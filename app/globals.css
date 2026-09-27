@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /*
-  Design tokens: the single source is main-app/DESIGN.md ("Token Block"). Light mode only
-  (plan §4.9, G-UI-LIGHT). `static` emits every variable even when no utility uses it: the Shiki
+  Design tokens: the single source is DESIGN.md ("Token Block"). Light mode only
+  (G-UI-LIGHT). `static` emits every variable even when no utility uses it: the Shiki
   theme and the visualization library read them.
 */
 @theme static {

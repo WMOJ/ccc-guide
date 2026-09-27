@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse as parseYaml } from "yaml";
+import { resolvePypy38 } from "../../lib/tools/resolve-tools";
 import {
   type FramesFile,
   framesFileSchema,
@@ -17,7 +18,15 @@ import {
 } from "../../lib/viz/schema";
 
 export const APP_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
-export const PYPY = path.resolve(APP_ROOT, "..", ".tooling", "bin", "pypy38");
+
+// Resolved lazily, on first actual use (not at import time): most callers of this module (schema
+// validation, formatting) never touch PyPy at all, and should not fail just because a module that
+// transitively imports this one was loaded.
+let _pypy: string | undefined;
+export function pypyPath(): string {
+  if (_pypy === undefined) _pypy = resolvePypy38();
+  return _pypy;
+}
 export const TOOLS_DIR = path.join(APP_ROOT, "tools", "viz");
 export const DEFAULT_ROOTS = [
   path.join(APP_ROOT, "content"),
@@ -174,7 +183,8 @@ export function runPypy(
   input: string,
   cwd: string,
 ): { stdout: string; stderr: string; status: number } {
-  const res = spawnSync(PYPY, args, {
+  const pypy = pypyPath();
+  const res = spawnSync(pypy, args, {
     cwd,
     input,
     encoding: "utf8",
@@ -183,7 +193,7 @@ export function runPypy(
     timeout: 120_000,
   });
   if (res.error)
-    throw new VizError("python", `cannot run PyPy 3.8 (${PYPY}): ${res.error.message}`);
+    throw new VizError("python", `cannot run PyPy 3.8 (${pypy}): ${res.error.message}`);
   return { stdout: res.stdout, stderr: res.stderr, status: res.status ?? 1 };
 }
 
@@ -328,7 +338,7 @@ export function generate(src: VisualSource): Generated {
 
 export interface Args {
   scope?: string;
-  /** `--root=<dir>` (repeatable, relative to main-app/): replaces DEFAULT_ROOTS (gate fixtures). */
+  /** `--root=<dir>` (repeatable, relative to the repo root): replaces DEFAULT_ROOTS (gate fixtures). */
   roots: string[];
   flags: Set<string>;
   rest: string[];

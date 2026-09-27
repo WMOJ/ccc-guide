@@ -13,6 +13,8 @@
       "!**/.impeccable",
       "!**/playwright-report",
       "!**/test-results",
+      "!.agents/skills",
+      "!.claude",
       "!**/AGENTS.md",
       "!**/next-env.d.ts",
       "!**/*.generated.*",

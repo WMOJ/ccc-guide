@@ -4,8 +4,6 @@ problems:
     level: J
     number: 1
     title: Triangle Times
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.1
     topics:
@@ -15,8 +13,6 @@ problems:
     level: J
     number: 2
     title: Vote Count
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - strings
@@ -25,8 +21,6 @@ problems:
     level: J
     number: 3
     title: Double Dice
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M2.7
     topics:
@@ -39,8 +33,6 @@ problems:
     aliases:
       - level: J
         number: 4
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M4.5
     topics:
@@ -53,8 +45,6 @@ problems:
     aliases:
       - level: J
         number: 5
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.9
       - M4.1
@@ -66,8 +56,6 @@ problems:
     level: S
     number: 3
     title: The Geneva Confection
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.14
       - M4.8
@@ -80,8 +68,6 @@ problems:
     level: S
     number: 4
     title: Tinted Glass Window
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - coordinate compression
@@ -91,8 +77,6 @@ problems:
     level: S
     number: 5
     title: Lazy Fox
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M5.13
       - M7.8
@@ -103,8 +87,6 @@ problems:
     level: J
     number: 1
     title: Special Day
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.13
     topics:
@@ -114,8 +96,6 @@ problems:
     level: J
     number: 2
     title: Happy or Sad
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.10
     topics:
@@ -125,8 +105,6 @@ problems:
     level: J
     number: 3
     title: Rövarspråket
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M2.6
     topics:
@@ -136,8 +114,6 @@ problems:
     level: J
     number: 4
     title: Wait Time
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - event simulation
@@ -146,8 +122,6 @@ problems:
     level: J
     number: 5
     title: π-day
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - dp
@@ -157,8 +131,6 @@ problems:
     level: S
     number: 1
     title: Zero That Out
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M3.10
     topics:
@@ -168,8 +140,6 @@ problems:
     level: S
     number: 2
     title: Jerseys
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M4.4
     topics:
@@ -179,8 +149,6 @@ problems:
     level: S
     number: 3
     title: Gates
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M4.11
       - M5.6
@@ -193,8 +161,6 @@ problems:
     level: S
     number: 4
     title: Convex Hull
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.3
       - M5.11
@@ -208,8 +174,6 @@ problems:
     level: S
     number: 5
     title: Greedy For Pies
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M7.7
     topics:
@@ -219,8 +183,6 @@ problems:
     level: J
     number: 1
     title: Tournament Selection
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.5
     topics:
@@ -230,8 +192,6 @@ problems:
     level: J
     number: 2
     title: Magic Squares
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M2.5
     topics:
@@ -241,8 +201,6 @@ problems:
     level: J
     number: 3
     title: Hidden Palindrome
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M5.12
     topics:
@@ -252,8 +210,6 @@ problems:
     level: J
     number: 4
     title: Arrival Time
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M3.5
     topics:
@@ -263,8 +219,6 @@ problems:
     level: S
     number: 1
     title: Ragaman
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - counting
@@ -276,8 +230,6 @@ problems:
     aliases:
       - level: J
         number: 5
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.6
       - M4.7
@@ -289,8 +241,6 @@ problems:
     level: S
     number: 3
     title: Phonomenal Reviews
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M5.1
       - M5.8
@@ -303,8 +253,6 @@ problems:
     level: S
     number: 4
     title: Combining Riceballs
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - interval dp
@@ -313,8 +261,6 @@ problems:
     level: S
     number: 5
     title: Circle of Life
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M6.12
       - M7.5
@@ -326,8 +272,6 @@ problems:
     level: J
     number: 1
     title: Quadrant Selection
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.4
     topics:
@@ -337,8 +281,6 @@ problems:
     level: J
     number: 2
     title: Shifty Sum
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.12
     topics:
@@ -348,8 +290,6 @@ problems:
     level: J
     number: 3
     title: Exactly Electrical
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M2.4
     topics:
@@ -359,8 +299,6 @@ problems:
     level: J
     number: 4
     title: Favourite Times
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M3.8
       - M4.14
@@ -371,8 +309,6 @@ problems:
     level: S
     number: 1
     title: Sum Game
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M3.6
       - M3.7
@@ -383,8 +319,6 @@ problems:
     level: S
     number: 2
     title: High Tide, Low Tide
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.5
       - M4.10
@@ -398,8 +332,6 @@ problems:
     aliases:
       - level: J
         number: 5
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M5.4
     topics:
@@ -409,8 +341,6 @@ problems:
     level: S
     number: 4
     title: Minimum Cost Flow
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M6.3
       - M6.8
@@ -422,8 +352,6 @@ problems:
     level: S
     number: 5
     title: RMT
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M7.2
       - M7.11
@@ -435,8 +363,6 @@ problems:
     level: J
     number: 1
     title: Telemarketer or not?
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M0.7
       - M1.3
@@ -447,8 +373,6 @@ problems:
     level: J
     number: 2
     title: Occupy parking
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.6
     topics:
@@ -458,8 +382,6 @@ problems:
     level: J
     number: 3
     title: Are we there yet?
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M2.3
       - M3.1
@@ -470,8 +392,6 @@ problems:
     level: J
     number: 5
     title: Choose your own path
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M4.12
       - M4.13
@@ -482,8 +402,6 @@ problems:
     level: S
     number: 1
     title: Voronoi Villages
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.2
       - M3.9
@@ -497,8 +415,6 @@ problems:
     aliases:
       - level: J
         number: 4
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.8
       - M4.3
@@ -510,8 +426,6 @@ problems:
     level: S
     number: 3
     title: RoboThieves
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M5.5
       - M5.9
@@ -522,8 +436,6 @@ problems:
     level: S
     number: 4
     title: Balanced Trees
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M6.6
     topics:
@@ -534,8 +446,6 @@ problems:
     level: S
     number: 5
     title: Maximum Strategic Savings
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M7.4
       - M7.13
@@ -547,8 +457,6 @@ problems:
     level: J
     number: 1
     title: Winning Score
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M0.5
       - M1.2
@@ -559,8 +467,6 @@ problems:
     level: J
     number: 2
     title: Time to Decompress
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.7
     topics:
@@ -570,8 +476,6 @@ problems:
     level: J
     number: 3
     title: Cold Compress
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.11
       - M2.2
@@ -583,8 +487,6 @@ problems:
     level: J
     number: 5
     title: Rule of Three
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - backtracking
@@ -596,8 +498,6 @@ problems:
     aliases:
       - level: J
         number: 4
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.9
       - M2.9
@@ -609,8 +509,6 @@ problems:
     level: S
     number: 2
     title: Pretty Average Primes
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M4.6
       - M5.3
@@ -621,8 +519,6 @@ problems:
     level: S
     number: 3
     title: Arithmetic Square
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.4
     topics:
@@ -632,8 +528,6 @@ problems:
     level: S
     number: 4
     title: Tourism
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M6.5
       - M6.11
@@ -646,8 +540,6 @@ problems:
     level: S
     number: 5
     title: "Triangle: The Data Structure"
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M7.1
       - M7.3
@@ -658,8 +550,6 @@ problems:
     level: J
     number: 1
     title: Dog Treats
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.10
       - M0.4
@@ -671,8 +561,6 @@ problems:
     level: J
     number: 2
     title: Epidemiology
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.8
     topics:
@@ -682,8 +570,6 @@ problems:
     level: J
     number: 3
     title: Art
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M2.1
       - M3.2
@@ -695,8 +581,6 @@ problems:
     level: J
     number: 4
     title: Cyclic Shifts
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - brute force
@@ -706,8 +590,6 @@ problems:
     level: S
     number: 1
     title: Surmising a Sprinter's Speed
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M2.8
       - M3.3
@@ -723,8 +605,6 @@ problems:
     aliases:
       - level: J
         number: 5
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.7
       - M4.13
@@ -736,8 +616,6 @@ problems:
     level: S
     number: 3
     title: Searching for Strings
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M6.7
       - M6.13
@@ -749,8 +627,6 @@ problems:
     level: S
     number: 4
     title: Swapping Seats
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - prefix sums circular
@@ -759,8 +635,6 @@ problems:
     level: S
     number: 5
     title: Josh's Double Bacon Deluxe
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M7.12
       - M7.14
@@ -771,8 +645,6 @@ problems:
     level: J
     number: 1
     title: Boiling Water
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.3
     topics:
@@ -782,8 +654,6 @@ problems:
     level: J
     number: 2
     title: Silent Auction
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.7
       - M1.10
@@ -794,8 +664,6 @@ problems:
     level: J
     number: 3
     title: Secret Instructions
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.9
     topics:
@@ -805,8 +673,6 @@ problems:
     level: J
     number: 4
     title: Arranging Books
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - greedy counting
@@ -815,8 +681,6 @@ problems:
     level: S
     number: 1
     title: Crazy Fencing
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M3.7
     topics:
@@ -829,8 +693,6 @@ problems:
     aliases:
       - level: J
         number: 5
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M4.12
       - M4.15
@@ -842,8 +704,6 @@ problems:
     level: S
     number: 3
     title: Lunch Concert
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - binary search
@@ -853,8 +713,6 @@ problems:
     level: S
     number: 4
     title: Daily Commute
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M6.2
     topics:
@@ -865,8 +723,6 @@ problems:
     level: S
     number: 5
     title: Math Homework
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M6.12
       - M7.10
@@ -878,8 +734,6 @@ problems:
     level: J
     number: 1
     title: Cupcake Party
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.1
     topics:
@@ -889,8 +743,6 @@ problems:
     level: J
     number: 2
     title: Fergusonball Ratings
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.5
     topics:
@@ -901,8 +753,6 @@ problems:
     level: J
     number: 3
     title: Harp Tuning
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.10
       - M2.6
@@ -913,8 +763,6 @@ problems:
     level: J
     number: 5
     title: Square Pool
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.14
     topics:
@@ -924,8 +772,6 @@ problems:
     level: S
     number: 1
     title: Good Fours and Good Fives
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - math loop
@@ -938,7 +784,6 @@ problems:
       - level: J
         number: 4
     internal:
-      titleSource: research/01-recon/past-problems-analysis.md
       note: Title corrected to 'Good Groups' (matches the ccc22s* 'Good ___' naming
         pattern) after the P4 WMOJ live verification run flagged a mismatch
         against the recon table's 'Group Work'
@@ -955,8 +800,6 @@ problems:
     level: S
     number: 3
     title: Good Samples
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M5.8
     topics:
@@ -966,8 +809,6 @@ problems:
     level: S
     number: 4
     title: Good Triplets
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M6.6
       - M6.9
@@ -979,8 +820,6 @@ problems:
     level: S
     number: 5
     title: Good Influencers
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M7.6
     topics:
@@ -990,8 +829,6 @@ problems:
     level: J
     number: 1
     title: Deliv-e-droid
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M0.7
       - M1.2
@@ -1002,8 +839,6 @@ problems:
     level: J
     number: 2
     title: Chili Peppers
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.2
       - M1.4
@@ -1016,8 +851,6 @@ problems:
     level: J
     number: 3
     title: Special Event
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.8
       - M2.2
@@ -1030,8 +863,6 @@ problems:
     level: J
     number: 5
     title: CCC Word Hunt
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - grid brute force
@@ -1043,8 +874,6 @@ problems:
     aliases:
       - level: J
         number: 4
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.9
       - M3.3
@@ -1057,8 +886,6 @@ problems:
     level: S
     number: 2
     title: Symmetric Mountains
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.9
       - M4.5
@@ -1071,8 +898,6 @@ problems:
     level: S
     number: 3
     title: Palindromic Poster
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M4.12
       - M5.3
@@ -1084,8 +909,6 @@ problems:
     level: S
     number: 4
     title: Minimum Cost Roads
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.3
       - M5.11
@@ -1100,8 +923,6 @@ problems:
     level: S
     number: 5
     title: The Filter
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M7.1
       - M7.3
@@ -1113,8 +934,6 @@ problems:
     level: J
     number: 1
     title: Conveyor Belt Sushi
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.1
       - C.10
@@ -1128,8 +947,6 @@ problems:
     level: J
     number: 2
     title: Dusa And The Yobis
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.3
       - M1.5
@@ -1141,8 +958,6 @@ problems:
     level: J
     number: 3
     title: Bronze Count
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.8
       - M1.13
@@ -1157,8 +972,6 @@ problems:
     level: J
     number: 4
     title: Troublesome Keys
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M2.4
     topics:
@@ -1168,8 +981,6 @@ problems:
     level: J
     number: 5
     title: Harvest Waterloo
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.3
       - C.7
@@ -1182,8 +993,6 @@ problems:
     level: S
     number: 1
     title: Hat Circle
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M2.9
       - M3.5
@@ -1196,8 +1005,6 @@ problems:
     level: S
     number: 2
     title: Heavy-Light Composition
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M4.6
       - M4.9
@@ -1210,8 +1017,6 @@ problems:
     level: S
     number: 3
     title: Swipe
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.4
       - M5.1
@@ -1225,8 +1030,6 @@ problems:
     level: S
     number: 4
     title: Painting Roads
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M6.4
       - M6.5
@@ -1238,8 +1041,6 @@ problems:
     level: S
     number: 5
     title: Chocolate Bar Partition
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M7.4
       - M7.5
@@ -1254,8 +1055,6 @@ problems:
     level: J
     number: 1
     title: Roller Coaster Ride
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M0.4
       - M1.2
@@ -1266,8 +1065,6 @@ problems:
     level: J
     number: 2
     title: Donut Shop
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.2
       - M1.6
@@ -1279,8 +1076,6 @@ problems:
     level: J
     number: 3
     title: Product Codes
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.9
       - M1.12
@@ -1294,8 +1089,6 @@ problems:
     level: J
     number: 4
     title: Sunny Days
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - run processing
@@ -1304,8 +1097,6 @@ problems:
     level: J
     number: 5
     title: Connecting Territories
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - grid dp
@@ -1314,8 +1105,6 @@ problems:
     level: S
     number: 1
     title: Positioning Peter's Paintings
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.5
       - M2.8
@@ -1328,8 +1117,6 @@ problems:
     level: S
     number: 2
     title: Cryptogram Cracking Club
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.8
       - M3.8
@@ -1343,8 +1130,6 @@ problems:
     level: S
     number: 3
     title: Pretty Pens
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M5.4
       - M5.11
@@ -1356,8 +1141,6 @@ problems:
     level: S
     number: 4
     title: Floor is Lava
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M6.1
       - M6.2
@@ -1369,8 +1152,6 @@ problems:
     level: S
     number: 5
     title: To-Do List
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M7.1
       - M7.2
@@ -1385,8 +1166,6 @@ problems:
     level: J
     number: 1
     title: Concert Tickets
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M0.4
       - M1.4
@@ -1397,8 +1176,6 @@ problems:
     level: J
     number: 2
     title: Olympic Scores
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M1.7
       - M2.1
@@ -1410,8 +1187,6 @@ problems:
     level: J
     number: 3
     title: Creative Candy Consumption
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M2.7
       - M3.1
@@ -1422,8 +1197,6 @@ problems:
     level: J
     number: 4
     title: Snail Path
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M3.6
     topics:
@@ -1434,8 +1207,6 @@ problems:
     level: S
     number: 1
     title: Baby Hop, Giant Hop
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - C.6
       - M3.10
@@ -1451,8 +1222,6 @@ problems:
     aliases:
       - level: J
         number: 5
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M4.1
       - M5.10
@@ -1463,8 +1232,6 @@ problems:
     level: S
     number: 3
     title: Common Card Choice
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M5.5
       - M5.13
@@ -1477,8 +1244,6 @@ problems:
     level: S
     number: 4
     title: Minecarts
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
       - binary search
@@ -1489,8 +1254,6 @@ problems:
     level: S
     number: 5
     title: On the Fence
-    internal:
-      titleSource: research/01-recon/past-problems-analysis.md
     modules:
       - M7.7
       - M7.11

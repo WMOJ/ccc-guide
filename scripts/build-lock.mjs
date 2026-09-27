@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// scripts/build-lock.mjs — serializes `next build` runs through .tooling/locks/build.lock (plan
-// brief §1.3: "next build only under the build lock"). Usage:
+// scripts/build-lock.mjs — serializes `next build` runs through a lock file under
+// node_modules/.cache/, so two builds never race each other's dist output. Usage:
 //   node scripts/build-lock.mjs -- <command> [args...]
 
 import { spawnSync } from "node:child_process";
@@ -9,8 +9,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-const workspaceRoot = path.resolve(scriptDir, "..", "..");
-const lockDir = path.join(workspaceRoot, ".tooling", "locks");
+const workspaceRoot = path.resolve(scriptDir, "..");
+const lockDir = path.join(workspaceRoot, "node_modules", ".cache");
 const lockFile = path.join(lockDir, "build.lock");
 
 const rawArgs = process.argv.slice(2);

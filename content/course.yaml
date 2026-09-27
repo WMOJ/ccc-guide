@@ -1,7 +1,7 @@
-# content/course.yaml — P4 skeleton, P5 finalises (brief §2 A5).
+# content/course.yaml
 #
-# Ordered stages -> modules. IDs and titles from research/01-recon/curriculum-map.md
-# (M0.2 and M0.3 dropped as setup-only content, C21/D-030 Q-19; M7.14 kept, D-030 Q-10).
+# Ordered stages -> modules. No system/environment setup content (M0.2 and M0.3 were dropped as
+# setup-only; M7.14, the C++ bridge, is kept with no setup framing).
 # Every module starts "planned" (renders as "Coming soon", no link, plan §4.1 draft visibility)
 # until P5-P8 write it. Stage and module "goal"/"title" text here is neutral and score-free by
 # hand (plan §5.4): the source recon file's "Goal / exit criterion" and "Contest payoff" columns

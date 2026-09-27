@@ -1,8 +1,4 @@
-# main-app/.gitignore — mirrors the relevant entries from the root .gitignore (plan §10.3) so
-# Biome's VCS-aware ignore lookup (biome.json vcs.useIgnoreFile) finds a file in this directory.
-# The root .gitignore is still authoritative for the whole repo; this file must not diverge from
-# it for any shared pattern.
-
+# Build and test output
 node_modules/
 .next/
 .next-*/
@@ -10,9 +6,23 @@ out/
 test-results/
 playwright-report/
 *.tsbuildinfo
-.pycheck-scratch/
 
+# tools/pycheck scratch (fenced-code-block temp files, deleted at the end of every run;
+# gitignored as a safety net if a run is interrupted)
+.pycheck-scratch/
+__pycache__/
+
+# scripts/check-production-mode.mjs's isolated production build (G-E2E production-mode proof);
+# deleted at the end of every run, gitignored as a safety net if a run is interrupted
+.next-prod-check/
+
+# Secrets and machine-local config
 .env*
 .vercel/
+.claude/settings.local.json
+.impeccable/config.local.json
+.impeccable/hook.cache.json
+.impeccable/hook.pending.json
 
+# OS
 .DS_Store

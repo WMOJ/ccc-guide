@@ -266,7 +266,6 @@ export const registryProblemSchema = z.object({
   modules: z.array(z.string().regex(moduleIdRe)).default([]),
   internal: z
     .object({
-      titleSource: z.string().optional(),
       note: z.string().optional(),
     })
     .default({}),

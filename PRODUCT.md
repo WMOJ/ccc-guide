@@ -77,7 +77,7 @@ The only course that goes from "never programmed" to CCC Senior S5 **in Python 3
 
 - Course structure: `research/01-recon/curriculum-map.md` (module IDs and titles; its "Contest payoff" column and score lines are on the leak list and never appear in the app, plan §5.4).
 - Registry: 119 CCC 2014–2026 problems (stubbed in P4, `content/registry/ccc-problems.yaml`).
-- Fixture course for previews: `main-app/tests/fixtures/content/` (stage `fx`).
+- Fixture course for previews: `tests/fixtures/content/` (stage `fx`).
 - There are **no** testimonials, user counts, results, outcomes or endorsements, and none may be fabricated.
 
 ## Product Principles

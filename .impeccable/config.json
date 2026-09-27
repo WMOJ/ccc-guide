@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [
+      "node_modules/**"
+    ],
+    "ignoreValues": []
+  },
+  "hook": {
+    "enabled": true,
+    "consent": "accepted",
+    "limits": {
+      "maxFindings": 5,
+      "maxChars": 8000
+    }
+  }
+}

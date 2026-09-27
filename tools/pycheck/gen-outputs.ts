@@ -13,11 +13,11 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { resolvePypy38 } from "@/lib/tools/resolve-tools";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const APP_ROOT = path.resolve(HERE, "..", "..");
-const REPO_ROOT = path.resolve(APP_ROOT, "..");
-const PYPY38 = path.join(REPO_ROOT, ".tooling", "bin", "pypy38");
+const PYPY38 = resolvePypy38();
 
 const scopeIndex = process.argv.indexOf("--scope");
 const SCOPE = scopeIndex !== -1 ? process.argv[scopeIndex + 1] : undefined;
