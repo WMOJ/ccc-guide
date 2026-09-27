@@ -1,0 +1,18 @@
+example: grade_classifier.py
+alt: >-
+  The program reads a score, then an if/elif/else chain assigns a letter
+  grade, taking a different branch for each preset.
+presets:
+  - id: high
+    label: A high score
+    stdin: "95\n"
+  - id: middle
+    label: A middle score
+    stdin: "75\n"
+  - id: low
+    label: A low score
+    stdin: "50\n"
+notes:
+  "2": "`score >= 90` is checked first. When it is `True`, the `if` branch runs and neither `elif` nor `else` is checked at all."
+  "4": "This `elif` only runs when the `if` above was `False`. It is true for scores from `70` to `89`."
+  "7": "`else` catches whatever the `if` and `elif` above missed, here any score below `70`."

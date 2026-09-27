@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "compare_raw_input.py", line 2, in <module>
+    if age < 18:
+TypeError: '<' not supported between instances of 'str' and 'int'

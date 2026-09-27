@@ -67,7 +67,7 @@ stages:
         title: Booleans and conditionals
         prereqs:
           - M1.2
-        status: planned
+        status: accepted
       - id: M1.5
         title: "`for` loops and `range`"
         prereqs:

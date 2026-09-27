@@ -1,0 +1,31 @@
+{"schema":1,
+"kind":"trace",
+"id":"grade_classifier",
+"source":"grade_classifier.py",
+"code":"score = int(input())\nif score >= 90:\n    grade = \"A\"\nelif score >= 70:\n    grade = \"B\"\nelse:\n    grade = \"C\"\nprint(grade)\n",
+"alt":"The program reads a score, then an if/elif/else chain assigns a letter grade, taking a different branch for each preset.",
+"presets":[
+{"id":"high","label":"A high score","stdin":"95\n","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["score","95"]]}],"c":"Line 1 runs: `score` is created with the value `95`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["score","95"]]}],"c":"Line 2 checks the condition: it is true, so line 3 runs next. `score >= 90` is checked first. When it is `True`, the `if` branch runs and neither `elif` nor `else` is checked at all."},
+{"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["score","95"],["grade","'A'"]]}],"c":"Line 3 runs: `grade` is created with the value `'A'`."},
+{"l":8,"e":"end","st":[{"f":"<module>","l":8,"v":[["score","95"],["grade","'A'"]]}],"o":"A\n","c":"Line 8 runs: it prints `A`. The program has finished: no lines are left to run."}
+]},
+{"id":"middle","label":"A middle score","stdin":"75\n","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["score","75"]]}],"c":"Line 1 runs: `score` is created with the value `75`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["score","75"]]}],"c":"Line 2 checks the condition: it is false, so line 4 runs next. `score >= 90` is checked first. When it is `True`, the `if` branch runs and neither `elif` nor `else` is checked at all."},
+{"l":5,"e":"line","st":[{"f":"<module>","l":5,"v":[["score","75"]]}],"c":"Line 4 checks the condition: it is true, so line 5 runs next. This `elif` only runs when the `if` above was `False`. It is true for scores from `70` to `89`."},
+{"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["score","75"],["grade","'B'"]]}],"c":"Line 5 runs: `grade` is created with the value `'B'`."},
+{"l":8,"e":"end","st":[{"f":"<module>","l":8,"v":[["score","75"],["grade","'B'"]]}],"o":"B\n","c":"Line 8 runs: it prints `B`. The program has finished: no lines are left to run."}
+]},
+{"id":"low","label":"A low score","stdin":"50\n","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["score","50"]]}],"c":"Line 1 runs: `score` is created with the value `50`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["score","50"]]}],"c":"Line 2 checks the condition: it is false, so line 4 runs next. `score >= 90` is checked first. When it is `True`, the `if` branch runs and neither `elif` nor `else` is checked at all."},
+{"l":7,"e":"line","st":[{"f":"<module>","l":7,"v":[["score","50"]]}],"c":"Line 4 checks the condition: it is false, so line 7 runs next. This `elif` only runs when the `if` above was `False`. It is true for scores from `70` to `89`."},
+{"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["score","50"],["grade","'C'"]]}],"c":"Line 7 runs: `grade` is created with the value `'C'`. `else` catches whatever the `if` and `elif` above missed, here any score below `70`."},
+{"l":8,"e":"end","st":[{"f":"<module>","l":8,"v":[["score","50"],["grade","'C'"]]}],"o":"C\n","c":"Line 8 runs: it prints `C`. The program has finished: no lines are left to run."}
+]}
+]}

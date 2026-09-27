@@ -1,0 +1,22 @@
+id: M1.4
+title: Booleans and conditionals
+status: accepted
+objectives:
+  - "Compare values with `==`, `!=`, `<`, `<=`, `>`, `>=`, and test membership with `in`."
+  - Branch a program's logic with `if`, `elif` and `else`.
+  - Combine conditions with `and`, `or` and `not`, and chain comparisons like `0 <= x <= 10`.
+  - Write a short either/or value in one line with a conditional expression.
+prereqs:
+  - M1.2
+lessons:
+  - booleans-and-conditionals
+practice:
+  - id: ccc21j1
+    note: Turn a boiling point into an atmospheric pressure and a three-way elevation reading.
+  - id: ccc23j1
+    note: Score a delivery robot's run from its package count and its collisions, with a bonus condition.
+  - id: ccc26j1
+    note: Decide whether a concert-goer can buy their tickets from the remaining supply.
+  - id: ccc17j1
+    note: Decide which quadrant a point falls in from the signs of its coordinates.
+    why: Tries the same kind of decision on DMOJ, which holds 2014 to 2020.
