@@ -5,4 +5,4 @@ alt: >-
 notes:
   "3": "`n` is `0`, so this call returns `[]` without calling itself again."
   "4": "This call waits while `countdown(n - 1)` gets a new frame on top of the stack."
-  "8": "countdown(3) is called for the first time, starting the stack of waiting frames."
+  "8": "`countdown(3)` is called for the first time, starting the stack of waiting frames."

@@ -4,6 +4,6 @@ alt: >-
   A later tie does not replace the leader, so the earliest player to reach the best
   score keeps the lead.
 notes:
-  "4": "best_score and best_name are seeded from the first player, A, before the loop starts."
-  "6": "scores[i] > best_score is strict, so a tie never replaces the current leader."
-  "7": "B's 9 beats A's 7, so both accumulators move to B."
+  "5": "`best_score` and `leader` are seeded from the first player, A, before the loop starts."
+  "11": "B's `9` beats A's `7`, so both accumulators move to B."
+  "9@2": "`cur > best_score` is strict. C's `9` only ties B's, so the lead stays with B."

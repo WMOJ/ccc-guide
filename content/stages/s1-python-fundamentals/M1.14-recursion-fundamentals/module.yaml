@@ -1,6 +1,6 @@
 id: M1.14
 title: Recursion fundamentals
-status: gated
+status: accepted
 objectives:
   - Split a problem into a base case and a recursive case.
   - Trace how the call stack grows as newer calls stack on top, then unwinds as each one finishes.

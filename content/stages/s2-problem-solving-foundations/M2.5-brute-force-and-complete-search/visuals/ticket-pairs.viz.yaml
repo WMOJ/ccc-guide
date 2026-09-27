@@ -1,6 +1,7 @@
 layout: single
 panels:
   - { id: t, viz: TableViz, title: Pair sums }
+legendLabels: { path: Match }
 alt: >-
   A table of four ticket prices against themselves, filled in one pair at a time with the
   sum of that pair, checked against the target of 10.

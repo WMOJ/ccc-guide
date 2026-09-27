@@ -8,7 +8,7 @@
 {"id":"default","label":"Run","steps":[
 {"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
 {"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]}],"h":{"1":{"t":"function","n":"countdown"}},"c":"Line 1 runs: the name `countdown` now refers to a function."},
-{"l":1,"e":"call","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":1,"v":[["n","3"]]}],"c":"Line 8 calls `countdown` with `n = 3`. A new frame for `countdown` goes on top of the call stack. countdown(3) is called for the first time, starting the stack of waiting frames."},
+{"l":1,"e":"call","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":1,"v":[["n","3"]]}],"c":"Line 8 calls `countdown` with `n = 3`. A new frame for `countdown` goes on top of the call stack. `countdown(3)` is called for the first time, starting the stack of waiting frames."},
 {"l":2,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":2,"v":[["n","3"]]}],"c":"`countdown()` starts running its body at line 2."},
 {"l":4,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]}],"c":"Line 2 checks the condition: it is false, so line 4 runs next."},
 {"l":1,"e":"call","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":1,"v":[["n","2"]]}],"c":"Line 4 calls `countdown` with `n = 2`. A new frame for `countdown` goes on top of the call stack. This call waits while `countdown(n - 1)` gets a new frame on top of the stack."},

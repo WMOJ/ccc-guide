@@ -4,15 +4,16 @@
 "layout":"single",
 "panels":[{"id":"t","viz":"TableViz","title":"Pair sums"}],
 "alt":"A table of four ticket prices against themselves, filled in one pair at a time with the sum of that pair, checked against the target of 10.",
+"legendLabels":{"path":"Match"},
 "presets":[
 {"id":"sample","label":"Four tickets","steps":[
 {"caption":"Every pair (i, j) with i before j will be checked against the target, 10.","panels":{"t":{"cells":[["-","-","-","-"],["-","-","-","-"],["-","-","-","-"],["-","-","-","-"]],"states":["____","____","____","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
-{"caption":"Ticket 3 plus ticket 5 is 8, which does not match the target.","panels":{"t":{"cells":[["-",8,"-","-"],["-","-","-","-"],["-","-","-","-"],["-","-","-","-"]],"states":["_c__","____","____","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
-{"caption":"Ticket 3 plus ticket 2 is 5, which does not match the target.","panels":{"t":{"cells":[["-",8,5,"-"],["-","-","-","-"],["-","-","-","-"],["-","-","-","-"]],"states":["_dc_","____","____","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
-{"caption":"Ticket 3 plus ticket 8 is 11, which does not match the target.","panels":{"t":{"cells":[["-",8,5,11],["-","-","-","-"],["-","-","-","-"],["-","-","-","-"]],"states":["_ddc","____","____","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
-{"caption":"Ticket 5 plus ticket 2 is 7, which does not match the target.","panels":{"t":{"cells":[["-",8,5,11],["-","-",7,"-"],["-","-","-","-"],["-","-","-","-"]],"states":["_ddd","__c_","____","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
-{"caption":"Ticket 5 plus ticket 8 is 13, which does not match the target.","panels":{"t":{"cells":[["-",8,5,11],["-","-",7,13],["-","-","-","-"],["-","-","-","-"]],"states":["_ddd","__dc","____","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
-{"caption":"Ticket 2 plus ticket 8 is 10, which matches the target. Matches so far: 1.","panels":{"t":{"cells":[["-",8,5,11],["-","-",7,13],["-","-","-",10],["-","-","-","-"]],"states":["_ddd","__dd","___c","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
+{"caption":"The 3-dollar ticket plus the 5-dollar ticket is 8, which does not match the target.","panels":{"t":{"cells":[["-",8,"-","-"],["-","-","-","-"],["-","-","-","-"],["-","-","-","-"]],"states":["_c__","____","____","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
+{"caption":"The 3-dollar ticket plus the 2-dollar ticket is 5, which does not match the target.","panels":{"t":{"cells":[["-",8,5,"-"],["-","-","-","-"],["-","-","-","-"],["-","-","-","-"]],"states":["_dc_","____","____","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
+{"caption":"The 3-dollar ticket plus the 8-dollar ticket is 11, which does not match the target.","panels":{"t":{"cells":[["-",8,5,11],["-","-","-","-"],["-","-","-","-"],["-","-","-","-"]],"states":["_ddc","____","____","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
+{"caption":"The 5-dollar ticket plus the 2-dollar ticket is 7, which does not match the target.","panels":{"t":{"cells":[["-",8,5,11],["-","-",7,"-"],["-","-","-","-"],["-","-","-","-"]],"states":["_ddd","__c_","____","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
+{"caption":"The 5-dollar ticket plus the 8-dollar ticket is 13, which does not match the target.","panels":{"t":{"cells":[["-",8,5,11],["-","-",7,13],["-","-","-","-"],["-","-","-","-"]],"states":["_ddd","__dc","____","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
+{"caption":"The 2-dollar ticket plus the 8-dollar ticket is 10, which matches the target. Matches so far: 1.","panels":{"t":{"cells":[["-",8,5,11],["-","-",7,13],["-","-","-",10],["-","-","-","-"]],"states":["_ddd","__dd","___c","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}},
 {"caption":"Every pair has been checked. 1 pair matched the target.","panels":{"t":{"cells":[["-",8,5,11],["-","-",7,13],["-","-","-",10],["-","-","-","-"]],"states":["_ddd","__dd","___p","____"],"rowHeads":[3,5,2,8],"colHeads":[3,5,2,8],"rowTitle":"i","colTitle":"j"}}}
 ]}
 ]}

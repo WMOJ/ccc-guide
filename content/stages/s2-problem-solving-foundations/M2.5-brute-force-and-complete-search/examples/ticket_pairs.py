@@ -1,9 +1,9 @@
-tickets = [3, 5, 2, 8]
-target = 10
+n, target = map(int, input().split())
+tickets = [int(x) for x in input().split()]
 
 count = 0
-for i in range(len(tickets)):
-    for j in range(i + 1, len(tickets)):
+for i in range(n):
+    for j in range(i + 1, n):
         if tickets[i] + tickets[j] == target:
             count += 1
 

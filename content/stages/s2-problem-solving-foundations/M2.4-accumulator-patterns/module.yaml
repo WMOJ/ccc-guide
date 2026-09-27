@@ -1,6 +1,6 @@
 id: M2.4
 title: Accumulator patterns
-status: gated
+status: accepted
 objectives:
   - Keep a running sum, count, minimum or maximum while looping over input.
   - Track the best-so-far value with an explicit tie-breaking rule.

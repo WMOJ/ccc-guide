@@ -2,10 +2,12 @@ scores = [7, 9, 9]
 names = ["A", "B", "C"]
 
 best_score = scores[0]
-best_name = names[0]
-for i in range(1, len(scores)):
-    if scores[i] > best_score:
-        best_score = scores[i]
-        best_name = names[i]
+leader = names[0]
+n = len(scores)
+for i in range(1, n):
+    cur = scores[i]
+    if cur > best_score:
+        best_score = cur
+        leader = names[i]
 
-print(best_name, best_score)
+print(leader, best_score)

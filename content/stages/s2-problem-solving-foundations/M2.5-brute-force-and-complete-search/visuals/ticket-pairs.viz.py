@@ -31,17 +31,18 @@ for i in range(n):
             count += 1
             cell_states[(i, j)] = "path"
             rec.step(
-                f"Ticket {tickets[i]} plus ticket {tickets[j]} is {total}, which matches the "
-                f"target. Matches so far: {count}.",
+                f"The {tickets[i]}-dollar ticket plus the {tickets[j]}-dollar ticket is "
+                f"{total}, which matches the target. Matches so far: {count}.",
                 t=frame((i, j))
             )
         else:
             cell_states[(i, j)] = "done"
             rec.step(
-                f"Ticket {tickets[i]} plus ticket {tickets[j]} is {total}, which does not "
-                f"match the target.",
+                f"The {tickets[i]}-dollar ticket plus the {tickets[j]}-dollar ticket is "
+                f"{total}, which does not match the target.",
                 t=frame((i, j))
             )
 
-rec.step(f"Every pair has been checked. {count} pair matched the target.", t=frame())
+pair_word = "pair" if count == 1 else "pairs"
+rec.step(f"Every pair has been checked. {count} {pair_word} matched the target.", t=frame())
 rec.output(f"{count}\n")

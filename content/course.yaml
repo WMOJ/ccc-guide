@@ -117,7 +117,7 @@ stages:
         title: Recursion fundamentals
         prereqs:
           - M1.10
-        status: planned
+        status: accepted
       - id: M1.15
         title: The Python 3.8 language boundary
         prereqs:
@@ -132,7 +132,7 @@ stages:
         title: Reading a CCC problem statement
         prereqs:
           - M0.5
-        status: planned
+        status: accepted
       - id: M2.2
         title: Algorithm-first thinking
         prereqs:
@@ -148,13 +148,13 @@ stages:
         title: Accumulator patterns
         prereqs:
           - M1.5
-        status: planned
+        status: accepted
       - id: M2.5
         title: Brute force and complete search
         prereqs:
           - M1.8
           - M1.13
-        status: planned
+        status: accepted
       - id: M2.6
         title: Case analysis and edge cases
         prereqs:

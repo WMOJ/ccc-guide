@@ -2,22 +2,25 @@
 "kind":"trace",
 "id":"best_score",
 "source":"best_score.py",
-"code":"scores = [7, 9, 9]\nnames = [\"A\", \"B\", \"C\"]\n\nbest_score = scores[0]\nbest_name = names[0]\nfor i in range(1, len(scores)):\n    if scores[i] > best_score:\n        best_score = scores[i]\n        best_name = names[i]\n\nprint(best_name, best_score)\n",
+"code":"scores = [7, 9, 9]\nnames = [\"A\", \"B\", \"C\"]\n\nbest_score = scores[0]\nleader = names[0]\nn = len(scores)\nfor i in range(1, n):\n    cur = scores[i]\n    if cur > best_score:\n        best_score = cur\n        leader = names[i]\n\nprint(leader, best_score)\n",
 "alt":"The program scans three scores, keeping the best score and the name that reached it. A later tie does not replace the leader, so the earliest player to reach the best score keeps the lead.",
 "presets":[
 {"id":"default","label":"Run","steps":[
 {"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
 {"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["scores",[1]]]}],"h":{"1":{"t":"list","v":["7","9","9"]}},"c":"Line 1 runs: `scores` is created with the value `[7, 9, 9]`."},
 {"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["scores",[1]],["names",[2]]]}],"h":{"2":{"t":"list","v":["'A'","'B'","'C'"]}},"c":"Line 2 runs: `names` is created with the value `['A', 'B', 'C']`."},
-{"l":5,"e":"line","st":[{"f":"<module>","l":5,"v":[["scores",[1]],["names",[2]],["best_score","7"]]}],"c":"Line 4 runs: `best_score` is created with the value `7`. best_score and best_name are seeded from the first player, A, before the loop starts."},
-{"l":6,"e":"line","st":[{"f":"<module>","l":6,"v":[["scores",[1]],["names",[2]],["best_score","7"],["best_name","'A'"]]}],"c":"Line 5 runs: `best_name` is created with the value `'A'`."},
-{"l":7,"e":"line","st":[{"f":"<module>","l":7,"v":[["scores",[1]],["names",[2]],["best_score","7"],["best_name","'A'"],["i","1"]]}],"c":"Line 6 runs: the loop gives `i` its first value, `1`. scores[i] > best_score is strict, so a tie never replaces the current leader."},
-{"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["scores",[1]],["names",[2]],["best_score","7"],["best_name","'A'"],["i","1"]]}],"c":"Line 7 checks the condition: it is true, so line 8 runs next. B's 9 beats A's 7, so both accumulators move to B."},
-{"l":9,"e":"line","st":[{"f":"<module>","l":9,"v":[["scores",[1]],["names",[2]],["best_score","9"],["best_name","'A'"],["i","1"]]}],"c":"Line 8 runs: `best_score` changes from `7` to `9`."},
-{"l":6,"e":"line","st":[{"f":"<module>","l":6,"v":[["scores",[1]],["names",[2]],["best_score","9"],["best_name","'B'"],["i","1"]]}],"c":"Line 9 runs: `best_name` changes from `'A'` to `'B'`."},
-{"l":7,"e":"line","st":[{"f":"<module>","l":7,"v":[["scores",[1]],["names",[2]],["best_score","9"],["best_name","'B'"],["i","2"]]}],"c":"Line 6 runs: the loop gives `i` its next value, `2`."},
-{"l":6,"e":"line","st":[{"f":"<module>","l":6,"v":[["scores",[1]],["names",[2]],["best_score","9"],["best_name","'B'"],["i","2"]]}],"c":"Line 7 checks the condition: it is false, so line 6 runs next."},
-{"l":11,"e":"line","st":[{"f":"<module>","l":11,"v":[["scores",[1]],["names",[2]],["best_score","9"],["best_name","'B'"],["i","2"]]}],"c":"Line 6: the loop has no values left, so it ends and line 11 runs next."},
-{"l":11,"e":"end","st":[{"f":"<module>","l":11,"v":[["scores",[1]],["names",[2]],["best_score","9"],["best_name","'B'"],["i","2"]]}],"o":"B 9\n","c":"Line 11 runs: it prints `B 9`. The program has finished: no lines are left to run."}
+{"l":5,"e":"line","st":[{"f":"<module>","l":5,"v":[["scores",[1]],["names",[2]],["best_score","7"]]}],"c":"Line 4 runs: `best_score` is created with the value `7`."},
+{"l":6,"e":"line","st":[{"f":"<module>","l":6,"v":[["scores",[1]],["names",[2]],["best_score","7"],["leader","'A'"]]}],"c":"Line 5 runs: `leader` is created with the value `'A'`. `best_score` and `leader` are seeded from the first player, A, before the loop starts."},
+{"l":7,"e":"line","st":[{"f":"<module>","l":7,"v":[["scores",[1]],["names",[2]],["best_score","7"],["leader","'A'"],["n","3"]]}],"c":"Line 6 runs: `n` is created with the value `3`."},
+{"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["scores",[1]],["names",[2]],["best_score","7"],["leader","'A'"],["n","3"],["i","1"]]}],"c":"Line 7 runs: the loop gives `i` its first value, `1`."},
+{"l":9,"e":"line","st":[{"f":"<module>","l":9,"v":[["scores",[1]],["names",[2]],["best_score","7"],["leader","'A'"],["n","3"],["i","1"],["cur","9"]]}],"c":"Line 8 runs: `cur` is created with the value `9`."},
+{"l":10,"e":"line","st":[{"f":"<module>","l":10,"v":[["scores",[1]],["names",[2]],["best_score","7"],["leader","'A'"],["n","3"],["i","1"],["cur","9"]]}],"c":"Line 9 checks the condition: it is true, so line 10 runs next."},
+{"l":11,"e":"line","st":[{"f":"<module>","l":11,"v":[["scores",[1]],["names",[2]],["best_score","9"],["leader","'A'"],["n","3"],["i","1"],["cur","9"]]}],"c":"Line 10 runs: `best_score` changes from `7` to `9`."},
+{"l":7,"e":"line","st":[{"f":"<module>","l":7,"v":[["scores",[1]],["names",[2]],["best_score","9"],["leader","'B'"],["n","3"],["i","1"],["cur","9"]]}],"c":"Line 11 runs: `leader` changes from `'A'` to `'B'`. B's `9` beats A's `7`, so both accumulators move to B."},
+{"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["scores",[1]],["names",[2]],["best_score","9"],["leader","'B'"],["n","3"],["i","2"],["cur","9"]]}],"c":"Line 7 runs: the loop gives `i` its next value, `2`."},
+{"l":9,"e":"line","st":[{"f":"<module>","l":9,"v":[["scores",[1]],["names",[2]],["best_score","9"],["leader","'B'"],["n","3"],["i","2"],["cur","9"]]}],"c":"Line 8 runs; line 9 is next."},
+{"l":7,"e":"line","st":[{"f":"<module>","l":7,"v":[["scores",[1]],["names",[2]],["best_score","9"],["leader","'B'"],["n","3"],["i","2"],["cur","9"]]}],"c":"Line 9 checks the condition: it is false, so line 7 runs next. `cur > best_score` is strict. C's `9` only ties B's, so the lead stays with B."},
+{"l":13,"e":"line","st":[{"f":"<module>","l":13,"v":[["scores",[1]],["names",[2]],["best_score","9"],["leader","'B'"],["n","3"],["i","2"],["cur","9"]]}],"c":"Line 7: the loop has no values left, so it ends and line 13 runs next."},
+{"l":13,"e":"end","st":[{"f":"<module>","l":13,"v":[["scores",[1]],["names",[2]],["best_score","9"],["leader","'B'"],["n","3"],["i","2"],["cur","9"]]}],"o":"B 9\n","c":"Line 13 runs: it prints `B 9`. The program has finished: no lines are left to run."}
 ]}
 ]}
