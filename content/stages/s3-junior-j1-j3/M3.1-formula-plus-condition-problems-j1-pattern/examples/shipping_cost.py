@@ -1,7 +1,7 @@
-weight = int(input())
-distance = int(input())
+kg = int(input())
+km = int(input())
 
-cost = weight * 2 + distance // 10
+cost = kg * 2 + km // 10
 
 if cost <= 20:
     print("Standard")

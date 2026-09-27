@@ -6,7 +6,7 @@
 // from ./mdx-component-names.ts (a plain-data module, kept in sync with the object below by
 // tests/unit/content/mdx-component-names.test.ts) since it cannot load this file's JSX.
 import fs from "node:fs";
-import type { ReactNode } from "react";
+import type { ReactNode, TableHTMLAttributes } from "react";
 import {
   Callout,
   JudgeLink as JudgeLinkImpl,
@@ -130,8 +130,28 @@ export function createMdxComponents({ moduleDir, practiceItems = [] }: MdxCompon
     );
   }
 
+  // Overrides the native `table` element markdown tables compile to (not an authored JSX
+  // component — authors write `| a | b |`, never `<table>`). The wrapper div, not the table
+  // itself, is the scrollable region on a narrow viewport (globals.css's `.prose-table-scroll`):
+  // a scrollable region axe can reach must also be keyboard-focusable (WCAG 2.1.1, axe rule
+  // scrollable-region-focusable), and a `<table>` can't take tabIndex itself (it's not an
+  // interactive element), so the focusable, scrollable div wraps a plain, unscrolled table.
+  function TableTag(props: TableHTMLAttributes<HTMLTableElement>) {
+    return (
+      <section
+        className="prose-table-scroll"
+        aria-label="Scrollable table"
+        // biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable region must be keyboard-reachable (WCAG 2.1.1)
+        tabIndex={0}
+      >
+        <table {...props} />
+      </section>
+    );
+  }
+
   return {
     Callout,
+    table: TableTag,
     Term: TermTag,
     Details,
     Code: CodeTag,

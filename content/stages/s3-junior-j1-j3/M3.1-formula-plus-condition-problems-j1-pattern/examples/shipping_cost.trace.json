@@ -2,33 +2,33 @@
 "kind":"trace",
 "id":"shipping_cost",
 "source":"shipping_cost.py",
-"code":"weight = int(input())\ndistance = int(input())\n\ncost = weight * 2 + distance // 10\n\nif cost <= 20:\n    print(\"Standard\")\nelif cost <= 50:\n    print(\"Priority\")\nelse:\n    print(\"Express\")\n",
+"code":"kg = int(input())\nkm = int(input())\n\ncost = kg * 2 + km // 10\n\nif cost <= 20:\n    print(\"Standard\")\nelif cost <= 50:\n    print(\"Priority\")\nelse:\n    print(\"Express\")\n",
 "alt":"The program reads a package weight and distance, computes a cost, and prints one of three labels. Three presets land exactly on the boundary between labels, showing which branch a tied cost takes.",
 "presets":[
-{"id":"exactly-20","label":"Cost lands on 20","stdin":"10\n0\n","steps":[
+{"id":"exactly-20","label":"Cost 20","stdin":"10\n0\n","steps":[
 {"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
-{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["weight","10"]]}],"c":"Line 1 runs: `weight` is created with the value `10`."},
-{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["weight","10"],["distance","0"]]}],"c":"Line 2 runs: `distance` is created with the value `0`."},
-{"l":6,"e":"line","st":[{"f":"<module>","l":6,"v":[["weight","10"],["distance","0"],["cost","20"]]}],"c":"Line 4 runs: `cost` is created with the value `20`. `cost` is computed once, before any branch is checked, so every branch below reads the same value."},
-{"l":7,"e":"line","st":[{"f":"<module>","l":7,"v":[["weight","10"],["distance","0"],["cost","20"]]}],"c":"Line 6 checks the condition: it is true, so line 7 runs next. `cost <= 20` is `True` only for the first preset. A cost of `20` counts as `Standard`, not `Priority`."},
-{"l":7,"e":"end","st":[{"f":"<module>","l":7,"v":[["weight","10"],["distance","0"],["cost","20"]]}],"o":"Standard\n","c":"Line 7 runs: it prints `Standard`. The program has finished: no lines are left to run."}
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["kg","10"]]}],"c":"Line 1 runs: `kg` is created with the value `10`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["kg","10"],["km","0"]]}],"c":"Line 2 runs: `km` is created with the value `0`."},
+{"l":6,"e":"line","st":[{"f":"<module>","l":6,"v":[["kg","10"],["km","0"],["cost","20"]]}],"c":"Line 4 runs: `cost` is created with the value `20`. `cost` is computed once, before any branch is checked, so every branch below reads the same value."},
+{"l":7,"e":"line","st":[{"f":"<module>","l":7,"v":[["kg","10"],["km","0"],["cost","20"]]}],"c":"Line 6 checks the condition: it is true, so line 7 runs next. `cost <= 20` is `True` only for the first preset. A cost of `20` counts as `Standard`, not `Priority`."},
+{"l":7,"e":"end","st":[{"f":"<module>","l":7,"v":[["kg","10"],["km","0"],["cost","20"]]}],"o":"Standard\n","c":"Line 7 runs: it prints `Standard`. The program has finished: no lines are left to run."}
 ]},
-{"id":"exactly-21","label":"Cost lands on 21","stdin":"10\n10\n","steps":[
+{"id":"exactly-21","label":"Cost 21","stdin":"10\n10\n","steps":[
 {"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
-{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["weight","10"]]}],"c":"Line 1 runs: `weight` is created with the value `10`."},
-{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["weight","10"],["distance","10"]]}],"c":"Line 2 runs: `distance` is created with the value `10`."},
-{"l":6,"e":"line","st":[{"f":"<module>","l":6,"v":[["weight","10"],["distance","10"],["cost","21"]]}],"c":"Line 4 runs: `cost` is created with the value `21`. `cost` is computed once, before any branch is checked, so every branch below reads the same value."},
-{"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["weight","10"],["distance","10"],["cost","21"]]}],"c":"Line 6 checks the condition: it is false, so line 8 runs next. `cost <= 20` is `True` only for the first preset. A cost of `20` counts as `Standard`, not `Priority`."},
-{"l":9,"e":"line","st":[{"f":"<module>","l":9,"v":[["weight","10"],["distance","10"],["cost","21"]]}],"c":"Line 8 checks the condition: it is true, so line 9 runs next. This `elif` only runs once the `if` above was `False`. `cost <= 50` covers `21` up to `50`."},
-{"l":9,"e":"end","st":[{"f":"<module>","l":9,"v":[["weight","10"],["distance","10"],["cost","21"]]}],"o":"Priority\n","c":"Line 9 runs: it prints `Priority`. The program has finished: no lines are left to run."}
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["kg","10"]]}],"c":"Line 1 runs: `kg` is created with the value `10`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["kg","10"],["km","10"]]}],"c":"Line 2 runs: `km` is created with the value `10`."},
+{"l":6,"e":"line","st":[{"f":"<module>","l":6,"v":[["kg","10"],["km","10"],["cost","21"]]}],"c":"Line 4 runs: `cost` is created with the value `21`. `cost` is computed once, before any branch is checked, so every branch below reads the same value."},
+{"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["kg","10"],["km","10"],["cost","21"]]}],"c":"Line 6 checks the condition: it is false, so line 8 runs next. `cost <= 20` is `True` only for the first preset. A cost of `20` counts as `Standard`, not `Priority`."},
+{"l":9,"e":"line","st":[{"f":"<module>","l":9,"v":[["kg","10"],["km","10"],["cost","21"]]}],"c":"Line 8 checks the condition: it is true, so line 9 runs next. This `elif` only runs once the `if` above was `False`. `cost <= 50` covers `21` up to `50`."},
+{"l":9,"e":"end","st":[{"f":"<module>","l":9,"v":[["kg","10"],["km","10"],["cost","21"]]}],"o":"Priority\n","c":"Line 9 runs: it prints `Priority`. The program has finished: no lines are left to run."}
 ]},
-{"id":"exactly-51","label":"Cost lands on 51","stdin":"25\n10\n","steps":[
+{"id":"exactly-51","label":"Cost 51","stdin":"25\n10\n","steps":[
 {"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
-{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["weight","25"]]}],"c":"Line 1 runs: `weight` is created with the value `25`."},
-{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["weight","25"],["distance","10"]]}],"c":"Line 2 runs: `distance` is created with the value `10`."},
-{"l":6,"e":"line","st":[{"f":"<module>","l":6,"v":[["weight","25"],["distance","10"],["cost","51"]]}],"c":"Line 4 runs: `cost` is created with the value `51`. `cost` is computed once, before any branch is checked, so every branch below reads the same value."},
-{"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["weight","25"],["distance","10"],["cost","51"]]}],"c":"Line 6 checks the condition: it is false, so line 8 runs next. `cost <= 20` is `True` only for the first preset. A cost of `20` counts as `Standard`, not `Priority`."},
-{"l":11,"e":"line","st":[{"f":"<module>","l":11,"v":[["weight","25"],["distance","10"],["cost","51"]]}],"c":"Line 8 checks the condition: it is false, so line 11 runs next. This `elif` only runs once the `if` above was `False`. `cost <= 50` covers `21` up to `50`."},
-{"l":11,"e":"end","st":[{"f":"<module>","l":11,"v":[["weight","25"],["distance","10"],["cost","51"]]}],"o":"Express\n","c":"Line 11 runs: it prints `Express`. A cost of `51` fails both comparisons above, so it falls through to `else`. The program has finished: no lines are left to run."}
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["kg","25"]]}],"c":"Line 1 runs: `kg` is created with the value `25`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["kg","25"],["km","10"]]}],"c":"Line 2 runs: `km` is created with the value `10`."},
+{"l":6,"e":"line","st":[{"f":"<module>","l":6,"v":[["kg","25"],["km","10"],["cost","51"]]}],"c":"Line 4 runs: `cost` is created with the value `51`. `cost` is computed once, before any branch is checked, so every branch below reads the same value."},
+{"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["kg","25"],["km","10"],["cost","51"]]}],"c":"Line 6 checks the condition: it is false, so line 8 runs next. `cost <= 20` is `True` only for the first preset. A cost of `20` counts as `Standard`, not `Priority`."},
+{"l":11,"e":"line","st":[{"f":"<module>","l":11,"v":[["kg","25"],["km","10"],["cost","51"]]}],"c":"Line 8 checks the condition: it is false, so line 11 runs next. This `elif` only runs once the `if` above was `False`. `cost <= 50` covers `21` up to `50`."},
+{"l":11,"e":"end","st":[{"f":"<module>","l":11,"v":[["kg","25"],["km","10"],["cost","51"]]}],"o":"Express\n","c":"Line 11 runs: it prints `Express`. A cost of `51` fails both comparisons above, so it falls through to `else`. The program has finished: no lines are left to run."}
 ]}
 ]}

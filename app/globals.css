@@ -261,7 +261,7 @@
   /* Measure per block type (DESIGN.md → Layout → Measure by block type): code assemblies,
      output panels, figures, tables and display math run to the wide measure; everything else,
      including callouts, details and the practice list, keeps the prose measure. */
-  .prose-sheet > :is([data-wide], figure, table, .katex-display) {
+  .prose-sheet > :is([data-wide], figure, table, .prose-table-scroll, .katex-display) {
     max-width: var(--measure-wide);
   }
 
@@ -301,11 +301,14 @@
     margin-top: 0.5rem;
   }
 
-  .prose-sheet > :is(figure, [data-exhibit], aside, details, table, .katex-display) {
+  .prose-sheet
+    > :is(figure, [data-exhibit], aside, details, table, .prose-table-scroll, .katex-display) {
     margin-top: 2rem;
   }
 
-  .prose-sheet > :is(figure, [data-exhibit], aside, details, table, .katex-display) + * {
+  .prose-sheet
+    > :is(figure, [data-exhibit], aside, details, table, .prose-table-scroll, .katex-display)
+    + * {
     margin-top: 2rem;
   }
 
@@ -394,11 +397,16 @@
     color: var(--color-ink-2);
   }
 
-  /* Tables in prose: scroll inside their own wrapper when narrow. */
-  .prose-sheet table {
-    display: block;
+  /* Tables in prose: the wrapper (lib/content/mdx-components.tsx's TableTag), not the table
+     itself, is the scrollable region when narrow — a plain `<table>` can't take tabIndex (biome
+     noNoninteractiveTabindex), but the axe rule scrollable-region-focusable still needs whatever
+     actually scrolls to be keyboard-reachable, so the `<div>` wrapper carries both. */
+  .prose-sheet .prose-table-scroll {
     max-width: 100%;
     overflow-x: auto;
+  }
+
+  .prose-sheet table {
     border-collapse: collapse;
     font-size: var(--text-ui);
     line-height: var(--text-ui--line-height);

@@ -5,13 +5,13 @@ alt: >-
   branch a tied cost takes.
 presets:
   - id: exactly-20
-    label: Cost lands on 20
+    label: Cost 20
     stdin: "10\n0\n"
   - id: exactly-21
-    label: Cost lands on 21
+    label: Cost 21
     stdin: "10\n10\n"
   - id: exactly-51
-    label: Cost lands on 51
+    label: Cost 51
     stdin: "25\n10\n"
 notes:
   "4": "`cost` is computed once, before any branch is checked, so every branch below reads the same value."

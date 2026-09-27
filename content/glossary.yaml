@@ -187,6 +187,10 @@ terms:
     term: invariant
     definition: A property or quantity that remains unchanged through a series of operations or transformations.
     introducedIn: M4.5/mathematical-insight
+  - id: memoization
+    term: memoization
+    definition: Storing the result of each distinct call to a recursive function the first time it runs, so a later call with the same arguments is looked up instead of recomputed.
+    introducedIn: M4.11/memoization-and-dynamic-programming
   - id: disjoint-set-union
     term: disjoint set union
     definition: A data structure that tracks which elements belong to the same group, supporting fast union and connectivity queries.
