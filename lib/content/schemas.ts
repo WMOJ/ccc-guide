@@ -285,6 +285,8 @@ export const verifiedEntrySchema = z.object({
   checkedAt: z.string(),
   method: z.enum(["automated", "manual"]),
   titleOnJudge: z.string().optional(),
+  /** Who confirmed a `method: "manual"` entry by hand (recorded by `verify-judges --record-manual`). */
+  confirmedBy: z.string().optional(),
 });
 export const verifiedFileSchema = z.object({
   entries: z.array(verifiedEntrySchema),
