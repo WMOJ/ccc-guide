@@ -1,0 +1,18 @@
+id: M4.12
+title: "Graphs I: modelling and adjacency lists"
+status: accepted
+objectives:
+  - Recognize when a problem has a graph structure (vertices and edges).
+  - Represent a graph as an adjacency list and populate it from input.
+  - Understand the tradeoff between adjacency lists and adjacency matrices.
+  - Iterate over a vertex's neighbours and apply an algorithm to each.
+prereqs:
+  - M1.8
+  - M1.9
+lessons:
+  - graphs-and-adjacency-lists
+practice:
+  - id: ccc21j3
+    note: Find the shortest path in a tree of cities.
+  - id: ccc19j4
+    note: Determine if a map is connected.

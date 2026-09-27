@@ -1,0 +1,20 @@
+id: M4.3
+title: Prefix sums (1D, 2D, prefix/suffix max)
+status: accepted
+objectives:
+  - Build a prefix sum array to answer range-sum queries in O(1) time.
+  - Use prefix/suffix max arrays to find the best value in a range.
+  - Extend prefix sums to 2D grids for rectangular range queries.
+  - Recognize when preprocessing trades setup time for faster queries.
+prereqs:
+  - M1.8
+  - M2.9
+lessons:
+  - prefix-sums
+practice:
+  - id: ccc20j5
+    note: Find the max sum of a contiguous subarray over multiple queries.
+    why: Direct application of prefix sums for range queries.
+  - id: ccc19j4
+    note: Find the best rectangular region in a 2D grid.
+    why: 2D prefix sums for area queries on a grid.

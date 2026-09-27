@@ -1,0 +1,16 @@
+id: M7.8
+title: 2D range-max DP and doubling on shapes
+status: accepted
+objectives:
+  - Apply 2D DP to compute maximum values over rectangular regions.
+  - Use doubling on geometric shapes to build solutions from smaller pieces.
+  - Combine overlapping sub-shapes to construct a larger shape solution.
+  - Recognize when full-scale solutions are infeasible and focus on partial subtasks.
+prereqs:
+  - M6.12
+  - M7.3
+lessons:
+  - range-max-doubling
+practice:
+  - id: ccc19s5
+    note: Maximum triangle sum using doubling and shape decomposition (subtask focus).

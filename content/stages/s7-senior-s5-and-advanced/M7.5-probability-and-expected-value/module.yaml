@@ -1,0 +1,16 @@
+id: M7.5
+title: Probability and expected value
+status: accepted
+objectives:
+  - Apply linearity of expectation to compute expected values in dynamic scenarios.
+  - Compute probabilities of events using conditional reasoning.
+  - Implement expected value calculations with floating-point arithmetic in Python.
+  - Process scenarios backwards to simplify probability computations.
+prereqs:
+  - M4.11
+  - M1.12
+lessons:
+  - probability-expected-value
+practice:
+  - id: ccc20s5
+    note: Compute expected cost of a dish as customers make random choices.

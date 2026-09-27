@@ -1,0 +1,19 @@
+id: M5.8
+title: Trees I, rooting, parent/order arrays, pruning and diameter
+status: accepted
+objectives:
+  - Distinguish trees from general graphs and identify their properties.
+  - Root a tree at a node and compute parent and depth arrays.
+  - Build order arrays and perform tree traversals.
+  - Compute tree diameter using two BFS passes.
+  - Prune leaves iteratively and compute subtree aggregates.
+prereqs:
+  - M4.13
+  - M5.7
+lessons:
+  - trees-rooting-and-basic-properties
+practice:
+  - id: ccc16s3
+    note: Find which subtrees to keep and minimize the total edge count.
+  - id: ccc25s4
+    note: Compute paths in a tree and find maximum spanning subtrees.

@@ -1,0 +1,19 @@
+id: M6.6
+title: Interval DP and O(n³) algorithms
+status: accepted
+objectives:
+  - Define a subproblem as a contiguous interval in a sequence.
+  - Compute solutions bottom-up by increasing interval length.
+  - Optimize interval DP with convex hull or monotonicity pruning when O(n³) is too slow.
+  - Recognize problems solvable by splitting an interval at each possible position.
+prereqs:
+  - M4.11
+  - M4.3
+  - M4.9
+lessons:
+  - interval-dp
+practice:
+  - id: ccc21s5
+    note: Compute the minimum cost to break a wooden stick into unit pieces following given rules.
+  - id: ccc17s5
+    note: Solve an optimal matrix chain multiplication problem on a sequence.

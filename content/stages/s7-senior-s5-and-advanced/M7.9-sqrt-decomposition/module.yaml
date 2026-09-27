@@ -1,0 +1,16 @@
+id: M7.9
+title: Sqrt decomposition
+status: accepted
+objectives:
+  - Partition a large problem into heavy and light groups.
+  - Process heavy items as special cases and light items with standard algorithms.
+  - Use square-root blocking to balance preprocessing and query time.
+  - Recognize when Python performance limits apply and accept partial-mark subtasks.
+prereqs:
+  - M6.10
+  - M2.9
+lessons:
+  - sqrt-blocks
+practice:
+  - id: ccc17s5
+    note: Process subway line queries by classifying lines as heavy or light.

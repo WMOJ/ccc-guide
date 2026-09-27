@@ -1,0 +1,18 @@
+id: M6.3
+title: Minimum spanning tree and Kruskal with DSU
+status: accepted
+objectives:
+  - Recognize when a minimum spanning tree solves a connectivity or infrastructure problem.
+  - Implement Kruskal's algorithm sorting edges by weight.
+  - Use a disjoint-set union (DSU) data structure to check connectivity and union components.
+  - Optimize DSU with path compression and union by rank.
+prereqs:
+  - M5.10
+  - M4.2
+lessons:
+  - kruskal-mst
+practice:
+  - id: ccc22j5
+    note: Connect cities with railways of minimum total cost, ensuring all cities are reachable.
+  - id: ccc20s2
+    note: Find the minimum cost to connect all computers in a network using cable segments.

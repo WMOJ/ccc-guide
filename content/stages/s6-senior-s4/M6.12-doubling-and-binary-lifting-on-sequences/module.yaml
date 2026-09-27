@@ -1,0 +1,17 @@
+id: M6.12
+title: Doubling and binary lifting on sequences
+status: accepted
+objectives:
+  - Build and query a binary-lifting table to jump O(log n) steps in a sequence.
+  - Apply binary lifting to find ancestors in trees and reachable nodes in a graph.
+  - Optimize queries by precomputing powers of two.
+prereqs:
+  - M4.15
+  - M4.5
+lessons:
+  - binary-lifting
+practice:
+  - id: ccc22s3
+    note: Jump through a queue of linked instructions to find the earliest action.
+  - id: ccc19s3
+    note: Find the maximum value on the path between two nodes in a tree.

@@ -1,0 +1,19 @@
+id: M3.5
+title: Lookup tables
+status: accepted
+objectives:
+  - Use a list or dictionary to map inputs to outputs.
+  - Build a lookup table from problem data and query it quickly.
+  - Avoid repeated computation by storing results in a lookup table.
+prereqs:
+  - M1.9
+lessons:
+  - lookup-tables
+practice:
+  - id: ccc22j5
+    note: Map country codes to country names using a lookup table.
+  - id: ccc21j5
+    note: Look up tax brackets and compute tax owed based on income.
+  - id: ccc19j5
+    note: Build a lookup table of day names and find which day of the week a date falls on.
+    why: Combines lookup tables with modulo arithmetic.

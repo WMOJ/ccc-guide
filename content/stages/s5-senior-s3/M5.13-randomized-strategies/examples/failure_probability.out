@@ -1,0 +1,4 @@
+Trials needed for different probabilities:
+p=0.5: 20 trials for failure prob < 10^-6
+p=0.3: 39 trials for failure prob < 10^-6
+p=0.1: 132 trials for failure prob < 10^-6

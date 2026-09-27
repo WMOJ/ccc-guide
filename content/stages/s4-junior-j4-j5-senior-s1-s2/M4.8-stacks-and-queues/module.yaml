@@ -1,0 +1,15 @@
+id: M4.8
+title: Stacks and queues
+status: accepted
+objectives:
+  - Use a stack to store data in LIFO order and solve matching problems.
+  - Use a queue to store data in FIFO order and solve ordering problems.
+  - Choose the right data structure for the problem.
+  - Implement and use `collections.deque` for efficient operations.
+prereqs:
+  - M1.8
+lessons:
+  - stacks-and-queues
+practice:
+  - id: ccc22j2
+    note: Match opening and closing brackets using a stack.

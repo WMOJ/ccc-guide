@@ -1,0 +1,20 @@
+id: M3.3
+title: String processing I (counting runs and building)
+status: accepted
+objectives:
+  - Iterate through a string character by character to count runs of identical characters.
+  - Build a new string by appending characters inside a loop.
+  - Detect when a character changes and reset a counter.
+prereqs:
+  - M1.7
+  - M2.4
+lessons:
+  - string-processing-counting-runs-and-building
+practice:
+  - id: ccc22j3
+    note: Compress a string by counting consecutive identical characters.
+  - id: ccc20j3
+    note: Count and decode groups of repeated characters.
+  - id: ccc18j3
+    note: Find the longest run of identical characters in a password.
+    why: A classic string run-detection problem with threshold checking.

@@ -1,0 +1,18 @@
+id: M6.2
+title: State-space graph modelling and sparsification
+status: accepted
+objectives:
+  - Model a problem as a shortest-path search by representing states as nodes.
+  - Identify which edges matter in practice, even when the full state graph is enormous.
+  - Implement reachability search with pruning and edge filtering.
+  - Measure the sparsified graph's size and confirm it solves the problem.
+prereqs:
+  - M6.1
+  - M4.2
+lessons:
+  - state-space-modelling
+practice:
+  - id: ccc19s3
+    note: Find the minimum cost to transport fuel through a pipeline by moving shipments.
+  - id: ccc18s3
+    note: Collect objects by moving through a grid, avoiding certain states.

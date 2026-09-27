@@ -1,0 +1,13 @@
+id: C.8
+title: Output edge cases and special checkers
+status: accepted
+objectives:
+  - Recognize when the grader uses a special checker instead of exact string matching.
+  - Identify common output edge cases (trailing newlines, precision, order).
+  - Write code that produces output in the exact format the problem specifies.
+prereqs:
+  - M1.11
+  - M5.1
+lessons:
+  - output-edge-cases-and-special-checkers
+practice: []

@@ -1,0 +1,17 @@
+id: M5.12
+title: O(N^2) DP on intervals and centre expansion
+status: accepted
+objectives:
+  - Recognize interval DP patterns and implement centre-expansion recurrences.
+  - Optimize space by keeping only per-length aggregates instead of full 2D tables.
+  - Handle both odd and even-length intervals in expansion.
+  - Choose the right recurrence to stay in O(N^2) time on moderately sized inputs.
+prereqs:
+  - M4.11
+lessons:
+  - interval-dp-expansion
+practice:
+  - id: ccc16j3
+    note: Count palindromic substrings using centre expansion and dynamic programming.
+  - id: ccc23s2
+    why: A classic symmetric problem solved by expanding from each centre over O(N^2) operations.

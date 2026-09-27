@@ -1,0 +1,11 @@
+Original:
+A B C
+D E F
+
+Horizontal reflection:
+C B A
+F E D
+
+Vertical reflection:
+D E F
+A B C

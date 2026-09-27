@@ -1,0 +1,18 @@
+id: M5.9
+title: BFS variants, multi-source, 0-1 BFS, zero-cost moves, reverse graph
+status: accepted
+objectives:
+  - Implement multi-source BFS starting from several nodes at once.
+  - Use 0-1 BFS with deque to handle graphs with edge weights 0 and 1.
+  - Detect and process forced zero-cost moves (conveyors) with cycle detection.
+  - Apply reverse-graph BFS to find distances backward from a target.
+prereqs:
+  - M4.13
+lessons:
+  - bfs-variants
+practice:
+  - id: ccc18s3
+    note: Search from multiple starting positions while handling conveyors and cameras.
+    why: Combines multi-source BFS with zero-cost-move detection.
+  - id: ccc21s4
+    note: Find optimal daily routes using per-day BFS with reverse-graph distances.

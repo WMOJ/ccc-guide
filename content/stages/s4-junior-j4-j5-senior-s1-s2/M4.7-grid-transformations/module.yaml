@@ -1,0 +1,15 @@
+id: M4.7
+title: Grid transformations
+status: accepted
+objectives:
+  - Rotate a grid 90 degrees clockwise or counterclockwise.
+  - Reflect a grid horizontally or vertically.
+  - Transpose a grid and understand its relationship to other transformations.
+  - Combine multiple transformations to solve symmetry problems.
+prereqs:
+  - M3.7
+lessons:
+  - grid-transformations
+practice:
+  - id: ccc21j2
+    note: Rotate a grid pattern to find its appearance after applying turns.

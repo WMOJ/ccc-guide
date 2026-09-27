@@ -167,3 +167,87 @@ terms:
     term: local
     definition: A variable that exists only inside the function call that created it, separate from any variable of the same name outside that function.
     introducedIn: M1.10/functions-and-scope
+  - id: greedy-algorithm
+    term: greedy algorithm
+    definition: An algorithm that solves a problem by making locally optimal choices at each step without reconsidering earlier decisions.
+    introducedIn: M4.2/sorting-with-keys-and-greedy
+  - id: greedy-choice-property
+    term: greedy choice property
+    definition: A property of optimization problems where a globally optimal solution always includes a locally optimal (greedy) choice made at the first step.
+    introducedIn: M4.2/sorting-with-keys-and-greedy
+  - id: prefix-sum
+    term: prefix sum
+    definition: An array where each element stores the cumulative sum of all elements up to that index, enabling O(1) range-sum queries.
+    introducedIn: M4.3/prefix-sums
+  - id: difference-array
+    term: difference array
+    definition: An array storing the differences between consecutive elements, used to apply multiple range updates in O(1) time per update.
+    introducedIn: M4.4/difference-arrays
+  - id: invariant
+    term: invariant
+    definition: A property or quantity that remains unchanged through a series of operations or transformations.
+    introducedIn: M4.5/mathematical-insight
+  - id: disjoint-set-union
+    term: disjoint set union
+    definition: A data structure that tracks which elements belong to the same group, supporting fast union and connectivity queries.
+    introducedIn: M5.10/union-find-connectivity
+  - id: union-find
+    term: union-find
+    definition: Another name for disjoint set union; commonly used when describing the find and union operations.
+    introducedIn: M5.10/union-find-connectivity
+  - id: path-halving
+    term: path halving
+    definition: An optimization in the find operation where each node points to its grandparent instead of its parent, flattening the tree over time.
+    introducedIn: M5.10/union-find-connectivity
+  - id: union-by-size
+    term: union by size
+    definition: An optimization where the smaller tree is always attached under the larger tree during union, keeping the forest shallow.
+    introducedIn: M5.10/union-find-connectivity
+  - id: lazy-deletion
+    term: lazy deletion
+    definition: An optimization technique where items are marked invalid instead of being removed immediately, with removal deferred until they are popped.
+    introducedIn: M5.11/heaps-and-lazy-deletion
+  - id: deque
+    term: double-ended queue (deque)
+    definition: A data structure that supports efficient insertion and removal at both ends, useful for sliding window problems.
+    introducedIn: M5.11/heaps-and-lazy-deletion
+  - id: sparsification
+    term: Sparsification
+    definition: The process of reducing a graph or state space by keeping only the nodes and edges that can actually be reached or are needed to solve the problem, discarding theoretical possibilities that never arise in practice.
+    introducedIn: M6.2/state-space-modelling
+  - id: minimum-spanning-tree
+    term: Minimum spanning tree
+    definition: A spanning tree of a graph with the smallest total edge weight. Connects all nodes using the fewest or cheapest edges.
+    introducedIn: M6.3/kruskal-mst
+  - id: tree-edge
+    term: Tree edge
+    definition: An edge in a DFS that leads to a node being visited for the first time. Tree edges form the DFS tree.
+    introducedIn: M6.4/dfs-tree
+  - id: back-edge
+    term: Back edge
+    definition: An edge in a DFS that points to an ancestor in the DFS tree. Back edges indicate cycles in a directed graph.
+    introducedIn: M6.4/dfs-tree
+  - id: interval-dp
+    term: Interval DP
+    definition: A dynamic programming technique where subproblems are defined on contiguous intervals of a sequence, solved bottom-up by increasing interval length.
+    introducedIn: M6.6/interval-dp
+  - id: monotonic-stack
+    term: monotonic stack
+    definition: A stack storing elements in monotonic order, used to efficiently find the next greater element.
+    introducedIn: M6.11/monotonic-structures
+  - id: monotonic-deque
+    term: monotonic deque
+    definition: A double-ended queue maintaining elements in monotonic order to track sliding window maximum.
+    introducedIn: M6.11/monotonic-structures
+  - id: coordinate-compression
+    term: coordinate compression
+    definition: Mapping large coordinate values to small ranks to enable dense array storage for sparse 2D problems.
+    introducedIn: M6.8/coordinate-compression
+  - id: segment-tree
+    term: segment tree
+    definition: A tree data structure that stores partial answers about ranges, enabling point updates and range queries in logarithmic time.
+    introducedIn: M7.1/segment-tree-structure
+  - id: sparse-table
+    term: sparse table
+    definition: A precomputed table for answering idempotent range queries (minimum, maximum, gcd) in constant time after O(N log N) preprocessing.
+    introducedIn: M7.3/sparse-table-queries

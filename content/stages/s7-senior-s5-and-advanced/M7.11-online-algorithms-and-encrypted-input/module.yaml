@@ -1,0 +1,16 @@
+id: M7.11
+title: Online algorithms and encrypted input
+status: accepted
+objectives:
+  - Decode encrypted input using the previous answer.
+  - Understand why encryption forces an online algorithm.
+  - Solve problems where queries cannot be sorted or reordered.
+  - Implement fast I/O for problems with many queries and answers.
+prereqs:
+  - M7.1
+  - M3.10
+lessons:
+  - online-with-encryption
+practice:
+  - id: ccc25s5
+    note: Process encrypted range queries with segment tree updates.

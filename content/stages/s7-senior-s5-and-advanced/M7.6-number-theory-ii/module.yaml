@@ -1,0 +1,16 @@
+id: M7.6
+title: Number theory II
+status: accepted
+objectives:
+  - Apply modular arithmetic including modular inverse to solve problems.
+  - Represent and iterate self-similar sets using integer arithmetic.
+  - Detect cycles in iterated maps on fractions to solve problems efficiently.
+  - Use lcm/gcd structure of constraints to optimize search.
+prereqs:
+  - M4.6
+  - M5.2
+lessons:
+  - number-theory-advanced
+practice:
+  - id: ccc23s5
+    note: Identify which fractions survive filtering by a self-similar rule.

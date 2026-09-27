@@ -1,0 +1,13 @@
+id: C.7
+title: Reading grader feedback and submission discipline
+status: accepted
+objectives:
+  - Interpret grader verdicts (AC, WA, RE, MLE, TLE) and what each means for your solution.
+  - Read the feedback to identify whether the issue is logic, runtime, or memory.
+  - "Practice disciplined debugging: test locally, make one change, resubmit."
+prereqs:
+  - M0.5
+  - M0.7
+lessons:
+  - reading-grader-feedback-and-submission-discipline
+practice: []

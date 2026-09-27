@@ -1,0 +1,16 @@
+id: M4.4
+title: Difference arrays and interval clamping
+status: accepted
+objectives:
+  - Use a difference array to apply multiple range updates efficiently.
+  - Solve problems where you increment or decrement a range of elements.
+  - Recognize the dual relationship between prefix sums and difference arrays.
+  - Handle boundary conditions in difference arrays correctly.
+prereqs:
+  - M4.3
+lessons:
+  - difference-arrays
+practice:
+  - id: ccc21j3
+    note: Apply multiple updates to a range of elements and find the final array.
+    why: Direct application of difference arrays for range updates.

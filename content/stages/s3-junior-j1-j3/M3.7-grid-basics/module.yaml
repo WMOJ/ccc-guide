@@ -1,0 +1,17 @@
+id: M3.7
+title: Grid basics
+status: accepted
+objectives:
+  - Read and store a rectangular grid of characters.
+  - Use row and column indices to access and update grid cells.
+  - Iterate over rows and columns with nested loops.
+  - Apply grid basics to search and count features in a two-dimensional space.
+prereqs:
+  - M1.8
+lessons:
+  - grid-basics
+practice:
+  - id: ccc20j3
+    note: Mark cells on a map to track which ones have been visited.
+  - id: ccc19j4
+    note: Count columns in a grid where all cells meet a condition.

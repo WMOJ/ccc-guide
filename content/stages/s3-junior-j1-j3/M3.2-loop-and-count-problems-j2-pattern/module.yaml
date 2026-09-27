@@ -1,0 +1,20 @@
+id: M3.2
+title: Loop-and-count problems (J2 pattern)
+status: accepted
+objectives:
+  - Read multiple items in a loop and accumulate a count or total.
+  - Initialize a counter before the loop and update it inside.
+  - Use the final count to make a decision or produce output.
+prereqs:
+  - M1.6
+  - M2.4
+lessons:
+  - loop-and-count-problems
+practice:
+  - id: ccc22j2
+    note: Count votes for two candidates and report the winner.
+  - id: ccc21j2
+    note: Count how many grades fall into each letter category.
+  - id: ccc19j2
+    note: Count the number of students whose mark exceeds the class average.
+    why: A classic loop-and-count with a comparison step, good practice with threshold logic.

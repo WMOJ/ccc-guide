@@ -1,0 +1,14 @@
+id: M5.13
+title: Randomized strategies
+status: accepted
+objectives:
+  - Use random shuffling and random guesses to explore the solution space.
+  - Calculate the probability of failure and choose enough trials.
+  - Use a fixed random seed for reproducibility in testing and debugging.
+  - Reason about when randomization is fast enough for a given time limit.
+prereqs:
+  - M1.13
+  - M4.6
+lessons:
+  - randomized-strategies
+practice: []

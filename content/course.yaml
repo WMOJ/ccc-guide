@@ -187,57 +187,57 @@ stages:
         prereqs:
           - M1.4
           - M1.11
-        status: planned
+        status: accepted
       - id: M3.2
         title: Loop-and-count problems (J2 pattern)
         prereqs:
           - M1.6
           - M2.4
-        status: planned
+        status: accepted
       - id: M3.3
         title: "String processing I: counting, runs and building"
         prereqs:
           - M1.7
           - M2.4
-        status: planned
+        status: accepted
       - id: M3.4
         title: "String processing II: tokenizing with state"
         prereqs:
           - M3.3
-        status: planned
+        status: accepted
       - id: M3.5
         title: Lookup tables
         prereqs:
           - M1.9
-        status: planned
+        status: accepted
       - id: M3.6
         title: Frequency arrays and counting
         prereqs:
           - M1.8
           - M1.9
-        status: planned
+        status: accepted
       - id: M3.7
         title: Grid basics
         prereqs:
           - M1.8
-        status: planned
+        status: accepted
       - id: M3.8
         title: Clock and calendar arithmetic, modulo and periodicity
         prereqs:
           - M1.2
           - M2.3
-        status: planned
+        status: accepted
       - id: M3.9
         title: Linear-pass thinking and hidden costs of built-ins
         prereqs:
           - M2.9
-        status: planned
+        status: accepted
       - id: M3.10
         title: Fast input and output
         prereqs:
           - M1.3
           - M1.11
-        status: planned
+        status: accepted
   - id: s4
     number: "4"
     title: Junior J4–J5 / Senior S1–S2
@@ -248,69 +248,69 @@ stages:
         prereqs:
           - M1.9
           - M2.9
-        status: planned
+        status: accepted
       - id: M4.2
         title: Sorting with keys, and greedy
         prereqs:
           - M1.8
           - M2.4
-        status: planned
+        status: accepted
       - id: M4.3
         title: Prefix sums (1D, 2D, prefix/suffix max)
         prereqs:
           - M1.8
           - M2.9
-        status: planned
+        status: accepted
       - id: M4.4
         title: Difference arrays and interval clamping
         prereqs:
           - M4.3
-        status: planned
+        status: accepted
       - id: M4.5
         title: "Mathematical insight: parity, invariants, closed forms"
         prereqs:
           - M2.3
           - M2.6
-        status: planned
+        status: accepted
       - id: M4.6
         title: Number theory I
         prereqs:
           - M1.2
           - M2.5
-        status: planned
+        status: accepted
       - id: M4.7
         title: Grid transformations
         prereqs:
           - M3.7
-        status: planned
+        status: accepted
       - id: M4.8
         title: Stacks and queues
         prereqs:
           - M1.8
-        status: planned
+        status: accepted
       - id: M4.9
         title: Two pointers and index pointers
         prereqs:
           - M3.9
-        status: planned
+        status: accepted
       - id: M4.10
         title: Backtracking search with pruning
         prereqs:
           - M1.14
           - M2.5
-        status: planned
+        status: accepted
       - id: M4.11
         title: Memoization and introductory dynamic programming
         prereqs:
           - M1.14
           - M2.5
-        status: planned
+        status: accepted
       - id: M4.12
         title: "Graphs I: modelling and adjacency lists"
         prereqs:
           - M1.8
           - M1.9
-        status: planned
+        status: accepted
       - id: M4.13
         title: BFS and flood fill (iterative)
         prereqs:
@@ -322,13 +322,13 @@ stages:
         prereqs:
           - M3.4
           - M3.8
-        status: planned
+        status: accepted
       - id: M4.15
         title: Circular arrays
         prereqs:
           - M1.8
           - M1.2
-        status: planned
+        status: accepted
   - id: s5
     number: "5"
     title: Senior S3
@@ -340,78 +340,78 @@ stages:
           - M2.5
           - M2.6
           - M4.5
-        status: planned
+        status: accepted
       - id: M5.2
         title: Pattern discovery by small-case enumeration
         prereqs:
           - M2.5
           - M1.10
-        status: planned
+        status: accepted
       - id: M5.3
         title: Sliding windows with counts
         prereqs:
           - M3.6
           - M4.9
-        status: planned
+        status: accepted
       - id: M5.4
         title: "Hashing: polynomial rolling hash"
         prereqs:
           - M5.3
           - M4.1
           - M4.6
-        status: planned
+        status: accepted
       - id: M5.5
         title: Binary search
         prereqs:
           - M4.2
           - M2.9
-        status: planned
+        status: accepted
       - id: M5.6
         title: "Convex functions: ternary search and slope sweep"
         prereqs:
           - M5.5
           - M4.2
-        status: planned
+        status: accepted
       - id: M5.7
         title: Iterative DFS and recursion elimination
         prereqs:
           - M4.13
           - M1.14
-        status: planned
+        status: accepted
       - id: M5.8
         title: "Trees I: rooting, parent/order arrays, pruning and diameter"
         prereqs:
           - M4.13
           - M5.7
-        status: planned
+        status: accepted
       - id: M5.9
         title: "BFS variants: multi-source, 0-1 BFS, zero-cost moves, reverse graph"
         prereqs:
           - M4.13
-        status: planned
+        status: accepted
       - id: M5.10
         title: Disjoint Set Union (union-find)
         prereqs:
           - M1.8
           - M1.10
-        status: planned
+        status: accepted
       - id: M5.11
         title: Heaps and lazy deletion; ordered-set substitutes
         prereqs:
           - M4.2
           - M4.1
-        status: planned
+        status: accepted
       - id: M5.12
         title: O(N^2) DP on intervals and centre expansion
         prereqs:
           - M4.11
-        status: planned
+        status: accepted
       - id: M5.13
         title: Randomized strategies
         prereqs:
           - M1.13
           - M4.6
-        status: planned
+        status: accepted
   - id: s6
     number: "6"
     title: Senior S4
@@ -428,76 +428,76 @@ stages:
         prereqs:
           - M6.1
           - M4.2
-        status: planned
+        status: accepted
       - id: M6.3
         title: "Minimum spanning tree: Kruskal plus DSU"
         prereqs:
           - M5.10
           - M4.2
-        status: planned
+        status: accepted
       - id: M6.4
         title: DFS tree properties
         prereqs:
           - M5.7
-        status: planned
+        status: accepted
       - id: M6.5
         title: Tree DP
         prereqs:
           - M5.8
           - M4.11
-        status: planned
+        status: accepted
       - id: M6.6
         title: Interval DP (O(N^3))
         prereqs:
           - M4.11
           - M4.3
           - M4.9
-        status: planned
+        status: accepted
       - id: M6.11
         title: Monotonic stack and deque
         prereqs:
           - M4.8
           - M5.3
-        status: planned
+        status: accepted
       - id: M6.7
         title: Advanced DP design
         prereqs:
           - M4.11
           - M4.3
           - M6.11
-        status: planned
+        status: accepted
       - id: M6.8
         title: Coordinate compression and sweep line
         prereqs:
           - M4.3
           - M4.4
           - M5.5
-        status: planned
+        status: accepted
       - id: M6.9
         title: Counting and combinatorics
         prereqs:
           - M4.3
           - M4.15
           - M3.6
-        status: planned
+        status: accepted
       - id: M6.10
         title: Fenwick tree (Binary Indexed Tree)
         prereqs:
           - M4.3
           - M2.9
-        status: planned
+        status: accepted
       - id: M6.12
         title: Doubling and binary lifting on sequences
         prereqs:
           - M4.15
           - M4.5
-        status: planned
+        status: accepted
       - id: M6.13
         title: Memoisation over floor-division blocks
         prereqs:
           - M4.11
           - M4.6
-        status: planned
+        status: accepted
   - id: s7
     number: "7"
     title: Senior S5 and advanced
@@ -508,87 +508,87 @@ stages:
         prereqs:
           - M4.2
           - M2.2
-        status: planned
+        status: accepted
       - id: M7.1
         title: Segment tree (iterative, custom merge)
         prereqs:
           - M6.10
           - M4.3
           - M7.4
-        status: planned
+        status: accepted
       - id: M7.2
         title: Lazy propagation
         prereqs:
           - M7.1
-        status: planned
+        status: accepted
       - id: M7.3
         title: Sparse table
         prereqs:
           - M6.12
           - M4.6
-        status: planned
+        status: accepted
       - id: M7.5
         title: Probability and expected value
         prereqs:
           - M4.11
           - M1.12
-        status: planned
+        status: accepted
       - id: M7.6
         title: Number theory II
         prereqs:
           - M4.6
           - M5.2
-        status: planned
+        status: accepted
       - id: M7.7
         title: DP with hash maps (prefix-sum-keyed DP)
         prereqs:
           - M6.7
           - M4.3
           - M4.1
-        status: planned
+        status: accepted
       - id: M7.8
         title: 2D range-max DP and doubling on shapes
         prereqs:
           - M6.12
           - M7.3
-        status: planned
+        status: accepted
       - id: M7.9
         title: Sqrt decomposition
         prereqs:
           - M6.10
           - M2.9
-        status: planned
+        status: accepted
       - id: M7.10
         title: Ad hoc math and geometry optimisation casework
         prereqs:
           - M5.2
           - M4.5
           - M2.6
-        status: planned
+        status: accepted
       - id: M7.11
         title: Online algorithms and encrypted input
         prereqs:
           - M7.1
           - M3.10
-        status: planned
+        status: accepted
       - id: M7.12
         title: Python constant-factor engineering at scale
         prereqs:
           - M2.9
           - M3.10
           - M5.7
-        status: planned
+        status: accepted
       - id: M7.13
         title: LCA and binary lifting on trees
         prereqs:
           - M5.8
           - M6.12
-        status: planned
+        status: accepted
       - id: M7.14
         title: C++ bridge (optional)
         prereqs:
           - M6.13
-        status: planned
+        status: accepted
   - id: c
     number: C
     title: Contest skills
@@ -607,42 +607,42 @@ stages:
       - id: C.3
         title: Typing templates from memory
         prereqs: []
-        status: planned
+        status: accepted
       - id: C.4
         title: Subtask and partial-marks strategy
         prereqs:
           - M2.1
           - M2.9
-        status: planned
+        status: accepted
       - id: C.5
         title: Time management over 3 hours
         prereqs:
           - C.4
-        status: planned
+        status: accepted
       - id: C.6
         title: Stress testing against a brute force
         prereqs:
           - M2.5
           - M2.7
           - M0.1
-        status: planned
+        status: accepted
       - id: C.7
         title: Reading Grader feedback and submission discipline
         prereqs:
           - M0.5
           - M0.7
-        status: planned
+        status: accepted
       - id: C.8
         title: Output edge cases and special checkers
         prereqs:
           - M1.11
           - M5.1
-        status: planned
+        status: accepted
       - id: C.9
         title: Mock contests and upsolving
         prereqs:
           - M3.10
-        status: planned
+        status: accepted
       - id: C.10
         title: Local judging with official test data
         prereqs:

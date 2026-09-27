@@ -1,0 +1,20 @@
+id: M4.5
+title: Mathematical insight (parity, invariants, closed forms)
+status: accepted
+objectives:
+  - Recognize invariants that remain unchanged through a process.
+  - Determine whether a state is reachable by analyzing parity and conservation laws.
+  - Derive closed-form solutions instead of simulating step by step.
+  - Use mathematical reasoning to prune impossible branches early.
+prereqs:
+  - M2.3
+  - M2.6
+lessons:
+  - mathematical-insight
+practice:
+  - id: ccc18s1
+    note: Determine if a sequence of swaps can reach a target arrangement.
+    why: An invariant determines reachability without simulation.
+  - id: ccc22j5
+    note: Find the total cost after many operations by discovering a pattern.
+    why: Closed-form formula avoids step-by-step simulation.

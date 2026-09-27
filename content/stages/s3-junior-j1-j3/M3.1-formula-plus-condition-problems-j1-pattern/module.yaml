@@ -1,0 +1,20 @@
+id: M3.1
+title: Formula-plus-condition problems (J1 pattern)
+status: accepted
+objectives:
+  - Turn a problem's written rule into a single arithmetic formula.
+  - Branch on the formula's result with if/elif/else, choosing the right comparison at each boundary.
+  - Print exactly the text a problem asks for, with no extra words or punctuation.
+prereqs:
+  - M1.4
+  - M1.11
+lessons:
+  - formula-plus-condition-problems
+practice:
+  - id: ccc22j1
+    note: Work out a fair price for a shared batch of cupcakes.
+  - id: ccc21j1
+    note: Decide how long a kettle needs before water is ready.
+  - id: ccc14j1
+    note: Classify a triangle from three side lengths.
+    why: One of the earliest J1 problems, and still a plain formula-then-branch shape.

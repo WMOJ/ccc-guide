@@ -1,0 +1,20 @@
+id: M6.9
+title: Counting and combinatorics
+status: accepted
+objectives:
+  - Count instead of enumerating to solve combinatorial problems in linear time.
+  - Apply complementary counting to avoid hard cases.
+  - Use binomial coefficients and products of counts.
+  - Maintain counts with a sliding pointer for dynamic constraints.
+  - Solve circular and geometric counting problems.
+prereqs:
+  - M4.3
+  - M4.15
+  - M3.6
+lessons:
+  - counting-problems
+practice:
+  - id: ccc22s4
+    note: Count triplets with a specific property using O(N) counting, not enumeration.
+  - id: ccc17j5
+    note: Count pairs with complementary properties; solve as a junior problem.

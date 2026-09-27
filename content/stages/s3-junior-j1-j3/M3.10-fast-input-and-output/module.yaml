@@ -1,0 +1,18 @@
+id: M3.10
+title: Fast input and output
+status: accepted
+objectives:
+  - Use sys.stdin.read() to read large amounts of input quickly.
+  - Parse input using split() for faster token processing.
+  - Build output as a list and print it all at once.
+  - Apply the house skeleton pattern for high-throughput I/O.
+prereqs:
+  - M1.3
+  - M1.11
+lessons:
+  - fast-input-and-output
+practice:
+  - id: ccc21j1
+    note: Read many numbers and output a computation with fast I/O.
+  - id: ccc23j2
+    note: Process a large grid using the house skeleton pattern.

@@ -1,0 +1,14 @@
+id: C.4
+title: Subtask and partial-marks strategy
+status: accepted
+objectives:
+  - Recognise subtask structure in contest problems.
+  - Solve a subtask that is easier than the full problem.
+  - Decide when to solve the full problem or bank partial marks.
+  - Compare the value of different submission strategies.
+prereqs:
+  - M2.1
+  - M2.9
+lessons:
+  - partial-marks-strategy
+practice: []

@@ -1,0 +1,18 @@
+id: M6.5
+title: Tree dynamic programming
+status: accepted
+objectives:
+  - Recognize problems solvable by computing values on trees with subproblem overlap.
+  - Root a tree and define a subproblem on each subtree.
+  - Compute solutions bottom-up from leaves to root.
+  - "Rerooting: compute solutions at every node without recomputing from scratch."
+prereqs:
+  - M5.8
+  - M4.11
+lessons:
+  - tree-dp
+practice:
+  - id: ccc23s3
+    note: Find the maximum number of nodes you can select such that no selected nodes are adjacent in a tree.
+  - id: ccc20j5
+    note: Count paths in a tree with a sum equal to a target value.

@@ -1,0 +1,12 @@
+id: C.5
+title: Time management over 3 hours
+status: accepted
+objectives:
+  - Manage your time across the three-hour CCC window to maximize points.
+  - Allocate effort between solving problems completely and earning subtask marks.
+  - Recognize when to move on from a stuck problem to get points elsewhere.
+prereqs:
+  - C.4
+lessons:
+  - time-management-over-3-hours
+practice: []

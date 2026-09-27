@@ -1,0 +1,14 @@
+id: C.6
+title: Stress testing against a brute force
+status: accepted
+objectives:
+  - Write a brute-force solution to generate expected outputs for small random inputs.
+  - Write a fast solution that solves the same problem.
+  - Compare the two solutions on random inputs to find bugs in the fast solution.
+prereqs:
+  - M2.5
+  - M2.7
+  - M0.1
+lessons:
+  - stress-testing-against-a-brute-force
+practice: []

@@ -1,0 +1,19 @@
+id: M3.4
+title: String processing II (tokenizing with state)
+status: accepted
+objectives:
+  - Parse a string into tokens based on separators or delimiters.
+  - Track state while building tokens to handle multi-character delimiters or contextual rules.
+  - Build a list of tokens by appending complete tokens when a delimiter is found.
+prereqs:
+  - M3.3
+lessons:
+  - string-processing-tokenizing-with-state
+practice:
+  - id: ccc22j4
+    note: Tokenize a command line string, splitting on spaces and handling quoted strings.
+  - id: ccc21j4
+    note: Parse a comma-separated list of values and validate each one.
+  - id: ccc19j4
+    note: Extract tokens from a string with multiple types of delimiters.
+    why: Combines multiple delimiter types with state tracking.

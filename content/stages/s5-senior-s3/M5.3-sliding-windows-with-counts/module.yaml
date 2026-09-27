@@ -1,0 +1,15 @@
+id: M5.3
+title: Sliding windows with counts
+status: accepted
+objectives:
+  - Maintain letter counts in a fixed-length window in O(1) per step.
+  - Track matching windows with a "matches" counter.
+  - Implement variable-length windows maintaining distinct elements.
+prereqs:
+  - M3.6
+  - M4.9
+lessons:
+  - window-counting
+practice:
+  - id: ccc20s3
+    note: Find windows that are permutations of a target string using a fixed-length sliding window.

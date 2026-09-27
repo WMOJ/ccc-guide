@@ -1,0 +1,18 @@
+id: M4.14
+title: Compressed data and values you cannot expand
+status: accepted
+objectives:
+  - Identify when a value is too large to store or iterate over directly.
+  - Use coordinate compression to map large values to a smaller range.
+  - Understand when expansion is possible and when it is not.
+  - Apply compression to solve problems where naive expansion would time out.
+prereqs:
+  - M3.4
+  - M3.8
+lessons:
+  - coordinate-compression
+practice:
+  - id: ccc15j4
+    note: Count events occurring in time ranges that span many days.
+  - id: ccc22j5
+    note: Handle a large grid with constraints on column operations.

@@ -1,0 +1,20 @@
+example: shipping_cost.py
+alt: >-
+  The program reads a package weight and distance, computes a cost, and prints one of
+  three labels. Three presets land exactly on the boundary between labels, showing which
+  branch a tied cost takes.
+presets:
+  - id: exactly-20
+    label: Cost lands on 20
+    stdin: "10\n0\n"
+  - id: exactly-21
+    label: Cost lands on 21
+    stdin: "10\n10\n"
+  - id: exactly-51
+    label: Cost lands on 51
+    stdin: "25\n10\n"
+notes:
+  "4": "`cost` is computed once, before any branch is checked, so every branch below reads the same value."
+  "6": "`cost <= 20` is `True` only for the first preset. A cost of `20` counts as `Standard`, not `Priority`."
+  "8": "This `elif` only runs once the `if` above was `False`. `cost <= 50` covers `21` up to `50`."
+  "11": "A cost of `51` fails both comparisons above, so it falls through to `else`."

@@ -1,0 +1,18 @@
+id: M4.10
+title: Backtracking search with pruning
+status: accepted
+objectives:
+  - Explore all possibilities using recursion and backtrack when a path fails.
+  - Prune search branches early to avoid exploring impossible solutions.
+  - Recognize problems that fit the backtracking pattern.
+  - Handle recursion depth limits with iterative approaches.
+prereqs:
+  - M1.14
+  - M2.5
+lessons:
+  - backtracking
+practice:
+  - id: ccc22j4
+    note: Find all valid arrangements of choices using backtracking.
+  - id: ccc19j5
+    note: Search for a valid configuration with constraints.

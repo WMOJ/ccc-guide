@@ -1,0 +1,12 @@
+id: C.9
+title: Mock contests and upsolving
+status: accepted
+objectives:
+  - Run a full mock contest in real time to practice time management and problem-solving.
+  - Recognize when to stop during a contest and which problem to work on next.
+  - Continue solving problems after the contest window (upsolving) to reinforce learning.
+prereqs:
+  - M3.10
+lessons:
+  - mock-contests-and-upsolving
+practice: []

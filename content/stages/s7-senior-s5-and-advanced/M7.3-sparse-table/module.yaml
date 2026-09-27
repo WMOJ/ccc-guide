@@ -1,0 +1,15 @@
+id: M7.3
+title: Sparse table
+status: accepted
+objectives:
+  - Precompute O(N log N) sparse table for O(1) idempotent range queries.
+  - Implement sparse table using logarithmic doubling.
+  - Optimize queries for min, max, and gcd.
+prereqs:
+  - M6.12
+  - M4.6
+lessons:
+  - sparse-table-queries
+practice:
+  - id: ccc21s5
+    note: Verify that every consecutive range has the same GCD.

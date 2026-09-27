@@ -1,22 +1,19 @@
 // lib/content/toc.ts — a lesson's on-page table of contents: every level-2 heading (the lesson
 // title itself is level-1, plan §4.6.3 "objectives, then sections that each introduce one idea").
-// Slug ids match rehype-slug's github-slugger closely enough for ASCII headings (our style guide
-// keeps headings plain); this is a known approximation for punctuation-heavy edge cases.
-import { slugify } from "./slug";
+// Ids come from github-slugger, the same slugger rehype-slug uses for the rendered heading ids, so
+// TOC links always match (P7: apostrophes, "I/O" and `bisect_left` in headings broke anchors).
+import GithubSlugger from "github-slugger";
 import type { TocItem } from "./types";
 
 export function extractToc(mdxBody: string): TocItem[] {
   const items: TocItem[] = [];
-  const seen = new Map<string, number>();
+  const slugger = new GithubSlugger();
   for (const line of mdxBody.split("\n")) {
     const m = line.match(/^##\s+(.+?)\s*$/);
     if (!m?.[1]) continue;
-    const text = m[1].replace(/[`*_]/g, "");
-    let id = slugify(text);
-    const count = seen.get(id) ?? 0;
-    seen.set(id, count + 1);
-    if (count > 0) id = `${id}-${count}`;
-    items.push({ id, text });
+    // Drop Markdown markers (inline-code backticks, emphasis) but keep underscores inside names.
+    const text = m[1].replace(/`/g, "").replace(/\*+|(^|\s)_+|_+(\s|$)/g, "$1$2");
+    items.push({ id: slugger.slug(text), text });
   }
   return items;
 }

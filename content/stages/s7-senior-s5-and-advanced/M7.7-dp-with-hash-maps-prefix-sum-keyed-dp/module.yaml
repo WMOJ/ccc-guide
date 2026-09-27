@@ -1,0 +1,17 @@
+id: M7.7
+title: DP with hash maps (prefix-sum-keyed DP)
+status: accepted
+objectives:
+  - Recognize when a DP transition depends on the prefix sum value at a previous position.
+  - Use a dictionary to store the best DP value for each prefix sum encountered so far.
+  - Apply mean-shift to convert a target sum into a zero-sum problem.
+  - Solve a partition problem by tracking prefix sums with a hash map.
+prereqs:
+  - M6.7
+  - M4.3
+  - M4.1
+lessons:
+  - prefix-sum-keyed-dp
+practice:
+  - id: ccc24s5
+    note: Find a balanced partition of weights by using prefix sums as keys.
