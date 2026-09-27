@@ -1,0 +1,32 @@
+{"schema":1,
+"kind":"trace",
+"id":"running_total",
+"source":"running_total.py",
+"code":"n = int(input())\ntotal = 0\nfor i in range(n):\n    total += int(input())\nprint(total)\n",
+"alt":"The program reads a count, then loops that many times, reading one number each pass and adding it to a running total.",
+"presets":[
+{"id":"main","label":"Three numbers","stdin":"3\n4\n5\n6\n","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["n","3"]]}],"c":"Line 1 runs: `n` is created with the value `3`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["n","3"],["total","0"]]}],"c":"Line 2 runs: `total` is created with the value `0`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["n","3"],["total","0"],["i","0"]]}],"c":"Line 3 runs: the loop gives `i` its first value, `0`. Python checks this line before every pass through the loop body, counting `i` from `0` up to `n - 1`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["n","3"],["total","4"],["i","0"]]}],"c":"Line 4 runs: `total` changes from `0` to `4`. Each pass reads one more number and adds it into `total`, which keeps whatever it already held from the pass before."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["n","3"],["total","4"],["i","1"]]}],"c":"Line 3 runs: the loop gives `i` its next value, `1`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["n","3"],["total","9"],["i","1"]]}],"c":"Line 4 runs: `total` changes from `4` to `9`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["n","3"],["total","9"],["i","2"]]}],"c":"Line 3 runs: the loop gives `i` its next value, `2`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["n","3"],["total","15"],["i","2"]]}],"c":"Line 4 runs: `total` changes from `9` to `15`."},
+{"l":5,"e":"line","st":[{"f":"<module>","l":5,"v":[["n","3"],["total","15"],["i","2"]]}],"c":"Line 3: the loop has no values left, so it ends and line 5 runs next."},
+{"l":5,"e":"end","st":[{"f":"<module>","l":5,"v":[["n","3"],["total","15"],["i","2"]]}],"o":"15\n","c":"Line 5 runs: it prints `15`. The program has finished: no lines are left to run."}
+]},
+{"id":"bigger","label":"Two bigger numbers","stdin":"2\n10\n20\n","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["n","2"]]}],"c":"Line 1 runs: `n` is created with the value `2`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["n","2"],["total","0"]]}],"c":"Line 2 runs: `total` is created with the value `0`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["n","2"],["total","0"],["i","0"]]}],"c":"Line 3 runs: the loop gives `i` its first value, `0`. Python checks this line before every pass through the loop body, counting `i` from `0` up to `n - 1`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["n","2"],["total","10"],["i","0"]]}],"c":"Line 4 runs: `total` changes from `0` to `10`. Each pass reads one more number and adds it into `total`, which keeps whatever it already held from the pass before."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["n","2"],["total","10"],["i","1"]]}],"c":"Line 3 runs: the loop gives `i` its next value, `1`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["n","2"],["total","30"],["i","1"]]}],"c":"Line 4 runs: `total` changes from `10` to `30`."},
+{"l":5,"e":"line","st":[{"f":"<module>","l":5,"v":[["n","2"],["total","30"],["i","1"]]}],"c":"Line 3: the loop has no values left, so it ends and line 5 runs next."},
+{"l":5,"e":"end","st":[{"f":"<module>","l":5,"v":[["n","2"],["total","30"],["i","1"]]}],"o":"30\n","c":"Line 5 runs: it prints `30`. The program has finished: no lines are left to run."}
+]}
+]}

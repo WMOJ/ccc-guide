@@ -1,0 +1,14 @@
+example: running_total.py
+alt: >-
+  The program reads a count, then loops that many times, reading one number
+  each pass and adding it to a running total.
+presets:
+  - id: main
+    label: Three numbers
+    stdin: "3\n4\n5\n6\n"
+  - id: bigger
+    label: Two bigger numbers
+    stdin: "2\n10\n20\n"
+notes:
+  "3": "Python checks this line before every pass through the loop body, counting `i` from `0` up to `n - 1`."
+  "4": "Each pass reads one more number and adds it into `total`, which keeps whatever it already held from the pass before."

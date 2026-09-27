@@ -1,0 +1,18 @@
+id: M2.6
+title: Case analysis and edge cases
+status: accepted
+objectives:
+  - Enumerate the edge cases a problem's own bounds allow, such as the smallest input, all-equal values, and ties.
+  - Check each edge case against the statement's exact wording, not against what a typical input looks like.
+  - Recognize when a case a bound allows is impossible to satisfy, and decide what your program should do there.
+prereqs:
+  - M2.2
+lessons:
+  - case-analysis-and-edge-cases
+practice:
+  - id: ccc24j4
+    note: Find which two keys on a keyboard are malfunctioning, from what was typed and what appeared.
+  - id: ccc25s1
+    note: Find the smallest perimeter of a rectangular wall that holds two rectangular paintings.
+  - id: ccc21j1
+    note: Decide whether a measured boiling point means an altitude above, at, or below sea level.

@@ -445,6 +445,31 @@ class Tracer:
         return None
 
     def describe_line(self, ran, nxt, prev, cur, step):
+        text = self.describe_line_only(ran, nxt, prev, cur, step)
+        # A `while True:` header is never a traced step (the compiler drops its re-check), so a
+        # pass ends by jumping from the body's last line straight back into the body. Say so, or
+        # the jump reads as a skipped step (P6-D98). A jump back to a real for/while header is
+        # described by that header's own step and needs nothing here.
+        header = self.loop_header_above(nxt) if nxt is not None else None
+        if text and header is not None and self.src(header).strip().startswith("while True"):
+            if nxt <= ran:
+                text += f" The loop goes back to the top for its next pass, so line {nxt} runs next."
+            elif ran < header:
+                text += f" Line {header}, `while True:`, needs no check, so the loop body starts at line {nxt}."
+        return text
+
+    def loop_header_above(self, line):
+        """The nearest `while`/`for` line above `line` that is less indented, or None."""
+        indent = len(self.src(line)) - len(self.src(line).lstrip())
+        n = line - 1
+        while n >= 1:
+            text = self.src(n)
+            if text.strip() and len(text) - len(text.lstrip()) < indent:
+                return n if text.strip().startswith(("while ", "for ")) else None
+            n -= 1
+        return None
+
+    def describe_line_only(self, ran, nxt, prev, cur, step):
         heap = cur["heap"]
         code = self.src(ran).strip()
         pieces = []
