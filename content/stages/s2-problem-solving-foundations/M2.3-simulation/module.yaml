@@ -1,6 +1,6 @@
 id: M2.3
 title: Simulation
-status: gated
+status: accepted
 objectives:
   - Model a process literally, one step at a time, with a variable for each piece of state.
   - Recognize when a problem's story is the algorithm, needing no extra insight beyond following it exactly.

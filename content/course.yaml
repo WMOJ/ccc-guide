@@ -143,7 +143,7 @@ stages:
         prereqs:
           - M1.6
           - M1.8
-        status: planned
+        status: accepted
       - id: M2.4
         title: Accumulator patterns
         prereqs:

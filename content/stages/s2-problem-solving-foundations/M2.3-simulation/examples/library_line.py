@@ -1,4 +1,5 @@
-arrivals = [2, 0, 1, 3, 0]
+input()
+arrivals = [int(x) for x in input().split()]
 
 queue_length = 0
 max_length = 0
