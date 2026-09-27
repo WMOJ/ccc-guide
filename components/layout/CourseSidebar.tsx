@@ -53,12 +53,15 @@ export function CourseSidebar({ nav, idPrefix = "side" }: { nav: CourseNav; idPr
                       </span>
                     </a>
                   ) : (
-                    <div className="grid grid-cols-[3.5rem_minmax(0,1fr)_auto] items-baseline gap-x-2 border border-transparent px-2 py-2 text-ink-3">
+                    <div className="grid grid-cols-[3.5rem_minmax(0,1fr)_auto] items-baseline border border-transparent px-2 py-2 text-ink-3">
                       <span className="text-small tnum">{m.id}</span>
                       <span>
                         <RichTitle text={m.title} />
                       </span>
-                      <ComingSoon label={s.status.soon} />
+                      {/* Space before the tag only: the title column starts where a linked row's does. */}
+                      <span className="ml-2">
+                        <ComingSoon label={s.status.soon} />
+                      </span>
                     </div>
                   )}
                   {current && m.lessons.length > 0 ? (

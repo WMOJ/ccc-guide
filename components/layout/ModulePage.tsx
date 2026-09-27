@@ -2,6 +2,7 @@ import { Practice } from "@/components/content/Practice";
 import type { ModuleLink, ModulePageProps } from "@/components/layout/props";
 import { ComingSoon, DraftBadge } from "@/components/ui/Badge";
 import { LiveReadCell } from "@/components/ui/LiveReadCell";
+import { RichText } from "@/components/ui/RichText";
 import { RichTitle } from "@/components/ui/RichTitle";
 import { fmt, ui } from "@/components/ui/ui-strings";
 import { plainTitle } from "@/lib/content/title";
@@ -64,7 +65,9 @@ export function ModulePage({ module, stage, prerequisites, practice, courseNav }
             </h2>
             <ul className="mt-3 list-disc space-y-1 pl-6 text-body leading-(--text-body--line-height) marker:text-ink-3">
               {module.objectives.map((o) => (
-                <li key={o}>{o}</li>
+                <li key={o}>
+                  <RichText text={o} />
+                </li>
               ))}
             </ul>
           </section>

@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import type { PracticeItemView } from "@/components/layout/props";
 import { JudgeBadge } from "@/components/ui/Badge";
+import { RichText } from "@/components/ui/RichText";
 import { fmt, ui } from "@/components/ui/ui-strings";
 import { judgeName, problemLabel } from "./problem-label";
 
@@ -53,10 +54,14 @@ export function Practice({
                   {fmt(s.sameAs, { label: problemLabel(p.sameAs) })}
                 </span>
               ) : null}
-              {note ? <p className="mt-1 text-ink-2 text-small">{note}</p> : null}
+              {note ? (
+                <p className="mt-1 text-ink-2 text-small">
+                  <RichText text={note} />
+                </p>
+              ) : null}
               {why ? (
                 <p className="mt-0.5 text-ink-3 text-small">
-                  <span className="font-semibold">{s.why}</span> {why}
+                  <span className="font-semibold">{s.why}</span> <RichText text={why} />
                 </p>
               ) : null}
             </div>

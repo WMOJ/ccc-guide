@@ -4,6 +4,7 @@ import { cn } from "@/components/ui/cn";
 import { MarkAsRead } from "@/components/ui/MarkAsRead";
 import { RichTitle } from "@/components/ui/RichTitle";
 import { ui } from "@/components/ui/ui-strings";
+import { plainTitle } from "@/lib/content/title";
 
 /** The ruled block that ends every lesson: mark as read, then Previous and Next. */
 export function ClosingTitleBlock({
@@ -15,6 +16,12 @@ export function ClosingTitleBlock({
 }) {
   const s = ui().lesson;
   const next = nav.next ?? { href: "/learn", title: s.backToMap, moduleTitle: undefined };
+  // The next lesson's module title is context, so it is left out when it only repeats the lesson
+  // title (a one-lesson module usually names its lesson after itself, P6-D26).
+  const nextModuleTitle =
+    next.moduleTitle && plainTitle(next.moduleTitle) !== plainTitle(next.title)
+      ? next.moduleTitle
+      : undefined;
   return (
     <section
       aria-label={s.markRead}
@@ -62,9 +69,9 @@ export function ClosingTitleBlock({
           <span className="font-semibold text-ink text-ui group-hover:underline group-hover:underline-offset-[0.2em]">
             <RichTitle text={next.title} />
           </span>
-          {next.moduleTitle ? (
+          {nextModuleTitle ? (
             <span className="text-ink-3 text-small">
-              <RichTitle text={next.moduleTitle} />
+              <RichTitle text={nextModuleTitle} />
             </span>
           ) : null}
         </a>

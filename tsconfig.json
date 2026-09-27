@@ -45,7 +45,9 @@
     ".next-perf/types/**/*.ts",
     ".next-perf/dev/types/**/*.ts",
     ".next-w3viz/types/**/*.ts",
-    ".next-w3viz/dev/types/**/*.ts"
+    ".next-w3viz/dev/types/**/*.ts",
+    ".next-pageshots/types/**/*.ts",
+    ".next-pageshots/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

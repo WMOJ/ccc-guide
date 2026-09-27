@@ -1,5 +1,6 @@
 import type { GlossaryPageProps } from "@/components/layout/props";
 import { cn } from "@/components/ui/cn";
+import { RichText } from "@/components/ui/RichText";
 import { RichTitle } from "@/components/ui/RichTitle";
 import { ui } from "@/components/ui/ui-strings";
 import { SiteFrame } from "./SiteFrame";
@@ -77,7 +78,13 @@ export function GlossaryPage({ terms }: GlossaryPageProps) {
               >
                 <dt className="font-bold text-ink text-ui">{t.term}</dt>
                 <dd className="text-ink text-ui">
-                  <div>{t.definition}</div>
+                  <div>
+                    {typeof t.definition === "string" ? (
+                      <RichText text={t.definition} />
+                    ) : (
+                      t.definition
+                    )}
+                  </div>
                   {t.introducedIn ? (
                     <p className="mt-1.5 text-ink-3 text-small">
                       {g.introducedIn}{" "}

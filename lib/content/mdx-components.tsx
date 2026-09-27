@@ -17,6 +17,7 @@ import {
 } from "../../components/content";
 import { CodeBlock } from "../../components/content/CodeBlock";
 import { Details } from "../../components/content/Details";
+import { RichText } from "../../components/ui/RichText";
 import { createVizComponents } from "../../components/viz";
 import type { Judge } from "../registry/judge-url";
 import { fencedCodeBlock, resolveFileCodeBlock, resolveModulePath } from "./code-block-data";
@@ -87,7 +88,13 @@ export function createMdxComponents({ moduleDir, practiceItems = [] }: MdxCompon
       <TermImpl
         id={id}
         term={entry.term}
-        definition={entry.definition}
+        definition={
+          typeof entry.definition === "string" ? (
+            <RichText text={entry.definition} />
+          ) : (
+            entry.definition
+          )
+        }
         glossaryHref={`/glossary#${id}`}
       >
         {children}

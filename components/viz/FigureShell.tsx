@@ -33,12 +33,14 @@ export function FigureShell({
         {figure ? (
           <p className="vz-figcaption">
             {figure.number !== undefined ? <b>Figure {figure.number}</b> : null}
-            {figure.caption}
+            <CaptionText text={figure.caption} />
           </p>
         ) : null}
         <div className="vz-text-alt">
           <Details summary={steps ? "Read the steps as text" : "Read the figure as text"}>
-            <p>{alt}</p>
+            <p>
+              <CaptionText text={alt} />
+            </p>
             {steps?.map((s) => (
               <div key={s.label}>
                 {many ? <p className="vz-alt-preset">{s.label}</p> : null}

@@ -1,6 +1,7 @@
 import { ArrowDownToLine, ArrowUpFromLine, OctagonAlert, OctagonX } from "lucide-react";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { cn } from "@/components/ui/cn";
+import { RichText } from "@/components/ui/RichText";
 import { fmt, ui } from "@/components/ui/ui-strings";
 import { highlightLines } from "./highlight";
 
@@ -170,7 +171,11 @@ export async function CodeBlock({
           ) : null}
         </div>
       ) : null}
-      {caption ? <figcaption className="mt-2 text-ink-2 text-small">{caption}</figcaption> : null}
+      {caption ? (
+        <figcaption className="mt-2 text-ink-2 text-small">
+          <RichText text={caption} />
+        </figcaption>
+      ) : null}
     </figure>
   );
 }
