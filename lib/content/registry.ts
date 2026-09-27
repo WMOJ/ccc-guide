@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { parse } from "yaml";
 import { judgeForYear, judgeUrl } from "../registry/judge-url";
+import { getCourse, getModuleAuthoredData } from "./course";
 import { externalLinksSchema, type RegistryProblemEntry, registrySchema } from "./schemas";
 import type { PracticeItemView, ProblemView } from "./types";
 
@@ -96,13 +97,66 @@ export function resolvePracticeItem(
   return { problem: view, ...extra };
 }
 
-/** /problems: every problem grouped by year (descending), Junior then Senior within a year. */
+/** The canonical (Senior-side) registry id for a canonical id or a Junior alias id. */
+function canonicalId(registryId: string): string {
+  const entry = loadProblems().find(
+    (p) =>
+      p.id === registryId ||
+      p.aliases.some(
+        (a) =>
+          `ccc${String(p.year % 100).padStart(2, "0")}${a.level.toLowerCase()}${a.number}` ===
+          registryId,
+      ),
+  );
+  return entry?.id ?? registryId;
+}
+
+/**
+ * Canonical problem id -> the readable modules whose practice list names it, in course order
+ * (DESIGN.md → Problems page, "Taught in"). Derived from the practice lists themselves, so it can
+ * never disagree with what the module pages show (P6-D4). Modules this build does not show
+ * (no href) are left out.
+ */
+function taughtInIndex(): Map<string, NonNullable<ProblemView["taughtIn"]>> {
+  const index = new Map<string, NonNullable<ProblemView["taughtIn"]>>();
+  for (const stage of getCourse().stages) {
+    for (const m of stage.modules) {
+      if (!m.href) continue;
+      for (const item of getModuleAuthoredData(stage.id, m.id).practice) {
+        const id = canonicalId(item.id);
+        const list = index.get(id) ?? [];
+        if (!list.some((t) => t.id === m.id)) list.push({ id: m.id, title: m.title, href: m.href });
+        index.set(id, list);
+      }
+    }
+  }
+  return index;
+}
+
+/**
+ * /problems: every problem grouped by year (descending), Junior then Senior within a year. A
+ * problem shared by both levels appears once in each level; the Junior row says "same problem as"
+ * the Senior one (DESIGN.md → Problems page).
+ */
 export function getProblemsGrouped(): { year: number; problems: ProblemView[] }[] {
+  const taughtIn = taughtInIndex();
   const byYear = new Map<number, ProblemView[]>();
-  for (const p of getAllProblems()) {
-    const list = byYear.get(p.year) ?? [];
-    list.push(p);
-    byYear.set(p.year, list);
+  for (const entry of loadProblems()) {
+    const view = toProblemView(entry);
+    const modules = taughtIn.get(entry.id);
+    if (modules) view.taughtIn = modules;
+    const rows: ProblemView[] = [view];
+    for (const alias of entry.aliases) {
+      rows.push({
+        ...view,
+        level: alias.level,
+        number: alias.number,
+        sameAs: { year: entry.year, level: entry.level, number: entry.number },
+      });
+    }
+    const list = byYear.get(entry.year) ?? [];
+    list.push(...rows);
+    byYear.set(entry.year, list);
   }
   return [...byYear.entries()]
     .sort(([a], [b]) => b - a)

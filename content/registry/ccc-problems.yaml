@@ -1414,8 +1414,6 @@ problems:
       - M2.7
       - M3.1
     topics:
-      - "2026"
-      - always has subtasks since 2022 2-mark large-input traps 2024
       - two-pointer simulation
   - id: ccc26j4
     year: 2026
@@ -1427,7 +1425,6 @@ problems:
     modules:
       - M3.6
     topics:
-      - every j4 since 2021 has a final n  1010 subtask averages 2448
       - hashing
       - sets
   - id: ccc26s1
@@ -1443,9 +1440,7 @@ problems:
       - M4.3
       - M4.8
     topics:
-      - "88137"
       - number-theory casework
-      - then 2026 769 lowest s1 in 20162026
   - id: ccc26s2
     year: 2026
     level: S
@@ -1460,9 +1455,6 @@ problems:
       - M4.1
       - M5.10
     topics:
-      - 0230 hardest 2019 j5 dmoj 20 recent j5s are textbook algorithms
-      - 2023 426
-      - 42107 2020 416
       - difference array
   - id: ccc26s3
     year: 2026
@@ -1475,7 +1467,6 @@ problems:
       - M5.5
       - M5.13
     topics:
-      - 1425 every year non-zero avg fell to 349 2024
       - constructive
       - parity
       - randomized
@@ -1488,7 +1479,6 @@ problems:
       titleSource: research/01-recon/past-problems-analysis.md
     modules: []
     topics:
-      - "013072"
       - binary search
       - fenwick
       - greedy
@@ -1505,7 +1495,5 @@ problems:
       - M7.12
       - M7.13
     topics:
-      - 005046 2026 non-zero avg 112
       - ad hoc geometry
-      - dmoj 30 pts
       - math

@@ -77,12 +77,16 @@ function buildModuleLink(
   entry: { id: string; title: string; status: ModuleStatus; prereqs: string[] },
 ): ModuleLink {
   const dir = findModuleDir(root, stageId, stageTitle, entry.id, entry.title);
-  const visible = visibleStatuses().includes(entry.status);
+  // An authored module's own module.yaml status is the working status (authors move it through
+  // drafted -> gated -> reviewed); course.yaml's copy only matters for unauthored modules.
+  // content:check (G-SCHEMA) keeps the two in agreement wherever "accepted" is involved.
+  let status: ModuleStatus = entry.status;
 
   let lessons: LessonLink[] = [];
   if (dir) {
     const moduleYamlPath = path.join(dir, "module.yaml");
     const moduleData = moduleFileSchema.parse(parse(fs.readFileSync(moduleYamlPath, "utf8")));
+    status = moduleData.status;
     lessons = moduleData.lessons.map((slug) => {
       const lessonFile = path.join(dir, "lessons", `${slug}.mdx`);
       const title = fs.existsSync(lessonFile) ? readLessonTitle(lessonFile) : slug;
@@ -94,6 +98,7 @@ function buildModuleLink(
     });
   }
 
+  const visible = visibleStatuses().includes(status);
   const hasLessons = lessons.length > 0;
   const href = visible && hasLessons ? `/learn/${stageId}/${encodeURIComponent(entry.id)}` : null;
 
@@ -101,7 +106,7 @@ function buildModuleLink(
     id: entry.id,
     title: entry.title,
     href,
-    status: entry.status,
+    status,
     lessons,
   };
 }
