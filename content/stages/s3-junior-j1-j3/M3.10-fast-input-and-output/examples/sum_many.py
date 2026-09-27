@@ -1,5 +1,6 @@
 import sys
 
+
 def main() -> None:
     tokens = sys.stdin.read().split()
     if not tokens:

@@ -15,4 +15,5 @@ practice:
   - id: ccc21s4
     note: Find the minimum of dynamic expressions using lazy-deletion heaps to track candidates.
   - id: ccc25s3
-    why: Priority queues and lazy deletion for managing colour groups and tracking extremes.
+    note: Track the best combination of items in a changing collection under updates.
+    why: A greedy problem over a changing collection, solved with heaps and lazy deletion.

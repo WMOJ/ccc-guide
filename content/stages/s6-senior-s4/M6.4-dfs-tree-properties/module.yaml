@@ -11,7 +11,5 @@ prereqs:
 lessons:
   - dfs-tree
 practice:
-  - id: ccc21s4
-    note: Find all nodes in a single strongly connected component without visiting others.
-  - id: ccc16s4
-    note: Determine whether a directed graph has a cycle.
+  - id: ccc24s4
+    note: Classify the edges of a DFS tree to tell a simple path apart from a cycle.

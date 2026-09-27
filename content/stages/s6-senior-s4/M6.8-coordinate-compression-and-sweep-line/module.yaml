@@ -4,7 +4,7 @@ status: accepted
 objectives:
   - Compress large coordinates into a dense rank map.
   - Build a 2D difference array on a compressed grid weighted by real dimensions.
-  - Sweep over sorted events to compute 2D aggregates.
+  - Sweep over sorted events to compute coverage, not just a count.
   - Solve rectangle and interval problems that span large coordinate ranges.
 prereqs:
   - M4.3
@@ -14,4 +14,4 @@ lessons:
   - coordinate-compression
 practice:
   - id: ccc14s4
-    note: Compute the total area of overlapping rectangles using coordinate compression and a 2D difference array.
+    note: Find the total window area covered once several tinted panes overlap.

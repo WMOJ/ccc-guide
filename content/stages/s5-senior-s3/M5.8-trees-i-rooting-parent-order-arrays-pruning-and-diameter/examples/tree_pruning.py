@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def prune_leaves(adj):
     """Prune leaves layer by layer."""
     n = len(adj)

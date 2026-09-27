@@ -7,28 +7,25 @@ def main() -> None:
         return
 
     n = int(data[0])
-    d = int(data[1])
 
-    # Compute sum of floor(i / d) for i = 1 to n
-    # Naive: O(n), but we'll use floor-division blocks for O(sqrt(n))
-
+    # Compute sum of floor(n / d) for d = 1 to n, using O(sqrt(n)) blocks
+    # instead of an O(n) loop over every divisor d.
     total = 0
-    i = 1
+    d = 1
 
-    while i <= n:
-        q = i // d  # quotient at position i
-        # Find the last position in this block with the same quotient
-        # floor(i / d) = q means q*d <= i < (q+1)*d
-        # The last i with quotient q is (q+1)*d - 1, but capped at n
-        next_boundary = min((q + 1) * d - 1, n)
+    while d <= n:
+        q = n // d  # the quotient shared by this whole block of divisors
 
-        # All integers from i to next_boundary have quotient q
-        count = next_boundary - i + 1
+        # Every d' in this block satisfies n // d' == q. The largest such d'
+        # is n // q (when q > 0); beyond it the quotient drops below q.
+        next_d = n // q if q > 0 else n
+
+        count = next_d - d + 1
         total += q * count
 
-        i = next_boundary + 1
+        d = next_d + 1
 
-    print(f"Sum of floor(i/{d}) for i=1 to {n}: {total}")
+    print(f"Sum of floor({n}/d) for d=1 to {n}: {total}")
 
 
 if __name__ == "__main__":

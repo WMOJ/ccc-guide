@@ -10,10 +10,10 @@ prereqs:
 lessons:
   - string-processing-tokenizing-with-state
 practice:
-  - id: ccc22j4
-    note: Tokenize a command line string, splitting on spaces and handling quoted strings.
-  - id: ccc21j4
-    note: Parse a comma-separated list of values and validate each one.
-  - id: ccc19j4
-    note: Extract tokens from a string with multiple types of delimiters.
-    why: Combines multiple delimiter types with state tracking.
+  - id: ccc19j3
+    note: Decompress a run-length encoded string one token at a time.
+    why: A state-tracking tokenizing problem from the same era as this lesson's examples.
+  - id: ccc23j3
+    note: Read a line of tokens and track the maximum, joining names on a tie.
+  - id: ccc25j3
+    note: Tokenize a line into distinct character classes, including signed multi-digit numbers.

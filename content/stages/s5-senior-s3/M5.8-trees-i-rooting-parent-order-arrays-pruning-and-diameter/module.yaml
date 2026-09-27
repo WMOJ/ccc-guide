@@ -15,5 +15,6 @@ lessons:
 practice:
   - id: ccc16s3
     note: Find which subtrees to keep and minimize the total edge count.
+    why: An older tree problem, solvable with the traversal and pruning techniques in this module, that still makes good practice.
   - id: ccc25s4
-    note: Compute paths in a tree and find maximum spanning subtrees.
+    note: A tree-shaped special case is worth partial credit before the full graph problem.

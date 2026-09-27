@@ -13,5 +13,6 @@ lessons:
 practice:
   - id: ccc16j3
     note: Count palindromic substrings using centre expansion and dynamic programming.
+    why: An older palindrome-counting problem that still makes good practice for this module.
   - id: ccc23s2
-    why: A classic symmetric problem solved by expanding from each centre over O(N^2) operations.
+    note: Check a sequence for a symmetric shape by expanding outward from each candidate centre.

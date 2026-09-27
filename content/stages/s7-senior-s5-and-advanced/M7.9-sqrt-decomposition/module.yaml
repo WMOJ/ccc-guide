@@ -13,4 +13,5 @@ lessons:
   - sqrt-blocks
 practice:
   - id: ccc17s5
-    note: Process subway line queries by classifying lines as heavy or light.
+    note: Many queries over a transit network's routes.
+    why: An older problem with a large number of queries, good for practicing where a partial, unoptimized attempt still scores.

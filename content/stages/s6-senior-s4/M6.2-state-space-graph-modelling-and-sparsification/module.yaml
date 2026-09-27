@@ -12,7 +12,8 @@ prereqs:
 lessons:
   - state-space-modelling
 practice:
-  - id: ccc19s3
-    note: Find the minimum cost to transport fuel through a pipeline by moving shipments.
+  - id: ccc25s4
+    note: Expand each state to include a resource level, then search the larger graph for a shortest path.
   - id: ccc18s3
     note: Collect objects by moving through a grid, avoiding certain states.
+    why: An older problem whose forced moves are naturally modelled as an expanded state space.

@@ -1,5 +1,6 @@
 import math
 
+
 def trials_needed(success_prob, target_failure_prob):
     """Calculate trials needed for a given failure probability."""
     if success_prob <= 0 or success_prob >= 1:

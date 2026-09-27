@@ -13,4 +13,5 @@ lessons:
   - range-max-doubling
 practice:
   - id: ccc19s5
-    note: Maximum triangle sum using doubling and shape decomposition (subtask focus).
+    note: A triangular grid of values, queried and updated many times.
+    why: An older problem with a small first subtask, good for practicing a partial attempt.

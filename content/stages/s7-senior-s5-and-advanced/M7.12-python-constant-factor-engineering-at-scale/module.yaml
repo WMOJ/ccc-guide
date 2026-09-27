@@ -16,6 +16,7 @@ lessons:
 practice:
   - id: ccc19s4
     note: Find the minimum cost to process a stream of updates to a flat array.
+    why: An older large-input problem, good for practicing fast I/O and tight loops.
   - id: ccc15s5
     note: Compute the shortest meeting time for scheduled intervals.
     why: An older problem that builds timing-critical fast-I/O and loop skills.

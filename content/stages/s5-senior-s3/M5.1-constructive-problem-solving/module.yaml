@@ -17,3 +17,4 @@ practice:
     note: Build a palindromic poster on a grid by choosing characters for each cell.
   - id: ccc19s3
     note: Fill a grid so all rows and columns have the same sum.
+    why: An older constructive-casework problem with the same build-and-verify approach.

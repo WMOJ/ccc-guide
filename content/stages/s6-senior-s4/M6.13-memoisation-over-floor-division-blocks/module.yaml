@@ -2,9 +2,9 @@ id: M6.13
 title: Memoisation over floor-division blocks
 status: accepted
 objectives:
-  - Recognize when floor division creates a limited set of distinct quotients.
-  - Apply memoisation to avoid recomputation over ranges with the same quotient.
-  - Optimize range queries using floor-division blocks.
+  - Recognize when a sum over floor division takes only O(sqrt(n)) distinct values.
+  - Jump between block boundaries instead of scanning every divisor.
+  - Apply floor-division blocks to divisor-counting sums.
 prereqs:
   - M4.11
   - M4.6
@@ -12,6 +12,7 @@ lessons:
   - floor-division-blocks
 practice:
   - id: ccc20s1
-    note: Find divisor counts over a range using precomputed factorization.
+    note: Work with a sprinter's recorded checkpoint times to find a consistent picture of the race.
+    why: An older problem whose numeric structure still makes good practice for this module.
   - id: ccc21s1
-    note: Compute sums involving floor division efficiently over large ranges.
+    note: Cut a fence into pieces while respecting a length-based rule.

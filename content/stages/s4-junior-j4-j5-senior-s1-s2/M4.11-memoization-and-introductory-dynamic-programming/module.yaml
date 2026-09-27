@@ -12,7 +12,5 @@ prereqs:
 lessons:
   - memoization-and-dynamic-programming
 practice:
-  - id: ccc23j4
-    note: Count palindromic subsequences of a string.
-  - id: ccc21j4
-    note: Find the largest sum of numbers in an array with constraints.
+  - id: ccc15j5
+    note: Count the ways to reach a target using memoized recursion over smaller subproblems.

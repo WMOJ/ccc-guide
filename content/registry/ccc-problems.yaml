@@ -295,6 +295,7 @@ problems:
       - M5.1
       - M5.8
       - M6.4
+      - M5.7
     topics:
       - tree
   - id: ccc16s4
@@ -1229,6 +1230,7 @@ problems:
     modules:
       - M6.4
       - M6.5
+      - M5.7
     topics:
       - dfs tree
   - id: ccc24s5

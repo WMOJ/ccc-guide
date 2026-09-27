@@ -13,6 +13,7 @@ lessons:
   - coordinate-compression
 practice:
   - id: ccc15j4
-    note: Count events occurring in time ranges that span many days.
+    note: Track events over a wide time range using a dictionary keyed by time, not a huge array.
+    why: An older problem where a dictionary keyed by time stands in for full coordinate compression.
   - id: ccc22j5
-    note: Handle a large grid with constraints on column operations.
+    note: Narrow a huge coordinate plane down to a small set of candidate points worth checking.

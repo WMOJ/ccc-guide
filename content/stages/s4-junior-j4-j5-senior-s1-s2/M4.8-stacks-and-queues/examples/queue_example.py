@@ -1,7 +1,9 @@
+from collections import deque
+
 orders = ['pizza', 'burger', 'salad', 'pasta']
-queue = list(orders)
+queue = deque(orders)
 
 print("Processing orders in order:")
 while queue:
-    order = queue.pop(0)
+    order = queue.popleft()
     print(f"Served: {order}")

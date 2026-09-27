@@ -12,7 +12,8 @@ prereqs:
 lessons:
   - kruskal-mst
 practice:
-  - id: ccc22j5
-    note: Connect cities with railways of minimum total cost, ensuring all cities are reachable.
-  - id: ccc20s2
-    note: Find the minimum cost to connect all computers in a network using cable segments.
+  - id: ccc17s4
+    note: Build a minimum spanning tree while preferring to keep certain edges when costs tie.
+    why: An older MST problem, with a DSU-based tie-breaking rule, that still makes good practice for this module.
+  - id: ccc23s4
+    note: A subtask of this problem reduces to a plain minimum spanning tree.

@@ -13,4 +13,4 @@ lessons:
   - online-with-encryption
 practice:
   - id: ccc25s5
-    note: Process encrypted range queries with segment tree updates.
+    note: Tracking a changing list of tasks, given as encrypted, online queries.

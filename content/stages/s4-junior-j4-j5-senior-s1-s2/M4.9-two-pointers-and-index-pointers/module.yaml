@@ -11,7 +11,5 @@ prereqs:
 lessons:
   - two-pointers
 practice:
-  - id: ccc23j1
-    note: Find two distinct numbers in a list that add to a target sum.
-  - id: ccc20j5
-    note: Use two pointers to reverse a portion of an array.
+  - id: ccc24s3
+    note: Use two pointers to decide whether one sequence of moves can be reproduced from another.

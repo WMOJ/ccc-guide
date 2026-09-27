@@ -15,9 +15,8 @@ practice:
   - id: ccc20j2
     note: Count how many athletes finished in each age category.
     why: A direct counting problem where a dictionary groups results by key.
-  - id: ccc19j3
-    note: Find duplicate pairs of measurements and report the count.
-    why: Classic "count occurrences" pattern using a dictionary.
-  - id: ccc23j4
-    note: Track and retrieve the value associated with each game piece.
-    why: Lookups by name with default handling for unknown pieces.
+  - id: ccc22j4
+    note: Look up which group a name belongs to, checking membership in O(1) per query.
+  - id: ccc14s2
+    note: Build a name-to-partner mapping and check it for symmetry.
+    why: A direct dict-mapping problem, the same shape as this lesson's phone-book example.

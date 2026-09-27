@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def root_tree(adj, root):
     """Root a tree at a node, compute parent and depth."""
     n = len(adj)

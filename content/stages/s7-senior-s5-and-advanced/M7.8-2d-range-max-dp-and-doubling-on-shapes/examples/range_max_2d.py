@@ -11,34 +11,45 @@ def main() -> None:
         grid.append(row)
         idx += n
 
-    # Build sparse table for 2D range max
-    # table[i][j][k][l] = max over rectangle starting at (i,j) of size 2^k by 2^l
-    table = [[[[0 for _ in range(10)] for _ in range(10)] for _ in range(n)] for _ in range(n)]
+    # table[k] holds the sparse table for 2^k by 2^k squares.
+    # table[k][i][j] is the max over rows i..i+2^k-1 and columns j..j+2^k-1.
+    max_k = 0
+    while (1 << (max_k + 1)) <= n:
+        max_k += 1
 
-    # Base case: 2^0 by 2^0 (single cell)
-    for i in range(n):
-        for j in range(n):
-            table[i][j][0][0] = grid[i][j]
+    table = [grid]
+    for k in range(1, max_k + 1):
+        half = 1 << (k - 1)
+        prev = table[k - 1]
+        span = len(prev) - half
+        layer = []
+        for i in range(span):
+            row = []
+            for j in range(span):
+                row.append(max(
+                    prev[i][j],
+                    prev[i + half][j],
+                    prev[i][j + half],
+                    prev[i + half][j + half],
+                ))
+            layer.append(row)
+        table.append(layer)
 
-    # Fill for increasing powers
-    for k in range(1, 10):
-        for i in range(n):
-            for j in range(n):
-                if i + (1 << k) > n or j + (1 << k) > n:
-                    continue
-                # Max of four 2^(k-1) by 2^(k-1) rectangles
-                half = 1 << (k - 1)
-                val = max(
-                    table[i][j][k - 1][k - 1],
-                    table[i + half][j][k - 1][k - 1],
-                    table[i][j + half][k - 1][k - 1],
-                    table[i + half][j + half][k - 1][k - 1]
-                )
-                table[i][j][k][k] = val
+    def query(r1, c1, r2, c2):
+        # Decompose the square region into two overlapping power-of-2 squares
+        # per side and take the max of the four corners.
+        side = r2 - r1 + 1
+        k = side.bit_length() - 1
+        size = 1 << k
+        t = table[k]
+        return max(
+            t[r1][c1],
+            t[r2 - size + 1][c1],
+            t[r1][c2 - size + 1],
+            t[r2 - size + 1][c2 - size + 1],
+        )
 
-    # Query: max in rectangle from (0,0) to (n-1,n-1)
-    result = table[0][0][9][9] if n <= 512 else max(table[i][j][9][9] for i in range(n) for j in range(n) if i + 512 <= n and j + 512 <= n)
-    print(result)
+    print(query(0, 0, n - 1, n - 1))
 
 
 if __name__ == "__main__":

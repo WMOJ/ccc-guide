@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def bfs_farthest(adj, start):
     """BFS from start, return (farthest_node, distance)."""
     n = len(adj)

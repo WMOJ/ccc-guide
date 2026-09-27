@@ -11,6 +11,5 @@ prereqs:
 lessons:
   - difference-arrays
 practice:
-  - id: ccc21j3
-    note: Apply multiple updates to a range of elements and find the final array.
-    why: Direct application of difference arrays for range updates.
+  - id: ccc26j5
+    note: Apply a +1/-1 update at each interval's clipped ends and answer queries in O(1) with a prefix sum.

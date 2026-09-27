@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def reverse_bfs(adj, target):
     """BFS on reverse graph to compute distances to target."""
     n = len(adj)

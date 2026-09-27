@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def conveyor_bfs(adj, conveyors, start):
     """BFS handling forced zero-cost moves (conveyors)."""
     n = len(adj)

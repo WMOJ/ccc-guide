@@ -12,9 +12,10 @@ lessons:
   - loop-and-count-problems
 practice:
   - id: ccc22j2
-    note: Count votes for two candidates and report the winner.
-  - id: ccc21j2
-    note: Count how many grades fall into each letter category.
+    note: Process two lines of data per player and flag those meeting a condition.
+  - id: ccc20j3
+    note: Scan a comma-separated line of numbers, tracking the minimum and maximum as you go.
+    why: A running-minimum-and-maximum scan, the same one-pass shape as this lesson's counters.
   - id: ccc19j2
-    note: Count the number of students whose mark exceeds the class average.
-    why: A classic loop-and-count with a comparison step, good practice with threshold logic.
+    note: Expand a run-length compressed string and process the result in a loop.
+    why: A one-pass scan with a running total, in the same style as this lesson's examples.

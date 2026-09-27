@@ -13,6 +13,7 @@ lessons:
   - clock-and-calendar-arithmetic
 practice:
   - id: ccc24s1
-    note: Calculate when an event with a repeating schedule occurs next.
-  - id: ccc22j4
-    note: Determine what day of the week it will be after adding days.
+    note: Compare values at paired positions around a circular arrangement, wrapping the index with modulo.
+  - id: ccc17j4
+    note: Count occurrences of a periodic event across a long span, using cycles and a remainder.
+    why: A periodicity problem matching this lesson's cycle-and-remainder pattern.

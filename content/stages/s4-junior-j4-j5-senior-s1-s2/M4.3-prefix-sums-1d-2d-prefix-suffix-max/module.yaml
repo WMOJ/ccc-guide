@@ -12,9 +12,9 @@ prereqs:
 lessons:
   - prefix-sums
 practice:
-  - id: ccc20j5
-    note: Find the max sum of a contiguous subarray over multiple queries.
-    why: Direct application of prefix sums for range queries.
-  - id: ccc19j4
-    note: Find the best rectangular region in a 2D grid.
-    why: 2D prefix sums for area queries on a grid.
+  - id: ccc17s1
+    note: Track a running total as you scan, and use it to answer a question about the whole range.
+    why: A direct running-total problem, the same idea as this lesson's prefix sum array.
+  - id: ccc18j3
+    note: Use cumulative totals across a table to answer a positional question.
+    why: A cumulative-sum problem solved the same way as this lesson's range-sum queries.

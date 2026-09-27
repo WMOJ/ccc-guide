@@ -12,9 +12,9 @@ prereqs:
 lessons:
   - sorting-with-keys-and-greedy
 practice:
-  - id: ccc21j4
-    note: Assign tasks to workers to minimize the maximum time any worker spends.
-    why: A classic greedy scheduling problem solved by sorting tasks.
-  - id: ccc22j3
-    note: Select the longest jump or highest score from a contestant's attempts.
-    why: Direct max-finding after sorting by a key criterion.
+  - id: ccc16s2
+    note: Sort two lists of times and pair them to get the fastest and the slowest combined result.
+    why: A two-key greedy-after-sort problem, the same shape as this lesson's ratio sort.
+  - id: ccc20s1
+    note: Scan and sort a set of measurements to work out a consistent value.
+    why: A scan-then-sort problem in the same style as this lesson's key-based sorting.

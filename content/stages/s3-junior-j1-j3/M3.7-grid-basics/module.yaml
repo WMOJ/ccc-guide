@@ -11,7 +11,7 @@ prereqs:
 lessons:
   - grid-basics
 practice:
-  - id: ccc20j3
-    note: Mark cells on a map to track which ones have been visited.
-  - id: ccc19j4
-    note: Count columns in a grid where all cells meet a condition.
+  - id: ccc21s1
+    note: Sum a property across a 2D layout of shapes, row by row.
+  - id: ccc23j4
+    note: Count features across a triangular grid pattern.

@@ -10,10 +10,10 @@ prereqs:
 lessons:
   - lookup-tables
 practice:
-  - id: ccc22j5
-    note: Map country codes to country names using a lookup table.
-  - id: ccc21j5
-    note: Look up tax brackets and compute tax owed based on income.
-  - id: ccc19j5
-    note: Build a lookup table of day names and find which day of the week a date falls on.
-    why: Combines lookup tables with modulo arithmetic.
+  - id: ccc16j4
+    note: Look up an arrival time using a rule that changes across the day.
+    why: A lookup-driven simulation, matching this lesson's table-first approach.
+  - id: ccc24s1
+    note: Compare values at paired positions around a circular arrangement.
+  - id: ccc23j2
+    note: Look up a value for each item using a fixed table of entries.

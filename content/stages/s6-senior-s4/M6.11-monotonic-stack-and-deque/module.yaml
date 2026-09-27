@@ -2,9 +2,9 @@ id: M6.11
 title: Monotonic stack and deque
 status: accepted
 objectives:
-  - Use a monotonic stack to find the next greater element efficiently.
+  - Use a monotonic stack to find the next greater element in linear time.
   - Track the maximum in a sliding window with a monotonic deque.
-  - Implement an offset deque to handle feasibility checks over a range.
+  - Reuse the same sliding-window deque to answer a feasibility check over a shrinking range.
   - Solve classic window-maximum problems in linear time.
 prereqs:
   - M4.8
@@ -13,6 +13,7 @@ lessons:
   - monotonic-structures
 practice:
   - id: ccc19s4
-    note: Find the range maximum during a sliding window over sorted events.
+    note: Plan a multi-day itinerary that visits the most cities under a travel budget.
+    why: An older windowed-search problem that still makes good practice for this module.
   - id: ccc26s4
-    note: Use a feasibility check with offsets; the monotonic deque keeps a range max.
+    note: Track which minecarts can still reach the end of the line as tracks change.

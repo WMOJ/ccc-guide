@@ -20,7 +20,9 @@ def main() -> None:
 
     for pos, delta in events:
         if active_count > 0 and pos > prev_pos:
-            total_coverage += (pos - prev_pos) * active_count
+            # This stretch is covered by at least one interval, so it counts
+            # once no matter how many intervals overlap it here.
+            total_coverage += pos - prev_pos
 
         active_count += delta
         prev_pos = pos

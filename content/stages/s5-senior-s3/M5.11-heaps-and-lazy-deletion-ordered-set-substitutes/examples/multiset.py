@@ -15,11 +15,9 @@ print(f"Added 5 items, count = {count}")
 removed.add(9)
 count -= 1
 
-# Find maximum
+# Find maximum, skipping stale entries already accounted for above
 while h:
     val = -heapq.heappop(h)
     if val not in removed:
         print(f"Maximum: {val}, remaining count: {count}")
         break
-    else:
-        count -= 1

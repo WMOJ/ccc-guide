@@ -18,12 +18,14 @@ def main() -> None:
         for j in range(1, n + 1):
             prefix[i][j] = grid[i - 1][j - 1] + prefix[i - 1][j] + prefix[i][j - 1] - prefix[i - 1][j - 1]
 
-    # Find max sum of k by k rectangle
-    max_sum = 0
+    # Find max sum of k by k rectangle. Seed with the first candidate, not 0,
+    # so a grid of entirely negative values still gives the right answer.
+    max_sum = None
     for i in range(k, n + 1):
         for j in range(k, n + 1):
             rect_sum = prefix[i][j] - prefix[i - k][j] - prefix[i][j - k] + prefix[i - k][j - k]
-            max_sum = max(max_sum, rect_sum)
+            if max_sum is None or rect_sum > max_sum:
+                max_sum = rect_sum
 
     print(max_sum)
 

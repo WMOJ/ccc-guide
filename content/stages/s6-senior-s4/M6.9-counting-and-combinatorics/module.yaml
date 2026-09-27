@@ -15,6 +15,7 @@ lessons:
   - counting-problems
 practice:
   - id: ccc22s4
-    note: Count triplets with a specific property using O(N) counting, not enumeration.
+    note: Count triplets in a sequence that satisfy a specific ordering condition.
   - id: ccc17j5
-    note: Count pairs with complementary properties; solve as a junior problem.
+    note: Count pairs of items whose properties combine to meet a target.
+    why: An older junior counting problem that still makes good practice for this module.

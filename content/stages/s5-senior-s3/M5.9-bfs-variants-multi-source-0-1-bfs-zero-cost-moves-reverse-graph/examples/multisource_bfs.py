@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def multisource_bfs(adj, sources):
     """BFS from multiple sources at once."""
     n = len(adj)

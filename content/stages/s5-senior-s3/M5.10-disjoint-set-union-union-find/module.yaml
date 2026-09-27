@@ -14,5 +14,7 @@ lessons:
 practice:
   - id: ccc15s3
     note: Find the next available gate on a linear arrangement using DSU next-free optimization.
+    why: A direct application of the next-free-slot trick from this module.
   - id: ccc17s4
-    why: Demonstrates basic connectivity queries that DSU solves efficiently.
+    note: Merge components with DSU while breaking ties between equally cheap connections.
+    why: The full problem builds a minimum spanning tree, a later module's topic, but its DSU merging step is good practice here.

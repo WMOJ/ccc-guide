@@ -12,7 +12,12 @@ prereqs:
 lessons:
   - frequency-arrays-and-counting
 practice:
-  - id: ccc24j1
-    note: Count how many of each type of action the captain gives.
+  - id: ccc16s1
+    note: Count how many times each letter appears, using the counts to fill a gap.
+    why: A letter-frequency problem, the direct application of this lesson's array.
+  - id: ccc17s3
+    note: Count how often each length occurs, then use the counts to avoid a slow scan.
+    why: A frequency-array problem where the counts themselves make a fast solution possible.
   - id: ccc19j2
-    note: Find the character that appears most often in a string.
+    note: Expand a compressed string, then count how often each character appears in the result.
+    why: A one-pass character count over the string this lesson's pattern builds toward.

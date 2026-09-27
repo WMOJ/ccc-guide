@@ -2,10 +2,10 @@ id: M6.7
 title: Advanced DP design
 status: accepted
 objectives:
-  - Combine multi-dimensional states and sorted events in a single DP.
-  - Optimize DP transitions that need a range maximum with monotonic deques or segment trees.
-  - Use sticking-out component shapes to solve complex DP problems.
-  - Apply rolling arrays and packed-int sorting for fast Python performance on hard S4/S5 problems.
+  - Combine a second dimension, such as a resource limit, with a DP state that is sorted by position.
+  - Optimize DP transitions that need a window maximum with a monotonic deque.
+  - Recognize when the best predecessor for a DP transition only moves forward, so a single pointer sweeps the whole array once.
+  - Apply rolling arrays and tuple sorting for fast Python performance on hard S4/S5 problems.
 prereqs:
   - M4.11
   - M4.3
@@ -14,6 +14,6 @@ lessons:
   - multi-dimensional-dp
 practice:
   - id: ccc19s4
-    note: Use a monotonic deque to track the maximum of the previous window in a DP.
+    note: Plan a multi-day itinerary that visits the most cities under a travel budget.
   - id: ccc15s5
-    note: Multi-dimensional DP with sorted extras and rolling arrays on a 3D state space.
+    note: Split a set of pies among people so that the smallest share is as large as possible.

@@ -14,5 +14,6 @@ lessons:
 practice:
   - id: ccc16s3
     note: Mark subtrees for removal and count edges carefully to minimize the total length.
+    why: An older tree problem, solvable with an iterative DFS, that still makes good practice for this module.
   - id: ccc24s4
-    note: Process the DFS tree and compute distances in a large graph.
+    note: Colour the nodes of a DFS tree using the parity of each node's depth.

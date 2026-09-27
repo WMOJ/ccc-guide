@@ -13,8 +13,8 @@ lessons:
 practice:
   - id: ccc22j3
     note: Compress a string by counting consecutive identical characters.
-  - id: ccc20j3
-    note: Count and decode groups of repeated characters.
-  - id: ccc18j3
-    note: Find the longest run of identical characters in a password.
-    why: A classic string run-detection problem with threshold checking.
+  - id: ccc20s1
+    note: Scan a list of values and sort them to work out a consistent pattern.
+    why: A scan-and-sort problem that reuses the character-by-character pass from this lesson.
+  - id: ccc24j3
+    note: Find a specific ranked value among a set of scores, by counting or sorting.

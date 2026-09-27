@@ -12,7 +12,7 @@ prereqs:
 lessons:
   - circular-arrays-and-wraparound
 practice:
-  - id: ccc16j2
-    note: Simulate a circular shift of array elements.
-  - id: ccc20j3
-    note: Find the maximum sum in a circular array.
+  - id: ccc20j4
+    note: Check whether one string is a circular shift of another.
+  - id: ccc20s4
+    note: Use circular prefix sums to answer range questions that wrap around.

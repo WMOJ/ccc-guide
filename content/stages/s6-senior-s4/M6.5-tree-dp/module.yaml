@@ -12,7 +12,5 @@ prereqs:
 lessons:
   - tree-dp
 practice:
-  - id: ccc23s3
-    note: Find the maximum number of nodes you can select such that no selected nodes are adjacent in a tree.
-  - id: ccc20j5
-    note: Count paths in a tree with a sum equal to a target value.
+  - id: ccc22s5
+    note: Keep several states per node and combine children in post-order to satisfy a tree-wide condition.

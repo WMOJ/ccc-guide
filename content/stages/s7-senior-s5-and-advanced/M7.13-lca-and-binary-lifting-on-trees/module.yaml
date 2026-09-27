@@ -11,8 +11,4 @@ prereqs:
   - M6.12
 lessons:
   - binary-lifting
-practice:
-  - id: ccc20s5
-    note: Find the minimum cost on paths between nodes in a tree.
-  - id: ccc17s5
-    note: Compute properties of subtrees and query node relationships.
+practice: []

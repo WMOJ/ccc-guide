@@ -251,3 +251,23 @@ terms:
     term: sparse table
     definition: A precomputed table for answering idempotent range queries (minimum, maximum, gcd) in constant time after O(N log N) preprocessing.
     introducedIn: M7.3/sparse-table-queries
+  - id: vertex
+    term: vertex
+    definition: A single node in a graph; the thing that edges connect.
+    introducedIn: M4.12/graphs-and-adjacency-lists
+  - id: edge
+    term: edge
+    definition: A connection between two vertices in a graph, sometimes carrying a weight.
+    introducedIn: M4.12/graphs-and-adjacency-lists
+  - id: adjacency-list
+    term: adjacency list
+    definition: A way to store a graph as a list or dictionary that maps each vertex to the list of its neighbours.
+    introducedIn: M4.12/graphs-and-adjacency-lists
+  - id: circular-array
+    term: circular array
+    definition: An array whose index wraps from the last element back to the first, usually with the modulo operator.
+    introducedIn: M4.15/circular-arrays-and-wraparound
+  - id: hash-collision
+    term: hash collision
+    definition: Two different inputs that produce the same hash value. Rare with a good hash and a large modulus, but never impossible.
+    introducedIn: M5.4/rolling-hash

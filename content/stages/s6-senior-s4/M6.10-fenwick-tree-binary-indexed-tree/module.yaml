@@ -14,4 +14,4 @@ practice:
   - id: ccc19j5
     note: Calculate how the number of each item changes across growing inventory.
   - id: ccc20s1
-    note: Count inversions in an array using a Fenwick tree for efficiency.
+    note: Work with a sprinter's recorded checkpoint times to find a consistent picture of the race.

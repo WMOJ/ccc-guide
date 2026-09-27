@@ -3,7 +3,7 @@ title: Linear pass thinking and hidden costs of built-ins
 status: accepted
 objectives:
   - Solve problems by scanning data once instead of searching repeatedly.
-  - Recognize when a built-in function calls do extra work.
+  - Recognize when calling a built-in function does extra work.
   - Apply the two-pointer technique to solve problems in one pass.
   - Reason about time complexity to avoid slow solutions.
 prereqs:
@@ -11,7 +11,8 @@ prereqs:
 lessons:
   - linear-pass-thinking
 practice:
-  - id: ccc19j1
-    note: Find the most common letter in a string without searching twice.
+  - id: ccc18s1
+    note: Track a running minimum while scanning a sorted list once.
+    why: A one-pass tracking problem in the same style as this lesson's min/max example.
   - id: ccc21j3
-    note: Track maximum and minimum in one pass through a list.
+    note: Read input until a sentinel value appears, without knowing the count in advance.

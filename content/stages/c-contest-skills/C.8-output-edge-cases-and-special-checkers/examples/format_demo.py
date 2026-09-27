@@ -1,21 +1,17 @@
-"""Demonstrations of common output format mistakes and fixes."""
+"""Four common output shapes, each written the way a judge expects it."""
 
-# Single integer: correct
+# A single integer.
 n = 42
 print(n)
 
-# Multiple integers on one line: correct (no trailing space)
+# Several integers on one line, one space between them, no trailing space.
 numbers = [1, 2, 3, 4, 5]
 print(" ".join(map(str, numbers)))
 
-# Floating point with specific precision: correct (2 decimals)
+# A float rounded to a fixed number of decimal places, not Python's default.
 value = 3.14159
 print(f"{value:.2f}")
 
-# Multiple lines: correct
+# One item per line, with no blank line at the end.
 items = ["apple", "banana", "cherry"]
 print("\n".join(items))
-
-# Correct way to handle output with no trailing space on last line
-lines = ["first", "second", "third"]
-print("\n".join(lines))

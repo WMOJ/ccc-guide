@@ -1,6 +1,5 @@
 def slope_sweep(positions, weights):
     """Find location c that minimizes sum of |c - p_i| * w_i."""
-    n = len(positions)
     total_weight = sum(weights)
     events = sorted(zip(positions, weights))
 

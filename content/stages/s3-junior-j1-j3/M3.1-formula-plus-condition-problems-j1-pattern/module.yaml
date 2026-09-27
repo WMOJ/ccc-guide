@@ -16,5 +16,5 @@ practice:
   - id: ccc21j1
     note: Decide how long a kettle needs before water is ready.
   - id: ccc14j1
-    note: Classify a triangle from three side lengths.
+    note: Classify a triangle as acute, right, or obtuse from its three angles.
     why: One of the earliest J1 problems, and still a plain formula-then-branch shape.

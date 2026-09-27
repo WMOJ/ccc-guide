@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def zero_one_bfs(adj, start):
     """0-1 BFS using deque with appendleft for weight-0 edges."""
     n = len(adj)

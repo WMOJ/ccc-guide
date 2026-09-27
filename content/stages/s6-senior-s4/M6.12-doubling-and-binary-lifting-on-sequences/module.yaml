@@ -12,6 +12,7 @@ lessons:
   - binary-lifting
 practice:
   - id: ccc22s3
-    note: Jump through a queue of linked instructions to find the earliest action.
+    note: Follow a queue of linked instructions to find the first one that fires.
   - id: ccc19s3
     note: Find the maximum value on the path between two nodes in a tree.
+    why: An older tree-query problem that still makes good practice for this module.

@@ -1,0 +1,17 @@
+layout: row
+panels:
+  - { id: word, viz: ArrayViz, title: Word }
+  - { id: freq, viz: ArrayViz, title: "Frequency array (a-h)" }
+alt: >-
+  The word "cabbage" scanned one character at a time, with a pointer moving across it. Beside
+  it, the first 8 slots of the frequency array, one slot per letter a through h, fill in as
+  each character is read: the slots for a, b, c, e and g grow while every other slot stays at 0.
+captions: vizrec
+presets:
+  - id: cabbage
+    label: The word "cabbage"
+    stdin: "cabbage\n"
+consistency:
+  description: The final non-zero slots in the frequency array equal the counts printed by examples/freq_count.py.
+  example: ../examples/freq_count.py
+  compare: output

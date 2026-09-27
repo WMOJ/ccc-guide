@@ -13,7 +13,6 @@ prereqs:
 lessons:
   - interval-dp
 practice:
-  - id: ccc21s5
-    note: Compute the minimum cost to break a wooden stick into unit pieces following given rules.
-  - id: ccc17s5
-    note: Solve an optimal matrix chain multiplication problem on a sequence.
+  - id: ccc16s4
+    note: Fill a table over subarrays, from shorter intervals to longer ones, to combine adjacent groups.
+    why: An older interval-DP problem that still makes good practice for this module.

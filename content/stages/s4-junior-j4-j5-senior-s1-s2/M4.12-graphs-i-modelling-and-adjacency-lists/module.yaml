@@ -12,7 +12,5 @@ prereqs:
 lessons:
   - graphs-and-adjacency-lists
 practice:
-  - id: ccc21j3
-    note: Find the shortest path in a tree of cities.
-  - id: ccc19j4
-    note: Determine if a map is connected.
+  - id: ccc18j5
+    note: Model a choose-your-own-adventure book as a graph of pages and links.
