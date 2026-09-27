@@ -1,0 +1,15 @@
+{"schema":1,
+"kind":"trace",
+"id":"backup_scores",
+"source":"backup_scores.py",
+"code":"scores = [1, 2, 3]\nbackup = scores\nscores[0] = 99\nprint(backup)\n",
+"alt":"scores and backup both point at the same list. Changing scores through an index also changes what backup shows, because there was never a second list.",
+"presets":[
+{"id":"default","label":"Run","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["scores",[1]]]}],"h":{"1":{"t":"list","v":["1","2","3"]}},"c":"Line 1 runs: `scores` is created with the value `[1, 2, 3]`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["scores",[1]],["backup",[1]]]}],"c":"Line 2 runs: `backup` is created with the value `[1, 2, 3]`. `backup` now names the exact same list as `scores`, not a copy of it."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["scores",[1]],["backup",[1]]]}],"h":{"1":{"t":"list","v":["99","2","3"]}},"c":"Line 3 runs: the one list that `scores` and `backup` both refer to changes; it is now `[99, 2, 3]`. This changes the one list both names point to, so `backup` changes too, even though line 3 never mentions `backup`."},
+{"l":4,"e":"end","st":[{"f":"<module>","l":4,"v":[["scores",[1]],["backup",[1]]]}],"o":"[99, 2, 3]\n","c":"Line 4 runs: it prints `[99, 2, 3]`. `backup` was never a separate list, so the change made through `scores` on the line above reached it too. The program has finished: no lines are left to run."}
+]}
+]}

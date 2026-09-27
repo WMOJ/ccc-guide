@@ -1203,6 +1203,11 @@ function niceTicks(min: number, max: number): number[] {
   return out;
 }
 
+/** An axis tick: thousands separated ("1,000,000"), as the captions write them (P6-D101). */
+function tickText(v: number): string {
+  return Math.abs(v) >= 1000 ? v.toLocaleString("en-US") : fmt(v);
+}
+
 export function layoutPlot(frames: PlotFrame[]): VizScene[] {
   const f0 = frames[0] as PlotFrame;
   const xt = f0.x.ticks ?? niceTicks(f0.x.min, f0.x.max);
@@ -1210,7 +1215,7 @@ export function layoutPlot(frames: PlotFrame[]): VizScene[] {
   let labelW = 0;
   for (const f of frames)
     for (const s of f.series) labelW = Math.max(labelW, textWidth(s.label, "label"));
-  const left = PAD + Math.max(...yt.map((v) => textWidth(fmt(v), "label"))) + 8;
+  const left = PAD + Math.max(...yt.map((v) => textWidth(tickText(v), "label"))) + 8;
   const right = labelW + 14 + PAD;
   const topY = PAD + 22;
   const plotW = MAX_NATURAL_WIDTH - left - right;
@@ -1238,7 +1243,7 @@ export function layoutPlot(frames: PlotFrame[]): VizScene[] {
         t: "text",
         x: left - 8,
         y: Y(v),
-        text: fmt(v),
+        text: tickText(v),
         role: "label",
         anchor: "end",
         muted: true,
@@ -1250,7 +1255,7 @@ export function layoutPlot(frames: PlotFrame[]): VizScene[] {
         t: "text",
         x: X(v),
         y: bottom + 16,
-        text: fmt(v),
+        text: tickText(v),
         role: "label",
         anchor: "middle",
         muted: true,
@@ -1370,6 +1375,15 @@ export function layoutPlot(frames: PlotFrame[]): VizScene[] {
       const cur = labels[i] as { y: number };
       if (cur.y - prev.y < 17) cur.y = prev.y + 17;
     }
+    // Spreading runs downward, so curves ending near the x-axis pushed their labels into the
+    // x-tick row (P6-D101: "n" over the "1,000" tick). Keep every label above the axis, moving
+    // the whole stack up instead.
+    const floor = bottom - 8;
+    for (let i = labels.length - 1; i >= 0; i -= 1) {
+      const cur = labels[i] as { y: number };
+      const limit = i === labels.length - 1 ? floor : (labels[i + 1] as { y: number }).y - 17;
+      if (cur.y > limit) cur.y = limit;
+    }
     for (const l of labels)
       items.push({
         key: l.key,
@@ -1457,6 +1471,19 @@ export function layoutPlot(frames: PlotFrame[]): VizScene[] {
         taken.push(box(spot));
         spotOf.set(i, spot);
       });
+    // Two labels stacked beside markers at the same x read top to bottom in value order: the
+    // larger value's label sits higher (P6-D101: "1,000" was drawn above "9,965.8").
+    const labelled = (f.markers ?? []).map((m, i) => ({ m, i })).filter(({ i }) => spotOf.has(i));
+    for (const a of labelled)
+      for (const b of labelled) {
+        const sa = spotOf.get(a.i) as Spot;
+        const sb = spotOf.get(b.i) as Spot;
+        if (a.m.x !== b.m.x || sa.anchor !== sb.anchor || sa.x !== sb.x) continue;
+        if (a.m.y > b.m.y && sa.y > sb.y) {
+          spotOf.set(a.i, { ...sa, y: sb.y });
+          spotOf.set(b.i, { ...sb, y: sa.y });
+        }
+      }
     (f.markers ?? []).forEach((m, i) => {
       items.push({
         key: `m${i}`,

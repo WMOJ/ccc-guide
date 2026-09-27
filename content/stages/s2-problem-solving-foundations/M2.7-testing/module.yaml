@@ -1,0 +1,17 @@
+id: M2.7
+title: Testing
+status: accepted
+objectives:
+  - Compare your program's output against the sample exactly, not just by how it looks.
+  - Write test inputs beyond the sample, including a hand-made case, an edge case, and one built to check speed.
+  - Recognize that the grader shows only sample feedback and per-subtask results up to the first failure, so local testing is your only view into anything beyond that.
+prereqs:
+  - M0.1
+  - M2.6
+lessons:
+  - testing
+practice:
+  - id: ccc22j1
+    note: Given how many regular boxes and how many small boxes of cupcakes a group has, find how many cupcakes are left over after handing one to each of a fixed number of students.
+  - id: ccc26j4
+    note: Given a sequence of moves a snail makes on a grid while leaving a trail behind it, count how many times it revisits a square it has already marked.

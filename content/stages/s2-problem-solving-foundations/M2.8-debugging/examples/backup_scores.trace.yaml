@@ -1,0 +1,8 @@
+example: backup_scores.py
+alt: >-
+  scores and backup both point at the same list. Changing scores through an index
+  also changes what backup shows, because there was never a second list.
+notes:
+  "2": "`backup` now names the exact same list as `scores`, not a copy of it."
+  "3": "This changes the one list both names point to, so `backup` changes too, even though line 3 never mentions `backup`."
+  "4": "`backup` was never a separate list, so the change made through `scores` on the line above reached it too."

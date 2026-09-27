@@ -1,0 +1,18 @@
+id: M2.8
+title: Debugging
+status: accepted
+objectives:
+  - Reproduce a bug on the smallest input that still shows it, before changing any code.
+  - Bisect a program by printing intermediate state and by using `assert`, removing every print before submitting.
+  - Recognize common bug families, including aliasing, mutating a list while iterating over it, integer versus float division, and a forgotten `.strip()`.
+prereqs:
+  - M0.6
+  - M2.7
+lessons:
+  - debugging
+practice:
+  - id: ccc23j3
+    note: Given each person's availability across five days, find the day or days when the most people can attend.
+  - id: ccc20j3
+    note: Given the coordinates of paint drops on a canvas, find the smallest rectangular frame that contains every drop without touching any of them.
+    why: An earlier, DMOJ-era problem, included here for extra practice.

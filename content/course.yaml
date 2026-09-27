@@ -165,13 +165,13 @@ stages:
         prereqs:
           - M0.1
           - M2.6
-        status: planned
+        status: accepted
       - id: M2.8
         title: Debugging
         prereqs:
           - M0.6
           - M2.7
-        status: planned
+        status: accepted
       - id: M2.9
         title: Complexity analysis and deriving the target from N
         prereqs:
