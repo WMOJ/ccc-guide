@@ -1,3 +1,2 @@
-a, b = input().split()
-print(a)
-print(b)
+parts = input().split()
+print(parts)

@@ -1,2 +1,3 @@
-price_a, price_b = map(int, input().split())
-print(price_a + price_b)
+parts = input().split()
+a, b = map(int, parts)
+print(a + b)

@@ -434,6 +434,16 @@ class Tracer:
                 return {"list": "list", "tuple": "tuple", "set": "set", "dict": "dictionary"}.get(obj["t"], "object")
         return "value"
 
+    def first_body_line(self, line):
+        """The first line after `line` that holds code (blank and comment-only lines skipped)."""
+        n = line + 1
+        while n <= len(self.lines):
+            text = self.src(n).strip()
+            if text and not text.startswith("#"):
+                return n
+            n += 1
+        return None
+
     def describe_line(self, ran, nxt, prev, cur, step):
         heap = cur["heap"]
         code = self.src(ran).strip()
@@ -474,7 +484,10 @@ class Tracer:
         if code.startswith(("if ", "elif ", "while ")):
             indent_ran = len(self.src(ran)) - len(self.src(ran).lstrip())
             indent_next = len(self.src(nxt)) - len(self.src(nxt).lstrip())
-            truth = nxt > ran and indent_next > indent_ran
+            # True only when the next line is this statement's own first body line. A false `elif`
+            # that falls through to the `else` body also jumps to a deeper line, which is not
+            # evidence of truth (P6-D89).
+            truth = nxt == self.first_body_line(ran) and indent_next > indent_ran
             if code.startswith("while "):
                 return "Line {} checks the loop condition: it is {}, so {}.".format(
                     ran,

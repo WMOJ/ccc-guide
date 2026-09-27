@@ -62,7 +62,7 @@ stages:
         title: Reading input
         prereqs:
           - M1.1
-        status: planned
+        status: accepted
       - id: M1.4
         title: Booleans and conditionals
         prereqs:

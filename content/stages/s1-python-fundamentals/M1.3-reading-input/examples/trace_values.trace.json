@@ -2,17 +2,19 @@
 "kind":"trace",
 "id":"trace_values",
 "source":"trace_values.py",
-"code":"price_a, price_b = map(int, input().split())\nprint(price_a + price_b)\n",
-"alt":"The program splits one line into two numbers, converts both with map and int, unpacks them into price_a and price_b, then prints their sum.",
+"code":"parts = input().split()\na, b = map(int, parts)\nprint(a + b)\n",
+"alt":"The program splits one line into text pieces, converts and assigns them to a and b with map, then prints their sum.",
 "presets":[
 {"id":"main","label":"Two small prices","stdin":"3 5\n","steps":[
 {"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
-{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["price_a","3"],["price_b","5"]]}],"c":"Line 1 runs: `price_a` is created with the value `3`. `price_b` is created with the value `5`. `input().split()` turns the line into a list of text pieces. `map(int, ...)` converts each piece to a number, and `price_a, price_b = ...` unpacks the two results into two names."},
-{"l":2,"e":"end","st":[{"f":"<module>","l":2,"v":[["price_a","3"],["price_b","5"]]}],"o":"8\n","c":"Line 2 runs: it prints `8`. The program has finished: no lines are left to run."}
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["parts",[1]]]}],"h":{"1":{"t":"list","v":["'3'","'5'"]}},"c":"Line 1 runs: `parts` is created with the value `['3', '5']`. `input().split()` breaks the line into a list of text pieces, kept under the name `parts`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["parts",[1]],["a","3"],["b","5"]]}],"c":"Line 2 runs: `a` is created with the value `3`. `b` is created with the value `5`. Converting every piece in `parts` with `map(int, parts)` gives two numbers, and the assignment sends them into `a` and `b`."},
+{"l":3,"e":"end","st":[{"f":"<module>","l":3,"v":[["parts",[1]],["a","3"],["b","5"]]}],"o":"8\n","c":"Line 3 runs: it prints `8`. The program has finished: no lines are left to run."}
 ]},
 {"id":"bigger","label":"Two bigger prices","stdin":"10 20\n","steps":[
 {"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
-{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["price_a","10"],["price_b","20"]]}],"c":"Line 1 runs: `price_a` is created with the value `10`. `price_b` is created with the value `20`. `input().split()` turns the line into a list of text pieces. `map(int, ...)` converts each piece to a number, and `price_a, price_b = ...` unpacks the two results into two names."},
-{"l":2,"e":"end","st":[{"f":"<module>","l":2,"v":[["price_a","10"],["price_b","20"]]}],"o":"30\n","c":"Line 2 runs: it prints `30`. The program has finished: no lines are left to run."}
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["parts",[1]]]}],"h":{"1":{"t":"list","v":["'10'","'20'"]}},"c":"Line 1 runs: `parts` is created with the value `['10', '20']`. `input().split()` breaks the line into a list of text pieces, kept under the name `parts`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["parts",[1]],["a","10"],["b","20"]]}],"c":"Line 2 runs: `a` is created with the value `10`. `b` is created with the value `20`. Converting every piece in `parts` with `map(int, parts)` gives two numbers, and the assignment sends them into `a` and `b`."},
+{"l":3,"e":"end","st":[{"f":"<module>","l":3,"v":[["parts",[1]],["a","10"],["b","20"]]}],"o":"30\n","c":"Line 3 runs: it prints `30`. The program has finished: no lines are left to run."}
 ]}
 ]}
