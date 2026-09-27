@@ -1,4 +1,5 @@
 // app/learn/[stage]/[module]/page.tsx — module overview (brief §7 thin wiring).
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ModulePage } from "@/components/layout";
 import type { CourseNav } from "@/components/layout/props";
@@ -11,11 +12,22 @@ import {
   getStage,
 } from "@/lib/content/course";
 import { resolvePracticeItem } from "@/lib/content/registry";
+import { plainTitle } from "@/lib/content/title";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
   return getAllModuleRouteParams();
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ stage: string; module: string }>;
+}): Promise<Metadata> {
+  const { stage, module } = await params;
+  const m = getModule(stage, module);
+  return m ? { title: `${m.id} ${plainTitle(m.title)}` } : {};
 }
 
 export default async function Page({

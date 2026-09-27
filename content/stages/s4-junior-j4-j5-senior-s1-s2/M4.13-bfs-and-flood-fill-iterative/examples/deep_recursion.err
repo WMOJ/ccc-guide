@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "deep_recursion.py", line 9, in <module>
+    fill(0)
+  File "deep_recursion.py", line 4, in fill
+    fill(c + 1)
+  File "deep_recursion.py", line 4, in fill
+    fill(c + 1)
+  File "deep_recursion.py", line 4, in fill
+    fill(c + 1)
+  [Previous line repeated 1395 more times]
+  File "deep_recursion.py", line 3, in fill
+    if c + 1 < n and not seen[c + 1]:
+RecursionError: maximum recursion depth exceeded

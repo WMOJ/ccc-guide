@@ -50,12 +50,12 @@ export function layoutTrace(states: TraceState[]): VizScene[] {
       titleW = Math.max(titleW, textWidth(frameTitle(fr.f), "title"));
       for (const [n, v] of fr.v) {
         nameW = Math.max(nameW, textWidth(n, "value"));
-        if (!isRef(v)) valW = Math.max(valW, textWidth(v, "value") + 14);
+        if (!isRef(v)) valW = Math.max(valW, textWidth(v, "value") + 18);
       }
     }
     if (s.returned !== null) {
       nameW = Math.max(nameW, textWidth("return", "label"));
-      if (!isRef(s.returned)) valW = Math.max(valW, textWidth(s.returned, "value") + 14);
+      if (!isRef(s.returned)) valW = Math.max(valW, textWidth(s.returned, "value") + 18);
     }
   }
   const fw = Math.max(titleW + 20, 10 + nameW + 10 + valW + 10);

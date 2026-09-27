@@ -4,6 +4,7 @@ import { ComingSoon, DraftBadge } from "@/components/ui/Badge";
 import { LiveReadCell } from "@/components/ui/LiveReadCell";
 import { RichTitle } from "@/components/ui/RichTitle";
 import { fmt, ui } from "@/components/ui/ui-strings";
+import { plainTitle } from "@/lib/content/title";
 import { Breadcrumb } from "./Breadcrumb";
 import { IndexRow } from "./IndexRow";
 import { isDraft } from "./LessonPage";
@@ -16,7 +17,11 @@ export function LessonMarks({ module }: { module: ModuleLink }) {
   return (
     <>
       {module.lessons.map((l) => (
-        <LiveReadCell key={l.id} lessonId={l.id} readLabel={`${l.title}: ${s.lesson.readState}`} />
+        <LiveReadCell
+          key={l.id}
+          lessonId={l.id}
+          readLabel={`${plainTitle(l.title)}: ${s.lesson.readState}`}
+        />
       ))}
     </>
   );

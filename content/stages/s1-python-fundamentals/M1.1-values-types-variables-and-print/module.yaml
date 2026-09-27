@@ -1,0 +1,20 @@
+id: M1.1
+title: Values, types, variables and `print`
+status: accepted
+objectives:
+  - Tell integers, floats, strings and booleans apart.
+  - Store values in variables with the assignment operator.
+  - Follow how reassignment changes what a variable refers to.
+  - Print values in exactly the format you intend.
+prereqs:
+  - M0.4
+lessons:
+  - variables-and-print
+practice:
+  - id: ccc24j1
+    note: Calculate the total cost from plate counts and fixed prices.
+  - id: ccc22j1
+    note: Compute leftover cupcakes from regular and small boxes.
+  - id: ccc20j1
+    note: Calculate a dog treat score using arithmetic formulas.
+    why: Practice integer operations and output comparison on an earlier contest problem.

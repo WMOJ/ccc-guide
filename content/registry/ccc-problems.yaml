@@ -1,16 +1,3 @@
-# content/registry/ccc-problems.yaml — P4 skeleton, P5 finalises (brief §2 A5).
-#
-# One entry per unique CCC problem, 2014-2026 (119 total, plan §4.7). id is the derived judge
-# slug (never hand-typed elsewhere — judgeUrl() in lib/registry/judge-url.ts is the only place
-# that builds a URL from it, R13/D-020). A crossover problem (hosted once, under its Senior
-# slug — plan §4.7) carries its Junior "aliases" entry; there is no separate Junior registry row
-# for it, by design (G-SCHEMA checks there is no duplicate).
-#
-# Titles are provisional, taken only from research/01-recon/past-problems-analysis.md (the id,
-# year, level, number and title columns only — NOT the Diff/Py-verdict/Cheap-partial-route
-# columns, which contain the kind of solution/score framing the app must never show, R14/C20).
-# topics, modules and the subtask outline are P5's job. "internal" is never rendered (G-SCHEMA).
-
 problems:
   - id: ccc14j1
     year: 2014
@@ -19,6 +6,10 @@ problems:
     title: Triangle Times
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.1
+    topics:
+      - conditionals
   - id: ccc14j2
     year: 2014
     level: J
@@ -26,6 +17,9 @@ problems:
     title: Vote Count
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - strings
   - id: ccc14j3
     year: 2014
     level: J
@@ -33,6 +27,10 @@ problems:
     title: Double Dice
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M2.7
+    topics:
+      - simulation
   - id: ccc14s1
     year: 2014
     level: S
@@ -43,6 +41,10 @@ problems:
         number: 4
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M4.5
+    topics:
+      - list simulation
   - id: ccc14s2
     year: 2014
     level: S
@@ -53,6 +55,12 @@ problems:
         number: 5
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.9
+      - M4.1
+    topics:
+      - dict
+      - mapping
   - id: ccc14s3
     year: 2014
     level: S
@@ -60,6 +68,13 @@ problems:
     title: The Geneva Confection
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.14
+      - M4.8
+      - M4.9
+      - M6.10
+    topics:
+      - stack
   - id: ccc14s4
     year: 2014
     level: S
@@ -67,6 +82,10 @@ problems:
     title: Tinted Glass Window
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - coordinate compression
+      - sweep
   - id: ccc14s5
     year: 2014
     level: S
@@ -74,6 +93,11 @@ problems:
     title: Lazy Fox
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M5.13
+      - M7.8
+    topics:
+      - dp over sorted pairs
   - id: ccc15j1
     year: 2015
     level: J
@@ -81,6 +105,10 @@ problems:
     title: Special Day
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.13
+    topics:
+      - conditionals
   - id: ccc15j2
     year: 2015
     level: J
@@ -88,6 +116,10 @@ problems:
     title: Happy or Sad
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.10
+    topics:
+      - strings
   - id: ccc15j3
     year: 2015
     level: J
@@ -95,6 +127,10 @@ problems:
     title: Rövarspråket
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M2.6
+    topics:
+      - string building
   - id: ccc15j4
     year: 2015
     level: J
@@ -102,6 +138,9 @@ problems:
     title: Wait Time
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - event simulation
   - id: ccc15j5
     year: 2015
     level: J
@@ -109,6 +148,10 @@ problems:
     title: π-day
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - dp
+      - memo recursion
   - id: ccc15s1
     year: 2015
     level: S
@@ -116,6 +159,10 @@ problems:
     title: Zero That Out
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M3.10
+    topics:
+      - stack
   - id: ccc15s2
     year: 2015
     level: S
@@ -123,6 +170,10 @@ problems:
     title: Jerseys
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M4.4
+    topics:
+      - greedy
   - id: ccc15s3
     year: 2015
     level: S
@@ -130,6 +181,13 @@ problems:
     title: Gates
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M4.11
+      - M5.6
+      - M5.10
+    topics:
+      - dsu
+      - greedy
   - id: ccc15s4
     year: 2015
     level: S
@@ -137,6 +195,14 @@ problems:
     title: Convex Hull
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.3
+      - M5.11
+      - M6.1
+      - M6.2
+      - M6.9
+    topics:
+      - dijkstra on states
   - id: ccc15s5
     year: 2015
     level: S
@@ -144,6 +210,10 @@ problems:
     title: Greedy For Pies
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M7.7
+    topics:
+      - multi-dimensional dp
   - id: ccc16j1
     year: 2016
     level: J
@@ -151,6 +221,10 @@ problems:
     title: Tournament Selection
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.5
+    topics:
+      - counting
   - id: ccc16j2
     year: 2016
     level: J
@@ -158,6 +232,10 @@ problems:
     title: Magic Squares
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M2.5
+    topics:
+      - 2d lists
   - id: ccc16j3
     year: 2016
     level: J
@@ -165,6 +243,10 @@ problems:
     title: Hidden Palindrome
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M5.12
+    topics:
+      - brute force
   - id: ccc16j4
     year: 2016
     level: J
@@ -172,6 +254,10 @@ problems:
     title: Arrival Time
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M3.5
+    topics:
+      - time simulation
   - id: ccc16s1
     year: 2016
     level: S
@@ -179,6 +265,9 @@ problems:
     title: Ragaman
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - counting
   - id: ccc16s2
     year: 2016
     level: S
@@ -189,6 +278,12 @@ problems:
         number: 5
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.6
+      - M4.7
+    topics:
+      - greedy
+      - sorting
   - id: ccc16s3
     year: 2016
     level: S
@@ -196,6 +291,12 @@ problems:
     title: Phonomenal Reviews
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M5.1
+      - M5.8
+      - M6.4
+    topics:
+      - tree
   - id: ccc16s4
     year: 2016
     level: S
@@ -203,6 +304,9 @@ problems:
     title: Combining Riceballs
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - interval dp
   - id: ccc16s5
     year: 2016
     level: S
@@ -210,6 +314,12 @@ problems:
     title: Circle of Life
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M6.12
+      - M7.5
+    topics:
+      - doubling
+      - xor
   - id: ccc17j1
     year: 2017
     level: J
@@ -217,6 +327,10 @@ problems:
     title: Quadrant Selection
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.4
+    topics:
+      - conditionals
   - id: ccc17j2
     year: 2017
     level: J
@@ -224,6 +338,10 @@ problems:
     title: Shifty Sum
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.12
+    topics:
+      - loops
   - id: ccc17j3
     year: 2017
     level: J
@@ -231,6 +349,10 @@ problems:
     title: Exactly Electrical
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M2.4
+    topics:
+      - math insight
   - id: ccc17j4
     year: 2017
     level: J
@@ -238,6 +360,11 @@ problems:
     title: Favourite Times
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M3.8
+      - M4.14
+    topics:
+      - periodicity
   - id: ccc17s1
     year: 2017
     level: S
@@ -245,6 +372,11 @@ problems:
     title: Sum Game
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M3.6
+      - M3.7
+    topics:
+      - prefix sums
   - id: ccc17s2
     year: 2017
     level: S
@@ -252,6 +384,11 @@ problems:
     title: High Tide, Low Tide
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.5
+      - M4.10
+    topics:
+      - sorting
   - id: ccc17s3
     year: 2017
     level: S
@@ -262,6 +399,10 @@ problems:
         number: 5
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M5.4
+    topics:
+      - frequency counting
   - id: ccc17s4
     year: 2017
     level: S
@@ -269,6 +410,12 @@ problems:
     title: Minimum Cost Flow
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M6.3
+      - M6.8
+    topics:
+      - dsu
+      - mst
   - id: ccc17s5
     year: 2017
     level: S
@@ -276,6 +423,12 @@ problems:
     title: RMT
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M7.2
+      - M7.11
+    topics:
+      - fenwick
+      - sqrt decomposition
   - id: ccc18j1
     year: 2018
     level: J
@@ -283,6 +436,11 @@ problems:
     title: Telemarketer or not?
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M0.7
+      - M1.3
+    topics:
+      - conditionals
   - id: ccc18j2
     year: 2018
     level: J
@@ -290,6 +448,10 @@ problems:
     title: Occupy parking
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.6
+    topics:
+      - strings
   - id: ccc18j3
     year: 2018
     level: J
@@ -297,6 +459,11 @@ problems:
     title: Are we there yet?
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M2.3
+      - M3.1
+    topics:
+      - prefix sums
   - id: ccc18j5
     year: 2018
     level: J
@@ -304,6 +471,11 @@ problems:
     title: Choose your own path
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M4.12
+      - M4.13
+    topics:
+      - graph bfs
   - id: ccc18s1
     year: 2018
     level: S
@@ -311,6 +483,11 @@ problems:
     title: Voronoi Villages
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.2
+      - M3.9
+    topics:
+      - sorting
   - id: ccc18s2
     year: 2018
     level: S
@@ -321,6 +498,12 @@ problems:
         number: 4
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.8
+      - M4.3
+      - M4.15
+    topics:
+      - 2d rotation
   - id: ccc18s3
     year: 2018
     level: S
@@ -328,6 +511,11 @@ problems:
     title: RoboThieves
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M5.5
+      - M5.9
+    topics:
+      - grid bfs
   - id: ccc18s4
     year: 2018
     level: S
@@ -335,6 +523,11 @@ problems:
     title: Balanced Trees
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M6.6
+    topics:
+      - memo
+      - number theory
   - id: ccc18s5
     year: 2018
     level: S
@@ -342,6 +535,12 @@ problems:
     title: Maximum Strategic Savings
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M7.4
+      - M7.13
+    topics:
+      - dsu
+      - mst
   - id: ccc19j1
     year: 2019
     level: J
@@ -349,6 +548,11 @@ problems:
     title: Winning Score
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M0.5
+      - M1.2
+    topics:
+      - arithmetic
   - id: ccc19j2
     year: 2019
     level: J
@@ -356,6 +560,10 @@ problems:
     title: Time to Decompress
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.7
+    topics:
+      - strings
   - id: ccc19j3
     year: 2019
     level: J
@@ -363,6 +571,12 @@ problems:
     title: Cold Compress
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.11
+      - M2.2
+      - M3.4
+    topics:
+      - run detection
   - id: ccc19j5
     year: 2019
     level: J
@@ -370,6 +584,9 @@ problems:
     title: Rule of Three
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - backtracking
   - id: ccc19s1
     year: 2019
     level: S
@@ -380,6 +597,12 @@ problems:
         number: 4
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.9
+      - M2.9
+      - M5.2
+    topics:
+      - parity
   - id: ccc19s2
     year: 2019
     level: S
@@ -387,6 +610,11 @@ problems:
     title: Pretty Average Primes
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M4.6
+      - M5.3
+    topics:
+      - primes
   - id: ccc19s3
     year: 2019
     level: S
@@ -394,6 +622,10 @@ problems:
     title: Arithmetic Square
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.4
+    topics:
+      - constructive casework
   - id: ccc19s4
     year: 2019
     level: S
@@ -401,6 +633,13 @@ problems:
     title: Tourism
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M6.5
+      - M6.11
+      - M7.6
+    topics:
+      - dp
+      - range max
   - id: ccc19s5
     year: 2019
     level: S
@@ -408,6 +647,11 @@ problems:
     title: "Triangle: The Data Structure"
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M7.1
+      - M7.3
+    topics:
+      - 2d doubling dp
   - id: ccc20j1
     year: 2020
     level: J
@@ -415,6 +659,12 @@ problems:
     title: Dog Treats
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.10
+      - M0.4
+      - M1.1
+    topics:
+      - arithmetic
   - id: ccc20j2
     year: 2020
     level: J
@@ -422,6 +672,10 @@ problems:
     title: Epidemiology
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.8
+    topics:
+      - while loop
   - id: ccc20j3
     year: 2020
     level: J
@@ -429,6 +683,12 @@ problems:
     title: Art
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M2.1
+      - M3.2
+    topics:
+      - max parsing
+      - min
   - id: ccc20j4
     year: 2020
     level: J
@@ -436,6 +696,10 @@ problems:
     title: Cyclic Shifts
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - brute force
+      - strings
   - id: ccc20s1
     year: 2020
     level: S
@@ -443,6 +707,13 @@ problems:
     title: Surmising a Sprinter's Speed
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M2.8
+      - M3.3
+      - M4.2
+    topics:
+      - scan
+      - sort
   - id: ccc20s2
     year: 2020
     level: S
@@ -453,6 +724,12 @@ problems:
         number: 5
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.7
+      - M4.13
+      - M5.7
+    topics:
+      - graph bfs
   - id: ccc20s3
     year: 2020
     level: S
@@ -460,6 +737,12 @@ problems:
     title: Searching for Strings
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M6.7
+      - M6.13
+      - M7.9
+    topics:
+      - hashing
   - id: ccc20s4
     year: 2020
     level: S
@@ -467,6 +750,9 @@ problems:
     title: Swapping Seats
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - prefix sums circular
   - id: ccc20s5
     year: 2020
     level: S
@@ -474,6 +760,11 @@ problems:
     title: Josh's Double Bacon Deluxe
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M7.12
+      - M7.14
+    topics:
+      - probability dp
   - id: ccc21j1
     year: 2021
     level: J
@@ -481,6 +772,10 @@ problems:
     title: Boiling Water
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.3
+    topics:
+      - formula
   - id: ccc21j2
     year: 2021
     level: J
@@ -488,6 +783,11 @@ problems:
     title: Silent Auction
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.7
+      - M1.10
+    topics:
+      - max with tie-break
   - id: ccc21j3
     year: 2021
     level: J
@@ -495,6 +795,10 @@ problems:
     title: Secret Instructions
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.9
+    topics:
+      - sentinel loop
   - id: ccc21j4
     year: 2021
     level: J
@@ -502,6 +806,9 @@ problems:
     title: Arranging Books
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - greedy counting
   - id: ccc21s1
     year: 2021
     level: S
@@ -509,6 +816,10 @@ problems:
     title: Crazy Fencing
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M3.7
+    topics:
+      - geometry sum
   - id: ccc21s2
     year: 2021
     level: S
@@ -519,6 +830,12 @@ problems:
         number: 5
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M4.12
+      - M4.15
+      - M5.2
+    topics:
+      - parity counting
   - id: ccc21s3
     year: 2021
     level: S
@@ -526,6 +843,10 @@ problems:
     title: Lunch Concert
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - binary search
+      - convexity
   - id: ccc21s4
     year: 2021
     level: S
@@ -533,6 +854,11 @@ problems:
     title: Daily Commute
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M6.2
+    topics:
+      - bfs
+      - multiset
   - id: ccc21s5
     year: 2021
     level: S
@@ -540,6 +866,12 @@ problems:
     title: Math Homework
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M6.12
+      - M7.10
+    topics:
+      - difference arrays
+      - gcd
   - id: ccc22j1
     year: 2022
     level: J
@@ -547,6 +879,10 @@ problems:
     title: Cupcake Party
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.1
+    topics:
+      - arithmetic
   - id: ccc22j2
     year: 2022
     level: J
@@ -554,6 +890,11 @@ problems:
     title: Fergusonball Ratings
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.5
+    topics:
+      - flag
+      - loop
   - id: ccc22j3
     year: 2022
     level: J
@@ -561,6 +902,11 @@ problems:
     title: Harp Tuning
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.10
+      - M2.6
+    topics:
+      - tokenizing
   - id: ccc22j5
     year: 2022
     level: J
@@ -568,6 +914,10 @@ problems:
     title: Square Pool
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.14
+    topics:
+      - candidate coordinates
   - id: ccc22s1
     year: 2022
     level: S
@@ -575,6 +925,9 @@ problems:
     title: Good Fours and Good Fives
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - math loop
   - id: ccc22s2
     year: 2022
     level: S
@@ -585,7 +938,17 @@ problems:
         number: 4
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
-      note: "Title corrected to 'Good Groups' (matches the ccc22s* 'Good ___' naming pattern) after the P4 WMOJ live verification run flagged a mismatch against the recon table's 'Group Work' (work/04-app/wmoj-verification-run-1.md)."
+      note: Title corrected to 'Good Groups' (matches the ccc22s* 'Good ___' naming
+        pattern) after the P4 WMOJ live verification run flagged a mismatch
+        against the recon table's 'Group Work'
+        (work/04-app/wmoj-verification-run-1.md).
+    modules:
+      - C.4
+      - M4.1
+      - M4.7
+      - M5.2
+    topics:
+      - dict lookup
   - id: ccc22s3
     year: 2022
     level: S
@@ -593,6 +956,10 @@ problems:
     title: Good Samples
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M5.8
+    topics:
+      - constructive greedy
   - id: ccc22s4
     year: 2022
     level: S
@@ -600,6 +967,12 @@ problems:
     title: Good Triplets
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M6.6
+      - M6.9
+    topics:
+      - counting
+      - prefix sums
   - id: ccc22s5
     year: 2022
     level: S
@@ -607,6 +980,10 @@ problems:
     title: Good Influencers
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M7.6
+    topics:
+      - tree dp
   - id: ccc23j1
     year: 2023
     level: J
@@ -614,6 +991,11 @@ problems:
     title: Deliv-e-droid
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M0.7
+      - M1.2
+    topics:
+      - arithmetic
   - id: ccc23j2
     year: 2023
     level: J
@@ -621,6 +1003,13 @@ problems:
     title: Chili Peppers
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.2
+      - M1.4
+      - M1.6
+      - M1.11
+    topics:
+      - lookup table
   - id: ccc23j3
     year: 2023
     level: J
@@ -628,6 +1017,13 @@ problems:
     title: Special Event
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.8
+      - M2.2
+      - M2.5
+      - M3.4
+    topics:
+      - column counting
   - id: ccc23j5
     year: 2023
     level: J
@@ -635,6 +1031,9 @@ problems:
     title: CCC Word Hunt
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - grid brute force
   - id: ccc23s1
     year: 2023
     level: S
@@ -645,6 +1044,13 @@ problems:
         number: 4
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.9
+      - M3.3
+      - M3.7
+      - M4.4
+    topics:
+      - counting
   - id: ccc23s2
     year: 2023
     level: S
@@ -652,6 +1058,13 @@ problems:
     title: Symmetric Mountains
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.9
+      - M4.5
+      - M5.12
+      - M6.11
+    topics:
+      - on interval expansion
   - id: ccc23s3
     year: 2023
     level: S
@@ -659,6 +1072,12 @@ problems:
     title: Palindromic Poster
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M4.12
+      - M5.3
+      - M5.9
+    topics:
+      - constructive casework
   - id: ccc23s4
     year: 2023
     level: S
@@ -666,6 +1085,15 @@ problems:
     title: Minimum Cost Roads
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.3
+      - M5.11
+      - M6.1
+      - M6.3
+      - M6.8
+    topics:
+      - dijkstra
+      - mst
   - id: ccc23s5
     year: 2023
     level: S
@@ -673,6 +1101,12 @@ problems:
     title: The Filter
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M7.1
+      - M7.3
+      - M7.8
+    topics:
+      - number theory cantor
   - id: ccc24j1
     year: 2024
     level: J
@@ -680,6 +1114,14 @@ problems:
     title: Conveyor Belt Sushi
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.1
+      - C.10
+      - M0.5
+      - M1.1
+      - M1.15
+    topics:
+      - arithmetic
   - id: ccc24j2
     year: 2024
     level: J
@@ -687,6 +1129,12 @@ problems:
     title: Dusa And The Yobis
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.3
+      - M1.5
+    topics:
+      - unknown input count
+      - while loop
   - id: ccc24j3
     year: 2024
     level: J
@@ -694,6 +1142,15 @@ problems:
     title: Bronze Count
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.8
+      - M1.13
+      - M2.2
+      - M3.1
+      - M3.3
+    topics:
+      - distinct
+      - sorting
   - id: ccc24j4
     year: 2024
     level: J
@@ -701,6 +1158,10 @@ problems:
     title: Troublesome Keys
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M2.4
+    topics:
+      - string case analysis
   - id: ccc24j5
     year: 2024
     level: J
@@ -708,6 +1169,13 @@ problems:
     title: Harvest Waterloo
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.3
+      - C.7
+      - M4.13
+      - M5.7
+    topics:
+      - flood fill
   - id: ccc24s1
     year: 2024
     level: S
@@ -715,6 +1183,13 @@ problems:
     title: Hat Circle
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M2.9
+      - M3.5
+      - M3.9
+      - M4.2
+    topics:
+      - indexing
   - id: ccc24s2
     year: 2024
     level: S
@@ -722,6 +1197,13 @@ problems:
     title: Heavy-Light Composition
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M4.6
+      - M4.9
+      - M4.11
+      - M6.13
+    topics:
+      - counting
   - id: ccc24s3
     year: 2024
     level: S
@@ -729,6 +1211,14 @@ problems:
     title: Swipe
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.4
+      - M5.1
+      - M5.6
+      - M6.10
+    topics:
+      - constructive
+      - two pointers
   - id: ccc24s4
     year: 2024
     level: S
@@ -736,6 +1226,11 @@ problems:
     title: Painting Roads
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M6.4
+      - M6.5
+    topics:
+      - dfs tree
   - id: ccc24s5
     year: 2024
     level: S
@@ -743,6 +1238,15 @@ problems:
     title: Chocolate Bar Partition
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M7.4
+      - M7.5
+      - M7.9
+      - M7.13
+    topics:
+      - dp
+      - hashmap
+      - prefix sums
   - id: ccc25j1
     year: 2025
     level: J
@@ -750,6 +1254,11 @@ problems:
     title: Roller Coaster Ride
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M0.4
+      - M1.2
+    topics:
+      - arithmetic
   - id: ccc25j2
     year: 2025
     level: J
@@ -757,6 +1266,12 @@ problems:
     title: Donut Shop
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.2
+      - M1.6
+      - M2.1
+    topics:
+      - loop
   - id: ccc25j3
     year: 2025
     level: J
@@ -764,6 +1279,14 @@ problems:
     title: Product Codes
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.9
+      - M1.12
+      - M2.3
+      - M3.2
+      - M3.4
+    topics:
+      - tokenizing
   - id: ccc25j4
     year: 2025
     level: J
@@ -771,6 +1294,9 @@ problems:
     title: Sunny Days
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - run processing
   - id: ccc25j5
     year: 2025
     level: J
@@ -778,6 +1304,9 @@ problems:
     title: Connecting Territories
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - grid dp
   - id: ccc25s1
     year: 2025
     level: S
@@ -785,6 +1314,13 @@ problems:
     title: Positioning Peter's Paintings
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.5
+      - M2.8
+      - M3.10
+      - M4.4
+    topics:
+      - o1 math
   - id: ccc25s2
     year: 2025
     level: S
@@ -792,6 +1328,14 @@ problems:
     title: Cryptogram Cracking Club
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.8
+      - M3.8
+      - M4.10
+      - M4.14
+    topics:
+      - modulo
+      - parsing
   - id: ccc25s3
     year: 2025
     level: S
@@ -799,6 +1343,12 @@ problems:
     title: Pretty Pens
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M5.4
+      - M5.11
+    topics:
+      - dynamic ordered sets
+      - greedy
   - id: ccc25s4
     year: 2025
     level: S
@@ -806,6 +1356,12 @@ problems:
     title: Floor is Lava
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M6.1
+      - M6.2
+      - M6.7
+    topics:
+      - dijkstra on edge-states
   - id: ccc25s5
     year: 2025
     level: S
@@ -813,6 +1369,15 @@ problems:
     title: To-Do List
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M7.1
+      - M7.2
+      - M7.10
+      - M7.12
+      - M7.14
+    topics:
+      - online
+      - segment tree custom monoid
   - id: ccc26j1
     year: 2026
     level: J
@@ -820,6 +1385,11 @@ problems:
     title: Concert Tickets
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M0.4
+      - M1.4
+    topics:
+      - arithmetic
   - id: ccc26j2
     year: 2026
     level: J
@@ -827,6 +1397,12 @@ problems:
     title: Olympic Scores
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M1.7
+      - M2.1
+    topics:
+      - max
+      - min
   - id: ccc26j3
     year: 2026
     level: J
@@ -834,6 +1410,13 @@ problems:
     title: Creative Candy Consumption
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M2.7
+      - M3.1
+    topics:
+      - "2026"
+      - always has subtasks since 2022 2-mark large-input traps 2024
+      - two-pointer simulation
   - id: ccc26j4
     year: 2026
     level: J
@@ -841,6 +1424,12 @@ problems:
     title: Snail Path
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M3.6
+    topics:
+      - every j4 since 2021 has a final n  1010 subtask averages 2448
+      - hashing
+      - sets
   - id: ccc26s1
     year: 2026
     level: S
@@ -848,6 +1437,15 @@ problems:
     title: Baby Hop, Giant Hop
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - C.6
+      - M3.10
+      - M4.3
+      - M4.8
+    topics:
+      - "88137"
+      - number-theory casework
+      - then 2026 769 lowest s1 in 20162026
   - id: ccc26s2
     year: 2026
     level: S
@@ -858,6 +1456,14 @@ problems:
         number: 5
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M4.1
+      - M5.10
+    topics:
+      - 0230 hardest 2019 j5 dmoj 20 recent j5s are textbook algorithms
+      - 2023 426
+      - 42107 2020 416
+      - difference array
   - id: ccc26s3
     year: 2026
     level: S
@@ -865,6 +1471,14 @@ problems:
     title: Common Card Choice
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M5.5
+      - M5.13
+    topics:
+      - 1425 every year non-zero avg fell to 349 2024
+      - constructive
+      - parity
+      - randomized
   - id: ccc26s4
     year: 2026
     level: S
@@ -872,6 +1486,12 @@ problems:
     title: Minecarts
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules: []
+    topics:
+      - "013072"
+      - binary search
+      - fenwick
+      - greedy
   - id: ccc26s5
     year: 2026
     level: S
@@ -879,3 +1499,13 @@ problems:
     title: On the Fence
     internal:
       titleSource: research/01-recon/past-problems-analysis.md
+    modules:
+      - M7.7
+      - M7.11
+      - M7.12
+      - M7.13
+    topics:
+      - 005046 2026 non-zero avg 112
+      - ad hoc geometry
+      - dmoj 30 pts
+      - math

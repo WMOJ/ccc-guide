@@ -63,7 +63,9 @@ export function ClosingTitleBlock({
             <RichTitle text={next.title} />
           </span>
           {next.moduleTitle ? (
-            <span className="text-ink-3 text-small">{next.moduleTitle}</span>
+            <span className="text-ink-3 text-small">
+              <RichTitle text={next.moduleTitle} />
+            </span>
           ) : null}
         </a>
       </nav>

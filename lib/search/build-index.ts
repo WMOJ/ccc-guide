@@ -4,6 +4,7 @@
 import { getCourse } from "../content/course";
 import { getGlossaryTerms } from "../content/glossary";
 import { getAllProblems } from "../content/registry";
+import { plainTitle } from "../content/title";
 
 export interface SearchIndexEntry {
   kind: "lesson" | "term" | "problem";
@@ -24,7 +25,7 @@ export function buildSearchIndex(): SearchIndexEntry[] {
         entries.push({
           kind: "lesson",
           id: lesson.id,
-          title: lesson.title,
+          title: plainTitle(lesson.title),
           label: m.id,
           href: lesson.href,
         });

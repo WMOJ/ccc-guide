@@ -52,7 +52,7 @@ stages:
         title: Values, types, variables and `print`
         prereqs:
           - M0.4
-        status: planned
+        status: accepted
       - id: M1.2
         title: Integer arithmetic and operators
         prereqs:
@@ -316,7 +316,7 @@ stages:
         prereqs:
           - M4.8
           - M4.12
-        status: planned
+        status: accepted
       - id: M4.14
         title: Compressed data and values you cannot expand
         prereqs:
@@ -422,7 +422,7 @@ stages:
         prereqs:
           - M4.12
           - M5.11
-        status: planned
+        status: accepted
       - id: M6.2
         title: State-space graph modelling and sparsification
         prereqs:

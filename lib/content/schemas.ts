@@ -84,6 +84,13 @@ export type ConceptsFile = z.infer<typeof conceptsSchema>;
 
 // --- content/ui/strings.yaml (matches components/ui/ui-strings.ts's UiStrings) -----------------
 
+/** /start and /about: a title, a lede and short headed sections of plain paragraphs. */
+const prosePageSchema = z.object({
+  title: z.string(),
+  lede: z.string(),
+  sections: z.array(z.object({ heading: z.string(), paragraphs: z.array(z.string()).min(1) })),
+});
+
 export const uiStringsSchema = z.object({
   siteName: z.string(),
   skipLink: z.string(),
@@ -192,6 +199,8 @@ export const uiStringsSchema = z.object({
     howHeading: z.string(),
     how: z.array(z.object({ term: z.string(), text: z.string() })),
   }),
+  startPage: prosePageSchema,
+  aboutPage: prosePageSchema,
   courseMap: z.object({
     title: z.string(),
     intro: z.string(),

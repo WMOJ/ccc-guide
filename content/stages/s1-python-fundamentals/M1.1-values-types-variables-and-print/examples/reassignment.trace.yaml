@@ -1,0 +1,7 @@
+example: reassignment.py
+alt: >-
+  The program assigns 10 to total, prints it, increases total by 5, prints 15, and finally prints total alongside the string tag box.
+notes:
+  "1": total is created and points to integer 10.
+  "4": total is updated to refer to 15.
+  "7": tag refers to the string "box".

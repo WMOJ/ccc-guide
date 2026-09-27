@@ -4,6 +4,7 @@ import type { ProblemsPageProps } from "@/components/layout/props";
 import { JudgeBadge } from "@/components/ui/Badge";
 import { cn } from "@/components/ui/cn";
 import { fmt, ui } from "@/components/ui/ui-strings";
+import { plainTitle } from "@/lib/content/title";
 import { SiteFrame } from "./SiteFrame";
 import { h1Class, h2Class } from "./type-styles";
 
@@ -93,13 +94,17 @@ export function ProblemsPage({ years }: ProblemsPageProps) {
                             <a
                               key={m.id}
                               href={m.href}
-                              title={m.title}
+                              title={plainTitle(m.title)}
                               className="text-blueline tnum underline decoration-1 underline-offset-[0.2em] hover:text-blueline-deep"
                             >
                               {m.id}
                             </a>
                           ) : (
-                            <span key={m.id} title={m.title} className="text-ink-3 tnum">
+                            <span
+                              key={m.id}
+                              title={plainTitle(m.title)}
+                              className="text-ink-3 tnum"
+                            >
                               {m.id}
                             </span>
                           ),

@@ -3,6 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { parse } from "yaml";
+import { getCourse } from "./course";
 import { getBuildEnv } from "./env";
 import { glossarySchema } from "./schemas";
 import type { GlossaryTermView } from "./types";
@@ -28,6 +29,7 @@ export function getGlossaryTerms(): GlossaryTermView[] {
       id: t.id,
       term: t.term,
       definition: t.definition,
+      introducedIn: t.introducedIn ? resolveIntroducedIn(t.introducedIn) : undefined,
     }))
     .sort((a, b) => a.term.localeCompare(b.term));
   return cached;
@@ -35,4 +37,21 @@ export function getGlossaryTerms(): GlossaryTermView[] {
 
 export function getGlossaryTerm(id: string): GlossaryTermView | null {
   return getGlossaryTerms().find((t) => t.id === id) ?? null;
+}
+
+/**
+ * `<moduleId>/<lessonSlug>` → the lesson that introduces a term. Links to the lesson when it is
+ * readable in this build; otherwise names the module without a link.
+ */
+function resolveIntroducedIn(lessonId: string): GlossaryTermView["introducedIn"] {
+  const moduleId = lessonId.split("/")[0] ?? "";
+  for (const stage of getCourse().stages) {
+    const m = stage.modules.find((mm) => mm.id === moduleId);
+    if (!m) continue;
+    const lesson = m.href ? m.lessons.find((l) => l.id === lessonId) : undefined;
+    return lesson
+      ? { lessonId, moduleId, title: lesson.title, href: lesson.href }
+      : { lessonId, moduleId, title: m.title, href: null };
+  }
+  return undefined;
 }

@@ -32,7 +32,10 @@ export function HomePage({ stages, lessonOrder }: HomePageProps) {
               href: l.href,
               moduleId: l.moduleId,
             }))}
-            labels={{ continueLabel: h.continueLabel, startLabel: h.startLabel }}
+            labels={{
+              continueLabel: h.continueLabel,
+              startLabel: fmt(h.startLabel, { n: startStage(stages, lessonOrder[0]?.moduleId) }),
+            }}
           />
         </div>
       ) : null}
@@ -75,4 +78,9 @@ export function HomePage({ stages, lessonOrder }: HomePageProps) {
       ) : null}
     </SiteFrame>
   );
+}
+
+/** Display number of the stage holding `moduleId` (the first readable lesson's stage). */
+function startStage(stages: HomePageProps["stages"], moduleId: string | undefined): string {
+  return stages.find((st) => st.modules.some((m) => m.id === moduleId))?.number ?? "";
 }

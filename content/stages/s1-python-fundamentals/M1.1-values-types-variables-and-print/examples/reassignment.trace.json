@@ -1,0 +1,17 @@
+{"schema":1,
+"kind":"trace",
+"id":"reassignment",
+"source":"reassignment.py",
+"code":"total = 10\nprint(total)\n\ntotal = total + 5\nprint(total)\n\ntag = \"box\"\nprint(total, tag)\n",
+"alt":"The program assigns 10 to total, prints it, increases total by 5, prints 15, and finally prints total alongside the string tag box.",
+"presets":[
+{"id":"default","label":"Run","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["total","10"]]}],"c":"Line 1 runs: `total` is created with the value `10`. total is created and points to integer 10."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["total","10"]]}],"o":"10\n","c":"Line 2 runs: it prints `10`."},
+{"l":5,"e":"line","st":[{"f":"<module>","l":5,"v":[["total","15"]]}],"c":"Line 4 runs: `total` changes from `10` to `15`. total is updated to refer to 15."},
+{"l":7,"e":"line","st":[{"f":"<module>","l":7,"v":[["total","15"]]}],"o":"15\n","c":"Line 5 runs: it prints `15`."},
+{"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["total","15"],["tag","'box'"]]}],"c":"Line 7 runs: `tag` is created with the value `'box'`. tag refers to the string \"box\"."},
+{"l":8,"e":"end","st":[{"f":"<module>","l":8,"v":[["total","15"],["tag","'box'"]]}],"o":"15 box\n","c":"Line 8 runs: it prints `15 box`. The program has finished: no lines are left to run."}
+]}
+]}

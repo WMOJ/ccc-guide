@@ -1,0 +1,21 @@
+id: M6.1
+title: Dijkstra's shortest paths
+status: accepted
+objectives:
+  - Explain why settling the closest node first needs non-negative edge weights.
+  - Implement Dijkstra's algorithm with Python's heapq module.
+  - Skip out-of-date heap entries instead of updating them.
+  - Store the graph and read input so the search runs fast on PyPy 3.8.
+prereqs:
+  - M4.12
+  - M5.11
+lessons:
+  - dijkstras-algorithm
+practice:
+  - id: ccc25s4
+    note: Find the cheapest way through a set of rooms and tunnels of different temperatures.
+  - id: ccc23s4
+    note: Keep the cheapest set of roads that leaves every shortest distance unchanged.
+  - id: ccc15s4
+    note: Find the fastest crossing between islands while keeping hull damage under a limit.
+    why: An older weighted shortest-path problem that still makes good practice for this module.

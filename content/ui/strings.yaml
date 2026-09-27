@@ -1,6 +1,6 @@
 # content/ui/strings.yaml — ALL learner-facing UI copy (plan §4.6.2). P4 skeleton seeded from
-# the design lead's working defaults (main-app/components/ui/ui-strings.ts DEFAULTS); P5 writes
-# the final, style-guide-checked copy. Loaded and Zod-validated by lib/content/strings.ts
+# the design lead's working defaults; P5 rewrote it in the approved voice (STYLE-GUIDE.md), and
+# G-STYLE checks every string here. Loaded and Zod-validated by lib/content/strings.ts
 # (getUiStrings()). Working title: "CCC Python Course" (brief §7) until P5/Manager decides.
 
 siteName: CCC Python Course
@@ -69,7 +69,7 @@ code:
   python: Python
   copy: Copy
   copied: Copied
-  copyFailed: Press Ctrl+C to copy
+  copyFailed: Selected. Press Ctrl+C or ⌘C to copy
   bad38: Not valid on the CCC grader
   input: Input
   output: Output
@@ -94,7 +94,7 @@ home:
     - Read a lesson, watch the code run step by step, then practise on real CCC problems on WMOJ and
       DMOJ.
   continueLabel: Continue where you left off
-  startLabel: Start with Stage 0
+  startLabel: Start with Stage {n}
   sheetIndex: The course, stage by stage
   modules: "{n} modules"
   modulesOne: "{n} module"
@@ -110,6 +110,53 @@ home:
         your answers.
     - term: Keep your place
       text: Mark a lesson as read when you finish it. The marks are saved in this browser only.
+startPage:
+  title: Start here
+  lede: What this course covers, how to read a lesson, and where you practise.
+  sections:
+    - heading: What the CCC is
+      paragraphs:
+        - The Canadian Computing Competition (CCC) is a programming contest that the University of
+          Waterloo runs every year. It has a Junior contest and a Senior contest, with five problems
+          in each.
+        - This course teaches the Python and the problem-solving ideas those problems use. It
+          starts at your first line of code, so you do not need to know any programming yet.
+    - heading: How to read a lesson
+      paragraphs:
+        - Read the lessons in order. Each one explains one idea and shows it working on a small
+          program.
+        - Many lessons include a step-through. It runs a program or an algorithm one step at a time,
+          and you choose when to take the next step.
+        - When you finish a lesson, mark it as read. The mark is saved in this browser, and the home
+          page uses it to send you back to where you stopped.
+    - heading: How practice works
+      paragraphs:
+        - Most modules end with a short list of real CCC problems. You solve them on WMOJ or DMOJ,
+          two online judges. A judge runs your program on the official test data and tells you
+          whether it passed.
+        - Each practice link opens the problem on its judge. To submit a solution, you need a free
+          account on that judge.
+    - heading: What you need
+      paragraphs:
+        - You need a way to write and run Python programs. This course teaches Python and contest
+          techniques. It does not explain how to install software or set up a computer.
+aboutPage:
+  title: About
+  lede: Who made the problems, where you practise them, and what this course keeps about you.
+  sections:
+    - heading: About this course
+      paragraphs:
+        - This course is free and non-commercial. There are no accounts and no ads. Your read marks
+          are saved in this browser and are never sent anywhere.
+    - heading: Credits
+      paragraphs:
+        - CCC problems and contest materials are written by the Centre for Education in Mathematics
+          and Computing (CEMC) at the University of Waterloo, and are used here under CC BY-NC 4.0.
+          This course is not affiliated with or endorsed by the CEMC.
+    - heading: Judges
+      paragraphs:
+        - Practice links go to WMOJ and DMOJ, two independent online judges that host CCC problems.
+          This course is not affiliated with either judge.
 courseMap:
   title: Course map
   intro: Every stage and module in order. Modules that are not written yet say so.

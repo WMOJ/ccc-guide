@@ -1,5 +1,6 @@
 import type { GlossaryPageProps } from "@/components/layout/props";
 import { cn } from "@/components/ui/cn";
+import { RichTitle } from "@/components/ui/RichTitle";
 import { ui } from "@/components/ui/ui-strings";
 import { SiteFrame } from "./SiteFrame";
 import { h1Class, h2Class } from "./type-styles";
@@ -86,12 +87,12 @@ export function GlossaryPage({ terms }: GlossaryPageProps) {
                           className="text-blueline underline decoration-1 underline-offset-[0.2em] hover:text-blueline-deep"
                         >
                           <span className="tnum">{t.introducedIn.moduleId}</span>{" "}
-                          {t.introducedIn.title}
+                          <RichTitle text={t.introducedIn.title} />
                         </a>
                       ) : (
                         <span>
                           <span className="tnum">{t.introducedIn.moduleId}</span>{" "}
-                          {t.introducedIn.title}
+                          <RichTitle text={t.introducedIn.title} />
                         </span>
                       )}
                     </p>
