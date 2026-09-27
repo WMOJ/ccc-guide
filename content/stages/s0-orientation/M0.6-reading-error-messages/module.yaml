@@ -1,0 +1,12 @@
+id: M0.6
+title: Reading error messages
+status: gated
+objectives:
+  - "Read a Python traceback: find the file name, the line number, and the error on the last line."
+  - Recognize a SyntaxError, a NameError, a TypeError and a ValueError, and fix the mistake behind each one.
+  - Name the runtime errors covered in later modules, and say which module covers each one.
+prereqs:
+  - M0.1
+lessons:
+  - reading-error-messages
+practice: []

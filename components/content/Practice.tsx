@@ -17,6 +17,15 @@ export function Practice({
   headingId?: string;
 }) {
   if (items.length === 0) return null;
+  // Worded by count and by the judges actually listed (P6-D34).
+  function practiceIntro(list: PracticeItemView[]): string {
+    const judges = [...new Set(list.map((i) => i.problem.judge))];
+    const [first] = judges;
+    const only = judges.length === 1 && first ? judgeName(first) : null;
+    if (list.length === 1 && only) return fmt(s.introOne, { judge: only });
+    if (only) return fmt(s.introOneJudge, { judge: only });
+    return s.introBothJudges;
+  }
   const s = ui().practice;
   return (
     <section data-exhibit="" data-ui="" aria-labelledby={headingId}>
@@ -26,7 +35,7 @@ export function Practice({
       >
         {s.heading}
       </h2>
-      <p className="mt-2 text-ink-2 text-small">{s.intro}</p>
+      <p className="mt-2 text-ink-2 text-small">{practiceIntro(items)}</p>
       <ol className="mt-4 border-rule border-t">
         {items.map(({ problem: p, note, why }) => (
           <li

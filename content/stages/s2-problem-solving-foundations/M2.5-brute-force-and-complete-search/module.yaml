@@ -1,0 +1,22 @@
+id: M2.5
+title: Brute force and complete search
+status: gated
+objectives:
+  - Try every candidate answer with nested loops when the input is small enough.
+  - Enumerate every pair, triple or subset systematically, without missing or repeating one.
+  - Prune an obviously wasteful candidate early, without changing which candidates count.
+  - Recognize when the number of candidates is small enough for this to finish in time.
+prereqs:
+  - M1.8
+  - M1.13
+lessons:
+  - brute-force-and-complete-search
+practice:
+  - id: ccc22s1
+    note: Find how many ways a number can be written as a sum of 4s and 5s.
+  - id: ccc16j3
+    note: Find the length of the longest palindrome hidden inside a word.
+    why: A short Junior problem, included here for extra practice.
+  - id: ccc20j4
+    note: Decide whether any rotation of one string appears inside another.
+    why: A Junior problem, included here for extra practice.

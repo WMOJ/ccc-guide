@@ -1,0 +1,4 @@
+  File "unterminated_string.py", line 1
+    name = "Maya
+           ^
+SyntaxError: end of line (EOL) while scanning string literal

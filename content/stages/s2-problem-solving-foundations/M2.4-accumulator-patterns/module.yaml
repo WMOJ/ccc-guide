@@ -1,0 +1,19 @@
+id: M2.4
+title: Accumulator patterns
+status: gated
+objectives:
+  - Keep a running sum, count, minimum or maximum while looping over input.
+  - Track the best-so-far value with an explicit tie-breaking rule.
+  - Use a boolean flag to record whether something has happened yet.
+prereqs:
+  - M1.5
+lessons:
+  - accumulator-patterns
+practice:
+  - id: ccc21j2
+    note: Find the winning bid in a silent auction with several bidders.
+  - id: ccc24j3
+    note: Find the third-highest distinct score in a list of contest scores.
+  - id: ccc17s1
+    note: Find the last day two teams' season totals were tied, or that they never were.
+    why: An early Senior problem, included here for extra practice.

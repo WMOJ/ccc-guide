@@ -57,7 +57,7 @@ stages:
         title: Integer arithmetic and operators
         prereqs:
           - M1.1
-        status: planned
+        status: accepted
       - id: M1.3
         title: Reading input
         prereqs:

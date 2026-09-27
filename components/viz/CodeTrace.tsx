@@ -68,6 +68,7 @@ export async function CodeTrace({ trace, preset, baseDir, figure, demo }: CodeTr
               box={prepared.box}
               outputLines={prepared.outputLines}
               stepLabel={stepLabel(at, total)}
+              showState={prepared.hasFrames}
             />
           }
         />

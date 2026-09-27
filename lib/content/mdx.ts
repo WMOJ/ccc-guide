@@ -12,6 +12,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import { parse as parseYaml } from "yaml";
 import { remarkFigureNumbers } from "../viz/remark-figure-numbers";
+import { remarkLongInlineCode } from "./inline-code";
 import { createMdxComponents } from "./mdx-components";
 import { remarkFencedCode } from "./remark-fenced-code";
 import { type LessonFrontmatter, lessonFrontmatterSchema } from "./schemas";
@@ -45,7 +46,13 @@ export async function compileLesson(
 
   const { default: Content } = await evaluate(mdxBody, {
     ...runtime,
-    remarkPlugins: [remarkGfm, remarkMath, remarkFencedCode, remarkFigureNumbers],
+    remarkPlugins: [
+      remarkGfm,
+      remarkMath,
+      remarkFencedCode,
+      remarkLongInlineCode,
+      remarkFigureNumbers,
+    ],
     rehypePlugins: [rehypeSlug, rehypeKatex],
   });
 

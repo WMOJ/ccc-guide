@@ -1,0 +1,15 @@
+{"schema":1,
+"kind":"trace",
+"id":"subtotal_and_tip",
+"source":"subtotal_and_tip.py",
+"code":"subtotal = 12\nshipping = 3\ntotal = subtotal + shiping\nprint(total)\n",
+"alt":"The program creates subtotal and shipping, then crashes on line 3 with a NameError, because shiping was never assigned. It never reaches the print on line 4.",
+"presets":[
+{"id":"default","label":"Run","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["subtotal","12"]]}],"c":"Line 1 runs: `subtotal` is created with the value `12`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["subtotal","12"],["shipping","3"]]}],"c":"Line 2 runs: `shipping` is created with the value `3`."},
+{"l":3,"e":"exception","st":[{"f":"<module>","l":3,"v":[["subtotal","12"],["shipping","3"]]}],"x":"NameError: name 'shiping' is not defined","c":"Line 3 raises an error: `NameError: name 'shiping' is not defined`. Both `subtotal` and `shipping` already exist by this point. Only `shiping` does not, since it was never assigned."},
+{"l":3,"e":"end","st":[{"f":"<module>","l":3,"v":[["subtotal","12"],["shipping","3"]]}],"x":"NameError: name 'shiping' is not defined","c":"The program stops because of the error `NameError: name 'shiping' is not defined`."}
+]}
+]}

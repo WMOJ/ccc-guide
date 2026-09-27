@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "word_as_number.py", line 1, in <module>
+    age = int("twelve")
+ValueError: invalid literal for int() with base 10: 'twelve'

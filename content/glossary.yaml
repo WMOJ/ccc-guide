@@ -23,6 +23,7 @@ terms:
   - id: interpreter
     term: interpreter
     definition: The program that reads Python source code and runs it, one instruction at a time.
+    introducedIn: M0.1/what-a-program-is
   - id: algorithm
     term: algorithm
     definition: A precise, step-by-step method for solving a problem.
@@ -46,3 +47,87 @@ terms:
     term: priority queue
     definition: A data structure that retrieves the item with the smallest (or largest) priority key first.
     introducedIn: M6.1/dijkstras-algorithm
+  - id: operator
+    term: operator
+    definition: A symbol such as `+` or `//` that performs a computation on one or more values.
+    introducedIn: M1.2/integer-arithmetic-and-operators
+  - id: floor-division
+    term: floor division
+    definition: Division that rounds the exact answer down to a whole number, written `//`.
+    introducedIn: M1.2/integer-arithmetic-and-operators
+  - id: modulo
+    term: modulo
+    definition: The remainder left over after floor division, written `%`.
+    introducedIn: M1.2/integer-arithmetic-and-operators
+  - id: true-division
+    term: true division
+    definition: Division written with `/` that always produces a float, even when the numbers divide evenly.
+    introducedIn: M1.2/integer-arithmetic-and-operators
+  - id: augmented-assignment
+    term: augmented assignment
+    definition: A shorthand such as `+=` that updates a variable using its own current value in one step.
+    introducedIn: M1.2/integer-arithmetic-and-operators
+  - id: precedence
+    term: precedence
+    definition: The fixed order in which Python runs the operators in a line that has more than one. Parentheses change that order.
+    introducedIn: M1.2/integer-arithmetic-and-operators
+  - id: ceiling-division
+    term: ceiling division
+    definition: Division that rounds a result up to the next whole number when there is a remainder, computed as `-(-a // b)`.
+    introducedIn: M1.12/floats-precision-and-big-integers
+  - id: standard-library
+    term: standard library
+    definition: The collection of modules that ships with Python itself, without installing anything extra.
+    introducedIn: M1.13/imports-and-the-standard-library-tour
+  - id: recursion
+    term: recursion
+    definition: A function calling itself to solve a smaller version of the same problem.
+    introducedIn: M1.14/recursion-fundamentals
+  - id: call-stack
+    term: call stack
+    definition: The stack of frames for every function call currently in progress, most recent on top.
+    introducedIn: M1.14/recursion-fundamentals
+  - id: walrus-operator
+    term: walrus operator
+    definition: The `:=` operator, which assigns a value to a name inside a larger expression instead of on its own line.
+    introducedIn: M1.15/the-python-3-8-language-boundary
+  - id: source-code
+    term: source code
+    definition: The plain text you write that describes what you want a program to do, before anything runs it.
+    introducedIn: M0.1/what-a-program-is
+  - id: standard-input
+    term: standard input
+    definition: The stream of text a program reads its input from, normally whatever the judge feeds it.
+    introducedIn: M0.4/the-standard-input-output-model-and-exact-output
+  - id: standard-output
+    term: standard output
+    definition: The stream of text a program writes its output to, normally what the judge reads and compares.
+    introducedIn: M0.4/the-standard-input-output-model-and-exact-output
+  - id: accumulator
+    term: accumulator
+    definition: A variable that carries a running result forward through a loop, updated once per item.
+    introducedIn: M2.4/accumulator-patterns
+  - id: subtask
+    term: subtask
+    definition: A named group of hidden test cases within one problem, run and reported together as a batch.
+    introducedIn: M0.5/how-judging-works
+  - id: verdict
+    term: verdict
+    definition: The judge's recorded result for one test case, such as accepted or wrong answer.
+    introducedIn: M0.5/how-judging-works
+  - id: simulation
+    term: simulation
+    definition: Solving a problem by running its described process step by step, with a variable for each piece of state.
+    introducedIn: M2.3/simulation
+  - id: traceback
+    term: traceback
+    definition: The message Python prints when a program stops with an error, naming the file, the line, and the error itself.
+    introducedIn: M0.6/reading-error-messages
+  - id: brute-force
+    term: brute force
+    definition: Solving a problem by checking every candidate answer directly, with no shortcut.
+    introducedIn: M2.5/brute-force-and-complete-search
+  - id: method
+    term: method
+    definition: A function called on a value using a dot, such as `.split()` called on a string.
+    introducedIn: M1.3/reading-input

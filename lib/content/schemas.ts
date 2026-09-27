@@ -180,7 +180,12 @@ export const uiStringsSchema = z.object({
   }),
   practice: z.object({
     heading: z.string(),
-    intro: z.string(),
+    /** One problem. {judge}: its judge. */
+    introOne: z.string(),
+    /** Several problems, all on one judge. {judge}: that judge. */
+    introOneJudge: z.string(),
+    /** Several problems on both judges. */
+    introBothJudges: z.string(),
     why: z.string(),
     sameAs: z.string(),
     opensOn: z.string(),

@@ -1,0 +1,22 @@
+{"schema":1,
+"kind":"frames",
+"id":"library-line",
+"layout":"row",
+"panels":[{"id":"arr","viz":"ArrayViz","title":"Arrivals per minute"},{"id":"q","viz":"StructViz","title":"Line"}],
+"alt":"Five minutes of a library line. Each minute's arrivals join the line, the longest length so far is checked, and then one patron is served if the line is not empty.",
+"presets":[
+{"id":"sample","label":"Five minutes","steps":[
+{"caption":"Before minute 1: the line is empty.","panels":{"arr":{"values":[2,0,1,3,0],"states":"c____"},"q":{"kind":"queue","items":[]}}},
+{"caption":"Minute 1: 2 patrons join. The line is now 2 long, and the longest so far is 2.","panels":{"arr":{"values":[2,0,1,3,0],"states":"c____"},"q":{"kind":"queue","items":[{"v":"patron 1"},{"v":"patron 2"}]}}},
+{"caption":"Minute 1: one patron is served, leaving the line at 1.","panels":{"arr":{"values":[2,0,1,3,0],"states":"c____"},"q":{"kind":"queue","items":[{"v":"patron 1"}]}}},
+{"caption":"Minute 2: 0 patrons join. The line is now 1 long, and the longest so far is 2.","panels":{"arr":{"values":[2,0,1,3,0],"states":"dc___"},"q":{"kind":"queue","items":[{"v":"patron 1"}]}}},
+{"caption":"Minute 2: one patron is served, leaving the line at 0.","panels":{"arr":{"values":[2,0,1,3,0],"states":"dc___"},"q":{"kind":"queue","items":[]}}},
+{"caption":"Minute 3: 1 patrons join. The line is now 1 long, and the longest so far is 2.","panels":{"arr":{"values":[2,0,1,3,0],"states":"ddc__"},"q":{"kind":"queue","items":[{"v":"patron 1"}]}}},
+{"caption":"Minute 3: one patron is served, leaving the line at 0.","panels":{"arr":{"values":[2,0,1,3,0],"states":"ddc__"},"q":{"kind":"queue","items":[]}}},
+{"caption":"Minute 4: 3 patrons join. The line is now 3 long, and the longest so far is 3.","panels":{"arr":{"values":[2,0,1,3,0],"states":"dddc_"},"q":{"kind":"queue","items":[{"v":"patron 1"},{"v":"patron 2"},{"v":"patron 3"}]}}},
+{"caption":"Minute 4: one patron is served, leaving the line at 2.","panels":{"arr":{"values":[2,0,1,3,0],"states":"dddc_"},"q":{"kind":"queue","items":[{"v":"patron 1"},{"v":"patron 2"}]}}},
+{"caption":"Minute 5: 0 patrons join. The line is now 2 long, and the longest so far is 3.","panels":{"arr":{"values":[2,0,1,3,0],"states":"ddddc"},"q":{"kind":"queue","items":[{"v":"patron 1"},{"v":"patron 2"}]}}},
+{"caption":"Minute 5: one patron is served, leaving the line at 1.","panels":{"arr":{"values":[2,0,1,3,0],"states":"ddddc"},"q":{"kind":"queue","items":[{"v":"patron 1"}]}}},
+{"caption":"After minute 5: the longest the line ever reached was 3.","panels":{"arr":{"values":[2,0,1,3,0],"states":"ddddd"},"q":{"kind":"queue","items":[{"v":"patron 1"}]}}}
+]}
+]}

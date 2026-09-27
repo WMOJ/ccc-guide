@@ -1,0 +1,2 @@
+name = "Maya
+print(name)

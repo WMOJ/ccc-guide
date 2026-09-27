@@ -105,8 +105,11 @@ class Tracer:
         self.params = []
         self.max_steps = max_steps
         self.skip_rules = [dict(r, done=False) for r in skip_rules]
-        self.notes = {int(k): v for k, v in notes.items()}
+        # "7" is the first captioned run of line 7; "7@2" its second (P6-D70: a note for the step
+        # where something specific happens, such as a tie, not the first time the line runs).
+        self.notes = {parse_note_key(k): v for k, v in notes.items()}
         self.noted = set()
+        self.note_runs = {}
         self.heap = Heap()
         self.steps = []
         self.prev_snapshot = {}
@@ -307,11 +310,16 @@ class Tracer:
         if step["e"] == "call":
             call_line = prev["stack"][-1]["l"]
             args = self.args(cur, len(cur["stack"]) - 1, heap)
-            return "Line {} calls {}{}. A new frame for {} goes on top of the call stack.".format(
+            # Notes also reach call, return and end captions: a note on a line that calls, returns
+            # or ends the program used to be dropped without a word (P6-D62).
+            return self.add_note(
+                "Line {} calls {}{}. A new frame for {} goes on top of the call stack.".format(
+                    call_line,
+                    as_code(top["f"]),
+                    (" with " + args) if args else "",
+                    as_code(top["f"]),
+                ),
                 call_line,
-                as_code(top["f"]),
-                (" with " + args) if args else "",
-                as_code(top["f"]),
             )
         if step["e"] == "return":
             args = self.args(cur, len(cur["stack"]) - 1, heap)
@@ -325,14 +333,18 @@ class Tracer:
                     self.val(prev_return(self, prev), prev["heap"]),
                     text,
                 )
-            return self.with_output(text, step, ran)
+            return self.add_note(self.with_output(text, step, ran), line)
         if step["e"] == "exception":
-            return "Line {} raises an error: {}.".format(line, as_code(step["x"]))
+            # A note on the line that raises is the figure's point; it must not be lost (P6-D62).
+            return self.add_note("Line {} raises an error: {}.".format(line, as_code(step["x"])), line)
         if step["e"] == "end":
             ran = prev["stack"][0]["l"]
             if "x" in step:
                 return self.with_output("The program stops because of the error {}.".format(as_code(step["x"])), step, ran)
-            return self.with_output("The program has finished: no lines are left to run.", step, ran)
+            # The note belongs to the last line's own sentence, before "The program has finished".
+            note = self.take_note(ran)
+            done = "The program has finished: no lines are left to run."
+            return self.with_output(f"{note} {done}" if note else done, step, ran)
         if len(cur["stack"]) < len(prev["stack"]):
             where = "the main program" if top["f"] == "<module>" else as_code(top["f"] + "()")
             text = f"Back in {where}, line {top_line(prev)} finishes with the returned value."
@@ -361,11 +373,22 @@ class Tracer:
         return text
 
     def add_note(self, text, line):
-        note = self.notes.get(line)
-        if note and line not in self.noted:
-            self.noted.add(line)
-            return text + " " + note
-        return text
+        note = self.take_note(line)
+        return f"{text} {note}" if note else text
+
+    def take_note(self, line):
+        """The note for this captioned run of `line` ("7@2" first, then "7"), or "" if none."""
+        run = self.note_runs.get(line, 0) + 1
+        self.note_runs[line] = run
+        for key in ((line, run), (line, None)):
+            note = self.notes.get(key)
+            if note and key not in self.noted:
+                self.noted.add(key)
+                return note
+        return ""
+
+    def unused_notes(self):
+        return {k for k in self.notes if k not in self.noted}
 
     def changes(self, prev, cur):
         """Variable changes in the top frame between two states (same frame)."""
@@ -491,7 +514,17 @@ def top_line(state):
 
 
 
-def trace_preset(source, stdin_text, job):
+def parse_note_key(key):
+    """"7" -> (7, None): the first captioned run of line 7; "7@2" -> (7, 2): its second."""
+    line, _, run = str(key).partition("@")
+    return (int(line), int(run) if run else None)
+
+
+def note_key_text(key):
+    return str(key[0]) if key[1] is None else f"{key[0]}@{key[1]}"
+
+
+def trace_preset(source, stdin_text, job, unused=None):
     lines = source.split("\n")
     tracer = Tracer(lines, job.get("maxSteps", 200), job.get("skip", []), job.get("notes", {}))
     code = compile(source, FILENAME, "exec")
@@ -520,6 +553,8 @@ def trace_preset(source, stdin_text, job):
     final = {"x": short(error, 200)} if error else None
     tracer.module_frame_globals = globs
     tracer.emit_end(final)
+    if unused is not None:
+        unused.append(tracer.unused_notes())
     return tracer.steps
 
 
@@ -567,13 +602,23 @@ def main():
     with open(job["example"], "r", encoding="utf-8") as fh:
         source = fh.read()
     presets = []
+    unused = []
     try:
         for preset in job["presets"]:
-            steps = trace_preset(source, preset.get("stdin", ""), job)
+            steps = trace_preset(source, preset.get("stdin", ""), job, unused)
             entry = {"id": preset["id"], "label": preset["label"], "steps": steps}
             if preset.get("stdin"):
                 entry["stdin"] = preset["stdin"]
             presets.append(entry)
+        # A note that no preset's caption ever shows is a silent loss of the figure's teaching
+        # point (P6-D62), so it fails generation.
+        never = set.intersection(*unused) if unused else set()
+        if never:
+            keys = ", ".join(sorted(note_key_text(k) for k in never))
+            raise TraceError(
+                f"note(s) {keys} never appear in a caption: key a note by the line that just ran"
+                " (\"7\", or \"7@2\" for its second run), not the line that runs next"
+            )
     except TraceError as err:
         sys.stderr.write(f"trace.py: {err}\n")
         return 1

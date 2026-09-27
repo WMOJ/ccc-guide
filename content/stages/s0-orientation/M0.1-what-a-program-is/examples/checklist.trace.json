@@ -1,0 +1,14 @@
+{"schema":1,
+"kind":"trace",
+"id":"checklist",
+"source":"checklist.py",
+"code":"print(\"Reading the problem\")\nprint(\"Writing the answer\")\nprint(\"Checking it twice\")\n",
+"alt":"The program prints three lines in the order they appear in the source code: reading the problem, writing the answer, then checking it twice.",
+"presets":[
+{"id":"default","label":"Run","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[]}],"o":"Reading the problem\n","c":"Line 1 runs: it prints `Reading the problem`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[]}],"o":"Writing the answer\n","c":"Line 2 runs: it prints `Writing the answer`."},
+{"l":3,"e":"end","st":[{"f":"<module>","l":3,"v":[]}],"o":"Checking it twice\n","c":"Line 3 runs: it prints `Checking it twice`. The program has finished: no lines are left to run."}
+]}
+]}

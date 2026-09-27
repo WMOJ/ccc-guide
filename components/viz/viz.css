@@ -787,6 +787,15 @@
   white-space: nowrap;
 }
 
+/* A long span (a whole error line such as "NameError: name 'x' is not defined") may wrap at its
+   spaces, or it pushes a phone-width page sideways (P6-D51). It has no box, so wrapping stays one span. */
+.vz-cap-code-long {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 .vz-caption {
   padding: 12px 16px 8px;
   min-height: calc(3lh + 20px);

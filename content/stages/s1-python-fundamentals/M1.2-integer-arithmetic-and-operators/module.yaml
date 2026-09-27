@@ -1,0 +1,15 @@
+id: M1.2
+title: Integer arithmetic and operators
+status: accepted
+objectives:
+  - Compute with `//`, `%`, `**` and `/`, using precedence and parentheses to control the order Python evaluates a longer expression.
+  - Predict what `//` and `%` give with negative numbers, and recognize the `ZeroDivisionError` that dividing by zero raises.
+  - Shorten repeated updates to a variable with augmented assignment.
+  - Use `abs`, `min`, `max`, `divmod` and `pow` instead of writing that arithmetic by hand.
+prereqs:
+  - M1.1
+lessons:
+  - integer-arithmetic-and-operators
+practice:
+  - id: ccc26j2
+    note: Turn five judges' scores and a difficulty factor into one final score.

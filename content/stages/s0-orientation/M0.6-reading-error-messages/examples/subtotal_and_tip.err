@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "subtotal_and_tip.py", line 3, in <module>
+    total = subtotal + shiping
+NameError: name 'shiping' is not defined. Did you mean: shipping?

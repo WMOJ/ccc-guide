@@ -1,0 +1,21 @@
+id: M2.3
+title: Simulation
+status: gated
+objectives:
+  - Model a process literally, one step at a time, with a variable for each piece of state.
+  - Recognize when a problem's story is the algorithm, needing no extra insight beyond following it exactly.
+  - Check a simulation's result against a hand-worked run of the same steps.
+prereqs:
+  - M1.6
+  - M1.8
+lessons:
+  - simulation
+practice:
+  - id: ccc26j3
+    note: Two lines of candies face off by fixed rules until one line empties; find how many each side ate.
+  - id: ccc14j3
+    note: Track two players' scores through a dice game, round by round.
+    why: An early Junior problem, included here for extra practice.
+  - id: ccc15j4
+    note: Find how long you kept each friend waiting for a reply, from a log of messages.
+    why: A Junior problem, included here for extra practice.

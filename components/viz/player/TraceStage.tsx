@@ -13,6 +13,8 @@ export interface TraceStageProps {
   /** Reserved output lines (largest across the steps): the panel never grows. */
   outputLines: number;
   stepLabel: string;
+  /** Draw the frames-and-objects panel (false for a trace that never holds a variable). */
+  showState: boolean;
 }
 
 function Caret({ hollow }: { hollow: boolean }) {
@@ -28,7 +30,15 @@ function Caret({ hollow }: { hollow: boolean }) {
 }
 
 /** Code pane + frames/objects panel + output so far (DESIGN.md → Code trace layout). */
-export function TraceStage({ lines, state, scene, box, outputLines, stepLabel }: TraceStageProps) {
+export function TraceStage({
+  lines,
+  state,
+  scene,
+  box,
+  outputLines,
+  stepLabel,
+  showState,
+}: TraceStageProps) {
   const out = state.output.replace(/\n$/, "");
   const reserved = Math.max(1, outputLines);
   return (
@@ -100,9 +110,11 @@ export function TraceStage({ lines, state, scene, box, outputLines, stepLabel }:
             </pre>
           </div>
         </div>
-        <div className="vz-trace-state">
-          <MotionSceneSvg scene={scene} box={box} title={`Frames and objects, ${stepLabel}`} />
-        </div>
+        {showState ? (
+          <div className="vz-trace-state">
+            <MotionSceneSvg scene={scene} box={box} title={`Frames and objects, ${stepLabel}`} />
+          </div>
+        ) : null}
       </div>
     </div>
   );

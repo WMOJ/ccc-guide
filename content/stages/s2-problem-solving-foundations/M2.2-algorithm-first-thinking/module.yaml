@@ -1,0 +1,17 @@
+id: M2.2
+title: Algorithm-first thinking
+status: gated
+objectives:
+  - Work a small sample by hand before writing any code.
+  - Write a plan in plain words, separate from the code that will implement it.
+  - Translate a plain-language plan into Python, checking each step against the hand-worked sample.
+prereqs:
+  - M2.1
+lessons:
+  - algorithm-first-thinking
+practice:
+  - id: ccc25j3
+    note: Build an output from a line that mixes letters and numbers.
+  - id: ccc14j4
+    note: Remove people from a numbered list in rounds, each round dropping every k-th remaining person.
+    why: An early problem, included here for extra practice.

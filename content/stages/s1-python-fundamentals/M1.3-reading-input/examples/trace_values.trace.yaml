@@ -1,0 +1,13 @@
+example: trace_values.py
+alt: >-
+  The program splits one line into two numbers, converts both with map and
+  int, unpacks them into price_a and price_b, then prints their sum.
+presets:
+  - id: main
+    label: Two small prices
+    stdin: "3 5\n"
+  - id: bigger
+    label: Two bigger prices
+    stdin: "10 20\n"
+notes:
+  "1": "`input().split()` turns the line into a list of text pieces. `map(int, ...)` converts each piece to a number, and `price_a, price_b = ...` unpacks the two results into two names."

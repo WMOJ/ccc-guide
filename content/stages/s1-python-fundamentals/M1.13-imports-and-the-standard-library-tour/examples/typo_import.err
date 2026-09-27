@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "typo_import.py", line 1, in <module>
+    import maths
+ModuleNotFoundError: No module named 'maths'

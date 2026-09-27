@@ -62,7 +62,23 @@ fs.writeSync(
 );
 fs.closeSync(fd);
 
+// `next build` rewrites the tracked next-env.d.ts to import its own dist dir's route types
+// (.next-local, .next-verify-build, .next-pageshots ...), leaving the tree dirty after every
+// local build (P6-D27). The file's content is Next's, not ours: put back what was there before.
+const nextEnvFile = path.join(scriptDir, "..", "next-env.d.ts");
+const nextEnvBefore = fs.existsSync(nextEnvFile) ? fs.readFileSync(nextEnvFile, "utf8") : null;
+function restoreNextEnv() {
+  if (nextEnvBefore === null) return;
+  try {
+    if (fs.readFileSync(nextEnvFile, "utf8") !== nextEnvBefore)
+      fs.writeFileSync(nextEnvFile, nextEnvBefore);
+  } catch {
+    // removed by the command: leave it to the next build to regenerate
+  }
+}
+
 function release() {
+  restoreNextEnv();
   try {
     fs.unlinkSync(lockFile);
   } catch {

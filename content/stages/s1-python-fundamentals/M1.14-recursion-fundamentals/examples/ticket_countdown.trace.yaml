@@ -1,0 +1,8 @@
+example: ticket_countdown.py
+alt: >-
+  The program calls countdown(3), which calls itself down to 0, then unwinds,
+  building the list [3, 2, 1] one number at a time as each waiting call returns.
+notes:
+  "3": "`n` is `0`, so this call returns `[]` without calling itself again."
+  "4": "This call waits while `countdown(n - 1)` gets a new frame on top of the stack."
+  "8": "countdown(3) is called for the first time, starting the stack of waiting frames."

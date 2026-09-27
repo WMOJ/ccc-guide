@@ -1,0 +1,18 @@
+id: M1.12
+title: Floats, precision and big integers
+status: gated
+objectives:
+  - Explain why floats can be slightly off, and avoid comparing them with `==`.
+  - Scale a calculation to integers to keep output exact.
+  - Work with integers of any size, and use `math.isqrt` instead of `math.sqrt` for large values.
+  - Round a division up with integer ceiling division.
+prereqs:
+  - M1.2
+lessons:
+  - floats-precision-and-big-integers
+practice:
+  - id: ccc21s1
+    note: Add up trapezoid areas measured from a list of heights and widths.
+  - id: ccc20s1
+    note: Find the top speed a sprinter must have reached, given a series of timed positions.
+    why: An early Senior problem, included here for extra practice.

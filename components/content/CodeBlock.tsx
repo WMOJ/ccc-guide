@@ -47,7 +47,8 @@ export async function CodeBlock({
   const isPython = lang === "python" || lang === "py";
   const lines = await highlightLines(code, isPython ? "python" : "text");
   const hl = new Set(highlight);
-  const showNumbers = lines.length > 3 || hl.size > 0;
+  // Short blocks read better without a gutter, except where a traceback below names a line (P6-D33).
+  const showNumbers = lines.length > 3 || hl.size > 0 || error !== undefined;
   const lastNo = startLine + lines.length - 1;
   // Gutter: the widest number plus 0.75rem either side (ch is one Mono digit).
   const gutter = `calc(${Math.max(2, String(lastNo).length)}ch + 1.5rem)`;

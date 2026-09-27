@@ -1,0 +1,4 @@
+example: checklist.py
+alt: >-
+  The program prints three lines in the order they appear in the source code:
+  reading the problem, writing the answer, then checking it twice.

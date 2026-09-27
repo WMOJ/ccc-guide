@@ -1,0 +1,13 @@
+id: M0.5
+title: How judging works
+status: gated
+objectives:
+  - "Explain that the judge runs your program once for each hidden test case, feeding it that test's input and comparing what it prints."
+  - Describe how tests are grouped into subtasks, and that a subtask stops at its first failing test.
+  - "Recognize the verdicts AC, WA, TLE and RTE, and what causes each one."
+  - Say that the grader keeps your best submission, within the submission limits.
+prereqs:
+  - M0.4
+lessons:
+  - how-judging-works
+practice: []

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "recursion_limit_trap.py", line 7, in <module>
+    count_up(0, 2000)
+  File "recursion_limit_trap.py", line 4, in count_up
+    count_up(n + 1, target)
+  File "recursion_limit_trap.py", line 4, in count_up
+    count_up(n + 1, target)
+  File "recursion_limit_trap.py", line 4, in count_up
+    count_up(n + 1, target)
+  [Previous line repeated 1396 more times]
+RecursionError: maximum recursion depth exceeded

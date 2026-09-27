@@ -364,6 +364,16 @@
     white-space: nowrap;
   }
 
+  /* A long span (a whole error line) may wrap at its spaces, or it pushes a phone page sideways
+     (P6-D51; lib/content/inline-code.ts decides which spans are long). */
+  .prose-sheet code.code-long:not([data-ui] *),
+  .inline-code.code-long {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
   .prose-sheet kbd:not([data-ui] *) {
     font-size: var(--text-label);
     border: 1px solid var(--color-rule-strong);

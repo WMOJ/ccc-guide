@@ -1,0 +1,7 @@
+example: subtotal_and_tip.py
+alt: >-
+  The program creates subtotal and shipping, then crashes on line 3 with a
+  NameError, because shiping was never assigned. It never reaches the print
+  on line 4.
+notes:
+  "3": "Both `subtotal` and `shipping` already exist by this point. Only `shiping` does not, since it was never assigned."

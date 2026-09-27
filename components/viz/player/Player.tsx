@@ -159,6 +159,7 @@ export function Player({ data, focusCtl, pendingCtl }: PlayerProps) {
           box={trace.box}
           outputLines={trace.outputLines}
           stepLabel={label}
+          showState={trace.hasFrames}
         />
       );
     }

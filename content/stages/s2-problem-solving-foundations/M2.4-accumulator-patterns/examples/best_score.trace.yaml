@@ -1,0 +1,9 @@
+example: best_score.py
+alt: >-
+  The program scans three scores, keeping the best score and the name that reached it.
+  A later tie does not replace the leader, so the earliest player to reach the best
+  score keeps the lead.
+notes:
+  "4": "best_score and best_name are seeded from the first player, A, before the loop starts."
+  "6": "scores[i] > best_score is strict, so a tie never replaces the current leader."
+  "7": "B's 9 beats A's 7, so both accumulators move to B."

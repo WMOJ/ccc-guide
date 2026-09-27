@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "mixed_types.py", line 3, in <module>
+    print(price + tax)
+TypeError: unsupported operand type(s) for +: 'str' and 'int'

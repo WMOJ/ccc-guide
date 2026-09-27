@@ -33,6 +33,16 @@ export interface PreparedTrace {
   scenes: VizScene[][];
   box: { width: number; height: number };
   outputLines: number;
+  /** False when no step ever holds a variable (or a return value): the trace then shows no
+   * frames panel at all, only code and output (P6-D58: an empty "Global frame" box is noise). */
+  hasFrames: boolean;
+}
+
+/** Does any step of any preset show a name or a return value in a frame? */
+export function traceHasFrames(states: TraceState[][]): boolean {
+  return states.some((p) =>
+    p.some((s) => s.returned !== null || s.stack.some((fr) => fr.v.length > 0)),
+  );
 }
 
 export function prepareTrace(data: Pick<TracePlayerData, "presets">): PreparedTrace {
@@ -43,6 +53,7 @@ export function prepareTrace(data: Pick<TracePlayerData, "presets">): PreparedTr
     scenes,
     box: unionSize(scenes.flat()),
     outputLines: Math.max(...states.map((s) => maxOutputLines(s))),
+    hasFrames: traceHasFrames(states),
   };
 }
 

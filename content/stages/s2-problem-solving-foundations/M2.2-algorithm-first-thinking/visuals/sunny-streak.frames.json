@@ -1,0 +1,19 @@
+{"schema":1,
+"kind":"frames",
+"id":"sunny-streak",
+"layout":"single",
+"panels":[{"id":"arr","viz":"ArrayViz","title":"Days"}],
+"alt":"A row of seven days, sunny or not. A pointer moves across them one at a time, while the caption tracks the current sunny run and the best run seen so far.",
+"presets":[
+{"id":"sample","label":"Seven days","steps":[
+{"caption":"Before day 1: the current run is 0 and the best run so far is 0.","panels":{"arr":{"values":[1,1,0,1,1,1,0],"states":"_______"}}},
+{"caption":"Day 1 is sunny. The current run grows to 1, and the best run so far is 1.","panels":{"arr":{"values":[1,1,0,1,1,1,0],"states":"c______","pointers":[{"name":"day","at":0}]}}},
+{"caption":"Day 2 is sunny. The current run grows to 2, and the best run so far is 2.","panels":{"arr":{"values":[1,1,0,1,1,1,0],"states":"dc_____","pointers":[{"name":"day","at":1}]}}},
+{"caption":"Day 3 is not sunny. The current run resets to 0. The best run so far stays 2.","panels":{"arr":{"values":[1,1,0,1,1,1,0],"states":"ddc____","pointers":[{"name":"day","at":2}]}}},
+{"caption":"Day 4 is sunny. The current run grows to 1, and the best run so far is 2.","panels":{"arr":{"values":[1,1,0,1,1,1,0],"states":"dddc___","pointers":[{"name":"day","at":3}]}}},
+{"caption":"Day 5 is sunny. The current run grows to 2, and the best run so far is 2.","panels":{"arr":{"values":[1,1,0,1,1,1,0],"states":"ddddc__","pointers":[{"name":"day","at":4}]}}},
+{"caption":"Day 6 is sunny. The current run grows to 3, and the best run so far is 3.","panels":{"arr":{"values":[1,1,0,1,1,1,0],"states":"dddddc_","pointers":[{"name":"day","at":5}]}}},
+{"caption":"Day 7 is not sunny. The current run resets to 0. The best run so far stays 3.","panels":{"arr":{"values":[1,1,0,1,1,1,0],"states":"ddddddc","pointers":[{"name":"day","at":6}]}}},
+{"caption":"After the last day, the best run seen was 3.","panels":{"arr":{"values":[1,1,0,1,1,1,0],"states":"ddddddd"}}}
+]}
+]}

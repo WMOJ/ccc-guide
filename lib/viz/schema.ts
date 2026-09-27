@@ -657,8 +657,9 @@ export const traceYamlSchema = z.strictObject({
     )
     .max(4)
     .optional(),
-  /** Extra teaching notes appended to the caption the first time a line runs. */
-  notes: z.record(z.string().regex(/^\d+$/), z.string().min(5).max(200)).optional(),
+  /** Extra teaching notes appended to a caption: "7" the first time line 7 runs, "7@2" the second
+   * time (P6-D70). Every note must appear in some caption, or generation fails (P6-D62). */
+  notes: z.record(z.string().regex(/^\d+(@[1-9]\d*)?$/), z.string().min(5).max(200)).optional(),
   budget: budgetSchema.optional(),
 });
 export type TraceYaml = z.infer<typeof traceYamlSchema>;

@@ -1,0 +1,14 @@
+{"schema":1,
+"kind":"trace",
+"id":"stdin_trace",
+"source":"stdin_trace.py",
+"code":"name = input()\ncount = int(input())\nprint(name, count)\n",
+"alt":"The program reads a name and a count from two lines of standard input, then prints them together on one line separated by a single space.",
+"presets":[
+{"id":"main","label":"Standard input","stdin":"Maya\n5\n","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["name","'Maya'"]]}],"c":"Line 1 runs: `name` is created with the value `'Maya'`. `input()` reads the first line and returns it as text: `'Maya'`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["name","'Maya'"],["count","5"]]}],"c":"Line 2 runs: `count` is created with the value `5`. `input()` reads the second line, and `int()` turns the text `'5'` into the number `5`."},
+{"l":3,"e":"end","st":[{"f":"<module>","l":3,"v":[["name","'Maya'"],["count","5"]]}],"o":"Maya 5\n","c":"Line 3 runs: it prints `Maya 5`. `print(name, count)` joins the two values with a single space. The program has finished: no lines are left to run."}
+]}
+]}

@@ -1,0 +1,7 @@
+example: minutes_to_hours.py
+alt: >-
+  The program divides 150 total minutes by 60 to get 2 whole hours, finds the
+  remaining 30 minutes with the modulo operator, and prints 2 then 30.
+notes:
+  "2": "`150 // 60` is `2`: 60 fits into 150 twice, which uses 120 minutes."
+  "3": "`150 % 60` is `30`: the minutes left over after those 120."

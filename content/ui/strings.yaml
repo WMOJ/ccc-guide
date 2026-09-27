@@ -81,7 +81,9 @@ term:
   inGlossary: In the glossary
 practice:
   heading: Practice
-  intro: Try these on the judges. Each link opens the problem on WMOJ or DMOJ.
+  introOne: Try this on the judge. The link opens the problem on {judge}.
+  introOneJudge: Try these on the judge. Each link opens the problem on {judge}.
+  introBothJudges: Try these on the judges. Each link opens the problem on WMOJ or DMOJ.
   why: "Why DMOJ:"
   sameAs: (same problem as {label})
   opensOn: (opens on {judge} in a new tab)

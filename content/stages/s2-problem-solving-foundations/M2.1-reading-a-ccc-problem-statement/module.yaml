@@ -1,0 +1,16 @@
+id: M2.1
+title: Reading a CCC problem statement
+status: gated
+objectives:
+  - "Identify the fixed sections of a CCC statement: description, input specification, output specification, sample input and output, subtask table and technical notes."
+  - Underline every bound in the input specification before writing any code.
+  - Read the subtask table as a list of facts about one problem, and recognize 1-indexing and "any valid answer" wording.
+prereqs:
+  - M0.5
+lessons:
+  - reading-a-ccc-problem-statement
+practice:
+  - id: ccc24j3
+    note: Find the third-highest distinct score in a list of contest scores.
+  - id: ccc22j3
+    note: Split one line of mixed letters and numbers into separate instructions.

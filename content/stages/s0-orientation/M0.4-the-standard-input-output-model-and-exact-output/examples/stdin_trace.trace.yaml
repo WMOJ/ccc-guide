@@ -1,0 +1,12 @@
+example: stdin_trace.py
+alt: >-
+  The program reads a name and a count from two lines of standard input, then
+  prints them together on one line separated by a single space.
+presets:
+  - id: main
+    label: Standard input
+    stdin: "Maya\n5\n"
+notes:
+  "1": "`input()` reads the first line and returns it as text: `'Maya'`."
+  "2": "`input()` reads the second line, and `int()` turns the text `'5'` into the number `5`."
+  "3": "`print(name, count)` joins the two values with a single space."

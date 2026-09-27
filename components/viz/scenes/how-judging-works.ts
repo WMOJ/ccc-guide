@@ -1,7 +1,6 @@
 // Scene "how-judging-works": the judge runs the program once per test case, feeds the test's
 // input, compares the output with the expected output and gives each test a verdict.
 import { z } from "zod";
-import { verdictWord } from "../../../lib/viz/layout-scenes";
 import { type JudgeSceneFrame, VERDICTS } from "../../../lib/viz/schema";
 import type { SceneBuild } from "./types";
 
@@ -57,8 +56,9 @@ export function buildJudging(props: z.infer<typeof judgingProps>): SceneBuild {
       });
     }
     verdicts[i] = v;
+    // AFTER already names the verdict; a second "The verdict is …" sentence repeated it (P6-D59).
     steps.push({
-      caption: `Test ${i + 1}: ${ran ? "" : "before any output could be compared, "}${AFTER[v]} The verdict is ${verdictWord(v)}.`,
+      caption: `Test ${i + 1}: ${ran ? "" : "before any output could be compared, "}${AFTER[v]}`,
       panels: { judge: frame(i, "done") },
     });
   });

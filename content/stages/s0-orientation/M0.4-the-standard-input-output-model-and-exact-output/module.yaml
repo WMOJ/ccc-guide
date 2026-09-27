@@ -1,0 +1,12 @@
+id: M0.4
+title: The standard input/output model and exact output
+status: gated
+objectives:
+  - Explain how the judge's standard input and standard output model works.
+  - "Match your program's output to the judge's expected output: the same case, the same spacing, and nothing extra."
+  - Read a line of text with `input()` and convert it to a number with `int()`.
+prereqs:
+  - M0.1
+lessons:
+  - the-standard-input-output-model-and-exact-output
+practice: []

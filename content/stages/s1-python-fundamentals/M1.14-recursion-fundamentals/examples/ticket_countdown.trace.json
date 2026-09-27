@@ -1,0 +1,32 @@
+{"schema":1,
+"kind":"trace",
+"id":"ticket_countdown",
+"source":"ticket_countdown.py",
+"code":"def countdown(n):\n    if n == 0:\n        return []\n    rest = countdown(n - 1)\n    return [n] + rest\n\n\nprint(countdown(3))\n",
+"alt":"The program calls countdown(3), which calls itself down to 0, then unwinds, building the list [3, 2, 1] one number at a time as each waiting call returns.",
+"presets":[
+{"id":"default","label":"Run","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":8,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]}],"h":{"1":{"t":"function","n":"countdown"}},"c":"Line 1 runs: the name `countdown` now refers to a function."},
+{"l":1,"e":"call","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":1,"v":[["n","3"]]}],"c":"Line 8 calls `countdown` with `n = 3`. A new frame for `countdown` goes on top of the call stack. countdown(3) is called for the first time, starting the stack of waiting frames."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":2,"v":[["n","3"]]}],"c":"`countdown()` starts running its body at line 2."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]}],"c":"Line 2 checks the condition: it is false, so line 4 runs next."},
+{"l":1,"e":"call","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":1,"v":[["n","2"]]}],"c":"Line 4 calls `countdown` with `n = 2`. A new frame for `countdown` goes on top of the call stack. This call waits while `countdown(n - 1)` gets a new frame on top of the stack."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":2,"v":[["n","2"]]}],"c":"`countdown()` starts running its body at line 2."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":4,"v":[["n","2"]]}],"c":"Line 2 checks the condition: it is false, so line 4 runs next."},
+{"l":1,"e":"call","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":4,"v":[["n","2"]]},{"f":"countdown","l":1,"v":[["n","1"]]}],"c":"Line 4 calls `countdown` with `n = 1`. A new frame for `countdown` goes on top of the call stack."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":4,"v":[["n","2"]]},{"f":"countdown","l":2,"v":[["n","1"]]}],"c":"`countdown()` starts running its body at line 2."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":4,"v":[["n","2"]]},{"f":"countdown","l":4,"v":[["n","1"]]}],"c":"Line 2 checks the condition: it is false, so line 4 runs next."},
+{"l":1,"e":"call","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":4,"v":[["n","2"]]},{"f":"countdown","l":4,"v":[["n","1"]]},{"f":"countdown","l":1,"v":[["n","0"]]}],"c":"Line 4 calls `countdown` with `n = 0`. A new frame for `countdown` goes on top of the call stack."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":4,"v":[["n","2"]]},{"f":"countdown","l":4,"v":[["n","1"]]},{"f":"countdown","l":2,"v":[["n","0"]]}],"c":"`countdown()` starts running its body at line 2."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":4,"v":[["n","2"]]},{"f":"countdown","l":4,"v":[["n","1"]]},{"f":"countdown","l":3,"v":[["n","0"]]}],"c":"Line 2 checks the condition: it is true, so line 3 runs next."},
+{"l":3,"e":"return","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":4,"v":[["n","2"]]},{"f":"countdown","l":4,"v":[["n","1"]]},{"f":"countdown","l":3,"v":[["n","0"]]}],"h":{"2":{"t":"list","v":[]}},"r":[2],"c":"The call of `countdown` with `n = 0` returns `[]`. Its frame leaves the call stack next. `n` is `0`, so this call returns `[]` without calling itself again."},
+{"l":5,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":4,"v":[["n","2"]]},{"f":"countdown","l":5,"v":[["n","1"],["rest",[2]]]}],"c":"Back in `countdown()`, line 4 finishes with the returned value. `rest` is created with the value `[]`."},
+{"l":5,"e":"return","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":4,"v":[["n","2"]]},{"f":"countdown","l":5,"v":[["n","1"],["rest",[2]]]}],"h":{"3":{"t":"list","v":["1"]}},"r":[3],"c":"The call of `countdown` with `n = 1` returns `[1]`. Its frame leaves the call stack next."},
+{"l":5,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":5,"v":[["n","2"],["rest",[3]]]}],"hd":[2],"c":"Back in `countdown()`, line 4 finishes with the returned value. `rest` is created with the value `[1]`."},
+{"l":5,"e":"return","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":4,"v":[["n","3"]]},{"f":"countdown","l":5,"v":[["n","2"],["rest",[3]]]}],"h":{"4":{"t":"list","v":["2","1"]}},"r":[4],"c":"The call of `countdown` with `n = 2` returns `[2, 1]`. Its frame leaves the call stack next."},
+{"l":5,"e":"line","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":5,"v":[["n","3"],["rest",[4]]]}],"hd":[3],"c":"Back in `countdown()`, line 4 finishes with the returned value. `rest` is created with the value `[2, 1]`."},
+{"l":5,"e":"return","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]},{"f":"countdown","l":5,"v":[["n","3"],["rest",[4]]]}],"h":{"5":{"t":"list","v":["3","2","1"]}},"r":[5],"c":"The call of `countdown` with `n = 3` returns `[3, 2, 1]`. Its frame leaves the call stack next."},
+{"l":8,"e":"end","st":[{"f":"<module>","l":8,"v":[["countdown",[1]]]}],"hd":[4,5],"o":"[3, 2, 1]\n","c":"Line 8 runs: it prints `[3, 2, 1]`. The program has finished: no lines are left to run."}
+]}
+]}

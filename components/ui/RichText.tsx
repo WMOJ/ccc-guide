@@ -1,5 +1,9 @@
 import type { ReactNode } from "react";
+import { isLongInlineCode } from "@/lib/content/inline-code";
 import { captionParts } from "@/lib/viz/caption";
+
+const codeClass = (code: string) =>
+  isLongInlineCode(code) ? "inline-code code-long" : "inline-code";
 
 /**
  * A short content string from YAML or an MDX attribute (an objective, a glossary definition, a
@@ -14,7 +18,7 @@ export function RichText({ text }: { text: string }): ReactNode {
       {captionParts(text).map((p, i) =>
         p.code ? (
           // biome-ignore lint/suspicious/noArrayIndexKey: parts of one fixed string
-          <code key={i} className="inline-code">
+          <code key={i} className={codeClass(p.text)}>
             {p.text}
           </code>
         ) : (
