@@ -1,4 +1,4 @@
-// Named concept animations (plan §4.11.1 "Scene"). Each has Zod-validated props and builds
+// Named concept animations ("Scene"). Each has Zod-validated props and builds
 // frames for the shared player, deterministically, at build time.
 import type { z } from "zod";
 import { buildGrowth, growthProps } from "./growth-rates";

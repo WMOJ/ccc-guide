@@ -1,4 +1,4 @@
-// The one Shiki light theme (plan §4.4, brief A7/A10), built from the syntax tokens in
+// The one Shiki light theme, built from the syntax tokens in
 // DESIGN.md ("Colors → Syntax", "Components → Code block") and app/globals.css
 // (`--color-syn-*`). Change a colour there first, then here; the design review checks they match.
 // Every foreground meets WCAG AA on sheet-sunk (#f3f6f8) and on check-soft (#fef5c7) highlights:

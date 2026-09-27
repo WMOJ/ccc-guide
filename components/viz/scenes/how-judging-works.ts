@@ -56,7 +56,7 @@ export function buildJudging(props: z.infer<typeof judgingProps>): SceneBuild {
       });
     }
     verdicts[i] = v;
-    // AFTER already names the verdict; a second "The verdict is …" sentence repeated it (P6-D59).
+    // AFTER already names the verdict; a second "The verdict is …" sentence repeated it.
     steps.push({
       caption: `Test ${i + 1}: ${ran ? "" : "before any output could be compared, "}${AFTER[v]}`,
       panels: { judge: frame(i, "done") },

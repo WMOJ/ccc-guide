@@ -1,5 +1,5 @@
-// Public API of the design lead's MDX content components (W1's lib/content/mdx-components.tsx
-// maps MDX names onto these; props in work/04-app/requests.md "Batch 2").
+// Public API of the MDX content components (lib/content/mdx-components.tsx
+// maps MDX names onto these).
 export { ComingSoon, DraftBadge, JudgeBadge } from "@/components/ui/Badge";
 export { Callout, type CalloutKind, type CalloutProps } from "./Callout";
 export { CodeBlock, type CodeBlockProps, ErrorPanel, IoPanel, OutputPanel } from "./CodeBlock";

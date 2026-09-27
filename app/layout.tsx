@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { ui } from "@/components/ui/ui-strings";
 import "./globals.css";
 
-// Fonts: committed WOFF2 from the official upstream (work/04-app/fonts.md, brief A12).
+// Fonts: committed WOFF2 from the official upstream.
 const atkinsonNext = localFont({
   src: "./fonts/AtkinsonHyperlegibleNext-Variable.woff2",
   weight: "200 800",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   description: "A free reading course from zero programming to CCC Senior, in Python 3.8.",
 };
 
-// Light mode only (plan §4.9): emits <meta name="color-scheme" content="light">.
+// Light mode only: emits <meta name="color-scheme" content="light">.
 export const viewport: Viewport = {
   colorScheme: "light",
   themeColor: "#fbfdfd",

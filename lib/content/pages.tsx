@@ -1,8 +1,8 @@
-// lib/content/pages.tsx — /start and /about prose (plan §4.10). The copy lives in
+// lib/content/pages.tsx — /start and /about prose. The copy lives in
 // content/ui/strings.yaml (startPage, aboutPage) with the rest of the UI copy, so G-STYLE checks it;
 // this file only turns it into headed sections. Rules for that copy: no local system/environment
-// setup content (C21), no score targets or CCO/medal wording (R14), no walkthroughs or
-// per-problem hints (C20).
+// setup content, no score targets or CCO/medal wording, no walkthroughs or
+// per-problem hints.
 import { Fragment } from "react";
 import { getUiStrings, type UiStrings } from "./strings";
 import type { ProsePageProps } from "./types";

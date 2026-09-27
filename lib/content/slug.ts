@@ -1,5 +1,5 @@
 // lib/content/slug.ts — filesystem naming helpers for content/ and tests/fixtures/content/
-// (plan §4.6.2 layout: stages/<sN-name>/<ModuleId-slug>/).
+// (layout: stages/<sN-name>/<ModuleId-slug>/).
 
 export function slugify(text: string): string {
   return text

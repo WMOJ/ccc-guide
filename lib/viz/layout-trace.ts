@@ -1,6 +1,6 @@
 // CodeTraceViz state panel: call frames (newest on top) with their variables, and the heap
 // objects they refer to, drawn as boxes with arrows from names so aliasing is visible
-// (plan §4.11.1, DESIGN.md → Code trace layout).
+// (DESIGN.md → Code trace layout).
 import { MAX_NATURAL_WIDTH, PAD, textWidth, type VizItem, type VizScene } from "./geometry";
 import type { HeapObject, TraceValue } from "./schema";
 import type { TraceState } from "./trace";
@@ -64,7 +64,7 @@ export function layoutTrace(states: TraceState[]): VizScene[] {
   const xObj = x0 + fw + 36;
   const availW = Math.max(60, MAX_NATURAL_WIDTH - xObj - PAD);
   // A trace whose names only ever hold plain values (ints, strings, ...) has nothing to draw in the
-  // Objects column, so it gets no Objects header either (P6-D8: the header alone overflowed).
+  // Objects column, so it gets no Objects header either (the header alone overflowed otherwise).
   const hasObjects = states.some((s) => s.heap.size > 0);
 
   return states.map((s) => {
@@ -386,7 +386,7 @@ export function layoutTrace(states: TraceState[]): VizScene[] {
     let maxX = x0 + fw + PAD;
     for (const it of items) {
       if (it.t === "cell" || it.t === "slot") maxX = Math.max(maxX, it.x + it.w + PAD);
-      // Column headers are start-anchored text; the scene must hold them too (P6-D8).
+      // Column headers are start-anchored text; the scene must hold them too.
       if (it.t === "text" && (it.key === "hframes" || it.key === "hobjects"))
         maxX = Math.max(maxX, it.x + textWidth(it.text, "title") + PAD);
     }

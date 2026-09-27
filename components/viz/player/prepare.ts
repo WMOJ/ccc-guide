@@ -34,7 +34,7 @@ export interface PreparedTrace {
   box: { width: number; height: number };
   outputLines: number;
   /** False when no step ever holds a variable (or a return value): the trace then shows no
-   * frames panel at all, only code and output (P6-D58: an empty "Global frame" box is noise). */
+   * frames panel at all, only code and output (an empty "Global frame" box is noise). */
   hasFrames: boolean;
 }
 

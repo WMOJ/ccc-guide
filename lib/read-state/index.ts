@@ -1,6 +1,6 @@
 "use client";
 
-// lib/read-state — one localStorage key `etccc:read:v1` -> { lessonId: ISODate } (plan §4.8, A9).
+// lib/read-state — one localStorage key `etccc:read:v1` -> { lessonId: ISODate }.
 // Every access in try/catch; when storage is blocked or cleared the app works the same, minus
 // the check marks (no other state, no export/import).
 import { useCallback, useSyncExternalStore } from "react";
@@ -14,7 +14,7 @@ type ReadMap = Record<string, string>;
  * Anything else — an array, a number, `null`, non-string values — is treated as empty rather
  * than trusted, so a corrupted or hand-edited localStorage entry can't desync the read state or
  * (via `id in map`, fixed below to `Object.hasOwn`) leak prototype properties as "read" lessons.
- * Pure and DOM-free so it's directly unit-testable (design-review.md A1-8).
+ * Pure and DOM-free so it's directly unit-testable.
  */
 export function parseReadMap(raw: string | null): ReadMap {
   if (!raw) return {};

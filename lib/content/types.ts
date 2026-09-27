@@ -5,7 +5,7 @@
 import type { ReactNode } from "react";
 import type { Judge } from "../registry/judge-url";
 
-/** Module lifecycle (plan §4.6.5). */
+/** Module lifecycle. */
 export type ModuleStatus = "planned" | "drafted" | "gated" | "reviewed" | "accepted";
 
 export type { Judge };
@@ -35,7 +35,7 @@ export interface StageLink {
   /** Display number: "0"…"7", "C". */
   number: string;
   title: string;
-  /** One-line goal from course.yaml. Never score/payoff wording (plan §5.4). */
+  /** One-line goal from course.yaml. Never score/payoff wording. */
   goal?: string;
   /** `/learn#stage-<id>`. */
   href: string;
@@ -51,7 +51,7 @@ export interface ProblemView {
   number: number;
   title: string;
   judge: Judge;
-  /** From judgeUrl() only (R13). */
+  /** From judgeUrl() only. */
   url: string;
   /**
    * Set when this reference is a Junior alias of a Senior problem: renders
@@ -65,7 +65,7 @@ export interface ProblemView {
 export interface PracticeItemView {
   problem: ProblemView;
   note?: string;
-  /** Required for some DMOJ entries (plan §4.7). */
+  /** Required for some DMOJ entries. */
   why?: string;
 }
 

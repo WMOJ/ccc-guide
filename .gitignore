@@ -26,3 +26,7 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# Run logs and reports written by manual tools (link verification, perf budgets) — regenerated
+# on each run, not scratch by definition but not meant to be committed either
+reports/

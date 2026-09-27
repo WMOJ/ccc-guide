@@ -1,7 +1,6 @@
-// lib/content/dev-guard.ts — shared production gate for every `/dev/*` route (plan §4.10:
-// "/dev/viz ... exists only in local and preview builds and returns 404 in production"; the same
-// rule applies to `/dev/design`, orchestrator relay). Both `app/dev/viz/page.tsx` (W3) and
-// `app/dev/design/page.tsx` (W2) call this first.
+// lib/content/dev-guard.ts — shared production gate for every `/dev/*` route: `/dev/viz` exists
+// only in local and preview builds and returns 404 in production; the same rule applies to
+// `/dev/design`. Both `app/dev/viz/page.tsx` and `app/dev/design/page.tsx` call this first.
 import { notFound } from "next/navigation";
 import { isProduction } from "./env";
 

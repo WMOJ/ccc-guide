@@ -1,4 +1,4 @@
-// The /dev/viz gallery (plan §4.11.6): every primitive, every visualizer in every state, every
+// The /dev/viz gallery: every primitive, every visualizer in every state, every
 // player state, the code tracer and each scene. Where visual baselines and the design review
 // start. Previews only (the route 404s in production).
 import path from "node:path";

@@ -1,4 +1,4 @@
-// lib/search/build-index.ts — builds the static search index entries (plan §4.8): every
+// lib/search/build-index.ts — builds the static search index entries: every
 // readable lesson, every glossary term, every registry problem. Server-only (reads content from
 // disk via lib/content). Consumed by app/search-index.json/route.ts at build time.
 import { getCourse } from "../content/course";

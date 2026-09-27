@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-// Security headers (plan §4.1): no request leaves the origin except a learner clicking an
+// Security headers: no request leaves the origin except a learner clicking an
 // external judge/CEMC link; the app has no API routes, no cookies, no server state to protect,
 // so the CSP only needs to stop framing and plugin content, not script origins.
 const securityHeaders = [
@@ -36,7 +36,7 @@ const nextConfig: NextConfig = {
   // explicitly to a directory nothing else writes to. `npm run dev`/`npm run start` never set it,
   // so they keep using `.next` as always.
   distDir: process.env.ETCCC_DIST_DIR || ".next",
-  // No `output: 'export'` (plan §4.1): a regular Vercel build keeps next.config headers working.
+  // No `output: 'export'`: a regular Vercel build keeps next.config headers working.
   async headers() {
     return [
       {

@@ -1,4 +1,4 @@
-// lib/search — public entry point (plan §4.8). `loadSearch()` is client-only (fetches
+// lib/search — public entry point. `loadSearch()` is client-only (fetches
 // /search-index.json and builds MiniSearch); `buildSearchIndex()` is server-only (used by the
 // route handler at build time).
 

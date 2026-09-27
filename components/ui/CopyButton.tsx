@@ -11,7 +11,7 @@ export interface CopyButtonProps {
 
 type State = "idle" | "copied" | "failed";
 
-/** Copy-code button (plan §4.8): the only JS on a code block. */
+/** Copy-code button: the only JS on a code block. */
 export function CopyButton({ code, labels }: CopyButtonProps) {
   const [state, setState] = useState<State>("idle");
   const ref = useRef<HTMLButtonElement>(null);

@@ -6,7 +6,7 @@ import { fmt, ui } from "@/components/ui/ui-strings";
 import { judgeName, problemLabel } from "./problem-label";
 
 /**
- * A module's practice list (plan §4.6.4, DESIGN.md → Practice list). No status, checkboxes,
+ * A module's practice list (DESIGN.md → Practice list). No status, checkboxes,
  * scores or hints. Renders nothing when the list is empty.
  */
 export function Practice({
@@ -17,7 +17,7 @@ export function Practice({
   headingId?: string;
 }) {
   if (items.length === 0) return null;
-  // Worded by count and by the judges actually listed (P6-D34).
+  // Worded by count and by the judges actually listed.
   function practiceIntro(list: PracticeItemView[]): string {
     const judges = [...new Set(list.map((i) => i.problem.judge))];
     const [first] = judges;

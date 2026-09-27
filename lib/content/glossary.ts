@@ -1,5 +1,5 @@
 // lib/content/glossary.ts — loads content/glossary.yaml (+ the fixture's, non-production) into
-// GlossaryTermView[] (plan §4.6, brief A4).
+// GlossaryTermView[].
 import fs from "node:fs";
 import path from "node:path";
 import { parse } from "yaml";

@@ -1,6 +1,6 @@
 // lib/content/code-block-data.ts — resolves a `<Code>` MDX tag's file/lines/highlight/.in/.out/
-// expectError props into the raw strings W2's `CodeBlock` component (components/content) takes
-// (plan §4.4, brief §4, requests.md "Batch 2" #2: "you pass raw strings, I highlight").
+// expectError props into the raw strings the `CodeBlock` component (components/content) takes
+// ("you pass raw strings, I highlight").
 import fs from "node:fs";
 import path from "node:path";
 
@@ -20,9 +20,9 @@ export interface CodeBlockData {
 /**
  * Resolves `file` (an MDX author's `<Code file="…">`/`<Output file="…">` prop) against
  * `moduleDir` and rejects anything that escapes it — `../../../etc/passwd` or an absolute path
- * would otherwise let a lesson read any file the server process can (design-review.md A1-4:
- * "OutputTag must reject any file that resolves outside the module dir"; the same risk exists
- * for `<Code file>`, fixed here once for both call sites).
+ * would otherwise let a lesson read any file the server process can ("OutputTag must reject any
+ * file that resolves outside the module dir"; the same risk exists for `<Code file>`, fixed here
+ * once for both call sites).
  */
 export function resolveModulePath(moduleDir: string, file: string): string {
   const root = path.resolve(moduleDir);
@@ -57,8 +57,8 @@ function parseHighlight(highlight: string | undefined): number[] | undefined {
 /**
  * Resolves `<Code file="examples/x.py" lines="1-5" highlight="3,4" caption="…" showOutput
  * expectError="IndexError" />` against the lesson's module directory. `.out` is required when
- * `showOutput` is set; `.err` (committed traceback text, our convention — plan §4.4 doesn't name
- * one) is required when `expectError` is set.
+ * `showOutput` is set; `.err` (committed traceback text, our own convention) is required when
+ * `expectError` is set.
  */
 export function resolveFileCodeBlock(
   moduleDir: string,

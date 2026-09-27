@@ -1,5 +1,5 @@
 // lib/content/strings.ts — typed, Zod-validated access to content/ui/strings.yaml, the ONLY
-// place learner-facing UI copy lives (plan §4.6.2). Reads from disk with `node:fs`, so it only
+// place learner-facing UI copy lives. Reads from disk with `node:fs`, so it only
 // runs on the server (any client import fails at build/runtime already, since `fs` isn't
 // available in the browser — no extra `server-only` dependency needed for that guarantee).
 import fs from "node:fs";

@@ -1,4 +1,4 @@
-// lib/content/env.ts — draft visibility environment (plan §4.1, brief A4/A6).
+// lib/content/env.ts — draft visibility environment.
 //
 // Production (VERCEL_ENV === "production") renders only "accepted" modules and never mounts the
 // fixture course. Everything else (local dev/build, Vercel previews) is "preview": it also
@@ -19,7 +19,7 @@ export function isProduction(): boolean {
   return getBuildEnv() === "production";
 }
 
-/** Module statuses visible in this build (plan §4.1 draft visibility, brief A6). */
+/** Module statuses visible in this build (draft visibility). */
 export function visibleStatuses(env: BuildEnv = getBuildEnv()): readonly string[] {
   return env === "production"
     ? (["accepted"] as const)

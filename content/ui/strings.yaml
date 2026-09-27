@@ -1,7 +1,7 @@
-# content/ui/strings.yaml — ALL learner-facing UI copy (plan §4.6.2). P4 skeleton seeded from
-# the design lead's working defaults; P5 rewrote it in the approved voice (STYLE-GUIDE.md), and
-# G-STYLE checks every string here. Loaded and Zod-validated by lib/content/strings.ts
-# (getUiStrings()). Working title: "CCC Python Course" (brief §7) until P5/Manager decides.
+# content/ui/strings.yaml — ALL learner-facing UI copy, written in the approved voice
+# (STYLE-GUIDE.md). G-STYLE checks every string here. Loaded and Zod-validated by
+# lib/content/strings.ts (getUiStrings()). Working title: "CCC Python Course" until the
+# Manager decides.
 
 siteName: CCC Python Course
 skipLink: Skip to content

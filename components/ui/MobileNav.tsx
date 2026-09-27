@@ -7,7 +7,7 @@ import { buttonClass } from "./button-styles";
 import { cn } from "./cn";
 
 /**
- * Mobile navigation (plan §4.8): a drawer from the left below 1024 px. The navigation inside is
+ * Mobile navigation: a drawer from the left below 1024 px. The navigation inside is
  * server-rendered and passed as children; this component only opens and closes it.
  */
 export function MobileNav({

@@ -1,4 +1,4 @@
-// Build-time Python highlighting with the one custom light theme (plan §4.4). Server only:
+// Build-time Python highlighting with the one custom light theme. Server only:
 // imported by the CodeBlock server component; nothing here ships to the browser.
 
 import { createHighlighterCore, type HighlighterCore } from "shiki/core";

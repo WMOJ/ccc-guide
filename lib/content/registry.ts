@@ -1,5 +1,5 @@
 // lib/content/registry.ts — loads content/registry/ccc-problems.yaml and
-// content/registry/external-links.yaml, and builds ProblemView / PracticeItemView (plan §4.7).
+// content/registry/external-links.yaml, and builds ProblemView / PracticeItemView.
 import fs from "node:fs";
 import path from "node:path";
 import { parse } from "yaml";
@@ -114,7 +114,7 @@ function canonicalId(registryId: string): string {
 /**
  * Canonical problem id -> the readable modules whose practice list names it, in course order
  * (DESIGN.md → Problems page, "Taught in"). Derived from the practice lists themselves, so it can
- * never disagree with what the module pages show (P6-D4). Modules this build does not show
+ * never disagree with what the module pages show. Modules this build does not show
  * (no href) are left out.
  */
 function taughtInIndex(): Map<string, NonNullable<ProblemView["taughtIn"]>> {

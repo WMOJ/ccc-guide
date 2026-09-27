@@ -10,7 +10,7 @@ export interface StepsText {
 
 /**
  * <figure> around one visual: the visual (frame), then a figcaption holding "Figure N" + the
- * caption and the text alternative in a native <details> (plan §4.11.4). No JS.
+ * caption and the text alternative in a native <details>. No JS.
  */
 export function FigureShell({
   kind,

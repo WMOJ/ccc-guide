@@ -1,4 +1,4 @@
-// app/search-index.json/route.ts — the only route handler in the app (plan §4.8, A3). Static
+// app/search-index.json/route.ts — the only route handler in the app. Static
 // JSON built at build time; MiniSearch loads it lazily on the client (lib/search/client.ts).
 import { NextResponse } from "next/server";
 import { buildSearchIndex } from "@/lib/search/build-index";

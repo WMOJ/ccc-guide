@@ -2,10 +2,9 @@
 #
 # Ordered stages -> modules. No system/environment setup content (M0.2 and M0.3 were dropped as
 # setup-only; M7.14, the C++ bridge, is kept with no setup framing).
-# Every module starts "planned" (renders as "Coming soon", no link, plan §4.1 draft visibility)
-# until P5-P8 write it. Stage and module "goal"/"title" text here is neutral and score-free by
-# hand (plan §5.4): the source recon file's "Goal / exit criterion" and "Contest payoff" columns
-# were NOT copied, since they contain score/CCO/medal wording the app must never show (R14).
+# Every module starts "planned" (renders as "Coming soon", no link, draft visibility)
+# until written. Stage and module "goal"/"title" text here is neutral and score-free by
+# hand: score/CCO/medal wording and "Contest payoff" framing must never show in the app.
 #
 # prereqs are module ids only, resolved and checked acyclic by content:check (G-SCHEMA). A few
 # prereqs that named non-module text in the source ("Stage 6 complete", "the module that

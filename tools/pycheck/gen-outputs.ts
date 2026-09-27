@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// tools/pycheck/gen-outputs.ts — `npm run gen:outputs -- --scope <id>` (plan §4.5 G-PY-RUN).
+// tools/pycheck/gen-outputs.ts — `npm run gen:outputs -- --scope <id>` (G-PY-RUN).
 // Runs every file-based example under PyPy 3.8 and overwrites its `.out` (stdout, exit 0
 // expected) or `.err` (stderr, non-zero exit expected) next to it. Generated files only — never
-// hand-write a `.out`/`.err` (plan §4.6.2: "generated files: never hand-edited").
+// hand-write a `.out`/`.err` (generated files: never hand-edited).
 //
 // An example only gets a `.out` or `.err` written if one already exists (i.e. an author has
 // already decided, via `<Code showOutput />` / `<Code expectError="...">`, that this example

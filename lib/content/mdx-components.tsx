@@ -1,8 +1,8 @@
-// lib/content/mdx-components.tsx — the fixed MDX component map (plan §4.6.1, brief §4). Authors
+// lib/content/mdx-components.tsx — the fixed MDX component map. Authors
 // never import: every name below is all that is available inside a lesson .mdx file. Anything
 // else fails the build (unresolved MDX component references throw at render time, which SSG hits
-// during `next build` since every route is static, plan §4.1) — and, before that, fails
-// content:check's static G-SCHEMA check (design-review.md A1-4), which reads the same key list
+// during `next build` since every route is static) — and, before that, fails
+// content:check's static G-SCHEMA check, which reads the same key list
 // from ./mdx-component-names.ts (a plain-data module, kept in sync with the object below by
 // tests/unit/content/mdx-component-names.test.ts) since it cannot load this file's JSX.
 import fs from "node:fs";
@@ -120,8 +120,8 @@ export function createMdxComponents({ moduleDir, practiceItems = [] }: MdxCompon
     kind: "home" | "signup";
     children?: ReactNode;
   }) {
-    // Judge home/sign-up URLs go through external-links.yaml only (design-review.md A1-2, plan
-    // §4.7) — never lib/registry/judge-url.ts, which builds problem URLs only.
+    // Judge home/sign-up URLs go through external-links.yaml only — never
+    // lib/registry/judge-url.ts, which builds problem URLs only.
     const { url: href } = getExternalLink(`${judge}-${kind}`);
     return (
       <JudgeLinkImpl judge={judge} kind={kind} href={href}>
@@ -159,9 +159,9 @@ export function createMdxComponents({ moduleDir, practiceItems = [] }: MdxCompon
     ProblemLink: ProblemLinkTag,
     Practice: PracticeTag,
     JudgeLink: JudgeLinkTag,
-    // DraftBadge/ComingSoon deliberately NOT exposed to authors (design-review.md A1-4): they
-    // aren't in brief §4's MDX component contract, and an author must never be able to place a
-    // Draft badge — that's derived from a module's status, not something a lesson decides.
+    // DraftBadge/ComingSoon deliberately NOT exposed to authors: they aren't in the MDX
+    // component contract, and an author must never be able to place a Draft badge — that's
+    // derived from a module's status, not something a lesson decides.
     ...viz,
   };
 }

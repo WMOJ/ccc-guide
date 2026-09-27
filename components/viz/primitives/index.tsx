@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-// SVG primitives (plan §4.11.2): cell / value box, node, edge, arrow, pointer, dimension line
+// SVG primitives: cell / value box, node, edge, arrow, pointer, dimension line
 // (range) and compare bracket, label, badge, container slot, plot line, band. Pure and
 // server-safe: no hooks, no client code. Colours and strokes come from viz.css through the
 // `data-s` state attribute (DESIGN.md → State vocabulary), never from literals here.

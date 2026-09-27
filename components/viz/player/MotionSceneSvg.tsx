@@ -23,7 +23,7 @@ function paintOrder(items: VizItem[]): VizItem[] {
 }
 
 /**
- * Interactive SVG drawing powered by Motion for enter/exit animations (plan §4.2, §4.11.3).
+ * Interactive SVG drawing powered by Motion for enter/exit animations.
  * Loaded lazily only when a player comes near the viewport.
  */
 export function MotionSceneSvg({ scene, box, title, desc }: MotionSceneSvgProps) {

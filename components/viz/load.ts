@@ -1,5 +1,5 @@
 // Server-only loading of committed visual data (build time). A malformed file throws, so a
-// broken visual can never deploy (plan §4.11.6).
+// broken visual can never deploy.
 import fs from "node:fs";
 import path from "node:path";
 import type { FramesFile, TraceFile } from "@/lib/viz/schema";

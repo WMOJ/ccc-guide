@@ -1,4 +1,4 @@
-// Layout: frame data → VizScene, one function per panel visualizer (plan §4.11.2). Each takes
+// Layout: frame data → VizScene, one function per panel visualizer. Each takes
 // every frame of a panel at once, so sizes and positions are fixed across steps and presets
 // (the fixed aspect box: no layout shift, nothing jumps between steps).
 import { tree as d3tree, hierarchy } from "d3-hierarchy";
@@ -1203,7 +1203,7 @@ function niceTicks(min: number, max: number): number[] {
   return out;
 }
 
-/** An axis tick: thousands separated ("1,000,000"), as the captions write them (P6-D101). */
+/** An axis tick: thousands separated ("1,000,000"), as the captions write them. */
 function tickText(v: number): string {
   return Math.abs(v) >= 1000 ? v.toLocaleString("en-US") : fmt(v);
 }
@@ -1376,7 +1376,7 @@ export function layoutPlot(frames: PlotFrame[]): VizScene[] {
       if (cur.y - prev.y < 17) cur.y = prev.y + 17;
     }
     // Spreading runs downward, so curves ending near the x-axis pushed their labels into the
-    // x-tick row (P6-D101: "n" over the "1,000" tick). Keep every label above the axis, moving
+    // x-tick row ("n" over the "1,000" tick, before this fix). Keep every label above the axis, moving
     // the whole stack up instead.
     const floor = bottom - 8;
     for (let i = labels.length - 1; i >= 0; i -= 1) {
@@ -1472,7 +1472,7 @@ export function layoutPlot(frames: PlotFrame[]): VizScene[] {
         spotOf.set(i, spot);
       });
     // Two labels stacked beside markers at the same x read top to bottom in value order: the
-    // larger value's label sits higher (P6-D101: "1,000" was drawn above "9,965.8").
+    // larger value's label sits higher (fixed a bug where "1,000" was drawn above "9,965.8").
     const labelled = (f.markers ?? []).map((m, i) => ({ m, i })).filter(({ i }) => spotOf.has(i));
     for (const a of labelled)
       for (const b of labelled) {

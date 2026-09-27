@@ -13,7 +13,7 @@ export function Legend({
 }: {
   states: VizState[];
   label?: string;
-  /** Per-visual names for states (P6-D77); the default word is used otherwise. */
+  /** Per-visual names for states; the default word is used otherwise. */
   labels?: Partial<Record<VizState, string>> | undefined;
 }) {
   const shown = states.filter((s): s is Exclude<VizState, "none"> => s !== "none");

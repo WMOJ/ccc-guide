@@ -1,4 +1,4 @@
-// app/start/page.tsx — how the course and practice work (brief §7 thin wiring, plan §4.10).
+// app/start/page.tsx — how the course and practice work.
 import type { Metadata } from "next";
 import { StartPage } from "@/components/layout";
 import { ui } from "@/components/ui/ui-strings";

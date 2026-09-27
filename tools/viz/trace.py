@@ -105,7 +105,7 @@ class Tracer:
         self.params = []
         self.max_steps = max_steps
         self.skip_rules = [dict(r, done=False) for r in skip_rules]
-        # "7" is the first captioned run of line 7; "7@2" its second (P6-D70: a note for the step
+        # "7" is the first captioned run of line 7; "7@2" its second (a note for the step
         # where something specific happens, such as a tie, not the first time the line runs).
         self.notes = {parse_note_key(k): v for k, v in notes.items()}
         self.noted = set()
@@ -311,7 +311,7 @@ class Tracer:
             call_line = prev["stack"][-1]["l"]
             args = self.args(cur, len(cur["stack"]) - 1, heap)
             # Notes also reach call, return and end captions: a note on a line that calls, returns
-            # or ends the program used to be dropped without a word (P6-D62).
+            # or ends the program used to be dropped without a word.
             return self.add_note(
                 "Line {} calls {}{}. A new frame for {} goes on top of the call stack.".format(
                     call_line,
@@ -335,7 +335,7 @@ class Tracer:
                 )
             return self.add_note(self.with_output(text, step, ran), line)
         if step["e"] == "exception":
-            # A note on the line that raises is the figure's point; it must not be lost (P6-D62).
+            # A note on the line that raises is the figure's point; it must not be lost.
             return self.add_note("Line {} raises an error: {}.".format(line, as_code(step["x"])), line)
         if step["e"] == "end":
             ran = prev["stack"][0]["l"]
@@ -448,13 +448,13 @@ class Tracer:
         text = self.describe_line_only(ran, nxt, prev, cur, step)
         # A `while True:` header is never a traced step (the compiler drops its re-check), so a
         # pass ends by jumping from the body's last line straight back into the body. Say so, or
-        # the jump reads as a skipped step (P6-D98). A jump back to a real for/while header is
+        # the jump reads as a skipped step. A jump back to a real for/while header is
         # described by that header's own step and needs nothing here.
         header = self.loop_header_above(nxt) if nxt is not None else None
         if text and header is not None and self.src(header).strip().startswith("while True"):
             if nxt <= ran:
                 # The new-pass sentence names the next line itself; drop a plain "; line N is next"
-                # so the caption does not say it twice (P6-D102).
+                # so the caption does not say it twice.
                 plain = f"Line {ran} runs; line {nxt} is next."
                 if text == plain:
                     text = f"Line {ran} runs."
@@ -516,7 +516,7 @@ class Tracer:
             indent_next = len(self.src(nxt)) - len(self.src(nxt).lstrip())
             # True only when the next line is this statement's own first body line. A false `elif`
             # that falls through to the `else` body also jumps to a deeper line, which is not
-            # evidence of truth (P6-D89).
+            # evidence of truth.
             truth = nxt == self.first_body_line(ran) and indent_next > indent_ran
             if code.startswith("while "):
                 return "Line {} checks the loop condition: it is {}, so {}.".format(
@@ -654,7 +654,7 @@ def main():
                 entry["stdin"] = preset["stdin"]
             presets.append(entry)
         # A note that no preset's caption ever shows is a silent loss of the figure's teaching
-        # point (P6-D62), so it fails generation.
+        # point, so it fails generation.
         never = set.intersection(*unused) if unused else set()
         if never:
             keys = ", ".join(sorted(note_key_text(k) for k in never))

@@ -1,4 +1,4 @@
-// Scene "stdin-flow": how input() takes one line of standard input at a time (plan §4.11.1).
+// Scene "stdin-flow": how input() takes one line of standard input at a time.
 import { z } from "zod";
 import type { StdinSceneFrame } from "../../../lib/viz/schema";
 import type { SceneBuild } from "./types";

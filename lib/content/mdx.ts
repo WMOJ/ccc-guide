@@ -1,4 +1,4 @@
-// lib/content/mdx.ts — compiles one lesson's MDX to a React element (plan §4.6.1, A7). Runs
+// lib/content/mdx.ts — compiles one lesson's MDX to a React element. Runs
 // `@mdx-js/mdx` `evaluate()` in RSC with the fixed component map; unknown components fail the
 // build (see lib/content/mdx-components.tsx).
 import fs from "node:fs";

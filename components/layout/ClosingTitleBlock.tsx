@@ -17,7 +17,7 @@ export function ClosingTitleBlock({
   const s = ui().lesson;
   const next = nav.next ?? { href: "/learn", title: s.backToMap, moduleTitle: undefined };
   // The next lesson's module title is context, so it is left out when it only repeats the lesson
-  // title (a one-lesson module usually names its lesson after itself, P6-D26).
+  // title (a one-lesson module usually names its lesson after itself).
   const nextModuleTitle =
     next.moduleTitle && plainTitle(next.moduleTitle) !== plainTitle(next.title)
       ? next.moduleTitle

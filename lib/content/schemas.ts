@@ -1,5 +1,5 @@
-// lib/content/schemas.ts — Zod schemas for every YAML file the loader reads (plan §4.6, G-SCHEMA).
-// A build/content:check failure here always names the file and field (plan §4.6.2).
+// lib/content/schemas.ts — Zod schemas for every YAML file the loader reads (G-SCHEMA).
+// A build/content:check failure here always names the file and field.
 import { z } from "zod";
 
 const moduleIdRe = /^(M\d+\.\d+|C\.\d+)$/;
@@ -145,8 +145,7 @@ export const uiStringsSchema = z.object({
     stage: z.string(),
     lessons: z.string(),
     lessonCount: z.string(),
-    /** Singular form of lessonCount ("{n} lesson", n === 1) — so "1 lessons" can never render
-     * (requests.md, W2 r8 review). */
+    /** Singular form of lessonCount ("{n} lesson", n === 1) — so "1 lessons" can never render. */
     lessonCountOne: z.string(),
     before: z.string(),
     lessonsHeading: z.string(),
@@ -198,8 +197,7 @@ export const uiStringsSchema = z.object({
     startLabel: z.string(),
     sheetIndex: z.string(),
     modules: z.string(),
-    /** Singular form of modules ("{n} module", n === 1) — so "1 modules" can never render
-     * (requests.md, W2 r8 review). */
+    /** Singular form of modules ("{n} module", n === 1) — so "1 modules" can never render. */
     modulesOne: z.string(),
     howHeading: z.string(),
     how: z.array(z.object({ term: z.string(), text: z.string() })),

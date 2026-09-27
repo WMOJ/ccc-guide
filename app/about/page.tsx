@@ -1,4 +1,4 @@
-// app/about/page.tsx — credits and attribution (brief §7 thin wiring, plan §4.10).
+// app/about/page.tsx — credits and attribution.
 import type { Metadata } from "next";
 import { AboutPage } from "@/components/layout";
 import { ui } from "@/components/ui/ui-strings";

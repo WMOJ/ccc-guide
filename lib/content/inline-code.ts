@@ -1,7 +1,7 @@
 // lib/content/inline-code.ts — one rule for every inline code span (lesson prose, RichText strings,
-// visual captions). A short span never wraps, so "-3" or "% 5" never splits into two pills
-// (P6-D25). A long span (a whole error line such as "NameError: name 'shiping' is not defined")
-// may wrap at its spaces, or it pushes a 390 px page sideways (P6-D51).
+// visual captions). A short span never wraps, so "-3" or "% 5" never splits into two pills.
+// A long span (a whole error line such as "NameError: name 'shiping' is not defined")
+// may wrap at its spaces, or it pushes a 390 px page sideways.
 
 /** Spans longer than this many characters may wrap; shorter ones never split. */
 export const LONG_INLINE_CODE = 24;

@@ -1,4 +1,4 @@
-// lib/search/client.ts — lazy-loaded client search (plan §4.8): fetches the static
+// lib/search/client.ts — lazy-loaded client search: fetches the static
 // /search-index.json and builds a MiniSearch instance. Only imported from client components
 // that open search, so MiniSearch's JS never ships on a page that never opens it.
 import MiniSearch from "minisearch";

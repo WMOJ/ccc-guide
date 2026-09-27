@@ -1,4 +1,4 @@
-// lib/content/reading-time.ts — readingMinutes (W2 request, requests.md): word count of the MDX
+// lib/content/reading-time.ts — readingMinutes: word count of the MDX
 // prose / 200, rounded, minimum 1.
 
 /** Strips MDX/markdown syntax that isn't prose the learner reads at reading pace. */

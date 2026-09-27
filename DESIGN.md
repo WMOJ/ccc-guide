@@ -202,10 +202,8 @@ components:
 # Design System: CCC Python Course
 
 <!--
-Status: P4 batch 1 specification, written by the design lead (W2) before any UI exists, at the phase orchestrator's request (brief A10: this file is the single token source).
-Impeccable normally writes DESIGN.md at the finish of a new world; here it is written first as the build spec, and the finish pass (Impeccable `document`, scan mode) will re-check it against the built code and update it.
-The product name above is a working title (PRODUCT.md "Open facts"); the rendered wordmark comes from content/ui/strings.yaml.
-Section "Visual Language" is shared: parts marked [W2] are the design lead's; parts marked [W3] are for the visualization engineer to complete.
+This file is the single token source for the design system.
+The product name above is a working title (see PRODUCT.md "Open facts"); the rendered wordmark comes from content/ui/strings.yaml.
 -->
 
 ## Overview
@@ -230,7 +228,7 @@ This is not a grey docs template with a blue sidebar and a card grid, not a crea
 
 A restrained drafting palette: board green, sheet white, pen ink, one diazo blueline for everything interactive, and a small fixed set of marking colours (checker's yellow, redline, approval green, plum) that each carry one meaning.
 
-All hex values are the canonical tokens. They were derived in OKLCH (noted per token) and all are in the sRGB gamut. Contrast ratios are WCAG 2.x ratios computed from the hex values (script: `work/04-app/_scratch/palette.cjs`).
+All hex values are the canonical tokens. They were derived in OKLCH (noted per token) and all are in the sRGB gamut. Contrast ratios are WCAG 2.x ratios computed from the hex values.
 
 ### Primary
 - **Diazo Blueline** (#29519F, oklch 45% 0.135 262): links, focus rings, the selected state of controls, the `note` callout's label and icon, Python keywords. 7.45:1 on paper, 6.63:1 on board, 5.85:1 on check. Named after the blue-line prints drawings were copied on.
@@ -276,7 +274,7 @@ Keyword #29519F, string #1F6538, number/constant #954717, builtin #156165, comme
 **Text Font:** Atkinson Hyperlegible Next (variable, wght 200–800), fallback `ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif` with `next/font` metric adjustment.
 **Code Font:** Atkinson Hyperlegible Mono (variable, wght 200–800), fallback `ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace`.
 
-**Character:** One legibility-first family does everything, like the single standard lettering on a drawing; rank comes from size and weight, not from a second display face. The Mono is its sibling, so code and prose share proportions and x-height. Both have a slashed zero, a flagged and footed 1, a tailed l and a serifed capital I (checked on the downloaded files, see `work/04-app/fonts.md`).
+**Character:** One legibility-first family does everything, like the single standard lettering on a drawing; rank comes from size and weight, not from a second display face. The Mono is its sibling, so code and prose share proportions and x-height. Both have a slashed zero, a flagged and footed 1, a tailed l and a serifed capital I (checked on the downloaded files).
 
 ### Hierarchy
 Fixed rem sizes (Read mode: predictable, no fluid type). Phone values apply below 640 px.
@@ -297,7 +295,7 @@ Fixed rem sizes (Read mode: predictable, no fluid type). Phone values apply belo
 - Tabular figures (`font-variant-numeric: tabular-nums`, the font's `tnum`) for every number that sits in a column or changes in place: module IDs, lesson counts, years and levels ("2023 S1"), step counters, table cells, title blocks. Utility class `tnum`.
 - Prose keeps the default proportional figures.
 - Mono is tabular by construction. The Mono's `zero` feature stays off: its default zero is already slashed.
-- Atkinson Hyperlegible Next draws every zero slashed, at every size, and has no plain-zero alternate (checked: no `zero`, `ssNN` or `cvNN` feature; `aalt` alternates 1–3 leave `0` unchanged; render in `work/04-app/_scratch/fonts/zero-features.png`). The slashed zero stays in headings and body. It is part of the face's character-disambiguation design, the same reason the face was chosen.
+- Atkinson Hyperlegible Next draws every zero slashed, at every size, and has no plain-zero alternate (checked: no `zero`, `ssNN` or `cvNN` feature; `aalt` alternates 1–3 leave `0` unchanged). The slashed zero stays in headings and body. It is part of the face's character-disambiguation design, the same reason the face was chosen.
 
 ### Named Rules
 **The One Lettering Rule.** One family, one standard. A second display face, italics for decoration, or monospace as a "technical" costume outside code, values and IDs is refused.
@@ -515,7 +513,7 @@ Every interactive component has default, hover, focus-visible, active, and (wher
 - **Class merging**: `cn()` uses `extendTailwindMerge` with the custom `text-*` sizes, radii, shadow and ease declared, so a size class such as `text-label` never removes a colour class.
 - **Titles with code**: module and lesson titles may contain backtick spans; `RichTitle` renders them as inline `<code>` in the sidebar, index rows and continue block.
 - **Copy**: every UI string comes from `content/ui/strings.yaml` through `ui()` (server) or props (client). Client components never import copy.
-- **Client code** is limited to the plan §4.8 set: copy button, mark-as-read, live read cells, continue block, search dialog and page, mobile drawer. Term uses a native popover and needs no script.
+- **Client code** is limited to: copy button, mark-as-read, live read cells, continue block, search dialog and page, mobile drawer. Term uses a native popover and needs no script.
 - **`/dev/design`** (preview builds only, 404 in production) shows every component in every state, with sample problems resolved from the registry. It is the target for pixel review and visual baselines.
 
 ## Visual Language
@@ -830,4 +828,4 @@ The design lead moves this into `app/globals.css` when the scaffold hands the fi
 }
 ```
 
-Notes for the implementer: the `--font-atkinson-next` and `--font-atkinson-mono` variables come from `next/font/local` in `app/layout.tsx` (files in `app/fonts/`, see `work/04-app/fonts.md`; preload the roman text face only). The phone overrides of `--text-*` work because Tailwind 4's `text-*` utilities read the variables at use time; confirm this on the built CSS and fall back to responsive utilities if the build inlines values.
+Notes for the implementer: the `--font-atkinson-next` and `--font-atkinson-mono` variables come from `next/font/local` in `app/layout.tsx` (files in `app/fonts/`; preload the roman text face only). The phone overrides of `--text-*` work because Tailwind 4's `text-*` utilities read the variables at use time; confirm this on the built CSS and fall back to responsive utilities if the build inlines values.

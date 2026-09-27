@@ -1,7 +1,7 @@
-// lib/content/course.ts — the course structure loader (plan §4.6, brief A4).
+// lib/content/course.ts — the course structure loader.
 //
 // Reads content/course.yaml (real course) and, in non-production builds, also
-// tests/fixtures/content/course.yaml (the "fx" fixture stage, brief A4) and merges them. For
+// tests/fixtures/content/course.yaml (the "fx" fixture stage) and merges them. For
 // every module, checks whether it has been authored on disk (a module directory with
 // module.yaml under stages/<stageDir>/<moduleDir>/) — real content has none yet (P5 writes
 // them); the fixture course does. Unauthored modules render as "Coming soon" with no link,

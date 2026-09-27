@@ -20,7 +20,7 @@ export interface PlayerProps {
 
 let playerModule: Promise<ComponentType<PlayerProps>> | null = null;
 function loadPlayer(): Promise<ComponentType<PlayerProps>> {
-  // One shared lazy chunk for every player on the page (plan §4.8): the player, the layouts and
+  // One shared lazy chunk for every player on the page: the player, the layouts and
   // the renderers load only when a visual comes near the viewport.
   playerModule ??= import("./Player").then((m) => m.Player);
   return playerModule;

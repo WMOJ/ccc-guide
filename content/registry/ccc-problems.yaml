@@ -785,9 +785,8 @@ problems:
         number: 4
     internal:
       note: Title corrected to 'Good Groups' (matches the ccc22s* 'Good ___' naming
-        pattern) after the P4 WMOJ live verification run flagged a mismatch
-        against the recon table's 'Group Work'
-        (work/04-app/wmoj-verification-run-1.md).
+        pattern) after a live WMOJ verification run flagged a mismatch
+        against 'Group Work'.
     modules:
       - C.4
       - M4.1

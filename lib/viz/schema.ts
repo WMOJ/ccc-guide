@@ -1,4 +1,4 @@
-// Zod schemas for every visual data file (plan §4.11.6, G-VIZ): the per-visualizer frame
+// Zod schemas for every visual data file (G-VIZ): the per-visualizer frame
 // schemas, the `.frames.json` / `.trace.json` files written by tools/viz, and the authored
 // `.viz.yaml` / `.trace.yaml` configs. Pure TypeScript (no JSX, no Next imports) so the Node
 // gate scripts can load it with type stripping (tools/viz/register.mjs).
@@ -46,7 +46,7 @@ export const compareSchema = z.strictObject({
 });
 
 // ---------------------------------------------------------------------------------------------
-// Frames, one schema per visualizer (plan §4.11.2)
+// Frames, one schema per visualizer
 // ---------------------------------------------------------------------------------------------
 
 export const arrayFrameSchema = z
@@ -395,7 +395,7 @@ export const PANEL_VIZ = [
 ] as const;
 export type PanelVizName = (typeof PANEL_VIZ)[number];
 export type FrameVizName = keyof typeof FRAME_SCHEMAS;
-/** The nine library visualizers of plan §4.11.2. */
+/** The nine library visualizers. */
 export const LIBRARY_VIZ = [...PANEL_VIZ, "CodeTraceViz"] as const;
 
 export type ArrayFrame = z.infer<typeof arrayFrameSchema>;
@@ -447,7 +447,7 @@ export const presetSchema = z.strictObject({
 });
 
 /** A visual may rename a state in its legend when the default word does not fit what it shows
- * (P6-D77: "Answer path" on a table's one matching pair). The cue drawn stays the same. */
+ * (e.g. "Answer path" on a table's one matching pair). The cue drawn stays the same. */
 export const legendLabelsSchema = z.partialRecord(stateSchema, z.string().min(2).max(24));
 
 export const framesFileSchema = z
@@ -664,7 +664,7 @@ export const traceYamlSchema = z.strictObject({
     .max(4)
     .optional(),
   /** Extra teaching notes appended to a caption: "7" the first time line 7 runs, "7@2" the second
-   * time (P6-D70). Every note must appear in some caption, or generation fails (P6-D62). */
+   * time. Every note must appear in some caption, or generation fails. */
   notes: z.record(z.string().regex(/^\d+(@[1-9]\d*)?$/), z.string().min(5).max(200)).optional(),
   budget: budgetSchema.optional(),
 });

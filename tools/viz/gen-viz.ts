@@ -1,6 +1,6 @@
 // npm run gen:viz [-- --scope <id>]: regenerate every `.frames.json` (from `<name>.viz.py` via
 // vizrec) and `.trace.json` (from the shown example via trace.py) under PyPy 3.8. The generated
-// files are committed; the Vercel build never needs Python (plan §4.11.6).
+// files are committed; the Vercel build never needs Python.
 import fs from "node:fs";
 import { findVisuals, generate, parseArgs, rel, VizError } from "./lib";
 

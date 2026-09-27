@@ -356,7 +356,7 @@
   }
 
   /* Inline code in prose, and in YAML/attribute strings rendered by <RichText> (.inline-code). A
-     span never wraps: a wrapped span split into two pills mid-expression (P6-D25, "-3" / "% 5"). */
+     span never wraps: a wrapped span split into two pills mid-expression ("-3" / "% 5"). */
   .prose-sheet :not(pre) > code:not([data-ui] *),
   .inline-code {
     font-size: 0.9em;
@@ -368,7 +368,7 @@
   }
 
   /* A long span (a whole error line) may wrap at its spaces, or it pushes a phone page sideways
-     (P6-D51; lib/content/inline-code.ts decides which spans are long). */
+     (lib/content/inline-code.ts decides which spans are long). */
   .prose-sheet code.code-long:not([data-ui] *),
   .inline-code.code-long {
     white-space: normal;
