@@ -1,7 +1,7 @@
 n = int(input())
 readings = [tuple(map(int, input().split())) for _ in range(n)]
 
-unique_days = sorted(set(day for day, _ in readings))
+unique_days = sorted({day for day, _ in readings})
 day_to_compressed = {day: i for i, day in enumerate(unique_days)}
 
 event_types = [set() for _ in unique_days]

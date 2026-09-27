@@ -1,4 +1,4 @@
-def add_item(item, basket=[]):
+def add_item(item, basket=[]):  # noqa: B006 (the mutable default is the bug this example shows)
     basket.append(item)
     return basket
 
