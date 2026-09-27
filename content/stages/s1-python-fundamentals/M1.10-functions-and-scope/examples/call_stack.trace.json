@@ -1,0 +1,20 @@
+{"schema":1,
+"kind":"trace",
+"id":"call_stack",
+"source":"call_stack.py",
+"code":"def double(x):\n    return x * 2\n\ndef add_one(x):\n    return double(x) + 1\n\nprint(add_one(3))\n",
+"alt":"add_one calls double, which finishes and returns before add_one adds 1 and returns its own result.",
+"presets":[
+{"id":"default","label":"Run","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["double",[1]]]}],"h":{"1":{"t":"function","n":"double"}},"c":"Line 1 runs: the name `double` now refers to a function."},
+{"l":7,"e":"line","st":[{"f":"<module>","l":7,"v":[["double",[1]],["add_one",[2]]]}],"h":{"2":{"t":"function","n":"add_one"}},"c":"Line 4 runs: the name `add_one` now refers to a function."},
+{"l":4,"e":"call","st":[{"f":"<module>","l":7,"v":[["double",[1]],["add_one",[2]]]},{"f":"add_one","l":4,"v":[["x","3"]]}],"c":"Line 7 calls `add_one` with `x = 3`. A new frame for `add_one` goes on top of the call stack."},
+{"l":5,"e":"line","st":[{"f":"<module>","l":7,"v":[["double",[1]],["add_one",[2]]]},{"f":"add_one","l":5,"v":[["x","3"]]}],"c":"`add_one()` starts running its body at line 5."},
+{"l":1,"e":"call","st":[{"f":"<module>","l":7,"v":[["double",[1]],["add_one",[2]]]},{"f":"add_one","l":5,"v":[["x","3"]]},{"f":"double","l":1,"v":[["x","3"]]}],"c":"Line 5 calls `double` with `x = 3`. A new frame for `double` goes on top of the call stack. Calling `double(x)` pushes a new frame onto the call stack; `add_one` waits, paused, until `double` returns."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":7,"v":[["double",[1]],["add_one",[2]]]},{"f":"add_one","l":5,"v":[["x","3"]]},{"f":"double","l":2,"v":[["x","3"]]}],"c":"`double()` starts running its body at line 2."},
+{"l":2,"e":"return","st":[{"f":"<module>","l":7,"v":[["double",[1]],["add_one",[2]]]},{"f":"add_one","l":5,"v":[["x","3"]]},{"f":"double","l":2,"v":[["x","3"]]}],"r":"6","c":"The call of `double` with `x = 3` returns `6`. Its frame leaves the call stack next. `double` returns its result here, popping its frame off the stack and handing control back to `add_one`."},
+{"l":5,"e":"return","st":[{"f":"<module>","l":7,"v":[["double",[1]],["add_one",[2]]]},{"f":"add_one","l":5,"v":[["x","3"]]}],"r":"7","c":"The call with `x = 3` handed back `6`. The call of `add_one` with `x = 3` returns `7`. Its frame leaves the call stack next."},
+{"l":7,"e":"end","st":[{"f":"<module>","l":7,"v":[["double",[1]],["add_one",[2]]]}],"o":"7\n","c":"Line 7 runs: it prints `7`. The program has finished: no lines are left to run."}
+]}
+]}

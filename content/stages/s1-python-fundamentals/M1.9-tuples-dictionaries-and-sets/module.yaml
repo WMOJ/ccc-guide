@@ -1,0 +1,20 @@
+id: M1.9
+title: Tuples, dictionaries and sets
+status: accepted
+objectives:
+  - "Pair values together with a tuple literal, and convert a sequence to one with `tuple()`."
+  - Look up and store values by key with a dict, including a dict comprehension.
+  - Test membership and remove duplicates with a set, including a set comprehension.
+  - Count how many times each value appears with a dict, using `.get()` for a default.
+prereqs:
+  - M1.8
+lessons:
+  - tuples-dictionaries-and-sets
+practice:
+  - id: ccc23j2
+    note: Look up each order's cost from a lookup table of prices.
+  - id: ccc22j4
+    note: Check a small set of grouping rules against a list of student groups, on the smallest test cases.
+  - id: ccc14j5
+    note: Assign each name in one list to a role from another list, and answer questions about the pairing.
+    why: Tries the same kind of problem on DMOJ, which holds 2014 to 2020.

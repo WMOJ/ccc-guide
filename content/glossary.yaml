@@ -163,3 +163,7 @@ terms:
     term: generator expression
     definition: "The same shape as a list comprehension without square brackets, producing values one at a time instead of building a whole list."
     introducedIn: M1.8/lists-1d-and-2d
+  - id: local
+    term: local
+    definition: A variable that exists only inside the function call that created it, separate from any variable of the same name outside that function.
+    introducedIn: M1.10/functions-and-scope

@@ -1,0 +1,18 @@
+id: M1.11
+title: Output formatting
+status: accepted
+objectives:
+  - Build a formatted string with an f-string, inserting a value directly inside `{}`.
+  - Zero-pad a number and fix how many decimal places a float shows, with an f-string format spec.
+  - Round a number to the nearest whole value or a chosen number of decimals with `round()`.
+  - Join a list into one line with no trailing separator, using `" ".join(map(str, ...))`.
+prereqs:
+  - M1.7
+lessons:
+  - output-formatting
+practice:
+  - id: ccc21s1
+    note: Add up the areas of several trapezoid-shaped fence pieces, printing the exact total.
+  - id: ccc18j3
+    note: Print a small table of numbers as evenly spaced, space-separated rows.
+    why: Tries the same kind of formatted output on DMOJ, which holds 2014 to 2020.

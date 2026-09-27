@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "unbound_local.py", line 7, in <module>
+    print(add(5))
+  File "unbound_local.py", line 4, in add
+    total += x
+UnboundLocalError: local variable 'total' referenced before assignment

@@ -1,6 +1,6 @@
 id: M1.8
 title: Lists (1D and 2D)
-status: gated
+status: accepted
 objectives:
   - Build and grow a list with a literal, `.append()`, and a list comprehension.
   - Summarize a list with `sum()`, `sorted()`, `reversed()`, `any()` and `all()`, and pair values with `enumerate()` and `zip()`.

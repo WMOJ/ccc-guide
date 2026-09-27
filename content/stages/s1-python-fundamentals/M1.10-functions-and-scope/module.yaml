@@ -1,0 +1,15 @@
+id: M1.10
+title: Functions and scope
+status: accepted
+objectives:
+  - Wrap repeated logic in a function with `def`, taking parameters and returning a result.
+  - Tell a local variable from a global one, and use `global` to change a global from inside a function.
+  - Avoid the mutable-default-argument trap, where a default list or dict persists between calls.
+  - Write a short one-line function with `lambda`.
+prereqs:
+  - M1.8
+lessons:
+  - functions-and-scope
+practice:
+  - id: ccc23j5
+    note: Search a small grid for a hidden word along a single horizontal line, the easiest of several scoring tiers.

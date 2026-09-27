@@ -1,0 +1,14 @@
+{"schema":1,
+"kind":"trace",
+"id":"aliasing_bug",
+"source":"aliasing_bug.py",
+"code":"grid = [[0] * 3] * 2\ngrid[0][1] = 5\nprint(grid)\n",
+"alt":"The program builds a 2-by-3 grid by repeating one row list twice, then changes one cell, which changes both rows because they are the same object.",
+"presets":[
+{"id":"default","label":"Run","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["grid",[1]]]}],"h":{"1":{"t":"list","v":[[2],[2]]},"2":{"t":"list","v":["0","0","0"]}},"c":"Line 1 runs: `grid` is created with the value `[[0, 0, 0], [0, 0, 0]]`. `[0] * 3` builds one row. Repeating it with `* 2` copies the reference to that same row twice, not the row itself."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["grid",[1]]]}],"h":{"2":{"t":"list","v":["0","5","0"]}},"c":"Line 2 runs; line 3 is next. `grid[0][1] = 5` changes the one shared row object, so both `grid[0]` and `grid[1]` show the change."},
+{"l":3,"e":"end","st":[{"f":"<module>","l":3,"v":[["grid",[1]]]}],"o":"[[0, 5, 0], [0, 5, 0]]\n","c":"Line 3 runs: it prints `[[0, 5, 0], [0, 5, 0]]`. The program has finished: no lines are left to run."}
+]}
+]}

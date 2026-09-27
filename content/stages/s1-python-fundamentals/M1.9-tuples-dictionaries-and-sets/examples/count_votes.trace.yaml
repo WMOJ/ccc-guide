@@ -1,0 +1,13 @@
+example: count_votes.py
+alt: >-
+  The program splits a line of names into votes, then counts how many
+  times each name appears using a dict.
+presets:
+  - id: main
+    label: A three-way tie broken
+    stdin: "Ana Bo Ana Ana\n"
+  - id: tied
+    label: An even split
+    stdin: "Ana Bo Ana Bo\n"
+notes:
+  "4": "`c.get(v, 0)` reads the count so far for `v`, or `0` the first time `v` appears, then adds `1` and stores it back."

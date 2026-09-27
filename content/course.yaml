@@ -92,17 +92,17 @@ stages:
         title: Tuples, dictionaries and sets
         prereqs:
           - M1.8
-        status: planned
+        status: accepted
       - id: M1.10
         title: Functions and scope
         prereqs:
           - M1.8
-        status: planned
+        status: accepted
       - id: M1.11
         title: Output formatting
         prereqs:
           - M1.7
-        status: planned
+        status: accepted
       - id: M1.12
         title: Floats, precision and big integers
         prereqs:

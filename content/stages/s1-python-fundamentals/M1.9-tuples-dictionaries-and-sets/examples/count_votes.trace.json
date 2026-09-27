@@ -1,0 +1,38 @@
+{"schema":1,
+"kind":"trace",
+"id":"count_votes",
+"source":"count_votes.py",
+"code":"votes = input().split()\nc = {}\nfor v in votes:\n    c[v] = c.get(v, 0) + 1\nprint(c)\n",
+"alt":"The program splits a line of names into votes, then counts how many times each name appears using a dict.",
+"presets":[
+{"id":"main","label":"A three-way tie broken","stdin":"Ana Bo Ana Ana\n","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["votes",[1]]]}],"h":{"1":{"t":"list","v":["'Ana'","'Bo'","'Ana'","'Ana'"]}},"c":"Line 1 runs: `votes` is created with the value `['Ana', 'Bo', 'Ana', 'Ana']`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["votes",[1]],["c",[2]]]}],"h":{"2":{"t":"dict","v":[]}},"c":"Line 2 runs: `c` is created with the value `{}`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["votes",[1]],["c",[2]],["v","'Ana'"]]}],"c":"Line 3 runs: the loop gives `v` its first value, `'Ana'`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["votes",[1]],["c",[2]],["v","'Ana'"]]}],"h":{"2":{"t":"dict","v":[["'Ana'","1"]]}},"c":"Line 4 runs: the dictionary that `c` refers to changes; it is now `{'Ana': 1}`. `c.get(v, 0)` reads the count so far for `v`, or `0` the first time `v` appears, then adds `1` and stores it back."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["votes",[1]],["c",[2]],["v","'Bo'"]]}],"c":"Line 3 runs: the loop gives `v` its next value, `'Bo'`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["votes",[1]],["c",[2]],["v","'Bo'"]]}],"h":{"2":{"t":"dict","v":[["'Ana'","1"],["'Bo'","1"]]}},"c":"Line 4 runs: the dictionary that `c` refers to changes; it is now `{'Ana': 1, 'Bo': 1}`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["votes",[1]],["c",[2]],["v","'Ana'"]]}],"c":"Line 3 runs: the loop gives `v` its next value, `'Ana'`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["votes",[1]],["c",[2]],["v","'Ana'"]]}],"h":{"2":{"t":"dict","v":[["'Ana'","2"],["'Bo'","1"]]}},"c":"Line 4 runs: the dictionary that `c` refers to changes; it is now `{'Ana': 2, 'Bo': 1}`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["votes",[1]],["c",[2]],["v","'Ana'"]]}],"c":"Line 3: the loop has no values left, so it ends and line 4 runs next."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["votes",[1]],["c",[2]],["v","'Ana'"]]}],"h":{"2":{"t":"dict","v":[["'Ana'","3"],["'Bo'","1"]]}},"c":"Line 4 runs: the dictionary that `c` refers to changes; it is now `{'Ana': 3, 'Bo': 1}`."},
+{"l":5,"e":"line","st":[{"f":"<module>","l":5,"v":[["votes",[1]],["c",[2]],["v","'Ana'"]]}],"c":"Line 3: the loop has no values left, so it ends and line 5 runs next."},
+{"l":5,"e":"end","st":[{"f":"<module>","l":5,"v":[["votes",[1]],["c",[2]],["v","'Ana'"]]}],"o":"{'Ana': 3, 'Bo': 1}\n","c":"Line 5 runs: it prints `{'Ana': 3, 'Bo': 1}`. The program has finished: no lines are left to run."}
+]},
+{"id":"tied","label":"An even split","stdin":"Ana Bo Ana Bo\n","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["votes",[1]]]}],"h":{"1":{"t":"list","v":["'Ana'","'Bo'","'Ana'","'Bo'"]}},"c":"Line 1 runs: `votes` is created with the value `['Ana', 'Bo', 'Ana', 'Bo']`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["votes",[1]],["c",[2]]]}],"h":{"2":{"t":"dict","v":[]}},"c":"Line 2 runs: `c` is created with the value `{}`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["votes",[1]],["c",[2]],["v","'Ana'"]]}],"c":"Line 3 runs: the loop gives `v` its first value, `'Ana'`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["votes",[1]],["c",[2]],["v","'Ana'"]]}],"h":{"2":{"t":"dict","v":[["'Ana'","1"]]}},"c":"Line 4 runs: the dictionary that `c` refers to changes; it is now `{'Ana': 1}`. `c.get(v, 0)` reads the count so far for `v`, or `0` the first time `v` appears, then adds `1` and stores it back."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["votes",[1]],["c",[2]],["v","'Bo'"]]}],"c":"Line 3 runs: the loop gives `v` its next value, `'Bo'`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["votes",[1]],["c",[2]],["v","'Bo'"]]}],"h":{"2":{"t":"dict","v":[["'Ana'","1"],["'Bo'","1"]]}},"c":"Line 4 runs: the dictionary that `c` refers to changes; it is now `{'Ana': 1, 'Bo': 1}`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["votes",[1]],["c",[2]],["v","'Ana'"]]}],"c":"Line 3 runs: the loop gives `v` its next value, `'Ana'`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["votes",[1]],["c",[2]],["v","'Ana'"]]}],"h":{"2":{"t":"dict","v":[["'Ana'","2"],["'Bo'","1"]]}},"c":"Line 4 runs: the dictionary that `c` refers to changes; it is now `{'Ana': 2, 'Bo': 1}`."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[["votes",[1]],["c",[2]],["v","'Bo'"]]}],"c":"Line 3 runs: the loop gives `v` its next value, `'Bo'`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["votes",[1]],["c",[2]],["v","'Bo'"]]}],"h":{"2":{"t":"dict","v":[["'Ana'","2"],["'Bo'","2"]]}},"c":"Line 4 runs: the dictionary that `c` refers to changes; it is now `{'Ana': 2, 'Bo': 2}`."},
+{"l":5,"e":"line","st":[{"f":"<module>","l":5,"v":[["votes",[1]],["c",[2]],["v","'Bo'"]]}],"c":"Line 3: the loop has no values left, so it ends and line 5 runs next."},
+{"l":5,"e":"end","st":[{"f":"<module>","l":5,"v":[["votes",[1]],["c",[2]],["v","'Bo'"]]}],"o":"{'Ana': 2, 'Bo': 2}\n","c":"Line 5 runs: it prints `{'Ana': 2, 'Bo': 2}`. The program has finished: no lines are left to run."}
+]}
+]}
