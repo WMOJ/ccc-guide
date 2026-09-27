@@ -1,6 +1,6 @@
 id: M1.15
 title: The Python 3.8 language boundary
-status: gated
+status: accepted
 objectives:
   - Recall that the contest grader runs an older Python than WMOJ and DMOJ.
   - Recognize a feature added after 3.8, and use its 3.8 substitute instead.

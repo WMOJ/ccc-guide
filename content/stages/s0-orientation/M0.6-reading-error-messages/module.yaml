@@ -1,6 +1,6 @@
 id: M0.6
 title: Reading error messages
-status: gated
+status: accepted
 objectives:
   - "Read a Python traceback: find the file name, the line number, and the error on the last line."
   - Recognize a SyntaxError, a NameError, a TypeError and a ValueError, and fix the mistake behind each one.

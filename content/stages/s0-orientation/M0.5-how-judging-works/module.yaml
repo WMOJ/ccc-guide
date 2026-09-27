@@ -1,6 +1,6 @@
 id: M0.5
 title: How judging works
-status: gated
+status: accepted
 objectives:
   - "Explain that the judge runs your program once for each hidden test case, feeding it that test's input and comparing what it prints."
   - Describe how tests are grouped into subtasks, and that a subtask stops at its first failing test.

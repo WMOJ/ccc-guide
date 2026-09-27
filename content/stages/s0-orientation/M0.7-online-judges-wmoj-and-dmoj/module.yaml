@@ -1,6 +1,6 @@
 id: M0.7
 title: "Online judges: WMOJ and DMOJ"
-status: gated
+status: accepted
 objectives:
   - "Say which judge holds which CCC problems: WMOJ for 2021 to 2026, DMOJ for 2014 to 2020."
   - "Submit a solution on WMOJ or DMOJ: find the problem, choose the language, and read the verdict it returns."

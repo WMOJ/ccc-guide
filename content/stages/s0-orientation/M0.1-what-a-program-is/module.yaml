@@ -1,6 +1,6 @@
 id: M0.1
 title: What a program is
-status: gated
+status: accepted
 objectives:
   - Explain what a program is and what an interpreter does when it runs one.
   - Follow a program's instructions in the order they run, from the first line to the last.

@@ -22,27 +22,27 @@ stages:
       - id: M0.1
         title: What a program is
         prereqs: []
-        status: planned
+        status: accepted
       - id: M0.4
         title: The standard input/output model and exact output
         prereqs:
           - M0.1
-        status: planned
+        status: accepted
       - id: M0.5
         title: How judging works
         prereqs:
           - M0.4
-        status: planned
+        status: accepted
       - id: M0.6
         title: Reading error messages
         prereqs:
           - M0.1
-        status: planned
+        status: accepted
       - id: M0.7
         title: "Online judges: WMOJ and DMOJ"
         prereqs:
           - M0.5
-        status: planned
+        status: accepted
   - id: s1
     number: "1"
     title: Python fundamentals
@@ -122,7 +122,7 @@ stages:
         title: The Python 3.8 language boundary
         prereqs:
           - M1.13
-        status: planned
+        status: accepted
   - id: s2
     number: "2"
     title: Problem-solving foundations
@@ -598,7 +598,7 @@ stages:
       - id: C.1
         title: CCC rules and integrity
         prereqs: []
-        status: planned
+        status: accepted
       - id: C.2
         title: Using the official Python docs under contest conditions
         prereqs:
