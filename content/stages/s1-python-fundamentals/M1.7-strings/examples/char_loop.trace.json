@@ -1,0 +1,32 @@
+{"schema":1,
+"kind":"trace",
+"id":"char_loop",
+"source":"char_loop.py",
+"code":"word = input()\nfor i in range(len(word)):\n    print(i, word[i])\n",
+"alt":"The program loops over every index of a word, printing each index next to the character at that position.",
+"presets":[
+{"id":"main","label":"A three-letter word","stdin":"cat\n","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["word","'cat'"]]}],"c":"Line 1 runs: `word` is created with the value `'cat'`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["word","'cat'"],["i","0"]]}],"c":"Line 2 runs: the loop gives `i` its first value, `0`. `range(len(word))` visits every valid index of `word`, from `0` up to the last one."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["word","'cat'"],["i","0"]]}],"o":"0 c\n","c":"Line 3 runs: it prints `0 c`. `word[i]` reads the single character at index `i`, the same character this pass's index refers to."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["word","'cat'"],["i","1"]]}],"c":"Line 2 runs: the loop gives `i` its next value, `1`."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["word","'cat'"],["i","1"]]}],"o":"1 a\n","c":"Line 3 runs: it prints `1 a`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["word","'cat'"],["i","2"]]}],"c":"Line 2 runs: the loop gives `i` its next value, `2`."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["word","'cat'"],["i","2"]]}],"o":"2 t\n","c":"Line 3 runs: it prints `2 t`."},
+{"l":2,"e":"end","st":[{"f":"<module>","l":2,"v":[["word","'cat'"],["i","2"]]}],"c":"The program has finished: no lines are left to run."}
+]},
+{"id":"longer","label":"A four-letter word","stdin":"frog\n","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["word","'frog'"]]}],"c":"Line 1 runs: `word` is created with the value `'frog'`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["word","'frog'"],["i","0"]]}],"c":"Line 2 runs: the loop gives `i` its first value, `0`. `range(len(word))` visits every valid index of `word`, from `0` up to the last one."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["word","'frog'"],["i","0"]]}],"o":"0 f\n","c":"Line 3 runs: it prints `0 f`. `word[i]` reads the single character at index `i`, the same character this pass's index refers to."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["word","'frog'"],["i","1"]]}],"c":"Line 2 runs: the loop gives `i` its next value, `1`."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["word","'frog'"],["i","1"]]}],"o":"1 r\n","c":"Line 3 runs: it prints `1 r`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["word","'frog'"],["i","2"]]}],"c":"Line 2 runs: the loop gives `i` its next value, `2`."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["word","'frog'"],["i","2"]]}],"o":"2 o\n","c":"Line 3 runs: it prints `2 o`."},
+{"l":3,"e":"line","st":[{"f":"<module>","l":3,"v":[["word","'frog'"],["i","3"]]}],"c":"Line 2 runs: the loop gives `i` its next value, `3`."},
+{"l":2,"e":"line","st":[{"f":"<module>","l":2,"v":[["word","'frog'"],["i","3"]]}],"o":"3 g\n","c":"Line 3 runs: it prints `3 g`."},
+{"l":2,"e":"end","st":[{"f":"<module>","l":2,"v":[["word","'frog'"],["i","3"]]}],"c":"The program has finished: no lines are left to run."}
+]}
+]}

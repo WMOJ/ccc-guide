@@ -453,6 +453,11 @@ class Tracer:
         header = self.loop_header_above(nxt) if nxt is not None else None
         if text and header is not None and self.src(header).strip().startswith("while True"):
             if nxt <= ran:
+                # The new-pass sentence names the next line itself; drop a plain "; line N is next"
+                # so the caption does not say it twice (P6-D102).
+                plain = f"Line {ran} runs; line {nxt} is next."
+                if text == plain:
+                    text = f"Line {ran} runs."
                 text += f" The loop goes back to the top for its next pass, so line {nxt} runs next."
             elif ran < header:
                 text += f" Line {header}, `while True:`, needs no check, so the loop body starts at line {nxt}."

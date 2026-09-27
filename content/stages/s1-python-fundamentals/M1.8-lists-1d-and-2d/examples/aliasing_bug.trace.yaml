@@ -1,0 +1,8 @@
+example: aliasing_bug.py
+alt: >-
+  The program builds a 2-by-3 grid by repeating one row list twice, then
+  changes one cell, which changes both rows because they are the same
+  object.
+notes:
+  "1": "`[0] * 3` builds one row. Repeating it with `* 2` copies the reference to that same row twice, not the row itself."
+  "2": "`grid[0][1] = 5` changes the one shared row object, so both `grid[0]` and `grid[1]` show the change."

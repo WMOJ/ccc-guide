@@ -1,0 +1,20 @@
+id: M1.8
+title: Lists (1D and 2D)
+status: gated
+objectives:
+  - Build and grow a list with a literal, `.append()`, and a list comprehension.
+  - Summarize a list with `sum()`, `sorted()`, `reversed()`, `any()` and `all()`, and pair values with `enumerate()` and `zip()`.
+  - Build a 2D grid of lists, and avoid the `[[0] * m] * n` aliasing bug that shares one row across every entry.
+  - Recognize which list operations cost more as a list grows, and allocate `n + 1` slots for a 1-indexed problem.
+prereqs:
+  - M1.5
+lessons:
+  - lists-1d-and-2d
+practice:
+  - id: ccc26j2
+    note: Drop an athlete's highest and lowest judge scores, then scale what remains by a difficulty factor.
+  - id: ccc23j3
+    note: Find which day of the week has the most people available from a list of weekly schedules.
+  - id: ccc16j2
+    note: Check whether every row and column of a grid sums to the same value.
+    why: Tries the same kind of problem on DMOJ, which holds 2014 to 2020.

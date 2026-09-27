@@ -1,0 +1,14 @@
+example: skip_and_sum.py
+alt: >-
+  The program reads numbers in a loop, adding each positive one to a total,
+  skipping negative ones, and stopping when it reads a 0.
+presets:
+  - id: main
+    label: No negatives
+    stdin: "4\n6\n0\n"
+  - id: skip
+    label: With a negative to skip
+    stdin: "4\n-1\n6\n0\n"
+notes:
+  "5": "Reading `0` reaches this `break`, which exits the loop immediately, skipping every line below it."
+  "7": "That is what `continue` does: it skips `total += n` entirely for this pass."

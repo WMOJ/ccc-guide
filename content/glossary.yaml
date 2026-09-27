@@ -131,3 +131,35 @@ terms:
     term: method
     definition: A function called on a value using a dot, such as `.split()` called on a string.
     introducedIn: M1.3/reading-input
+  - id: multiple-assignment
+    term: multiple assignment
+    definition: Assigning several values to several names in one line, matched left to right by position.
+    introducedIn: M1.3/reading-input
+  - id: comparison-operator
+    term: comparison operator
+    definition: "An operator that compares two values and gives back a boolean, such as `==`, `<`, or `in`."
+    introducedIn: M1.4/booleans-and-conditionals
+  - id: boolean-operator
+    term: boolean operator
+    definition: An operator that combines or inverts boolean values, such as `and`, `or`, and `not`.
+    introducedIn: M1.4/booleans-and-conditionals
+  - id: conditional-expression
+    term: conditional expression
+    definition: "A one-line either/or expression of the form `a if condition else b`, which evaluates to `a` or `b` depending on the condition."
+    introducedIn: M1.4/booleans-and-conditionals
+  - id: edge-case
+    term: edge case
+    definition: An input at the extreme or unusual end of what a problem's bounds allow, such as the smallest size, every value equal, or a tie.
+    introducedIn: M2.6/case-analysis-and-edge-cases
+  - id: aliasing
+    term: aliasing
+    definition: Two names that refer to the exact same list or other mutable value, so a change made through one name shows up when the other is read.
+    introducedIn: M2.8/debugging
+  - id: list-comprehension
+    term: list comprehension
+    definition: "A one-line way to build a list from an existing sequence, written `[expression for name in sequence]`, optionally filtered with `if`."
+    introducedIn: M1.8/lists-1d-and-2d
+  - id: generator-expression
+    term: generator expression
+    definition: "The same shape as a list comprehension without square brackets, producing values one at a time instead of building a whole list."
+    introducedIn: M1.8/lists-1d-and-2d

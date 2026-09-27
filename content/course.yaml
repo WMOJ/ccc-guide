@@ -77,17 +77,17 @@ stages:
         title: "`while` loops, `break`/`continue`, sentinels and EOF"
         prereqs:
           - M1.5
-        status: planned
+        status: accepted
       - id: M1.7
         title: Strings
         prereqs:
           - M1.5
-        status: planned
+        status: accepted
       - id: M1.8
         title: Lists (1D and 2D)
         prereqs:
           - M1.5
-        status: planned
+        status: accepted
       - id: M1.9
         title: Tuples, dictionaries and sets
         prereqs:
@@ -176,7 +176,7 @@ stages:
         title: Complexity analysis and deriving the target from N
         prereqs:
           - M2.5
-        status: planned
+        status: accepted
   - id: s3
     number: "3"
     title: Junior J1–J3
@@ -603,7 +603,7 @@ stages:
         title: Using the official Python docs under contest conditions
         prereqs:
           - M1.13
-        status: planned
+        status: accepted
       - id: C.3
         title: Typing templates from memory
         prereqs: []
@@ -648,4 +648,4 @@ stages:
         prereqs:
           - M0.1
           - M2.7
-        status: planned
+        status: accepted

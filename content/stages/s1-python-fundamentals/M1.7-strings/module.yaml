@@ -1,0 +1,22 @@
+id: M1.7
+title: Strings
+status: accepted
+objectives:
+  - Find how many characters a string holds with `len()`.
+  - Read one character with indexing (`word[i]`), including from the end with a negative index.
+  - Take out part of a string with slicing (`word[a:b]`).
+  - Convert between a character and its code point with `ord()` and `chr()`.
+prereqs:
+  - M1.5
+lessons:
+  - strings
+practice:
+  - id: ccc15j2
+    note: Count two kinds of faces in a line of text and decide whether it reads happy, sad, unsure, or neither.
+    why: Tries the same kind of problem on DMOJ, which holds 2014 to 2020.
+  - id: ccc19j2
+    note: Turn each "count and character" line into that character repeated that many times.
+    why: Tries the same kind of problem on DMOJ, which holds 2014 to 2020.
+  - id: ccc18j2
+    note: Compare two lines and count where both mark the same spot.
+    why: Tries the same kind of problem on DMOJ, which holds 2014 to 2020.

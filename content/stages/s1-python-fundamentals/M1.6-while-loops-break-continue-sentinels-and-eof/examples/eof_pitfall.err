@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "eof_pitfall.py", line 3, in <module>
+    total += int(input())
+EOFError

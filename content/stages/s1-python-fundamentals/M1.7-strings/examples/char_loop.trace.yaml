@@ -1,0 +1,14 @@
+example: char_loop.py
+alt: >-
+  The program loops over every index of a word, printing each index next to
+  the character at that position.
+presets:
+  - id: main
+    label: A three-letter word
+    stdin: "cat\n"
+  - id: longer
+    label: A four-letter word
+    stdin: "frog\n"
+notes:
+  "2": "`range(len(word))` visits every valid index of `word`, from `0` up to the last one."
+  "3": "`word[i]` reads the single character at index `i`, the same character this pass's index refers to."
