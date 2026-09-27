@@ -73,6 +73,18 @@ export function inScope(file: string, scope: string | undefined): boolean {
   return segments.some((s) => s === scope || s.startsWith(`${scope}-`));
 }
 
+/**
+ * Does a lesson path (/learn/<stage>/<module>/<lesson>) belong to the scope: a module id (exact,
+ * so M1.1 does not pick up M1.10), a stage id or a lesson slug? P6: the old test lower-cased the
+ * scope and swapped its dot for a dash, so no module id ever matched a real lesson URL.
+ */
+export function lessonInScope(lessonPath: string, scopeId: string | undefined): boolean {
+  if (!scopeId) return true;
+  const [, , stage, moduleId, lesson] = decodeURIComponent(lessonPath).split("/");
+  const folderId = scopeId.replace(/-.*$/, ""); // "M1.2-integer-..." -> "M1.2"
+  return moduleId === folderId || stage === scopeId || lesson === scopeId;
+}
+
 export function findVisuals(roots: string[], scope?: string): VisualSource[] {
   const files = listFiles(roots);
   const out: VisualSource[] = [];

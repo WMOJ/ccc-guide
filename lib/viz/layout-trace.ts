@@ -63,6 +63,9 @@ export function layoutTrace(states: TraceState[]): VizScene[] {
   // Room for the reference arrows between the frames and the objects.
   const xObj = x0 + fw + 36;
   const availW = Math.max(60, MAX_NATURAL_WIDTH - xObj - PAD);
+  // A trace whose names only ever hold plain values (ints, strings, ...) has nothing to draw in the
+  // Objects column, so it gets no Objects header either (P6-D8: the header alone overflowed).
+  const hasObjects = states.some((s) => s.heap.size > 0);
 
   return states.map((s) => {
     const items: VizItem[] = [];
@@ -79,17 +82,18 @@ export function layoutTrace(states: TraceState[]): VizScene[] {
       anchor: "start",
       muted: true,
     });
-    items.push({
-      key: "hobjects",
-      t: "text",
-      x: xObj,
-      y: y + 8,
-      text: "Objects",
-      role: "title",
-      weight: 600,
-      anchor: "start",
-      muted: true,
-    });
+    if (hasObjects)
+      items.push({
+        key: "hobjects",
+        t: "text",
+        x: xObj,
+        y: y + 8,
+        text: "Objects",
+        role: "title",
+        weight: 600,
+        anchor: "start",
+        muted: true,
+      });
     y += 24;
     const top = s.stack.length - 1;
     for (let fi = top; fi >= 0; fi -= 1) {
@@ -382,6 +386,9 @@ export function layoutTrace(states: TraceState[]): VizScene[] {
     let maxX = x0 + fw + PAD;
     for (const it of items) {
       if (it.t === "cell" || it.t === "slot") maxX = Math.max(maxX, it.x + it.w + PAD);
+      // Column headers are start-anchored text; the scene must hold them too (P6-D8).
+      if (it.t === "text" && (it.key === "hframes" || it.key === "hobjects"))
+        maxX = Math.max(maxX, it.x + textWidth(it.text, "title") + PAD);
     }
     return {
       width: Math.ceil(maxX),
