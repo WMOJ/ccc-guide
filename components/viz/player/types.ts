@@ -27,6 +27,7 @@ export interface FramesPlayerData {
   panels: PanelSpec[];
   presets: { id: string; label: string; steps: FramesStep[] }[];
   legend: VizState[];
+  legendLabels?: Partial<Record<VizState, string>> | undefined;
   initialPreset: number;
   demo?: PlayerDemo | undefined;
 }

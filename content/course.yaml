@@ -107,12 +107,12 @@ stages:
         title: Floats, precision and big integers
         prereqs:
           - M1.2
-        status: planned
+        status: accepted
       - id: M1.13
         title: Imports and the standard library tour
         prereqs:
           - M1.10
-        status: planned
+        status: accepted
       - id: M1.14
         title: Recursion fundamentals
         prereqs:
@@ -137,7 +137,7 @@ stages:
         title: Algorithm-first thinking
         prereqs:
           - M2.1
-        status: planned
+        status: accepted
       - id: M2.3
         title: Simulation
         prereqs:

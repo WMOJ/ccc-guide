@@ -180,6 +180,7 @@ export function Player({ data, focusCtl, pendingCtl }: PlayerProps) {
         skipped={skipped}
         stage={stage}
         legend={data.legend}
+        legendLabels={data.kind === "frames" ? data.legendLabels : undefined}
         act={act}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}

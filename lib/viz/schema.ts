@@ -446,6 +446,10 @@ export const presetSchema = z.strictObject({
   steps: z.array(stepSchema).min(1).max(200),
 });
 
+/** A visual may rename a state in its legend when the default word does not fit what it shows
+ * (P6-D77: "Answer path" on a table's one matching pair). The cue drawn stays the same. */
+export const legendLabelsSchema = z.partialRecord(stateSchema, z.string().min(2).max(24));
+
 export const framesFileSchema = z
   .strictObject({
     schema: z.literal(1),
@@ -454,6 +458,7 @@ export const framesFileSchema = z
     layout: z.enum(["single", "row"]),
     panels: z.array(panelSpecSchema).min(1).max(2),
     alt: z.string().min(1).max(600),
+    legendLabels: legendLabelsSchema.optional(),
     presets: z.array(presetSchema).min(1).max(3),
   })
   .superRefine((file, ctx) => {
@@ -622,6 +627,7 @@ export const vizYamlSchema = z.strictObject({
   alt: z.string().min(20).max(600),
   /** Where step captions come from. Only "vizrec" (rec.step(caption, …)) exists today. */
   captions: z.literal("vizrec"),
+  legendLabels: legendLabelsSchema.optional(),
   presets: z.array(presetInputSchema).min(1).max(3),
   consistency: z
     .strictObject({

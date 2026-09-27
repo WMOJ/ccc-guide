@@ -31,6 +31,7 @@ export function StepThrough({ frames, preset, baseDir, figure, demo }: StepThrou
     panels: file.panels,
     presets: file.presets.map((p) => ({ id: p.id, label: p.label, steps: p.steps })),
     legend: [],
+    legendLabels: file.legendLabels,
     initialPreset,
     demo,
   };
@@ -80,6 +81,7 @@ export function FramesPlayer({
           caption={first?.caption ?? ""}
           skipped={first?.skipped}
           legend={withLegend.legend}
+          legendLabels={data.legendLabels}
           reducedMotion={data.demo?.reducedMotion}
           stage={
             <FramesStage

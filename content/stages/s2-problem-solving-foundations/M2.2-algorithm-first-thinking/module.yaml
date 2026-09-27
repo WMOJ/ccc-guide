@@ -1,6 +1,6 @@
 id: M2.2
 title: Algorithm-first thinking
-status: gated
+status: accepted
 objectives:
   - Work a small sample by hand before writing any code.
   - Write a plan in plain words, separate from the code that will implement it.

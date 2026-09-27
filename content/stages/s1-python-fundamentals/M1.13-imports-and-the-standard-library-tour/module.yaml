@@ -1,6 +1,6 @@
 id: M1.13
 title: Imports and the standard library tour
-status: gated
+status: accepted
 objectives:
   - Bring in a module, or one name from it, with `import` and `from ... import`.
   - Use `math.gcd`, `math.comb`, `collections.Counter` and `itertools.combinations` to replace hand-written loops.

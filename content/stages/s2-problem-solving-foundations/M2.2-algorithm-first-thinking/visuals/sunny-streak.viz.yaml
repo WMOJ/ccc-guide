@@ -1,9 +1,11 @@
-layout: single
+layout: row
 panels:
   - { id: arr, viz: ArrayViz, title: Days }
+  - { id: counters, viz: TableViz, title: Counters }
 alt: >-
-  A row of seven days, sunny or not. A pointer moves across them one at a time, while the
-  caption tracks the current sunny run and the best run seen so far.
+  A row of seven days, labelled Day 1 through Day 7, sunny or not. A pointer moves across
+  them one at a time, while a small table beside it tracks the current sunny run and the
+  best run seen so far.
 captions: vizrec
 presets:
   - id: sample

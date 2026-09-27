@@ -6,7 +6,16 @@ function hatch(): string {
 }
 
 /** Legend: one swatch per state the visual uses, drawn with the exact cue (DESIGN.md). */
-export function Legend({ states, label = "Legend" }: { states: VizState[]; label?: string }) {
+export function Legend({
+  states,
+  label = "Legend",
+  labels,
+}: {
+  states: VizState[];
+  label?: string;
+  /** Per-visual names for states (P6-D77); the default word is used otherwise. */
+  labels?: Partial<Record<VizState, string>> | undefined;
+}) {
   const shown = states.filter((s): s is Exclude<VizState, "none"> => s !== "none");
   if (shown.length === 0) return null;
   return (
@@ -25,7 +34,7 @@ export function Legend({ states, label = "Legend" }: { states: VizState[]; label
               {s === "wall" ? <path className="vz-hatch" d={hatch()} /> : null}
             </g>
           </svg>
-          {STATE_META[s].label}
+          {labels?.[s] ?? STATE_META[s].label}
         </li>
       ))}
     </ul>

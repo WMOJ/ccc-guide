@@ -1,4 +1,5 @@
-days = [1, 1, 0, 1, 1, 1, 0]
+input()
+days = [int(x) for x in input().split()]
 
 current_run = 0
 best_run = 0

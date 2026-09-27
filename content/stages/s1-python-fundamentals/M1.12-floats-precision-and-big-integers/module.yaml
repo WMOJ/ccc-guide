@@ -1,6 +1,6 @@
 id: M1.12
 title: Floats, precision and big integers
-status: gated
+status: accepted
 objectives:
   - Explain why floats can be slightly off, and avoid comparing them with `==`.
   - Scale a calculation to integers to keep output exact.

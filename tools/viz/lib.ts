@@ -257,6 +257,7 @@ export function generateFrames(src: VisualSource): Generated {
     layout: config.layout,
     panels: config.panels,
     alt: config.alt,
+    ...(config.legendLabels ? { legendLabels: config.legendLabels } : {}),
     presets,
   };
   const parsed = framesFileSchema.safeParse(file);

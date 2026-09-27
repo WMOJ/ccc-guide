@@ -19,6 +19,7 @@ export interface PlayerViewProps {
   skipped?: number | null | undefined;
   stage: ReactNode;
   legend: VizState[];
+  legendLabels?: Partial<Record<VizState, string>> | undefined;
   /** Client only: the dispatcher. Absent on the server-rendered first frame (inert controls). */
   act?: ((a: PlayerAction) => void) | undefined;
   onKeyDown?: ((e: KeyboardEvent<HTMLDivElement>) => void) | undefined;
@@ -74,6 +75,7 @@ export function PlayerView(props: PlayerViewProps) {
     skipped,
     stage,
     legend,
+    legendLabels,
     act,
   } = props;
   // Radio groups are named per instance: the same visual shown twice on a page (the gallery's
@@ -223,7 +225,7 @@ export function PlayerView(props: PlayerViewProps) {
         {skipped ? <span className="vz-skip">Skip ahead</span> : null}
         <CaptionText text={caption} />
       </div>
-      <Legend states={legend} />
+      <Legend states={legend} labels={legendLabels} />
     </div>
   );
 }
