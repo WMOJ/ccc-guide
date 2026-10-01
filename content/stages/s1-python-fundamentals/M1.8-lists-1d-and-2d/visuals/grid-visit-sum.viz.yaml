@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: g, viz: GridViz, title: "Visiting grid[r][c]" }
+alt: >-
+  A nested loop visits a grid row by row. Each cell is marked current while its value joins a
+  running total, then marked done before the loop moves to the next cell. A one-column grid
+  shows the same visit order with only one cell per row.
+captions: vizrec
+presets:
+  - id: main
+    label: Two rows, three columns
+    stdin: "2\n3\n1 2 3\n4 5 6\n"
+  - id: column
+    label: One column
+    stdin: "3\n1\n5\n6\n7\n"
+consistency:
+  description: The final total shown matches the output of examples/grid_visit_sum.py.
+  example: ../examples/grid_visit_sum.py
+  compare: output

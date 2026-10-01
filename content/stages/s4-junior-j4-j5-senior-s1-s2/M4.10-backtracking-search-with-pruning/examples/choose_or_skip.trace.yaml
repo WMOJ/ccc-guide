@@ -1,0 +1,15 @@
+example: choose_or_skip.py
+alt: >-
+  go(0, 2, []) tries 0 then 1 at position 0, and at each choice recurses into position 1,
+  which does the same. path grows by one value on each call and shrinks by one on each return,
+  so its length always equals how many positions have been decided so far.
+presets:
+  - id: two
+    label: n = 2
+    stdin: "2\n"
+  - id: one
+    label: n = 1
+    stdin: "1\n"
+notes:
+  "9": "`path` gains one more value here, one for every level of recursion still waiting above this call."
+  "11": "`path` loses that value again the moment this call is about to return, so the caller sees it unchanged."

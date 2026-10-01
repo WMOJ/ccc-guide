@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: tree, viz: TreeViz, title: Recursion tree }
+alt: >-
+  The unmemoized recursion tree for counting staircase paths. Every call branches into two more
+  calls until a stair at or past the target returns 1 directly. The same stair number is called
+  from more than one place in the tree, and each repeat redoes the same work from scratch.
+captions: vizrec
+presets:
+  - id: two
+    label: Target 2
+    stdin: "2\n"
+  - id: one
+    label: Target 1
+    stdin: "1\n"
+consistency:
+  description: The value the root call returns equals the output of examples/count_stairs_naive.py on the same target.
+  example: ../examples/count_stairs_naive.py
+  compare: output

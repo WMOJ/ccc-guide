@@ -1,0 +1,18 @@
+example: average_subarrays.py
+alt: >-
+  The counting program run on a short list. Each pass of the loop adds the element minus the
+  target to the running prefix, looks that prefix up in the dictionary seen, adds the count found to
+  the answer, and stores the new count.
+presets:
+  - id: main
+    label: Two matches
+    stdin: "4\n4 2 3 6\n3\n"
+  - id: equal
+    label: All equal
+    stdin: "3\n3 3 3\n3\n"
+notes:
+  "6": "The target is the last number in the input, after the values."
+  "8": "The empty prefix counts once, before any element is read."
+  "12": "Shift the element by the target: a matching stretch then sums to 0."
+  "13": "`c` earlier prefixes equal this one, so `c` stretches end at this element."
+  "15": "Store the count so later elements can match this prefix too."

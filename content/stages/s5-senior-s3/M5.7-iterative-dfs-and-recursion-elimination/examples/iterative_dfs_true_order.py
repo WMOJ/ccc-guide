@@ -1,37 +1,51 @@
-def iterative_dfs_true_order(adj, root):
-    """Iterative DFS with iterator indices for true DFS order."""
-    visited = set()
-    stack = [(root, 0)]
-    order = []
+import sys
 
-    while stack:
-        node, idx = stack[-1]
-        if node in visited and idx == 0:
-            stack.pop()
+
+def main() -> None:
+    raw = sys.stdin.read()
+    data = raw.split()
+    if not data:
+        return
+    pos = 0
+    n = int(data[pos])
+    m = int(data[pos + 1])
+    pos += 2
+
+    adj = [
+        [] for _ in range(n)
+    ]
+    for _ in range(m):
+        u = int(data[pos])
+        v = int(data[pos + 1])
+        pos += 2
+        adj[u].append(v)
+        adj[v].append(u)
+
+    seen = [False] * n
+    par = [-1] * n
+    order = [0]
+    seen[0] = True
+    st = [[0, 0]]
+
+    while st:
+        fr = st[-1]
+        node = fr[0]
+        idx = fr[1]
+        deg = len(adj[node])
+        if idx == deg:
+            st.pop()
             continue
-        if idx == 0:
-            visited.add(node)
-            order.append(node)
+        nb = adj[node][idx]
+        fr[1] = idx + 1
+        if not seen[nb]:
+            seen[nb] = True
+            par[nb] = node
+            order.append(nb)
+            st.append([nb, 0])
 
-        if idx < len(adj[node]):
-            neighbor = adj[node][idx]
-            stack[-1] = (node, idx + 1)
-            if neighbor not in visited:
-                stack.append((neighbor, 0))
-        else:
-            stack.pop()
-
-    return order
+    print("Preorder:", order)
+    print("Parent:", par)
 
 
-adj = {
-    0: [1, 2],
-    1: [3, 4],
-    2: [5],
-    3: [],
-    4: [],
-    5: []
-}
-
-result = iterative_dfs_true_order(adj, 0)
-print("DFS with iterator order:", result)
+if __name__ == "__main__":
+    main()

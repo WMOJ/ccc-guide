@@ -1,0 +1,41 @@
+{"schema":1,
+"kind":"frames",
+"id":"prefix-array",
+"layout":"row",
+"panels":[{"id":"values","viz":"ArrayViz","title":"Daily rainfall"},{"id":"prefix","viz":"ArrayViz","title":"Prefix sum"}],
+"alt":"Building a prefix sum array from a list of daily rainfall totals, one day at a time, then answering a range-sum query by marking the query's range on the rainfall array and subtracting two entries of the prefix array.",
+"presets":[
+{"id":"middle","label":"Middle range","steps":[
+{"caption":"Before any day is added, prefix holds one entry, 0: the rainfall total for zero days.","panels":{"values":{"values":[10,20,15,30,25],"states":"c____"},"prefix":{"values":[0],"states":"d","indexBase":0}}},
+{"caption":"prefix[1] is prefix[0] plus values[0]: 0 + 10 = 10.","panels":{"values":{"values":[10,20,15,30,25],"states":"c____"},"prefix":{"values":[0,10],"states":"dd","pointers":[{"name":"k","at":1}],"indexBase":0}}},
+{"caption":"prefix[2] is prefix[1] plus values[1]: 10 + 20 = 30.","panels":{"values":{"values":[10,20,15,30,25],"states":"dc___"},"prefix":{"values":[0,10,30],"states":"ddd","pointers":[{"name":"k","at":2}],"indexBase":0}}},
+{"caption":"prefix[3] is prefix[2] plus values[2]: 30 + 15 = 45.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddc__"},"prefix":{"values":[0,10,30,45],"states":"dddd","pointers":[{"name":"k","at":3}],"indexBase":0}}},
+{"caption":"prefix[4] is prefix[3] plus values[3]: 45 + 30 = 75.","panels":{"values":{"values":[10,20,15,30,25],"states":"dddc_"},"prefix":{"values":[0,10,30,45,75],"states":"ddddd","pointers":[{"name":"k","at":4}],"indexBase":0}}},
+{"caption":"prefix[5] is prefix[4] plus values[4]: 75 + 25 = 100.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddddc"},"prefix":{"values":[0,10,30,45,75,100],"states":"dddddd","pointers":[{"name":"k","at":5}],"indexBase":0}}},
+{"caption":"The prefix array is complete, one entry longer than values, with prefix[0] equal to 0.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddddd"},"prefix":{"values":[0,10,30,45,75,100],"states":"dddddd","indexBase":0}}},
+{"caption":"To total the rainfall from day 1 to day 3, mark that range on values.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddddd","ranges":[{"from":1,"to":3,"label":"day 1-3"}]},"prefix":{"values":[0,10,30,45,75,100],"states":"dddddd","pointers":[{"name":"i","at":1},{"name":"j+1","at":4}],"indexBase":0}}},
+{"caption":"prefix[4] - prefix[1] = 75 - 10 = 65. That is the total rainfall from day 1 to day 3.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddddd","ranges":[{"from":1,"to":3,"label":"day 1-3"}]},"prefix":{"values":[0,10,30,45,75,100],"states":"dddddd","pointers":[{"name":"i","at":1},{"name":"j+1","at":4}],"compare":{"a":1,"b":4,"text":"=65"},"indexBase":0}}}
+]},
+{"id":"from-start","label":"From day 0","steps":[
+{"caption":"Before any day is added, prefix holds one entry, 0: the rainfall total for zero days.","panels":{"values":{"values":[10,20,15,30,25],"states":"c____"},"prefix":{"values":[0],"states":"d","indexBase":0}}},
+{"caption":"prefix[1] is prefix[0] plus values[0]: 0 + 10 = 10.","panels":{"values":{"values":[10,20,15,30,25],"states":"c____"},"prefix":{"values":[0,10],"states":"dd","pointers":[{"name":"k","at":1}],"indexBase":0}}},
+{"caption":"prefix[2] is prefix[1] plus values[1]: 10 + 20 = 30.","panels":{"values":{"values":[10,20,15,30,25],"states":"dc___"},"prefix":{"values":[0,10,30],"states":"ddd","pointers":[{"name":"k","at":2}],"indexBase":0}}},
+{"caption":"prefix[3] is prefix[2] plus values[2]: 30 + 15 = 45.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddc__"},"prefix":{"values":[0,10,30,45],"states":"dddd","pointers":[{"name":"k","at":3}],"indexBase":0}}},
+{"caption":"prefix[4] is prefix[3] plus values[3]: 45 + 30 = 75.","panels":{"values":{"values":[10,20,15,30,25],"states":"dddc_"},"prefix":{"values":[0,10,30,45,75],"states":"ddddd","pointers":[{"name":"k","at":4}],"indexBase":0}}},
+{"caption":"prefix[5] is prefix[4] plus values[4]: 75 + 25 = 100.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddddc"},"prefix":{"values":[0,10,30,45,75,100],"states":"dddddd","pointers":[{"name":"k","at":5}],"indexBase":0}}},
+{"caption":"The prefix array is complete, one entry longer than values, with prefix[0] equal to 0.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddddd"},"prefix":{"values":[0,10,30,45,75,100],"states":"dddddd","indexBase":0}}},
+{"caption":"To total the rainfall from day 0 to day 2, mark that range on values.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddddd","ranges":[{"from":0,"to":2,"label":"day 0-2"}]},"prefix":{"values":[0,10,30,45,75,100],"states":"dddddd","pointers":[{"name":"i","at":0},{"name":"j+1","at":3}],"indexBase":0}}},
+{"caption":"prefix[3] - prefix[0] = 45 - 0 = 45. That is the total rainfall from day 0 to day 2.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddddd","ranges":[{"from":0,"to":2,"label":"day 0-2"}]},"prefix":{"values":[0,10,30,45,75,100],"states":"dddddd","pointers":[{"name":"i","at":0},{"name":"j+1","at":3}],"compare":{"a":0,"b":3,"text":"=45"},"indexBase":0}}}
+]},
+{"id":"single","label":"One day","steps":[
+{"caption":"Before any day is added, prefix holds one entry, 0: the rainfall total for zero days.","panels":{"values":{"values":[10,20,15,30,25],"states":"c____"},"prefix":{"values":[0],"states":"d","indexBase":0}}},
+{"caption":"prefix[1] is prefix[0] plus values[0]: 0 + 10 = 10.","panels":{"values":{"values":[10,20,15,30,25],"states":"c____"},"prefix":{"values":[0,10],"states":"dd","pointers":[{"name":"k","at":1}],"indexBase":0}}},
+{"caption":"prefix[2] is prefix[1] plus values[1]: 10 + 20 = 30.","panels":{"values":{"values":[10,20,15,30,25],"states":"dc___"},"prefix":{"values":[0,10,30],"states":"ddd","pointers":[{"name":"k","at":2}],"indexBase":0}}},
+{"caption":"prefix[3] is prefix[2] plus values[2]: 30 + 15 = 45.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddc__"},"prefix":{"values":[0,10,30,45],"states":"dddd","pointers":[{"name":"k","at":3}],"indexBase":0}}},
+{"caption":"prefix[4] is prefix[3] plus values[3]: 45 + 30 = 75.","panels":{"values":{"values":[10,20,15,30,25],"states":"dddc_"},"prefix":{"values":[0,10,30,45,75],"states":"ddddd","pointers":[{"name":"k","at":4}],"indexBase":0}}},
+{"caption":"prefix[5] is prefix[4] plus values[4]: 75 + 25 = 100.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddddc"},"prefix":{"values":[0,10,30,45,75,100],"states":"dddddd","pointers":[{"name":"k","at":5}],"indexBase":0}}},
+{"caption":"The prefix array is complete, one entry longer than values, with prefix[0] equal to 0.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddddd"},"prefix":{"values":[0,10,30,45,75,100],"states":"dddddd","indexBase":0}}},
+{"caption":"To total the rainfall from day 2 to day 2, mark that range on values.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddddd","ranges":[{"from":2,"to":2,"label":"day 2-2"}]},"prefix":{"values":[0,10,30,45,75,100],"states":"dddddd","pointers":[{"name":"i","at":2},{"name":"j+1","at":3}],"indexBase":0}}},
+{"caption":"prefix[3] - prefix[2] = 45 - 30 = 15. That is the total rainfall from day 2 to day 2.","panels":{"values":{"values":[10,20,15,30,25],"states":"ddddd","ranges":[{"from":2,"to":2,"label":"day 2-2"}]},"prefix":{"values":[0,10,30,45,75,100],"states":"dddddd","pointers":[{"name":"i","at":2},{"name":"j+1","at":3}],"compare":{"a":2,"b":3,"text":"=15"},"indexBase":0}}}
+]}
+]}

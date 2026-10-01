@@ -1,0 +1,21 @@
+{"schema":1,
+"kind":"frames",
+"id":"split",
+"layout":"single",
+"panels":[{"id":"t","viz":"TableViz"}],
+"alt":"Splitting labeled items into groups of fixed sizes, one group at a time. For each group the table shows its size, how many items are left to choose from, the binomial coefficient for choosing that group, and the running product of those coefficients.",
+"presets":[
+{"id":"three","label":"Sizes 3, 4, 3","steps":[
+{"caption":"Group 1 takes 3 of the 10 items still unplaced: C(10, 3) = 120 ways. The running product is 120.","panels":{"t":{"cells":[[3,10,120,120],[4,7,null,null],[3,3,null,null]],"states":["cccc","____","____"],"rowHeads":["group 1","group 2","group 3"],"colHeads":["size","left","ways","product"]}}},
+{"caption":"Group 2 takes 4 of the 7 items still unplaced: C(7, 4) = 35 ways. The running product is 4200.","panels":{"t":{"cells":[[3,10,120,120],[4,7,35,4200],[3,3,null,null]],"states":["dddd","cccc","____"],"rowHeads":["group 1","group 2","group 3"],"colHeads":["size","left","ways","product"]}}},
+{"caption":"Group 3 takes 3 of the 3 items still unplaced: C(3, 3) = 1 way. The running product is 4200. Every item is placed, so this product is the answer.","panels":{"t":{"cells":[[3,10,120,120],[4,7,35,4200],[3,3,1,4200]],"states":["dddd","dddd","cccc"],"rowHeads":["group 1","group 2","group 3"],"colHeads":["size","left","ways","product"]}}}
+]},
+{"id":"equal","label":"Sizes 2, 2, 2","steps":[
+{"caption":"Group 1 takes 2 of the 6 items still unplaced: C(6, 2) = 15 ways. The running product is 15.","panels":{"t":{"cells":[[2,6,15,15],[2,4,null,null],[2,2,null,null]],"states":["cccc","____","____"],"rowHeads":["group 1","group 2","group 3"],"colHeads":["size","left","ways","product"]}}},
+{"caption":"Group 2 takes 2 of the 4 items still unplaced: C(4, 2) = 6 ways. The running product is 90.","panels":{"t":{"cells":[[2,6,15,15],[2,4,6,90],[2,2,null,null]],"states":["dddd","cccc","____"],"rowHeads":["group 1","group 2","group 3"],"colHeads":["size","left","ways","product"]}}},
+{"caption":"Group 3 takes 2 of the 2 items still unplaced: C(2, 2) = 1 way. The running product is 90. Every item is placed, so this product is the answer.","panels":{"t":{"cells":[[2,6,15,15],[2,4,6,90],[2,2,1,90]],"states":["dddd","dddd","cccc"],"rowHeads":["group 1","group 2","group 3"],"colHeads":["size","left","ways","product"]}}}
+]},
+{"id":"one","label":"One group","steps":[
+{"caption":"Group 1 takes 5 of the 5 items still unplaced: C(5, 5) = 1 way. The running product is 1. Every item is placed, so this product is the answer.","panels":{"t":{"cells":[[5,5,1,1]],"states":["cccc"],"rowHeads":["group 1"],"colHeads":["size","left","ways","product"]}}}
+]}
+]}

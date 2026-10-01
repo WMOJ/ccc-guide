@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: tokens, viz: ArrayViz, title: Token list }
+alt: >-
+  Reading a token list built by sys.stdin.read().split(), with a pos pointer that reads n, then
+  moves across the n value tokens one at a time. The same numbers split across several lines
+  produce the same token list as one line, and an N of 0 leaves no value tokens to read.
+captions: vizrec
+presets:
+  - id: main
+    label: One line
+    stdin: "5\n10 20 30 40 50\n"
+  - id: lines
+    label: Multi-line
+    stdin: "5\n10\n20\n30\n40\n50\n"
+  - id: empty
+    label: "N = 0"
+    stdin: "0\n"
+consistency:
+  description: The final total in the visual equals the output of examples/sum_many.py.
+  example: ../examples/sum_many.py
+  compare: output

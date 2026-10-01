@@ -13,8 +13,8 @@ lessons:
   - sorting-with-keys-and-greedy
 practice:
   - id: ccc16s2
-    note: Sort two lists of times and pair them to get the fastest and the slowest combined result.
-    why: A two-key greedy-after-sort problem, the same shape as this lesson's ratio sort.
+    note: Pair up cyclists from two teams, one from each, to get the fastest or the slowest combined ride.
+    why: A two-list sorting problem, pairing entries after each list is sorted its own way.
   - id: ccc20s1
-    note: Scan and sort a set of measurements to work out a consistent value.
-    why: A scan-then-sort problem in the same style as this lesson's key-based sorting.
+    note: A runner's position is recorded at several moments; work out how fast the runner must have been going at some point.
+    why: Sorting the readings by time first is the same shape as this lesson's key-based sort.

@@ -2,9 +2,10 @@ id: C.8
 title: Output edge cases and special checkers
 status: accepted
 objectives:
-  - Recognize when the grader uses a special checker instead of exact string matching.
-  - Identify common output edge cases (trailing newlines, precision, order).
-  - Write code that produces output in the exact format the problem specifies.
+  - Find a stray space or missing newline in your output with `repr()`, and say why an exact checker rejects it.
+  - Explain how an exact checker and a token-based checker treat the same output differently.
+  - Fix how many decimals a float prints, and say when an absolute or a relative tolerance accepts it.
+  - Recognize a problem judged by a special checker, and say why matching the sample output is not required.
 prereqs:
   - M1.11
   - M5.1

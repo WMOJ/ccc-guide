@@ -11,11 +11,13 @@ export type { UiStrings };
 
 const CONTENT_ROOT = path.join(process.cwd(), "content");
 
+// Cached per process in production only, so `next dev` picks up edits without a restart.
+const CACHE = process.env.NODE_ENV === "production";
 let cached: UiStrings | null = null;
 
-/** Loads and validates content/ui/strings.yaml once per process. */
+/** Loads and validates content/ui/strings.yaml (once per process in production). */
 export function getUiStrings(): UiStrings {
-  if (cached) return cached;
+  if (CACHE && cached) return cached;
   const file = path.join(CONTENT_ROOT, "ui", "strings.yaml");
   const raw = fs.readFileSync(file, "utf8");
   const data = parse(raw);

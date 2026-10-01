@@ -3,30 +3,23 @@ from collections import deque
 
 
 def main() -> None:
-    input_data = sys.stdin.read().split()
-    n = int(input_data[0])
-    k = int(input_data[1])
-    arr = list(map(int, input_data[2:2 + n]))
+    data = sys.stdin.read().split()
+    n = int(data[0])
+    k = int(data[1])
+    values = [int(x) for x in data[2:2 + n]]
 
-    dq = deque()
-    result = []
-
+    dq = deque()  # indices, values[j] decreasing from front to back
+    maximums = []
     for i in range(n):
-        # Remove indices outside the window
-        while dq and dq[0] < i - k + 1:
+        while dq and dq[0] <= i - k:
             dq.popleft()
-
-        # Remove indices of elements smaller than current
-        while dq and arr[dq[-1]] <= arr[i]:
+        while dq and values[dq[-1]] <= values[i]:
             dq.pop()
-
         dq.append(i)
-
-        # The maximum in the current window is at the front
         if i >= k - 1:
-            result.append(arr[dq[0]])
+            maximums.append(values[dq[0]])
 
-    print("\n".join(map(str, result)))
+    print(" ".join(str(x) for x in maximums))
 
 
 if __name__ == "__main__":

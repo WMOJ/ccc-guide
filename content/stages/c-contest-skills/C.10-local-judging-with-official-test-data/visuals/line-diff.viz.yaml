@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: "Actual vs official" }
+alt: >-
+  A table comparing the solution's actual output to the official expected output, line by line.
+  A matching line is marked done; a mismatching line, including one that differs only by
+  trailing whitespace, is marked invalid.
+captions: vizrec
+presets:
+  - id: match
+    label: Match
+    stdin: "4\n3 1 4 1\n4\n6\n2\n8\n2\n"
+  - id: wrong_line
+    label: Trailing space
+    stdin: "4\n3 1 4 1\n4\n6\n2\n8 \n2\n"
+  - id: missing_last
+    label: Missing line
+    stdin: "4\n3 1 4 1\n3\n6\n2\n8\n"
+consistency:
+  description: The actual column's values equal the printed output of examples/mini_judge_solution.py on each preset's stdin.
+  example: ../examples/mini_judge_solution.py
+  compare: output

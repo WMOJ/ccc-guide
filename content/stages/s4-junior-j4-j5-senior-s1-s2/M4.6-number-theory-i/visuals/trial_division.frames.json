@@ -1,0 +1,33 @@
+{"schema":1,
+"kind":"frames",
+"id":"trial_division",
+"layout":"single",
+"panels":[{"id":"line","viz":"LineViz","title":"Candidate divisors"}],
+"alt":"A number line of candidate divisors from 2 up to the square root of n, tested one at a time; the sweep stops the moment a divisor is found, or at the square root if none is.",
+"presets":[
+{"id":"prime","label":"Prime","steps":[
+{"caption":"Test divisors of 47 from 2 up to its square root, about 6.","panels":{"line":{"min":0,"max":8,"points":[{"x":6,"label":"limit","s":"#"}]}}},
+{"caption":"2 does not divide 47. Move to the next candidate.","panels":{"line":{"min":0,"max":8,"points":[{"x":6,"label":"limit","s":"#"},{"x":2,"label":"2","s":"c"}]}}},
+{"caption":"3 does not divide 47. Move to the next candidate.","panels":{"line":{"min":0,"max":8,"points":[{"x":2,"label":"2","s":"d"},{"x":6,"label":"limit","s":"#"},{"x":3,"label":"3","s":"c"}]}}},
+{"caption":"4 does not divide 47. Move to the next candidate.","panels":{"line":{"min":0,"max":8,"points":[{"x":2,"label":"2","s":"d"},{"x":3,"label":"3","s":"d"},{"x":6,"label":"limit","s":"#"},{"x":4,"label":"4","s":"c"}]}}},
+{"caption":"5 does not divide 47. Move to the next candidate.","panels":{"line":{"min":0,"max":8,"points":[{"x":2,"label":"2","s":"d"},{"x":3,"label":"3","s":"d"},{"x":4,"label":"4","s":"d"},{"x":6,"label":"limit","s":"#"},{"x":5,"label":"5","s":"c"}]}}},
+{"caption":"6 does not divide 47. Move to the next candidate.","panels":{"line":{"min":0,"max":8,"points":[{"x":2,"label":"2","s":"d"},{"x":3,"label":"3","s":"d"},{"x":4,"label":"4","s":"d"},{"x":5,"label":"5","s":"d"},{"x":6,"label":"6","s":"c"}]}}},
+{"caption":"No candidate up to 6 divides 47. Past 6, any factor would already have shown up paired with one below it, so 47 is prime.","panels":{"line":{"min":0,"max":8,"points":[{"x":2,"label":"2","s":"d"},{"x":3,"label":"3","s":"d"},{"x":4,"label":"4","s":"d"},{"x":5,"label":"5","s":"d"},{"x":6,"label":"6","s":"d"}]}}}
+]},
+{"id":"square","label":"Square","steps":[
+{"caption":"Test divisors of 49 from 2 up to its square root, about 7.","panels":{"line":{"min":0,"max":9,"points":[{"x":7,"label":"limit","s":"#"}]}}},
+{"caption":"2 does not divide 49. Move to the next candidate.","panels":{"line":{"min":0,"max":9,"points":[{"x":7,"label":"limit","s":"#"},{"x":2,"label":"2","s":"c"}]}}},
+{"caption":"3 does not divide 49. Move to the next candidate.","panels":{"line":{"min":0,"max":9,"points":[{"x":2,"label":"2","s":"d"},{"x":7,"label":"limit","s":"#"},{"x":3,"label":"3","s":"c"}]}}},
+{"caption":"4 does not divide 49. Move to the next candidate.","panels":{"line":{"min":0,"max":9,"points":[{"x":2,"label":"2","s":"d"},{"x":3,"label":"3","s":"d"},{"x":7,"label":"limit","s":"#"},{"x":4,"label":"4","s":"c"}]}}},
+{"caption":"5 does not divide 49. Move to the next candidate.","panels":{"line":{"min":0,"max":9,"points":[{"x":2,"label":"2","s":"d"},{"x":3,"label":"3","s":"d"},{"x":4,"label":"4","s":"d"},{"x":7,"label":"limit","s":"#"},{"x":5,"label":"5","s":"c"}]}}},
+{"caption":"6 does not divide 49. Move to the next candidate.","panels":{"line":{"min":0,"max":9,"points":[{"x":2,"label":"2","s":"d"},{"x":3,"label":"3","s":"d"},{"x":4,"label":"4","s":"d"},{"x":5,"label":"5","s":"d"},{"x":7,"label":"limit","s":"#"},{"x":6,"label":"6","s":"c"}]}}},
+{"caption":"7 divides 49 evenly (49 // 7 = 7), so 49 is not prime. 7 is its smallest prime factor.","panels":{"line":{"min":0,"max":9,"points":[{"x":2,"label":"2","s":"d"},{"x":3,"label":"3","s":"d"},{"x":4,"label":"4","s":"d"},{"x":5,"label":"5","s":"d"},{"x":6,"label":"6","s":"d"},{"x":7,"label":"7","s":"m"}]}}}
+]},
+{"id":"composite","label":"Composite","steps":[
+{"caption":"Test divisors of 35 from 2 up to its square root, about 5.","panels":{"line":{"min":0,"max":7,"points":[{"x":5,"label":"limit","s":"#"}]}}},
+{"caption":"2 does not divide 35. Move to the next candidate.","panels":{"line":{"min":0,"max":7,"points":[{"x":5,"label":"limit","s":"#"},{"x":2,"label":"2","s":"c"}]}}},
+{"caption":"3 does not divide 35. Move to the next candidate.","panels":{"line":{"min":0,"max":7,"points":[{"x":2,"label":"2","s":"d"},{"x":5,"label":"limit","s":"#"},{"x":3,"label":"3","s":"c"}]}}},
+{"caption":"4 does not divide 35. Move to the next candidate.","panels":{"line":{"min":0,"max":7,"points":[{"x":2,"label":"2","s":"d"},{"x":3,"label":"3","s":"d"},{"x":5,"label":"limit","s":"#"},{"x":4,"label":"4","s":"c"}]}}},
+{"caption":"5 divides 35 evenly (35 // 5 = 7), so 35 is not prime. 5 is its smallest prime factor.","panels":{"line":{"min":0,"max":7,"points":[{"x":2,"label":"2","s":"d"},{"x":3,"label":"3","s":"d"},{"x":4,"label":"4","s":"d"},{"x":5,"label":"5","s":"m"}]}}}
+]}
+]}

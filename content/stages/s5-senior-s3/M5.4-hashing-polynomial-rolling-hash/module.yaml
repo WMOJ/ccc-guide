@@ -14,4 +14,5 @@ lessons:
   - rolling-hash
 practice:
   - id: ccc20s3
-    note: Find distinct permutations of a pattern in a text using rolling hashes.
+    note: Count the distinct substrings of a longer text that are rearrangements of a shorter one.
+    why: Telling distinct substrings apart without comparing them letter by letter is what a rolling hash is for.

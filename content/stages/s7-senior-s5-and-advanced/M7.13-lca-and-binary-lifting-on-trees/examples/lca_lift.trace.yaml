@@ -1,0 +1,29 @@
+example: lca_lift.py
+alt: >-
+  A short version of the query for the nine-node tree. It reads the two query nodes, the depth of
+  every node and the ancestor table, climbs the deeper node by the depth difference using the set
+  bits, then tries the levels from highest to lowest, jumping both nodes only where their targets
+  differ, and prints the lowest common ancestor.
+presets:
+  - id: main
+    label: Both deep
+    stdin: "7\n8\n0 1 2 3 3 4 4 5 5\n0 0 1 2 2 3 4 5 6\n0 0 0 1 1 2 2 3 4\n0 0 0 0 0 0 0 1 1\n"
+  - id: uneven
+    label: Uneven
+    stdin: "7\n6\n0 1 2 3 3 4 4 5 5\n0 0 1 2 2 3 4 5 6\n0 0 0 1 1 2 2 3 4\n0 0 0 0 0 0 0 1 1\n"
+  - id: ancestor
+    label: Ancestor
+    stdin: "7\n3\n0 1 2 3 3 4 4 5 5\n0 0 1 2 2 3 4 5 6\n0 0 0 1 1 2 2 3 4\n0 0 0 0 0 0 0 1 1\n"
+skip:
+  - line: 9
+    keep: 0
+    to: 11
+    label: "Read the depths and the three levels of the table, one line each."
+notes:
+  "11": "`LOG` is the number of table levels, here 3."
+  "14": "How many levels deeper is `a` than `b`?"
+  "16": "Is bit `k` of the difference set? Then `a` climbs `2^k` levels with one lookup."
+  "18": "If `a` and `b` are now the same node, one was an ancestor of the other."
+  "21": "Try the levels from the highest down to 0."
+  "22": "Do the two targets differ? Then both are still below the answer, so jump."
+  "25": "The two nodes are children of the answer, so `up[0][a]` is it."

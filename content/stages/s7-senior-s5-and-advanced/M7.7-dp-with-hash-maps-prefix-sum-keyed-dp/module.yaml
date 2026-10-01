@@ -14,4 +14,4 @@ lessons:
   - prefix-sum-keyed-dp
 practice:
   - id: ccc24s5
-    note: Split a bar of chocolate squares into two groups of equal weight.
+    note: Split a two-row chocolate bar into connected parts that all have the same average tastiness.

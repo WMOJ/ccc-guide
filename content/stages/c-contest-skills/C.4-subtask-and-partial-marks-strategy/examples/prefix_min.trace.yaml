@@ -1,0 +1,23 @@
+example: prefix_min.py
+alt: >-
+  The prefix-sum method with a running minimum, run on two or three numbers. The program reads the numbers,
+  builds the prefix array with a running total, then loops over each end j. For each end it
+  subtracts low, the smallest prefix entry so far, to get the best sum ending there, keeps the
+  largest in best, and lowers low whenever a smaller entry appears. It prints best.
+presets:
+  - id: dip
+    label: Dip, then gain
+    stdin: "3\n2 -3 4\n"
+  - id: losses
+    label: All losses
+    stdin: "2\n-3 -1\n"
+  - id: gains
+    label: All gains
+    stdin: "3\n1 2 3\n"
+skip:
+  - { line: 1, keep: 0, to: 30, label: "The import and the two function definitions run first." }
+  - { line: 9, keep: 1, to: 11, label: "The loop adds each remaining value to total and appends it to prefix." }
+notes:
+  "11": "`low` starts at `prefix[0]`, which is 0: a run may start at `values[0]`, so the empty prefix must be available to subtract."
+  "12": "`best` starts at the first value, not 0, so a list of only losses still reports its largest single value."
+  "15": "`cand` is the best sum of a run that ends at `values[j]`: this end's prefix entry minus the smallest entry before it."

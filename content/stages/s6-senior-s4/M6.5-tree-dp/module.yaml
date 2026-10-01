@@ -13,4 +13,4 @@ lessons:
   - tree-dp
 practice:
   - id: ccc22s5
-    note: Keep several states per node and combine children in post-order to satisfy a tree-wide condition.
+    note: Choose which students to pay, in a friendship network shaped like a tree, so that every student ends up wanting to write the contest.

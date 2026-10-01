@@ -1,0 +1,20 @@
+layout: single
+panels:
+  - id: table
+    viz: TableViz
+alt: >-
+  A table of names and scores fills in one row at a time. Each row prints with the name
+  left-aligned in 10 characters and the score right-aligned in 5, so every score's last digit
+  lines up under the one above it.
+captions: vizrec
+presets:
+  - id: main
+    label: Three rows
+    stdinFile: ../examples/column_table.in
+  - id: long_name
+    label: Long name
+    stdin: "2\nAl 3\nChristopher 150\n"
+consistency:
+  description: "rec.output() equals column_table.py's real stdout for the same stdin."
+  example: ../examples/column_table.py
+  compare: output

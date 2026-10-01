@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "key_error_demo.py", line 2, in <module>
+    print(data["wheat"])
+KeyError: 'wheat'

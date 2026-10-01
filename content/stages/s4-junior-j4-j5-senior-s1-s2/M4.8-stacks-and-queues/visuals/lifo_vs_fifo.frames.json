@@ -1,0 +1,20 @@
+{"schema":1,
+"kind":"frames",
+"id":"lifo_vs_fifo",
+"layout":"row",
+"panels":[{"id":"stack","viz":"StructViz","title":"Stack (LIFO)"},{"id":"queue","viz":"StructViz","title":"Queue (FIFO)"}],
+"alt":"Pushing the same values onto a stack and adding them to a queue, then draining both: the stack gives them back in reverse order while the queue gives them back in the order they arrived.",
+"presets":[
+{"id":"main","label":"Three values","steps":[
+{"caption":"Push 'a' onto the stack and add 'a' to the back of the queue. Stack: ['a']. Queue: ['a'].","panels":{"stack":{"kind":"stack","items":[{"v":"a","s":"d"}]},"queue":{"kind":"queue","items":[{"v":"a","s":"d"}]}}},
+{"caption":"Push 'b' onto the stack and add 'b' to the back of the queue. Stack: ['a', 'b']. Queue: ['a', 'b'].","panels":{"stack":{"kind":"stack","items":[{"v":"a","s":"d"},{"v":"b","s":"d"}]},"queue":{"kind":"queue","items":[{"v":"a","s":"d"},{"v":"b","s":"d"}]}}},
+{"caption":"Push 'c' onto the stack and add 'c' to the back of the queue. Stack: ['a', 'b', 'c']. Queue: ['a', 'b', 'c'].","panels":{"stack":{"kind":"stack","items":[{"v":"a","s":"d"},{"v":"b","s":"d"},{"v":"c","s":"d"}]},"queue":{"kind":"queue","items":[{"v":"a","s":"d"},{"v":"b","s":"d"},{"v":"c","s":"d"}]}}},
+{"caption":"Pop 'c' from the top of the stack; serve 'a' from the front of the queue. Stack has given back ['c']. Queue has given back ['a'].","panels":{"stack":{"kind":"stack","items":[{"v":"a","s":"d"},{"v":"b","s":"d"}]},"queue":{"kind":"queue","items":[{"v":"b","s":"d"},{"v":"c","s":"d"}]}}},
+{"caption":"Pop 'b' from the top of the stack; serve 'b' from the front of the queue. Stack has given back ['c', 'b']. Queue has given back ['a', 'b'].","panels":{"stack":{"kind":"stack","items":[{"v":"a","s":"d"}]},"queue":{"kind":"queue","items":[{"v":"c","s":"d"}]}}},
+{"caption":"Pop 'a' from the top of the stack; serve 'c' from the front of the queue. Stack has given back ['c', 'b', 'a']. Queue has given back ['a', 'b', 'c'].","panels":{"stack":{"kind":"stack","items":[]},"queue":{"kind":"queue","items":[]}}}
+]},
+{"id":"one","label":"One value","steps":[
+{"caption":"Push 'x' onto the stack and add 'x' to the back of the queue. Stack: ['x']. Queue: ['x'].","panels":{"stack":{"kind":"stack","items":[{"v":"x","s":"d"}]},"queue":{"kind":"queue","items":[{"v":"x","s":"d"}]}}},
+{"caption":"Pop 'x' from the top of the stack; serve 'x' from the front of the queue. Stack has given back ['x']. Queue has given back ['x'].","panels":{"stack":{"kind":"stack","items":[]},"queue":{"kind":"queue","items":[]}}}
+]}
+]}

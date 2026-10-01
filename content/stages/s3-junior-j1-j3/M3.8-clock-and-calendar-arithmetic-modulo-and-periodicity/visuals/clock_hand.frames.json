@@ -1,0 +1,33 @@
+{"schema":1,
+"kind":"frames",
+"id":"clock_hand",
+"layout":"single",
+"panels":[{"id":"wheel","viz":"LineViz","title":"24-hour clock"}],
+"alt":"A 24-position clock wheel with a hand that moves one hour at a time from the starting hour. Passing hour 23 wraps the hand back to 0, and a negative offset wraps the other way, so the hand always ends at the sum taken modulo 24, matching examples/clock_wrap.py.",
+"presets":[
+{"id":"forward","label":"Past midnight","steps":[
+{"caption":"The hand starts at hour 22. The wheel has 24 positions, 0 through 23, and the offset to add is 5.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":22,"label":"start","s":"d"}],"at":22}}},
+{"caption":"Forward one hour: the hand is at 23.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":22,"label":"start","s":"d"}],"at":23}}},
+{"caption":"Forward one hour: 24 is off the wheel, and 24 % 24 is 0, so the hand wraps to 0.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":22,"label":"start","s":"d"}],"at":0}}},
+{"caption":"Forward one hour: the hand is at 1.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":22,"label":"start","s":"d"}],"at":1}}},
+{"caption":"Forward one hour: the hand is at 2.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":22,"label":"start","s":"d"}],"at":2}}},
+{"caption":"Forward one hour: the hand is at 3.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":22,"label":"start","s":"d"}],"at":3}}},
+{"caption":"Directly: 22 + 5 = 27, and 27 % 24 = 3. The hand ended on hour 3, the same place.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":22,"label":"start","s":"d"}],"at":3}}}
+]},
+{"id":"back","label":"Back past 0","steps":[
+{"caption":"The hand starts at hour 2. The wheel has 24 positions, 0 through 23, and the offset to add is -5.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":2,"label":"start","s":"d"}],"at":2}}},
+{"caption":"Back one hour: the hand is at 1.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":2,"label":"start","s":"d"}],"at":1}}},
+{"caption":"Back one hour: the hand is at 0.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":2,"label":"start","s":"d"}],"at":0}}},
+{"caption":"Back one hour: -1 is off the wheel, and -1 % 24 is 23, so the hand wraps to 23.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":2,"label":"start","s":"d"}],"at":23}}},
+{"caption":"Back one hour: the hand is at 22.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":2,"label":"start","s":"d"}],"at":22}}},
+{"caption":"Back one hour: the hand is at 21.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":2,"label":"start","s":"d"}],"at":21}}},
+{"caption":"Directly: 2 + (-5) = -3, and -3 % 24 = 21. The hand ended on hour 21, the same place.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":2,"label":"start","s":"d"}],"at":21}}}
+]},
+{"id":"laps","label":"Full laps","steps":[
+{"caption":"The hand starts at hour 5. The wheel has 24 positions, 0 through 23, and the offset to add is 50.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":5,"label":"start","s":"d"}],"at":5}}},
+{"caption":"50 hours is 2 full laps of 24 plus 2. Each full lap returns the hand to where it started, hour 5.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":5,"label":"start","s":"d"}],"at":5}}},
+{"caption":"Forward one hour: the hand is at 6.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":5,"label":"start","s":"d"}],"at":6}}},
+{"caption":"Forward one hour: the hand is at 7.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":5,"label":"start","s":"d"}],"at":7}}},
+{"caption":"Directly: 5 + 50 = 55, and 55 % 24 = 7. The hand ended on hour 7, the same place.","panels":{"wheel":{"kind":"wheel","min":0,"max":24,"points":[{"x":5,"label":"start","s":"d"}],"at":7}}}
+]}
+]}

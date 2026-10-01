@@ -1,0 +1,16 @@
+{"schema":1,
+"kind":"frames",
+"id":"basket_share",
+"layout":"row",
+"panels":[{"id":"call","viz":"StructViz","title":"Call frame"},{"id":"shared","viz":"StructViz","title":"Default list"}],
+"alt":"The def line builds one default list, kept with the function. The call with apple appends to that list. The call with pear does not build a new list either, so it appends to the same one, and its result already holds apple.",
+"presets":[
+{"id":"main","label":"apple, then pear","steps":[
+{"caption":"When Python ran the `def` line, it built one empty list for `basket=[]` and kept it with the function. Now `add_item(\"apple\")` is called without a `basket`, so `basket` is that list.","panels":{"call":{"kind":"map","items":[{"k":"item","v":"apple"},{"k":"basket","v":"default list","s":"c"}]},"shared":{"kind":"map","items":[]}}},
+{"caption":"`basket.append(item)` adds \"apple\" to the default list itself, not to a copy.","panels":{"call":{"kind":"map","items":[{"k":"item","v":"apple"},{"k":"basket","v":"default list","s":"c"}]},"shared":{"kind":"map","items":[{"k":"[0]","v":"apple","s":"c"}]}}},
+{"caption":"`return basket` hands back the list, so `print` shows ['apple']. The call is over, but the default list is still there, now holding one item.","panels":{"call":{"kind":"map","items":[{"k":"item","v":"apple"},{"k":"basket","v":"default list","s":"c"}]},"shared":{"kind":"map","items":[{"k":"[0]","v":"apple","s":"_"}]}}},
+{"caption":"`add_item(\"pear\")` also gives no `basket`, so Python again uses the same default list. It did not build a fresh one. The list already holds apple.","panels":{"call":{"kind":"map","items":[{"k":"item","v":"pear"},{"k":"basket","v":"default list","s":"c"}]},"shared":{"kind":"map","items":[{"k":"[0]","v":"apple","s":"_"}]}}},
+{"caption":"`basket.append(item)` adds \"pear\" after \"apple\" in that one list.","panels":{"call":{"kind":"map","items":[{"k":"item","v":"pear"},{"k":"basket","v":"default list","s":"c"}]},"shared":{"kind":"map","items":[{"k":"[0]","v":"apple","s":"_"},{"k":"[1]","v":"pear","s":"c"}]}}},
+{"caption":"`print` shows ['apple', 'pear']. The second call's answer contains apple because both calls shared one list.","panels":{"call":{"kind":"map","items":[{"k":"item","v":"pear"},{"k":"basket","v":"default list","s":"c"}]},"shared":{"kind":"map","items":[{"k":"[0]","v":"apple","s":"_"},{"k":"[1]","v":"pear","s":"_"}]}}}
+]}
+]}

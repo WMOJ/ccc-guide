@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: "List A (i)" }
+  - { id: b, viz: ArrayViz, title: "List B (j)" }
+alt: >-
+  Two sorted lists, A and B, each with its own index pointer, i and j. At each step the smaller of
+  the two pointed-at values moves into the merged result and that pointer advances. When one list
+  runs out, the rest of the other list is copied over unchanged, since it is already sorted.
+captions: vizrec
+presets:
+  - id: interleaved
+    label: Interleaved
+    stdin: "4 1 3 5 7 4 2 4 6 8\n"
+  - id: exhausts
+    label: One runs out
+    stdin: "2 1 2 5 3 4 5 6 7\n"
+  - id: ties
+    label: Equal values
+    stdin: "3 2 2 4 2 2 3\n"
+consistency:
+  description: The printed merged list equals the output of examples/merge_sorted.py on the same two lists.
+  example: ../examples/merge_sorted.py
+  compare: output

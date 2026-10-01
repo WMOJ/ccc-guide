@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: discount table }
+alt: >-
+  A discount table with one column per tier letter, A through E. A tier letter is turned into its
+  index with ord(tier) - ord("A"), and that index then reaches the matching discount directly,
+  with no comparison against the other tiers.
+captions: vizrec
+presets:
+  - id: tier-c
+    label: Tier C
+    stdin: "C\n"
+  - id: tier-a
+    label: Tier A
+    stdin: "A\n"
+  - id: tier-e
+    label: Tier E
+    stdin: "E\n"
+consistency:
+  description: The looked-up discount equals the output of examples/discount_tier.py on the same input.
+  example: ../examples/discount_tier.py
+  compare: output

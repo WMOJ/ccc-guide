@@ -1,0 +1,20 @@
+layout: single
+panels:
+  - { id: a, viz: ArrayViz, title: "Numbers, running total" }
+alt: >-
+  Numbers are read one at a time. Each one that is not the sentinel joins a running total,
+  shown above the array; the sentinel itself is marked as invalid and stops the loop before
+  it is added. One preset sums two numbers before the sentinel; the other hits the sentinel
+  on the very first number, leaving the total at zero.
+captions: vizrec
+presets:
+  - id: main
+    label: Two numbers
+    stdin: "4\n6\n0\n"
+  - id: immediate
+    label: Sentinel right away
+    stdin: "0\n"
+consistency:
+  description: The final total shown matches the output of examples/sum_until_sentinel.py.
+  example: ../examples/sum_until_sentinel.py
+  compare: output

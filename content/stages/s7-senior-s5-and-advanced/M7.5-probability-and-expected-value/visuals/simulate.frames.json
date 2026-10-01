@@ -1,0 +1,14 @@
+{"schema":1,
+"kind":"frames",
+"id":"simulate",
+"layout":"single",
+"panels":[{"id":"p","viz":"PlotViz","title":"Average turns per game"}],
+"alt":"A chart of the running average number of turns per game against the number of games played, on a scale where each tick is ten times more games. The average starts away from the exact expected value, shown as a dashed horizontal line, and settles close to it as more games are played, without ever being exactly equal.",
+"presets":[
+{"id":"main","label":"Seed 7","steps":[
+{"caption":"Play the game 10 times with a seeded random coin and average the turns. The average is 2.600. The dashed line is the exact expected value of 2.25. Ten games are far too few to land near it.","panels":{"p":{"x":{"min":1,"max":4,"label":"games, as a power of 10","ticks":[1,2,3,4]},"y":{"min":2,"max":3,"label":"turns per game"},"series":[{"id":"avg","label":"average","pts":[[1,2.6]],"style":0},{"id":"exact","label":"exact","pts":[[1,2.25],[4,2.25]],"style":1}],"markers":[{"x":1,"y":2.6,"label":"2.60","s":"c"}]}}},
+{"caption":"After 100 games the average is 2.310. Each new game moves the average less because it is one more vote among many.","panels":{"p":{"x":{"min":1,"max":4,"label":"games, as a power of 10","ticks":[1,2,3,4]},"y":{"min":2,"max":3,"label":"turns per game"},"series":[{"id":"avg","label":"average","pts":[[1,2.6],[1.301,2.45],[1.699,2.36],[2,2.31]],"style":0},{"id":"exact","label":"exact","pts":[[1,2.25],[4,2.25]],"style":1}],"markers":[{"x":2,"y":2.31,"label":"2.31","s":"c"}]}}},
+{"caption":"After 1000 games the average is 2.270, off by 0.020 from the exact value.","panels":{"p":{"x":{"min":1,"max":4,"label":"games, as a power of 10","ticks":[1,2,3,4]},"y":{"min":2,"max":3,"label":"turns per game"},"series":[{"id":"avg","label":"average","pts":[[1,2.6],[1.301,2.45],[1.699,2.36],[2,2.31],[2.301,2.295],[2.699,2.286],[3,2.27]],"style":0},{"id":"exact","label":"exact","pts":[[1,2.25],[4,2.25]],"style":1}],"markers":[{"x":3,"y":2.27,"label":"2.27","s":"c"}]}}},
+{"caption":"After 10000 games it is 2.250. The average settles toward 2.25. It remains a sample, so it carries noise that the exact computation does not have.","panels":{"p":{"x":{"min":1,"max":4,"label":"games, as a power of 10","ticks":[1,2,3,4]},"y":{"min":2,"max":3,"label":"turns per game"},"series":[{"id":"avg","label":"average","pts":[[1,2.6],[1.301,2.45],[1.699,2.36],[2,2.31],[2.301,2.295],[2.699,2.286],[3,2.27],[3.301,2.264],[3.699,2.248],[4,2.25]],"style":0},{"id":"exact","label":"exact","pts":[[1,2.25],[4,2.25]],"style":1}],"markers":[{"x":4,"y":2.25,"label":"2.25","s":"c"}]}}}
+]}
+]}

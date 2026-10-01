@@ -1,0 +1,24 @@
+layout: single
+panels:
+  - id: text
+    viz: ArrayViz
+    title: Field text
+alt: >-
+  A float is formatted with the spec greater-than 7 point 2 f. First the decimals are fixed at two.
+  Then the width of 7 is applied, with padding spaces shown as dots on the left. A number already
+  wider than 7 gets no padding. The last step shows the printed field.
+captions: vizrec
+presets:
+  - id: main
+    label: "3.14159"
+    stdinFile: ../examples/field_width.in
+  - id: wide
+    label: Too wide
+    stdin: "12345.6\n"
+  - id: whole
+    label: Whole number
+    stdin: "7\n"
+consistency:
+  description: "rec.output() equals field_width.py's real stdout for the same stdin."
+  example: ../examples/field_width.py
+  compare: output

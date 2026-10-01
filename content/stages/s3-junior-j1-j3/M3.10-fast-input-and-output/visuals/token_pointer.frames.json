@@ -1,0 +1,31 @@
+{"schema":1,
+"kind":"frames",
+"id":"token_pointer",
+"layout":"single",
+"panels":[{"id":"tokens","viz":"ArrayViz","title":"Token list"}],
+"alt":"Reading a token list built by sys.stdin.read().split(), with a pos pointer that reads n, then moves across the n value tokens one at a time. The same numbers split across several lines produce the same token list as one line, and an N of 0 leaves no value tokens to read.",
+"presets":[
+{"id":"main","label":"One line","steps":[
+{"caption":"The whole input becomes one list of strings: ['5', '10', '20', '30', '40', '50']. pos starts at 0.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"c_____","pointers":[{"name":"pos","at":0}],"indices":true}}},
+{"caption":"tokens[0] is '5', so n = 5. pos moves to 1.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"dc____","pointers":[{"name":"pos","at":1}],"indices":true}}},
+{"caption":"tokens[1] is '10'. Adding it makes the running total 10. pos moves to 2.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"ddc___","pointers":[{"name":"pos","at":2}],"indices":true}}},
+{"caption":"tokens[2] is '20'. Adding it makes the running total 30. pos moves to 3.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"dddc__","pointers":[{"name":"pos","at":3}],"indices":true}}},
+{"caption":"tokens[3] is '30'. Adding it makes the running total 60. pos moves to 4.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"ddddc_","pointers":[{"name":"pos","at":4}],"indices":true}}},
+{"caption":"tokens[4] is '40'. Adding it makes the running total 100. pos moves to 5.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"dddddc","pointers":[{"name":"pos","at":5}],"indices":true}}},
+{"caption":"tokens[5] is '50'. Adding it makes the running total 150. pos moves to 6.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"dddddd","pointers":[{"name":"pos","at":6}],"indices":true}}}
+]},
+{"id":"lines","label":"Multi-line","steps":[
+{"caption":"The whole input becomes one list of strings: ['5', '10', '20', '30', '40', '50']. pos starts at 0.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"c_____","pointers":[{"name":"pos","at":0}],"indices":true}}},
+{"caption":"tokens[0] is '5', so n = 5. pos moves to 1.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"dc____","pointers":[{"name":"pos","at":1}],"indices":true}}},
+{"caption":"tokens[1] is '10'. Adding it makes the running total 10. pos moves to 2.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"ddc___","pointers":[{"name":"pos","at":2}],"indices":true}}},
+{"caption":"tokens[2] is '20'. Adding it makes the running total 30. pos moves to 3.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"dddc__","pointers":[{"name":"pos","at":3}],"indices":true}}},
+{"caption":"tokens[3] is '30'. Adding it makes the running total 60. pos moves to 4.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"ddddc_","pointers":[{"name":"pos","at":4}],"indices":true}}},
+{"caption":"tokens[4] is '40'. Adding it makes the running total 100. pos moves to 5.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"dddddc","pointers":[{"name":"pos","at":5}],"indices":true}}},
+{"caption":"tokens[5] is '50'. Adding it makes the running total 150. pos moves to 6.","panels":{"tokens":{"values":["5","10","20","30","40","50"],"states":"dddddd","pointers":[{"name":"pos","at":6}],"indices":true}}}
+]},
+{"id":"empty","label":"N = 0","steps":[
+{"caption":"The whole input becomes one list of strings: ['0']. pos starts at 0.","panels":{"tokens":{"values":["0"],"states":"c","pointers":[{"name":"pos","at":0}],"indices":true}}},
+{"caption":"tokens[0] is '0', so n = 0. pos moves to 1.","panels":{"tokens":{"values":["0"],"states":"d","pointers":[{"name":"pos","at":1}],"indices":true}}},
+{"caption":"n is 0, so the loop body never runs: there are no value tokens to read.","panels":{"tokens":{"values":["0"],"states":"d","pointers":[{"name":"pos","at":1}],"indices":true}}}
+]}
+]}

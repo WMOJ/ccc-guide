@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: line, viz: LineViz, title: "Requested range, clamped" }
+alt: >-
+  Each requested range drawn on the index line as invalid where it reaches past the array, then
+  clipped to the array's valid indices and marked applied, or, when clipping leaves nothing
+  inside the array, marked skipped instead.
+captions: vizrec
+presets:
+  - id: clamped
+    label: Needs clamping
+    stdin: "5 3\n-2 2 5\n3 10 2\n6 8 9\n"
+  - id: in-bounds
+    label: Already in range
+    stdin: "5 2\n0 1 4\n2 4 3\n"
+consistency:
+  description: The rebuilt array equals the line examples/clamp_updates.py prints.
+  example: ../examples/clamp_updates.py
+  compare: output

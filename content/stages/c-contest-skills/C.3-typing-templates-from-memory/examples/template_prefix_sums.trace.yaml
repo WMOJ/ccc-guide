@@ -1,0 +1,30 @@
+example: template_prefix_sums.py
+alt: >-
+  The prefix-sum template on four days of rainfall and one query. The program builds the prefix
+  list one running total at a time, then answers the query with one subtraction of two prefix
+  entries and prints the answer.
+presets:
+  - id: main
+    label: Middle days
+    stdin: "4\n10 20 15 30\n1\n1 2\n"
+  - id: whole
+    label: Whole range
+    stdin: "4\n10 20 15 30\n1\n0 3\n"
+  - id: single
+    label: One day
+    stdin: "4\n10 20 15 30\n1\n2 2\n"
+skip:
+  - line: 11
+    keep: 1
+    to: 15
+    label: "The other days are read the same way, one per pass."
+  - line: 17
+    keep: 2
+    to: 21
+    label: "The other days join the running total the same way."
+notes:
+  "16": "`prefix[i]` will hold the sum of the first `i` days, so it starts with a 0."
+  "19": "The running total grew by one day, and the new total is appended."
+  "28": "`prefix[j + 1]` holds days 0 to `j`."
+  "29": "`prefix[i]` holds days 0 to `i - 1`."
+  "30": "Their difference is the sum of days `i` to `j`."

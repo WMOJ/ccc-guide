@@ -1,0 +1,28 @@
+{"schema":1,
+"kind":"frames",
+"id":"min-max-pass",
+"layout":"row",
+"panels":[{"id":"numbers","viz":"ArrayViz","title":"Numbers"},{"id":"best","viz":"ArrayViz","title":"min_val, max_val"}],
+"alt":"A list of numbers scanned once, left to right, with a pointer on the current number. Beside it, a two-cell array holds the running min_val and max_val, updating only when the current number beats one of them.",
+"presets":[
+{"id":"ascending","label":"Ascending","steps":[
+{"caption":"Before the loop, both running values start at the first number, 1.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"c____","pointers":[{"name":"i","at":0}]},"best":{"values":[1,1]}}},
+{"caption":"2 is a new high. max_val rises from 1 to 2.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"dc___","pointers":[{"name":"i","at":1}]},"best":{"values":[1,2],"states":"_c"}}},
+{"caption":"3 is a new high. max_val rises from 2 to 3.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"ddc__","pointers":[{"name":"i","at":2}]},"best":{"values":[1,3],"states":"_c"}}},
+{"caption":"4 is a new high. max_val rises from 3 to 4.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"dddc_","pointers":[{"name":"i","at":3}]},"best":{"values":[1,4],"states":"_c"}}},
+{"caption":"5 is a new high. max_val rises from 4 to 5.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"ddddc","pointers":[{"name":"i","at":4}]},"best":{"values":[1,5],"states":"_c"}}},
+{"caption":"After one pass over all 5 numbers, min_val is 1 and max_val is 5.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"ddddd"},"best":{"values":[1,5]}}}
+]},
+{"id":"descending","label":"Descending","steps":[
+{"caption":"Before the loop, both running values start at the first number, 5.","panels":{"numbers":{"values":[5,4,3,2,1],"states":"c____","pointers":[{"name":"i","at":0}]},"best":{"values":[5,5]}}},
+{"caption":"4 beats the running min of 5. min_val drops to 4.","panels":{"numbers":{"values":[5,4,3,2,1],"states":"dc___","pointers":[{"name":"i","at":1}]},"best":{"values":[4,5],"states":"c_"}}},
+{"caption":"3 beats the running min of 4. min_val drops to 3.","panels":{"numbers":{"values":[5,4,3,2,1],"states":"ddc__","pointers":[{"name":"i","at":2}]},"best":{"values":[3,5],"states":"c_"}}},
+{"caption":"2 beats the running min of 3. min_val drops to 2.","panels":{"numbers":{"values":[5,4,3,2,1],"states":"dddc_","pointers":[{"name":"i","at":3}]},"best":{"values":[2,5],"states":"c_"}}},
+{"caption":"1 beats the running min of 2. min_val drops to 1.","panels":{"numbers":{"values":[5,4,3,2,1],"states":"ddddc","pointers":[{"name":"i","at":4}]},"best":{"values":[1,5],"states":"c_"}}},
+{"caption":"After one pass over all 5 numbers, min_val is 1 and max_val is 5.","panels":{"numbers":{"values":[5,4,3,2,1],"states":"ddddd"},"best":{"values":[1,5]}}}
+]},
+{"id":"single","label":"Single element","steps":[
+{"caption":"Before the loop, both running values start at the first number, 7.","panels":{"numbers":{"values":[7],"states":"c","pointers":[{"name":"i","at":0}]},"best":{"values":[7,7]}}},
+{"caption":"After one pass over all 1 number, min_val is 7 and max_val is 7.","panels":{"numbers":{"values":[7],"states":"d"},"best":{"values":[7,7]}}}
+]}
+]}

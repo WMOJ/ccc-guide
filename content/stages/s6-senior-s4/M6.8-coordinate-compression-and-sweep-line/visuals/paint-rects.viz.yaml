@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: grid, viz: GridViz, title: Cells and their depth }
+  - { id: sizes, viz: TableViz, title: Original sizes }
+alt: >-
+  Rectangles with large coordinates become blocks of compressed cells. A grid of compressed cells
+  shows, for each cell, how many rectangles cover it, and a table beside it gives the original width
+  of each column and the original height of each row. Each step paints one rectangle onto the grid.
+captions: vizrec
+legendLabels: { current: Being painted, done: Already painted }
+presets:
+  - id: overlap
+    label: Overlapping
+    stdin: "3\n0 0 70 30\n40 20 100 80\n20 60 80 100\n"
+  - id: nested
+    label: Nested
+    stdin: "2\n0 0 100 100\n20 20 60 60\n"
+  - id: touching
+    label: Touching
+    stdin: "2\n0 0 50 40\n50 20 100 60\n"
+consistency:
+  description: The rank corners recorded for each rectangle equal what examples/rect_ranks.py prints.
+  example: ../examples/rect_ranks.py
+  compare: output

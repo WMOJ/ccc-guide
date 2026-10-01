@@ -1,0 +1,29 @@
+{"schema":1,
+"kind":"frames",
+"id":"pair-grid",
+"layout":"single",
+"panels":[{"id":"grid","viz":"GridViz","title":"Pairs (i, j) counted"}],
+"alt":"A square grid with rows for i and columns for j. Row by row, the cells to the right of the diagonal fill in with the running count as the inner loop visits them. Cells on or left of the diagonal are never visited, so the filled cells form a triangle holding n(n-1)/2 pairs.",
+"legendLabels":{"wall":"Never visited"},
+"presets":[
+{"id":"main","label":"n = 6","steps":[
+{"caption":"i = 0: j runs from 1 to 5, 5 times, so count goes from 0 to 5. Each counted cell shows the running count.","panels":{"grid":{"cells":["#ccccc","##....","###...","####..","#####.","######"],"values":[["-",1,2,3,4,5],["-","-","","","",""],["-","-","-","","",""],["-","-","-","-","",""],["-","-","-","-","-",""],["-","-","-","-","-","-"]],"indices":true}}},
+{"caption":"i = 1: j runs from 2 to 5, 4 times, so count goes from 5 to 9. Each counted cell shows the running count.","panels":{"grid":{"cells":["#ddddd","##cccc","###...","####..","#####.","######"],"values":[["-",1,2,3,4,5],["-","-",6,7,8,9],["-","-","-","","",""],["-","-","-","-","",""],["-","-","-","-","-",""],["-","-","-","-","-","-"]],"indices":true}}},
+{"caption":"i = 2: j runs from 3 to 5, 3 times, so count goes from 9 to 12. Each counted cell shows the running count.","panels":{"grid":{"cells":["#ddddd","##dddd","###ccc","####..","#####.","######"],"values":[["-",1,2,3,4,5],["-","-",6,7,8,9],["-","-","-",10,11,12],["-","-","-","-","",""],["-","-","-","-","-",""],["-","-","-","-","-","-"]],"indices":true}}},
+{"caption":"i = 3: j runs from 4 to 5, 2 times, so count goes from 12 to 14. Each counted cell shows the running count.","panels":{"grid":{"cells":["#ddddd","##dddd","###ddd","####cc","#####.","######"],"values":[["-",1,2,3,4,5],["-","-",6,7,8,9],["-","-","-",10,11,12],["-","-","-","-",13,14],["-","-","-","-","-",""],["-","-","-","-","-","-"]],"indices":true}}},
+{"caption":"i = 4: j runs from 5 to 5, 1 time, so count goes from 14 to 15. Each counted cell shows the running count.","panels":{"grid":{"cells":["#ddddd","##dddd","###ddd","####dd","#####c","######"],"values":[["-",1,2,3,4,5],["-","-",6,7,8,9],["-","-","-",10,11,12],["-","-","-","-",13,14],["-","-","-","-","-",15],["-","-","-","-","-","-"]],"indices":true}}},
+{"caption":"i = 5: the inner loop starts at j = 6, but range(6, 6) is empty, so no pair is counted. count stays 15.","panels":{"grid":{"cells":["#ddddd","##dddd","###ddd","####dd","#####d","######"],"values":[["-",1,2,3,4,5],["-","-",6,7,8,9],["-","-","-",10,11,12],["-","-","-","-",13,14],["-","-","-","-","-",15],["-","-","-","-","-","-"]],"indices":true}}},
+{"caption":"Every row is done: count is 15, the number of cells above the diagonal, 6 * 5 / 2. That is what the program prints.","panels":{"grid":{"cells":["#ddddd","##dddd","###ddd","####dd","#####d","######"],"values":[["-",1,2,3,4,5],["-","-",6,7,8,9],["-","-","-",10,11,12],["-","-","-","-",13,14],["-","-","-","-","-",15],["-","-","-","-","-","-"]],"indices":true}}}
+]},
+{"id":"four","label":"n = 4","steps":[
+{"caption":"i = 0: j runs from 1 to 3, 3 times, so count goes from 0 to 3. Each counted cell shows the running count.","panels":{"grid":{"cells":["#ccc","##..","###.","####"],"values":[["-",1,2,3],["-","-","",""],["-","-","-",""],["-","-","-","-"]],"indices":true}}},
+{"caption":"i = 1: j runs from 2 to 3, 2 times, so count goes from 3 to 5. Each counted cell shows the running count.","panels":{"grid":{"cells":["#ddd","##cc","###.","####"],"values":[["-",1,2,3],["-","-",4,5],["-","-","-",""],["-","-","-","-"]],"indices":true}}},
+{"caption":"i = 2: j runs from 3 to 3, 1 time, so count goes from 5 to 6. Each counted cell shows the running count.","panels":{"grid":{"cells":["#ddd","##dd","###c","####"],"values":[["-",1,2,3],["-","-",4,5],["-","-","-",6],["-","-","-","-"]],"indices":true}}},
+{"caption":"i = 3: the inner loop starts at j = 4, but range(4, 4) is empty, so no pair is counted. count stays 6.","panels":{"grid":{"cells":["#ddd","##dd","###d","####"],"values":[["-",1,2,3],["-","-",4,5],["-","-","-",6],["-","-","-","-"]],"indices":true}}},
+{"caption":"Every row is done: count is 6, the number of cells above the diagonal, 4 * 3 / 2. That is what the program prints.","panels":{"grid":{"cells":["#ddd","##dd","###d","####"],"values":[["-",1,2,3],["-","-",4,5],["-","-","-",6],["-","-","-","-"]],"indices":true}}}
+]},
+{"id":"tiny","label":"n = 1","steps":[
+{"caption":"i = 0: the inner loop starts at j = 1, but range(1, 1) is empty, so no pair is counted. count stays 0.","panels":{"grid":{"cells":["#"],"values":[["-"]],"indices":true}}},
+{"caption":"Every row is done: count is 0, the number of cells above the diagonal, 1 * 0 / 2. That is what the program prints.","panels":{"grid":{"cells":["#"],"values":[["-"]],"indices":true}}}
+]}
+]}

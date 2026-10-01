@@ -1,0 +1,21 @@
+layout: single
+panels:
+  - { id: ring, viz: ArrayViz, title: Circle of players }
+alt: >-
+  A token passed one seat at a time around a circle of players, wrapping from the last seat back
+  to seat 0 with (current + 1) % n, ending on the seat the pass count lands on.
+captions: vizrec
+presets:
+  - id: main
+    label: Five players
+    stdin: "5\n12\n"
+  - id: one-player
+    label: One player
+    stdin: "1\n3\n"
+  - id: full-lap
+    label: Full lap
+    stdin: "4\n4\n"
+consistency:
+  description: The final seat equals the output of examples/pass_token.py on the same input.
+  example: ../examples/pass_token.py
+  compare: output

@@ -1,0 +1,23 @@
+{"schema":1,
+"kind":"frames",
+"id":"check-counts",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz"}],
+"alt":"A table with one row per input size n. For each n it shows how many checks the list-scan version makes and how many lookups the set version makes, counted by running both, with a mark when the list scan passes 10^8. With no repeated value the list scan grows by about a hundred times for each tenfold n and passes 10^8 at n = 20,000. With a repeat at the front both finish at once.",
+"legendLabels":{"done":"Under 10^8 checks","invalid":"Over 10^8 checks"},
+"presets":[
+{"id":"distinct","label":"No repeat","steps":[
+{"caption":"n = 100: the list scan makes 4,950 checks and the set makes 100. Both are under 10^8.","panels":{"table":{"cells":[["4,950","100"]],"states":["dd"],"rowHeads":["100"],"colHeads":["list scan","set"],"rowTitle":"n"}}},
+{"caption":"n = 1,000: the list scan makes 499,500 checks and the set makes 1,000. Both are under 10^8.","panels":{"table":{"cells":[["4,950","100"],["499,500","1,000"]],"states":["dd","dd"],"rowHeads":["100","1,000"],"colHeads":["list scan","set"],"rowTitle":"n"}}},
+{"caption":"n = 10,000: the list scan makes 49,995,000 checks and the set makes 10,000. Both are under 10^8.","panels":{"table":{"cells":[["4,950","100"],["499,500","1,000"],["49,995,000","10,000"]],"states":["dd","dd","dd"],"rowHeads":["100","1,000","10,000"],"colHeads":["list scan","set"],"rowTitle":"n"}}},
+{"caption":"n = 20,000: the list scan makes 199,990,000 checks, past 10^8, while the set still makes 20,000, one per value.","panels":{"table":{"cells":[["4,950","100"],["499,500","1,000"],["49,995,000","10,000"],["199,990,000","20,000"]],"states":["dd","dd","dd","xd"],"rowHeads":["100","1,000","10,000","20,000"],"colHeads":["list scan","set"],"rowTitle":"n"}}},
+{"caption":"With no repeat, the list scan checks every pair: about 100 times more checks for each tenfold n. The set makes one lookup per value.","panels":{"table":{"cells":[["4,950","100"],["499,500","1,000"],["49,995,000","10,000"],["199,990,000","20,000"]],"states":["dd","dd","dd","xd"],"rowHeads":["100","1,000","10,000","20,000"],"colHeads":["list scan","set"],"rowTitle":"n"}}}
+]},
+{"id":"front","label":"Repeat first","steps":[
+{"caption":"n = 100: two equal values sit at the front. The list scan finds the repeat after 1 check and the set after 2.","panels":{"table":{"cells":[["1","2"]],"states":["dd"],"rowHeads":["100"],"colHeads":["list scan","set"],"rowTitle":"n"}}},
+{"caption":"n = 1,000: still 1 check for the list scan and 2 for the set, because the repeat is still at the front.","panels":{"table":{"cells":[["1","2"],["1","2"]],"states":["dd","dd"],"rowHeads":["100","1,000"],"colHeads":["list scan","set"],"rowTitle":"n"}}},
+{"caption":"n = 10,000: still 1 check for the list scan and 2 for the set, because the repeat is still at the front.","panels":{"table":{"cells":[["1","2"],["1","2"],["1","2"]],"states":["dd","dd","dd"],"rowHeads":["100","1,000","10,000"],"colHeads":["list scan","set"],"rowTitle":"n"}}},
+{"caption":"n = 20,000: still 1 check for the list scan and 2 for the set, because the repeat is still at the front.","panels":{"table":{"cells":[["1","2"],["1","2"],["1","2"],["1","2"]],"states":["dd","dd","dd","dd"],"rowHeads":["100","1,000","10,000","20,000"],"colHeads":["list scan","set"],"rowTitle":"n"}}},
+{"caption":"With a repeat at the front, the quadratic version finishes at once at every n. A test like this never shows the slowness of the list scan.","panels":{"table":{"cells":[["1","2"],["1","2"],["1","2"],["1","2"]],"states":["dd","dd","dd","dd"],"rowHeads":["100","1,000","10,000","20,000"],"colHeads":["list scan","set"],"rowTitle":"n"}}}
+]}
+]}

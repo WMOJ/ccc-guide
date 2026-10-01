@@ -1,0 +1,31 @@
+{"schema":1,
+"kind":"frames",
+"id":"token_mod_k",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Position mod 2"}],
+"alt":"A token that only ever moves by +4 or -6, so its position modulo 2 never changes. A target whose difference from the start is odd is ruled out instantly by one remainder; an even difference is always reachable, shown here by the moves +4, -6, +4 closing a difference of 2.",
+"presets":[
+{"id":"reachable","label":"Reachable","steps":[
+{"caption":"Start at 0, target 2. Every move is +4 or -6, both even, so the position's parity never changes. Check target - start = 2 first.","panels":{"table":{"cells":[[0,0]],"rowHeads":["start"],"colHeads":["position","mod 2"]}}},
+{"caption":"Move +4: position is 4, still 0 mod 2, exactly as the invariant says it must be.","panels":{"table":{"cells":[[4,0]],"rowHeads":["position"],"colHeads":["position","mod 2"]}}},
+{"caption":"Move -6: position is -2, still 0 mod 2, exactly as the invariant says it must be.","panels":{"table":{"cells":[[-2,0]],"rowHeads":["position"],"colHeads":["position","mod 2"]}}},
+{"caption":"Move +4: position is 2, still 0 mod 2, exactly as the invariant says it must be.","panels":{"table":{"cells":[[2,0]],"rowHeads":["position"],"colHeads":["position","mod 2"]}}},
+{"caption":"The position reached 2, the target, using only +4 and -6 moves.","panels":{"table":{"cells":[[2,0]],"states":["dd"],"rowHeads":["position"],"colHeads":["position","mod 2"]}}}
+]},
+{"id":"unreachable","label":"Unreachable","steps":[
+{"caption":"Start at 0, target 5. Every move is +4 or -6, both even, so the position's parity never changes. Check target - start = 5 first.","panels":{"table":{"cells":[[0,0]],"rowHeads":["start"],"colHeads":["position","mod 2"]}}},
+{"caption":"5 is odd. The position can never change parity, so the target is unreachable, no move sequence needs to be tried.","panels":{"table":{"cells":[[0,0]],"states":["dd"],"rowHeads":["start"],"colHeads":["position","mod 2"]}}}
+]},
+{"id":"downward","label":"Downward","steps":[
+{"caption":"Start at 10, target 2. Every move is +4 or -6, both even, so the position's parity never changes. Check target - start = -8 first.","panels":{"table":{"cells":[[10,0]],"rowHeads":["start"],"colHeads":["position","mod 2"]}}},
+{"caption":"Move +4: position is 14, still 0 mod 2, exactly as the invariant says it must be.","panels":{"table":{"cells":[[14,0]],"rowHeads":["position"],"colHeads":["position","mod 2"]}}},
+{"caption":"Move -6: position is 8, still 0 mod 2, exactly as the invariant says it must be.","panels":{"table":{"cells":[[8,0]],"rowHeads":["position"],"colHeads":["position","mod 2"]}}},
+{"caption":"Move +4: position is 12, still 0 mod 2, exactly as the invariant says it must be.","panels":{"table":{"cells":[[12,0]],"rowHeads":["position"],"colHeads":["position","mod 2"]}}},
+{"caption":"Move -6: position is 6, still 0 mod 2, exactly as the invariant says it must be.","panels":{"table":{"cells":[[6,0]],"rowHeads":["position"],"colHeads":["position","mod 2"]}}},
+{"caption":"Move +4: position is 10, still 0 mod 2, exactly as the invariant says it must be.","panels":{"table":{"cells":[[10,0]],"rowHeads":["position"],"colHeads":["position","mod 2"]}}},
+{"caption":"Move -6: position is 4, still 0 mod 2, exactly as the invariant says it must be.","panels":{"table":{"cells":[[4,0]],"rowHeads":["position"],"colHeads":["position","mod 2"]}}},
+{"caption":"Move +4: position is 8, still 0 mod 2, exactly as the invariant says it must be.","panels":{"table":{"cells":[[8,0]],"rowHeads":["position"],"colHeads":["position","mod 2"]}}},
+{"caption":"Move -6: position is 2, still 0 mod 2, exactly as the invariant says it must be.","panels":{"table":{"cells":[[2,0]],"rowHeads":["position"],"colHeads":["position","mod 2"]}}},
+{"caption":"The position reached 2, the target, using only +4 and -6 moves.","panels":{"table":{"cells":[[2,0]],"states":["dd"],"rowHeads":["position"],"colHeads":["position","mod 2"]}}}
+]}
+]}

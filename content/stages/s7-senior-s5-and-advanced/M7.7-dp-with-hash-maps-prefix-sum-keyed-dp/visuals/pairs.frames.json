@@ -1,0 +1,31 @@
+{"schema":1,
+"kind":"frames",
+"id":"pairs",
+"layout":"single",
+"panels":[{"id":"array","viz":"ArrayViz"}],
+"alt":"The values, then the values with the target subtracted, then their prefix sums. Cells holding the same prefix value are marked together, and each pair of them bounds a stretch whose shifted sum is zero. The last step counts the pairs.",
+"legendLabels":{"compare":"Equal prefix value"},
+"presets":[
+{"id":"main","label":"Two pairs","steps":[
+{"caption":"The values are 4 7 1 3 5 2 and the target average is 3.","panels":{"array":{"values":[4,7,1,3,5,2],"name":"a"}}},
+{"caption":"Subtract 3 from each one. A stretch with average 3 now adds up to exactly 0.","panels":{"array":{"values":[1,4,-2,0,2,-1],"name":"a - target"}}},
+{"caption":"The prefix sums of the shifted values, from the empty prefix prefix[0] = 0 up to prefix[6]. The sum of a stretch is one prefix minus an earlier one.","panels":{"array":{"values":[0,1,5,3,3,5,4],"states":"ddddddd","name":"prefix"}}},
+{"caption":"prefix[2] and prefix[5] are both 5, so the stretch of elements 2 to 4 sums to 5 - 5 = 0. That is 1 matching pair.","panels":{"array":{"values":[0,1,5,3,3,5,4],"states":"__m__m_","ranges":[{"from":2,"to":5,"label":"elements 2..4"}],"name":"prefix"}}},
+{"caption":"prefix[3] and prefix[4] are both 3, so the stretch of element 3 sums to 3 - 3 = 0. That is 1 matching pair.","panels":{"array":{"values":[0,1,5,3,3,5,4],"states":"___mm__","ranges":[{"from":3,"to":4,"label":"element 3"}],"name":"prefix"}}},
+{"caption":"The answer is the number of pairs of equal prefix values: 2.","panels":{"array":{"values":[0,1,5,3,3,5,4],"states":"ddddddd","name":"prefix"}}}
+]},
+{"id":"equal","label":"All equal","steps":[
+{"caption":"The values are 3 3 3 3 and the target average is 3.","panels":{"array":{"values":[3,3,3,3],"name":"a"}}},
+{"caption":"Subtract 3 from each one. A stretch with average 3 now adds up to exactly 0.","panels":{"array":{"values":[0,0,0,0],"name":"a - target"}}},
+{"caption":"The prefix sums of the shifted values, from the empty prefix prefix[0] = 0 up to prefix[4]. The sum of a stretch is one prefix minus an earlier one.","panels":{"array":{"values":[0,0,0,0,0],"states":"ddddd","name":"prefix"}}},
+{"caption":"The value 0 appears 5 times, at prefixes 0, 1, 2, 3, 4. Any two of them bound a stretch with sum 0: 5 * 4 / 2 = 10 pairs.","panels":{"array":{"values":[0,0,0,0,0],"states":"mmmmm","name":"prefix"}}},
+{"caption":"The answer is the number of pairs of equal prefix values: 10.","panels":{"array":{"values":[0,0,0,0,0],"states":"ddddd","name":"prefix"}}}
+]},
+{"id":"none","label":"No match","steps":[
+{"caption":"The values are 1 1 1 1 1 and the target average is 3.","panels":{"array":{"values":[1,1,1,1,1],"name":"a"}}},
+{"caption":"Subtract 3 from each one. A stretch with average 3 now adds up to exactly 0.","panels":{"array":{"values":[-2,-2,-2,-2,-2],"name":"a - target"}}},
+{"caption":"The prefix sums of the shifted values, from the empty prefix prefix[0] = 0 up to prefix[5]. The sum of a stretch is one prefix minus an earlier one.","panels":{"array":{"values":[0,-2,-4,-6,-8,-10],"states":"dddddd","name":"prefix"}}},
+{"caption":"No prefix value repeats, so no stretch sums to 0 and none has the target average.","panels":{"array":{"values":[0,-2,-4,-6,-8,-10],"name":"prefix"}}},
+{"caption":"The answer is the number of pairs of equal prefix values: 0.","panels":{"array":{"values":[0,-2,-4,-6,-8,-10],"states":"dddddd","name":"prefix"}}}
+]}
+]}

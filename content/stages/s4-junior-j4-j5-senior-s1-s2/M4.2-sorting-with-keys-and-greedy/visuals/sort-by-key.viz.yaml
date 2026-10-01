@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Tasks by key }
+alt: >-
+  A two-row table of task names and their duration keys, first in input order with each
+  position's key highlighted in turn, then rearranged ascending by duration. A tie between two
+  equal durations keeps its original relative order.
+captions: vizrec
+presets:
+  - id: normal
+    label: Distinct
+    stdin: "3\nwrite 20\ndebug 50\ntest 15\n"
+  - id: ties
+    label: Ties
+    stdin: "4\nwrite 20\nsketch 20\ndebug 50\ntest 15\n"
+consistency:
+  description: The final table's order equals the lines examples/sort_by_key.py prints.
+  example: ../examples/sort_by_key.py
+  compare: output

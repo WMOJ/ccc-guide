@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: plot, viz: PlotViz, title: Operations so far }
+alt: >-
+  Two lines plotted against n. A single loop's total operations rises in a straight line, one per
+  n. A nested loop's total rises along a curve that pulls further ahead of the straight line as n
+  grows, since it does n(n-1)/2 operations in total.
+captions: vizrec
+presets:
+  - id: main
+    label: "n = 10"
+    stdin: "10\n"
+  - id: mid
+    label: "n = 6"
+    stdin: "6\n"
+  - id: tiny
+    label: "n = 1"
+    stdin: "1\n"
+consistency:
+  description: The nested loop's final operation count equals the output of examples/count_pairs.py on each preset.
+  example: ../examples/count_pairs.py
+  compare: output

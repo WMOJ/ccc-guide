@@ -1,0 +1,22 @@
+layout: row
+panels:
+  - { id: fields, viz: ArrayViz, title: Fields }
+  - { id: counts, viz: TableViz, title: crop_count }
+alt: >-
+  Scanning a list of crops field by field, updating a dictionary of counts with crop_count.get(crop,
+  0) + 1 each time, then reading off how many crops ended with a count above one.
+captions: vizrec
+presets:
+  - id: mixed
+    label: Mixed
+    stdin: "4\ncorn oat corn pea\n"
+  - id: no-repeats
+    label: No repeats
+    stdin: "3\ncorn oat pea\n"
+  - id: all-repeat
+    label: All repeat
+    stdin: "4\ncorn corn corn corn\n"
+consistency:
+  description: The final count equals the output of examples/count_crops.py on the same input.
+  example: ../examples/count_crops.py
+  compare: output

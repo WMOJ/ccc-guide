@@ -1,0 +1,23 @@
+{"schema":1,
+"kind":"frames",
+"id":"sv_halving",
+"layout":"row",
+"panels":[{"id":"g","viz":"GraphViz","title":"Forest"},{"id":"p","viz":"ArrayViz","title":"parent"}],
+"alt":"Chain nodes built by naive unions, then a find call on the deepest node. Each step of find points its node straight at its former grandparent instead of its parent, so the chain gets shorter every time it is walked. A second preset finds a node that is already one hop from its root, where halving has nothing left to skip.",
+"presets":[
+{"id":"chain","label":"Chain","steps":[
+{"caption":"Naive unions build this forest. `parent` is [1, 2, 3, 4, 4].","panels":{"g":{"nodes":[{"id":"0","x":0,"y":2.4},{"id":"1","x":1.125,"y":1.7999999999999998},{"id":"2","x":2.25,"y":1.2},{"id":"3","x":3.375,"y":0.6},{"id":"4","x":4.5,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"1","b":"2"},{"a":"2","b":"3"},{"a":"3","b":"4"}]},"p":{"values":[1,2,3,4,4]}}},
+{"caption":"`find(0)` starts at 0 and climbs toward the root, halving the path along the way.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":2.4,"s":"c"},{"id":"1","x":1.125,"y":1.7999999999999998},{"id":"2","x":2.25,"y":1.2},{"id":"3","x":3.375,"y":0.6},{"id":"4","x":4.5,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"1","b":"2"},{"a":"2","b":"3"},{"a":"3","b":"4"}]},"p":{"values":[1,2,3,4,4],"pointers":[{"name":"x","at":0}]}}},
+{"caption":"`0` pointed to `1`, and `1` pointed on to `2`. Path halving skips the middle link: `parent[0]` now points straight to `2`.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":1.7999999999999998,"s":"c"},{"id":"1","x":1.125,"y":1.7999999999999998},{"id":"2","x":2.25,"y":1.2},{"id":"3","x":3.375,"y":0.6},{"id":"4","x":4.5,"y":0}],"edges":[{"a":"0","b":"2"},{"a":"1","b":"2"},{"a":"2","b":"3"},{"a":"3","b":"4"}]},"p":{"values":[2,2,3,4,4],"pointers":[{"name":"x","at":0}]}}},
+{"caption":"`2` pointed to `3`, and `3` pointed on to `4`. Path halving skips the middle link: `parent[2]` now points straight to `4`.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":1.2},{"id":"1","x":1.125,"y":1.2},{"id":"2","x":2.25,"y":0.6,"s":"c"},{"id":"3","x":3.375,"y":0.6},{"id":"4","x":4.5,"y":0}],"edges":[{"a":"0","b":"2"},{"a":"1","b":"2"},{"a":"2","b":"4"},{"a":"3","b":"4"}]},"p":{"values":[2,2,4,4,4],"pointers":[{"name":"x","at":2}]}}},
+{"caption":"`parent[4]` is `4`: 4 is the root. `find(0)` returns 4.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":1.2},{"id":"1","x":1.125,"y":1.2},{"id":"2","x":2.25,"y":0.6},{"id":"3","x":3.375,"y":0.6},{"id":"4","x":4.5,"y":0,"s":"c"}],"edges":[{"a":"0","b":"2"},{"a":"1","b":"2"},{"a":"2","b":"4"},{"a":"3","b":"4"}]},"p":{"values":[2,2,4,4,4],"pointers":[{"name":"x","at":4}]}}},
+{"caption":"The path from 0 is now much shorter. `parent` is [2, 2, 4, 4, 4].","panels":{"g":{"nodes":[{"id":"0","x":0,"y":1.2},{"id":"1","x":1.125,"y":1.2},{"id":"2","x":2.25,"y":0.6},{"id":"3","x":3.375,"y":0.6},{"id":"4","x":4.5,"y":0}],"edges":[{"a":"0","b":"2"},{"a":"1","b":"2"},{"a":"2","b":"4"},{"a":"3","b":"4"}]},"p":{"values":[2,2,4,4,4]}}}
+]},
+{"id":"shallow","label":"Shallow","steps":[
+{"caption":"Naive unions build this forest. `parent` is [1, 1, 3, 3].","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0.6},{"id":"1","x":1.5,"y":0},{"id":"2","x":3,"y":0.6},{"id":"3","x":4.5,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"2","b":"3"}]},"p":{"values":[1,1,3,3]}}},
+{"caption":"`find(0)` starts at 0 and climbs toward the root, halving the path along the way.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0.6,"s":"c"},{"id":"1","x":1.5,"y":0},{"id":"2","x":3,"y":0.6},{"id":"3","x":4.5,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"2","b":"3"}]},"p":{"values":[1,1,3,3],"pointers":[{"name":"x","at":0}]}}},
+{"caption":"`0` already points directly at `1`, one hop from where it started.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0.6,"s":"c"},{"id":"1","x":1.5,"y":0},{"id":"2","x":3,"y":0.6},{"id":"3","x":4.5,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"2","b":"3"}]},"p":{"values":[1,1,3,3],"pointers":[{"name":"x","at":0}]}}},
+{"caption":"`parent[1]` is `1`: 1 is the root. `find(0)` returns 1.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0.6},{"id":"1","x":1.5,"y":0,"s":"c"},{"id":"2","x":3,"y":0.6},{"id":"3","x":4.5,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"2","b":"3"}]},"p":{"values":[1,1,3,3],"pointers":[{"name":"x","at":1}]}}},
+{"caption":"The path from 0 was already one hop long, so halving had nothing to skip. `parent` is unchanged: [1, 1, 3, 3].","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0.6},{"id":"1","x":1.5,"y":0},{"id":"2","x":3,"y":0.6},{"id":"3","x":4.5,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"2","b":"3"}]},"p":{"values":[1,1,3,3]}}}
+]}
+]}

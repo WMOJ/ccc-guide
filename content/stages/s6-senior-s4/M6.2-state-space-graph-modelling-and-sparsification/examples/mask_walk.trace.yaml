@@ -1,0 +1,17 @@
+example: mask_walk.py
+alt: >-
+  The program reads a room count, the checkpoint rooms, then a route through the rooms. It gives
+  each checkpoint room one bit, and for every room on the route it switches on that room's bit in
+  mask, printing the room and the mask. Visiting a checkpoint changes the mask; visiting any
+  other room leaves it alone, so the same room can appear with two different masks.
+presets:
+  - id: main
+    label: Revisit
+    stdin: "5 2\n2 3\n0 3 0 1 2"
+  - id: none
+    label: No checkpoint
+    stdin: "4 1\n2\n0 1 0"
+notes:
+  "12": "Checkpoint number `i` gets the value `1 << i`: 1 for the first, 2 for the second, 4 for the third. Every other room keeps a bit of 0."
+  "15": "`mask` starts at 0: nothing collected yet."
+  "18": "`mask | bit[...]` switches on this room's bit and keeps every bit already on. A room with a bit of 0 leaves `mask` unchanged."

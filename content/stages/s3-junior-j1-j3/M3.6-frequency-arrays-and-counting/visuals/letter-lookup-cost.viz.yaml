@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: plot, viz: PlotViz, title: Comparisons so far }
+alt: >-
+  Two lines plotted against word length n. The frequency array's total comparisons rise in a
+  straight line, one per character. Calling .count() once for each of the 26 letters rises 26 times
+  as fast, since every call rescans the whole word.
+captions: vizrec
+presets:
+  - id: main
+    label: "n = 10"
+    stdin: "10\n"
+  - id: mid
+    label: "n = 6"
+    stdin: "6\n"
+  - id: tiny
+    label: "n = 1"
+    stdin: "1\n"
+consistency:
+  description: The final totals equal the two numbers printed by examples/letter_lookup_cost.py for the same n.
+  example: ../examples/letter_lookup_cost.py
+  compare: output

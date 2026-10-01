@@ -1,0 +1,20 @@
+layout: single
+panels:
+  - { id: plot, viz: PlotViz, title: Cost of one query }
+alt: >-
+  A chart of the worst-case number of additions in one range query, against the block size. The
+  number of single values on the edges rises with block size, and the number of whole blocks falls.
+  Their combined worst case forms a shallow valley, and the lowest point sits near the square
+  root of the length. The presets use 64 values and 100 values.
+captions: vizrec
+presets:
+  - id: n64
+    label: 64 values
+    stdin: "64\n"
+  - id: n100
+    label: 100 values
+    stdin: "100\n"
+consistency:
+  description: The best block size and its cost equal the output of examples/block_cost.py for the same length.
+  example: ../examples/block_cost.py
+  compare: output

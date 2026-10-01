@@ -1,34 +1,41 @@
+import sys
 from collections import deque
 
 
-def zero_one_bfs(adj, start):
-    """0-1 BFS using deque with appendleft for weight-0 edges."""
-    n = len(adj)
-    dist = [float('inf')] * n
+def main() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
+    n = int(data[0])
+    m = int(data[1])
+    start = int(data[2])
+    pos = 3
+
+    adj = [[] for _ in range(n)]
+    for _ in range(m):
+        u = int(data[pos])
+        v = int(data[pos + 1])
+        w = int(data[pos + 2])
+        pos += 3
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+
+    dist = [-1] * n
     dist[start] = 0
-    queue = deque([start])
-
-    while queue:
-        u = queue.popleft()
+    dq = deque([start])
+    while dq:
+        u = dq.popleft()
         for v, w in adj[u]:
-            if dist[u] + w < dist[v]:
-                dist[v] = dist[u] + w
+            nd = dist[u] + w
+            if dist[v] == -1 or nd < dist[v]:
+                dist[v] = nd
                 if w == 0:
-                    queue.appendleft(v)
+                    dq.appendleft(v)
                 else:
-                    queue.append(v)
+                    dq.append(v)
 
-    return dist
+    print(" ".join(str(x) for x in dist))
 
 
-adj = [
-    [(1, 0), (2, 1)],
-    [(0, 0), (3, 1)],
-    [(0, 1), (4, 0)],
-    [(1, 1), (5, 1)],
-    [(2, 0), (5, 1)],
-    [(3, 1), (4, 1)]
-]
-
-distances = zero_one_bfs(adj, 0)
-print("0-1 BFS distances from node 0:", distances)
+if __name__ == "__main__":
+    main()

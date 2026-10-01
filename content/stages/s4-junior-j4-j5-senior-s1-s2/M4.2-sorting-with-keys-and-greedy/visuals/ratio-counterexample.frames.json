@@ -1,0 +1,24 @@
+{"schema":1,
+"kind":"frames",
+"id":"ratio-counterexample",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"weight and value"}],
+"alt":"A table of three boxes' weight and value. Ratio-greedy's load is highlighted first, then the actual best possible combination is highlighted, showing the ratio order misses it.",
+"presets":[
+{"id":"counterexample","label":"Ratio misses it","steps":[
+{"caption":"Three boxes, capacity 10. Ratio, value over weight, ranks A first among them.","panels":{"table":{"cells":[[6,5,5],[7,5,5]],"rowHeads":["weight","value"],"colHeads":["A","B","C"]}}},
+{"caption":"Ratio order takes A (weight 6): 0 + 6 = 6 <= 10. Value so far: 7.","panels":{"table":{"cells":[[6,5,5],[7,5,5]],"states":["d__","d__"],"rowHeads":["weight","value"],"colHeads":["A","B","C"]}}},
+{"caption":"Ratio order reaches B (weight 5), but 6 + 5 = 11 would exceed 10. Skip it.","panels":{"table":{"cells":[[6,5,5],[7,5,5]],"states":["d__","d__"],"rowHeads":["weight","value"],"colHeads":["A","B","C"]}}},
+{"caption":"Ratio order reaches C (weight 5), but 6 + 5 = 11 would exceed 10. Skip it.","panels":{"table":{"cells":[[6,5,5],[7,5,5]],"states":["d__","d__"],"rowHeads":["weight","value"],"colHeads":["A","B","C"]}}},
+{"caption":"Ratio-greedy's final load: A, total value 7.","panels":{"table":{"cells":[[6,5,5],[7,5,5]],"states":["d__","d__"],"rowHeads":["weight","value"],"colHeads":["A","B","C"]}}},
+{"caption":"But B and C together weigh 10 and are worth 10, more than ratio-greedy found. Taking whole boxes by ratio is a heuristic, not a proof.","panels":{"table":{"cells":[[6,5,5],[7,5,5]],"states":["_mm","_mm"],"rowHeads":["weight","value"],"colHeads":["A","B","C"]}}}
+]},
+{"id":"matches","label":"Ratio matches","steps":[
+{"caption":"Three boxes, capacity 10. Ratio, value over weight, ranks A first among them.","panels":{"table":{"cells":[[6,3,3],[9,3,3]],"rowHeads":["weight","value"],"colHeads":["A","B","C"]}}},
+{"caption":"Ratio order takes A (weight 6): 0 + 6 = 6 <= 10. Value so far: 9.","panels":{"table":{"cells":[[6,3,3],[9,3,3]],"states":["d__","d__"],"rowHeads":["weight","value"],"colHeads":["A","B","C"]}}},
+{"caption":"Ratio order takes B (weight 3): 6 + 3 = 9 <= 10. Value so far: 12.","panels":{"table":{"cells":[[6,3,3],[9,3,3]],"states":["dd_","dd_"],"rowHeads":["weight","value"],"colHeads":["A","B","C"]}}},
+{"caption":"Ratio order reaches C (weight 3), but 9 + 3 = 12 would exceed 10. Skip it.","panels":{"table":{"cells":[[6,3,3],[9,3,3]],"states":["dd_","dd_"],"rowHeads":["weight","value"],"colHeads":["A","B","C"]}}},
+{"caption":"Ratio-greedy's final load: A, B, total value 12.","panels":{"table":{"cells":[[6,3,3],[9,3,3]],"states":["dd_","dd_"],"rowHeads":["weight","value"],"colHeads":["A","B","C"]}}},
+{"caption":"No other combination that fits is worth more than 12: here, ratio order happens to find the best load too.","panels":{"table":{"cells":[[6,3,3],[9,3,3]],"states":["mm_","mm_"],"rowHeads":["weight","value"],"colHeads":["A","B","C"]}}}
+]}
+]}

@@ -1,0 +1,25 @@
+{"schema":1,
+"kind":"frames",
+"id":"transpose",
+"layout":"row",
+"panels":[{"id":"source","viz":"GridViz","title":"Source"},{"id":"target","viz":"GridViz","title":"Target"}],
+"alt":"A source grid and an empty target grid of swapped dimensions. Each source cell moves to the target at its row and column swapped, filling the target one cell at a time.",
+"presets":[
+{"id":"main","label":"Main","steps":[
+{"caption":"The source is 2 rows by 3 columns. The target has 3 rows by 2 columns, every cell still marked ?, because a transpose swaps rows for columns, so the shape swaps too.","panels":{"source":{"cells":["___","___"],"values":[["A","B","C"],["D","E","F"]]},"target":{"cells":["__","__","__"],"values":[["?","?"],["?","?"],["?","?"]]}}},
+{"caption":"old[0][0] = 'A' moves to new[0][0]: row 0 becomes column 0, and column 0 becomes row 0.","panels":{"source":{"cells":["c__","___"],"values":[["A","B","C"],["D","E","F"]]},"target":{"cells":["c_","__","__"],"values":[["A","?"],["?","?"],["?","?"]]}}},
+{"caption":"old[0][1] = 'B' moves to new[1][0]: row 0 becomes column 0, and column 1 becomes row 1.","panels":{"source":{"cells":["dc_","___"],"values":[["A","B","C"],["D","E","F"]]},"target":{"cells":["d_","c_","__"],"values":[["A","?"],["B","?"],["?","?"]]}}},
+{"caption":"old[0][2] = 'C' moves to new[2][0]: row 0 becomes column 0, and column 2 becomes row 2.","panels":{"source":{"cells":["ddc","___"],"values":[["A","B","C"],["D","E","F"]]},"target":{"cells":["d_","d_","c_"],"values":[["A","?"],["B","?"],["C","?"]]}}},
+{"caption":"old[1][0] = 'D' moves to new[0][1]: row 1 becomes column 1, and column 0 becomes row 0.","panels":{"source":{"cells":["ddd","c__"],"values":[["A","B","C"],["D","E","F"]]},"target":{"cells":["dc","d_","d_"],"values":[["A","D"],["B","?"],["C","?"]]}}},
+{"caption":"old[1][1] = 'E' moves to new[1][1]: row 1 becomes column 1, and column 1 becomes row 1.","panels":{"source":{"cells":["ddd","dc_"],"values":[["A","B","C"],["D","E","F"]]},"target":{"cells":["dd","dc","d_"],"values":[["A","D"],["B","E"],["C","?"]]}}},
+{"caption":"old[1][2] = 'F' moves to new[2][1]: row 1 becomes column 1, and column 2 becomes row 2.","panels":{"source":{"cells":["ddd","ddc"],"values":[["A","B","C"],["D","E","F"]]},"target":{"cells":["dd","dd","dc"],"values":[["A","D"],["B","E"],["C","F"]]}}},
+{"caption":"Every source cell has moved. The target is the source with rows and columns swapped.","panels":{"source":{"cells":["ddd","ddd"],"values":[["A","B","C"],["D","E","F"]]},"target":{"cells":["dd","dd","dd"],"values":[["A","D"],["B","E"],["C","F"]]}}}
+]},
+{"id":"column","label":"One column","steps":[
+{"caption":"The source is 3 rows by 1 columns. The target has 1 rows by 3 columns, every cell still marked ?, because a transpose swaps rows for columns, so the shape swaps too.","panels":{"source":{"cells":["_","_","_"],"values":[["P"],["Q"],["R"]]},"target":{"cells":["___"],"values":[["?","?","?"]]}}},
+{"caption":"old[0][0] = 'P' moves to new[0][0]: row 0 becomes column 0, and column 0 becomes row 0.","panels":{"source":{"cells":["c","_","_"],"values":[["P"],["Q"],["R"]]},"target":{"cells":["c__"],"values":[["P","?","?"]]}}},
+{"caption":"old[1][0] = 'Q' moves to new[0][1]: row 1 becomes column 1, and column 0 becomes row 0.","panels":{"source":{"cells":["d","c","_"],"values":[["P"],["Q"],["R"]]},"target":{"cells":["dc_"],"values":[["P","Q","?"]]}}},
+{"caption":"old[2][0] = 'R' moves to new[0][2]: row 2 becomes column 2, and column 0 becomes row 0.","panels":{"source":{"cells":["d","d","c"],"values":[["P"],["Q"],["R"]]},"target":{"cells":["ddc"],"values":[["P","Q","R"]]}}},
+{"caption":"Every source cell has moved. The target is the source with rows and columns swapped.","panels":{"source":{"cells":["d","d","d"],"values":[["P"],["Q"],["R"]]},"target":{"cells":["ddd"],"values":[["P","Q","R"]]}}}
+]}
+]}

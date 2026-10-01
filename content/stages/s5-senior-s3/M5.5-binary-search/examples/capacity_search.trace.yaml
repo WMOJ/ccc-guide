@@ -1,0 +1,18 @@
+example: capacity_search.py
+alt: >-
+  The program parses the packages, then narrows lo and hi around the smallest capacity that
+  needs at most the allowed number of trips, calling trips_for once per candidate.
+presets:
+  - id: main
+    label: Three packages
+    stdin: "3 2\n3 4 5\n"
+notes:
+  "21": "`n` is the package count, read from the first token."
+  "22": "`trips` is how many trips the plan allows."
+  "23": "`weights` is every package, in the order the truck must carry them."
+  "24": "`data` is dropped once every field is parsed out of it: only `weights`, `n`, and `trips` are still needed."
+  "26": "`lo` starts at the heaviest single package: no smaller capacity could ever work."
+  "27": "`hi` starts at the sum of every weight: one trip can always carry everything."
+  "30": "`mid` is the candidate capacity this round checks."
+  "31": "`trips_for(weights, mid)` runs the greedy pass once for this one candidate."
+  "36": "`lo` and `hi` have met: this is the smallest feasible capacity."

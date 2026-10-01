@@ -1,0 +1,27 @@
+layout: single
+panels:
+  - { id: arr, viz: ArrayViz, title: Candidate capacities }
+alt: >-
+  The binary-search-on-the-answer template. The candidate answers are the capacities from the
+  heaviest weight up to the total weight. Each step tests the middle candidate by counting how many
+  trips it needs. If the count fits the allowed number of trips, the upper end moves down to the
+  middle; otherwise the lower end moves just above the middle. The range shrinks until one
+  capacity is left.
+legendLabels:
+  current: Tested
+  invalid: Ruled out
+captions: vizrec
+presets:
+  - id: main
+    label: Three items
+    stdin: "3 2\n3 4 5\n"
+  - id: loose
+    label: One trip
+    stdin: "3 3\n3 4 5\n"
+  - id: single
+    label: One item
+    stdin: "1 1\n4\n"
+consistency:
+  description: The final capacity equals the output of examples/template_binary_search.py on each preset.
+  example: ../examples/template_binary_search.py
+  compare: output

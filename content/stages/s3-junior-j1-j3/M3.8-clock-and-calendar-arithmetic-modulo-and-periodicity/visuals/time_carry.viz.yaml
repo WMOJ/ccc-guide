@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Carrying }
+alt: >-
+  A three-row table that converts a total number of minutes into days, hours and minutes.
+  Each row divides its total by the size of its unit, keeps the remainder, and carries the
+  quotient into the next row, matching examples/clock_carry.py.
+captions: vizrec
+presets:
+  - id: next-day
+    label: Next day
+    stdin: "22\n40\n530\n"
+  - id: midnight
+    label: Midnight
+    stdin: "23\n50\n10\n"
+  - id: many-days
+    label: Many days
+    stdin: "23\n59\n5000\n"
+consistency:
+  description: The kept days, hours and minutes equal the output of examples/clock_carry.py.
+  example: ../examples/clock_carry.py
+  compare: output

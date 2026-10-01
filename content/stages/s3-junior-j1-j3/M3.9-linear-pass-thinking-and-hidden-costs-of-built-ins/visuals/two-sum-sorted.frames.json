@@ -1,0 +1,25 @@
+{"schema":1,
+"kind":"frames",
+"id":"two-sum-sorted",
+"layout":"single",
+"panels":[{"id":"numbers","viz":"ArrayViz","title":"Numbers"}],
+"alt":"A sorted list of numbers with two pointers, left and right, starting at opposite ends. Each step compares their sum to the target: too small moves left inward, too big moves right inward, and a match stops both pointers where they landed. If the pointers meet with no match, no pair in the list sums to the target.",
+"presets":[
+{"id":"match","label":"Match","steps":[
+{"caption":"left starts at position 0 (1), right starts at the last position (6). Target is 9.","panels":{"numbers":{"values":[1,2,3,5,6],"states":"c___c","pointers":[{"name":"left","at":0},{"name":"right","at":4}]}}},
+{"caption":"1 + 6 = 7, too small. left moves right, to position 1.","panels":{"numbers":{"values":[1,2,3,5,6],"states":"dc__c","pointers":[{"name":"left","at":1},{"name":"right","at":4}]}}},
+{"caption":"2 + 6 = 8, too small. left moves right, to position 2.","panels":{"numbers":{"values":[1,2,3,5,6],"states":"ddc_c","pointers":[{"name":"left","at":2},{"name":"right","at":4}]}}},
+{"caption":"3 + 6 = 9, exactly the target. Pointers stop here.","panels":{"numbers":{"values":[1,2,3,5,6],"states":"ddpdp","pointers":[{"name":"left","at":2},{"name":"right","at":4}]}}}
+]},
+{"id":"none","label":"No match","steps":[
+{"caption":"left starts at position 0 (1), right starts at the last position (8). Target is 1.","panels":{"numbers":{"values":[1,2,4,8],"states":"c__c","pointers":[{"name":"left","at":0},{"name":"right","at":3}]}}},
+{"caption":"1 + 8 = 9, too big. right moves left, to position 2.","panels":{"numbers":{"values":[1,2,4,8],"states":"c_cd","pointers":[{"name":"left","at":0},{"name":"right","at":2}]}}},
+{"caption":"1 + 4 = 5, too big. right moves left, to position 1.","panels":{"numbers":{"values":[1,2,4,8],"states":"ccdd","pointers":[{"name":"left","at":0},{"name":"right","at":1}]}}},
+{"caption":"1 + 2 = 3, too big. right moves left, to position 0.","panels":{"numbers":{"values":[1,2,4,8],"states":"cddd","pointers":[{"name":"left","at":0},{"name":"right","at":0}]}}},
+{"caption":"left and right met without a match, so no pair in this list sums to the target.","panels":{"numbers":{"values":[1,2,4,8],"states":"cddd","pointers":[{"name":"left","at":0},{"name":"right","at":0}]}}}
+]},
+{"id":"single","label":"Smallest case","steps":[
+{"caption":"left starts at position 0 (2), right starts at the last position (3). Target is 5.","panels":{"numbers":{"values":[2,3],"states":"cc","pointers":[{"name":"left","at":0},{"name":"right","at":1}]}}},
+{"caption":"2 + 3 = 5, exactly the target. Pointers stop here.","panels":{"numbers":{"values":[2,3],"states":"pp","pointers":[{"name":"left","at":0},{"name":"right","at":1}]}}}
+]}
+]}

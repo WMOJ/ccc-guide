@@ -1,0 +1,20 @@
+layout: row
+panels:
+  - { id: source, viz: GridViz, title: Source }
+  - { id: result, viz: GridViz, title: Result }
+alt: >-
+  A source grid next to a result grid. The visual first builds the horizontal reflection, each
+  row reversed left to right, then clears and builds the vertical reflection, the row order
+  reversed top to bottom.
+captions: vizrec
+presets:
+  - id: letters
+    label: Letters
+    stdin: "2 3\nA B C\nD E F\n"
+  - id: single-row
+    label: Single row
+    stdin: "1 3\nX Y Z\n"
+consistency:
+  description: The recorded output equals the full output of examples/reflect.py on each preset.
+  example: ../examples/reflect.py
+  compare: output

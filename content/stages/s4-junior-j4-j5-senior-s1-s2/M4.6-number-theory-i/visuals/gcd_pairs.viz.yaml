@@ -1,0 +1,21 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Shrinking pairs }
+alt: >-
+  Euclid's algorithm reduces a pair of numbers to a smaller pair with the same gcd, step by
+  step, until the second number reaches 0; the first number left is the gcd.
+captions: vizrec
+presets:
+  - id: main
+    label: Typical
+    stdin: "48 18\n"
+  - id: divides
+    label: One divides
+    stdin: "18 6\n"
+  - id: coprime
+    label: Coprime
+    stdin: "17 13\n"
+consistency:
+  description: The final gcd (and the lcm computed from it) matches the output of examples/gcd.py.
+  example: ../examples/gcd.py
+  compare: output

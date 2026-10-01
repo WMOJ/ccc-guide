@@ -1,0 +1,2 @@
+heappushpop: returned 1, heap [2, 4, 6]
+heapreplace: returned 2, heap [1, 4, 6]

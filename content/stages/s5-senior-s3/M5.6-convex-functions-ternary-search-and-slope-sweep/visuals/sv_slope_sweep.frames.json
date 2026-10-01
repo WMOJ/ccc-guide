@@ -1,0 +1,21 @@
+{"schema":1,
+"kind":"frames",
+"id":"sv_slope_sweep",
+"layout":"single",
+"panels":[{"id":"line","viz":"LineViz","title":"Slope sweep"}],
+"alt":"Job sites sweep left to right in sorted order. A running left weight builds up, and the slope it implies crosses from negative to non-negative at one site, marking the minimum. A second preset has a single site, where the slope is non-negative from the very first site.",
+"presets":[
+{"id":"four_sites","label":"Four sites","steps":[
+{"caption":"Sort the 4 job sites by position. Before sweeping, the slope is `-7`: moving c right only helps, since every site still sits to its right.","panels":{"line":{"min":10,"max":100,"tick":9,"points":[{"x":10,"label":"w=1","s":"."},{"x":40,"label":"w=2","s":"."},{"x":50,"label":"w=1","s":"."},{"x":100,"label":"w=3","s":"."}]}}},
+{"caption":"At c = 10, weight 1 on the left brings the running left weight to 1. The slope is `2*1 - 7` = `-5`, still negative: the cost keeps falling past here.","panels":{"line":{"min":10,"max":100,"tick":9,"points":[{"x":10,"label":"w=1","s":"c"},{"x":40,"label":"w=2","s":"."},{"x":50,"label":"w=1","s":"."},{"x":100,"label":"w=3","s":"."}],"sweep":{"x":10,"label":"c = 10"}}}},
+{"caption":"At c = 40, weight 2 on the left brings the running left weight to 3. The slope is `2*3 - 7` = `-1`, still negative: the cost keeps falling past here.","panels":{"line":{"min":10,"max":100,"tick":9,"points":[{"x":10,"label":"w=1","s":"d"},{"x":40,"label":"w=2","s":"c"},{"x":50,"label":"w=1","s":"."},{"x":100,"label":"w=3","s":"."}],"sweep":{"x":40,"label":"c = 40"}}}},
+{"caption":"At c = 50, weight 1 on the left brings the running left weight to 4. The slope is `2*4 - 7` = `1`, no longer negative: this is the breakpoint where the cost stops falling.","panels":{"line":{"min":10,"max":100,"tick":9,"points":[{"x":10,"label":"w=1","s":"d"},{"x":40,"label":"w=2","s":"d"},{"x":50,"label":"w=1","s":"p"},{"x":100,"label":"w=3","s":"."}],"sweep":{"x":50,"label":"c = 50"}}}},
+{"caption":"At c = 100, weight 3 on the left brings the running left weight to 7. The slope is `2*7 - 7` = `7`, already found: this later site does not change the answer.","panels":{"line":{"min":10,"max":100,"tick":9,"points":[{"x":10,"label":"w=1","s":"d"},{"x":40,"label":"w=2","s":"d"},{"x":50,"label":"w=1","s":"p"},{"x":100,"label":"w=3","s":"c"}],"sweep":{"x":100,"label":"c = 100"}}}},
+{"caption":"The slope crosses zero at c = 50: the minimum. Total cost there is 210.","panels":{"line":{"min":10,"max":100,"tick":9,"points":[{"x":10,"label":"w=1","s":"d"},{"x":40,"label":"w=2","s":"d"},{"x":50,"label":"w=1","s":"p"},{"x":100,"label":"w=3","s":"c"}],"sweep":{"x":100,"label":"c = 100"}}}}
+]},
+{"id":"one_site","label":"One site","steps":[
+{"caption":"Sort the 1 job sites by position. Before sweeping, the slope is `-7`: moving c right only helps, since every site still sits to its right.","panels":{"line":{"min":45,"max":55,"tick":1,"points":[{"x":50,"label":"w=7","s":"."}]}}},
+{"caption":"At c = 50, weight 7 on the left brings the running left weight to 7. The slope is `2*7 - 7` = `7`, no longer negative: this is the breakpoint where the cost stops falling.","panels":{"line":{"min":45,"max":55,"tick":1,"points":[{"x":50,"label":"w=7","s":"p"}],"sweep":{"x":50,"label":"c = 50"}}}},
+{"caption":"The slope crosses zero at c = 50: the minimum. Total cost there is 0.","panels":{"line":{"min":45,"max":55,"tick":1,"points":[{"x":50,"label":"w=7","s":"p"}],"sweep":{"x":50,"label":"c = 50"}}}}
+]}
+]}

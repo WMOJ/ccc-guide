@@ -1,0 +1,25 @@
+layout: row
+panels:
+  - { id: l, viz: ArrayViz, title: bisect_left }
+  - { id: r, viz: ArrayViz, title: bisect_right }
+alt: >-
+  Two binary searches run side by side on the same sorted array with duplicates. bisect_left's
+  lo and hi close in on the first occurrence of the target; bisect_right's close in on the
+  position just past the last occurrence. A second preset searches for a value that is not in
+  the array, where both searches land on the same index. A third searches for a value past every
+  element, where both land one past the last index.
+captions: vizrec
+presets:
+  - id: duplicates
+    label: Duplicates
+    stdin: "6\n1 2 2 2 3 5\n1\n2\n"
+  - id: absent
+    label: Absent
+    stdin: "6\n1 2 2 2 3 5\n1\n4\n"
+  - id: past_end
+    label: Past the end
+    stdin: "6\n1 2 2 2 3 5\n1\n9\n"
+consistency:
+  description: The left/right positions and count in the final step equal the output of examples/bisect_positions.py for this one query.
+  example: ../examples/bisect_positions.py
+  compare: output

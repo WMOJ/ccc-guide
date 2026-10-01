@@ -1,0 +1,27 @@
+layout: single
+panels:
+  - { id: line, viz: LineViz, title: One practice cycle }
+alt: >-
+  One practice cycle on a day line from 0 to 16: a mock contest on day 0, an upsolving stretch
+  starting on day 1, a retry of the stalled problems some days after it ends, and the next mock
+  contest. When the wait is too long the retry lands after the next mock and is marked late.
+captions: vizrec
+legendLabels:
+  done: Mock contest
+  current: Upsolving
+  path: Retry
+  invalid: Retry too late
+presets:
+  - id: two-weeks
+    label: Two weeks
+    stdin: "14 3 7\n"
+  - id: short
+    label: Short cycle
+    stdin: "8 2 2\n"
+  - id: late
+    label: Retry too late
+    stdin: "6 3 7\n"
+consistency:
+  description: The calendar lines equal the output of examples/cadence.py on each preset's input.
+  example: ../examples/cadence.py
+  compare: output

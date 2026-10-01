@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"slot-model",
+"layout":"row",
+"panels":[{"id":"codes","viz":"ArrayViz","title":"Codes stored"},{"id":"slots","viz":"ArrayViz","title":"Slots (mod 8)"}],
+"alt":"A simplified 8-slot model of what a dictionary does inside. Each code lands in slot code mod 8; a taken slot probes forward to the next one. A lookup repeats the same walk: one step when the slot is free or already holds the code, a short probe on a collision, and an empty slot means the code was never stored.",
+"presets":[
+{"id":"collision","label":"Collision","steps":[
+{"caption":"3 % 8 = 3: an empty slot, so it goes straight in.","panels":{"codes":{"values":[3,11,19],"states":"c__","pointers":[{"name":"i","at":0}]},"slots":{"values":["_","_","_",3,"_","_","_","_"],"states":"___c____","indexBase":0}}},
+{"caption":"11 % 8 = 3, but slot 3 is taken. Probing forward lands it in slot 4.","panels":{"codes":{"values":[3,11,19],"states":"dc_","pointers":[{"name":"i","at":1}]},"slots":{"values":["_","_","_",3,11,"_","_","_"],"states":"___mc___","indexBase":0}}},
+{"caption":"19 % 8 = 3, but slot 3 is taken. Probing forward lands it in slot 5.","panels":{"codes":{"values":[3,11,19],"states":"ddc","pointers":[{"name":"i","at":2}]},"slots":{"values":["_","_","_",3,11,19,"_","_"],"states":"___mmc__","indexBase":0}}},
+{"caption":"Looking up 19: 19 % 8 = 3, but slot 3 holds a different code, so probing forward finds 19 in slot 5.","panels":{"codes":{"values":[3,11,19],"states":"ddd"},"slots":{"values":["_","_","_",3,11,19,"_","_"],"states":"___mmc__","indexBase":0}}},
+{"caption":"Looking up 5: 5 % 8 = 5, but slot 5 holds another code. Slot 6 is empty, so 5 was never stored.","panels":{"codes":{"values":[3,11,19],"states":"ddd"},"slots":{"values":["_","_","_",3,11,19,"_","_"],"states":"_____mc_","indexBase":0}}}
+]},
+{"id":"direct","label":"Direct","steps":[
+{"caption":"3 % 8 = 3: an empty slot, so it goes straight in.","panels":{"codes":{"values":[3,10,17],"states":"c__","pointers":[{"name":"i","at":0}]},"slots":{"values":["_","_","_",3,"_","_","_","_"],"states":"___c____","indexBase":0}}},
+{"caption":"10 % 8 = 2: an empty slot, so it goes straight in.","panels":{"codes":{"values":[3,10,17],"states":"dc_","pointers":[{"name":"i","at":1}]},"slots":{"values":["_","_",10,3,"_","_","_","_"],"states":"__c_____","indexBase":0}}},
+{"caption":"17 % 8 = 1: an empty slot, so it goes straight in.","panels":{"codes":{"values":[3,10,17],"states":"ddc","pointers":[{"name":"i","at":2}]},"slots":{"values":["_",17,10,3,"_","_","_","_"],"states":"_c______","indexBase":0}}},
+{"caption":"Looking up 10: 10 % 8 = 2, and slot 2 holds it directly.","panels":{"codes":{"values":[3,10,17],"states":"ddd"},"slots":{"values":["_",17,10,3,"_","_","_","_"],"states":"__c_____","indexBase":0}}}
+]},
+{"id":"wraparound","label":"Wraparound","steps":[
+{"caption":"7 % 8 = 7: an empty slot, so it goes straight in.","panels":{"codes":{"values":[7,15],"states":"c_","pointers":[{"name":"i","at":0}]},"slots":{"values":["_","_","_","_","_","_","_",7],"states":"_______c","indexBase":0}}},
+{"caption":"15 % 8 = 7, but slot 7 is taken. Probing forward wraps past slot 7 and lands it in slot 0.","panels":{"codes":{"values":[7,15],"states":"dc","pointers":[{"name":"i","at":1}]},"slots":{"values":[15,"_","_","_","_","_","_",7],"states":"c______m","indexBase":0}}},
+{"caption":"Looking up 15: 15 % 8 = 7, but slot 7 holds a different code, so probing forward finds 15 in slot 0.","panels":{"codes":{"values":[7,15],"states":"dd"},"slots":{"values":[15,"_","_","_","_","_","_",7],"states":"c______m","indexBase":0}}}
+]}
+]}

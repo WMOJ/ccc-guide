@@ -4,8 +4,8 @@ status: accepted
 objectives:
   - Model a problem as a shortest-path search by representing states as nodes.
   - Identify which edges matter in practice, even when the full state graph is enormous.
-  - Implement reachability search with pruning and edge filtering.
-  - Measure the sparsified graph's size and confirm it solves the problem.
+  - Search only the states reachable from the start, and stop as soon as the goal is settled.
+  - Measure the sparsified graph's size and confirm it gives the same answer.
 prereqs:
   - M6.1
   - M4.2
@@ -13,7 +13,7 @@ lessons:
   - state-space-modelling
 practice:
   - id: ccc25s4
-    note: Expand each state to include a resource level, then search the larger graph for a shortest path.
-  - id: ccc18s3
-    note: Collect objects by moving through a grid, avoiding certain states.
-    why: An older problem whose forced moves are naturally modelled as an expanded state space.
+    note: Cross rooms and tunnels of different temperatures, where the boots you wear decide which tunnels you can enter.
+  - id: ccc15s4
+    note: Sail between islands as fast as possible while keeping a ship's hull wear under a limit.
+    why: An older shortest-path problem where the answer depends on more than the island you are at.

@@ -1,15 +1,18 @@
-s = input()
-result = ""
-i = 0
+import sys
 
-while i < len(s):
-    current_char = s[i]
-    count = 1
 
-    while i + count < len(s) and s[i + count] == current_char:
-        count += 1
+def main() -> None:
+    raw = sys.stdin.read()
+    s = raw.rstrip("\n")
+    i = 0
+    while i < len(s):
+        current_char = s[i]
+        count = 1
+        while i + count < len(s) and s[i + count] == current_char:
+            count += 1
+        print(current_char, count)
+        i += count
 
-    result += str(count) + current_char
-    i += count
 
-print(result)
+if __name__ == "__main__":
+    main()

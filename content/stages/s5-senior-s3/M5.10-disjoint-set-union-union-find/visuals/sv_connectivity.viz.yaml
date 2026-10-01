@@ -1,0 +1,20 @@
+layout: row
+panels:
+  - { id: g, viz: GraphViz, title: Network }
+  - { id: p, viz: ArrayViz, title: parent }
+alt: >-
+  Computers start isolated. Each cable unions the two computers it connects. A later query
+  compares the roots found for its two computers: equal roots mean yes, they are connected,
+  even indirectly; different roots mean no.
+captions: vizrec
+presets:
+  - id: network
+    label: Five nodes
+    stdin: "5 3\n0 1\n1 2\n3 4\n3\n0 2\n0 3\n1 3\n"
+  - id: isolated
+    label: Isolated
+    stdin: "4 1\n0 1\n1\n2 3\n"
+consistency:
+  description: The yes/no answers in the visual equal the output of examples/connectivity.py.
+  example: ../examples/connectivity.py
+  compare: output

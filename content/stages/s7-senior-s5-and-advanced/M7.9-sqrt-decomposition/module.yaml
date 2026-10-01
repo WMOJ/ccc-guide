@@ -2,10 +2,10 @@ id: M7.9
 title: Sqrt decomposition
 status: accepted
 objectives:
-  - Partition a large problem into heavy and light groups.
-  - Process heavy items as special cases and light items with standard algorithms.
-  - Use square-root blocking to balance preprocessing and query time.
-  - Recognize when Python performance limits apply and accept partial-mark subtasks.
+  - Cut an array into blocks of about the square root of its length and store one summary per block.
+  - Answer a range query from two partial blocks and the whole blocks between them.
+  - Apply a point update by fixing one value and one block summary.
+  - Choose the block size by balancing the two costs, and recompute the summary when it cannot be subtracted.
 prereqs:
   - M6.10
   - M2.9
@@ -13,5 +13,5 @@ lessons:
   - sqrt-blocks
 practice:
   - id: ccc17s5
-    note: Many queries over a transit network's routes.
-    why: An older problem with a large number of queries, good for practicing where a partial, unoptimized attempt still scores.
+    note: Answer passenger totals over ranges of stations while trains move along their lines.
+    why: Totals over a range of stations are asked while single stations change, the shape of a long row with block totals kept beside it.

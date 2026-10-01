@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Pairing the terms }
+alt: >-
+  The terms 1 through n written forwards in one row and backwards in a second row, with each
+  column summed. Every column adds to n + 1 and there are n columns, so the two rows total
+  n times n + 1, and one row alone is half of that.
+captions: vizrec
+presets:
+  - id: six
+    label: Six terms
+    stdin: "6\n"
+  - id: five
+    label: Five terms
+    stdin: "5\n"
+  - id: one
+    label: One term
+    stdin: "1\n"
+consistency:
+  description: The total equals the output of examples/triangular_number.py on the same input.
+  example: ../examples/triangular_number.py
+  compare: output

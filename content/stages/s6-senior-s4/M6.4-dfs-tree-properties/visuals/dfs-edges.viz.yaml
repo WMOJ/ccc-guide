@@ -1,0 +1,32 @@
+layout: row
+panels:
+  - { id: g, viz: GraphViz, title: Graph }
+  - { id: t, viz: TableViz, title: Times }
+legendLabels:
+  current: On the stack
+  done: Finished
+  path: Tree edge
+  invalid: Back edge
+  compare: Forward edge
+  frontier: Cross edge
+alt: >-
+  A depth-first search over a small directed graph. Nodes turn to "on the stack" when discovered and
+  "finished" when every edge has been tried, and a table records each node's discovery and finish
+  time. Each edge, when the search first follows it, is marked as a tree edge, a back edge to an
+  ancestor on the stack, a forward edge to a finished descendant, or a cross edge to a finished node
+  in an earlier branch.
+captions: vizrec
+presets:
+  - id: four-kinds
+    label: Four kinds
+    stdin: "5 7\n0 1\n1 2\n2 3\n3 1\n0 3\n0 4\n4 2\n"
+  - id: cycle
+    label: A cycle
+    stdin: "4 4\n0 1\n1 2\n2 3\n3 0\n"
+  - id: forest
+    label: Two trees
+    stdin: "5 4\n0 1\n1 2\n3 4\n4 2\n"
+consistency:
+  description: The edge kinds and times equal the output of examples/edge_kinds.py.
+  example: ../examples/edge_kinds.py
+  compare: output

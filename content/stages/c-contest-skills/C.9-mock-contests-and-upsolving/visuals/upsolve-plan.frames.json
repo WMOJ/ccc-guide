@@ -1,0 +1,25 @@
+{"schema":1,
+"kind":"frames",
+"id":"upsolve-plan",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"From log to first step"}],
+"alt":"A table with one row per problem from a logged mock session, showing how many submissions each took and whether any was accepted. Each row then gets a first upsolving step: nothing for a problem accepted at once, a comparison of first and accepted attempts, a stress test for a problem never accepted, or a brute force for a problem with no submission.",
+"legendLabels":{"done":"Nothing to upsolve","invalid":"Stress test","compare":"Brute force first","path":"Compare attempts"},
+"presets":[
+{"id":"mixed","label":"Mixed","steps":[
+{"caption":"The log from a mock session, reduced to a row per problem: how many submissions it took and whether one was accepted. The first-step column is still empty.","panels":{"table":{"cells":[["1","yes","?"],["3","yes","?"],["1","no","?"],["0","no","?"]],"states":["___","___","___","___"],"rowHeads":["P1","P2","P3","P4"],"colHeads":["tries","accepted","first step"]}}},
+{"caption":"Problem 1 was accepted on the first submission, so there is nothing to upsolve.","panels":{"table":{"cells":[["1","yes","none"],["3","yes","?"],["1","no","?"],["0","no","?"]],"states":["__d","___","___","___"],"rowHeads":["P1","P2","P3","P4"],"colHeads":["tries","accepted","first step"]}}},
+{"caption":"Problem 2 needed several submissions. Run the first attempt and the accepted one on small inputs to see what the change fixed.","panels":{"table":{"cells":[["1","yes","none"],["3","yes","compare"],["1","no","?"],["0","no","?"]],"states":["__d","__p","___","___"],"rowHeads":["P1","P2","P3","P4"],"colHeads":["tries","accepted","first step"]}}},
+{"caption":"Problem 3 was never accepted. Stress test the last attempt against a brute force, and the smallest input where they disagree points at the bug.","panels":{"table":{"cells":[["1","yes","none"],["3","yes","compare"],["1","no","stress"],["0","no","?"]],"states":["__d","__p","__x","___"],"rowHeads":["P1","P2","P3","P4"],"colHeads":["tries","accepted","first step"]}}},
+{"caption":"Problem 4 has no submission. A brute force for its first subtask gives you a correct program to start from.","panels":{"table":{"cells":[["1","yes","none"],["3","yes","compare"],["1","no","stress"],["0","no","brute"]],"states":["__d","__p","__x","__m"],"rowHeads":["P1","P2","P3","P4"],"colHeads":["tries","accepted","first step"]}}},
+{"caption":"Each problem now has one next action, chosen from what the log shows. A problem can need more than one step, but the log tells you where to begin.","panels":{"table":{"cells":[["1","yes","none"],["3","yes","compare"],["1","no","stress"],["0","no","brute"]],"states":["__d","__p","__x","__m"],"rowHeads":["P1","P2","P3","P4"],"colHeads":["tries","accepted","first step"]}}}
+]},
+{"id":"early","label":"All accepted","steps":[
+{"caption":"The log from a mock session, reduced to a row per problem: how many submissions it took and whether one was accepted. The first-step column is still empty.","panels":{"table":{"cells":[["1","yes","?"],["1","yes","?"],["1","yes","?"],["1","yes","?"]],"states":["___","___","___","___"],"rowHeads":["P1","P2","P3","P4"],"colHeads":["tries","accepted","first step"]}}},
+{"caption":"Problem 1 was accepted on the first submission, so there is nothing to upsolve.","panels":{"table":{"cells":[["1","yes","none"],["1","yes","?"],["1","yes","?"],["1","yes","?"]],"states":["__d","___","___","___"],"rowHeads":["P1","P2","P3","P4"],"colHeads":["tries","accepted","first step"]}}},
+{"caption":"Problem 2 was accepted on the first submission, so there is nothing to upsolve.","panels":{"table":{"cells":[["1","yes","none"],["1","yes","none"],["1","yes","?"],["1","yes","?"]],"states":["__d","__d","___","___"],"rowHeads":["P1","P2","P3","P4"],"colHeads":["tries","accepted","first step"]}}},
+{"caption":"Problem 3 was accepted on the first submission, so there is nothing to upsolve.","panels":{"table":{"cells":[["1","yes","none"],["1","yes","none"],["1","yes","none"],["1","yes","?"]],"states":["__d","__d","__d","___"],"rowHeads":["P1","P2","P3","P4"],"colHeads":["tries","accepted","first step"]}}},
+{"caption":"Problem 4 was accepted on the first submission, so there is nothing to upsolve.","panels":{"table":{"cells":[["1","yes","none"],["1","yes","none"],["1","yes","none"],["1","yes","none"]],"states":["__d","__d","__d","__d"],"rowHeads":["P1","P2","P3","P4"],"colHeads":["tries","accepted","first step"]}}},
+{"caption":"Each problem now has one next action, chosen from what the log shows. A problem can need more than one step, but the log tells you where to begin.","panels":{"table":{"cells":[["1","yes","none"],["1","yes","none"],["1","yes","none"],["1","yes","none"]],"states":["__d","__d","__d","__d"],"rowHeads":["P1","P2","P3","P4"],"colHeads":["tries","accepted","first step"]}}}
+]}
+]}

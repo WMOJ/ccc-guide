@@ -1,0 +1,28 @@
+{"schema":1,
+"kind":"frames",
+"id":"judge-suite",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Judging a suite"}],
+"alt":"A table that gains one row per test as the judging loop runs. Each row shows the test's input, what the solution printed, the official output, and a verdict of matches or differs. A failing test does not stop the loop, so the final step shows every failure together.",
+"presets":[
+{"id":"one","label":"One differs","steps":[
+{"caption":"Test 1: the input is 3, the solution prints 6, and the official output is 6. The strings are equal: matches.","panels":{"table":{"cells":[[3,"6","6","match"]],"states":["___d"],"rowHeads":[1],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}},
+{"caption":"Test 2: the input is 8, the solution prints 16, and the official output is 16. The strings are equal: matches.","panels":{"table":{"cells":[[3,"6","6","match"],[8,"16","16","match"]],"states":["___d","___d"],"rowHeads":[1,2],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}},
+{"caption":"Test 3: the input is 5, the solution prints 10, and the official output is 10. The strings are equal: matches.","panels":{"table":{"cells":[[3,"6","6","match"],[8,"16","16","match"],[5,"10","10","match"]],"states":["___d","___d","___d"],"rowHeads":[1,2,3],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}},
+{"caption":"Test 4: the input is 4, the solution prints 8, but the official output is 9. The strings are not equal: differs.","panels":{"table":{"cells":[[3,"6","6","match"],[8,"16","16","match"],[5,"10","10","match"],[4,"8","9","differ"]],"states":["___d","___d","___d","___x"],"rowHeads":[1,2,3,4],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}},
+{"caption":"Test 5: the input is 6, the solution prints 12, and the official output is 12. The strings are equal: matches.","panels":{"table":{"cells":[[3,"6","6","match"],[8,"16","16","match"],[5,"10","10","match"],[4,"8","9","differ"],[6,"12","12","match"]],"states":["___d","___d","___d","___x","___d"],"rowHeads":[1,2,3,4,5],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}},
+{"caption":"One of the 5 tests differs. The loop ran every test, so you see all failures at once. Start with test 4: what does the solution do on that input?","panels":{"table":{"cells":[[3,"6","6","match"],[8,"16","16","match"],[5,"10","10","match"],[4,"8","9","differ"],[6,"12","12","match"]],"states":["___d","___d","___d","___x","___d"],"rowHeads":[1,2,3,4,5],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}}
+]},
+{"id":"all","label":"All match","steps":[
+{"caption":"Test 1: the input is 3, the solution prints 6, and the official output is 6. The strings are equal: matches.","panels":{"table":{"cells":[[3,"6","6","match"]],"states":["___d"],"rowHeads":[1],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}},
+{"caption":"Test 2: the input is 8, the solution prints 16, and the official output is 16. The strings are equal: matches.","panels":{"table":{"cells":[[3,"6","6","match"],[8,"16","16","match"]],"states":["___d","___d"],"rowHeads":[1,2],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}},
+{"caption":"Test 3: the input is 5, the solution prints 10, and the official output is 10. The strings are equal: matches.","panels":{"table":{"cells":[[3,"6","6","match"],[8,"16","16","match"],[5,"10","10","match"]],"states":["___d","___d","___d"],"rowHeads":[1,2,3],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}},
+{"caption":"All 3 tests match, every one checked exactly.","panels":{"table":{"cells":[[3,"6","6","match"],[8,"16","16","match"],[5,"10","10","match"]],"states":["___d","___d","___d"],"rowHeads":[1,2,3],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}}
+]},
+{"id":"first","label":"First differs","steps":[
+{"caption":"Test 1: the input is 3, the solution prints 6, but the official output is 7. The strings are not equal: differs.","panels":{"table":{"cells":[[3,"6","7","differ"]],"states":["___x"],"rowHeads":[1],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}},
+{"caption":"Test 2: the input is 8, the solution prints 16, and the official output is 16. The strings are equal: matches.","panels":{"table":{"cells":[[3,"6","7","differ"],[8,"16","16","match"]],"states":["___x","___d"],"rowHeads":[1,2],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}},
+{"caption":"Test 3: the input is 5, the solution prints 10, and the official output is 10. The strings are equal: matches.","panels":{"table":{"cells":[[3,"6","7","differ"],[8,"16","16","match"],[5,"10","10","match"]],"states":["___x","___d","___d"],"rowHeads":[1,2,3],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}},
+{"caption":"One of the 3 tests differs. The loop ran every test, so you see all failures at once. Start with test 1: what does the solution do on that input?","panels":{"table":{"cells":[[3,"6","7","differ"],[8,"16","16","match"],[5,"10","10","match"]],"states":["___x","___d","___d"],"rowHeads":[1,2,3],"colHeads":["input","got","want","verdict"],"rowTitle":"test"}}}
+]}
+]}

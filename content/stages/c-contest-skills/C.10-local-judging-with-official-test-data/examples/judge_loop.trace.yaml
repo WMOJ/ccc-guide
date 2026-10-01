@@ -1,0 +1,18 @@
+example: judge_loop.py
+alt: >-
+  The program judges a small suite. For each test it reads an input line and the official output
+  line, runs the solution (doubling the input), and compares the two strings. It prints matches when
+  they are equal and differs when they are not.
+presets:
+  - id: main
+    label: Match, then differ
+    stdin: "2 1 2 3 5\n"
+  - id: all
+    label: All match
+    stdin: "2 1 2 3 6\n"
+notes:
+  "11": "`want` is the official output line for this test, read as text, exactly as the file holds it."
+  "12": "The solution runs on the input. Its answer becomes text so it can be compared with `want`."
+  "13": "This `==` compares the two strings character by character. Equal means the test passes."
+  "14": "The strings were equal, so this test is reported as matching."
+  "16": "The strings differed, so this test fails, and the loop still goes on to the next test."

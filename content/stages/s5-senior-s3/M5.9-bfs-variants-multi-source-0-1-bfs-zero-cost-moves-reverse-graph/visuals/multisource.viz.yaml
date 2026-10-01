@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: grid, viz: GridViz, title: Warehouse floor }
+  - { id: queue, viz: StructViz, title: Queue }
+alt: >-
+  Multi-source breadth-first search on a warehouse floor. Every depot (D) starts in the queue
+  at distance 0. Each cell that leaves the front of the queue passes its distance plus one to
+  its open, unseen neighbors, which join the back. A cell no depot's search can reach, because
+  walls cut it off, never gets a distance.
+captions: vizrec
+presets:
+  - id: sources
+    label: Two depots
+    stdin: "4 5\nD.#..\n..#.#\n....D\n.#...\n"
+  - id: walled
+    label: Cut off
+    stdin: "3 4\nD.#.\n.###\n..#D\n"
+  - id: single
+    label: One depot
+    stdin: "3 4\nD...\n.##.\n....\n"
+consistency:
+  description: The distance grid in the visual equals the output of examples/multisource_bfs.py on each preset.
+  example: ../examples/multisource_bfs.py
+  compare: output

@@ -1,0 +1,11 @@
+{"schema":1,
+"kind":"frames",
+"id":"plain_vs_01",
+"layout":"single",
+"panels":[{"id":"t","viz":"TableViz","title":"Plain BFS vs 0-1 BFS"}],
+"alt":"A table comparing plain BFS, which counts edges, against 0-1 BFS, which respects weight, on the same doors-and-stairs graph. Plain BFS calls node 1 one hop away and node 4 two hops away; 0-1 BFS finds their true cost of 0 and 1, since three free doors beat the direct, costlier stairwell.",
+"presets":[
+{"id":"doors","label":"Doors and stairs","steps":[
+{"caption":"Plain BFS counts edges and ignores weight, so it calls node 1 one hop away, through the direct stairwell. 0-1 BFS finds the true cost: three free doors reach node 1 for nothing, and that shorter route also makes node 4 one minute closer. The marked cells are where counting edges gives the wrong answer.","panels":{"t":{"cells":[[0,1,1,2,2],[0,0,0,0,1]],"states":["_xxxx","_____"],"rowHeads":["Plain BFS (edges)","0-1 BFS (cost)"],"colHeads":["0","1","2","3","4"],"colTitle":"Node"}}}
+]}
+]}

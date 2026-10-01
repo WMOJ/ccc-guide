@@ -1,0 +1,25 @@
+{"schema":1,
+"kind":"frames",
+"id":"list_vs_deque",
+"layout":"row",
+"panels":[{"id":"plain","viz":"ArrayViz","title":"List: pop(0)"},{"id":"dq","viz":"StructViz","title":"Deque: popleft()"}],
+"alt":"The same line of orders served from a plain list with pop(0) and from a deque with popleft(). Each pop(0) slides every remaining list item one slot left, so the move count grows, while each popleft() removes the front without moving anything.",
+"presets":[
+{"id":"four","label":"Four orders","steps":[
+{"caption":"Both lines hold the same 4 orders. A list line is served with pop(0), a deque line with popleft(). Count how many items each has to move.","panels":{"plain":{"values":["p","q","r","s"],"indices":true},"dq":{"kind":"deque","items":[{"v":"p","s":"d"},{"v":"q","s":"d"},{"v":"r","s":"d"},{"v":"s","s":"d"}]}}},
+{"caption":"pop(0) removes 'p' and slides the other 3 items one slot left (3 moves so far). popleft() removes 'p' and moves nothing (0 moves).","panels":{"plain":{"values":["q","r","s"],"states":"mmm","indices":true},"dq":{"kind":"deque","items":[{"v":"q","s":"d"},{"v":"r","s":"d"},{"v":"s","s":"d"}]}}},
+{"caption":"pop(0) removes 'q' and slides the other 2 items one slot left (5 moves so far). popleft() removes 'q' and moves nothing (0 moves).","panels":{"plain":{"values":["r","s"],"states":"mm","indices":true},"dq":{"kind":"deque","items":[{"v":"r","s":"d"},{"v":"s","s":"d"}]}}},
+{"caption":"pop(0) removes 'r' and slides the other 1 item one slot left (6 moves so far). popleft() removes 'r' and moves nothing (0 moves).","panels":{"plain":{"values":["s"],"states":"m","indices":true},"dq":{"kind":"deque","items":[{"v":"s","s":"d"}]}}},
+{"caption":"'s' is the only order left, so pop(0) has nothing to slide. Serving all 4 orders cost the list 6 moves and the deque 0. The served order is the same either way.","panels":{"plain":{"values":["-"],"states":"_"},"dq":{"kind":"deque","items":[{"v":"empty","s":"_"}]}}}
+]},
+{"id":"three","label":"Three orders","steps":[
+{"caption":"Both lines hold the same 3 orders. A list line is served with pop(0), a deque line with popleft(). Count how many items each has to move.","panels":{"plain":{"values":["p","q","r"],"indices":true},"dq":{"kind":"deque","items":[{"v":"p","s":"d"},{"v":"q","s":"d"},{"v":"r","s":"d"}]}}},
+{"caption":"pop(0) removes 'p' and slides the other 2 items one slot left (2 moves so far). popleft() removes 'p' and moves nothing (0 moves).","panels":{"plain":{"values":["q","r"],"states":"mm","indices":true},"dq":{"kind":"deque","items":[{"v":"q","s":"d"},{"v":"r","s":"d"}]}}},
+{"caption":"pop(0) removes 'q' and slides the other 1 item one slot left (3 moves so far). popleft() removes 'q' and moves nothing (0 moves).","panels":{"plain":{"values":["r"],"states":"m","indices":true},"dq":{"kind":"deque","items":[{"v":"r","s":"d"}]}}},
+{"caption":"'r' is the only order left, so pop(0) has nothing to slide. Serving all 3 orders cost the list 3 moves and the deque 0. The served order is the same either way.","panels":{"plain":{"values":["-"],"states":"_"},"dq":{"kind":"deque","items":[{"v":"empty","s":"_"}]}}}
+]},
+{"id":"one","label":"One order","steps":[
+{"caption":"Both lines hold the same 1 order. A list line is served with pop(0), a deque line with popleft(). Count how many items each has to move.","panels":{"plain":{"values":["p"],"indices":true},"dq":{"kind":"deque","items":[{"v":"p","s":"d"}]}}},
+{"caption":"'p' is the only order left, so pop(0) has nothing to slide. Serving all 1 order cost the list 0 moves and the deque 0. The served order is the same either way.","panels":{"plain":{"values":["-"],"states":"_"},"dq":{"kind":"deque","items":[{"v":"empty","s":"_"}]}}}
+]}
+]}

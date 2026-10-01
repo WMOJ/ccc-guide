@@ -1,0 +1,36 @@
+{"schema":1,
+"kind":"frames",
+"id":"first-failure",
+"layout":"row",
+"panels":[{"id":"array","viz":"ArrayViz","title":"Input tried"},{"id":"table","viz":"TableViz","title":"Both answers"}],
+"alt":"A search for the smallest input on which a wrong attempt disagrees with a brute force. Inputs are tried shortest first in a fixed order, each shown as an array beside a row comparing the two answers, with runs of matching inputs skipped. The first disagreement is shown, then the repaired attempt agreeing with the brute force.",
+"legendLabels":{"done":"Answers match","invalid":"Answers differ","path":"The true run"},
+"presets":[
+{"id":"three","label":"Length 3","steps":[
+{"caption":"Input 1, [0]. The brute force says 1 and the attempt says 1. They match.","panels":{"array":{"values":[0],"states":"d"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#1"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"The rest of the inputs of length 1 also match (inputs 2 to 3). The last of them is [2].","skipped":2,"panels":{"array":{"values":[2],"states":"d"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#3"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"Input 4, [0, 0]. The brute force says 1 and the attempt says 1. They match.","panels":{"array":{"values":[0,0],"states":"dd"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#4"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"The rest of the inputs of length 2 also match (inputs 5 to 12). The last of them is [2, 2].","skipped":8,"panels":{"array":{"values":[2,2],"states":"dd"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#12"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"Input 13, [0, 0, 0]. The brute force says 1 and the attempt says 1. They match.","panels":{"array":{"values":[0,0,0],"states":"ddd"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#13"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"Input 14, [0, 0, 1]. The brute force says 2 and the attempt says 1. They differ: this is the smallest failing input, found in size order.","panels":{"array":{"values":[0,0,1],"states":"xxx"},"table":{"cells":[["2","1","no"]],"states":["_xx"],"rowHeads":["#14"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"On [0, 0, 1] the brute force finds the increasing run 0, 1 of length 2. The attempt returns 1: at the repeated 0 it reset run to 0, so the 1 that followed only brought it back to 1. A new run already holds the current value, so it should restart at 1.","panels":{"array":{"values":[0,0,1],"states":"_pp","ranges":[{"from":1,"to":2,"label":"run of 2"}]},"table":{"cells":[["2","1","no"]],"states":["_xx"],"rowHeads":["#14"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"With run reset to 1, the attempt returns 2 on [0, 0, 1], matching the brute force. Over all 39 inputs, the fixed attempt never differs from the brute force.","panels":{"array":{"values":[0,0,1],"states":"ddd"},"table":{"cells":[["2","2","yes"]],"states":["_dd"],"rowHeads":["#14"],"colHeads":["brute","attempt","same?"]}}}
+]},
+{"id":"too-short","label":"Length 2","steps":[
+{"caption":"Input 1, [0]. The brute force says 1 and the attempt says 1. They match.","panels":{"array":{"values":[0],"states":"d"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#1"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"The rest of the inputs of length 1 also match (inputs 2 to 3). The last of them is [2].","skipped":2,"panels":{"array":{"values":[2],"states":"d"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#3"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"Input 4, [0, 0]. The brute force says 1 and the attempt says 1. They match.","panels":{"array":{"values":[0,0],"states":"dd"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#4"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"The rest of the inputs of length 2 also match (inputs 5 to 12). The last of them is [2, 2].","skipped":8,"panels":{"array":{"values":[2,2],"states":"dd"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#12"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"No failing input among 12 inputs up to length 2. The attempt is not proven right: the bug may need a longer input, so raise the limit and search again.","panels":{"array":{"values":[2,2],"states":"dd"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#4"],"colHeads":["brute","attempt","same?"]}}}
+]},
+{"id":"two-values","label":"Two values","steps":[
+{"caption":"Input 1, [0]. The brute force says 1 and the attempt says 1. They match.","panels":{"array":{"values":[0],"states":"d"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#1"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"The rest of the inputs of length 1 also match (input 2). The last of them is [1].","skipped":1,"panels":{"array":{"values":[1],"states":"d"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#2"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"Input 3, [0, 0]. The brute force says 1 and the attempt says 1. They match.","panels":{"array":{"values":[0,0],"states":"dd"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#3"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"The rest of the inputs of length 2 also match (inputs 4 to 6). The last of them is [1, 1].","skipped":3,"panels":{"array":{"values":[1,1],"states":"dd"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#6"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"Input 7, [0, 0, 0]. The brute force says 1 and the attempt says 1. They match.","panels":{"array":{"values":[0,0,0],"states":"ddd"},"table":{"cells":[["1","1","yes"]],"states":["_dd"],"rowHeads":["#7"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"Input 8, [0, 0, 1]. The brute force says 2 and the attempt says 1. They differ: this is the smallest failing input, found in size order.","panels":{"array":{"values":[0,0,1],"states":"xxx"},"table":{"cells":[["2","1","no"]],"states":["_xx"],"rowHeads":["#8"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"On [0, 0, 1] the brute force finds the increasing run 0, 1 of length 2. The attempt returns 1: at the repeated 0 it reset run to 0, so the 1 that followed only brought it back to 1. A new run already holds the current value, so it should restart at 1.","panels":{"array":{"values":[0,0,1],"states":"_pp","ranges":[{"from":1,"to":2,"label":"run of 2"}]},"table":{"cells":[["2","1","no"]],"states":["_xx"],"rowHeads":["#8"],"colHeads":["brute","attempt","same?"]}}},
+{"caption":"With run reset to 1, the attempt returns 2 on [0, 0, 1], matching the brute force. Over all 14 inputs, the fixed attempt never differs from the brute force.","panels":{"array":{"values":[0,0,1],"states":"ddd"},"table":{"cells":[["2","2","yes"]],"states":["_dd"],"rowHeads":["#8"],"colHeads":["brute","attempt","same?"]}}}
+]}
+]}

@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Trials so far }
+alt: >-
+  A table that gains one row per stress-test trial. Each row shows the random input, the brute
+  force's answer, the fast function's answer and whether they agree. Rows marked agree leave the
+  loop running. The first row marked DIFFER ends the run, and that row's input is the one the test
+  prints.
+captions: vizrec
+presets:
+  - id: early
+    label: Seed 13
+    stdin: "13\n"
+  - id: mid
+    label: Seed 21
+    stdin: "21\n"
+  - id: late
+    label: Seed 33
+    stdin: "33\n"
+consistency:
+  description: The failing trial's report equals the output of examples/stress_test.py on the same seed.
+  example: ../examples/stress_test.py
+  compare: output

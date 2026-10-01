@@ -1,0 +1,25 @@
+example: sparse_min.py
+alt: >-
+  A short version of the program for four values and one query. It builds the sparse table one
+  level at a time from pairs of blocks of the level before, then answers the query with two
+  lookups: the block that starts at the left end and the block that ends at the right end.
+presets:
+  - id: main
+    label: Length 3
+    stdin: "0 2 4 6 3 7\n"
+  - id: power
+    label: Length 4
+    stdin: "0 3 4 6 3 7\n"
+  - id: single
+    label: One element
+    stdin: "2 2 4 6 3 7\n"
+notes:
+  "5": "The input is the query ends `left` and `last`, then the four values."
+  "8": "`sp[0]` is the array itself: blocks of length 1."
+  "9": "`LOG` levels are enough: the largest `k` with `2^k <= n` is `n.bit_length() - 1`."
+  "11": "`a` is the level below; each new block joins two of its blocks."
+  "12": "`b` is `a` shifted by half a block, so `a[i]` and `b[i]` are the two halves."
+  "13": "The new block is the smaller of its two halves."
+  "16": "The largest `k` with `2^k` at most the query length."
+  "18": "The second block ends at `last`, so it starts `2^k - 1` places earlier."
+  "20": "Two lookups and one `min`, however long the range is."

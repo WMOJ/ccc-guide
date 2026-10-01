@@ -1,0 +1,15 @@
+example: clock_wrap.py
+alt: >-
+  The program reads an hour and an offset, adds them, and prints the result modulo 24,
+  wrapping past midnight and lifting a negative sum back into range.
+presets:
+  - id: main
+    label: Crosses midnight
+    stdin: "22\n5\n"
+  - id: negative
+    label: Negative offset
+    stdin: "2\n-5\n"
+notes:
+  "9": "`offset` can be negative, as in the second preset: `-5` here."
+  "10": "`total` is 27 in the first preset, -3 in the second: it can land outside 0 to 23."
+  "11": "`% 24` brings it back in range: 27 % 24 is 3, and -3 % 24 is 21, not -3. Python's `%` never returns a negative result here."

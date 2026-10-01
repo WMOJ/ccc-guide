@@ -1,34 +1,41 @@
+import sys
 from collections import deque
 
 
-def multisource_bfs(adj, sources):
-    """BFS from multiple sources at once."""
-    n = len(adj)
-    dist = [-1] * n
-    queue = deque()
+def main() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
+    rows = int(data[0])
+    cols = int(data[1])
+    grid = data[2:2 + rows]
 
-    for src in sources:
-        dist[src] = 0
-        queue.append(src)
+    dist = [[-1] * cols for _ in range(rows)]
+    queue = deque()
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == "D":
+                dist[r][c] = 0
+                queue.append((r, c))
 
     while queue:
-        u = queue.popleft()
-        for v in adj[u]:
-            if dist[v] == -1:
-                dist[v] = dist[u] + 1
-                queue.append(v)
+        r, c = queue.popleft()
+        for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            nr, nc = r + dr, c + dc
+            if (
+                0 <= nr < rows
+                and 0 <= nc < cols
+                and grid[nr][nc] != "#"
+                and dist[nr][nc] == -1
+            ):
+                dist[nr][nc] = dist[r][c] + 1
+                queue.append((nr, nc))
 
-    return dist
+    out_lines = []
+    for r in range(rows):
+        out_lines.append(" ".join(str(dist[r][c]) for c in range(cols)))
+    print("\n".join(out_lines))
 
 
-adj = [
-    [1, 2],
-    [0, 3],
-    [0, 4],
-    [1, 5],
-    [2, 5],
-    [3, 4]
-]
-
-distances = multisource_bfs(adj, [0, 3])
-print("Distances from sources [0, 3]:", distances)
+if __name__ == "__main__":
+    main()

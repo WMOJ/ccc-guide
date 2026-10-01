@@ -1,0 +1,28 @@
+{"schema":1,
+"kind":"frames",
+"id":"seen-before-scan",
+"layout":"row",
+"panels":[{"id":"items","viz":"ArrayViz","title":"Input values"},{"id":"seen","viz":"StructViz","title":"seen"}],
+"alt":"Scanning a list left to right, checking each value against a growing set of values seen so far. A new value joins the set; a repeat is found already sitting inside it, one lookup either way.",
+"presets":[
+{"id":"has-repeat","label":"Has repeat","steps":[
+{"caption":"\"7\" is not in seen yet. It is new, so it joins the set now.","panels":{"items":{"values":["7","3","7","9","3","3"],"states":"c_____","pointers":[{"name":"i","at":0}]},"seen":{"kind":"set","items":[{"v":"7","s":"c"}]}}},
+{"caption":"\"3\" is not in seen yet. It is new, so it joins the set now.","panels":{"items":{"values":["7","3","7","9","3","3"],"states":"dc____","pointers":[{"name":"i","at":1}]},"seen":{"kind":"set","items":[{"v":"7","s":"d"},{"v":"3","s":"c"}]}}},
+{"caption":"\"7\" is already in seen. This is a repeat.","panels":{"items":{"values":["7","3","7","9","3","3"],"states":"ddc___","pointers":[{"name":"i","at":2}]},"seen":{"kind":"set","items":[{"v":"7","s":"m"},{"v":"3","s":"d"}]}}},
+{"caption":"\"9\" is not in seen yet. It is new, so it joins the set now.","panels":{"items":{"values":["7","3","7","9","3","3"],"states":"dddc__","pointers":[{"name":"i","at":3}]},"seen":{"kind":"set","items":[{"v":"7","s":"d"},{"v":"3","s":"d"},{"v":"9","s":"c"}]}}},
+{"caption":"\"3\" is already in seen. This is a repeat.","panels":{"items":{"values":["7","3","7","9","3","3"],"states":"ddddc_","pointers":[{"name":"i","at":4}]},"seen":{"kind":"set","items":[{"v":"7","s":"d"},{"v":"3","s":"m"},{"v":"9","s":"d"}]}}},
+{"caption":"\"3\" is already in seen. This is a repeat.","panels":{"items":{"values":["7","3","7","9","3","3"],"states":"dddddc","pointers":[{"name":"i","at":5}]},"seen":{"kind":"set","items":[{"v":"7","s":"d"},{"v":"3","s":"m"},{"v":"9","s":"d"}]}}}
+]},
+{"id":"no-repeat","label":"No repeat","steps":[
+{"caption":"\"1\" is not in seen yet. It is new, so it joins the set now.","panels":{"items":{"values":["1","2","3","4"],"states":"c___","pointers":[{"name":"i","at":0}]},"seen":{"kind":"set","items":[{"v":"1","s":"c"}]}}},
+{"caption":"\"2\" is not in seen yet. It is new, so it joins the set now.","panels":{"items":{"values":["1","2","3","4"],"states":"dc__","pointers":[{"name":"i","at":1}]},"seen":{"kind":"set","items":[{"v":"1","s":"d"},{"v":"2","s":"c"}]}}},
+{"caption":"\"3\" is not in seen yet. It is new, so it joins the set now.","panels":{"items":{"values":["1","2","3","4"],"states":"ddc_","pointers":[{"name":"i","at":2}]},"seen":{"kind":"set","items":[{"v":"1","s":"d"},{"v":"2","s":"d"},{"v":"3","s":"c"}]}}},
+{"caption":"\"4\" is not in seen yet. It is new, so it joins the set now.","panels":{"items":{"values":["1","2","3","4"],"states":"dddc","pointers":[{"name":"i","at":3}]},"seen":{"kind":"set","items":[{"v":"1","s":"d"},{"v":"2","s":"d"},{"v":"3","s":"d"},{"v":"4","s":"c"}]}}}
+]},
+{"id":"all-same","label":"All same","steps":[
+{"caption":"\"5\" is not in seen yet. It is new, so it joins the set now.","panels":{"items":{"values":["5","5","5","5"],"states":"c___","pointers":[{"name":"i","at":0}]},"seen":{"kind":"set","items":[{"v":"5","s":"c"}]}}},
+{"caption":"\"5\" is already in seen. This is a repeat.","panels":{"items":{"values":["5","5","5","5"],"states":"dc__","pointers":[{"name":"i","at":1}]},"seen":{"kind":"set","items":[{"v":"5","s":"m"}]}}},
+{"caption":"\"5\" is already in seen. This is a repeat.","panels":{"items":{"values":["5","5","5","5"],"states":"ddc_","pointers":[{"name":"i","at":2}]},"seen":{"kind":"set","items":[{"v":"5","s":"m"}]}}},
+{"caption":"\"5\" is already in seen. This is a repeat.","panels":{"items":{"values":["5","5","5","5"],"states":"dddc","pointers":[{"name":"i","at":3}]},"seen":{"kind":"set","items":[{"v":"5","s":"m"}]}}}
+]}
+]}

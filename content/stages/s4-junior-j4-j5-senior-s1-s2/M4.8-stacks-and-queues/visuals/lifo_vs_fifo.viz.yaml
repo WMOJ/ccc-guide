@@ -1,0 +1,20 @@
+layout: row
+panels:
+  - { id: stack, viz: StructViz, title: Stack (LIFO) }
+  - { id: queue, viz: StructViz, title: Queue (FIFO) }
+alt: >-
+  Pushing the same values onto a stack and adding them to a queue, then draining both: the
+  stack gives them back in reverse order while the queue gives them back in the order they
+  arrived.
+captions: vizrec
+presets:
+  - id: main
+    label: Three values
+    stdin: "a b c\n"
+  - id: one
+    label: One value
+    stdin: "x\n"
+consistency:
+  description: The final stack/queue order in the visual equals the output of examples/lifo_vs_fifo.py.
+  example: ../examples/lifo_vs_fifo.py
+  compare: output

@@ -1,0 +1,45 @@
+{"schema":1,
+"kind":"frames",
+"id":"every-pair",
+"layout":"single",
+"panels":[{"id":"values","viz":"ArrayViz","title":"Every start and end"}],
+"alt":"The brute force for the best stretch. For each pair of a start i and an end j, the slice between them is marked on the array with its sum, and the best sum so far is kept in a second mark. The last step shows the best stretch and its sum.",
+"presets":[
+{"id":"main","label":"Six days","steps":[
+{"caption":"Pair 1 is i = 0, j = 0: the slice values[0:1] sums to 3. Nothing is larger yet, so best starts at 3.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"c_____","ranges":[{"from":0,"to":0,"label":"sum 3"}],"indexBase":0}}},
+{"caption":"Pair 2 is i = 0, j = 1: the slice values[0:2] sums to -1. That does not beat best, which stays 3.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"cc____","ranges":[{"from":0,"to":1,"label":"sum -1"}],"indexBase":0}}},
+{"caption":"Pair 3 is i = 0, j = 2: the slice values[0:3] sums to 1. That does not beat best, which stays 3.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"ccc___","ranges":[{"from":0,"to":2,"label":"sum 1"}],"indexBase":0}}},
+{"caption":"Pair 4 is i = 0, j = 3: the slice values[0:4] sums to 0. That does not beat best, which stays 3.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"cccc__","ranges":[{"from":0,"to":3,"label":"sum 0"}],"indexBase":0}}},
+{"caption":"Pair 5 is i = 0, j = 4: the slice values[0:5] sums to 4. That beats the old best, so best becomes 4.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"ccccc_","ranges":[{"from":0,"to":4,"label":"sum 4"}],"indexBase":0}}},
+{"caption":"Pair 6 is i = 0, j = 5: the slice values[0:6] sums to -1. That does not beat best, which stays 4.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"cccccc","ranges":[{"from":0,"to":5,"label":"sum -1"}],"indexBase":0}}},
+{"caption":"Pair 7 is i = 1, j = 1: the slice values[1:2] sums to -4. That does not beat best, which stays 4.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"dcddd_","ranges":[{"from":1,"to":1,"label":"sum -4"}],"indexBase":0}}},
+{"caption":"Pair 8 is i = 1, j = 2: the slice values[1:3] sums to -2. That does not beat best, which stays 4.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"dccdd_","ranges":[{"from":1,"to":2,"label":"sum -2"}],"indexBase":0}}},
+{"caption":"Pair 9 is i = 1, j = 3: the slice values[1:4] sums to -3. That does not beat best, which stays 4.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"dcccd_","ranges":[{"from":1,"to":3,"label":"sum -3"}],"indexBase":0}}},
+{"caption":"Pair 10 is i = 1, j = 4: the slice values[1:5] sums to 1. That does not beat best, which stays 4.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"dcccc_","ranges":[{"from":1,"to":4,"label":"sum 1"}],"indexBase":0}}},
+{"caption":"Pair 11 is i = 1, j = 5: the slice values[1:6] sums to -4. That does not beat best, which stays 4.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"dccccc","ranges":[{"from":1,"to":5,"label":"sum -4"}],"indexBase":0}}},
+{"caption":"Pair 12 is i = 2, j = 2: the slice values[2:3] sums to 2. That does not beat best, which stays 4.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"ddcdd_","ranges":[{"from":2,"to":2,"label":"sum 2"}],"indexBase":0}}},
+{"caption":"Pair 13 is i = 2, j = 3: the slice values[2:4] sums to 1. That does not beat best, which stays 4.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"ddccd_","ranges":[{"from":2,"to":3,"label":"sum 1"}],"indexBase":0}}},
+{"caption":"Pair 14 is i = 2, j = 4: the slice values[2:5] sums to 5. That beats the old best, so best becomes 5.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"__ccc_","ranges":[{"from":2,"to":4,"label":"sum 5"}],"indexBase":0}}},
+{"caption":"Pair 15 is i = 2, j = 5: the slice values[2:6] sums to 0. That does not beat best, which stays 5.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"__cccc","ranges":[{"from":2,"to":5,"label":"sum 0"}],"indexBase":0}}},
+{"caption":"Pair 16 is i = 3, j = 3: the slice values[3:4] sums to -1. That does not beat best, which stays 5.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"__dcd_","ranges":[{"from":3,"to":3,"label":"sum -1"}],"indexBase":0}}},
+{"caption":"Pair 17 is i = 3, j = 4: the slice values[3:5] sums to 3. That does not beat best, which stays 5.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"__dcc_","ranges":[{"from":3,"to":4,"label":"sum 3"}],"indexBase":0}}},
+{"caption":"Pair 18 is i = 3, j = 5: the slice values[3:6] sums to -2. That does not beat best, which stays 5.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"__dccc","ranges":[{"from":3,"to":5,"label":"sum -2"}],"indexBase":0}}},
+{"caption":"Pair 19 is i = 4, j = 4: the slice values[4:5] sums to 4. That does not beat best, which stays 5.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"__ddc_","ranges":[{"from":4,"to":4,"label":"sum 4"}],"indexBase":0}}},
+{"caption":"Pair 20 is i = 4, j = 5: the slice values[4:6] sums to -1. That does not beat best, which stays 5.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"__ddcc","ranges":[{"from":4,"to":5,"label":"sum -1"}],"indexBase":0}}},
+{"caption":"Pair 21 is i = 5, j = 5: the slice values[5:6] sums to -5. That does not beat best, which stays 5.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"__dddc","ranges":[{"from":5,"to":5,"label":"sum -5"}],"indexBase":0}}},
+{"caption":"All 21 pairs are checked. The largest sum is 5, from values[2:5], which is what every_pair.py prints.","panels":{"values":{"values":[3,-4,2,-1,4,-5],"states":"__ddd_","ranges":[{"from":2,"to":4,"label":"best 5"}],"indexBase":0}}}
+]},
+{"id":"losses","label":"All losses","steps":[
+{"caption":"Pair 1 is i = 0, j = 0: the slice values[0:1] sums to -2. Nothing is larger yet, so best starts at -2.","panels":{"values":{"values":[-2,-1,-3],"states":"c__","ranges":[{"from":0,"to":0,"label":"sum -2"}],"indexBase":0}}},
+{"caption":"Pair 2 is i = 0, j = 1: the slice values[0:2] sums to -3. That does not beat best, which stays -2.","panels":{"values":{"values":[-2,-1,-3],"states":"cc_","ranges":[{"from":0,"to":1,"label":"sum -3"}],"indexBase":0}}},
+{"caption":"Pair 3 is i = 0, j = 2: the slice values[0:3] sums to -6. That does not beat best, which stays -2.","panels":{"values":{"values":[-2,-1,-3],"states":"ccc","ranges":[{"from":0,"to":2,"label":"sum -6"}],"indexBase":0}}},
+{"caption":"Pair 4 is i = 1, j = 1: the slice values[1:2] sums to -1. That beats the old best, so best becomes -1.","panels":{"values":{"values":[-2,-1,-3],"states":"_c_","ranges":[{"from":1,"to":1,"label":"sum -1"}],"indexBase":0}}},
+{"caption":"Pair 5 is i = 1, j = 2: the slice values[1:3] sums to -4. That does not beat best, which stays -1.","panels":{"values":{"values":[-2,-1,-3],"states":"_cc","ranges":[{"from":1,"to":2,"label":"sum -4"}],"indexBase":0}}},
+{"caption":"Pair 6 is i = 2, j = 2: the slice values[2:3] sums to -3. That does not beat best, which stays -1.","panels":{"values":{"values":[-2,-1,-3],"states":"_dc","ranges":[{"from":2,"to":2,"label":"sum -3"}],"indexBase":0}}},
+{"caption":"All 6 pairs are checked. The largest sum is -1, from values[1:2], which is what every_pair.py prints.","panels":{"values":{"values":[-2,-1,-3],"states":"_d_","ranges":[{"from":1,"to":1,"label":"best -1"}],"indexBase":0}}}
+]},
+{"id":"one","label":"One day","steps":[
+{"caption":"Pair 1 is i = 0, j = 0: the slice values[0:1] sums to 5. Nothing is larger yet, so best starts at 5.","panels":{"values":{"values":[5],"states":"c","ranges":[{"from":0,"to":0,"label":"sum 5"}],"indexBase":0}}},
+{"caption":"All 1 pair is checked. The largest sum is 5, from values[0:1], which is what every_pair.py prints.","panels":{"values":{"values":[5],"states":"d","ranges":[{"from":0,"to":0,"label":"best 5"}],"indexBase":0}}}
+]}
+]}

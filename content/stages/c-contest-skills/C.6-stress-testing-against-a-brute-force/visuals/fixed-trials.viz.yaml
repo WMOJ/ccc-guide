@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Fixed function }
+alt: >-
+  The same stress test run with the fixed fast function. Each of the first six trials adds a row
+  showing the input and two equal answers. A skip step stands for the remaining trials up to 1000,
+  and the last step reports that the two functions never disagreed.
+captions: vizrec
+presets:
+  - id: early
+    label: Seed 13
+    stdin: "13\n"
+  - id: mid
+    label: Seed 21
+    stdin: "21\n"
+consistency:
+  description: The final report equals the output of examples/stress_fixed.py on the same seed.
+  example: ../examples/stress_fixed.py
+  compare: output

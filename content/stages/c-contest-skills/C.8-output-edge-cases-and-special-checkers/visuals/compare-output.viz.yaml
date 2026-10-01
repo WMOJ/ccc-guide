@@ -1,0 +1,28 @@
+layout: row
+panels:
+  - { id: exp, viz: ArrayViz }
+  - { id: pro, viz: ArrayViz }
+alt: >-
+  Two rows of characters, the output the grader expects and the output the program produced, with
+  spaces drawn as dots and the newline as backslash n. An exact checker compares character by
+  character and stops at the first difference. A token checker splits both outputs on
+  whitespace and compares the tokens, so a trailing space no longer matters.
+legendLabels:
+  current: Comparing
+  done: Same
+  invalid: Differs
+captions: vizrec
+presets:
+  - id: three
+    label: Three values
+    stdin: "3 1 4\n"
+  - id: one
+    label: One value
+    stdin: "7\n"
+  - id: none
+    label: No values
+    stdin: ""
+consistency:
+  description: The two strings compared equal the two repr lines printed by examples/format_demo.py on each preset's input.
+  example: ../examples/format_demo.py
+  compare: output

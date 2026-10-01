@@ -1,51 +1,50 @@
 import sys
 
 
-def dfs(node, adj, state, discovery, finish, time_counter):
-    state[node] = 'gray'
-    discovery[node] = time_counter[0]
-    time_counter[0] += 1
-
-    for neighbor in adj[node]:
-        if state[neighbor] == 'white':
-            dfs(neighbor, adj, state, discovery, finish, time_counter)
-
-    state[node] = 'black'
-    finish[node] = time_counter[0]
-    time_counter[0] += 1
-
-
 def main() -> None:
-    input_data = sys.stdin.read().split()
-    if not input_data:
-        return
-
-    idx = 0
-    n = int(input_data[idx])
-    m = int(input_data[idx + 1])
-    idx += 2
-
+    data = sys.stdin.read().split()
+    n = int(data[0])
+    m = int(data[1])
+    pos = 2
     adj = [[] for _ in range(n)]
     for _ in range(m):
-        u = int(input_data[idx])
-        v = int(input_data[idx + 1])
-        idx += 2
+        u = int(data[pos])
+        v = int(data[pos + 1])
+        pos += 2
         adj[u].append(v)
 
-    state = ['white'] * n
-    discovery = [-1] * n
-    finish = [-1] * n
-    time_counter = [0]
+    disc = [-1] * n
+    fin = [-1] * n
+    clock = 0
+    roots = 0
+    for root in range(n):
+        if disc[root] != -1:
+            continue
+        roots += 1
+        disc[root] = clock
+        clock += 1
+        st = [[root, 0]]
+        while st:
+            fr = st[-1]
+            node = fr[0]
+            idx = fr[1]
+            if idx == len(adj[node]):
+                st.pop()
+                fin[node] = clock
+                clock += 1
+                continue
+            fr[1] = idx + 1
+            nb = adj[node][idx]
+            if disc[nb] == -1:
+                disc[nb] = clock
+                clock += 1
+                st.append([nb, 0])
 
-    for i in range(n):
-        if state[i] == 'white':
-            dfs(i, adj, state, discovery, finish, time_counter)
-
-    result = []
-    for i in range(n):
-        result.append(str(i) + " " + str(discovery[i]) + " " + str(finish[i]))
-
-    sys.stdout.write("\n".join(result) + "\n")
+    lines = []
+    for v in range(n):
+        lines.append(f"{v} {disc[v]} {fin[v]}")
+    lines.append(f"trees {roots}")
+    print("\n".join(lines))
 
 
 if __name__ == "__main__":

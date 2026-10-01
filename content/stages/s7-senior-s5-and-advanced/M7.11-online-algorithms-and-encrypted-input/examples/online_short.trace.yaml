@@ -1,0 +1,19 @@
+example: online_short.py
+alt: >-
+  A short version of the encrypted-query program for six values and two range-sum lines. The
+  answer to the first line is kept in last, and both numbers of the second line are decoded with
+  it before its range is known. A plain slice sum stands in for the tree.
+presets:
+  - id: main
+    label: Two lines
+    stdin: "6\n5 3 8 1 4 7\n1 4 2 1\n"
+  - id: same
+    label: Same line twice
+    stdin: "6\n5 3 8 1 4 7\n2 5 2 5\n"
+notes:
+  "9": "The raw pairs: line 1 is the first two tokens, line 2 the next two."
+  "10": "`last` is 0 until a range has been answered."
+  "11": "`k` picks the line: 0 for the first pair, 2 for the second."
+  "14": "Both numbers are decoded with `last` and `% n`, which keeps them inside the array."
+  "16": "Decoding can put the ends the wrong way round, so they are swapped."
+  "19": "This answer becomes the `last` that decodes the next line."

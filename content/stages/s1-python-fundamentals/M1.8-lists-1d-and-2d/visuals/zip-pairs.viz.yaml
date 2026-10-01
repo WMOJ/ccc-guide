@@ -1,0 +1,26 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: "names" }
+  - { id: b, viz: ArrayViz, title: "scores" }
+alt: >-
+  Two lists are read together with zip. Each pass pairs the values at the same index, marked in
+  both lists, and prints them. When the lists have the same length, both run out together.
+  When one list is longer, zip stops as soon as the shorter one ends and the extra values in
+  the longer list are never visited.
+captions: vizrec
+legendLabels:
+  current: Paired now
+  done: Already paired
+  invalid: Never visited
+  unvisited: Not yet paired
+presets:
+  - id: main
+    label: Same length
+    stdinFile: ../examples/zip_two_lists.in
+  - id: uneven
+    label: Uneven
+    stdin: "Ana Bo Cy\n10 20\n"
+consistency:
+  description: The pairs shown match the lines examples/zip_two_lists.py prints.
+  example: ../examples/zip_two_lists.py
+  compare: output

@@ -1,0 +1,26 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz }
+alt: >-
+  A table of three ways to print the same quotient. Each row gives the printed text, its absolute
+  error and its relative error against the true value, and marks each error as under or over 10^-6.
+  For a tiny answer, a six-decimal format has a small absolute error but a large relative error.
+  For a huge answer, two decimals have a large absolute error but a tiny relative error.
+legendLabels:
+  done: Under 10^-6
+  invalid: Over 10^-6
+captions: vizrec
+presets:
+  - id: small
+    label: Tiny answer
+    stdin: "1 10000000\n"
+  - id: large
+    label: Huge answer
+    stdin: "1000000000 3\n"
+  - id: twothirds
+    label: Two thirds
+    stdin: "2 3\n"
+consistency:
+  description: The printed texts in the table equal the three lines printed by examples/float_demo.py on each preset's input.
+  example: ../examples/float_demo.py
+  compare: output

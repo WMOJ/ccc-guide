@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: source, viz: ArrayViz, title: Source word }
+  - { id: parts, viz: ArrayViz, title: Parts so far }
+alt: >-
+  Building a list of parts one character at a time. Each step marks the source character being
+  read and shows the parts list one entry longer, with a vowel replaced by an asterisk and
+  every other character copied as is.
+captions: vizrec
+presets:
+  - id: main
+    label: Mixed
+    stdin: "hello\n"
+  - id: no-vowels
+    label: No vowels
+    stdin: "bcdfg\n"
+  - id: single
+    label: Single vowel
+    stdin: "a\n"
+consistency:
+  description: The final joined string equals the output of examples/build_transform.py on the same input.
+  example: ../examples/build_transform.py
+  compare: output

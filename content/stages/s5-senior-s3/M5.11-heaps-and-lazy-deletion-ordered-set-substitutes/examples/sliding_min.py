@@ -1,24 +1,26 @@
-from collections import deque
+import heapq
+import sys
 
-arr = [3, 1, 4, 1, 5, 9, 2, 6]
-k = 3
 
-dq = deque()
-results = []
+def main() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
+    n = int(data[0])
+    k = int(data[1])
+    values = [int(x) for x in data[2:2 + n]]
 
-for i, val in enumerate(arr):
-    # Remove indices outside the window
-    while dq and dq[0] < i - k + 1:
-        dq.popleft()
+    heap = []
+    minimums = []
+    for i in range(n):
+        heapq.heappush(heap, (values[i], i))
+        while heap[0][1] <= i - k:
+            heapq.heappop(heap)
+        if i >= k - 1:
+            minimums.append(heap[0][0])
 
-    # Remove larger values from the back
-    while dq and arr[dq[-1]] > val:
-        dq.pop()
+    print(" ".join(str(x) for x in minimums))
 
-    dq.append(i)
 
-    # Window is complete
-    if i >= k - 1:
-        results.append(arr[dq[0]])
-
-print("Sliding window minima:", results)
+if __name__ == "__main__":
+    main()

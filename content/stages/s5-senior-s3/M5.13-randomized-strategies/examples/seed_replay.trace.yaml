@@ -1,0 +1,18 @@
+example: seed_replay.py
+alt: >-
+  The program seeds the random generator, draws some numbers into a list called first, seeds it
+  again with the same value, and draws the same number of numbers into a list called second.
+  The two lists come out identical.
+presets:
+  - id: main
+    label: Seed 42
+    stdin: "42 3\n"
+  - id: other
+    label: Seed 7
+    stdin: "7 3\n"
+  - id: one
+    label: One draw
+    stdin: "42 1\n"
+notes:
+  "11": "Seeding puts the generator in a known state, so the draws that follow are fixed in advance."
+  "17": "Seeding again with the same number resets the generator to that same state."

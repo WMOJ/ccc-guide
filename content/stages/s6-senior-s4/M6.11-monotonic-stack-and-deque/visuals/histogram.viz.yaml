@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: "Bar heights" }
+  - { id: s, viz: StructViz, title: "Stack (bar: height)" }
+alt: >-
+  A row of histogram bar heights with a final bar of height 0, next to a stack of bar numbers
+  whose heights rise from bottom to top. When a bar is not taller than the top of the stack, the
+  top bar is popped and its widest rectangle is measured from the bar below it on the stack to
+  the current bar. The largest rectangle seen is the answer.
+captions: vizrec
+presets:
+  - id: main
+    label: Mixed
+    stdin: "7\n3 1 4 5 2 2 3\n"
+  - id: rising
+    label: Rising
+    stdin: "5\n1 2 3 4 5\n"
+  - id: flat
+    label: Equal bars
+    stdin: "5\n4 4 4 4 4\n"
+consistency:
+  description: The largest area equals the output of examples/largest_rectangle.py.
+  example: ../examples/largest_rectangle.py
+  compare: output

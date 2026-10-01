@@ -1,0 +1,28 @@
+layout: row
+panels:
+  - { id: graph, viz: GraphViz, title: Stations and hops }
+  - { id: table, viz: TableViz, title: Bits of K }
+alt: >-
+  A query answered with the doubling table. The graph keeps the teleporter arrows and adds one
+  labeled arrow for each hop the rider takes, such as +4 for a hop of four jumps. The table lists
+  each bit of K from bit 0 upward, whether it is set, and the station the rider is on after
+  that bit is handled.
+legendLabels:
+  frontier: Set bit
+  current: Rider here
+  done: Visited
+captions: vizrec
+presets:
+  - id: main
+    label: K = 13
+    stdin: "8 1\n1 2 3 4 5 6 7 3\n0 13\n"
+  - id: zero
+    label: K = 0
+    stdin: "8 1\n1 2 3 4 5 6 7 3\n6 0\n"
+  - id: skips
+    label: K = 22
+    stdin: "8 1\n1 2 3 4 5 6 7 3\n0 22\n"
+consistency:
+  description: The final station equals the answer examples/binary_lifting.py prints for the same single query.
+  example: ../examples/binary_lifting.py
+  compare: output

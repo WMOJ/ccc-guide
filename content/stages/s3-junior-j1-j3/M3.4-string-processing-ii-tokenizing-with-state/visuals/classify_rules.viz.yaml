@@ -1,0 +1,25 @@
+layout: row
+panels:
+  - { id: chars, viz: ArrayViz, title: Line }
+  - { id: rules, viz: TableViz, title: Rule table }
+alt: >-
+  The rule table behind the tokenizer. For each character, the scan finds the row for the
+  current mode (start, letters or number) and the column for the kind of the next character
+  (letter, digit or sign), and reads the marked cell: extend keeps the character in the current
+  token, new closes the current token and starts a fresh one. Only a letter after letters or a
+  digit after a number extends.
+captions: vizrec
+presets:
+  - id: main
+    label: Mixed
+    stdin: "AB+1C-2E\n"
+  - id: signs
+    label: Signs
+    stdin: "+1-2+3\n"
+  - id: digits
+    label: Digit run
+    stdin: "A123B\n"
+consistency:
+  description: The tokens found equal the lines printed by examples/classify_tokens.py.
+  example: ../examples/classify_tokens.py
+  compare: output

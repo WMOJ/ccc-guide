@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: g, viz: GraphViz, title: Floor plan }
+  - { id: q, viz: StructViz, title: Queue }
+alt: >-
+  Two breadth-first searches finding the longest walk between any two rooms on a floor plan. The
+  first search starts at room 0 and finds the farthest room from it; the second search starts
+  there and finds the room farthest from that, which is the diameter's other end. The last step
+  highlights the path between them.
+captions: vizrec
+presets:
+  - id: branch
+    label: Branching
+    stdin: "7\n0 1\n1 2\n1 3\n3 4\n4 5\n3 6\n"
+  - id: path
+    label: Straight hallway
+    stdin: "6\n0 1\n1 2\n2 3\n3 4\n4 5\n"
+  - id: star
+    label: One junction
+    stdin: "5\n0 1\n0 2\n0 3\n0 4\n"
+consistency:
+  description: The diameter endpoints and length equal the output of examples/tree_diameter.py on each preset.
+  example: ../examples/tree_diameter.py
+  compare: output

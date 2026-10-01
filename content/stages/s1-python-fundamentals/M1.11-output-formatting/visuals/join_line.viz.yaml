@@ -1,0 +1,17 @@
+layout: single
+panels:
+  - id: line
+    viz: ArrayViz
+alt: >-
+  A list of three numbers is converted to three strings, then joined with a space between each
+  pair, giving three characters of data and two separators. The same pattern with a comma gives
+  a comma-separated line. A loop that prints a space after every value would leave one trailing
+  space, shown as an invalid cell.
+captions: vizrec
+presets:
+  - id: main
+    label: 3, 5, 2
+consistency:
+  description: "rec.output() equals join_no_trailing.py's real stdout (no stdin needed)."
+  example: ../examples/join_no_trailing.py
+  compare: output

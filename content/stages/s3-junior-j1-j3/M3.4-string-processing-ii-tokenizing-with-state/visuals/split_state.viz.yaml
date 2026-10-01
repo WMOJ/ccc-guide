@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: chars, viz: ArrayViz, title: Characters }
+  - { id: tokens, viz: StructViz, title: Tokens }
+alt: >-
+  Walking a string one character at a time. A non-delimiter character joins the current token,
+  shown at the back of a queue; a delimiter finishes that token and moves it into the queue of
+  completed tokens, leaving the next token to start empty.
+captions: vizrec
+presets:
+  - id: main
+    label: Normal line
+    stdin: "ab,cd,ef\n"
+  - id: empty-token
+    label: Empty token
+    stdin: "ab,,cd,\n"
+  - id: single
+    label: No delimiter
+    stdin: "ab\n"
+consistency:
+  description: The tokens found equal the lines printed by examples/split_tokens.py.
+  example: ../examples/split_tokens.py
+  compare: output

@@ -8,26 +8,18 @@ def main() -> None:
 
     n = int(input_data[0])
     capacity = int(input_data[1])
+    weights = list(map(int, input_data[2:2 + n]))
 
-    boxes = []
-    idx = 2
-    for _ in range(n):
-        weight = int(input_data[idx])
-        value = int(input_data[idx + 1])
-        boxes.append((weight, value))
-        idx += 2
-
-    # Sort by value per weight, descending
-    boxes.sort(key=lambda b: b[1] / b[0], reverse=True)
+    weights.sort()
 
     total_weight = 0
-    total_value = 0
-    for weight, value in boxes:
+    count = 0
+    for weight in weights:
         if total_weight + weight <= capacity:
             total_weight += weight
-            total_value += value
+            count += 1
 
-    sys.stdout.write(str(total_value) + "\n")
+    sys.stdout.write(str(count) + "\n")
 
 
 if __name__ == "__main__":

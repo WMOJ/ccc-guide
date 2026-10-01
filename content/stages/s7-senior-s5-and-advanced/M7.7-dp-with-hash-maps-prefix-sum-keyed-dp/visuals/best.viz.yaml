@@ -1,0 +1,26 @@
+layout: row
+panels:
+  - { id: top, viz: TableViz, title: Prefix sums and dp }
+  - { id: best, viz: TableViz, title: Dictionary best }
+alt: >-
+  A table of prefix sums with the dp value of each position, beside a dictionary that maps each
+  prefix sum to the best dp value stored when it last appeared. At each position the program looks
+  the prefix sum up: a hit offers best plus one as a new dp value, a miss copies the previous dp.
+  Then the dictionary entry is overwritten with the new dp.
+legendLabels:
+  compare: Looked up
+captions: vizrec
+presets:
+  - id: main
+    label: Two stretches
+    stdin: "5\n5 1 4 2 6\n3\n"
+  - id: nested
+    label: Overlapping
+    stdin: "5\n1 2 3 4 5\n3\n"
+  - id: none
+    label: No stretch
+    stdin: "5\n1 1 1 1 1\n3\n"
+consistency:
+  description: The final dp value equals the output of examples/max_disjoint.py on the same input.
+  example: ../examples/max_disjoint.py
+  compare: output

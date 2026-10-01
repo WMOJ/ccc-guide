@@ -1,0 +1,25 @@
+layout: single
+panels:
+  - { id: subset, viz: ArrayViz, title: Checking every subset }
+alt: >-
+  A brute force checking every subset of the powers of 2 up to N, adding up the ones included
+  and comparing the sum to N. Exactly one subset ever matches, whatever N is: the number's own
+  binary representation.
+legendLabels:
+  current: Included
+  done: Match
+captions: vizrec
+presets:
+  - id: five
+    label: N = 5
+    stdin: "5\n"
+  - id: one
+    label: N = 1
+    stdin: "1\n"
+  - id: eleven
+    label: N = 11
+    stdin: "11\n"
+consistency:
+  description: The final count matches examples/subset_powers.py on the same input.
+  example: ../examples/subset_powers.py
+  compare: output

@@ -1,0 +1,18 @@
+example: digital_root_trace.py
+alt: >-
+  The program reads N, then repeatedly sums its digits in an inner loop and replaces N with
+  that sum, until N is under 10. 489 shrinks to 21, then 3. A number already under 10 skips
+  the outer loop entirely.
+presets:
+  - id: main
+    label: Multiple rounds
+    stdin: "489\n"
+  - id: single
+    label: Already one digit
+    stdin: "7\n"
+notes:
+  "10": "`while n >= 10` keeps summing digits until only one is left."
+  "12": "`while n > 0` walks the digits from the right, one at a time."
+  "13": "`n % 10` is the last digit, added onto the running total."
+  "14": "`n //= 10` drops that digit, moving to the next one."
+  "15": "Each round replaces `n` with the sum of its own digits."

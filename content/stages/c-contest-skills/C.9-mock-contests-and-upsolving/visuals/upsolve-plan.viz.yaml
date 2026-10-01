@@ -1,0 +1,25 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: From log to first step }
+alt: >-
+  A table with one row per problem from a logged mock session, showing how many submissions each
+  took and whether any was accepted. Each row then gets a first upsolving step: nothing for a
+  problem accepted at once, a comparison of first and accepted attempts, a stress test for a
+  problem never accepted, or a brute force for a problem with no submission.
+captions: vizrec
+legendLabels:
+  done: Nothing to upsolve
+  invalid: Stress test
+  compare: Brute force first
+  path: Compare attempts
+presets:
+  - id: mixed
+    label: Mixed
+    stdin: "6\n1 10 38 A\n2 38 70 W\n2 70 85 W\n3 85 130 W\n2 130 152 A\n4 152 180 N\n"
+  - id: early
+    label: All accepted
+    stdin: "4\n1 10 30 A\n2 30 60 A\n3 60 95 A\n4 95 140 A\n"
+consistency:
+  description: The per-problem first steps equal the output of examples/upsolve_plan.py on each preset's input.
+  example: ../examples/upsolve_plan.py
+  compare: output

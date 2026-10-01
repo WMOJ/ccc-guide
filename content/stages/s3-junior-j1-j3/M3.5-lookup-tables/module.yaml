@@ -13,7 +13,5 @@ practice:
   - id: ccc16j4
     note: Look up an arrival time using a rule that changes across the day.
     why: A lookup-driven simulation, matching this lesson's table-first approach.
-  - id: ccc24s1
-    note: Compare values at paired positions around a circular arrangement.
   - id: ccc23j2
     note: Look up a value for each item using a fixed table of entries.

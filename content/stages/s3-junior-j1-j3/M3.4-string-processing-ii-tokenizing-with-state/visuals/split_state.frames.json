@@ -1,0 +1,34 @@
+{"schema":1,
+"kind":"frames",
+"id":"split_state",
+"layout":"row",
+"panels":[{"id":"chars","viz":"ArrayViz","title":"Characters"},{"id":"tokens","viz":"StructViz","title":"Tokens"}],
+"alt":"Walking a string one character at a time. A non-delimiter character joins the current token, shown at the back of a queue; a delimiter finishes that token and moves it into the queue of completed tokens, leaving the next token to start empty.",
+"presets":[
+{"id":"main","label":"Normal line","steps":[
+{"caption":"s[0] is 'a': it joins the current token, now 'a'.","panels":{"chars":{"values":["a","b",",","c","d",",","e","f"],"states":"c_______","pointers":[{"name":"i","at":0}]},"tokens":{"kind":"queue","items":[{"v":"a","s":"c"}],"name":"tokens"}}},
+{"caption":"s[1] is 'b': it joins the current token, now 'ab'.","panels":{"chars":{"values":["a","b",",","c","d",",","e","f"],"states":"dc______","pointers":[{"name":"i","at":1}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"c"}],"name":"tokens"}}},
+{"caption":"s[2] is the delimiter ',': the token 'ab' is complete. A new token starts empty.","panels":{"chars":{"values":["a","b",",","c","d",",","e","f"],"states":"ddc_____","pointers":[{"name":"i","at":2}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"}],"name":"tokens"}}},
+{"caption":"s[3] is 'c': it joins the current token, now 'c'.","panels":{"chars":{"values":["a","b",",","c","d",",","e","f"],"states":"dddc____","pointers":[{"name":"i","at":3}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"},{"v":"c","s":"c"}],"name":"tokens"}}},
+{"caption":"s[4] is 'd': it joins the current token, now 'cd'.","panels":{"chars":{"values":["a","b",",","c","d",",","e","f"],"states":"ddddc___","pointers":[{"name":"i","at":4}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"},{"v":"cd","s":"c"}],"name":"tokens"}}},
+{"caption":"s[5] is the delimiter ',': the token 'cd' is complete. A new token starts empty.","panels":{"chars":{"values":["a","b",",","c","d",",","e","f"],"states":"dddddc__","pointers":[{"name":"i","at":5}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"},{"v":"cd","s":"d"}],"name":"tokens"}}},
+{"caption":"s[6] is 'e': it joins the current token, now 'e'.","panels":{"chars":{"values":["a","b",",","c","d",",","e","f"],"states":"ddddddc_","pointers":[{"name":"i","at":6}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"},{"v":"cd","s":"d"},{"v":"e","s":"c"}],"name":"tokens"}}},
+{"caption":"s[7] is 'f': it joins the current token, now 'ef'.","panels":{"chars":{"values":["a","b",",","c","d",",","e","f"],"states":"dddddddc","pointers":[{"name":"i","at":7}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"},{"v":"cd","s":"d"},{"v":"ef","s":"c"}],"name":"tokens"}}},
+{"caption":"The string ends with 'ef' still being built: append it as the last token.","panels":{"chars":{"values":["a","b",",","c","d",",","e","f"],"states":"dddddddc","pointers":[{"name":"i","at":7}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"},{"v":"cd","s":"d"},{"v":"ef","s":"d"}],"name":"tokens"}}}
+]},
+{"id":"empty-token","label":"Empty token","steps":[
+{"caption":"s[0] is 'a': it joins the current token, now 'a'.","panels":{"chars":{"values":["a","b",",",",","c","d",","],"states":"c______","pointers":[{"name":"i","at":0}]},"tokens":{"kind":"queue","items":[{"v":"a","s":"c"}],"name":"tokens"}}},
+{"caption":"s[1] is 'b': it joins the current token, now 'ab'.","panels":{"chars":{"values":["a","b",",",",","c","d",","],"states":"dc_____","pointers":[{"name":"i","at":1}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"c"}],"name":"tokens"}}},
+{"caption":"s[2] is the delimiter ',': the token 'ab' is complete. A new token starts empty.","panels":{"chars":{"values":["a","b",",",",","c","d",","],"states":"ddc____","pointers":[{"name":"i","at":2}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"}],"name":"tokens"}}},
+{"caption":"s[3] is the delimiter ',': the token '' is complete. A new token starts empty.","panels":{"chars":{"values":["a","b",",",",","c","d",","],"states":"dddc___","pointers":[{"name":"i","at":3}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"},{"v":"","s":"d"}],"name":"tokens"}}},
+{"caption":"s[4] is 'c': it joins the current token, now 'c'.","panels":{"chars":{"values":["a","b",",",",","c","d",","],"states":"ddddc__","pointers":[{"name":"i","at":4}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"},{"v":"","s":"d"},{"v":"c","s":"c"}],"name":"tokens"}}},
+{"caption":"s[5] is 'd': it joins the current token, now 'cd'.","panels":{"chars":{"values":["a","b",",",",","c","d",","],"states":"dddddc_","pointers":[{"name":"i","at":5}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"},{"v":"","s":"d"},{"v":"cd","s":"c"}],"name":"tokens"}}},
+{"caption":"s[6] is the delimiter ',': the token 'cd' is complete. A new token starts empty.","panels":{"chars":{"values":["a","b",",",",","c","d",","],"states":"ddddddc","pointers":[{"name":"i","at":6}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"},{"v":"","s":"d"},{"v":"cd","s":"d"}],"name":"tokens"}}},
+{"caption":"The string ends right after a delimiter: nothing is left to append.","panels":{"chars":{"values":["a","b",",",",","c","d",","],"states":"ddddddc","pointers":[{"name":"i","at":6}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"},{"v":"","s":"d"},{"v":"cd","s":"d"}],"name":"tokens"}}}
+]},
+{"id":"single","label":"No delimiter","steps":[
+{"caption":"s[0] is 'a': it joins the current token, now 'a'.","panels":{"chars":{"values":["a","b"],"states":"c_","pointers":[{"name":"i","at":0}]},"tokens":{"kind":"queue","items":[{"v":"a","s":"c"}],"name":"tokens"}}},
+{"caption":"s[1] is 'b': it joins the current token, now 'ab'.","panels":{"chars":{"values":["a","b"],"states":"dc","pointers":[{"name":"i","at":1}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"c"}],"name":"tokens"}}},
+{"caption":"The string ends with 'ab' still being built: append it as the last token.","panels":{"chars":{"values":["a","b"],"states":"dc","pointers":[{"name":"i","at":1}]},"tokens":{"kind":"queue","items":[{"v":"ab","s":"d"}],"name":"tokens"}}}
+]}
+]}

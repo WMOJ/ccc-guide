@@ -1,0 +1,24 @@
+{"schema":1,
+"kind":"frames",
+"id":"decode_runs",
+"layout":"row",
+"panels":[{"id":"encoded","viz":"ArrayViz","title":"Encoded string"},{"id":"parts","viz":"ArrayViz","title":"Parts so far"}],
+"alt":"Decoding a run-length string two characters at a time. Each step reads a length digit and the character after it, appends that character repeated that many times to a list of parts, and the last step joins the parts into the original string.",
+"presets":[
+{"id":"main","label":"Round trip","steps":[
+{"caption":"s[0] is '2' and s[1] is 'a': append 'a' * 2 = 'aa' to parts.","panels":{"encoded":{"values":["2","a","2","b","2","c"],"states":"cc____","pointers":[{"name":"i","at":0}],"ranges":[{"from":0,"to":1,"label":"one pair"}]},"parts":{"values":["aa"],"states":"c"}}},
+{"caption":"s[2] is '2' and s[3] is 'b': append 'b' * 2 = 'bb' to parts.","panels":{"encoded":{"values":["2","a","2","b","2","c"],"states":"ddcc__","pointers":[{"name":"i","at":2}],"ranges":[{"from":2,"to":3,"label":"one pair"}]},"parts":{"values":["aa","bb"],"states":"dc"}}},
+{"caption":"s[4] is '2' and s[5] is 'c': append 'c' * 2 = 'cc' to parts.","panels":{"encoded":{"values":["2","a","2","b","2","c"],"states":"ddddcc","pointers":[{"name":"i","at":4}],"ranges":[{"from":4,"to":5,"label":"one pair"}]},"parts":{"values":["aa","bb","cc"],"states":"ddc"}}},
+{"caption":"No pairs are left. \"\".join(parts) builds 'aabbcc' once, the string the encoding came from.","panels":{"encoded":{"values":["2","a","2","b","2","c"],"states":"dddddd"},"parts":{"values":["aa","bb","cc"],"states":"ccc"}}}
+]},
+{"id":"mixed","label":"Mixed lengths","steps":[
+{"caption":"s[0] is '3' and s[1] is 'a': append 'a' * 3 = 'aaa' to parts.","panels":{"encoded":{"values":["3","a","1","b","2","c"],"states":"cc____","pointers":[{"name":"i","at":0}],"ranges":[{"from":0,"to":1,"label":"one pair"}]},"parts":{"values":["aaa"],"states":"c"}}},
+{"caption":"s[2] is '1' and s[3] is 'b': append 'b' * 1 = 'b' to parts.","panels":{"encoded":{"values":["3","a","1","b","2","c"],"states":"ddcc__","pointers":[{"name":"i","at":2}],"ranges":[{"from":2,"to":3,"label":"one pair"}]},"parts":{"values":["aaa","b"],"states":"dc"}}},
+{"caption":"s[4] is '2' and s[5] is 'c': append 'c' * 2 = 'cc' to parts.","panels":{"encoded":{"values":["3","a","1","b","2","c"],"states":"ddddcc","pointers":[{"name":"i","at":4}],"ranges":[{"from":4,"to":5,"label":"one pair"}]},"parts":{"values":["aaa","b","cc"],"states":"ddc"}}},
+{"caption":"No pairs are left. \"\".join(parts) builds 'aaabcc' once, the string the encoding came from.","panels":{"encoded":{"values":["3","a","1","b","2","c"],"states":"dddddd"},"parts":{"values":["aaa","b","cc"],"states":"ccc"}}}
+]},
+{"id":"single","label":"One run","steps":[
+{"caption":"s[0] is '1' and s[1] is 'z': append 'z' * 1 = 'z' to parts.","panels":{"encoded":{"values":["1","z"],"states":"cc","pointers":[{"name":"i","at":0}],"ranges":[{"from":0,"to":1,"label":"one pair"}]},"parts":{"values":["z"],"states":"c"}}},
+{"caption":"No pairs are left. \"\".join(parts) builds 'z' once, the string the encoding came from.","panels":{"encoded":{"values":["1","z"],"states":"dd"},"parts":{"values":["z"],"states":"c"}}}
+]}
+]}

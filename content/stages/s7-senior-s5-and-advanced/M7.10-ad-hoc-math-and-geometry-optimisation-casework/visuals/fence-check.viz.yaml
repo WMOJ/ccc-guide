@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz, title: Best x per wire length }
+alt: >-
+  A table of six wire lengths. For each one the best side length from brute force is compared with
+  the shortcut that tries only the whole number at W over 4 and the one just above it. A rule
+  that tries only the floor is shown failing at a wire length where the peak is closer to the
+  next whole number, while floor and next always match.
+captions: vizrec
+presets:
+  - id: eight
+    label: W up to 8
+    stdin: "8\n"
+  - id: twelve
+    label: W up to 12
+    stdin: "12\n"
+  - id: five
+    label: W up to 5
+    stdin: "5\n"
+consistency:
+  description: The first failing wire length and the miss count equal the two lines examples/check_fence.py prints.
+  example: ../examples/check_fence.py
+  compare: output

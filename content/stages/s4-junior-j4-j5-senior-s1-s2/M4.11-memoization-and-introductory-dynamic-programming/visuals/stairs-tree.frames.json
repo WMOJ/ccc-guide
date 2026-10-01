@@ -1,0 +1,23 @@
+{"schema":1,
+"kind":"frames",
+"id":"stairs-tree",
+"layout":"single",
+"panels":[{"id":"tree","viz":"TreeViz","title":"Recursion tree"}],
+"alt":"The unmemoized recursion tree for counting staircase paths. Every call branches into two more calls until a stair at or past the target returns 1 directly. The same stair number is called from more than one place in the tree, and each repeat redoes the same work from scratch.",
+"presets":[
+{"id":"two","label":"Target 2","steps":[
+{"caption":"`ways(0)` is called. It needs `ways(1)` and `ways(2)`.","panels":{"tree":{"root":{"id":"root","label":"ways(0)","s":"c"}}}},
+{"caption":"`ways(1)` is called. It needs `ways(2)` and `ways(3)`.","panels":{"tree":{"root":{"id":"root","label":"ways(0)","s":"c","children":[{"id":"n0","label":"ways(1)","s":"c"}]}}}},
+{"caption":"`ways(2)` has reached or passed stair 2, the top: it returns 1 directly, with no further calls.","panels":{"tree":{"root":{"id":"root","label":"ways(0)","s":"c","children":[{"id":"n0","label":"ways(1)","s":"c","children":[{"id":"n00","label":"ways(2)","s":"p"}]}]}}}},
+{"caption":"`ways(3)` has reached or passed stair 2, the top: it returns 1 directly, with no further calls.","panels":{"tree":{"root":{"id":"root","label":"ways(0)","s":"c","children":[{"id":"n0","label":"ways(1)","s":"c","children":[{"id":"n00","label":"ways(2)","s":"p"},{"id":"n01","label":"ways(3)","s":"p"}]}]}}}},
+{"caption":"`ways(1)` adds the two results it was waiting on, 1 + 1 = 2, and returns.","panels":{"tree":{"root":{"id":"root","label":"ways(0)","s":"c","children":[{"id":"n0","label":"ways(1)","s":"d","children":[{"id":"n00","label":"ways(2)","s":"p"},{"id":"n01","label":"ways(3)","s":"p"}]}]}}}},
+{"caption":"`ways(2)` has reached or passed stair 2, the top: it returns 1 directly, with no further calls. This is the second time `ways(2)` is called.","panels":{"tree":{"root":{"id":"root","label":"ways(0)","s":"c","children":[{"id":"n0","label":"ways(1)","s":"d","children":[{"id":"n00","label":"ways(2)","s":"p"},{"id":"n01","label":"ways(3)","s":"p"}]},{"id":"n1","label":"ways(2)","s":"p"}]}}}},
+{"caption":"`ways(0)` adds the two results it was waiting on, 2 + 1 = 3, and returns.","panels":{"tree":{"root":{"id":"root","label":"ways(0)","s":"d","children":[{"id":"n0","label":"ways(1)","s":"d","children":[{"id":"n00","label":"ways(2)","s":"p"},{"id":"n01","label":"ways(3)","s":"p"}]},{"id":"n1","label":"ways(2)","s":"p"}]}}}}
+]},
+{"id":"one","label":"Target 1","steps":[
+{"caption":"`ways(0)` is called. It needs `ways(1)` and `ways(2)`.","panels":{"tree":{"root":{"id":"root","label":"ways(0)","s":"c"}}}},
+{"caption":"`ways(1)` has reached or passed stair 1, the top: it returns 1 directly, with no further calls.","panels":{"tree":{"root":{"id":"root","label":"ways(0)","s":"c","children":[{"id":"n0","label":"ways(1)","s":"p"}]}}}},
+{"caption":"`ways(2)` has reached or passed stair 1, the top: it returns 1 directly, with no further calls.","panels":{"tree":{"root":{"id":"root","label":"ways(0)","s":"c","children":[{"id":"n0","label":"ways(1)","s":"p"},{"id":"n1","label":"ways(2)","s":"p"}]}}}},
+{"caption":"`ways(0)` adds the two results it was waiting on, 1 + 1 = 2, and returns.","panels":{"tree":{"root":{"id":"root","label":"ways(0)","s":"d","children":[{"id":"n0","label":"ways(1)","s":"p"},{"id":"n1","label":"ways(2)","s":"p"}]}}}}
+]}
+]}

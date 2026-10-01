@@ -1,24 +1,45 @@
-def cost(c, targets):
-    """Total distance from location c to all targets."""
-    return sum(abs(x - c) for x in targets)
+import sys
 
 
-def ternary_search(targets, lo, hi):
-    """Find the location that minimizes cost using ternary search."""
-    epsilon = 1e-6
-    while hi - lo > epsilon:
-        m1 = lo + (hi - lo) / 3
-        m2 = hi - (hi - lo) / 3
-        if cost(m1, targets) > cost(m2, targets):
-            lo = m1
+def main() -> None:
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+
+    pos = 0
+    n = int(input_data[pos])
+    pos += 1
+    positions = [int(x) for x in input_data[pos : pos + n]]
+    pos += n
+    weights = [int(x) for x in input_data[pos : pos + n]]
+    pos += n
+    lo = int(input_data[pos])
+    hi = int(input_data[pos + 1])
+
+    def cost(c: int) -> int:
+        total = 0
+        for p, w in zip(positions, weights):
+            total += w * abs(p - c)
+        return total
+
+    while hi - lo > 2:
+        m1 = lo + (hi - lo) // 3
+        m2 = hi - (hi - lo) // 3
+        if cost(m1) > cost(m2):
+            lo = m1 + 1
         else:
-            hi = m2
-    return (lo + hi) / 2
+            hi = m2 - 1
+
+    best_loc = lo
+    best_cost = cost(lo)
+    for c in range(lo + 1, hi + 1):
+        c_cost = cost(c)
+        if c_cost < best_cost:
+            best_loc = c
+            best_cost = c_cost
+
+    print(f"{best_loc} {best_cost}")
 
 
-targets = [10, 40, 50, 100]
-best_loc = ternary_search(targets, 0, 1000)
-best_cost = cost(best_loc, targets)
-
-print(f"Best location: {best_loc:.2f}")
-print(f"Minimum cost: {best_cost:.2f}")
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,16 @@
+example: seen_before.py
+alt: >-
+  The program scans a list of values, checking each one against a set of values seen so far.
+  A value already in the set prints "seen"; a value not yet in the set prints "new" and joins it.
+presets:
+  - id: repeat
+    label: Has repeat
+    stdin: "4\n7 3 7 3\n"
+  - id: none
+    label: No repeat
+    stdin: "3\n1 2 3\n"
+notes:
+  "13": "seen starts empty: no value has been checked yet."
+  "16": "`v in seen` costs the same lookup whether seen holds one value or a thousand."
+  "17": "A hit: v was already in seen, so it is a repeat."
+  "20": "A miss: v joins seen now, so a later repeat of it will be caught."

@@ -1,0 +1,21 @@
+example: lowbit_walk.py
+alt: >-
+  The program reads an array size, an update position and a query position. The first loop adds
+  the lowest set bit to the position until it passes the size, collecting the positions an update
+  visits. The second loop subtracts the lowest set bit until it reaches 0, collecting the
+  positions a query visits.
+presets:
+  - id: main
+    label: Position 3 and 7
+    stdin: "8 3 7\n"
+  - id: edges
+    label: Position 1 and 8
+    stdin: "8 1 8\n"
+  - id: ends
+    label: Position 8 and 1
+    stdin: "8 8 1\n"
+notes:
+  "13": "`i & -i` keeps only the lowest set bit of `i`. For 3 (`011`) that is 1, so the next position is `100`, which is 4."
+  "14": "Adding `low` moves `i` to the next block that also contains the original position."
+  "20": "`j & -j` is the lowest set bit of `j`. For 7 (`111`) that is 1."
+  "21": "Subtracting `low` clears that bit: 7 becomes 6 (`110`), then 4 (`100`), then 0, so a query visits at most one position per set bit."

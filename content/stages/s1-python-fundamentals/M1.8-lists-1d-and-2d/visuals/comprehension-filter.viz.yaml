@@ -1,0 +1,24 @@
+layout: single
+panels:
+  - { id: a, viz: ArrayViz, title: "nums, tested one by one" }
+alt: >-
+  The values of nums are tested one at a time against the condition x % 2 == 0. A value that
+  passes is added to the new list evens, shown above the cells; a value that fails is skipped.
+  The first preset keeps two of five values; the second keeps none, leaving evens empty.
+captions: vizrec
+legendLabels:
+  current: Being tested
+  done: Kept
+  invalid: Skipped
+  unvisited: Not yet tested
+presets:
+  - id: main
+    label: Mixed values
+    stdinFile: ../examples/list_comprehension.in
+  - id: none
+    label: No even values
+    stdin: "1 3 5\n"
+consistency:
+  description: The nums and evens lists shown match the two lines examples/list_comprehension.py prints.
+  example: ../examples/list_comprehension.py
+  compare: output

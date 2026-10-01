@@ -1,0 +1,23 @@
+{"schema":1,
+"kind":"frames",
+"id":"ord-chr",
+"layout":"single",
+"panels":[{"id":"t","viz":"TableViz","title":"Calls so far"}],
+"alt":"A table gains one row for each of the example's three calls. The first turns a letter into its code point. The second turns that code point back into the letter. The third gives the next character. Presets use a lowercase a, an uppercase A, and the letter z, whose next code point is not a letter.",
+"presets":[
+{"id":"lower","label":"Lowercase a","steps":[
+{"caption":"`code = ord(letter)` turns the letter \"a\" into its code point, 97.","panels":{"t":{"cells":[["ord(\"a\")",97]],"states":["cc"],"colHeads":["call","result"]}}},
+{"caption":"`chr(code)` goes the other way: code point 97 is \"a\" again.","panels":{"t":{"cells":[["ord(\"a\")",97],["chr(97)","a"]],"states":["dd","cc"],"colHeads":["call","result"]}}},
+{"caption":"`chr(code + 1)` is \"b\": adding 1 to the code point steps to the next character in the alphabet. The program prints 97, a and b.","panels":{"t":{"cells":[["ord(\"a\")",97],["chr(97)","a"],["chr(97 + 1)","b"]],"states":["dd","dd","cc"],"colHeads":["call","result"]}}}
+]},
+{"id":"upper","label":"Uppercase A","steps":[
+{"caption":"`code = ord(letter)` turns the letter \"A\" into its code point, 65.","panels":{"t":{"cells":[["ord(\"A\")",65]],"states":["cc"],"colHeads":["call","result"]}}},
+{"caption":"`chr(code)` goes the other way: code point 65 is \"A\" again.","panels":{"t":{"cells":[["ord(\"A\")",65],["chr(65)","A"]],"states":["dd","cc"],"colHeads":["call","result"]}}},
+{"caption":"`chr(code + 1)` is \"B\": adding 1 to the code point steps to the next character in the alphabet. The program prints 65, A and B.","panels":{"t":{"cells":[["ord(\"A\")",65],["chr(65)","A"],["chr(65 + 1)","B"]],"states":["dd","dd","cc"],"colHeads":["call","result"]}}}
+]},
+{"id":"edge","label":"After z","steps":[
+{"caption":"`code = ord(letter)` turns the letter \"z\" into its code point, 122.","panels":{"t":{"cells":[["ord(\"z\")",122]],"states":["cc"],"colHeads":["call","result"]}}},
+{"caption":"`chr(code)` goes the other way: code point 122 is \"z\" again.","panels":{"t":{"cells":[["ord(\"z\")",122],["chr(122)","z"]],"states":["dd","cc"],"colHeads":["call","result"]}}},
+{"caption":"`chr(code + 1)` is \"{\": 123 comes right after \"z\" and is not a letter, which is why a letter shift needs `%` to wrap around. The program prints 122, z and {.","panels":{"t":{"cells":[["ord(\"z\")",122],["chr(122)","z"],["chr(122 + 1)","{"]],"states":["dd","dd","cc"],"colHeads":["call","result"]}}}
+]}
+]}

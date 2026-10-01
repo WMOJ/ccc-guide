@@ -1,0 +1,17 @@
+{"schema":1,
+"kind":"frames",
+"id":"scope_frames",
+"layout":"row",
+"panels":[{"id":"global_scope","viz":"StructViz","title":"Global scope"},{"id":"local_scope","viz":"StructViz","title":"Local scope (inside add)"}],
+"alt":"The global scope holds one name, total, starting at 0. Calling add(x) pushes a local scope holding only x. Because add declares global total, every call changes the same global total instead of creating a local copy, ending at 8 after add(5) then add(3).",
+"presets":[
+{"id":"main","label":"add(5) then add(3)","steps":[
+{"caption":"Before either call, the global scope has one name, `total`, set to 0. No function is running, so there is no local scope yet.","panels":{"global_scope":{"kind":"map","items":[{"k":"total","v":0,"s":"_"}]},"local_scope":{"kind":"map","items":[]}}},
+{"caption":"Calling add(5) pushes a local scope holding only the parameter `x`. `global total` tells Python that `total` inside add refers to the global name, not a new local one.","panels":{"global_scope":{"kind":"map","items":[{"k":"total","v":0,"s":"_"}]},"local_scope":{"kind":"map","items":[{"k":"x","v":5,"s":"c"}]}}},
+{"caption":"`total += x` changes the global `total` directly, since `global total` ruled out a local copy. total is now 5. The local scope still only holds x.","panels":{"global_scope":{"kind":"map","items":[{"k":"total","v":5,"s":"c"}]},"local_scope":{"kind":"map","items":[{"k":"x","v":5}]}}},
+{"caption":"add(5) returns. Its local scope, holding only x, disappears. The global total keeps the new value.","panels":{"global_scope":{"kind":"map","items":[{"k":"total","v":5,"s":"_"}]},"local_scope":{"kind":"map","items":[]}}},
+{"caption":"Calling add(3) pushes a local scope holding only the parameter `x`. `global total` tells Python that `total` inside add refers to the global name, not a new local one.","panels":{"global_scope":{"kind":"map","items":[{"k":"total","v":5,"s":"_"}]},"local_scope":{"kind":"map","items":[{"k":"x","v":3,"s":"c"}]}}},
+{"caption":"`total += x` changes the global `total` directly, since `global total` ruled out a local copy. total is now 8. The local scope still only holds x.","panels":{"global_scope":{"kind":"map","items":[{"k":"total","v":8,"s":"c"}]},"local_scope":{"kind":"map","items":[{"k":"x","v":3}]}}},
+{"caption":"add(3) returns too. The global total ends at 8, changed by both calls, and no local total was ever created.","panels":{"global_scope":{"kind":"map","items":[{"k":"total","v":8,"s":"c"}]},"local_scope":{"kind":"map","items":[]}}}
+]}
+]}

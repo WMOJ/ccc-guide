@@ -2,32 +2,39 @@ import sys
 
 
 def main() -> None:
-    input_data = sys.stdin.read().split()
-    n = int(input_data[0])
-    k = int(input_data[1])
+    raw = sys.stdin.read()
+    data = raw.split()
+    n = int(data[0])
+    k = int(data[1])
     grid = []
-    idx = 2
-    for i in range(n):
-        row = [int(input_data[idx + j]) for j in range(n)]
+    pos = 2
+    for r in range(n):
+        row = []
+        for c in range(n):
+            row.append(int(data[pos]))
+            pos += 1
         grid.append(row)
-        idx += n
 
-    # Build 2D prefix sum
     prefix = [[0] * (n + 1) for _ in range(n + 1)]
-    for i in range(1, n + 1):
-        for j in range(1, n + 1):
-            prefix[i][j] = grid[i - 1][j - 1] + prefix[i - 1][j] + prefix[i][j - 1] - prefix[i - 1][j - 1]
+    for r in range(1, n + 1):
+        for c in range(1, n + 1):
+            above = prefix[r - 1][c]
+            left = prefix[r][c - 1]
+            both = prefix[r - 1][c - 1]
+            prefix[r][c] = grid[r - 1][c - 1] + above + left - both
 
-    # Find max sum of k by k rectangle. Seed with the first candidate, not 0,
-    # so a grid of entirely negative values still gives the right answer.
-    max_sum = None
-    for i in range(k, n + 1):
-        for j in range(k, n + 1):
-            rect_sum = prefix[i][j] - prefix[i - k][j] - prefix[i][j - k] + prefix[i - k][j - k]
-            if max_sum is None or rect_sum > max_sum:
-                max_sum = rect_sum
+    best = None
+    best_at = (0, 0)
+    for r in range(k, n + 1):
+        for c in range(k, n + 1):
+            total = prefix[r][c] - prefix[r - k][c]
+            total -= prefix[r][c - k] - prefix[r - k][c - k]
+            if best is None or total > best:
+                best = total
+                best_at = (r - k, c - k)
 
-    print(max_sum)
+    print(best)
+    print(best_at[0], best_at[1])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: encoded, viz: ArrayViz, title: Encoded string }
+  - { id: parts, viz: ArrayViz, title: Parts so far }
+alt: >-
+  Decoding a run-length string two characters at a time. Each step reads a length digit and the
+  character after it, appends that character repeated that many times to a list of parts, and
+  the last step joins the parts into the original string.
+captions: vizrec
+presets:
+  - id: main
+    label: Round trip
+    stdin: "2a2b2c\n"
+  - id: mixed
+    label: Mixed lengths
+    stdin: "3a1b2c\n"
+  - id: single
+    label: One run
+    stdin: "1z\n"
+consistency:
+  description: The joined string equals the output of examples/decode_runs.py on the same input.
+  example: ../examples/decode_runs.py
+  compare: output

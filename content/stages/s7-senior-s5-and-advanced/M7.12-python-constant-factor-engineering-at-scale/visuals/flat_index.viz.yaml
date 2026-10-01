@@ -1,0 +1,28 @@
+layout: row
+panels:
+  - { id: g, viz: GridViz, title: Grid }
+  - { id: a, viz: ArrayViz, title: cells }
+alt: >-
+  A 2 by 4 grid and the flat list holding the same nine values row after row. A query picks
+  a cell, and the index r * 4 + c locates it in the list. Its right neighbor is the next index,
+  its lower neighbor is four indexes further on. In the edge presets a neighbor does not exist:
+  stepping one index past the last column would land on the first cell of the next row, so the
+  column check comes first.
+legendLabels:
+  invalid: Wrong cell
+  compare: Neighbor
+captions: vizrec
+presets:
+  - id: middle
+    label: Middle cell
+    stdin: "2 4\n1 2 3 4\n5 6 7 8\n0 1\n"
+  - id: edge
+    label: Right edge
+    stdin: "2 4\n1 2 3 4\n5 6 7 8\n0 3\n"
+  - id: corner
+    label: Corner
+    stdin: "2 4\n1 2 3 4\n5 6 7 8\n1 3\n"
+consistency:
+  description: The value and neighbors shown equal what examples/flat_grid.py prints.
+  example: ../examples/flat_grid.py
+  compare: output

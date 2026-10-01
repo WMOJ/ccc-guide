@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: counts, viz: TableViz, title: counts }
+alt: >-
+  A table with one column per distinct letter and two rows, one holding the counts for word A and
+  one for word B. The counts fill in as each word is scanned in turn, then the two rows are compared
+  column by column. In the matching preset the rows end identical, giving "Anagram". In the
+  mismatch preset some columns differ, giving "Not anagram".
+captions: vizrec
+presets:
+  - id: match
+    label: Match
+    stdin: "bad\ndab\n"
+  - id: mismatch
+    label: Mismatch
+    stdin: "bad\nbag\n"
+  - id: single
+    label: Single letter
+    stdin: "a\na\n"
+consistency:
+  description: The Anagram/Not anagram result matches the output of examples/anagram_check.py on the same two words.
+  example: ../examples/anagram_check.py
+  compare: output

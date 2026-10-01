@@ -11,7 +11,8 @@ prereqs:
 lessons:
   - grid-basics
 practice:
-  - id: ccc21s1
-    note: Sum a property across a 2D layout of shapes, row by row.
   - id: ccc23j4
-    note: Count features across a triangular grid pattern.
+    note: Find the length of tape needed to cover the painted tiles in a two-row triangular pattern.
+  - id: ccc16j2
+    note: Check whether every row and column of a small numeric grid sums to the same total.
+    why: Reads a small grid and scans every row and column, the same way this lesson does.

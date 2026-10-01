@@ -1,0 +1,21 @@
+layout: single
+panels:
+  - { id: line, viz: LineViz, title: Candidate divisors }
+alt: >-
+  A number line of candidate divisors from 2 up to the square root of n, tested one at a time;
+  the sweep stops the moment a divisor is found, or at the square root if none is.
+captions: vizrec
+presets:
+  - id: prime
+    label: Prime
+    stdin: "47\n"
+  - id: square
+    label: Square
+    stdin: "49\n"
+  - id: composite
+    label: Composite
+    stdin: "35\n"
+consistency:
+  description: The final divisor and primality verdict match examples/smallest_factor.py.
+  example: ../examples/smallest_factor.py
+  compare: output

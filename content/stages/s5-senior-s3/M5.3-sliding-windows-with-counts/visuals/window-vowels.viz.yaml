@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: text, viz: ArrayViz, title: Text }
+alt: >-
+  A fixed-length window sliding one character at a time over a text, its vowel count updated by
+  adding the new rightmost character and dropping the old leftmost one. The best window seen is
+  highlighted once the scan finishes.
+captions: vizrec
+presets:
+  - id: typical
+    label: K = 3
+    stdin: "beautify 3\n"
+  - id: whole
+    label: K = whole text
+    stdin: "beautify 8\n"
+  - id: k1
+    label: K = 1
+    stdin: "beautify 1\n"
+consistency:
+  description: The printed best count equals the output of examples/window_vowels.py on the same text and K.
+  example: ../examples/window_vowels.py
+  compare: output

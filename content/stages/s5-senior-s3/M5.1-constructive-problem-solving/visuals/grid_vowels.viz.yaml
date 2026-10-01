@@ -1,0 +1,26 @@
+layout: single
+panels:
+  - { id: board, viz: GridViz, title: Grid under construction }
+alt: >-
+  Building an N by M grid of vowels and consonants by a checkerboard pattern, row by row, until
+  every row and every column has the same vowel count; or detecting immediately that no such
+  grid can exist when that count cannot split evenly.
+legendLabels:
+  current: Attempted
+  done: Placed
+  invalid: Cannot match
+captions: vizrec
+presets:
+  - id: valid
+    label: Valid
+    stdin: "4 4\n"
+  - id: impossible
+    label: Impossible
+    stdin: "3 4\n"
+  - id: minimal
+    label: Minimal
+    stdin: "2 2\n"
+consistency:
+  description: The printed grid, or Impossible, matches examples/grid_vowels.py on the same input.
+  example: ../examples/grid_vowels.py
+  compare: output

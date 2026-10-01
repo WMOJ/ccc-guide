@@ -1,0 +1,26 @@
+layout: single
+panels:
+  - { id: array, viz: ArrayViz, title: Array }
+alt: >-
+  An array with a query range covered by two overlapping blocks. Cells in both blocks are marked.
+  Combining the two block results with minimum or gcd gives the true answer, because counting the
+  shared cells twice changes nothing; combining them with a sum gives too large an answer.
+legendLabels:
+  frontier: In the range
+  done: In one block
+  compare: In both blocks
+captions: vizrec
+presets:
+  - id: sum
+    label: Sum fails
+    stdin: "sum\n8\n5 3 7 4 6 2 8 3\n1 5\n"
+  - id: min
+    label: Min works
+    stdin: "min\n8\n5 3 7 4 6 2 8 3\n1 5\n"
+  - id: gcd
+    label: Gcd works
+    stdin: "gcd\n8\n12 18 30 24 36 6 9 15\n1 5\n"
+consistency:
+  description: The two-block result and the true answer equal the output of examples/overlap.py.
+  example: ../examples/overlap.py
+  compare: output

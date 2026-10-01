@@ -1,0 +1,26 @@
+layout: row
+panels:
+  - { id: array, viz: ArrayViz }
+  - { id: table, viz: TableViz, title: Dictionary seen }
+alt: >-
+  The running prefix sums of the shifted values fill in one cell at a time above a dictionary of
+  counts. At each cell the program looks the new prefix sum up in the dictionary: a key already
+  present adds its count to the answer, a new key adds nothing. Then the key's count goes up by one.
+legendLabels:
+  compare: Earlier match
+  current: Looked up
+captions: vizrec
+presets:
+  - id: main
+    label: Two matches
+    stdin: "6\n4 7 1 3 5 2\n3\n"
+  - id: equal
+    label: All equal
+    stdin: "5\n3 3 3 3 3\n3\n"
+  - id: none
+    label: No match
+    stdin: "5\n1 1 1 1 1\n3\n"
+consistency:
+  description: The final total equals the output of examples/average_subarrays.py on the same input.
+  example: ../examples/average_subarrays.py
+  compare: output

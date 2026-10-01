@@ -1,0 +1,30 @@
+{"schema":1,
+"kind":"frames",
+"id":"query",
+"layout":"single",
+"panels":[{"id":"array","viz":"ArrayViz","title":"Array"}],
+"alt":"An array with a query range marked. The range is covered by two blocks whose length is the largest power of two that fits: one starting at the left end and one ending at the right end. Cells in both blocks are marked as shared, and the answer is the smaller of the two block minimums.",
+"legendLabels":{"frontier":"In the range","done":"In one block","compare":"In both blocks"},
+"presets":[
+{"id":"main","label":"Length 5","steps":[
+{"caption":"Query: the minimum of a[1..5]. The range has length 5, marked by the pointers.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_qqqqq__","pointers":[{"name":"l","at":1,"side":"below"},{"name":"r","at":5,"side":"below"}],"name":"a"}}},
+{"caption":"The largest power of two that fits is 2^2 = 4, since (5).bit_length() - 1 = 2. So blocks of length 4 will cover the range.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_qqqqq__","pointers":[{"name":"l","at":1,"side":"below"},{"name":"r","at":5,"side":"below"}],"name":"a"}}},
+{"caption":"First block: sp[2][1] covers a[1..4], the block of length 4 that starts at the left end. Its minimum is 3.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_ddddq__","pointers":[{"name":"l","at":1,"side":"below"},{"name":"r","at":5,"side":"below"}],"ranges":[{"from":1,"to":4,"label":"sp[2][1]","side":"above"}],"name":"a"}}},
+{"caption":"Second block: sp[2][2] covers a[2..5], the block of length 4 that ends at the right end. Its minimum is 2. The 3 shared cells are in both blocks.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_dmmmd__","pointers":[{"name":"l","at":1,"side":"below"},{"name":"r","at":5,"side":"below"}],"ranges":[{"from":1,"to":4,"label":"sp[2][1]","side":"above"},{"from":2,"to":5,"label":"sp[2][2]","side":"below"}],"name":"a"}}},
+{"caption":"The answer is min(3, 2) = 2. Two lookups and one comparison, whatever the length of the range.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_dmmmd__","pointers":[{"name":"l","at":1,"side":"below"},{"name":"r","at":5,"side":"below"}],"name":"a"}}}
+]},
+{"id":"power","label":"Length 4","steps":[
+{"caption":"Query: the minimum of a[0..3]. The range has length 4, marked by the pointers.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"qqqq____","pointers":[{"name":"l","at":0,"side":"below"},{"name":"r","at":3,"side":"below"}],"name":"a"}}},
+{"caption":"The largest power of two that fits is 2^2 = 4, since (4).bit_length() - 1 = 2. So blocks of length 4 will cover the range.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"qqqq____","pointers":[{"name":"l","at":0,"side":"below"},{"name":"r","at":3,"side":"below"}],"name":"a"}}},
+{"caption":"First block: sp[2][0] covers a[0..3], the block of length 4 that starts at the left end. Its minimum is 3.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"dddd____","pointers":[{"name":"l","at":0,"side":"below"},{"name":"r","at":3,"side":"below"}],"ranges":[{"from":0,"to":3,"label":"sp[2][0]","side":"above"}],"name":"a"}}},
+{"caption":"Second block: sp[2][0] also starts at 0, so it is the first block again. Its minimum is 3. The length is a power of two, so the two blocks are the same block.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"mmmm____","pointers":[{"name":"l","at":0,"side":"below"},{"name":"r","at":3,"side":"below"}],"ranges":[{"from":0,"to":3,"label":"sp[2][0]","side":"above"}],"name":"a"}}},
+{"caption":"The answer is min(3, 3) = 3. Two lookups and one comparison, whatever the length of the range.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"mmmm____","pointers":[{"name":"l","at":0,"side":"below"},{"name":"r","at":3,"side":"below"}],"name":"a"}}}
+]},
+{"id":"single","label":"One element","steps":[
+{"caption":"Query: the minimum of a[2..2]. The range has length 1, marked by the pointers.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"__q_____","pointers":[{"name":"l=r","at":2,"side":"below"}],"name":"a"}}},
+{"caption":"The largest power of two that fits is 2^0 = 1, since (1).bit_length() - 1 = 0. So blocks of length 1 will cover the range.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"__q_____","pointers":[{"name":"l=r","at":2,"side":"below"}],"name":"a"}}},
+{"caption":"First block: sp[0][2] covers a[2..2], the block of length 1 that starts at the left end. Its minimum is 7.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"__d_____","pointers":[{"name":"l=r","at":2,"side":"below"}],"ranges":[{"from":2,"to":2,"label":"sp[0][2]","side":"above"}],"name":"a"}}},
+{"caption":"Second block: sp[0][2] also starts at 2, so it is the first block again. Its minimum is 7. The length is a power of two, so the two blocks are the same block.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"__m_____","pointers":[{"name":"l=r","at":2,"side":"below"}],"ranges":[{"from":2,"to":2,"label":"sp[0][2]","side":"above"}],"name":"a"}}},
+{"caption":"The answer is min(7, 7) = 7. Two lookups and one comparison, whatever the length of the range.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"__m_____","pointers":[{"name":"l=r","at":2,"side":"below"}],"name":"a"}}}
+]}
+]}

@@ -1,0 +1,40 @@
+{"schema":1,
+"kind":"trace",
+"id":"clock_wrap",
+"source":"clock_wrap.py",
+"code":"import sys\n\n\ndef main() -> None:\n    raw = sys.stdin.read()\n    tokens = raw.split()\n    if not tokens:\n        return\n    hour = int(tokens[0])\n    offset = int(tokens[1])\n    total = hour + offset\n    print(total % 24)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+"alt":"The program reads an hour and an offset, adds them, and prints the result modulo 24, wrapping past midnight and lifting a negative sum back into range.",
+"presets":[
+{"id":"main","label":"Crosses midnight","stdin":"22\n5\n","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[]}],"c":"Line 1 runs; line 4 is next."},
+{"l":15,"e":"line","st":[{"f":"<module>","l":15,"v":[["main",[1]]]}],"h":{"1":{"t":"function","n":"main"}},"c":"Line 4 runs: the name `main` now refers to a function."},
+{"l":16,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]}],"c":"Line 15 checks the condition: it is true, so line 16 runs next."},
+{"l":4,"e":"call","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":4,"v":[]}],"c":"Line 16 calls `main`. A new frame for `main` goes on top of the call stack."},
+{"l":5,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":5,"v":[]}],"c":"`main()` starts running its body at line 5."},
+{"l":6,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":6,"v":[["raw","'22\\n5\\n'"]]}],"c":"Line 5 runs: `raw` is created with the value `'22\\n5\\n'`."},
+{"l":7,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":7,"v":[["raw","'22\\n5\\n'"],["tokens",[2]]]}],"h":{"2":{"t":"list","v":["'22'","'5'"]}},"c":"Line 6 runs: `tokens` is created with the value `['22', '5']`."},
+{"l":9,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":9,"v":[["raw","'22\\n5\\n'"],["tokens",[2]]]}],"c":"Line 7 checks the condition: it is false, so line 9 runs next."},
+{"l":10,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":10,"v":[["raw","'22\\n5\\n'"],["tokens",[2]],["hour","22"]]}],"c":"Line 9 runs: `hour` is created with the value `22`. `offset` can be negative, as in the second preset: `-5` here."},
+{"l":11,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":11,"v":[["raw","'22\\n5\\n'"],["tokens",[2]],["hour","22"],["offset","5"]]}],"c":"Line 10 runs: `offset` is created with the value `5`. `total` is 27 in the first preset, -3 in the second: it can land outside 0 to 23."},
+{"l":12,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":12,"v":[["raw","'22\\n5\\n'"],["tokens",[2]],["hour","22"],["offset","5"],["total","27"]]}],"c":"Line 11 runs: `total` is created with the value `27`. `% 24` brings it back in range: 27 % 24 is 3, and -3 % 24 is 21, not -3. Python's `%` never returns a negative result here."},
+{"l":12,"e":"return","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":12,"v":[["raw","'22\\n5\\n'"],["tokens",[2]],["hour","22"],["offset","5"],["total","27"]]}],"o":"3\n","r":"None","c":"Line 12 runs: it prints `3`. The call of `main` returns `None`. Its frame leaves the call stack next."},
+{"l":16,"e":"end","st":[{"f":"<module>","l":16,"v":[["main",[1]]]}],"hd":[2],"c":"The program has finished: no lines are left to run."}
+]},
+{"id":"negative","label":"Negative offset","stdin":"2\n-5\n","steps":[
+{"l":1,"e":"line","st":[{"f":"<module>","l":1,"v":[]}],"c":"Python starts at the top of the file. Line 1 runs first."},
+{"l":4,"e":"line","st":[{"f":"<module>","l":4,"v":[]}],"c":"Line 1 runs; line 4 is next."},
+{"l":15,"e":"line","st":[{"f":"<module>","l":15,"v":[["main",[1]]]}],"h":{"1":{"t":"function","n":"main"}},"c":"Line 4 runs: the name `main` now refers to a function."},
+{"l":16,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]}],"c":"Line 15 checks the condition: it is true, so line 16 runs next."},
+{"l":4,"e":"call","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":4,"v":[]}],"c":"Line 16 calls `main`. A new frame for `main` goes on top of the call stack."},
+{"l":5,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":5,"v":[]}],"c":"`main()` starts running its body at line 5."},
+{"l":6,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":6,"v":[["raw","'2\\n-5\\n'"]]}],"c":"Line 5 runs: `raw` is created with the value `'2\\n-5\\n'`."},
+{"l":7,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":7,"v":[["raw","'2\\n-5\\n'"],["tokens",[2]]]}],"h":{"2":{"t":"list","v":["'2'","'-5'"]}},"c":"Line 6 runs: `tokens` is created with the value `['2', '-5']`."},
+{"l":9,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":9,"v":[["raw","'2\\n-5\\n'"],["tokens",[2]]]}],"c":"Line 7 checks the condition: it is false, so line 9 runs next."},
+{"l":10,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":10,"v":[["raw","'2\\n-5\\n'"],["tokens",[2]],["hour","2"]]}],"c":"Line 9 runs: `hour` is created with the value `2`. `offset` can be negative, as in the second preset: `-5` here."},
+{"l":11,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":11,"v":[["raw","'2\\n-5\\n'"],["tokens",[2]],["hour","2"],["offset","-5"]]}],"c":"Line 10 runs: `offset` is created with the value `-5`. `total` is 27 in the first preset, -3 in the second: it can land outside 0 to 23."},
+{"l":12,"e":"line","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":12,"v":[["raw","'2\\n-5\\n'"],["tokens",[2]],["hour","2"],["offset","-5"],["total","-3"]]}],"c":"Line 11 runs: `total` is created with the value `-3`. `% 24` brings it back in range: 27 % 24 is 3, and -3 % 24 is 21, not -3. Python's `%` never returns a negative result here."},
+{"l":12,"e":"return","st":[{"f":"<module>","l":16,"v":[["main",[1]]]},{"f":"main","l":12,"v":[["raw","'2\\n-5\\n'"],["tokens",[2]],["hour","2"],["offset","-5"],["total","-3"]]}],"o":"21\n","r":"None","c":"Line 12 runs: it prints `21`. The call of `main` returns `None`. Its frame leaves the call stack next."},
+{"l":16,"e":"end","st":[{"f":"<module>","l":16,"v":[["main",[1]]]}],"hd":[2],"c":"The program has finished: no lines are left to run."}
+]}
+]}

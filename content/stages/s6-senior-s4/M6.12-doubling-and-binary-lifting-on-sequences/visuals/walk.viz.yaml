@@ -1,0 +1,25 @@
+layout: single
+panels:
+  - { id: graph, viz: GraphViz, title: Teleporter stations }
+alt: >-
+  Eight stations sit on a ring, each with one arrow to the station its teleporter sends you to.
+  A rider walks the arrows one jump at a time; each visited station shows the number of the
+  latest jump that reached it, and the walk ends on the answer after K jumps.
+legendLabels:
+  current: Rider is here
+  done: Visited
+captions: vizrec
+presets:
+  - id: main
+    label: 13 jumps
+    stdin: "8 1\n1 2 3 4 5 6 7 3\n0 13\n"
+  - id: none
+    label: 0 jumps
+    stdin: "8 1\n1 2 3 4 5 6 7 3\n6 0\n"
+  - id: long
+    label: 22 jumps
+    stdin: "8 1\n1 2 3 4 5 6 7 3\n0 22\n"
+consistency:
+  description: The final station and hop count equal the output of examples/teleport_naive.py for one query.
+  example: ../examples/teleport_naive.py
+  compare: output

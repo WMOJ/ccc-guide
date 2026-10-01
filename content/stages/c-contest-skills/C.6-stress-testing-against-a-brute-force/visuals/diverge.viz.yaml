@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: values, viz: ArrayViz, title: values }
+  - { id: prefix, viz: ArrayViz, title: prefix }
+alt: >-
+  The buggy fast function run by hand on the smallest failing input, beside its prefix array. One
+  marker shows where low points and another shows the end of the range being tried. Because low
+  starts at prefix[1], the function never subtracts prefix[0]. It either misses a subarray that
+  starts at values[0] or counts an empty range, and so it disagrees with the brute force.
+captions: vizrec
+presets:
+  - id: positive
+    label: Five values
+    stdin: "5\n3 -1 4 -2 1\n"
+  - id: three
+    label: Three values
+    stdin: "3\n3 3 -2\n"
+  - id: negative
+    label: Negative
+    stdin: "3\n-1 -2 -4\n"
+consistency:
+  description: The shrunk input and both answers equal the output of examples/shrink.py on the same stdin.
+  example: ../examples/shrink.py
+  compare: output

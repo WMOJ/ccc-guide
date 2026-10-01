@@ -1,0 +1,18 @@
+layout: single
+panels:
+  - { id: deque, viz: StructViz, title: Deque }
+alt: >-
+  Adding values alternately to the back with append() and to the front with appendleft(),
+  building up a deque from both ends.
+captions: vizrec
+presets:
+  - id: main
+    label: Five values
+    stdin: "1 2 3 4 5\n"
+  - id: pair
+    label: Two values
+    stdin: "10 20\n"
+consistency:
+  description: The final deque order in the visual equals the output of examples/deque_basic.py.
+  example: ../examples/deque_basic.py
+  compare: output

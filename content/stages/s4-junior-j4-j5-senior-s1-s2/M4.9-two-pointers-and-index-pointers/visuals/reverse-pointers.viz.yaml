@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: numbers, viz: ArrayViz, title: Array }
+alt: >-
+  An array with a left pointer and a right pointer starting at opposite ends. Each step swaps the
+  two pointed-at values, then moves both pointers one slot inward, until they meet (an odd-length
+  array) or cross (an even-length one) with the array fully reversed.
+captions: vizrec
+presets:
+  - id: odd
+    label: Odd length
+    stdin: "5 1 2 3 4 5\n"
+  - id: even
+    label: Even length
+    stdin: "4 1 2 3 4\n"
+  - id: single
+    label: Single element
+    stdin: "1 7\n"
+consistency:
+  description: The printed reversed array equals the output of examples/reverse_array.py on the same array.
+  example: ../examples/reverse_array.py
+  compare: output

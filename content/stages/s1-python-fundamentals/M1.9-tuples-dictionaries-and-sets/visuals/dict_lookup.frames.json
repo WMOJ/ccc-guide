@@ -1,0 +1,15 @@
+{"schema":1,
+"kind":"frames",
+"id":"dict_lookup",
+"layout":"row",
+"panels":[{"id":"ages","viz":"StructViz","title":"ages"},{"id":"shown","viz":"StructViz","title":"Printed"}],
+"alt":"A dict named ages starts with Ana and Bo. Reading the key Bo gives 13. Storing Cy adds a third pair. Asking whether Cy is a key prints True, and asking about Dee prints False, because Dee was never stored.",
+"presets":[
+{"id":"main","label":"Store and look up","steps":[
+{"caption":"`ages = {\"Ana\": 12, \"Bo\": 13}` builds a dict with two keys. Each key sits next to its value.","panels":{"ages":{"kind":"map","items":[{"k":"Ana","v":12,"s":"_"},{"k":"Bo","v":13,"s":"_"}]},"shown":{"kind":"map","items":[{"k":"output","v":"(nothing yet)","s":"_"}]}}},
+{"caption":"`print(ages[\"Bo\"])` finds the key \"Bo\" and reads the value stored beside it: 13.","panels":{"ages":{"kind":"map","items":[{"k":"Ana","v":12,"s":"_"},{"k":"Bo","v":13,"s":"c"}]},"shown":{"kind":"map","items":[{"k":"output","v":"13","s":"c"}]}}},
+{"caption":"`ages[\"Cy\"] = 11` stores a new pair. \"Cy\" was not a key yet, so the dict grows to three pairs.","panels":{"ages":{"kind":"map","items":[{"k":"Ana","v":12,"s":"_"},{"k":"Bo","v":13,"s":"_"},{"k":"Cy","v":11,"s":"c"}]},"shown":{"kind":"map","items":[{"k":"output","v":"(nothing new)","s":"_"}]}}},
+{"caption":"`print(\"Cy\" in ages)` asks whether \"Cy\" is a key. It is now, so Python prints True.","panels":{"ages":{"kind":"map","items":[{"k":"Ana","v":12,"s":"_"},{"k":"Bo","v":13,"s":"_"},{"k":"Cy","v":11,"s":"c"}]},"shown":{"kind":"map","items":[{"k":"output","v":"True","s":"c"}]}}},
+{"caption":"`print(\"Dee\" in ages)` finds no key \"Dee\" among the three, so Python prints False. Nothing was stored.","panels":{"ages":{"kind":"map","items":[{"k":"Ana","v":12,"s":"_"},{"k":"Bo","v":13,"s":"_"},{"k":"Cy","v":11,"s":"_"}]},"shown":{"kind":"map","items":[{"k":"output","v":"False","s":"x"}]}}}
+]}
+]}

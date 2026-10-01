@@ -2,10 +2,10 @@ id: M7.6
 title: Number theory II
 status: accepted
 objectives:
-  - Apply modular arithmetic, including the modular inverse, to solve problems.
-  - Represent and iterate self-similar sets using integer arithmetic instead of floating point.
-  - Detect cycles in iterated maps to answer queries about huge iteration counts.
-  - Use the lcm and gcd of constraints to shrink a search space.
+  - Compute a power modulo m by repeated squaring, and divide modulo a prime with a modular inverse.
+  - Keep repeated fraction updates exact by storing an integer numerator over a fixed denominator.
+  - Find where an iterated map starts repeating, and use the cycle to answer a query about a huge step count.
+  - Use the lcm and gcd of two periods to bound a search.
 prereqs:
   - M4.6
   - M5.2
@@ -13,4 +13,4 @@ lessons:
   - number-theory-advanced
 practice:
   - id: ccc23s5
-    note: Identify which fractions survive filtering by a self-similar rule.
+    note: Decide which fractions with a given denominator survive a filter that is applied again and again to the unit interval.

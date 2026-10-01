@@ -1,0 +1,30 @@
+{"schema":1,
+"kind":"frames",
+"id":"bracket_stack",
+"layout":"row",
+"panels":[{"id":"chars","viz":"ArrayViz","title":"Characters"},{"id":"stack","viz":"StructViz","title":"Stack"}],
+"alt":"Reading a bracket string one character at a time, pushing every opener onto a stack and popping it when a matching closer arrives, marking the string valid when the stack ends empty and invalid on a mismatch, an empty stack facing a closer, or unclosed openers at the end.",
+"presets":[
+{"id":"valid","label":"Valid","steps":[
+{"caption":"'{' is an opener. Push it. The stack is now ['{'].","panels":{"chars":{"values":["{","[","(",")","(",")","]","}"],"states":"c_______"},"stack":{"kind":"stack","items":[{"v":"{","s":"c"}]}}},
+{"caption":"'[' is an opener. Push it. The stack is now ['{', '['].","panels":{"chars":{"values":["{","[","(",")","(",")","]","}"],"states":"dc______"},"stack":{"kind":"stack","items":[{"v":"{","s":"d"},{"v":"[","s":"c"}]}}},
+{"caption":"'(' is an opener. Push it. The stack is now ['{', '[', '('].","panels":{"chars":{"values":["{","[","(",")","(",")","]","}"],"states":"ddc_____"},"stack":{"kind":"stack","items":[{"v":"{","s":"d"},{"v":"[","s":"d"},{"v":"(","s":"c"}]}}},
+{"caption":"')' matches the top of the stack, '('. Pop it. The stack is now ['{', '['].","panels":{"chars":{"values":["{","[","(",")","(",")","]","}"],"states":"dddc____"},"stack":{"kind":"stack","items":[{"v":"{","s":"d"},{"v":"[","s":"d"}]}}},
+{"caption":"'(' is an opener. Push it. The stack is now ['{', '[', '('].","panels":{"chars":{"values":["{","[","(",")","(",")","]","}"],"states":"ddddc___"},"stack":{"kind":"stack","items":[{"v":"{","s":"d"},{"v":"[","s":"d"},{"v":"(","s":"c"}]}}},
+{"caption":"')' matches the top of the stack, '('. Pop it. The stack is now ['{', '['].","panels":{"chars":{"values":["{","[","(",")","(",")","]","}"],"states":"dddddc__"},"stack":{"kind":"stack","items":[{"v":"{","s":"d"},{"v":"[","s":"d"}]}}},
+{"caption":"']' matches the top of the stack, '['. Pop it. The stack is now ['{'].","panels":{"chars":{"values":["{","[","(",")","(",")","]","}"],"states":"ddddddc_"},"stack":{"kind":"stack","items":[{"v":"{","s":"d"}]}}},
+{"caption":"'}' matches the top of the stack, '{'. Pop it. The stack is now [].","panels":{"chars":{"values":["{","[","(",")","(",")","]","}"],"states":"dddddddc"},"stack":{"kind":"stack","items":[]}}},
+{"caption":"Every character is read and the stack is empty. The string is valid.","panels":{"chars":{"values":["{","[","(",")","(",")","]","}"],"states":"dddddddd"},"stack":{"kind":"stack","items":[]}}}
+]},
+{"id":"crossing","label":"Crossing","steps":[
+{"caption":"'(' is an opener. Push it. The stack is now ['('].","panels":{"chars":{"values":["(","[",")","]"],"states":"c___"},"stack":{"kind":"stack","items":[{"v":"(","s":"c"}]}}},
+{"caption":"'[' is an opener. Push it. The stack is now ['(', '['].","panels":{"chars":{"values":["(","[",")","]"],"states":"dc__"},"stack":{"kind":"stack","items":[{"v":"(","s":"d"},{"v":"[","s":"c"}]}}},
+{"caption":"')' does not match the top of the stack, '['. Invalid.","panels":{"chars":{"values":["(","[",")","]"],"states":"ddx_"},"stack":{"kind":"stack","items":[{"v":"(","s":"d"},{"v":"[","s":"x"}]}}}
+]},
+{"id":"unclosed","label":"Unclosed","steps":[
+{"caption":"'(' is an opener. Push it. The stack is now ['('].","panels":{"chars":{"values":["(","(",")"],"states":"c__"},"stack":{"kind":"stack","items":[{"v":"(","s":"c"}]}}},
+{"caption":"'(' is an opener. Push it. The stack is now ['(', '('].","panels":{"chars":{"values":["(","(",")"],"states":"dc_"},"stack":{"kind":"stack","items":[{"v":"(","s":"d"},{"v":"(","s":"c"}]}}},
+{"caption":"')' matches the top of the stack, '('. Pop it. The stack is now ['('].","panels":{"chars":{"values":["(","(",")"],"states":"ddc"},"stack":{"kind":"stack","items":[{"v":"(","s":"d"}]}}},
+{"caption":"Every character is read, but ['('] is still on the stack: an unclosed opener. Invalid.","panels":{"chars":{"values":["(","(",")"],"states":"ddd"},"stack":{"kind":"stack","items":[{"v":"(","s":"x"}]}}}
+]}
+]}

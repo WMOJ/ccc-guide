@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"grid-bfs",
+"layout":"single",
+"panels":[{"id":"grid","viz":"GridViz","title":"Grid with distances"}],
+"alt":"The grid BFS template on a three by three grid. The start cell is distance 0. Each cell taken from the queue checks its four neighbors in the template's order, and a neighbor that is on the grid, not a wall and still at distance -1 gets one more than the current cell. The search stops when E comes off the queue, or ends with -1 when the queue runs empty first.",
+"legendLabels":{"frontier":"In the queue","current":"Taken from the queue","done":"Finished"},
+"presets":[
+{"id":"main","label":"Reach E","steps":[
+{"caption":"The template starts with dist[start] = 0 and the start cell in the queue. Every other cell still has distance -1, meaning not reached. Walls are hatched, and the number in a cell is its distance.","panels":{"grid":{"cells":["q.#","...","#.."],"values":[[0,".","#"],[".",".","."],["#",".","E"]]}}},
+{"caption":"Cell (0, 0) comes off the queue (distance 0). The four neighbors, in the template's order: down is new, so it gets distance 1; up is off the grid; right is new, so it gets distance 1; left is off the grid.","panels":{"grid":{"cells":["cq#","q..","#.."],"values":[[0,1,"#"],[1,".","."],["#",".","E"]]}}},
+{"caption":"Cell (1, 0) comes off the queue (distance 1). The four neighbors, in the template's order: down is a wall; up already has distance 0; right is new, so it gets distance 2; left is off the grid.","panels":{"grid":{"cells":["dq#","cq.","#.."],"values":[[0,1,"#"],[1,2,"."],["#",".","E"]]}}},
+{"caption":"Cell (0, 1) comes off the queue (distance 1). The four neighbors, in the template's order: down already has distance 2; up is off the grid; right is a wall; left already has distance 0.","panels":{"grid":{"cells":["dc#","dq.","#.."],"values":[[0,1,"#"],[1,2,"."],["#",".","E"]]}}},
+{"caption":"Cell (1, 1) comes off the queue (distance 2). The four neighbors, in the template's order: down is new, so it gets distance 3; up already has distance 1; right is new, so it gets distance 3; left already has distance 1.","panels":{"grid":{"cells":["dd#","dcq","#q."],"values":[[0,1,"#"],[1,2,3],["#",3,"E"]]}}},
+{"caption":"Cell (2, 1) comes off the queue (distance 3). The four neighbors, in the template's order: down is off the grid; up already has distance 2; right is new, so it gets distance 4; left is a wall.","panels":{"grid":{"cells":["dd#","ddq","#cq"],"values":[[0,1,"#"],[1,2,3],["#",3,4]]}}},
+{"caption":"Cell (1, 2) comes off the queue (distance 3). The four neighbors, in the template's order: down already has distance 4; up is a wall; right is off the grid; left already has distance 2.","panels":{"grid":{"cells":["dd#","ddc","#dq"],"values":[[0,1,"#"],[1,2,3],["#",3,4]]}}},
+{"caption":"Cell (2, 2) comes off the queue and is E, with distance 4. The template stores 4 and breaks out of the loop.","panels":{"grid":{"cells":["dd#","ddd","#dc"],"values":[[0,1,"#"],[1,2,3],["#",3,4]]}}}
+]},
+{"id":"blocked","label":"No path","steps":[
+{"caption":"The template starts with dist[start] = 0 and the start cell in the queue. Every other cell still has distance -1, meaning not reached. Walls are hatched, and the number in a cell is its distance.","panels":{"grid":{"cells":["q.#",".#.","#.."],"values":[[0,".","#"],[".","#","."],["#",".","E"]]}}},
+{"caption":"Cell (0, 0) comes off the queue (distance 0). The four neighbors, in the template's order: down is new, so it gets distance 1; up is off the grid; right is new, so it gets distance 1; left is off the grid.","panels":{"grid":{"cells":["cq#","q#.","#.."],"values":[[0,1,"#"],[1,"#","."],["#",".","E"]]}}},
+{"caption":"Cell (1, 0) comes off the queue (distance 1). The four neighbors, in the template's order: down is a wall; up already has distance 0; right is a wall; left is off the grid.","panels":{"grid":{"cells":["dq#","c#.","#.."],"values":[[0,1,"#"],[1,"#","."],["#",".","E"]]}}},
+{"caption":"Cell (0, 1) comes off the queue (distance 1). The four neighbors, in the template's order: down is a wall; up is off the grid; right is a wall; left already has distance 0.","panels":{"grid":{"cells":["dc#","d#.","#.."],"values":[[0,1,"#"],[1,"#","."],["#",".","E"]]}}},
+{"caption":"The queue is empty and E was never taken out of it, so the loop ends with answer = -1.","panels":{"grid":{"cells":["dd#","d#.","#.."],"values":[[0,1,"#"],[1,"#","."],["#",".","E"]]}}}
+]}
+]}

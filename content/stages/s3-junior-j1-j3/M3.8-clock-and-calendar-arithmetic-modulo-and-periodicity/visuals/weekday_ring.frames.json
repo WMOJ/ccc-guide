@@ -1,0 +1,27 @@
+{"schema":1,
+"kind":"frames",
+"id":"weekday_ring",
+"layout":"single",
+"panels":[{"id":"ring","viz":"ArrayViz","title":"Week ring"}],
+"alt":"A ring of seven weekday names, Monday through Sunday. A hand starts on Monday, ignores whole weeks, then steps forward (or back, for a negative day number) only the remainder modulo 7, landing on the day name that examples/weekday.py prints.",
+"presets":[
+{"id":"day-100","label":"Day 100","steps":[
+{"caption":"Day 0 is a Monday, so the hand starts on index 0. The week repeats, so the ring has 7 entries and the period is 7. The question is day 100.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"c______","pointers":[{"name":"hand","at":0,"strong":true}],"indices":true,"circular":true}}},
+{"caption":"100 = 7 * 14 + 2. Each full week of 7 days puts the hand back on Monday, so all 14 weeks can be ignored.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"c______","pointers":[{"name":"hand","at":0,"strong":true}],"indices":true,"circular":true}}},
+{"caption":"One more day: the hand moves to index 1, Tuesday.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"dc_____","pointers":[{"name":"hand","at":1,"strong":true}],"indices":true,"circular":true}}},
+{"caption":"One more day: the hand moves to index 2, Wednesday.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"d_c____","pointers":[{"name":"hand","at":2,"strong":true}],"indices":true,"circular":true}}},
+{"caption":"100 % 7 = 2, and DAY_NAMES[2] is Wednesday.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"__c____","pointers":[{"name":"hand","at":2,"strong":true}],"indices":true,"circular":true}}}
+]},
+{"id":"huge","label":"Huge day","steps":[
+{"caption":"Day 0 is a Monday, so the hand starts on index 0. The week repeats, so the ring has 7 entries and the period is 7. The question is day 1,000,000,000,000.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"c______","pointers":[{"name":"hand","at":0,"strong":true}],"indices":true,"circular":true}}},
+{"caption":"1,000,000,000,000 = 7 * 142,857,142,857 + 1. Each full week of 7 days puts the hand back on Monday, so all 142,857,142,857 weeks can be ignored.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"c______","pointers":[{"name":"hand","at":0,"strong":true}],"indices":true,"circular":true}}},
+{"caption":"One more day: the hand moves to index 1, Tuesday.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"dc_____","pointers":[{"name":"hand","at":1,"strong":true}],"indices":true,"circular":true}}},
+{"caption":"1,000,000,000,000 % 7 = 1, and DAY_NAMES[1] is Tuesday.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"_c_____","pointers":[{"name":"hand","at":1,"strong":true}],"indices":true,"circular":true}}}
+]},
+{"id":"before","label":"Before day 0","steps":[
+{"caption":"Day 0 is a Monday, so the hand starts on index 0. The week repeats, so the ring has 7 entries and the period is 7. The question is day -1.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"c______","pointers":[{"name":"hand","at":0,"strong":true}],"indices":true,"circular":true}}},
+{"caption":"-1 is before day 0. Python gives -1 // 7 = -1 and -1 % 7 = 6, never a negative remainder, so the index stays inside 0 to 6.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"c______","pointers":[{"name":"hand","at":0,"strong":true}],"indices":true,"circular":true}}},
+{"caption":"One day back: the hand wraps around to index 6, Sunday.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"d_____c","pointers":[{"name":"hand","at":6,"strong":true}],"indices":true,"circular":true}}},
+{"caption":"-1 % 7 = 6, and DAY_NAMES[6] is Sunday.","panels":{"ring":{"values":["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"states":"______c","pointers":[{"name":"hand","at":6,"strong":true}],"indices":true,"circular":true}}}
+]}
+]}

@@ -1,0 +1,26 @@
+layout: single
+panels:
+  - { id: order, viz: ArrayViz, title: Schedule }
+legendLabels:
+  compare: Swapped
+  done: Already in order
+alt: >-
+  A row of jobs, each shown as a letter and its time and weight. Adjacent pairs are compared by
+  cross-multiplying time and weight. An out-of-order pair is swapped and the total weighted cost
+  is shown dropping, an in-order pair is left alone. The row ends sorted by time over weight
+  with the smallest cost, and no swap ever raised it.
+captions: vizrec
+presets:
+  - id: mixed
+    label: Mixed
+    stdin: "4\nA 3 1\nB 2 4\nC 4 2\nD 1 1\n"
+  - id: sorted
+    label: Has a tie
+    stdin: "3\nA 1 2\nB 2 4\nC 3 2\n"
+  - id: reversed
+    label: Worst case
+    stdin: "5\nA 5 1\nB 4 1\nC 3 1\nD 2 1\nE 1 1\n"
+consistency:
+  description: The final order and cost equal the two lines examples/weighted_jobs.py prints.
+  example: ../examples/weighted_jobs.py
+  compare: output

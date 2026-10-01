@@ -1,0 +1,35 @@
+{"schema":1,
+"kind":"frames",
+"id":"grid_sum",
+"layout":"row",
+"panels":[{"id":"grid","viz":"GridViz","title":"Numbers"},{"id":"totals","viz":"ArrayViz"}],
+"alt":"A grid of numbers with an array of totals beside it. Each row is highlighted in turn and its sum is written into the row-sum array. Then each column is highlighted in turn, the row index changing while the column index stays fixed, and its sum is written into the column-sum array.",
+"presets":[
+{"id":"board","label":"3 by 4","steps":[
+{"caption":"A 3-by-4 grid of numbers. The program prints each row's sum first, then each column's sum. No sum is computed yet.","panels":{"grid":{"cells":["____","____","____"],"values":[[1,2,3,4],[5,6,7,8],[9,10,11,12]]},"totals":{"values":["?","?","?"],"name":"row sums"}}},
+{"caption":"Row 0: `sum(grid[0])` is 1 + 2 + 3 + 4 = 10.","panels":{"grid":{"cells":["cccc","____","____"],"values":[[1,2,3,4],[5,6,7,8],[9,10,11,12]]},"totals":{"values":[10,"?","?"],"states":"c__","name":"row sums"}}},
+{"caption":"Row 1: `sum(grid[1])` is 5 + 6 + 7 + 8 = 26.","panels":{"grid":{"cells":["____","cccc","____"],"values":[[1,2,3,4],[5,6,7,8],[9,10,11,12]]},"totals":{"values":[10,26,"?"],"states":"_c_","name":"row sums"}}},
+{"caption":"Row 2: `sum(grid[2])` is 9 + 10 + 11 + 12 = 42.","panels":{"grid":{"cells":["____","____","cccc"],"values":[[1,2,3,4],[5,6,7,8],[9,10,11,12]]},"totals":{"values":[10,26,42],"states":"__c","name":"row sums"}}},
+{"caption":"Column 0: the row index changes while `col` stays 0, so the cells are `grid[0][0]` down to `grid[2][0]`. 1 + 5 + 9 = 15.","panels":{"grid":{"cells":["m___","m___","m___"],"values":[[1,2,3,4],[5,6,7,8],[9,10,11,12]]},"totals":{"values":[15,"?","?","?"],"states":"m___","name":"col sums"}}},
+{"caption":"Column 1: the row index changes while `col` stays 1, so the cells are `grid[0][1]` down to `grid[2][1]`. 2 + 6 + 10 = 18.","panels":{"grid":{"cells":["_m__","_m__","_m__"],"values":[[1,2,3,4],[5,6,7,8],[9,10,11,12]]},"totals":{"values":[15,18,"?","?"],"states":"_m__","name":"col sums"}}},
+{"caption":"Column 2: the row index changes while `col` stays 2, so the cells are `grid[0][2]` down to `grid[2][2]`. 3 + 7 + 11 = 21.","panels":{"grid":{"cells":["__m_","__m_","__m_"],"values":[[1,2,3,4],[5,6,7,8],[9,10,11,12]]},"totals":{"values":[15,18,21,"?"],"states":"__m_","name":"col sums"}}},
+{"caption":"Column 3: the row index changes while `col` stays 3, so the cells are `grid[0][3]` down to `grid[2][3]`. 4 + 8 + 12 = 24.","panels":{"grid":{"cells":["___m","___m","___m"],"values":[[1,2,3,4],[5,6,7,8],[9,10,11,12]]},"totals":{"values":[15,18,21,24],"states":"___m","name":"col sums"}}},
+{"caption":"Row sums: 10, 26, 42. Column sums: 15, 18, 21, 24. 3 rows give 3 row sums, 4 columns give 4 column sums.","panels":{"grid":{"cells":["____","____","____"],"values":[[1,2,3,4],[5,6,7,8],[9,10,11,12]]},"totals":{"values":[15,18,21,24],"name":"col sums"}}}
+]},
+{"id":"square","label":"2 by 2","steps":[
+{"caption":"A 2-by-2 grid of numbers. The program prints each row's sum first, then each column's sum. No sum is computed yet.","panels":{"grid":{"cells":["__","__"],"values":[[4,1],[2,3]]},"totals":{"values":["?","?"],"name":"row sums"}}},
+{"caption":"Row 0: `sum(grid[0])` is 4 + 1 = 5.","panels":{"grid":{"cells":["cc","__"],"values":[[4,1],[2,3]]},"totals":{"values":[5,"?"],"states":"c_","name":"row sums"}}},
+{"caption":"Row 1: `sum(grid[1])` is 2 + 3 = 5.","panels":{"grid":{"cells":["__","cc"],"values":[[4,1],[2,3]]},"totals":{"values":[5,5],"states":"_c","name":"row sums"}}},
+{"caption":"Column 0: the row index changes while `col` stays 0, so the cells are `grid[0][0]` down to `grid[1][0]`. 4 + 2 = 6.","panels":{"grid":{"cells":["m_","m_"],"values":[[4,1],[2,3]]},"totals":{"values":[6,"?"],"states":"m_","name":"col sums"}}},
+{"caption":"Column 1: the row index changes while `col` stays 1, so the cells are `grid[0][1]` down to `grid[1][1]`. 1 + 3 = 4.","panels":{"grid":{"cells":["_m","_m"],"values":[[4,1],[2,3]]},"totals":{"values":[6,4],"states":"_m","name":"col sums"}}},
+{"caption":"Row sums: 5, 5. Column sums: 6, 4. 2 rows give 2 row sums, 2 columns give 2 column sums.","panels":{"grid":{"cells":["__","__"],"values":[[4,1],[2,3]]},"totals":{"values":[6,4],"name":"col sums"}}}
+]},
+{"id":"column","label":"One column","steps":[
+{"caption":"A 3-by-1 grid of numbers. The program prints each row's sum first, then each column's sum. No sum is computed yet.","panels":{"grid":{"cells":["_","_","_"],"values":[[5],[7],[2]]},"totals":{"values":["?","?","?"],"name":"row sums"}}},
+{"caption":"Row 0: `sum(grid[0])` is 5 = 5.","panels":{"grid":{"cells":["c","_","_"],"values":[[5],[7],[2]]},"totals":{"values":[5,"?","?"],"states":"c__","name":"row sums"}}},
+{"caption":"Row 1: `sum(grid[1])` is 7 = 7.","panels":{"grid":{"cells":["_","c","_"],"values":[[5],[7],[2]]},"totals":{"values":[5,7,"?"],"states":"_c_","name":"row sums"}}},
+{"caption":"Row 2: `sum(grid[2])` is 2 = 2.","panels":{"grid":{"cells":["_","_","c"],"values":[[5],[7],[2]]},"totals":{"values":[5,7,2],"states":"__c","name":"row sums"}}},
+{"caption":"Column 0: the row index changes while `col` stays 0, so the cells are `grid[0][0]` down to `grid[2][0]`. 5 + 7 + 2 = 14.","panels":{"grid":{"cells":["m","m","m"],"values":[[5],[7],[2]]},"totals":{"values":[14],"states":"m","name":"col sums"}}},
+{"caption":"Row sums: 5, 7, 2. Column sums: 14. 3 rows give 3 row sums, 1 columns give 1 column sums.","panels":{"grid":{"cells":["_","_","_"],"values":[[5],[7],[2]]},"totals":{"values":[14],"name":"col sums"}}}
+]}
+]}

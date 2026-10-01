@@ -1,0 +1,29 @@
+{"schema":1,
+"kind":"frames",
+"id":"line-diff",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Actual vs official"}],
+"alt":"A table comparing the solution's actual output to the official expected output, line by line. A matching line is marked done; a mismatching line, including one that differs only by trailing whitespace, is marked invalid.",
+"presets":[
+{"id":"match","label":"Match","steps":[
+{"caption":"Line 1: actual and official both print 6. They match.","panels":{"table":{"cells":[["6","6"]],"states":["dd"],"rowHeads":[1],"colHeads":["actual","official"],"rowTitle":"line"}}},
+{"caption":"Line 2: actual and official both print 2. They match.","panels":{"table":{"cells":[["6","6"],["2","2"]],"states":["dd","dd"],"rowHeads":[1,2],"colHeads":["actual","official"],"rowTitle":"line"}}},
+{"caption":"Line 3: actual and official both print 8. They match.","panels":{"table":{"cells":[["6","6"],["2","2"],["8","8"]],"states":["dd","dd","dd"],"rowHeads":[1,2,3],"colHeads":["actual","official"],"rowTitle":"line"}}},
+{"caption":"Line 4: actual and official both print 2. They match.","panels":{"table":{"cells":[["6","6"],["2","2"],["8","8"],["2","2"]],"states":["dd","dd","dd","dd"],"rowHeads":[1,2,3,4],"colHeads":["actual","official"],"rowTitle":"line"}}},
+{"caption":"Every line matches: matches.","panels":{"table":{"cells":[["6","6"],["2","2"],["8","8"],["2","2"]],"states":["dd","dd","dd","dd"],"rowHeads":[1,2,3,4],"colHeads":["actual","official"],"rowTitle":"line"}}}
+]},
+{"id":"wrong_line","label":"Trailing space","steps":[
+{"caption":"Line 1: actual and official both print 6. They match.","panels":{"table":{"cells":[["6","6"]],"states":["dd"],"rowHeads":[1],"colHeads":["actual","official"],"rowTitle":"line"}}},
+{"caption":"Line 2: actual and official both print 2. They match.","panels":{"table":{"cells":[["6","6"],["2","2"]],"states":["dd","dd"],"rowHeads":[1,2],"colHeads":["actual","official"],"rowTitle":"line"}}},
+{"caption":"Line 3: official is 8·, with trailing whitespace made visible (·). The solution's 8 does not match it character for character.","panels":{"table":{"cells":[["6","6"],["2","2"],["8","8·"]],"states":["dd","dd","xx"],"rowHeads":[1,2,3],"colHeads":["actual","official"],"rowTitle":"line"}}},
+{"caption":"Line 4: actual and official both print 2. They match.","panels":{"table":{"cells":[["6","6"],["2","2"],["8","8·"],["2","2"]],"states":["dd","dd","xx","dd"],"rowHeads":[1,2,3,4],"colHeads":["actual","official"],"rowTitle":"line"}}},
+{"caption":"Line 3 is the first mismatch, marked invalid: does NOT match.","panels":{"table":{"cells":[["6","6"],["2","2"],["8","8·"],["2","2"]],"states":["dd","dd","xx","dd"],"rowHeads":[1,2,3,4],"colHeads":["actual","official"],"rowTitle":"line"}}}
+]},
+{"id":"missing_last","label":"Missing line","steps":[
+{"caption":"Line 1: actual and official both print 6. They match.","panels":{"table":{"cells":[["6","6"]],"states":["dd"],"rowHeads":[1],"colHeads":["actual","official"],"rowTitle":"line"}}},
+{"caption":"Line 2: actual and official both print 2. They match.","panels":{"table":{"cells":[["6","6"],["2","2"]],"states":["dd","dd"],"rowHeads":[1,2],"colHeads":["actual","official"],"rowTitle":"line"}}},
+{"caption":"Line 3: actual and official both print 8. They match.","panels":{"table":{"cells":[["6","6"],["2","2"],["8","8"]],"states":["dd","dd","dd"],"rowHeads":[1,2,3],"colHeads":["actual","official"],"rowTitle":"line"}}},
+{"caption":"Line 4: the solution printed 2, but official has no line here.","panels":{"table":{"cells":[["6","6"],["2","2"],["8","8"],["2","(none)"]],"states":["dd","dd","dd","xx"],"rowHeads":[1,2,3,4],"colHeads":["actual","official"],"rowTitle":"line"}}},
+{"caption":"Line 4 is the first mismatch, marked invalid: does NOT match.","panels":{"table":{"cells":[["6","6"],["2","2"],["8","8"],["2","(none)"]],"states":["dd","dd","dd","xx"],"rowHeads":[1,2,3,4],"colHeads":["actual","official"],"rowTitle":"line"}}}
+]}
+]}

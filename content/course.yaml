@@ -492,7 +492,7 @@ stages:
           - M4.5
         status: accepted
       - id: M6.13
-        title: Memoisation over floor-division blocks
+        title: Memoization over floor-division blocks
         prereqs:
           - M4.11
           - M4.6
@@ -558,7 +558,7 @@ stages:
           - M2.9
         status: accepted
       - id: M7.10
-        title: Ad hoc math and geometry optimisation casework
+        title: Ad hoc math and geometry optimization casework
         prereqs:
           - M5.2
           - M4.5
@@ -641,6 +641,8 @@ stages:
         title: Mock contests and upsolving
         prereqs:
           - M3.10
+          - C.4
+          - C.6
         status: accepted
       - id: C.10
         title: Local judging with official test data

@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: codes, viz: ArrayViz, title: Codes stored }
+  - { id: slots, viz: ArrayViz, title: Slots (mod 8) }
+alt: >-
+  A simplified 8-slot model of what a dictionary does inside. Each code lands in slot code mod 8;
+  a taken slot probes forward to the next one. A lookup repeats the same walk: one step when the
+  slot is free or already holds the code, a short probe on a collision, and an empty slot means
+  the code was never stored.
+captions: vizrec
+presets:
+  - id: collision
+    label: Collision
+    stdin: "3\n3 11 19\n2\n19 5\n"
+  - id: direct
+    label: Direct
+    stdin: "3\n3 10 17\n1\n10\n"
+  - id: wraparound
+    label: Wraparound
+    stdin: "2\n7 15\n1\n15\n"
+consistency:
+  description: The stored/lookup lines equal the output of examples/slot_model.py on the same input.
+  example: ../examples/slot_model.py
+  compare: output

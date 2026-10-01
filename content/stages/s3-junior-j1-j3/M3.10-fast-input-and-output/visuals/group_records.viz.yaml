@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: tokens, viz: ArrayViz, title: Token list }
+  - { id: state, viz: TableViz, title: Reader state }
+alt: >-
+  Reading records whose length is given inside the input. The pointer pos reads the number of
+  groups, then for each group reads its own count k and exactly that many value tokens, adding
+  them into that group's sum. The next group's count is always the token pos lands on next.
+captions: vizrec
+presets:
+  - id: main
+    label: Two groups
+    stdin: "2\n3 10 20 30\n1 5\n"
+  - id: empty-group
+    label: Empty group
+    stdin: "2\n0\n2 7 8\n"
+  - id: single
+    label: One group
+    stdin: "1\n3 4 5 6\n"
+consistency:
+  description: The group sums equal the lines printed by examples/sum_groups.py.
+  example: ../examples/sum_groups.py
+  compare: output

@@ -1,21 +1,37 @@
 import heapq
+import sys
 
-h = []
-valid = {}
+INF = 10 ** 9
 
-# Add item 0 with priority 8
-heapq.heappush(h, (8, 0))
-valid[(8, 0)] = False
 
-# Update item 0 to priority 2
-heapq.heappush(h, (2, 0))
-valid[(2, 0)] = True
+def main() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
+    n = int(data[0])
+    m = int(data[1])
+    pos = 2
 
-# Pop items, skipping invalid ones
-print("Popping from heap:")
-while h:
-    priority, item = heapq.heappop(h)
-    if valid.get((priority, item), False):
-        print(f"Item {item} with priority {priority}")
-    else:
-        print(f"Skipping stale entry ({priority}, {item})")
+    best = [INF] * n
+    heap = []
+    for _ in range(m):
+        op = data[pos]
+        pos += 1
+        if op == "U":
+            item = int(data[pos])
+            priority = int(data[pos + 1])
+            pos += 2
+            best[item] = priority
+            heapq.heappush(heap, (priority, item))
+            print(f"Update job {item} to priority {priority}")
+        else:
+            priority, item = heapq.heappop(heap)
+            while priority != best[item]:
+                print(f"Skipping stale entry (priority {priority}, job {item})")
+                priority, item = heapq.heappop(heap)
+            print(f"Job {item} at priority {priority} is handed out")
+            best[item] = -1
+
+
+if __name__ == "__main__":
+    main()

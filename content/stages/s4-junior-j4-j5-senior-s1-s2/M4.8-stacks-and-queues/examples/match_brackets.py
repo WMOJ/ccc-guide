@@ -1,6 +1,9 @@
-def matches(s):
+import sys
+
+
+def matches(s: str) -> bool:
+    pairs = {"(": ")", "[": "]", "{": "}"}
     stack = []
-    pairs = {'(': ')', '[': ']', '{': '}'}
     for c in s:
         if c in pairs:
             stack.append(c)
@@ -10,7 +13,14 @@ def matches(s):
     return len(stack) == 0
 
 
-print(matches("(())"))
-print(matches("()()"))
-print(matches("([)]"))
-print(matches("(()"))
+def main() -> None:
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+
+    s = input_data[0]
+    sys.stdout.write(f"{matches(s)}\n")
+
+
+if __name__ == "__main__":
+    main()

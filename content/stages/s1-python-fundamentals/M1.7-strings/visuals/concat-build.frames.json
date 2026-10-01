@@ -1,0 +1,28 @@
+{"schema":1,
+"kind":"frames",
+"id":"concat-build",
+"layout":"single",
+"panels":[{"id":"w","viz":"ArrayViz","title":"Word, result so far"}],
+"alt":"A word is copied into an empty string one character at a time with result += ch. Each step marks the character being added and shows the new, longer result string above the cells, with a caption counting the old characters Python copies to build it. Presets use a three-letter word, a seven-letter word and a single letter.",
+"presets":[
+{"id":"main","label":"Three letters","steps":[
+{"caption":"`ch` is \"c\". `result += ch` builds a new string, \"c\", from the empty string and this one character.","panels":{"w":{"values":["c","a","t"],"states":"c__","pointers":[{"name":"ch","at":0,"strong":true}],"name":"'c'"}}},
+{"caption":"`ch` is \"a\". `result += ch` builds a new 2-character string: Python copies the 1 old character and adds one.","panels":{"w":{"values":["c","a","t"],"states":"dc_","pointers":[{"name":"ch","at":1,"strong":true}],"name":"'ca'"}}},
+{"caption":"`ch` is \"t\". `result += ch` builds a new 3-character string: Python copies the 2 old characters and adds one.","panels":{"w":{"values":["c","a","t"],"states":"ddc","pointers":[{"name":"ch","at":2,"strong":true}],"name":"'cat'"}}},
+{"caption":"The loop is over. `result` is \"cat\". It was built as 3 separate strings, each one longer than the last.","panels":{"w":{"values":["c","a","t"],"states":"ddd","pointers":[{"name":"ch","at":3,"strong":true}],"name":"'cat'"}}}
+]},
+{"id":"longer","label":"Seven letters","steps":[
+{"caption":"`ch` is \"p\". `result += ch` builds a new string, \"p\", from the empty string and this one character.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"states":"c______","pointers":[{"name":"ch","at":0,"strong":true}],"name":"'p'"}}},
+{"caption":"`ch` is \"u\". `result += ch` builds a new 2-character string: Python copies the 1 old character and adds one.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"states":"dc_____","pointers":[{"name":"ch","at":1,"strong":true}],"name":"'pu'"}}},
+{"caption":"`ch` is \"m\". `result += ch` builds a new 3-character string: Python copies the 2 old characters and adds one.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"states":"ddc____","pointers":[{"name":"ch","at":2,"strong":true}],"name":"'pum'"}}},
+{"caption":"`ch` is \"p\". `result += ch` builds a new 4-character string: Python copies the 3 old characters and adds one.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"states":"dddc___","pointers":[{"name":"ch","at":3,"strong":true}],"name":"'pump'"}}},
+{"caption":"`ch` is \"k\". `result += ch` builds a new 5-character string: Python copies the 4 old characters and adds one.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"states":"ddddc__","pointers":[{"name":"ch","at":4,"strong":true}],"name":"'pumpk'"}}},
+{"caption":"`ch` is \"i\". `result += ch` builds a new 6-character string: Python copies the 5 old characters and adds one.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"states":"dddddc_","pointers":[{"name":"ch","at":5,"strong":true}],"name":"'pumpki'"}}},
+{"caption":"`ch` is \"n\". `result += ch` builds a new 7-character string: Python copies the 6 old characters and adds one.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"states":"ddddddc","pointers":[{"name":"ch","at":6,"strong":true}],"name":"'pumpkin'"}}},
+{"caption":"The loop is over. `result` is \"pumpkin\". It was built as 7 separate strings, each one longer than the last.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"states":"ddddddd","pointers":[{"name":"ch","at":7,"strong":true}],"name":"'pumpkin'"}}}
+]},
+{"id":"one","label":"One letter","steps":[
+{"caption":"`ch` is \"a\". `result += ch` builds a new string, \"a\", from the empty string and this one character.","panels":{"w":{"values":["a"],"states":"c","pointers":[{"name":"ch","at":0,"strong":true}],"name":"'a'"}}},
+{"caption":"The loop is over. `result` is \"a\". A one-letter word needs only one new string.","panels":{"w":{"values":["a"],"states":"d","pointers":[{"name":"ch","at":1,"strong":true}],"name":"'a'"}}}
+]}
+]}

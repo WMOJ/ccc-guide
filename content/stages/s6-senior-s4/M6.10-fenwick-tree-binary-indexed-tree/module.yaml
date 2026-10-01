@@ -11,7 +11,6 @@ prereqs:
 lessons:
   - fenwick-tree
 practice:
-  - id: ccc19j5
-    note: Calculate how the number of each item changes across growing inventory.
-  - id: ccc20s1
-    note: Work with a sprinter's recorded checkpoint times to find a consistent picture of the race.
+  - id: ccc17s5
+    note: Answer passenger totals over ranges of stations while trains move along their lines.
+    why: Totals over a range of positions are asked while the counts at individual positions keep changing.

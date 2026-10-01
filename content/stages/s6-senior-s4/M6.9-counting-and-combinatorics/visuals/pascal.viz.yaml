@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz }
+alt: >-
+  Pascal's triangle built one row at a time. Each new row starts and ends with 1, and every cell
+  between is the sum of the two cells above it, which are marked with arrows. The cell in row n
+  and column r is the number of ways to choose r items from n.
+captions: vizrec
+presets:
+  - id: five
+    label: Rows 0 to 5
+    stdin: "5\n"
+  - id: three
+    label: Rows 0 to 3
+    stdin: "3\n"
+  - id: one
+    label: Rows 0 to 1
+    stdin: "1\n"
+consistency:
+  description: The rows equal the output of examples/pascal.py.
+  example: ../examples/pascal.py
+  compare: output

@@ -1,0 +1,25 @@
+{"schema":1,
+"kind":"frames",
+"id":"rotate_counterclockwise",
+"layout":"row",
+"panels":[{"id":"source","viz":"GridViz","title":"Source"},{"id":"target","viz":"GridViz","title":"Target"}],
+"alt":"A source grid and an empty target grid of swapped dimensions. Each source cell moves to the target at n minus one minus column and row, filling the target one cell at a time.",
+"presets":[
+{"id":"main","label":"Main","steps":[
+{"caption":"The source is 2 rows by 3 columns. The target has 3 rows by 2 columns, every cell still marked ?, because rotating 90 degrees swaps the dimensions.","panels":{"source":{"cells":["___","___"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["__","__","__"],"values":[["?","?"],["?","?"],["?","?"]]}}},
+{"caption":"old[0][0] = 1 moves to new[2][0]: a counterclockwise turn sends column 0 to row 2, and row 0 to column 0.","panels":{"source":{"cells":["c__","___"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["__","__","c_"],"values":[["?","?"],["?","?"],[1,"?"]]}}},
+{"caption":"Next, old[0][1] = 2 lands at new[1][0], following the same rule.","panels":{"source":{"cells":["dc_","___"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["__","c_","d_"],"values":[["?","?"],[2,"?"],[1,"?"]]}}},
+{"caption":"Next, old[0][2] = 3 lands at new[0][0], following the same rule.","panels":{"source":{"cells":["ddc","___"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["c_","d_","d_"],"values":[[3,"?"],[2,"?"],[1,"?"]]}}},
+{"caption":"Next, old[1][0] = 4 lands at new[2][1], following the same rule.","panels":{"source":{"cells":["ddd","c__"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["d_","d_","dc"],"values":[[3,"?"],[2,"?"],[1,4]]}}},
+{"caption":"Next, old[1][1] = 5 lands at new[1][1], following the same rule.","panels":{"source":{"cells":["ddd","dc_"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["d_","dc","dd"],"values":[[3,"?"],[2,5],[1,4]]}}},
+{"caption":"Next, old[1][2] = 6 lands at new[0][1], following the same rule.","panels":{"source":{"cells":["ddd","ddc"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["dc","dd","dd"],"values":[[3,6],[2,5],[1,4]]}}},
+{"caption":"Every source cell has moved. The target is the source rotated 90 degrees counterclockwise.","panels":{"source":{"cells":["ddd","ddd"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["dd","dd","dd"],"values":[[3,6],[2,5],[1,4]]}}}
+]},
+{"id":"single-column","label":"One column","steps":[
+{"caption":"The source is 3 rows by 1 columns. The target has 1 rows by 3 columns, every cell still marked ?, because rotating 90 degrees swaps the dimensions.","panels":{"source":{"cells":["_","_","_"],"values":[[7],[8],[9]]},"target":{"cells":["___"],"values":[["?","?","?"]]}}},
+{"caption":"old[0][0] = 7 moves to new[0][0]: a counterclockwise turn sends column 0 to row 0, and row 0 to column 0.","panels":{"source":{"cells":["c","_","_"],"values":[[7],[8],[9]]},"target":{"cells":["c__"],"values":[[7,"?","?"]]}}},
+{"caption":"Next, old[1][0] = 8 lands at new[0][1], following the same rule.","panels":{"source":{"cells":["d","c","_"],"values":[[7],[8],[9]]},"target":{"cells":["dc_"],"values":[[7,8,"?"]]}}},
+{"caption":"Next, old[2][0] = 9 lands at new[0][2], following the same rule.","panels":{"source":{"cells":["d","d","c"],"values":[[7],[8],[9]]},"target":{"cells":["ddc"],"values":[[7,8,9]]}}},
+{"caption":"Every source cell has moved. The target is the source rotated 90 degrees counterclockwise.","panels":{"source":{"cells":["d","d","d"],"values":[[7],[8],[9]]},"target":{"cells":["ddd"],"values":[[7,8,9]]}}}
+]}
+]}

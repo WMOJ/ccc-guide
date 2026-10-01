@@ -1,0 +1,20 @@
+layout: single
+panels:
+  - { id: p, viz: ArrayViz, title: "parent (per slot)" }
+alt: >-
+  A row of parking slots, each numbered, with one extra sentinel slot after the last real one.
+  Each request calls find on slot 1, which skips over every taken slot and lands on the lowest
+  free one; that slot is then marked taken by pointing it at the next slot. When every real slot
+  is full, find reaches the sentinel and the request is turned away.
+captions: vizrec
+presets:
+  - id: five
+    label: Five slots
+    stdin: "5 6\n"
+  - id: one
+    label: One slot
+    stdin: "1 2\n"
+consistency:
+  description: The slots assigned in the visual equal the output of examples/next_slot.py.
+  example: ../examples/next_slot.py
+  compare: output

@@ -1,0 +1,31 @@
+{"schema":1,
+"kind":"frames",
+"id":"call_count",
+"layout":"row",
+"panels":[{"id":"lines","viz":"ArrayViz","title":"Input lines"},{"id":"calls","viz":"TableViz","title":"Calls made"}],
+"alt":"Counting calls to the input stream for one input with a count on the first line and one value per line after it. A loop that calls input() once per line makes one more call for every line, while a single sys.stdin.read() call takes the whole input at once, so its count stays at one. With a count of 0 both ways make a single call.",
+"presets":[
+{"id":"main","label":"Four values","steps":[
+{"caption":"The input has 5 lines: a count, then one value per line. One read() call already holds all of them. The input() loop has made 1 call so far, for the count.","panels":{"lines":{"values":["4","2","4","6","8"],"states":"d____","indices":true},"calls":{"cells":[[1],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"The loop calls input() again for line 1, '2': 2 calls so far. read() is still at 1.","panels":{"lines":{"values":["4","2","4","6","8"],"states":"dd___","indices":true},"calls":{"cells":[[2],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"The loop calls input() again for line 2, '4': 3 calls so far. read() is still at 1.","panels":{"lines":{"values":["4","2","4","6","8"],"states":"ddd__","indices":true},"calls":{"cells":[[3],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"The loop calls input() again for line 3, '6': 4 calls so far. read() is still at 1.","panels":{"lines":{"values":["4","2","4","6","8"],"states":"dddd_","indices":true},"calls":{"cells":[[4],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"The loop calls input() again for line 4, '8': 5 calls so far. read() is still at 1.","panels":{"lines":{"values":["4","2","4","6","8"],"states":"ddddd","indices":true},"calls":{"cells":[[5],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"Every line is consumed and the sum is 20 either way. The loop made 5 calls and read() made 1, for the same values.","panels":{"lines":{"values":["4","2","4","6","8"],"states":"ddddd","indices":true},"calls":{"cells":[[5],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}}
+]},
+{"id":"seven","label":"Seven values","steps":[
+{"caption":"The input has 8 lines: a count, then one value per line. One read() call already holds all of them. The input() loop has made 1 call so far, for the count.","panels":{"lines":{"values":["7","1","2","3","4","5","6","7"],"states":"d_______","indices":true},"calls":{"cells":[[1],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"The loop calls input() again for line 1, '1': 2 calls so far. read() is still at 1.","panels":{"lines":{"values":["7","1","2","3","4","5","6","7"],"states":"dd______","indices":true},"calls":{"cells":[[2],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"The loop calls input() again for line 2, '2': 3 calls so far. read() is still at 1.","panels":{"lines":{"values":["7","1","2","3","4","5","6","7"],"states":"ddd_____","indices":true},"calls":{"cells":[[3],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"The loop calls input() again for line 3, '3': 4 calls so far. read() is still at 1.","panels":{"lines":{"values":["7","1","2","3","4","5","6","7"],"states":"dddd____","indices":true},"calls":{"cells":[[4],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"The loop calls input() again for line 4, '4': 5 calls so far. read() is still at 1.","panels":{"lines":{"values":["7","1","2","3","4","5","6","7"],"states":"ddddd___","indices":true},"calls":{"cells":[[5],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"The loop calls input() again for line 5, '5': 6 calls so far. read() is still at 1.","panels":{"lines":{"values":["7","1","2","3","4","5","6","7"],"states":"dddddd__","indices":true},"calls":{"cells":[[6],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"The loop calls input() again for line 6, '6': 7 calls so far. read() is still at 1.","panels":{"lines":{"values":["7","1","2","3","4","5","6","7"],"states":"ddddddd_","indices":true},"calls":{"cells":[[7],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"The loop calls input() again for line 7, '7': 8 calls so far. read() is still at 1.","panels":{"lines":{"values":["7","1","2","3","4","5","6","7"],"states":"dddddddd","indices":true},"calls":{"cells":[[8],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"Every line is consumed and the sum is 28 either way. The loop made 8 calls and read() made 1, for the same values.","panels":{"lines":{"values":["7","1","2","3","4","5","6","7"],"states":"dddddddd","indices":true},"calls":{"cells":[[8],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}}
+]},
+{"id":"empty","label":"N = 0","steps":[
+{"caption":"The input has 1 line: just the count, 0. One read() call already holds all of them. The input() loop has made 1 call so far, for the count.","panels":{"lines":{"values":["0"],"states":"d","indices":true},"calls":{"cells":[[1],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}},
+{"caption":"Every line is consumed and the sum is 0 either way. With a count of 0 there is nothing else to read, so both ways make 1 call.","panels":{"lines":{"values":["0"],"states":"d","indices":true},"calls":{"cells":[[1],[1]],"states":["c","d"],"rowHeads":["input() loop","read() once"],"colHeads":["calls so far"]}}}
+]}
+]}

@@ -1,44 +1,63 @@
+import sys
 from collections import deque
 
 
-def bfs_farthest(adj, start):
-    """BFS from start, return (farthest_node, distance)."""
+def build_adjacency(n: int, edges: list) -> list:
+    adj = [[] for _ in range(n)]
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    return adj
+
+
+def bfs_farthest(adj: list, start: int) -> tuple:
+    """BFS from start; return the farthest node found and its distance."""
     n = len(adj)
     dist = [-1] * n
     dist[start] = 0
     queue = deque([start])
     farthest = start
     max_dist = 0
-
     while queue:
-        u = queue.popleft()
-        for v in adj[u]:
-            if dist[v] == -1:
-                dist[v] = dist[u] + 1
-                queue.append(v)
-                if dist[v] > max_dist:
-                    max_dist = dist[v]
-                    farthest = v
-
+        node = queue.popleft()
+        for neighbor in adj[node]:
+            if dist[neighbor] == -1:
+                dist[neighbor] = dist[node] + 1
+                queue.append(neighbor)
+                if dist[neighbor] > max_dist:
+                    max_dist = dist[neighbor]
+                    farthest = neighbor
     return farthest, max_dist
 
 
-def tree_diameter(adj):
-    """Find tree diameter using two BFS passes."""
-    end1, _ = bfs_farthest(adj, 0)
-    end2, diameter = bfs_farthest(adj, end1)
-    return end1, end2, diameter
+def tree_diameter(adj: list) -> tuple:
+    """Diameter by two BFS passes: any start to one end, then that end to the other."""
+    end_a, _ = bfs_farthest(adj, 0)
+    end_b, length = bfs_farthest(adj, end_a)
+    return end_a, end_b, length
 
 
-adj = [
-    [1, 2],
-    [0, 3],
-    [0, 4, 5],
-    [1],
-    [2],
-    [2]
-]
+def main() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
 
-end1, end2, diam = tree_diameter(adj)
-print(f"Diameter endpoints: {end1}, {end2}")
-print(f"Diameter: {diam}")
+    pos = 0
+    n = int(data[pos])
+    pos += 1
+
+    edges = []
+    for _ in range(n - 1):
+        a = int(data[pos])
+        b = int(data[pos + 1])
+        pos += 2
+        edges.append((a, b))
+
+    adj = build_adjacency(n, edges)
+    end_a, end_b, length = tree_diameter(adj)
+    print("Diameter endpoints:", end_a, end_b)
+    print("Diameter:", length)
+
+
+if __name__ == "__main__":
+    main()

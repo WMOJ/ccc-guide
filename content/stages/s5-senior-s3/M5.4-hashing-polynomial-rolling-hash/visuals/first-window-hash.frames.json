@@ -1,0 +1,19 @@
+{"schema":1,
+"kind":"frames",
+"id":"first-window-hash",
+"layout":"row",
+"panels":[{"id":"text","viz":"ArrayViz","title":"Text (first window)"},{"id":"hash","viz":"ArrayViz","title":"window_hash"}],
+"alt":"Building the hash of the text's first window one character at a time: each step multiplies the running hash by the base and adds the new character's code, the same formula used to hash the pattern. The last step compares the finished window_hash to pattern_hash.",
+"presets":[
+{"id":"match","label":"Match","steps":[
+{"caption":"window_hash = 0 * 31 + ord('a') (97) = 97.","panels":{"text":{"values":["a","b","a","c","a","b","a","d"],"states":"c_______","name":"text"},"hash":{"values":[97],"name":"window_hash"}}},
+{"caption":"window_hash = 97 * 31 + ord('b') (98) = 3105.","panels":{"text":{"values":["a","b","a","c","a","b","a","d"],"states":"dc______","name":"text"},"hash":{"values":[3105],"name":"window_hash"}}},
+{"caption":"The first window's hash is 3105, pattern_hash is 3105: the window matches pattern_hash.","panels":{"text":{"values":["a","b","a","c","a","b","a","d"],"states":"dd______","name":"text"},"hash":{"values":[3105],"name":"window_hash"}}}
+]},
+{"id":"no-match","label":"No match","steps":[
+{"caption":"window_hash = 0 * 31 + ord('b') (98) = 98.","panels":{"text":{"values":["b","a","n","a","n","a"],"states":"c_____","name":"text"},"hash":{"values":[98],"name":"window_hash"}}},
+{"caption":"window_hash = 98 * 31 + ord('a') (97) = 3135.","panels":{"text":{"values":["b","a","n","a","n","a"],"states":"dc____","name":"text"},"hash":{"values":[3135],"name":"window_hash"}}},
+{"caption":"window_hash = 3135 * 31 + ord('n') (110) = 97295.","panels":{"text":{"values":["b","a","n","a","n","a"],"states":"ddc___","name":"text"},"hash":{"values":[97295],"name":"window_hash"}}},
+{"caption":"The first window's hash is 97295, pattern_hash is 98262: the window does not match pattern_hash.","panels":{"text":{"values":["b","a","n","a","n","a"],"states":"ddd___","name":"text"},"hash":{"values":[97295],"name":"window_hash"}}}
+]}
+]}

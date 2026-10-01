@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: values, viz: ArrayViz, title: Elements }
+  - { id: tree, viz: ArrayViz, title: Fenwick tree }
+alt: >-
+  A point update on a Fenwick tree. One element gains a value. The update starts at that position
+  and adds the change to tree[i], then adds the lowest set bit of i to i and repeats until i
+  passes the end. Each tree entry it visits covers a block that contains the changed element.
+captions: vizrec
+legendLabels: { current: Being updated, done: Already updated }
+presets:
+  - id: three
+    label: Position 3
+    stdin: "8\n3 2 1 4 5 1 2 3\n2\nU 3 5\nQ 1 8\n"
+  - id: first
+    label: Position 1
+    stdin: "8\n3 2 1 4 5 1 2 3\n2\nU 1 5\nQ 1 8\n"
+  - id: last
+    label: Position 8
+    stdin: "8\n3 2 1 4 5 1 2 3\n2\nU 8 5\nQ 1 8\n"
+consistency:
+  description: The total after the update equals what examples/fenwick_basic.py prints for the same input.
+  example: ../examples/fenwick_basic.py
+  compare: output

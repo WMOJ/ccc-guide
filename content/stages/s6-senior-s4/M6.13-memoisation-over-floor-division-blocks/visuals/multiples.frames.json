@@ -1,0 +1,31 @@
+{"schema":1,
+"kind":"frames",
+"id":"multiples",
+"layout":"single",
+"panels":[{"id":"t","viz":"TableViz","title":"Does d divide i?"}],
+"alt":"A grid with one row for each d and one column for each i, marked where d divides i. Filling the rows from d = 1 down adds the multiples of each d, and the total number of marks is both the sum of n divided by d and the sum of the divisor counts of every i.",
+"presets":[
+{"id":"six","label":"n = 6","steps":[
+{"caption":"Row d has an x in column i when d divides i. Count the x marks in a column and you get the number of divisors of i. The grid starts blank for n = 6; rows fill in from d = 1.","panels":{"t":{"cells":[["","","","","",""],["","","","","",""],["","","","","",""],["","","","","",""],["","","","","",""],["","","","","",""]],"rowHeads":["d=1","d=2","d=3","d=4","d=5","d=6"],"colHeads":["1","2","3","4","5","6"],"colTitle":"i"}}},
+{"caption":"d = 1 divides 1, 2, 3, 4, 5, 6: 6 multiples, exactly `6 // 1`. Marks so far: 6.","panels":{"t":{"cells":[["x","x","x","x","x","x"],["","","","","",""],["","","","","",""],["","","","","",""],["","","","","",""],["","","","","",""]],"states":["cccccc","______","______","______","______","______"],"rowHeads":["d=1","d=2","d=3","d=4","d=5","d=6"],"colHeads":["1","2","3","4","5","6"],"colTitle":"i"}}},
+{"caption":"d = 2 divides 2, 4, 6: 3 multiples, exactly `6 // 2`. Marks so far: 9.","panels":{"t":{"cells":[["x","x","x","x","x","x"],["","x","","x","","x"],["","","","","",""],["","","","","",""],["","","","","",""],["","","","","",""]],"states":["dddddd","_c_c_c","______","______","______","______"],"rowHeads":["d=1","d=2","d=3","d=4","d=5","d=6"],"colHeads":["1","2","3","4","5","6"],"colTitle":"i"}}},
+{"caption":"d = 3 divides 3, 6: 2 multiples, exactly `6 // 3`. Marks so far: 11.","panels":{"t":{"cells":[["x","x","x","x","x","x"],["","x","","x","","x"],["","","x","","","x"],["","","","","",""],["","","","","",""],["","","","","",""]],"states":["dddddd","_d_d_d","__c__c","______","______","______"],"rowHeads":["d=1","d=2","d=3","d=4","d=5","d=6"],"colHeads":["1","2","3","4","5","6"],"colTitle":"i"}}},
+{"caption":"d = 4 divides 4: 1 multiple, exactly `6 // 4`. Marks so far: 12.","panels":{"t":{"cells":[["x","x","x","x","x","x"],["","x","","x","","x"],["","","x","","","x"],["","","","x","",""],["","","","","",""],["","","","","",""]],"states":["dddddd","_d_d_d","__d__d","___c__","______","______"],"rowHeads":["d=1","d=2","d=3","d=4","d=5","d=6"],"colHeads":["1","2","3","4","5","6"],"colTitle":"i"}}},
+{"caption":"d = 5 divides 5: 1 multiple, exactly `6 // 5`. Marks so far: 13.","panels":{"t":{"cells":[["x","x","x","x","x","x"],["","x","","x","","x"],["","","x","","","x"],["","","","x","",""],["","","","","x",""],["","","","","",""]],"states":["dddddd","_d_d_d","__d__d","___d__","____c_","______"],"rowHeads":["d=1","d=2","d=3","d=4","d=5","d=6"],"colHeads":["1","2","3","4","5","6"],"colTitle":"i"}}},
+{"caption":"d = 6 divides 6: 1 multiple, exactly `6 // 6`. Marks so far: 14.","panels":{"t":{"cells":[["x","x","x","x","x","x"],["","x","","x","","x"],["","","x","","","x"],["","","","x","",""],["","","","","x",""],["","","","","","x"]],"states":["dddddd","_d_d_d","__d__d","___d__","____d_","_____c"],"rowHeads":["d=1","d=2","d=3","d=4","d=5","d=6"],"colHeads":["1","2","3","4","5","6"],"colTitle":"i"}}},
+{"caption":"The marks total 14, which is the sum of the divisor counts of 1 to 6: 1 + 2 + 2 + 3 + 2 + 4 = 14.","panels":{"t":{"cells":[["x","x","x","x","x","x"],["","x","","x","","x"],["","","x","","","x"],["","","","x","",""],["","","","","x",""],["","","","","","x"]],"states":["dddddd","_d_d_d","__d__d","___d__","____d_","_____d"],"rowHeads":["d=1","d=2","d=3","d=4","d=5","d=6"],"colHeads":["1","2","3","4","5","6"],"colTitle":"i"}}}
+]},
+{"id":"four","label":"n = 4","steps":[
+{"caption":"Row d has an x in column i when d divides i. Count the x marks in a column and you get the number of divisors of i. The grid starts blank for n = 4; rows fill in from d = 1.","panels":{"t":{"cells":[["","","",""],["","","",""],["","","",""],["","","",""]],"rowHeads":["d=1","d=2","d=3","d=4"],"colHeads":["1","2","3","4"],"colTitle":"i"}}},
+{"caption":"d = 1 divides 1, 2, 3, 4: 4 multiples, exactly `4 // 1`. Marks so far: 4.","panels":{"t":{"cells":[["x","x","x","x"],["","","",""],["","","",""],["","","",""]],"states":["cccc","____","____","____"],"rowHeads":["d=1","d=2","d=3","d=4"],"colHeads":["1","2","3","4"],"colTitle":"i"}}},
+{"caption":"d = 2 divides 2, 4: 2 multiples, exactly `4 // 2`. Marks so far: 6.","panels":{"t":{"cells":[["x","x","x","x"],["","x","","x"],["","","",""],["","","",""]],"states":["dddd","_c_c","____","____"],"rowHeads":["d=1","d=2","d=3","d=4"],"colHeads":["1","2","3","4"],"colTitle":"i"}}},
+{"caption":"d = 3 divides 3: 1 multiple, exactly `4 // 3`. Marks so far: 7.","panels":{"t":{"cells":[["x","x","x","x"],["","x","","x"],["","","x",""],["","","",""]],"states":["dddd","_d_d","__c_","____"],"rowHeads":["d=1","d=2","d=3","d=4"],"colHeads":["1","2","3","4"],"colTitle":"i"}}},
+{"caption":"d = 4 divides 4: 1 multiple, exactly `4 // 4`. Marks so far: 8.","panels":{"t":{"cells":[["x","x","x","x"],["","x","","x"],["","","x",""],["","","","x"]],"states":["dddd","_d_d","__d_","___c"],"rowHeads":["d=1","d=2","d=3","d=4"],"colHeads":["1","2","3","4"],"colTitle":"i"}}},
+{"caption":"The marks total 8, which is the sum of the divisor counts of 1 to 4: 1 + 2 + 2 + 3 = 8.","panels":{"t":{"cells":[["x","x","x","x"],["","x","","x"],["","","x",""],["","","","x"]],"states":["dddd","_d_d","__d_","___d"],"rowHeads":["d=1","d=2","d=3","d=4"],"colHeads":["1","2","3","4"],"colTitle":"i"}}}
+]},
+{"id":"one","label":"n = 1","steps":[
+{"caption":"Row d has an x in column i when d divides i. Count the x marks in a column and you get the number of divisors of i. The grid starts blank for n = 1; rows fill in from d = 1.","panels":{"t":{"cells":[[""]],"rowHeads":["d=1"],"colHeads":["1"],"colTitle":"i"}}},
+{"caption":"d = 1 divides 1: 1 multiple, exactly `1 // 1`. Marks so far: 1.","panels":{"t":{"cells":[["x"]],"states":["c"],"rowHeads":["d=1"],"colHeads":["1"],"colTitle":"i"}}},
+{"caption":"The marks total 1, which is the sum of the divisor counts of 1 to 1: 1 = 1.","panels":{"t":{"cells":[["x"]],"states":["d"],"rowHeads":["d=1"],"colHeads":["1"],"colTitle":"i"}}}
+]}
+]}

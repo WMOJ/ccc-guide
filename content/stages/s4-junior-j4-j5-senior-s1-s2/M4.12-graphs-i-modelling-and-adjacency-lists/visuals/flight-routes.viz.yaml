@@ -1,0 +1,20 @@
+layout: row
+panels:
+  - { id: graph, viz: GraphViz, title: Airports }
+  - { id: table, viz: TableViz, title: Routes }
+alt: >-
+  Modelling a flight timetable as a directed graph. Airport codes are mapped to vertex indices
+  first, then each one-way flight adds the destination to the origin's route list, building
+  the same kind of adjacency list as the numbered examples, just keyed by name.
+captions: vizrec
+presets:
+  - id: given
+    label: Given
+    stdin: "4 3\nTO OT MO HA\nTO OT\nOT MO\nMO HA\n"
+  - id: hub
+    label: Hub
+    stdin: "5 4\nTO OT MO HA CA\nTO OT\nTO MO\nOT HA\nMO HA\n"
+consistency:
+  description: The routes the visual builds equal the lines examples/flight_routes.py prints on each preset.
+  example: ../examples/flight_routes.py
+  compare: output

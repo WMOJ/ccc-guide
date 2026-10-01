@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: text, viz: ArrayViz, title: Text }
+  - { id: counts, viz: TableViz, title: Letter counts }
+alt: >-
+  A text with a growing right pointer and a left pointer that only moves forward, beside a table
+  of the current window's letter counts. The right pointer adds a letter each step; the moment the
+  window holds more than K distinct letters, the left pointer drops letters until it is back down
+  to K. The longest window seen is highlighted once the scan finishes.
+captions: vizrec
+presets:
+  - id: k2
+    label: K = 2
+    stdin: "aabbbccc\n2"
+  - id: k1
+    label: K = 1
+    stdin: "aabbbccc\n1"
+  - id: never-shrinks
+    label: Never shrinks
+    stdin: "aaaaaaaa\n1"
+consistency:
+  description: The printed longest length equals the output of examples/longest_substring.py on the same text and K.
+  example: ../examples/longest_substring.py
+  compare: output

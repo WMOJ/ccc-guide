@@ -1,0 +1,23 @@
+example: lift_query.py
+alt: >-
+  A short version of the program for five stations and one query. It builds the doubling table
+  one level at a time, each level from the one before, then walks the set bits of K from bit 0
+  upward and hops once per set bit.
+presets:
+  - id: main
+    label: K = 5
+    stdin: "5 0 1 2 3 4 2\n"
+  - id: zero
+    label: K = 0
+    stdin: "0 3 1 2 3 4 2\n"
+  - id: skips
+    label: K = 6
+    stdin: "6 0 1 2 3 4 2\n"
+notes:
+  "5": "The input is K, the start station, then `nxt` for five stations."
+  "8": "Level 0 of the table is `nxt`: jumps of size 1."
+  "9": "`LOG` is the bit length of K, just enough levels for this query."
+  "11": "`p` is the previous level."
+  "12": "Level `k` from level `k - 1`: hop to `p[v]`, then hop again from there."
+  "15": "Is bit `k` of K set? Then one hop of `2^k` jumps is needed."
+  "16": "One table lookup replaces `2^k` single jumps."

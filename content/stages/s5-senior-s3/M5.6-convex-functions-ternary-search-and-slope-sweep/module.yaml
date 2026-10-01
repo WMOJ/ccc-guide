@@ -13,5 +13,4 @@ lessons:
   - convex-functions-and-ternary-search
 practice:
   - id: ccc21s3
-    note: Find the best meeting point on a timeline by minimizing total waiting time.
-    why: A classic convex-cost problem solved directly by slope sweep.
+    note: Pick a concert spot that keeps the total walking time of every friend as low as possible.

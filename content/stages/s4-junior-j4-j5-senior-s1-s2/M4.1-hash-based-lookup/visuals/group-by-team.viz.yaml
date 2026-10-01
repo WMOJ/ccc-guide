@@ -1,0 +1,19 @@
+layout: row
+panels:
+  - { id: entries, viz: ArrayViz, title: Team of each entry }
+  - { id: groups, viz: TableViz, title: by_team }
+alt: >-
+  Scanning a list of team-and-score entries, collecting each score into a list under its team's
+  key with by_team.setdefault(team, []).append(score), then reading the best score per team.
+captions: vizrec
+presets:
+  - id: mixed
+    label: Mixed
+    stdin: "4\nB 85\nA 92\nB 78\nC 88\n"
+  - id: one-team
+    label: One team
+    stdin: "3\nA 70\nA 90\nA 80\n"
+consistency:
+  description: The per-team best scores equal the output of examples/group_by_team.py on the same input.
+  example: ../examples/group_by_team.py
+  compare: output

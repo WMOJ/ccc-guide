@@ -1,0 +1,18 @@
+{"schema":1,
+"kind":"frames",
+"id":"update",
+"layout":"row",
+"panels":[{"id":"a","viz":"ArrayViz"},{"id":"s","viz":"TableViz","title":"Block sums"}],
+"alt":"A point update in eight values with blocks of three. One position changes, and its block sum changes by the same difference. No other value or sum is touched. A later range query then reads the new numbers. The presets change a middle position to a larger value and the last position to a smaller one.",
+"presets":[
+{"id":"raise","label":"Raise a value","steps":[
+{"caption":"Set position 4 to 10. Position 4 is in block 4 // 3 = 1, and it holds 5 now. `sums[1]` is 15.","panels":{"a":{"values":[3,1,4,1,5,9,2,6],"states":"____c___","name":"values"},"s":{"cells":[[8,15,8]],"states":["_c_"],"colHeads":["block 0","block 1","block 2"]}}},
+{"caption":"The value changes by 10 - 5 = 5. Write `a[4] = 10`, and add the same 5 to `sums[1]`: 15 + 5 = 20. No other value or block is read or written.","panels":{"a":{"values":[3,1,4,1,10,9,2,6],"states":"____d___","name":"values"},"s":{"cells":[[8,20,8]],"states":["_d_"],"colHeads":["block 0","block 1","block 2"]}}},
+{"caption":"A later query for positions 1 up to, but not including, 7 reads the new numbers and answers 27.","panels":{"a":{"values":[3,1,4,1,10,9,2,6],"states":"________","name":"values"},"s":{"cells":[[8,20,8]],"states":["___"],"colHeads":["block 0","block 1","block 2"]}}}
+]},
+{"id":"lower","label":"Lower a value","steps":[
+{"caption":"Set position 7 to 0. Position 7 is in block 7 // 3 = 2, and it holds 6 now. `sums[2]` is 8.","panels":{"a":{"values":[3,1,4,1,5,9,2,6],"states":"_______c","name":"values"},"s":{"cells":[[8,15,8]],"states":["__c"],"colHeads":["block 0","block 1","block 2"]}}},
+{"caption":"The value changes by 0 - 6 = -6. Write `a[7] = 0`, and add the same -6 to `sums[2]`: 8 - 6 = 2. No other value or block is read or written.","panels":{"a":{"values":[3,1,4,1,5,9,2,0],"states":"_______d","name":"values"},"s":{"cells":[[8,15,2]],"states":["__d"],"colHeads":["block 0","block 1","block 2"]}}},
+{"caption":"A later query for positions 6 up to, but not including, 8 reads the new numbers and answers 2.","panels":{"a":{"values":[3,1,4,1,5,9,2,0],"states":"________","name":"values"},"s":{"cells":[[8,15,2]],"states":["___"],"colHeads":["block 0","block 1","block 2"]}}}
+]}
+]}

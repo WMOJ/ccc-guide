@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz, title: "Work per stone" }
+alt: >-
+  A table with one row per stone comparing two ways to find the best predecessor. One column
+  counts the earlier stones a plain scan of the window reads. Another counts the appends and
+  pops the deque does. Two more columns keep running totals. The deque total stays under twice
+  the number of stones, while the scan total grows with the window size.
+captions: vizrec
+presets:
+  - id: mixed
+    label: Window 3
+    stdin: "9 3\n2 7 -3 -5 -6 -4 6 1 4\n"
+  - id: wide
+    label: Window 8
+    stdin: "9 8\n2 7 -3 -5 -6 -4 6 1 4\n"
+  - id: one
+    label: Window 1
+    stdin: "9 1\n2 7 -3 -5 -6 -4 6 1 4\n"
+consistency:
+  description: The final dp value equals the output of examples/dp_with_deque_max.py.
+  example: ../examples/dp_with_deque_max.py
+  compare: output

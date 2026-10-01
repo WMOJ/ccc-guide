@@ -18,10 +18,13 @@ function readTerms(file: string): GlossaryTermEntry[] {
   return glossarySchema.parse(parse(fs.readFileSync(file, "utf8"))).terms;
 }
 
+// Cached per process in production only: `next dev` re-reads the file on every call, so an edit
+// to content/glossary.yaml shows up without restarting the dev server.
+const CACHE = process.env.NODE_ENV === "production";
 let cached: GlossaryTermView[] | null = null;
 
 export function getGlossaryTerms(): GlossaryTermView[] {
-  if (cached) return cached;
+  if (CACHE && cached) return cached;
   const terms = [...readTerms(REAL_FILE)];
   if (getBuildEnv() !== "production") terms.push(...readTerms(FIXTURE_FILE));
   cached = terms

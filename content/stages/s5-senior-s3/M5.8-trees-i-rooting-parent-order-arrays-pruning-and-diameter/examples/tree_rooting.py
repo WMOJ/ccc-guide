@@ -1,34 +1,57 @@
+import sys
 from collections import deque
 
 
-def root_tree(adj, root):
-    """Root a tree at a node, compute parent and depth."""
+def build_adjacency(n: int, edges: list) -> list:
+    adj = [[] for _ in range(n)]
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    return adj
+
+
+def root_tree(adj: list, root: int) -> tuple:
+    """Root a tree with an iterative BFS, filling parent, depth and the BFS order."""
     n = len(adj)
     parent = [-1] * n
     depth = [-1] * n
+    order = []
     depth[root] = 0
     queue = deque([root])
-
     while queue:
-        u = queue.popleft()
-        for v in adj[u]:
-            if depth[v] == -1:
-                depth[v] = depth[u] + 1
-                parent[v] = u
-                queue.append(v)
+        node = queue.popleft()
+        order.append(node)
+        for neighbor in adj[node]:
+            if depth[neighbor] == -1:
+                depth[neighbor] = depth[node] + 1
+                parent[neighbor] = node
+                queue.append(neighbor)
+    return parent, depth, order
 
-    return parent, depth
+
+def main() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
+
+    pos = 0
+    n = int(data[pos])
+    root = int(data[pos + 1])
+    pos += 2
+
+    edges = []
+    for _ in range(n - 1):
+        a = int(data[pos])
+        b = int(data[pos + 1])
+        pos += 2
+        edges.append((a, b))
+
+    adj = build_adjacency(n, edges)
+    parent, depth, order = root_tree(adj, root)
+    print("Parent:", parent)
+    print("Depth:", depth)
+    print("Order:", order)
 
 
-adj = [
-    [1, 2],
-    [0, 3, 4],
-    [0, 5],
-    [1],
-    [1],
-    [2]
-]
-
-parent, depth = root_tree(adj, 0)
-print("Parent:", parent)
-print("Depth:", depth)
+if __name__ == "__main__":
+    main()

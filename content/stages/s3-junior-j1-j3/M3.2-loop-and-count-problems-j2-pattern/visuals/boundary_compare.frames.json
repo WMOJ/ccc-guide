@@ -1,0 +1,29 @@
+{"schema":1,
+"kind":"frames",
+"id":"boundary_compare",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Two tests"}],
+"alt":"A table with one row per mark and two columns, one for the test mark at least 50 and one for mark above 50. Marks away from 50 get the same answer in both columns, while a mark of exactly 50 passes the first and fails the second, so the two counts differ.",
+"presets":[
+{"id":"near-50","label":"Near 50","steps":[
+{"caption":"Two versions of the pass test, >= 50 and > 50, run on the same 3 marks. A mark of exactly 50 is the one that can tell them apart.","panels":{"table":{"cells":[[49,"?","?"],[50,"?","?"],[51,"?","?"]],"states":["___","___","___"],"colHeads":["mark",">= 50","> 50"]}}},
+{"caption":"Mark 49. Both versions fail it. Counts so far: 0 with >=, 0 with >.","panels":{"table":{"cells":[[49,"fail","fail"],[50,"?","?"],[51,"?","?"]],"states":["_xx","___","___"],"colHeads":["mark",">= 50","> 50"]}}},
+{"caption":"Mark 50. It is exactly 50, so >= 50 passes it but > 50 fails it. Counts so far: 1 with >=, 0 with >.","panels":{"table":{"cells":[[49,"fail","fail"],[50,"pass","fail"],[51,"?","?"]],"states":["_xx","_dx","___"],"colHeads":["mark",">= 50","> 50"]}}},
+{"caption":"Mark 51. Both versions pass it. Counts so far: 2 with >=, 1 with >.","panels":{"table":{"cells":[[49,"fail","fail"],[50,"pass","fail"],[51,"pass","pass"]],"states":["_xx","_dx","_dd"],"colHeads":["mark",">= 50","> 50"]}}},
+{"caption":"Final counts: 2 with >= 50 and 1 with > 50. They differ by 1, all from marks equal to 50.","panels":{"table":{"cells":[[49,"fail","fail"],[50,"pass","fail"],[51,"pass","pass"]],"states":["_xx","_dx","_dd"],"colHeads":["mark",">= 50","> 50"]}}}
+]},
+{"id":"apart","label":"Far apart","steps":[
+{"caption":"Two versions of the pass test, >= 50 and > 50, run on the same 3 marks. A mark of exactly 50 is the one that can tell them apart.","panels":{"table":{"cells":[[10,"?","?"],[70,"?","?"],[95,"?","?"]],"states":["___","___","___"],"colHeads":["mark",">= 50","> 50"]}}},
+{"caption":"Mark 10. Both versions fail it. Counts so far: 0 with >=, 0 with >.","panels":{"table":{"cells":[[10,"fail","fail"],[70,"?","?"],[95,"?","?"]],"states":["_xx","___","___"],"colHeads":["mark",">= 50","> 50"]}}},
+{"caption":"Mark 70. Both versions pass it. Counts so far: 1 with >=, 1 with >.","panels":{"table":{"cells":[[10,"fail","fail"],[70,"pass","pass"],[95,"?","?"]],"states":["_xx","_dd","___"],"colHeads":["mark",">= 50","> 50"]}}},
+{"caption":"Mark 95. Both versions pass it. Counts so far: 2 with >=, 2 with >.","panels":{"table":{"cells":[[10,"fail","fail"],[70,"pass","pass"],[95,"pass","pass"]],"states":["_xx","_dd","_dd"],"colHeads":["mark",">= 50","> 50"]}}},
+{"caption":"Final counts: 2 with >= 50 and 2 with > 50. They agree here.","panels":{"table":{"cells":[[10,"fail","fail"],[70,"pass","pass"],[95,"pass","pass"]],"states":["_xx","_dd","_dd"],"colHeads":["mark",">= 50","> 50"]}}}
+]},
+{"id":"all-50","label":"All 50","steps":[
+{"caption":"Two versions of the pass test, >= 50 and > 50, run on the same 3 marks. A mark of exactly 50 is the one that can tell them apart.","panels":{"table":{"cells":[[50,"?","?"],[50,"?","?"],[50,"?","?"]],"states":["___","___","___"],"colHeads":["mark",">= 50","> 50"]}}},
+{"caption":"Mark 50. It is exactly 50, so >= 50 passes it but > 50 fails it. Counts so far: 1 with >=, 0 with >.","panels":{"table":{"cells":[[50,"pass","fail"],[50,"?","?"],[50,"?","?"]],"states":["_dx","___","___"],"colHeads":["mark",">= 50","> 50"]}}},
+{"caption":"Mark 50. It is exactly 50, so >= 50 passes it but > 50 fails it. Counts so far: 2 with >=, 0 with >.","panels":{"table":{"cells":[[50,"pass","fail"],[50,"pass","fail"],[50,"?","?"]],"states":["_dx","_dx","___"],"colHeads":["mark",">= 50","> 50"]}}},
+{"caption":"Mark 50. It is exactly 50, so >= 50 passes it but > 50 fails it. Counts so far: 3 with >=, 0 with >.","panels":{"table":{"cells":[[50,"pass","fail"],[50,"pass","fail"],[50,"pass","fail"]],"states":["_dx","_dx","_dx"],"colHeads":["mark",">= 50","> 50"]}}},
+{"caption":"Final counts: 3 with >= 50 and 0 with > 50. They differ by 3, all from marks equal to 50.","panels":{"table":{"cells":[[50,"pass","fail"],[50,"pass","fail"],[50,"pass","fail"]],"states":["_dx","_dx","_dx"],"colHeads":["mark",">= 50","> 50"]}}}
+]}
+]}

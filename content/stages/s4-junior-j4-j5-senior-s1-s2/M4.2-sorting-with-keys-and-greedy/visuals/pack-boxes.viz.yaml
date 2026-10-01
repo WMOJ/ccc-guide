@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: boxes, viz: ArrayViz, title: box weights }
+alt: >-
+  Box weights shown first in input order, then sorted ascending, then taken one at a time from
+  lightest to heaviest while capacity allows, marked done, or skipped once the truck is full,
+  marked invalid.
+captions: vizrec
+presets:
+  - id: default
+    label: Mixed
+    stdin: "3 25\n10 5 15\n"
+  - id: tight
+    label: Nothing fits
+    stdin: "3 3\n10 5 15\n"
+  - id: roomy
+    label: Everything fits
+    stdin: "3 100\n10 5 15\n"
+consistency:
+  description: The final count equals the number examples/pack_boxes.py prints.
+  example: ../examples/pack_boxes.py
+  compare: output

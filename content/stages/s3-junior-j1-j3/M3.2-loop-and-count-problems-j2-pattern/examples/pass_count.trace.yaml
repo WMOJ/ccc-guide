@@ -1,0 +1,17 @@
+example: pass_count.py
+alt: >-
+  The program reads a count of marks followed by that many marks, and prints how many are
+  50 or higher. Two presets show a pass and a fail, and a run where nothing passes.
+presets:
+  - id: main
+    label: Mixed
+    stdin: "2\n45\n68\n"
+  - id: none
+    label: No matches
+    stdin: "2\n10\n20\n"
+notes:
+  "9": "`n` is read once, before the loop starts."
+  "12": "`count` is initialized to `0` before the loop, not inside it."
+  "14": "Each `mark` is read by position from `data`, one per iteration."
+  "17": "The condition is checked fresh on every iteration; it does not remember earlier marks."
+  "18": "`+=` adds `1` to the existing count. Writing `count = 1` here instead would erase every earlier pass."

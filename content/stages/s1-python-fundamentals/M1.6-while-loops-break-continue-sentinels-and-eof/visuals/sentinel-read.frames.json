@@ -1,0 +1,18 @@
+{"schema":1,
+"kind":"frames",
+"id":"sentinel-read",
+"layout":"single",
+"panels":[{"id":"a","viz":"ArrayViz","title":"Numbers, running total"}],
+"alt":"Numbers are read one at a time. Each one that is not the sentinel joins a running total, shown above the array; the sentinel itself is marked as invalid and stops the loop before it is added. One preset sums two numbers before the sentinel; the other hits the sentinel on the very first number, leaving the total at zero.",
+"presets":[
+{"id":"main","label":"Two numbers","steps":[
+{"caption":"Read the first number before the loop starts. It is 4.","panels":{"a":{"values":[4,6,0],"states":"___","pointers":[{"name":"read","at":0,"strong":true}],"name":"total: 0"}}},
+{"caption":"4 joins the running total since it is not the sentinel. The total becomes 4, and the next read is 6.","panels":{"a":{"values":[4,6,0],"states":"d__","pointers":[{"name":"read","at":1,"strong":true}],"name":"total: 4"}}},
+{"caption":"6 behaves the same way (it is not the sentinel); the total now stands at 10, ready for the next read, 0.","panels":{"a":{"values":[4,6,0],"states":"dd_","pointers":[{"name":"read","at":2,"strong":true}],"name":"total: 10"}}},
+{"caption":"Then 0 shows up. That is the sentinel, so the loop ends before total += number runs.","panels":{"a":{"values":[4,6,0],"states":"ddx","pointers":[{"name":"read","at":2,"strong":true}],"name":"total: 10"}}}
+]},
+{"id":"immediate","label":"Sentinel right away","steps":[
+{"caption":"Read the first number before the loop starts. It is 0.","panels":{"a":{"values":[0],"states":"_","pointers":[{"name":"read","at":0,"strong":true}],"name":"total: 0"}}},
+{"caption":"Then 0 shows up. That is the sentinel, so the loop ends before total += number runs.","panels":{"a":{"values":[0],"states":"x","pointers":[{"name":"read","at":0,"strong":true}],"name":"total: 0"}}}
+]}
+]}

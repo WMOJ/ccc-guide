@@ -1,0 +1,25 @@
+layout: single
+panels:
+  - { id: road, viz: LineViz, title: Houses on a road }
+legendLabels:
+  current: House holding the well
+alt: >-
+  Houses at whole-number positions along a road. A well is tried at each house in turn, with each
+  house labeled by its walking distance and the left and right sums computed from prefix sums. A
+  spot between two houses is shown to cost between its neighbors, so only house positions are
+  checked, and the cheapest one is marked.
+captions: vizrec
+presets:
+  - id: five
+    label: Five houses
+    stdin: "5\n2 3 7 9 15\n"
+  - id: even
+    label: Even count
+    stdin: "4\n1 4 6 10\n"
+  - id: one
+    label: One house
+    stdin: "1\n5\n"
+consistency:
+  description: The best position and cost equal the line examples/well.py prints.
+  example: ../examples/well.py
+  compare: output

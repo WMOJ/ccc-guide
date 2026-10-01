@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: w, viz: ArrayViz, title: "Word, result so far" }
+alt: >-
+  A word is copied into an empty string one character at a time with result += ch. Each step
+  marks the character being added and shows the new, longer result string above the cells,
+  with a caption counting the old characters Python copies to build it. Presets use a
+  three-letter word, a seven-letter word and a single letter.
+captions: vizrec
+presets:
+  - id: main
+    label: Three letters
+    stdinFile: ../examples/slow_concat.in
+  - id: longer
+    label: Seven letters
+    stdin: "pumpkin\n"
+  - id: one
+    label: One letter
+    stdin: "a\n"
+consistency:
+  description: The final result shown matches the output of examples/slow_concat.py.
+  example: ../examples/slow_concat.py
+  compare: output

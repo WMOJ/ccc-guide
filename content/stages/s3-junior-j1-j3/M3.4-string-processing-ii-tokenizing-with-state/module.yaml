@@ -10,10 +10,7 @@ prereqs:
 lessons:
   - string-processing-tokenizing-with-state
 practice:
-  - id: ccc19j3
-    note: Decompress a run-length encoded string one token at a time.
-    why: A state-tracking tokenizing problem from the same era as this lesson's examples.
-  - id: ccc23j3
-    note: Read a line of tokens and track the maximum, joining names on a tie.
+  - id: ccc22j3
+    note: Split a string of harp tuning instructions into its individual instructions.
   - id: ccc25j3
-    note: Tokenize a line into distinct character classes, including signed multi-digit numbers.
+    note: Rewrite a product code by keeping its letters and adding up its embedded numbers.

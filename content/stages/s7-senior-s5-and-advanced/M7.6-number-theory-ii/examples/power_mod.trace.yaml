@@ -1,0 +1,23 @@
+example: power_mod.py
+alt: >-
+  The program computes a to the power b, keeping only the remainder after dividing by m. It reads
+  the binary digits of b from the lowest upward. When a digit is 1 the current a is multiplied
+  into the result r, and every round a is squared and b is halved, so the loop runs once per
+  binary digit of b.
+presets:
+  - id: main
+    label: 3^13
+    stdin: "3 13 1000\n"
+  - id: squares
+    label: 2^16
+    stdin: "2 16 1000\n"
+  - id: zero
+    label: Power 0
+    stdin: "5 0 7\n"
+notes:
+  "10": "`r` collects the answer. It starts at 1, the result of multiplying nothing."
+  "11": "Each round looks at the lowest binary digit of `b`, then drops it."
+  "12": "An odd `b` means the lowest digit is 1, so the current power of `a` belongs in the answer."
+  "13": "Fold it in, and keep only the remainder so `r` never grows past `m`."
+  "14": "Square `a`: it moves from a^1 to a^2, then a^4, then a^8, one power of two per round."
+  "15": "Halving `b` discards the digit just used."

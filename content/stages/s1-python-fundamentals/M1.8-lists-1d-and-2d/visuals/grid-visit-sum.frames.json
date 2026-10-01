@@ -1,0 +1,25 @@
+{"schema":1,
+"kind":"frames",
+"id":"grid-visit-sum",
+"layout":"single",
+"panels":[{"id":"g","viz":"GridViz","title":"Visiting grid[r][c]"}],
+"alt":"A nested loop visits a grid row by row. Each cell is marked current while its value joins a running total, then marked done before the loop moves to the next cell. A one-column grid shows the same visit order with only one cell per row.",
+"presets":[
+{"id":"main","label":"Two rows, three columns","steps":[
+{"caption":"Start with a 2-by-3 grid. total is 0.","panels":{"g":{"cells":["...","..."],"values":[[1,2,3],[4,5,6]],"indices":true}}},
+{"caption":"grid[0][0] is 1, so total becomes 1.","panels":{"g":{"cells":["c..","..."],"values":[[1,2,3],[4,5,6]],"indices":true}}},
+{"caption":"grid[0][1] is 2, so total becomes 3.","panels":{"g":{"cells":["dc.","..."],"values":[[1,2,3],[4,5,6]],"indices":true}}},
+{"caption":"grid[0][2] is 3, so total becomes 6.","panels":{"g":{"cells":["ddc","..."],"values":[[1,2,3],[4,5,6]],"indices":true}}},
+{"caption":"grid[1][0] is 4, so total becomes 10.","panels":{"g":{"cells":["ddd","c.."],"values":[[1,2,3],[4,5,6]],"indices":true}}},
+{"caption":"grid[1][1] is 5, so total becomes 15.","panels":{"g":{"cells":["ddd","dc."],"values":[[1,2,3],[4,5,6]],"indices":true}}},
+{"caption":"grid[1][2] is 6, so total becomes 21.","panels":{"g":{"cells":["ddd","ddc"],"values":[[1,2,3],[4,5,6]],"indices":true}}},
+{"caption":"Every cell is visited. total is 21.","panels":{"g":{"cells":["ddd","ddd"],"values":[[1,2,3],[4,5,6]],"indices":true}}}
+]},
+{"id":"column","label":"One column","steps":[
+{"caption":"Start with a 3-by-1 grid. total is 0.","panels":{"g":{"cells":[".",".","."],"values":[[5],[6],[7]],"indices":true}}},
+{"caption":"grid[0][0] is 5, so total becomes 5.","panels":{"g":{"cells":["c",".","."],"values":[[5],[6],[7]],"indices":true}}},
+{"caption":"grid[1][0] is 6, so total becomes 11.","panels":{"g":{"cells":["d","c","."],"values":[[5],[6],[7]],"indices":true}}},
+{"caption":"grid[2][0] is 7, so total becomes 18.","panels":{"g":{"cells":["d","d","c"],"values":[[5],[6],[7]],"indices":true}}},
+{"caption":"Every cell is visited. total is 18.","panels":{"g":{"cells":["d","d","d"],"values":[[5],[6],[7]],"indices":true}}}
+]}
+]}

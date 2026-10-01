@@ -1,0 +1,20 @@
+{"schema":1,
+"kind":"frames",
+"id":"intervals",
+"layout":"single",
+"panels":[{"id":"line","viz":"LineViz","title":"Ranges on the index line"}],
+"alt":"Each range update drawn as a bar over the array's index line, one row per range so overlapping ranges stay visible, building up to all ranges shown at once.",
+"presets":[
+{"id":"overlapping","label":"Overlapping","steps":[
+{"caption":"The first range runs from index 0 through index 2 and adds 3. Drawing it on row 0 keeps it clear of the rows above.","panels":{"line":{"min":0,"max":5,"tick":1,"intervals":[{"a":0,"b":2,"label":"+3","s":"d","row":0}]}}},
+{"caption":"The second range runs from index 1 through index 4 and adds 2. Drawing it on row 1 keeps it clear of the rows above.","panels":{"line":{"min":0,"max":5,"tick":1,"intervals":[{"a":0,"b":2,"label":"+3","s":"d","row":0},{"a":1,"b":4,"label":"+2","s":"d","row":1}]}}},
+{"caption":"The third range runs from index 3 through index 3 and adds 1. Drawing it on row 2 keeps it clear of the rows above.","panels":{"line":{"min":0,"max":5,"tick":1,"intervals":[{"a":0,"b":2,"label":"+3","s":"d","row":0},{"a":1,"b":4,"label":"+2","s":"d","row":1},{"a":3,"b":3,"label":"+1","s":"c","row":2}]}}},
+{"caption":"All 3 ranges sit on the line together now. Any index covered by more than one row picks up every one of those additions once diff is rebuilt.","panels":{"line":{"min":0,"max":5,"tick":1,"intervals":[{"a":0,"b":2,"label":"+3","s":"d","row":0},{"a":1,"b":4,"label":"+2","s":"d","row":1},{"a":3,"b":3,"label":"+1","s":"d","row":2}]}}}
+]},
+{"id":"spread","label":"Spread out","steps":[
+{"caption":"The first range runs from index 0 through index 1 and adds 2. Drawing it on row 0 keeps it clear of the rows above.","panels":{"line":{"min":0,"max":9,"tick":1,"intervals":[{"a":0,"b":1,"label":"+2","s":"d","row":0}]}}},
+{"caption":"The second range runs from index 3 through index 4 and adds 1. Drawing it on row 1 keeps it clear of the rows above.","panels":{"line":{"min":0,"max":9,"tick":1,"intervals":[{"a":0,"b":1,"label":"+2","s":"d","row":0},{"a":3,"b":4,"label":"+1","s":"d","row":1}]}}},
+{"caption":"The third range runs from index 6 through index 8 and adds 3. Drawing it on row 2 keeps it clear of the rows above.","panels":{"line":{"min":0,"max":9,"tick":1,"intervals":[{"a":0,"b":1,"label":"+2","s":"d","row":0},{"a":3,"b":4,"label":"+1","s":"d","row":1},{"a":6,"b":8,"label":"+3","s":"c","row":2}]}}},
+{"caption":"All 3 ranges sit on the line together now. Any index covered by more than one row picks up every one of those additions once diff is rebuilt.","panels":{"line":{"min":0,"max":9,"tick":1,"intervals":[{"a":0,"b":1,"label":"+2","s":"d","row":0},{"a":3,"b":4,"label":"+1","s":"d","row":1},{"a":6,"b":8,"label":"+3","s":"d","row":2}]}}}
+]}
+]}

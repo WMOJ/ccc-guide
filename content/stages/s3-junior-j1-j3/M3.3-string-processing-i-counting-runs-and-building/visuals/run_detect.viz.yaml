@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: chars, viz: ArrayViz, title: String }
+alt: >-
+  Scanning a string one run at a time. A run-start pointer marks where the current run began, a
+  look pointer checks the next character, and the current run's characters are marked as they
+  are confirmed, until a mismatch or the end of the string closes the run.
+captions: vizrec
+presets:
+  - id: main
+    label: Mixed runs
+    stdin: "aabbcc\n"
+  - id: long-run
+    label: One long run
+    stdin: "aaaa\n"
+  - id: no-runs
+    label: All different
+    stdin: "abcd\n"
+consistency:
+  description: The runs found equal the char/count lines printed by examples/run_length.py.
+  example: ../examples/run_length.py
+  compare: output

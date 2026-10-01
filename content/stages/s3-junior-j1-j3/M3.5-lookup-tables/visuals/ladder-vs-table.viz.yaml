@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: ladder, viz: ArrayViz, title: if/elif chain }
+  - { id: table, viz: ArrayViz, title: Lookup table }
+alt: >-
+  Comparing an if/elif chain against a lookup table answering the same query, the days in a given
+  month. The chain checks one month at a time until it matches; the table jumps straight to the
+  matching month's index in one step, no matter which month is asked.
+captions: vizrec
+presets:
+  - id: january
+    label: Best case
+    stdin: "1\n"
+  - id: june
+    label: Middle
+    stdin: "6\n"
+  - id: december
+    label: Worst case
+    stdin: "12\n"
+consistency:
+  description: The looked-up value equals the output of examples/month_days.py on the same input.
+  example: ../examples/month_days.py
+  compare: output

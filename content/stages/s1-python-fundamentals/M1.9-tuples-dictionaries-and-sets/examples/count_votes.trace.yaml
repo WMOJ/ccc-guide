@@ -4,10 +4,13 @@ alt: >-
   times each name appears using a dict.
 presets:
   - id: main
-    label: A three-way tie broken
+    label: Ana leads
     stdin: "Ana Bo Ana Ana\n"
   - id: tied
-    label: An even split
+    label: Even split
     stdin: "Ana Bo Ana Bo\n"
+  - id: one
+    label: One vote
+    stdin: "Ana\n"
 notes:
-  "4": "`c.get(v, 0)` reads the count so far for `v`, or `0` the first time `v` appears, then adds `1` and stores it back."
+  "4": "Here, `c.get(v, 0)` reads the count so far for `v`, or `0` the first time `v` appears. Adding `1` and storing it back grows the count by one."

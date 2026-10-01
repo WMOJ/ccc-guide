@@ -1,0 +1,5 @@
+nums = list(map(int, input().split()))
+target = int(input())
+seen = set(nums)
+print(target in nums)
+print(target in seen)

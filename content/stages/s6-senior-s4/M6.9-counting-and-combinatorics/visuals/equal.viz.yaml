@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: Readings }
+  - { id: t, viz: TableViz, title: Counts }
+alt: >-
+  Six sensor readings are counted into a table with one row per distinct value. Then each row
+  turns its count k into the number of pairs of equal readings, k times k minus one, divided by
+  two, and a running total adds those pair counts up to the answer.
+captions: vizrec
+presets:
+  - id: mixed
+    label: Mixed readings
+    stdin: "6\n3 1 3 2 3 1\n"
+  - id: distinct
+    label: All different
+    stdin: "5\n4 8 15 16 23\n"
+  - id: same
+    label: All the same
+    stdin: "5\n7 7 7 7 7\n"
+consistency:
+  description: The total equals the output of examples/equal_pairs.py.
+  example: ../examples/equal_pairs.py
+  compare: output

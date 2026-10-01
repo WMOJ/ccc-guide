@@ -14,6 +14,7 @@ lessons:
   - multi-dimensional-dp
 practice:
   - id: ccc19s4
-    note: Plan a multi-day itinerary that visits the most cities under a travel budget.
+    note: Split a row of attractions into days and score each day by its best attraction.
+    why: Each day's score is a maximum over a block of consecutive attractions, the question the deque answers.
   - id: ccc15s5
-    note: Split a set of pies among people so that the smallest share is as large as possible.
+    note: Pick non-adjacent pies along a line for the most sugar, after slotting extra pies in anywhere.

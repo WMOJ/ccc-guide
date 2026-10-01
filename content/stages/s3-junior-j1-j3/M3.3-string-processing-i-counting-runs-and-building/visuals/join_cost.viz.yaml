@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: cost, viz: PlotViz, title: Characters copied }
+alt: >-
+  Comparing two ways to build a string, by a cost model of characters copied rather than a
+  stopwatch. Repeated += in the worst case copies the whole result again on every append, so
+  its total climbs as a curve. Appending to a list and joining once copies each character a
+  fixed number of times, so its total climbs as a straight line.
+captions: vizrec
+presets:
+  - id: main
+    label: Short word
+    stdin: "hello\n"
+  - id: long
+    label: Longer word
+    stdin: "abcdefghijkl\n"
+  - id: single
+    label: One character
+    stdin: "a\n"
+consistency:
+  description: The final concat/join totals equal the two numbers printed by examples/join_cost.py.
+  example: ../examples/join_cost.py
+  compare: output

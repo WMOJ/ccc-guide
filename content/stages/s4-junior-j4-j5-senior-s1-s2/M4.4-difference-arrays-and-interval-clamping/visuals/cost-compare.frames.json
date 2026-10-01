@@ -1,0 +1,28 @@
+{"schema":1,
+"kind":"frames",
+"id":"cost-compare",
+"layout":"row",
+"panels":[{"id":"direct","viz":"ArrayViz","title":"Direct loop"},{"id":"diff","viz":"ArrayViz","title":"Difference array"}],
+"alt":"Two arrays side by side, one updated by a direct loop that writes every index in each range, one by a difference array that writes only two entries per update. Each step marks the cells written and gives the running write counts, so a wide range costs the direct loop many writes and diff two.",
+"presets":[
+{"id":"mixed","label":"Mixed","steps":[
+{"caption":"Both methods start from 5 zeros and face the same 3 updates. The direct loop writes every index in each range. The difference array writes two entries per update.","panels":{"direct":{"values":[0,0,0,0,0],"states":"_____"},"diff":{"values":[0,0,0,0,0,0],"states":"______","indexBase":0}}},
+{"caption":"Update [0, 2] by 3. The direct loop writes 3 cells, 3 in total so far. diff writes diff[0] and diff[3], 2 in total so far.","panels":{"direct":{"values":[3,3,3,0,0],"states":"ccc__"},"diff":{"values":[3,0,0,-3,0,0],"states":"c__c__","indexBase":0}}},
+{"caption":"Update [1, 4] by 2. The direct loop writes 4 cells, 7 in total so far. diff writes diff[1] and diff[5], 4 in total so far.","panels":{"direct":{"values":[3,5,5,2,2],"states":"_cccc"},"diff":{"values":[3,2,0,-3,0,-2],"states":"_c___c","indexBase":0}}},
+{"caption":"Update [3, 3] by 1. The direct loop writes 1 cell, 8 in total so far. diff writes diff[3] and diff[4], 6 in total so far.","panels":{"direct":{"values":[3,5,5,3,2],"states":"___c_"},"diff":{"values":[3,2,0,-2,-1,-2],"states":"___cc_","indexBase":0}}},
+{"caption":"After 3 updates the direct loop made 8 writes; diff made 6 plus one 5-step rebuild, 11 in all. Both end at [3, 5, 5, 3, 2].","panels":{"direct":{"values":[3,5,5,3,2],"states":"_____"},"diff":{"values":[3,2,0,-2,-1,-2],"states":"______","indexBase":0}}}
+]},
+{"id":"wide","label":"Wide ranges","steps":[
+{"caption":"Both methods start from 7 zeros and face the same 3 updates. The direct loop writes every index in each range. The difference array writes two entries per update.","panels":{"direct":{"values":[0,0,0,0,0,0,0],"states":"_______"},"diff":{"values":[0,0,0,0,0,0,0,0],"states":"________","indexBase":0}}},
+{"caption":"Update [0, 6] by 2. The direct loop writes 7 cells, 7 in total so far. diff writes diff[0] and diff[7], 2 in total so far.","panels":{"direct":{"values":[2,2,2,2,2,2,2],"states":"ccccccc"},"diff":{"values":[2,0,0,0,0,0,0,-2],"states":"c______c","indexBase":0}}},
+{"caption":"Update [1, 5] by 3. The direct loop writes 5 cells, 12 in total so far. diff writes diff[1] and diff[6], 4 in total so far.","panels":{"direct":{"values":[2,5,5,5,5,5,2],"states":"_ccccc_"},"diff":{"values":[2,3,0,0,0,0,-3,-2],"states":"_c____c_","indexBase":0}}},
+{"caption":"Update [0, 6] by 1. The direct loop writes 7 cells, 19 in total so far. diff writes diff[0] and diff[7], 6 in total so far.","panels":{"direct":{"values":[3,6,6,6,6,6,3],"states":"ccccccc"},"diff":{"values":[3,3,0,0,0,0,-3,-3],"states":"c______c","indexBase":0}}},
+{"caption":"After 3 updates the direct loop made 19 writes; diff made 6 plus one 7-step rebuild, 13 in all. Both end at [3, 6, 6, 6, 6, 6, 3].","panels":{"direct":{"values":[3,6,6,6,6,6,3],"states":"_______"},"diff":{"values":[3,3,0,0,0,0,-3,-3],"states":"________","indexBase":0}}}
+]},
+{"id":"single","label":"Single cells","steps":[
+{"caption":"Both methods start from 6 zeros and face the same 2 updates. The direct loop writes every index in each range. The difference array writes two entries per update.","panels":{"direct":{"values":[0,0,0,0,0,0],"states":"______"},"diff":{"values":[0,0,0,0,0,0,0],"states":"_______","indexBase":0}}},
+{"caption":"Update [2, 2] by 5. The direct loop writes 1 cell, 1 in total so far. diff writes diff[2] and diff[3], 2 in total so far.","panels":{"direct":{"values":[0,0,5,0,0,0],"states":"__c___"},"diff":{"values":[0,0,5,-5,0,0,0],"states":"__cc___","indexBase":0}}},
+{"caption":"Update [4, 4] by 1. The direct loop writes 1 cell, 2 in total so far. diff writes diff[4] and diff[5], 4 in total so far.","panels":{"direct":{"values":[0,0,5,0,1,0],"states":"____c_"},"diff":{"values":[0,0,5,-5,1,-1,0],"states":"____cc_","indexBase":0}}},
+{"caption":"After 2 updates the direct loop made 2 writes; diff made 4 plus one 6-step rebuild, 10 in all. Both end at [0, 0, 5, 0, 1, 0].","panels":{"direct":{"values":[0,0,5,0,1,0],"states":"______"},"diff":{"values":[0,0,5,-5,1,-1,0],"states":"_______","indexBase":0}}}
+]}
+]}

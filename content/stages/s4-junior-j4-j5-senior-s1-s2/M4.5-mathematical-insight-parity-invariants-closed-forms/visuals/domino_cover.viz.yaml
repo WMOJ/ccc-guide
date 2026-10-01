@@ -1,0 +1,28 @@
+layout: single
+panels:
+  - { id: grid, viz: GridViz, title: Domino cover }
+alt: >-
+  Dominoes placed one at a time on a small board whose squares show (row + col) % 2. Every
+  domino covers one square showing 0 and one showing 1, so the covered count stays balanced. On
+  a board with two opposite corners removed, the squares showing 1 outnumber those showing 0,
+  so two squares are always left over.
+legendLabels:
+  done: Covered
+  current: New domino
+  invalid: Removed
+  compare: Left over
+captions: vizrec
+presets:
+  - id: cut
+    label: Corners cut
+    stdin: "4 1\n"
+  - id: full
+    label: Full board
+    stdin: "4 0\n"
+  - id: odd
+    label: Odd board
+    stdin: "3 0\n"
+consistency:
+  description: The zero and one counts and the verdict equal the output of examples/domino_balance.py.
+  example: ../examples/domino_balance.py
+  compare: output

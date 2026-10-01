@@ -1,0 +1,23 @@
+{"schema":1,
+"kind":"frames",
+"id":"zero_pad",
+"layout":"single",
+"panels":[{"id":"text","viz":"ArrayViz","title":"Text built"}],
+"alt":"The hours field is built first, then the colon, then the minutes field. A value with one digit gets a padding zero in front, drawn with its own state. A value that already has two digits is left alone. The finished text is printed.",
+"presets":[
+{"id":"main","label":"7 and 5","steps":[
+{"caption":"`hours:02d` wants at least 2 digits. `hours` is 7, one digit, so a 0 goes in front: 07. The highlighted 0 is padding, not part of the value.","panels":{"text":{"values":["0","7"],"states":"md"}}},
+{"caption":"The `:` is plain text in the f-string, copied as it is. `minutes:02d` wants at least 2 digits. `minutes` is 5, one digit, so a 0 goes in front: 05. The highlighted 0 is padding, not part of the value.","panels":{"text":{"values":["0","7",":","0","5"],"states":"mddmd"}}},
+{"caption":"`print` shows 07:05. Both numbers keep the same width, so times line up whatever the values.","panels":{"text":{"values":["0","7",":","0","5"],"states":"ddddd"}}}
+]},
+{"id":"two_digits","label":"12 and 30","steps":[
+{"caption":"`hours:02d` wants at least 2 digits. `hours` is 12, which already has 2, so nothing is added: 12.","panels":{"text":{"values":["1","2"],"states":"dd"}}},
+{"caption":"The `:` is plain text in the f-string, copied as it is. `minutes:02d` wants at least 2 digits. `minutes` is 30, which already has 2, so nothing is added: 30.","panels":{"text":{"values":["1","2",":","3","0"],"states":"ddddd"}}},
+{"caption":"`print` shows 12:30. Both numbers keep the same width, so times line up whatever the values.","panels":{"text":{"values":["1","2",":","3","0"],"states":"ddddd"}}}
+]},
+{"id":"zeros","label":"0 and 0","steps":[
+{"caption":"`hours:02d` wants at least 2 digits. `hours` is 0, one digit, so a 0 goes in front: 00. The highlighted 0 is padding, not part of the value.","panels":{"text":{"values":["0","0"],"states":"md"}}},
+{"caption":"The `:` is plain text in the f-string, copied as it is. `minutes:02d` wants at least 2 digits. `minutes` is 0, one digit, so a 0 goes in front: 00. The highlighted 0 is padding, not part of the value.","panels":{"text":{"values":["0","0",":","0","0"],"states":"mddmd"}}},
+{"caption":"`print` shows 00:00. Both numbers keep the same width, so times line up whatever the values.","panels":{"text":{"values":["0","0",":","0","0"],"states":"ddddd"}}}
+]}
+]}

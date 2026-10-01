@@ -1,11 +1,25 @@
 import heapq
+import sys
 
-h = []
-heapq.heappush(h, -10)
-heapq.heappush(h, -3)
-heapq.heappush(h, -7)
 
-print("Items in descending order:")
-while h:
-    print(-heapq.heappop(h), end=" ")
-print()
+def main() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
+    n = int(data[0])
+    values = [int(x) for x in data[1:1 + n]]
+
+    heap = []
+    for value in values:
+        heapq.heappush(heap, -value)
+
+    print("Stored as negatives:", heap)
+
+    print("Items in descending order:")
+    while heap:
+        print(-heapq.heappop(heap), end=" ")
+    print()
+
+
+if __name__ == "__main__":
+    main()

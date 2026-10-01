@@ -1,25 +1,35 @@
-def find(parent, x):
-    """Find root with path halving; returns first free slot at or after x."""
-    if parent[x] == x:
-        return x
-    parent[x] = find(parent, x + 1)
-    return parent[x]
+import sys
+
+
+def find(parent: list, x: int) -> int:
+    """Find root with path halving; the root is the first free slot at or after x."""
+    while parent[x] != x:
+        parent[x] = parent[parent[x]]
+        x = parent[x]
+    return x
 
 
 def main() -> None:
-    n = 5
-    parent = list(range(n + 1))
+    data = sys.stdin.read().split()
+    if not data:
+        return
 
-    results = []
-    for _ in range(3):
-        # Find next free slot
+    n = int(data[0])
+    k = int(data[1])
+
+    # Slots 1..n, plus one sentinel slot at n + 1 that is never taken.
+    parent = list(range(n + 2))
+
+    out_lines = []
+    for _ in range(k):
         slot = find(parent, 1)
-        results.append(str(slot))
-        # Mark it occupied by pointing it to the next slot
-        if slot < n:
+        if slot == n + 1:
+            out_lines.append("-1")
+        else:
+            out_lines.append(str(slot))
             parent[slot] = slot + 1
 
-    print("\n".join(results))
+    print("\n".join(out_lines))
 
 
 if __name__ == "__main__":

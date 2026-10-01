@@ -1,0 +1,30 @@
+{"schema":1,
+"kind":"frames",
+"id":"flat_index",
+"layout":"row",
+"panels":[{"id":"g","viz":"GridViz","title":"Grid"},{"id":"a","viz":"ArrayViz","title":"cells"}],
+"alt":"A 2 by 4 grid and the flat list holding the same nine values row after row. A query picks a cell, and the index r * 4 + c locates it in the list. Its right neighbor is the next index, its lower neighbor is four indexes further on. In the edge presets a neighbor does not exist: stepping one index past the last column would land on the first cell of the next row, so the column check comes first.",
+"legendLabels":{"invalid":"Wrong cell","compare":"Neighbor"},
+"presets":[
+{"id":"middle","label":"Middle cell","steps":[
+{"caption":"The grid has 2 rows and 4 columns. `cells` holds the same 8 values, row after row, so cell (r, c) sits at index `r * 4 + c`.","panels":{"g":{"cells":["____","____"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"indices":true}}},
+{"caption":"Cell (0, 1) is at index 0 * 4 + 1 = 1, and `cells[1]` is 2.","panels":{"g":{"cells":["_c__","____"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"states":"_c______","pointers":[{"name":"here","at":1}],"indices":true}}},
+{"caption":"Column 1 + 1 is 2, less than 4, so a right neighbor exists. It is the next index, 1 + 1 = 2: `cells[2]` is 3.","panels":{"g":{"cells":["_cm_","____"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"states":"_cm_____","pointers":[{"name":"here","at":1}],"indices":true}}},
+{"caption":"Row 0 + 1 is 1, less than 2. A row is 4 cells long, so the cell below is 4 indexes on: 1 + 4 = 5, and `cells[5]` is 6.","panels":{"g":{"cells":["_c__","_m__"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"states":"_c___m__","pointers":[{"name":"here","at":1}],"indices":true}}},
+{"caption":"The program prints `cell 2 right 3 down 6`.","panels":{"g":{"cells":["_c__","____"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"states":"_c______","pointers":[{"name":"here","at":1}],"indices":true}}}
+]},
+{"id":"edge","label":"Right edge","steps":[
+{"caption":"The grid has 2 rows and 4 columns. `cells` holds the same 8 values, row after row, so cell (r, c) sits at index `r * 4 + c`.","panels":{"g":{"cells":["____","____"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"indices":true}}},
+{"caption":"Cell (0, 3) is at index 0 * 4 + 3 = 3, and `cells[3]` is 4.","panels":{"g":{"cells":["___c","____"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"states":"___c____","pointers":[{"name":"here","at":3}],"indices":true}}},
+{"caption":"Index 3 + 1 is 4, which is cell (1, 0) on the next row, so the check `c + 1 < cols` fails first: column 3 + 1 is 4, not less than 4. No right neighbor.","panels":{"g":{"cells":["___c","x___"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"states":"___cx___","pointers":[{"name":"here","at":3}],"indices":true}}},
+{"caption":"Row 0 + 1 is 1, less than 2. A row is 4 cells long, so the cell below is 4 indexes on: 3 + 4 = 7, and `cells[7]` is 8.","panels":{"g":{"cells":["___c","___m"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"states":"___c___m","pointers":[{"name":"here","at":3}],"indices":true}}},
+{"caption":"The program prints `cell 4 right none down 8`.","panels":{"g":{"cells":["___c","____"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"states":"___c____","pointers":[{"name":"here","at":3}],"indices":true}}}
+]},
+{"id":"corner","label":"Corner","steps":[
+{"caption":"The grid has 2 rows and 4 columns. `cells` holds the same 8 values, row after row, so cell (r, c) sits at index `r * 4 + c`.","panels":{"g":{"cells":["____","____"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"indices":true}}},
+{"caption":"Cell (1, 3) is at index 1 * 4 + 3 = 7, and `cells[7]` is 8.","panels":{"g":{"cells":["____","___c"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"states":"_______c","pointers":[{"name":"here","at":7}],"indices":true}}},
+{"caption":"Column 3 + 1 is 4, not less than 4, so there is no right neighbor. Index 7 + 1 is 8, past the end of the list.","panels":{"g":{"cells":["____","___c"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"states":"_______c","pointers":[{"name":"here","at":7}],"indices":true}}},
+{"caption":"Row 1 + 1 is 2, not less than 2, so there is no cell below. Index 7 + 4 would be 11, past the end of the list.","panels":{"g":{"cells":["____","___c"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"states":"_______c","pointers":[{"name":"here","at":7}],"indices":true}}},
+{"caption":"The program prints `cell 8 right none down none`.","panels":{"g":{"cells":["____","___c"],"values":[[1,2,3,4],[5,6,7,8]]},"a":{"values":[1,2,3,4,5,6,7,8],"states":"_______c","pointers":[{"name":"here","at":7}],"indices":true}}}
+]}
+]}

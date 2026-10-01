@@ -1,0 +1,32 @@
+{"schema":1,
+"kind":"frames",
+"id":"pack-boxes",
+"layout":"single",
+"panels":[{"id":"boxes","viz":"ArrayViz","title":"box weights"}],
+"alt":"Box weights shown first in input order, then sorted ascending, then taken one at a time from lightest to heaviest while capacity allows, marked done, or skipped once the truck is full, marked invalid.",
+"presets":[
+{"id":"default","label":"Mixed","steps":[
+{"caption":"Each box has a weight. The truck's capacity is 25, and the goal is to fit as many boxes as possible.","panels":{"boxes":{"values":[10,5,15]}}},
+{"caption":"Sorting the boxes by weight, ascending, puts the lightest ones first.","panels":{"boxes":{"values":[5,10,15]}}},
+{"caption":"Weight 5 still fits: 0 + 5 = 5 <= 25. Take it: 1 box loaded so far.","panels":{"boxes":{"values":[5,10,15],"states":"d__"}}},
+{"caption":"Weight 10 still fits: 5 + 10 = 15 <= 25. Take it: 2 boxes loaded so far.","panels":{"boxes":{"values":[5,10,15],"states":"dd_"}}},
+{"caption":"Weight 15 would push the load to 30, over the capacity 25. Skip it; the count stays 2.","panels":{"boxes":{"values":[5,10,15],"states":"ddx"}}},
+{"caption":"Every box has been considered. Final count: 2 boxes, using 15 of 25 capacity.","panels":{"boxes":{"values":[5,10,15],"states":"ddx"}}}
+]},
+{"id":"tight","label":"Nothing fits","steps":[
+{"caption":"Each box has a weight. The truck's capacity is 3, and the goal is to fit as many boxes as possible.","panels":{"boxes":{"values":[10,5,15]}}},
+{"caption":"Sorting the boxes by weight, ascending, puts the lightest ones first.","panels":{"boxes":{"values":[5,10,15]}}},
+{"caption":"Weight 5 would push the load to 5, over the capacity 3. Skip it; the count stays 0.","panels":{"boxes":{"values":[5,10,15],"states":"x__"}}},
+{"caption":"Weight 10 would push the load to 10, over the capacity 3. Skip it; the count stays 0.","panels":{"boxes":{"values":[5,10,15],"states":"xx_"}}},
+{"caption":"Weight 15 would push the load to 15, over the capacity 3. Skip it; the count stays 0.","panels":{"boxes":{"values":[5,10,15],"states":"xxx"}}},
+{"caption":"Every box has been considered. Final count: 0 boxes, using 0 of 3 capacity.","panels":{"boxes":{"values":[5,10,15],"states":"xxx"}}}
+]},
+{"id":"roomy","label":"Everything fits","steps":[
+{"caption":"Each box has a weight. The truck's capacity is 100, and the goal is to fit as many boxes as possible.","panels":{"boxes":{"values":[10,5,15]}}},
+{"caption":"Sorting the boxes by weight, ascending, puts the lightest ones first.","panels":{"boxes":{"values":[5,10,15]}}},
+{"caption":"Weight 5 still fits: 0 + 5 = 5 <= 100. Take it: 1 box loaded so far.","panels":{"boxes":{"values":[5,10,15],"states":"d__"}}},
+{"caption":"Weight 10 still fits: 5 + 10 = 15 <= 100. Take it: 2 boxes loaded so far.","panels":{"boxes":{"values":[5,10,15],"states":"dd_"}}},
+{"caption":"Weight 15 still fits: 15 + 15 = 30 <= 100. Take it: 3 boxes loaded so far.","panels":{"boxes":{"values":[5,10,15],"states":"ddd"}}},
+{"caption":"Every box has been considered. Final count: 3 boxes, using 30 of 100 capacity.","panels":{"boxes":{"values":[5,10,15],"states":"ddd"}}}
+]}
+]}

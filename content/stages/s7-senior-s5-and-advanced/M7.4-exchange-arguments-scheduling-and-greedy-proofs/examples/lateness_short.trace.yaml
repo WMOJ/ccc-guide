@@ -1,0 +1,25 @@
+example: lateness_short.py
+alt: >-
+  The program reads time and deadline pairs, sorts the jobs by deadline, then runs them one after
+  another, computing each job's lateness as its finish time minus its deadline and keeping the
+  largest one in peak.
+presets:
+  - id: main
+    label: Two jobs
+    stdin: "4 5 2 4\n"
+  - id: early
+    label: All early
+    stdin: "1 9 2 9\n"
+  - id: late
+    label: All late
+    stdin: "2 1 3 2\n"
+skip:
+  - line: 11
+    keep: 1
+    to: 16
+    label: "Reading the other pairs works the same way for each job."
+notes:
+  "16": "Each job goes in as (deadline, time), so sorting puts the earliest deadline first."
+  "21": "`clock` is when the current job ends, counting from time 0."
+  "22": "Lateness is the finish time minus the deadline. It is negative when the job ends early."
+  "23": "Only the largest lateness matters, so `peak` keeps the larger of its old value and `late`."

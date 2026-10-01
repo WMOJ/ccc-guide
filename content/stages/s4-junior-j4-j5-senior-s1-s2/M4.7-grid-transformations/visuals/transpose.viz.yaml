@@ -1,0 +1,19 @@
+layout: row
+panels:
+  - { id: source, viz: GridViz, title: Source }
+  - { id: target, viz: GridViz, title: Target }
+alt: >-
+  A source grid and an empty target grid of swapped dimensions. Each source cell moves to the
+  target at its row and column swapped, filling the target one cell at a time.
+captions: vizrec
+presets:
+  - id: main
+    label: Main
+    stdin: "2 3\nA B C\nD E F\n"
+  - id: column
+    label: One column
+    stdin: "3 1\nP\nQ\nR\n"
+consistency:
+  description: The target grid the visual ends with equals the output of examples/transpose.py on each preset.
+  example: ../examples/transpose.py
+  compare: output

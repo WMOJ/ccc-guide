@@ -2,9 +2,9 @@ id: C.7
 title: Reading grader feedback and submission discipline
 status: accepted
 objectives:
-  - Interpret grader verdicts (AC, WA, RE, MLE, TLE) and what each means for your solution.
-  - Read the feedback to identify whether the issue is logic, runtime, or memory.
-  - "Practice disciplined debugging: test locally, make one change, resubmit."
+  - Match a verdict (AC, WA, RTE, TLE or MLE) to its likely cause and the first thing to check.
+  - Reproduce a wrong answer, a crash and a slow run on a small input, and find the cause of each.
+  - Change one thing per submission, and confirm the change locally before you resubmit.
 prereqs:
   - M0.5
   - M0.7

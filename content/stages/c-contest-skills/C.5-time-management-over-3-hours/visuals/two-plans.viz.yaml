@@ -1,0 +1,25 @@
+layout: row
+panels:
+  - { id: line, viz: LineViz, title: Plans over 180 minutes }
+  - { id: plot, viz: PlotViz, title: Cleared so far }
+alt: >-
+  Two example plans for a 180-minute contest drawn as two rows of bars on a minute line, plan A on
+  the top row and plan B below it. Each bar is a block of minutes on one problem, marked as
+  cleared a subtask or cleared none, and a small chart beneath counts the subtasks cleared at
+  the end of each block. Plan A keeps its last 105 minutes on one problem; plan B rotates between problems.
+captions: vizrec
+legendLabels:
+  done: Cleared a subtask
+  invalid: Cleared none
+  compare: Reading
+presets:
+  - id: dead-end
+    label: Dead end
+    stdin: "5\n2 15 35\n2 20 40\n3 25 60 -\n2 30 -\n2 40 120\n2\n4\n0 10\n1 35\n4 30\n4 105\n6\n0 10\n1 35\n4 30\n2 25\n3 30\n5 50\n"
+  - id: stay-pays
+    label: Stay pays
+    stdin: "5\n2 15 35\n2 30 45\n2 70 -\n2 30 60\n2 80 -\n2\n4\n0 10\n1 35\n4 30\n4 105\n6\n0 10\n1 35\n4 30\n2 25\n3 30\n5 50\n"
+consistency:
+  description: The two summary lines equal the output of examples/plan_timeline.py on each preset's input.
+  example: ../examples/plan_timeline.py
+  compare: output

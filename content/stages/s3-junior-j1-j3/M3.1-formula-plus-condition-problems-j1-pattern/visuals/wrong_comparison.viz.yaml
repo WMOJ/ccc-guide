@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Two versions }
+alt: >-
+  A two-row table comparing the correct chain of at-most comparisons with a chain that uses
+  strictly-less-than. On a cost that sits exactly on a boundary the two versions print
+  different tiers, while on a cost away from a boundary they agree and hide the mistake.
+captions: vizrec
+presets:
+  - id: on-20
+    label: Cost 20
+    stdin: "10\n0\n"
+  - id: on-50
+    label: Cost 50
+    stdin: "25\n0\n"
+  - id: away
+    label: Cost 18
+    stdin: "9\n0\n"
+consistency:
+  description: The correct version's tier equals the output of examples/shipping_cost.py.
+  example: ../examples/shipping_cost.py
+  compare: output

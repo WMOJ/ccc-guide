@@ -1,0 +1,23 @@
+{"schema":1,
+"kind":"frames",
+"id":"discount-tier",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"discount table"}],
+"alt":"A discount table with one column per tier letter, A through E. A tier letter is turned into its index with ord(tier) - ord(\"A\"), and that index then reaches the matching discount directly, with no comparison against the other tiers.",
+"presets":[
+{"id":"tier-c","label":"Tier C","steps":[
+{"caption":"The tier letter read from the input is \"C\". The table has one column per tier, but the program never searches them.","panels":{"table":{"cells":[[0,1,2,3,4],[20,15,10,5,0]],"states":["_____","_____"],"rowHeads":["index","discount"],"colHeads":["A","B","C","D","E"],"colTitle":"tier"}}},
+{"caption":"ord(\"C\") - ord(\"A\") is 67 - 65 = 2, so tier C sits at index 2.","panels":{"table":{"cells":[[0,1,2,3,4],[20,15,10,5,0]],"states":["__c__","_____"],"rowHeads":["index","discount"],"colHeads":["A","B","C","D","E"],"colTitle":"tier"}}},
+{"caption":"discount[2] is 10: the index goes straight to that column's discount, and the answer is 10.","panels":{"table":{"cells":[[0,1,2,3,4],[20,15,10,5,0]],"states":["__c__","__c__"],"rowHeads":["index","discount"],"colHeads":["A","B","C","D","E"],"colTitle":"tier","arrows":[{"from":[0,2],"to":[1,2]}]}}}
+]},
+{"id":"tier-a","label":"Tier A","steps":[
+{"caption":"The tier letter read from the input is \"A\". The table has one column per tier, but the program never searches them.","panels":{"table":{"cells":[[0,1,2,3,4],[20,15,10,5,0]],"states":["_____","_____"],"rowHeads":["index","discount"],"colHeads":["A","B","C","D","E"],"colTitle":"tier"}}},
+{"caption":"ord(\"A\") - ord(\"A\") is 65 - 65 = 0, so tier A sits at index 0.","panels":{"table":{"cells":[[0,1,2,3,4],[20,15,10,5,0]],"states":["c____","_____"],"rowHeads":["index","discount"],"colHeads":["A","B","C","D","E"],"colTitle":"tier"}}},
+{"caption":"discount[0] is 20: the index goes straight to that column's discount, and the answer is 20.","panels":{"table":{"cells":[[0,1,2,3,4],[20,15,10,5,0]],"states":["c____","c____"],"rowHeads":["index","discount"],"colHeads":["A","B","C","D","E"],"colTitle":"tier","arrows":[{"from":[0,0],"to":[1,0]}]}}}
+]},
+{"id":"tier-e","label":"Tier E","steps":[
+{"caption":"The tier letter read from the input is \"E\". The table has one column per tier, but the program never searches them.","panels":{"table":{"cells":[[0,1,2,3,4],[20,15,10,5,0]],"states":["_____","_____"],"rowHeads":["index","discount"],"colHeads":["A","B","C","D","E"],"colTitle":"tier"}}},
+{"caption":"ord(\"E\") - ord(\"A\") is 69 - 65 = 4, so tier E sits at index 4.","panels":{"table":{"cells":[[0,1,2,3,4],[20,15,10,5,0]],"states":["____c","_____"],"rowHeads":["index","discount"],"colHeads":["A","B","C","D","E"],"colTitle":"tier"}}},
+{"caption":"discount[4] is 0: the index goes straight to that column's discount, and the answer is 0.","panels":{"table":{"cells":[[0,1,2,3,4],[20,15,10,5,0]],"states":["____c","____c"],"rowHeads":["index","discount"],"colHeads":["A","B","C","D","E"],"colTitle":"tier","arrows":[{"from":[0,4],"to":[1,4]}]}}}
+]}
+]}

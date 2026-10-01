@@ -2,32 +2,31 @@ import sys
 
 
 def main() -> None:
-    input_data = sys.stdin.read().split()
-    n = int(input_data[0])
-
+    data = sys.stdin.read().split()
+    n = int(data[0])
+    pos = 1
     events = []
-    for i in range(n):
-        start = int(input_data[1 + i * 2])
-        end = int(input_data[1 + i * 2 + 1])
+    for _ in range(n):
+        start = int(data[pos])
+        end = int(data[pos + 1])
+        pos += 2
         events.append((start, 1))
         events.append((end, -1))
-
     events.sort()
 
-    total_coverage = 0
-    active_count = 0
-    prev_pos = events[0][0]
+    active = 0
+    best = 0
+    covered = 0
+    prev = events[0][0]
+    for x, delta in events:
+        if active > 0:
+            covered += x - prev
+        active += delta
+        best = max(best, active)
+        prev = x
 
-    for pos, delta in events:
-        if active_count > 0 and pos > prev_pos:
-            # This stretch is covered by at least one interval, so it counts
-            # once no matter how many intervals overlap it here.
-            total_coverage += pos - prev_pos
-
-        active_count += delta
-        prev_pos = pos
-
-    print(total_coverage)
+    print(covered)
+    print(best)
 
 
 if __name__ == "__main__":

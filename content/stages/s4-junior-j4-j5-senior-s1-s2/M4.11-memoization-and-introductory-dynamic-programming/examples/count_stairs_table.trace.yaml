@@ -1,0 +1,12 @@
+example: count_stairs_table.py
+alt: >-
+  ways fills in from the top of the staircase down to the bottom. The two base cells start at 1,
+  and each earlier cell reads the two cells one and two steps ahead of it and adds them, so both
+  values it needs are always ready by the time it is computed.
+presets:
+  - id: three
+    label: target = 3
+    stdin: "3\n"
+notes:
+  "12": "`ways[target]` and `ways[target + 1]` are the base cases: landing on either one finishes the climb."
+  "18": "`ways[stair]` never reads a cell that is still empty, since `stair` only ever counts down from `target - 1`."

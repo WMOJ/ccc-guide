@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: p, viz: PlotViz }
+alt: >-
+  A plot of the exponent of the failure probability against the number of trials. Each success
+  probability gives a straight line sloping down, because the failure probability shrinks by the
+  same factor on every trial. A dashed horizontal line marks the target; where a line crosses it
+  is the number of trials needed.
+captions: vizrec
+presets:
+  - id: three
+    label: Three odds
+    stdin: "6\n0.5 0.37 0.1\n"
+  - id: loose
+    label: Loose target
+    stdin: "3\n0.5 0.37 0.1\n"
+  - id: rare
+    label: Rare success
+    stdin: "6\n0.2 0.05\n"
+consistency:
+  description: The trial counts equal the output of examples/failure_probability.py.
+  example: ../examples/failure_probability.py
+  compare: output

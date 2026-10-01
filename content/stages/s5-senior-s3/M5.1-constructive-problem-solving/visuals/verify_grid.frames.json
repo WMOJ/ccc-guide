@@ -1,0 +1,30 @@
+{"schema":1,
+"kind":"frames",
+"id":"verify_grid",
+"layout":"single",
+"panels":[{"id":"counts","viz":"TableViz","title":"Verifying the grid"}],
+"alt":"Re-checking a finished grid against every constraint by tallying each row's vowel count, then each column's, and comparing them. A grid where every row and column tallies the same and every row splits exactly in half passes; a grid with even one mismatched row or column fails.",
+"presets":[
+{"id":"valid","label":"Valid grid","steps":[
+{"caption":"Row 0: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["b","a","b","a"]],"states":["cccc","____","____","____"],"rowHeads":[2,"?","?","?"],"colHeads":["?","?","?","?"]}}},
+{"caption":"Row 1: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["b","a","b","a"]],"states":["dddd","cccc","____","____"],"rowHeads":[2,2,"?","?"],"colHeads":["?","?","?","?"]}}},
+{"caption":"Row 2: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["b","a","b","a"]],"states":["dddd","dddd","cccc","____"],"rowHeads":[2,2,2,"?"],"colHeads":["?","?","?","?"]}}},
+{"caption":"Row 3: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["b","a","b","a"]],"states":["dddd","dddd","dddd","cccc"],"rowHeads":[2,2,2,2],"colHeads":["?","?","?","?"]}}},
+{"caption":"Column 0: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["b","a","b","a"]],"states":["cddd","cddd","cddd","cddd"],"rowHeads":[2,2,2,2],"colHeads":[2,"?","?","?"]}}},
+{"caption":"Column 1: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["b","a","b","a"]],"states":["dcdd","dcdd","dcdd","dcdd"],"rowHeads":[2,2,2,2],"colHeads":[2,2,"?","?"]}}},
+{"caption":"Column 2: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["b","a","b","a"]],"states":["ddcd","ddcd","ddcd","ddcd"],"rowHeads":[2,2,2,2],"colHeads":[2,2,2,"?"]}}},
+{"caption":"Column 3: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["b","a","b","a"]],"states":["dddc","dddc","dddc","dddc"],"rowHeads":[2,2,2,2],"colHeads":[2,2,2,2]}}},
+{"caption":"Every row count matches, every column count matches, and each row splits exactly in half: valid.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["b","a","b","a"]],"states":["dddd","dddd","dddd","dddd"],"rowHeads":[2,2,2,2],"colHeads":[2,2,2,2]}}}
+]},
+{"id":"broken","label":"Broken grid","steps":[
+{"caption":"Row 0: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["a","a","a","a"]],"states":["cccc","____","____","____"],"rowHeads":[2,"?","?","?"],"colHeads":["?","?","?","?"]}}},
+{"caption":"Row 1: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["a","a","a","a"]],"states":["dddd","cccc","____","____"],"rowHeads":[2,2,"?","?"],"colHeads":["?","?","?","?"]}}},
+{"caption":"Row 2: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["a","a","a","a"]],"states":["dddd","dddd","cccc","____"],"rowHeads":[2,2,2,"?"],"colHeads":["?","?","?","?"]}}},
+{"caption":"Row 3: count the a's, 4 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["a","a","a","a"]],"states":["dddd","dddd","dddd","cccc"],"rowHeads":[2,2,2,4],"colHeads":["?","?","?","?"]}}},
+{"caption":"Column 0: count the a's, 3 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["a","a","a","a"]],"states":["cddd","cddd","cddd","cddd"],"rowHeads":[2,2,2,4],"colHeads":[3,"?","?","?"]}}},
+{"caption":"Column 1: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["a","a","a","a"]],"states":["dcdd","dcdd","dcdd","dcdd"],"rowHeads":[2,2,2,4],"colHeads":[3,2,"?","?"]}}},
+{"caption":"Column 2: count the a's, 3 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["a","a","a","a"]],"states":["ddcd","ddcd","ddcd","ddcd"],"rowHeads":[2,2,2,4],"colHeads":[3,2,3,"?"]}}},
+{"caption":"Column 3: count the a's, 2 of them.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["a","a","a","a"]],"states":["dddc","dddc","dddc","dddc"],"rowHeads":[2,2,2,4],"colHeads":[3,2,3,2]}}},
+{"caption":"The row counts do not all match: invalid.","panels":{"counts":{"cells":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["a","a","a","a"]],"states":["dddd","dddd","dddd","dddd"],"rowHeads":[2,2,2,4],"colHeads":[3,2,3,2]}}}
+]}
+]}

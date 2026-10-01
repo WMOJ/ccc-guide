@@ -1,0 +1,27 @@
+{"schema":1,
+"kind":"frames",
+"id":"bsearch",
+"layout":"single",
+"panels":[{"id":"arr","viz":"ArrayViz","title":"Candidate capacities"}],
+"alt":"The binary-search-on-the-answer template. The candidate answers are the capacities from the heaviest weight up to the total weight. Each step tests the middle candidate by counting how many trips it needs. If the count fits the allowed number of trips, the upper end moves down to the middle; otherwise the lower end moves just above the middle. The range shrinks until one capacity is left.",
+"legendLabels":{"current":"Tested","invalid":"Ruled out"},
+"presets":[
+{"id":"main","label":"Three items","steps":[
+{"caption":"The answer is a capacity. It is at least the heaviest weight, 5, and at most the total, 12. lo = 5 and hi = 12 mark the two ends of the candidates. Greyed capacities are already ruled out.","panels":{"arr":{"values":[5,6,7,8,9,10,11,12],"states":"________","pointers":[{"name":"lo","at":0,"side":"above"},{"name":"hi","at":7,"side":"below"}],"name":"capacity"}}},
+{"caption":"mid = (5 + 12) // 2 = 8. A capacity of 8 needs 2 trips, which is at most 2, so 8 works. Keep it and look lower: hi = 8.","panels":{"arr":{"values":[5,6,7,8,9,10,11,12],"states":"___c____","pointers":[{"name":"lo","at":0,"side":"above"},{"name":"hi","at":7,"side":"below"},{"name":"mid","at":3,"side":"above"}],"name":"capacity"}}},
+{"caption":"mid = (5 + 8) // 2 = 6. A capacity of 6 needs 3 trips, more than 2, so 6 fails and so does everything below it. lo = 7.","panels":{"arr":{"values":[5,6,7,8,9,10,11,12],"states":"_c__xxxx","pointers":[{"name":"lo","at":0,"side":"above"},{"name":"hi","at":3,"side":"below"},{"name":"mid","at":1,"side":"above"}],"name":"capacity"}}},
+{"caption":"mid = (7 + 8) // 2 = 7. A capacity of 7 needs 2 trips, which is at most 2, so 7 works. Keep it and look lower: hi = 7.","panels":{"arr":{"values":[5,6,7,8,9,10,11,12],"states":"xxc_xxxx","pointers":[{"name":"lo","at":2,"side":"above"},{"name":"hi","at":3,"side":"below"},{"name":"mid","at":2,"side":"above"}],"name":"capacity"}}},
+{"caption":"lo and hi are both 7, so one candidate is left. The smallest capacity that works is 7.","panels":{"arr":{"values":[5,6,7,8,9,10,11,12],"states":"xx_xxxxx","pointers":[{"name":"lo","at":2,"side":"above"},{"name":"hi","at":2,"side":"below"}],"name":"capacity"}}}
+]},
+{"id":"loose","label":"One trip","steps":[
+{"caption":"The answer is a capacity. It is at least the heaviest weight, 5, and at most the total, 12. lo = 5 and hi = 12 mark the two ends of the candidates. Greyed capacities are already ruled out.","panels":{"arr":{"values":[5,6,7,8,9,10,11,12],"states":"________","pointers":[{"name":"lo","at":0,"side":"above"},{"name":"hi","at":7,"side":"below"}],"name":"capacity"}}},
+{"caption":"mid = (5 + 12) // 2 = 8. A capacity of 8 needs 2 trips, which is at most 3, so 8 works. Keep it and look lower: hi = 8.","panels":{"arr":{"values":[5,6,7,8,9,10,11,12],"states":"___c____","pointers":[{"name":"lo","at":0,"side":"above"},{"name":"hi","at":7,"side":"below"},{"name":"mid","at":3,"side":"above"}],"name":"capacity"}}},
+{"caption":"mid = (5 + 8) // 2 = 6. A capacity of 6 needs 3 trips, which is at most 3, so 6 works. Keep it and look lower: hi = 6.","panels":{"arr":{"values":[5,6,7,8,9,10,11,12],"states":"_c__xxxx","pointers":[{"name":"lo","at":0,"side":"above"},{"name":"hi","at":3,"side":"below"},{"name":"mid","at":1,"side":"above"}],"name":"capacity"}}},
+{"caption":"mid = (5 + 6) // 2 = 5. A capacity of 5 needs 3 trips, which is at most 3, so 5 works. Keep it and look lower: hi = 5.","panels":{"arr":{"values":[5,6,7,8,9,10,11,12],"states":"c_xxxxxx","pointers":[{"name":"lo","at":0,"side":"above"},{"name":"hi","at":1,"side":"below"},{"name":"mid","at":0,"side":"above"}],"name":"capacity"}}},
+{"caption":"lo and hi are both 5, so one candidate is left. The smallest capacity that works is 5.","panels":{"arr":{"values":[5,6,7,8,9,10,11,12],"states":"_xxxxxxx","pointers":[{"name":"lo","at":0,"side":"above"},{"name":"hi","at":0,"side":"below"}],"name":"capacity"}}}
+]},
+{"id":"single","label":"One item","steps":[
+{"caption":"The answer is a capacity. It is at least the heaviest weight, 4, and at most the total, 4. lo = 4 and hi = 4 mark the two ends of the candidates. Greyed capacities are already ruled out.","panels":{"arr":{"values":[4],"states":"_","pointers":[{"name":"lo","at":0,"side":"above"},{"name":"hi","at":0,"side":"below"}],"name":"capacity"}}},
+{"caption":"lo and hi are both 4, so one candidate is left. The smallest capacity that works is 4.","panels":{"arr":{"values":[4],"states":"_","pointers":[{"name":"lo","at":0,"side":"above"},{"name":"hi","at":0,"side":"below"}],"name":"capacity"}}}
+]}
+]}

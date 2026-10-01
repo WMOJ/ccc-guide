@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"int_wrap",
+"layout":"single",
+"panels":[{"id":"t","viz":"TableViz","title":"Running total"}],
+"alt":"A running total grows by a fixed step, shown in two columns. The first column is Python's integer, which never overflows. The second is a model of a 32-bit signed integer, which holds values from -2147483648 to 2147483647. When the exact total passes that range, the 32-bit column wraps around to a value of the opposite sign, while Python's column keeps growing.",
+"presets":[
+{"id":"up","label":"Wraps up","steps":[
+{"caption":"0 + 700000000 = 700000000, inside the 32-bit range -2147483648 to 2147483647. Both columns agree.","panels":{"t":{"cells":[["700000000","700000000"],["?","?"],["?","?"],["?","?"]],"states":["cc","__","__","__"],"rowHeads":["add 1","add 2","add 3","add 4"],"colHeads":["Python","32-bit"]}}},
+{"caption":"700000000 + 700000000 = 1400000000, inside the 32-bit range -2147483648 to 2147483647. Both columns agree.","panels":{"t":{"cells":[["700000000","700000000"],["1400000000","1400000000"],["?","?"],["?","?"]],"states":["dd","cc","__","__"],"rowHeads":["add 1","add 2","add 3","add 4"],"colHeads":["Python","32-bit"]}}},
+{"caption":"1400000000 + 700000000 = 2100000000, inside the 32-bit range -2147483648 to 2147483647. Both columns agree.","panels":{"t":{"cells":[["700000000","700000000"],["1400000000","1400000000"],["2100000000","2100000000"],["?","?"]],"states":["dd","dd","cc","__"],"rowHeads":["add 1","add 2","add 3","add 4"],"colHeads":["Python","32-bit"]}}},
+{"caption":"2100000000 + 700000000 = 2800000000, which is above 2147483647, the end of the 32-bit range. A 32-bit int keeps 2800000000 - 4294967296 = -1494967296. Python's int is still 2800000000.","panels":{"t":{"cells":[["700000000","700000000"],["1400000000","1400000000"],["2100000000","2100000000"],["2800000000","-1494967296"]],"states":["dd","dd","dd","cx"],"rowHeads":["add 1","add 2","add 3","add 4"],"colHeads":["Python","32-bit"]}}}
+]},
+{"id":"fits","label":"Fits","steps":[
+{"caption":"0 + 100000000 = 100000000, inside the 32-bit range -2147483648 to 2147483647. Both columns agree.","panels":{"t":{"cells":[["100000000","100000000"],["?","?"],["?","?"],["?","?"]],"states":["cc","__","__","__"],"rowHeads":["add 1","add 2","add 3","add 4"],"colHeads":["Python","32-bit"]}}},
+{"caption":"100000000 + 100000000 = 200000000, inside the 32-bit range -2147483648 to 2147483647. Both columns agree.","panels":{"t":{"cells":[["100000000","100000000"],["200000000","200000000"],["?","?"],["?","?"]],"states":["dd","cc","__","__"],"rowHeads":["add 1","add 2","add 3","add 4"],"colHeads":["Python","32-bit"]}}},
+{"caption":"200000000 + 100000000 = 300000000, inside the 32-bit range -2147483648 to 2147483647. Both columns agree.","panels":{"t":{"cells":[["100000000","100000000"],["200000000","200000000"],["300000000","300000000"],["?","?"]],"states":["dd","dd","cc","__"],"rowHeads":["add 1","add 2","add 3","add 4"],"colHeads":["Python","32-bit"]}}},
+{"caption":"300000000 + 100000000 = 400000000, inside the 32-bit range -2147483648 to 2147483647. Both columns agree.","panels":{"t":{"cells":[["100000000","100000000"],["200000000","200000000"],["300000000","300000000"],["400000000","400000000"]],"states":["dd","dd","dd","cc"],"rowHeads":["add 1","add 2","add 3","add 4"],"colHeads":["Python","32-bit"]}}}
+]},
+{"id":"down","label":"Wraps down","steps":[
+{"caption":"0 + -700000000 = -700000000, inside the 32-bit range -2147483648 to 2147483647. Both columns agree.","panels":{"t":{"cells":[["-700000000","-700000000"],["?","?"],["?","?"],["?","?"]],"states":["cc","__","__","__"],"rowHeads":["add 1","add 2","add 3","add 4"],"colHeads":["Python","32-bit"]}}},
+{"caption":"-700000000 + -700000000 = -1400000000, inside the 32-bit range -2147483648 to 2147483647. Both columns agree.","panels":{"t":{"cells":[["-700000000","-700000000"],["-1400000000","-1400000000"],["?","?"],["?","?"]],"states":["dd","cc","__","__"],"rowHeads":["add 1","add 2","add 3","add 4"],"colHeads":["Python","32-bit"]}}},
+{"caption":"-1400000000 + -700000000 = -2100000000, inside the 32-bit range -2147483648 to 2147483647. Both columns agree.","panels":{"t":{"cells":[["-700000000","-700000000"],["-1400000000","-1400000000"],["-2100000000","-2100000000"],["?","?"]],"states":["dd","dd","cc","__"],"rowHeads":["add 1","add 2","add 3","add 4"],"colHeads":["Python","32-bit"]}}},
+{"caption":"-2100000000 + -700000000 = -2800000000, which is below -2147483648, the end of the 32-bit range. A 32-bit int keeps -2800000000 + 4294967296 = 1494967296. Python's int is still -2800000000.","panels":{"t":{"cells":[["-700000000","-700000000"],["-1400000000","-1400000000"],["-2100000000","-2100000000"],["-2800000000","1494967296"]],"states":["dd","dd","dd","cx"],"rowHeads":["add 1","add 2","add 3","add 4"],"colHeads":["Python","32-bit"]}}}
+]}
+]}

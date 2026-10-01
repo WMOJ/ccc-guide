@@ -1,0 +1,29 @@
+{"schema":1,
+"kind":"frames",
+"id":"update-walk",
+"layout":"row",
+"panels":[{"id":"values","viz":"ArrayViz","title":"Elements"},{"id":"tree","viz":"ArrayViz","title":"Fenwick tree"}],
+"alt":"A point update on a Fenwick tree. One element gains a value. The update starts at that position and adds the change to tree[i], then adds the lowest set bit of i to i and repeats until i passes the end. Each tree entry it visits covers a block that contains the changed element.",
+"legendLabels":{"current":"Being updated","done":"Already updated"},
+"presets":[
+{"id":"three","label":"Position 3","steps":[
+{"caption":"Position 3 is about to go up by 5, from 1 to 6. Every tree entry whose block contains position 3 must go up by 5 too. The update finds them by starting at i and adding the lowest set bit.","panels":{"values":{"values":[3,2,1,4,5,1,2,3],"states":"__c_____","indexBase":1},"tree":{"values":[3,5,1,10,5,6,2,21],"states":"________","indexBase":1}}},
+{"caption":"i is 3 (00011). tree[3] covers just position 3, so it goes from 1 to 6. Add the lowest set bit, 1, to reach i = 4 (00100).","panels":{"values":{"values":[3,2,6,4,5,1,2,3],"states":"__c_____","ranges":[{"from":2,"to":2,"label":"tree[3]"}],"indexBase":1},"tree":{"values":[3,5,6,10,5,6,2,21],"states":"__c_____","pointers":[{"name":"i","at":2}],"indexBase":1}}},
+{"caption":"i is 4 (00100). tree[4] covers positions 1 to 4, which include position 3, so it goes from 10 to 15. Add the lowest set bit, 4, to reach i = 8 (01000).","panels":{"values":{"values":[3,2,6,4,5,1,2,3],"states":"__c_____","ranges":[{"from":0,"to":3,"label":"tree[4]"}],"indexBase":1},"tree":{"values":[3,5,6,15,5,6,2,21],"states":"__dc____","pointers":[{"name":"i","at":3}],"indexBase":1}}},
+{"caption":"i is 8 (01000). tree[8] covers positions 1 to 8, which include position 3, so it goes from 21 to 26. Add the lowest set bit, 8, to reach i = 16 (10000), which is past 8.","panels":{"values":{"values":[3,2,6,4,5,1,2,3],"states":"__c_____","ranges":[{"from":0,"to":7,"label":"tree[8]"}],"indexBase":1},"tree":{"values":[3,5,6,15,5,6,2,26],"states":"__dd___c","pointers":[{"name":"i","at":7}],"indexBase":1}}},
+{"caption":"i is past 8, so the update stops after 3 entries. Every block that contained position 3 now includes the change, and the 8 elements total 26.","panels":{"values":{"values":[3,2,6,4,5,1,2,3],"states":"__c_____","indexBase":1},"tree":{"values":[3,5,6,15,5,6,2,26],"states":"__dd___d","indexBase":1}}}
+]},
+{"id":"first","label":"Position 1","steps":[
+{"caption":"Position 1 is about to go up by 5, from 3 to 8. Every tree entry whose block contains position 1 must go up by 5 too. The update finds them by starting at i and adding the lowest set bit.","panels":{"values":{"values":[3,2,1,4,5,1,2,3],"states":"c_______","indexBase":1},"tree":{"values":[3,5,1,10,5,6,2,21],"states":"________","indexBase":1}}},
+{"caption":"i is 1 (00001). tree[1] covers just position 1, so it goes from 3 to 8. Add the lowest set bit, 1, to reach i = 2 (00010).","panels":{"values":{"values":[8,2,1,4,5,1,2,3],"states":"c_______","ranges":[{"from":0,"to":0,"label":"tree[1]"}],"indexBase":1},"tree":{"values":[8,5,1,10,5,6,2,21],"states":"c_______","pointers":[{"name":"i","at":0}],"indexBase":1}}},
+{"caption":"i is 2 (00010). tree[2] covers positions 1 to 2, which include position 1, so it goes from 5 to 10. Add the lowest set bit, 2, to reach i = 4 (00100).","panels":{"values":{"values":[8,2,1,4,5,1,2,3],"states":"c_______","ranges":[{"from":0,"to":1,"label":"tree[2]"}],"indexBase":1},"tree":{"values":[8,10,1,10,5,6,2,21],"states":"dc______","pointers":[{"name":"i","at":1}],"indexBase":1}}},
+{"caption":"i is 4 (00100). tree[4] covers positions 1 to 4, which include position 1, so it goes from 10 to 15. Add the lowest set bit, 4, to reach i = 8 (01000).","panels":{"values":{"values":[8,2,1,4,5,1,2,3],"states":"c_______","ranges":[{"from":0,"to":3,"label":"tree[4]"}],"indexBase":1},"tree":{"values":[8,10,1,15,5,6,2,21],"states":"dd_c____","pointers":[{"name":"i","at":3}],"indexBase":1}}},
+{"caption":"i is 8 (01000). tree[8] covers positions 1 to 8, which include position 1, so it goes from 21 to 26. Add the lowest set bit, 8, to reach i = 16 (10000), which is past 8.","panels":{"values":{"values":[8,2,1,4,5,1,2,3],"states":"c_______","ranges":[{"from":0,"to":7,"label":"tree[8]"}],"indexBase":1},"tree":{"values":[8,10,1,15,5,6,2,26],"states":"dd_d___c","pointers":[{"name":"i","at":7}],"indexBase":1}}},
+{"caption":"i is past 8, so the update stops after 4 entries. Every block that contained position 1 now includes the change, and the 8 elements total 26.","panels":{"values":{"values":[8,2,1,4,5,1,2,3],"states":"c_______","indexBase":1},"tree":{"values":[8,10,1,15,5,6,2,26],"states":"dd_d___d","indexBase":1}}}
+]},
+{"id":"last","label":"Position 8","steps":[
+{"caption":"Position 8 is about to go up by 5, from 3 to 8. Every tree entry whose block contains position 8 must go up by 5 too. The update finds them by starting at i and adding the lowest set bit.","panels":{"values":{"values":[3,2,1,4,5,1,2,3],"states":"_______c","indexBase":1},"tree":{"values":[3,5,1,10,5,6,2,21],"states":"________","indexBase":1}}},
+{"caption":"i is 8 (01000). tree[8] covers positions 1 to 8, which include position 8, so it goes from 21 to 26. Add the lowest set bit, 8, to reach i = 16 (10000), which is past 8.","panels":{"values":{"values":[3,2,1,4,5,1,2,8],"states":"_______c","ranges":[{"from":0,"to":7,"label":"tree[8]"}],"indexBase":1},"tree":{"values":[3,5,1,10,5,6,2,26],"states":"_______c","pointers":[{"name":"i","at":7}],"indexBase":1}}},
+{"caption":"i is past 8, so the update stops after 1 entry. Every block that contained position 8 now includes the change, and the 8 elements total 26.","panels":{"values":{"values":[3,2,1,4,5,1,2,8],"states":"_______c","indexBase":1},"tree":{"values":[3,5,1,10,5,6,2,26],"states":"_______d","indexBase":1}}}
+]}
+]}

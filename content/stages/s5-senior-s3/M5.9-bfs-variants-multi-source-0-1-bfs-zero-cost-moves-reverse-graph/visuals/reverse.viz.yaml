@@ -1,0 +1,21 @@
+layout: row
+panels:
+  - { id: g, viz: GraphViz, title: Original edges }
+  - { id: q, viz: StructViz, title: Queue }
+alt: >-
+  Breadth-first search on a reversed graph. The edges are drawn in their original, one-way
+  direction, but the search starts at the target and walks them backward: an edge drawn into
+  the current node is what lets the search leave it. A node with no one-way route to the
+  target is never reached and stays at infinity.
+captions: vizrec
+presets:
+  - id: one-way
+    label: One-way edges
+    stdin: "7 5 3\n0 1\n1 2\n2 3\n4 1\n5 4\n"
+  - id: isolated
+    label: Target cut off
+    stdin: "4 1 0\n1 2\n"
+consistency:
+  description: The final distances in the visual equal the output of examples/reverse_bfs.py on each preset.
+  example: ../examples/reverse_bfs.py
+  compare: output

@@ -1,0 +1,24 @@
+layout: single
+panels:
+  - { id: tab, viz: TableViz, title: "opt[i][j]" }
+alt: >-
+  Filling the table of best split points opt[i][j] by increasing interval length. Each cell only
+  tries split points between the two neighboring cells opt[i][j-1] and opt[i+1][j], so most cells
+  try just one or two splits instead of every one.
+captions: vizrec
+legendLabels:
+  compare: Window bound
+presets:
+  - id: eight
+    label: Eight piles
+    stdin: "8\n4 1 3 2 6 5 2 7\n"
+  - id: six
+    label: Six piles
+    stdin: "6\n5 1 4 2 3 6\n"
+  - id: equal
+    label: Equal piles
+    stdin: "6\n3 3 3 3 3 3\n"
+consistency:
+  description: The minimum cost and the split counts equal the output of examples/merge_knuth.py on each preset.
+  example: ../examples/merge_knuth.py
+  compare: output

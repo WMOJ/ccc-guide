@@ -13,8 +13,8 @@ lessons:
   - prefix-sums
 practice:
   - id: ccc17s1
-    note: Track a running total as you scan, and use it to answer a question about the whole range.
-    why: A direct running-total problem, the same idea as this lesson's prefix sum array.
+    note: Two teams' cumulative runs over a baseball season, compared day by day.
+    why: A direct 1D prefix-sum problem, the same running-total idea as this lesson's range queries.
   - id: ccc18j3
-    note: Use cumulative totals across a table to answer a positional question.
-    why: A cumulative-sum problem solved the same way as this lesson's range-sum queries.
+    note: Distances between cities along a straight road, given the segments between them.
+    why: A small 1D prefix-sum problem, cumulative sums of the segments between any two cities.

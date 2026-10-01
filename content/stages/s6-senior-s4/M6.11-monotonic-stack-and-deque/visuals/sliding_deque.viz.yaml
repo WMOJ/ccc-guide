@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: "Values" }
+  - { id: d, viz: StructViz, title: "Deque (index: value)" }
+alt: >-
+  A row of values with a window of the last k indices marked, next to a deque of indices whose
+  values fall from front to back. A new index removes smaller or equal entries from the back
+  before joining, an index older than the window leaves the front, and the front of the deque
+  is always the maximum of the current window.
+captions: vizrec
+presets:
+  - id: main
+    label: Mixed
+    stdin: "8 3\n3 1 4 1 9 2 1 6\n"
+  - id: falling
+    label: Falling
+    stdin: "6 3\n9 8 7 6 5 4\n"
+  - id: rising
+    label: Rising
+    stdin: "6 3\n1 2 3 4 5 6\n"
+consistency:
+  description: The window maximums equal the output of examples/sliding_max.py.
+  example: ../examples/sliding_max.py
+  compare: output

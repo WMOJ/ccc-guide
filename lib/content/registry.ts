@@ -10,10 +10,12 @@ import type { PracticeItemView, ProblemView } from "./types";
 
 const REGISTRY_DIR = path.join(process.cwd(), "content", "registry");
 
+// Cached per process in production only, so `next dev` picks up registry edits without a restart.
+const CACHE = process.env.NODE_ENV === "production";
 let cachedProblems: RegistryProblemEntry[] | null = null;
 
 function loadProblems(): RegistryProblemEntry[] {
-  if (cachedProblems) return cachedProblems;
+  if (CACHE && cachedProblems) return cachedProblems;
   const raw = fs.readFileSync(path.join(REGISTRY_DIR, "ccc-problems.yaml"), "utf8");
   cachedProblems = registrySchema.parse(parse(raw)).problems;
   return cachedProblems;
@@ -22,7 +24,7 @@ function loadProblems(): RegistryProblemEntry[] {
 let cachedLinks: Record<string, { label: string; url: string }> | null = null;
 
 export function getExternalLink(id: string): { label: string; url: string } {
-  if (!cachedLinks) {
+  if (!CACHE || !cachedLinks) {
     const raw = fs.readFileSync(path.join(REGISTRY_DIR, "external-links.yaml"), "utf8");
     const data = externalLinksSchema.parse(parse(raw));
     cachedLinks = Object.fromEntries(data.links.map((l) => [l.id, { label: l.label, url: l.url }]));

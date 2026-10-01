@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: "Sites (x, sorted)" }
+  - { id: t, viz: TableViz, title: "dp[signs][site]" }
+alt: >-
+  A table with one row per number of signs and one column per site. Row 1 starts as each site's
+  own profit. Each later cell adds a site's profit to the best cell of the previous row among
+  sites far enough to the left, found by a pointer that only moves right. Cells with no legal
+  way show a dash. The largest cell is the answer.
+captions: vizrec
+presets:
+  - id: main
+    label: Three signs
+    stdin: "6 3 4\n9 4\n1 3\n5 6\n2 5\n13 2\n7 3\n"
+  - id: far
+    label: Wide gap
+    stdin: "6 2 20\n9 4\n1 3\n5 6\n2 5\n13 2\n7 3\n"
+  - id: one
+    label: One sign
+    stdin: "6 1 4\n9 4\n1 3\n5 6\n2 5\n13 2\n7 3\n"
+consistency:
+  description: The largest cell equals the output of examples/sign_sites.py.
+  example: ../examples/sign_sites.py
+  compare: output

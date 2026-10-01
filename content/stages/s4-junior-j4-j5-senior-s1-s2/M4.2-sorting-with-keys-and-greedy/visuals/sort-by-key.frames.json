@@ -1,0 +1,24 @@
+{"schema":1,
+"kind":"frames",
+"id":"sort-by-key",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Tasks by key"}],
+"alt":"A two-row table of task names and their duration keys, first in input order with each position's key highlighted in turn, then rearranged ascending by duration. A tie between two equal durations keeps its original relative order.",
+"presets":[
+{"id":"normal","label":"Distinct","steps":[
+{"caption":"Each task's key is its duration, read off in the order the input lists them.","panels":{"table":{"cells":[["write","debug","test"],[20,50,15]],"states":["___","___"],"rowHeads":["item","key"],"colHeads":[0,1,2],"colTitle":"position"}}},
+{"caption":"Position 0 holds \"write\", key 20.","panels":{"table":{"cells":[["write","debug","test"],[20,50,15]],"states":["___","c__"],"rowHeads":["item","key"],"colHeads":[0,1,2],"colTitle":"position"}}},
+{"caption":"Position 1 holds \"debug\", key 50.","panels":{"table":{"cells":[["write","debug","test"],[20,50,15]],"states":["___","_c_"],"rowHeads":["item","key"],"colHeads":[0,1,2],"colTitle":"position"}}},
+{"caption":"Position 2 holds \"test\", key 15.","panels":{"table":{"cells":[["write","debug","test"],[20,50,15]],"states":["___","__c"],"rowHeads":["item","key"],"colHeads":[0,1,2],"colTitle":"position"}}},
+{"caption":"sorted() rearranges the tasks by key, ascending: the shortest duration goes first.","panels":{"table":{"cells":[["test","write","debug"],[15,20,50]],"states":["___","___"],"rowHeads":["item","key"],"colHeads":[0,1,2],"colTitle":"position"}}}
+]},
+{"id":"ties","label":"Ties","steps":[
+{"caption":"Each task's key is its duration, read off in the order the input lists them.","panels":{"table":{"cells":[["write","sketch","debug","test"],[20,20,50,15]],"states":["____","____"],"rowHeads":["item","key"],"colHeads":[0,1,2,3],"colTitle":"position"}}},
+{"caption":"Position 0 holds \"write\", key 20.","panels":{"table":{"cells":[["write","sketch","debug","test"],[20,20,50,15]],"states":["____","c___"],"rowHeads":["item","key"],"colHeads":[0,1,2,3],"colTitle":"position"}}},
+{"caption":"Position 1 holds \"sketch\", key 20.","panels":{"table":{"cells":[["write","sketch","debug","test"],[20,20,50,15]],"states":["____","_c__"],"rowHeads":["item","key"],"colHeads":[0,1,2,3],"colTitle":"position"}}},
+{"caption":"Position 2 holds \"debug\", key 50.","panels":{"table":{"cells":[["write","sketch","debug","test"],[20,20,50,15]],"states":["____","__c_"],"rowHeads":["item","key"],"colHeads":[0,1,2,3],"colTitle":"position"}}},
+{"caption":"Position 3 holds \"test\", key 15.","panels":{"table":{"cells":[["write","sketch","debug","test"],[20,20,50,15]],"states":["____","___c"],"rowHeads":["item","key"],"colHeads":[0,1,2,3],"colTitle":"position"}}},
+{"caption":"sorted() rearranges the tasks by key, ascending: the shortest duration goes first.","panels":{"table":{"cells":[["test","write","sketch","debug"],[15,20,20,50]],"states":["____","____"],"rowHeads":["item","key"],"colHeads":[0,1,2,3],"colTitle":"position"}}},
+{"caption":"write, sketch share a duration. Python's sort is stable, so they keep their original relative order instead of swapping places.","panels":{"table":{"cells":[["test","write","sketch","debug"],[15,20,20,50]],"states":["____","____"],"rowHeads":["item","key"],"colHeads":[0,1,2,3],"colTitle":"position"}}}
+]}
+]}

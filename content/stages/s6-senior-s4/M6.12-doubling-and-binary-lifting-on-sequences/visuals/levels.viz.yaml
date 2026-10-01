@@ -1,0 +1,25 @@
+layout: single
+panels:
+  - { id: graph, viz: GraphViz, title: Jump pointers }
+alt: >-
+  The same eight stations, redrawn once per level of the doubling table. Level 0 shows every
+  station's own teleporter; level 1 draws an arrow for each station's jump of 2, level 2 for 4,
+  level 3 for 8. A station whose jump lands back on itself shows a mark instead of an arrow.
+legendLabels:
+  current: Arrow at this level
+  done: Lands on itself
+captions: vizrec
+presets:
+  - id: main
+    label: Tail and loop
+    stdin: "8 1\n1 2 3 4 5 6 7 3\n0 13\n"
+  - id: loops
+    label: Two loops
+    stdin: "8 1\n1 2 3 0 5 6 7 4\n0 13\n"
+  - id: dead
+    label: Dead end
+    stdin: "8 1\n1 2 3 4 5 6 7 7\n0 13\n"
+consistency:
+  description: The levels drawn are the rows up[0] to up[LOG - 1] that examples/build_table.py prints.
+  example: ../examples/build_table.py
+  compare: output

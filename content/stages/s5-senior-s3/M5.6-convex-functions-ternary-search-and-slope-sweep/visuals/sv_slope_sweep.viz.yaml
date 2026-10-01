@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: line, viz: LineViz, title: Slope sweep }
+alt: >-
+  Job sites sweep left to right in sorted order. A running left weight builds up, and the slope
+  it implies crosses from negative to non-negative at one site, marking the minimum. A second
+  preset has a single site, where the slope is non-negative from the very first site.
+captions: vizrec
+presets:
+  - id: four_sites
+    label: Four sites
+    stdin: "4\n10 40 50 100\n1 2 1 3\n"
+  - id: one_site
+    label: One site
+    stdin: "1\n50\n7\n"
+consistency:
+  description: The final location and cost equal the output of examples/slope_sweep.py for the same input.
+  example: ../examples/slope_sweep.py
+  compare: output

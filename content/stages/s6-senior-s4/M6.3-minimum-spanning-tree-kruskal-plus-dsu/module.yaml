@@ -5,7 +5,7 @@ objectives:
   - Recognize when a minimum spanning tree solves a connectivity or infrastructure problem.
   - Implement Kruskal's algorithm sorting edges by weight.
   - Use a disjoint-set union (DSU) data structure to check connectivity and union components.
-  - Optimize DSU with path compression and union by rank.
+  - Use path halving and union by size to keep the disjoint-set union fast.
 prereqs:
   - M5.10
   - M4.2
@@ -13,7 +13,7 @@ lessons:
   - kruskal-mst
 practice:
   - id: ccc17s4
-    note: Build a minimum spanning tree while preferring to keep certain edges when costs tie.
-    why: An older MST problem, with a DSU-based tie-breaking rule, that still makes good practice for this module.
+    note: Keep a city's buildings connected at the lowest maintenance cost, with one pipe that can be upgraded.
+    why: The pipes form a weighted graph whose cheapest connected plan is a minimum spanning tree.
   - id: ccc23s4
-    note: A subtask of this problem reduces to a plain minimum spanning tree.
+    note: Keep the cheapest set of roads that leaves every shortest distance unchanged.

@@ -1,9 +1,22 @@
-def gcd(a, b):
-    while b != 0:
-        a, b = b, a % b
-    return a
+import sys
 
 
-print(gcd(48, 18))
-print(gcd(100, 35))
-print(gcd(17, 13))
+def main() -> None:
+    raw = sys.stdin.read()
+    tokens = raw.split()
+    if not tokens:
+        return
+    a = int(tokens[0])
+    b = int(tokens[1])
+    x = a
+    y = b
+    while y != 0:
+        x, y = y, x % y
+    g = x
+    lcm = a * b // g
+    print(g)
+    print(lcm)
+
+
+if __name__ == "__main__":
+    main()

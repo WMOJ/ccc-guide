@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: plot, viz: PlotViz, title: Area by side length }
+alt: >-
+  A curve of the pen's area for every whole side length x. The peak of the parabola is marked at
+  w over 4. The whole numbers on either side of it are the only candidates, and the larger of the
+  two areas is the answer. In one preset a limit on x moves the best choice to the end of the
+  allowed range.
+captions: vizrec
+presets:
+  - id: odd
+    label: Wire 21
+    stdin: "21 100\n"
+  - id: tie
+    label: Wire 22
+    stdin: "22 100\n"
+  - id: capped
+    label: With a limit
+    stdin: "40 6\n"
+consistency:
+  description: The chosen side length and area equal the line examples/fence_area.py prints.
+  example: ../examples/fence_area.py
+  compare: output

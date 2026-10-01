@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: chars, viz: ArrayViz, title: String left }
+alt: >-
+  A bracket string shrinking as the brute-force check deletes one adjacent opener and closer
+  pair per pass. The nested string takes one pass per pair, each pass rescanning from the left,
+  while the crossing string has no adjacent pair to delete and stops with characters left over.
+captions: vizrec
+presets:
+  - id: nested
+    label: Nested
+    stdin: "(((())))\n"
+  - id: mixed
+    label: Mixed
+    stdin: "{[()()]}\n"
+  - id: crossing
+    label: Crossing
+    stdin: "([)]\n"
+consistency:
+  description: The valid/invalid result the deletion check ends with equals the output of examples/match_brackets.py.
+  example: ../examples/match_brackets.py
+  compare: output

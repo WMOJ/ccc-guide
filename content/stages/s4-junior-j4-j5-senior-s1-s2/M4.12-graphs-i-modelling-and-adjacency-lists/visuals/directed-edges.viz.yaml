@@ -1,0 +1,20 @@
+layout: row
+panels:
+  - { id: graph, viz: GraphViz, title: Graph }
+  - { id: table, viz: TableViz, title: Adjacency list }
+alt: >-
+  Building a directed adjacency list from the same style of edge list. Each edge only appends
+  the second vertex to the first vertex's list, so arrows point one way and a vertex with
+  nothing pointing out of it keeps an empty list.
+captions: vizrec
+presets:
+  - id: given
+    label: Given
+    stdin: "4 3\n0 1\n1 2\n2 3\n"
+  - id: cycle
+    label: With a cycle
+    stdin: "5 5\n0 1\n1 2\n2 0\n2 3\n3 4\n"
+consistency:
+  description: The adjacency list the visual builds equals the lines examples/directed_edges.py prints on each preset.
+  example: ../examples/directed_edges.py
+  compare: output

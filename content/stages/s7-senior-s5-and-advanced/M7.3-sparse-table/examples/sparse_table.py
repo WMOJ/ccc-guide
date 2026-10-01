@@ -3,34 +3,40 @@ import sys
 
 def main() -> None:
     data = sys.stdin.read().split()
-    idx = 0
-    n = int(data[idx])
-    idx += 1
-    arr = list(map(int, data[idx:idx + n]))
-    idx += n
-    l, r = int(data[idx]), int(data[idx + 1])  # query range [l, r], inclusive
+    n = int(data[0])
+    a = []
+    pos = 1
+    for _ in range(n):
+        a.append(int(data[pos]))
+        pos += 1
+    q = int(data[pos])
+    pos += 1
 
-    # k columns are enough to cover ranges up to size n; n.bit_length() gives
-    # the smallest k with 2^k > n, one more than actually needed, which is
-    # a harmless extra column.
-    k = n.bit_length()
+    LOG = n.bit_length()
+    sp = [a]
+    for k in range(1, LOG):
+        prev = sp[k - 1]
+        half = 1 << (k - 1)
+        count = n - (1 << k) + 1
+        row = []
+        for i in range(count):
+            x = prev[i]
+            y = prev[i + half]
+            row.append(min(x, y))
+        sp.append(row)
 
-    # table[i][j] = min of the range [i, i + 2^j)
-    table = [[0] * k for _ in range(n)]
-
-    for i in range(n):
-        table[i][0] = arr[i]
-
-    for j in range(1, k):
-        half = 1 << (j - 1)
-        for i in range(n - (1 << j) + 1):
-            table[i][j] = min(table[i][j - 1], table[i + half][j - 1])
-
-    # Convert the inclusive query [l, r] to a half-open length.
-    length = r - l + 1
-    j = length.bit_length() - 1
-    result = min(table[l][j], table[r - (1 << j) + 1][j])
-    print(result)
+    out = []
+    for _ in range(q):
+        left = int(data[pos])
+        last = int(data[pos + 1])
+        pos += 2
+        length = last - left + 1
+        k = length.bit_length() - 1
+        second = last - (1 << k) + 1
+        front = sp[k][left]
+        back = sp[k][second]
+        out.append(str(min(front, back)))
+    sys.stdout.write("\n".join(out) + "\n")
 
 
 if __name__ == "__main__":

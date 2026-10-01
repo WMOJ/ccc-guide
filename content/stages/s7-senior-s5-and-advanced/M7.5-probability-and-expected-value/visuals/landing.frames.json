@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"landing",
+"layout":"single",
+"panels":[{"id":"a","viz":"ArrayViz","title":"Landing chances"}],
+"alt":"An array where cell i is the chance that the token lands on square i. Cell 0 starts at 1, and each later cell is filled from the one or two cells before it. A final step brackets the cells for squares 1 and up and adds them, plus 1 for the last turn, to get the expected number of turns.",
+"legendLabels":{"current":"Being computed","compare":"Cells it reads","done":"Known"},
+"presets":[
+{"id":"main","label":"Fair coin","steps":[
+{"caption":"Every turn ends on some square. The token starts on square 0, so `land[0]` is 1. `land[i]` will hold the chance that the token lands on square `i` at some point.","panels":{"a":{"values":["1","?","?"],"states":"c__"}}},
+{"caption":"The token reaches square 1 only by a 1-step from square 0: land[1] = 0.5 * 1 = 0.5.","panels":{"a":{"values":["1","0.5","?"],"states":"mc_"}}},
+{"caption":"Square 2 is reached by a 1-step from square 1 or a 2-step from square 0: land[2] = 0.5 * 0.5 + 0.5 * 1 = 0.75.","panels":{"a":{"values":["1","0.5","0.75"],"states":"mmc"}}},
+{"caption":"Each landing on squares 1 to 2 is one turn, and the last turn lands on or past square 3. Adding the chances gives the expected turns, by linearity. Expected turns = 1 + 0.5 + 0.75 = 2.25.","panels":{"a":{"values":["1","0.5","0.75"],"states":"ddd","ranges":[{"from":1,"to":2,"label":"add these, plus 1"}]}}}
+]},
+{"id":"longer","label":"Longer strip","steps":[
+{"caption":"Every turn ends on some square. The token starts on square 0, so `land[0]` is 1. `land[i]` will hold the chance that the token lands on square `i` at some point.","panels":{"a":{"values":["1","?","?","?"],"states":"c___"}}},
+{"caption":"The token reaches square 1 only by a 1-step from square 0: land[1] = 0.5 * 1 = 0.5.","panels":{"a":{"values":["1","0.5","?","?"],"states":"mc__"}}},
+{"caption":"Square 2 is reached by a 1-step from square 1 or a 2-step from square 0: land[2] = 0.5 * 0.5 + 0.5 * 1 = 0.75.","panels":{"a":{"values":["1","0.5","0.75","?"],"states":"mmc_"}}},
+{"caption":"Square 3 is reached by a 1-step from square 2 or a 2-step from square 1: land[3] = 0.5 * 0.75 + 0.5 * 0.5 = 0.625.","panels":{"a":{"values":["1","0.5","0.75","0.625"],"states":"dmmc"}}},
+{"caption":"Each landing on squares 1 to 3 is one turn, and the last turn lands on or past square 4. Adding the chances gives the expected turns, by linearity. Expected turns = 1 + 0.5 + 0.75 + 0.625 = 2.875.","panels":{"a":{"values":["1","0.5","0.75","0.625"],"states":"dddd","ranges":[{"from":1,"to":3,"label":"add these, plus 1"}]}}}
+]},
+{"id":"one","label":"One square","steps":[
+{"caption":"Every turn ends on some square. The token starts on square 0, so `land[0]` is 1. `land[i]` will hold the chance that the token lands on square `i` at some point.","panels":{"a":{"values":["1"],"states":"c"}}},
+{"caption":"There are no squares between the start and the end, so the only turn is the last one. Expected turns = 1 + 0 = 1.","panels":{"a":{"values":["1"],"states":"d"}}}
+]}
+]}

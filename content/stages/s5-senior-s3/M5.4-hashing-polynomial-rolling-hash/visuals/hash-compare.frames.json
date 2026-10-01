@@ -1,0 +1,18 @@
+{"schema":1,
+"kind":"frames",
+"id":"hash-compare",
+"layout":"row",
+"panels":[{"id":"text","viz":"ArrayViz","title":"Text (both windows)"},{"id":"hash","viz":"ArrayViz","title":"hash_a vs hash_b"}],
+"alt":"Comparing two substrings of the same text by hash instead of character by character. A prefix hash array lets either window's hash be read in O(1), without rebuilding it. Two presets: one where the substrings are equal and their hashes agree, one where they differ and the hashes disagree.",
+"presets":[
+{"id":"equal","label":"Equal","steps":[
+{"caption":"hash_a = window_hash(0, 3) reads prefix_hash directly: prefix_hash[3] - prefix_hash[0] * powers[3] = 96354. No character of this window is rebuilt.","panels":{"text":{"values":["a","b","c","a","b","c"],"states":"cccddd","ranges":[{"from":0,"to":2,"label":"hash_a"},{"from":3,"to":5,"label":"hash_b"}],"name":"text"},"hash":{"values":[96354,null],"name":"hashes"}}},
+{"caption":"hash_b = window_hash(3, 3) the same way: 96354.","panels":{"text":{"values":["a","b","c","a","b","c"],"states":"dddccc","ranges":[{"from":0,"to":2,"label":"hash_a"},{"from":3,"to":5,"label":"hash_b"}],"name":"text"},"hash":{"values":[96354,96354],"name":"hashes"}}},
+{"caption":"hash_a and hash_b agree at 96354. Checking the characters confirms it: \"abc\" equals \"abc\", reported equal.","panels":{"text":{"values":["a","b","c","a","b","c"],"states":"cccccc","ranges":[{"from":0,"to":2,"label":"hash_a"},{"from":3,"to":5,"label":"hash_b"}],"name":"text"},"hash":{"values":[96354,96354],"compare":{"a":0,"b":1,"text":"match"},"name":"hashes"}}}
+]},
+{"id":"different","label":"Different","steps":[
+{"caption":"hash_a = window_hash(0, 3) reads prefix_hash directly: prefix_hash[3] - prefix_hash[0] * powers[3] = 96354. No character of this window is rebuilt.","panels":{"text":{"values":["a","b","c","a","b","c"],"states":"cmmd__","ranges":[{"from":0,"to":2,"label":"hash_a"},{"from":1,"to":3,"label":"hash_b"}],"name":"text"},"hash":{"values":[96354,null],"name":"hashes"}}},
+{"caption":"hash_b = window_hash(1, 3) the same way: 97344.","panels":{"text":{"values":["a","b","c","a","b","c"],"states":"dmmc__","ranges":[{"from":0,"to":2,"label":"hash_a"},{"from":1,"to":3,"label":"hash_b"}],"name":"text"},"hash":{"values":[96354,97344],"name":"hashes"}}},
+{"caption":"hash_a and hash_b differ, so the windows cannot be equal: \"abc\" and \"bca\" are reported different without comparing a single character.","panels":{"text":{"values":["a","b","c","a","b","c"],"states":"cmmc__","ranges":[{"from":0,"to":2,"label":"hash_a"},{"from":1,"to":3,"label":"hash_b"}],"name":"text"},"hash":{"values":[96354,97344],"compare":{"a":0,"b":1,"text":"differ"},"name":"hashes"}}}
+]}
+]}

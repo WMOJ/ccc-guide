@@ -1,0 +1,25 @@
+{"schema":1,
+"kind":"frames",
+"id":"diverge",
+"layout":"row",
+"panels":[{"id":"values","viz":"ArrayViz","title":"values"},{"id":"prefix","viz":"ArrayViz","title":"prefix"}],
+"alt":"The buggy fast function run by hand on the smallest failing input, beside its prefix array. One marker shows where low points and another shows the end of the range being tried. Because low starts at prefix[1], the function never subtracts prefix[0]. It either misses a subarray that starts at values[0] or counts an empty range, and so it disagrees with the brute force.",
+"presets":[
+{"id":"positive","label":"Five values","steps":[
+{"caption":"The shrunk input is [4, 1], so prefix is [0, 4, 5]. The buggy function starts low at prefix[1], which is 4, and best at values[0], which is 4.","panels":{"values":{"values":[4,1],"states":"__","indexBase":0},"prefix":{"values":[0,4,5],"states":"_m_","pointers":[{"name":"low","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"cand is prefix[1] - prefix[1] = 4 - 4 = 0. Both come from the same entry, so this is an empty range, not a subarray. It does not beat best, which stays 4.","panels":{"values":{"values":[4,1],"states":"c_","indexBase":0},"prefix":{"values":[0,4,5],"states":"_m_","pointers":[{"name":"low","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"cand is prefix[2] - prefix[1] = 5 - 4 = 1. That is the sum of values[1..1]. It does not beat best, which stays 4.","panels":{"values":{"values":[4,1],"states":"_c","ranges":[{"from":1,"to":1,"label":"sum 1"}],"indexBase":0},"prefix":{"values":[0,4,5],"states":"_mc","pointers":[{"name":"low","at":1,"side":"below"},{"name":"end","at":2}],"indexBase":0}}},
+{"caption":"The function returns 4, but the brute force says 5. The best subarray starts at values[0], and prefix[0] was never available to subtract.","panels":{"values":{"values":[4,1],"states":"__","indexBase":0},"prefix":{"values":[0,4,5],"states":"_m_","pointers":[{"name":"low","at":1,"side":"below"}],"indexBase":0}}}
+]},
+{"id":"three","label":"Three values","steps":[
+{"caption":"The shrunk input is [3, 3], so prefix is [0, 3, 6]. The buggy function starts low at prefix[1], which is 3, and best at values[0], which is 3.","panels":{"values":{"values":[3,3],"states":"__","indexBase":0},"prefix":{"values":[0,3,6],"states":"_m_","pointers":[{"name":"low","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"cand is prefix[1] - prefix[1] = 3 - 3 = 0. Both come from the same entry, so this is an empty range, not a subarray. It does not beat best, which stays 3.","panels":{"values":{"values":[3,3],"states":"c_","indexBase":0},"prefix":{"values":[0,3,6],"states":"_m_","pointers":[{"name":"low","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"cand is prefix[2] - prefix[1] = 6 - 3 = 3. That is the sum of values[1..1]. It does not beat best, which stays 3.","panels":{"values":{"values":[3,3],"states":"_c","ranges":[{"from":1,"to":1,"label":"sum 3"}],"indexBase":0},"prefix":{"values":[0,3,6],"states":"_mc","pointers":[{"name":"low","at":1,"side":"below"},{"name":"end","at":2}],"indexBase":0}}},
+{"caption":"The function returns 3, but the brute force says 6. The best subarray starts at values[0], and prefix[0] was never available to subtract.","panels":{"values":{"values":[3,3],"states":"__","indexBase":0},"prefix":{"values":[0,3,6],"states":"_m_","pointers":[{"name":"low","at":1,"side":"below"}],"indexBase":0}}}
+]},
+{"id":"negative","label":"Negative","steps":[
+{"caption":"The shrunk input is [-4], so prefix is [0, -4]. The buggy function starts low at prefix[1], which is -4, and best at values[0], which is -4.","panels":{"values":{"values":[-4],"states":"_","indexBase":0},"prefix":{"values":[0,-4],"states":"_m","pointers":[{"name":"low","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"cand is prefix[1] - prefix[1] = -4 - (-4) = 0. Both come from the same entry, so this is an empty range, not a subarray. It beats best, so best becomes 0.","panels":{"values":{"values":[-4],"states":"c","indexBase":0},"prefix":{"values":[0,-4],"states":"_m","pointers":[{"name":"low","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"The function returns 0, but the brute force says -4. No subarray sums to 0: that value came from subtracting prefix[1] from itself.","panels":{"values":{"values":[-4],"states":"_","indexBase":0},"prefix":{"values":[0,-4],"states":"_m","pointers":[{"name":"low","at":1,"side":"below"}],"indexBase":0}}}
+]}
+]}

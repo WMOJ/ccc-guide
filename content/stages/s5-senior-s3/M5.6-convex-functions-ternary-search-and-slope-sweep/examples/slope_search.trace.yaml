@@ -1,0 +1,16 @@
+example: slope_search.py
+alt: >-
+  The program binary searches for the first location where the cost stops falling, comparing
+  cost at x + 1 against cost at x instead of comparing two interior points.
+presets:
+  - id: main
+    label: Two sites
+    stdin: "2\n30 70\n1 2\n10 90\n"
+notes:
+  "16": "`lo` and `hi` bound the whole range of candidate locations."
+  "25": "`past_min(x)` is the monotone predicate: once the cost stops falling at x, it never falls again past x."
+  "26": "The comparison is between two adjacent integers, not two thirds of the interval."
+  "29": "`mid` is this round's candidate breakpoint."
+  "30": "A non-negative slope at `mid` means the minimum is at or before it: `hi` moves down."
+  "33": "A negative slope means the cost is still falling: `lo` moves past `mid`."
+  "36": "`lo` and `hi` have met: this is the first location where the slope is no longer negative."

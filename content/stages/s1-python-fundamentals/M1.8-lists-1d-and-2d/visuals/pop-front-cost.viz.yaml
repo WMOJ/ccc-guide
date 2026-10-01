@@ -1,0 +1,20 @@
+layout: single
+panels:
+  - { id: a, viz: ArrayViz }
+alt: >-
+  A list has its first value removed with pop(0). The removed cell becomes an empty gap, and
+  every later value moves one slot left, one step at a time, until the gap leaves the end of
+  the list. A second list has its last value removed with pop(), and nothing moves. Presets
+  use lists of four values and of two values.
+captions: vizrec
+presets:
+  - id: main
+    label: Four values
+    stdin: "10 20 30 40\n10 20 30 40\n"
+  - id: small
+    label: Two values
+    stdin: "7 9\n7 9\n"
+consistency:
+  description: The two lists shown after pop(0) and pop() match the two lines examples/pop_front_cost.py prints.
+  example: ../examples/pop_front_cost.py
+  compare: output

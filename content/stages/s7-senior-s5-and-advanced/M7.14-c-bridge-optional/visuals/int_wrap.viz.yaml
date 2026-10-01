@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz, title: Running total }
+alt: >-
+  A running total grows by a fixed step, shown in two columns. The first column is Python's
+  integer, which never overflows. The second is a model of a 32-bit signed integer, which holds
+  values from -2147483648 to 2147483647. When the exact total passes that range, the 32-bit column
+  wraps around to a value of the opposite sign, while Python's column keeps growing.
+captions: vizrec
+presets:
+  - id: up
+    label: Wraps up
+    stdin: "0 700000000 4\n"
+  - id: fits
+    label: Fits
+    stdin: "0 100000000 4\n"
+  - id: down
+    label: Wraps down
+    stdin: "0 -700000000 4\n"
+consistency:
+  description: The rows shown equal the lines examples/int32_wrap.py prints.
+  example: ../examples/int32_wrap.py
+  compare: output

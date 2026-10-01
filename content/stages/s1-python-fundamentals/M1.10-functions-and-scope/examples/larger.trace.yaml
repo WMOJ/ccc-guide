@@ -1,0 +1,17 @@
+example: larger.py
+alt: >-
+  The program reads two numbers, passes them to larger as the parameters a and b, and prints what
+  larger returns. The function returns at the first return it reaches.
+presets:
+  - id: main
+    label: Second is bigger
+    stdinFile: larger.in
+  - id: first
+    label: First is bigger
+    stdin: "9\n2\n"
+  - id: equal
+    label: Equal
+    stdin: "5\n5\n"
+notes:
+  "3": "`return a` ends the call here. The second `return` on line 4 never runs, because a function stops at the first `return` it reaches."
+  "4": "The `if` was false, so this line runs. `return b` ends the call and sends the value of `b` back to line 8."

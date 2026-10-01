@@ -1,0 +1,27 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz, title: Candidates t = r + a * k }
+alt: >-
+  A two-row table of candidate values t and their remainders modulo the second period, one column
+  per k. The candidates are tested left to right until one has the wanted remainder. When none of
+  the first lcm over a candidates does, extra columns show the remainders repeating, so no later
+  candidate can work.
+captions: vizrec
+legendLabels:
+  current: Candidate tested
+  compare: Repeat of earlier
+  path: Match
+presets:
+  - id: main
+    label: Match found
+    stdin: "12 5 18 11\n"
+  - id: none
+    label: No match
+    stdin: "12 5 18 10\n"
+  - id: late
+    label: Last candidate
+    stdin: "3 1 4 2\n"
+consistency:
+  description: The candidate count and the smallest t equal the output of examples/first_match.py.
+  example: ../examples/first_match.py
+  compare: output

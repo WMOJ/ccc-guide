@@ -1,0 +1,30 @@
+layout: single
+panels:
+  - { id: t, viz: TreeViz, title: "Sum and tag (#i +tag)" }
+alt: >-
+  A range add on a six-value lazy tree. The update walks down from the root: nodes outside the
+  range return at once, nodes partly inside recurse into both children, and each node lying
+  fully inside the range receives a tag and a corrected sum without any visit to its leaves.
+  Sums of the partly covered nodes are recomputed on the way back up. The presets add to a
+  middle range, to a range under a node that already holds a tag, and to a block-aligned range.
+captions: vizrec
+legendLabels:
+  current: Covered, tag placed
+  compare: Partly inside
+  invalid: Outside the range
+  done: Sum recomputed
+  path: Received pushed tag
+presets:
+  - id: middle
+    label: Middle range
+    stdin: "6\n2 4 1 3 5 2\n2\n1 1 5 5\n2 0 6\n"
+  - id: pending
+    label: Pending tag
+    stdin: "6\n2 4 1 3 5 2\n3\n1 0 4 2\n1 1 5 5\n2 0 6\n"
+  - id: aligned
+    label: Aligned block
+    stdin: "6\n2 4 1 3 5 2\n2\n1 0 4 3\n2 0 6\n"
+consistency:
+  description: The answers printed by examples/lazy_tree.py on each preset's operations agree with the tree the visual builds.
+  example: ../examples/lazy_tree.py
+  compare: output

@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"round_or_format",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz"}],
+"alt":"One float goes through two lines. round with two places gives back a float, which prints without any added trailing zero. The f-string spec dot 2 f gives back text with exactly two decimals. The table shows what each line gives and what it prints.",
+"presets":[
+{"id":"main","label":"3.1","steps":[
+{"caption":"`x = float(input())` reads 3.1. Both lines below start from this one value.","panels":{"table":{"cells":[["-","-"],["-","-"]],"states":["..",".."],"rowHeads":["round(x, 2)","f\"{x:.2f}\""],"colHeads":["gives","prints"]}}},
+{"caption":"`round(x, 2)` returns a float rounded to 2 places, 3.1. A float has no memory of how many digits you wanted, so `print` shows 3.1.","panels":{"table":{"cells":[["float","3.1"],["-","-"]],"states":["cc",".."],"rowHeads":["round(x, 2)","f\"{x:.2f}\""],"colHeads":["gives","prints"]}}},
+{"caption":"`f\"{x:.2f}\"` returns text with exactly 2 digits after the point: 3.10. It is a string, so the digits are kept as written.","panels":{"table":{"cells":[["float","3.1"],["str","3.10"]],"states":["dd","cc"],"rowHeads":["round(x, 2)","f\"{x:.2f}\""],"colHeads":["gives","prints"]}}},
+{"caption":"The two lines print 3.1 and 3.10 for the same value. A problem that asks for exactly two decimal places wants the second line.","panels":{"table":{"cells":[["float","3.1"],["str","3.10"]],"states":["dd","dd"],"rowHeads":["round(x, 2)","f\"{x:.2f}\""],"colHeads":["gives","prints"]}}}
+]},
+{"id":"long","label":"3.14159","steps":[
+{"caption":"`x = float(input())` reads 3.14159. Both lines below start from this one value.","panels":{"table":{"cells":[["-","-"],["-","-"]],"states":["..",".."],"rowHeads":["round(x, 2)","f\"{x:.2f}\""],"colHeads":["gives","prints"]}}},
+{"caption":"`round(x, 2)` returns a float rounded to 2 places, 3.14. A float has no memory of how many digits you wanted, so `print` shows 3.14.","panels":{"table":{"cells":[["float","3.14"],["-","-"]],"states":["cc",".."],"rowHeads":["round(x, 2)","f\"{x:.2f}\""],"colHeads":["gives","prints"]}}},
+{"caption":"`f\"{x:.2f}\"` returns text with exactly 2 digits after the point: 3.14. It is a string, so the digits are kept as written.","panels":{"table":{"cells":[["float","3.14"],["str","3.14"]],"states":["dd","cc"],"rowHeads":["round(x, 2)","f\"{x:.2f}\""],"colHeads":["gives","prints"]}}},
+{"caption":"Both lines print 3.14 this time, because 3.14159 already has at least two decimals. The difference shows up when it has fewer.","panels":{"table":{"cells":[["float","3.14"],["str","3.14"]],"states":["dd","dd"],"rowHeads":["round(x, 2)","f\"{x:.2f}\""],"colHeads":["gives","prints"]}}}
+]},
+{"id":"whole","label":"Whole number","steps":[
+{"caption":"`x = float(input())` reads 2.0. Both lines below start from this one value.","panels":{"table":{"cells":[["-","-"],["-","-"]],"states":["..",".."],"rowHeads":["round(x, 2)","f\"{x:.2f}\""],"colHeads":["gives","prints"]}}},
+{"caption":"`round(x, 2)` returns a float rounded to 2 places, 2.0. A float has no memory of how many digits you wanted, so `print` shows 2.0.","panels":{"table":{"cells":[["float","2.0"],["-","-"]],"states":["cc",".."],"rowHeads":["round(x, 2)","f\"{x:.2f}\""],"colHeads":["gives","prints"]}}},
+{"caption":"`f\"{x:.2f}\"` returns text with exactly 2 digits after the point: 2.00. It is a string, so the digits are kept as written.","panels":{"table":{"cells":[["float","2.0"],["str","2.00"]],"states":["dd","cc"],"rowHeads":["round(x, 2)","f\"{x:.2f}\""],"colHeads":["gives","prints"]}}},
+{"caption":"The two lines print 2.0 and 2.00 for the same value. A problem that asks for exactly two decimal places wants the second line.","panels":{"table":{"cells":[["float","2.0"],["str","2.00"]],"states":["dd","dd"],"rowHeads":["round(x, 2)","f\"{x:.2f}\""],"colHeads":["gives","prints"]}}}
+]}
+]}

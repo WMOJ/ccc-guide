@@ -12,4 +12,6 @@ lessons:
   - functions-and-scope
 practice:
   - id: ccc23j5
-    note: Search a small grid for a hidden word along a single horizontal line, the easiest of several scoring tiers.
+    note: Search a small grid of letters for a hidden word.
+  - id: ccc22j3
+    note: Decode a line of harp tuning instructions into readable steps.

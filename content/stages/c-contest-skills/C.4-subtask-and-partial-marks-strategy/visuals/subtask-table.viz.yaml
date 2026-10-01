@@ -1,0 +1,20 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Additions at each bound }
+alt: >-
+  A table with one row per subtask bound and three columns for the plans O(N^3), O(N^2) and O(N).
+  Each cell holds the number of additions that plan does at that bound, written like 4.5e6 for
+  4.5 times 10^6. A cell is marked done when the count is at most 10^7 and invalid when it is
+  over. Row by row, the bound rules out the plans of lower rows until only the linear plan fits.
+captions: vizrec
+presets:
+  - id: main
+    label: This problem
+    stdin: "3\n300 4000 1000000\n"
+  - id: smaller
+    label: Smaller bounds
+    stdin: "3\n100 2000 200000\n"
+consistency:
+  description: The counts equal the output of examples/count_adds.py on each preset's bounds.
+  example: ../examples/count_adds.py
+  compare: output

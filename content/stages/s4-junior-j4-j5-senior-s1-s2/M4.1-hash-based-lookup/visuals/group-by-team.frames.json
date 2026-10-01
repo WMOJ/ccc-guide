@@ -1,0 +1,21 @@
+{"schema":1,
+"kind":"frames",
+"id":"group-by-team",
+"layout":"row",
+"panels":[{"id":"entries","viz":"ArrayViz","title":"Team of each entry"},{"id":"groups","viz":"TableViz","title":"by_team"}],
+"alt":"Scanning a list of team-and-score entries, collecting each score into a list under its team's key with by_team.setdefault(team, []).append(score), then reading the best score per team.",
+"presets":[
+{"id":"mixed","label":"Mixed","steps":[
+{"caption":"Score 85 joins team \"B\": by_team[\"B\"] is now [85].","panels":{"entries":{"values":["B","A","B","C"],"states":"c___","pointers":[{"name":"i","at":0}]},"groups":{"cells":[["85"]],"states":["c"],"rowHeads":["scores"],"colHeads":["B"],"colTitle":"team"}}},
+{"caption":"Score 92 joins team \"A\": by_team[\"A\"] is now [92].","panels":{"entries":{"values":["B","A","B","C"],"states":"dc__","pointers":[{"name":"i","at":1}]},"groups":{"cells":[["92","85"]],"states":["c_"],"rowHeads":["scores"],"colHeads":["A","B"],"colTitle":"team"}}},
+{"caption":"Score 78 joins team \"B\": by_team[\"B\"] is now [85, 78].","panels":{"entries":{"values":["B","A","B","C"],"states":"ddc_","pointers":[{"name":"i","at":2}]},"groups":{"cells":[["92","85,78"]],"states":["_c"],"rowHeads":["scores"],"colHeads":["A","B"],"colTitle":"team"}}},
+{"caption":"Score 88 joins team \"C\": by_team[\"C\"] is now [88].","panels":{"entries":{"values":["B","A","B","C"],"states":"dddc","pointers":[{"name":"i","at":3}]},"groups":{"cells":[["92","85,78","88"]],"states":["__c"],"rowHeads":["scores"],"colHeads":["A","B","C"],"colTitle":"team"}}},
+{"caption":"Every entry is grouped. Taking the highest score in each group answers the query.","panels":{"entries":{"values":["B","A","B","C"],"states":"dddd"},"groups":{"cells":[["92","85,78","88"]],"rowHeads":["scores"],"colHeads":["A","B","C"],"colTitle":"team"}}}
+]},
+{"id":"one-team","label":"One team","steps":[
+{"caption":"Score 70 joins team \"A\": by_team[\"A\"] is now [70].","panels":{"entries":{"values":["A","A","A"],"states":"c__","pointers":[{"name":"i","at":0}]},"groups":{"cells":[["70"]],"states":["c"],"rowHeads":["scores"],"colHeads":["A"],"colTitle":"team"}}},
+{"caption":"Score 90 joins team \"A\": by_team[\"A\"] is now [70, 90].","panels":{"entries":{"values":["A","A","A"],"states":"dc_","pointers":[{"name":"i","at":1}]},"groups":{"cells":[["70,90"]],"states":["c"],"rowHeads":["scores"],"colHeads":["A"],"colTitle":"team"}}},
+{"caption":"Score 80 joins team \"A\": by_team[\"A\"] is now [70, 90, 80].","panels":{"entries":{"values":["A","A","A"],"states":"ddc","pointers":[{"name":"i","at":2}]},"groups":{"cells":[["70,90,80"]],"states":["c"],"rowHeads":["scores"],"colHeads":["A"],"colTitle":"team"}}},
+{"caption":"Every entry is grouped. Taking the highest score in each group answers the query.","panels":{"entries":{"values":["A","A","A"],"states":"ddd"},"groups":{"cells":[["70,90,80"]],"rowHeads":["scores"],"colHeads":["A"],"colTitle":"team"}}}
+]}
+]}

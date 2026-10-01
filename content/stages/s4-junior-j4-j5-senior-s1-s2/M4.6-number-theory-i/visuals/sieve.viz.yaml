@@ -1,0 +1,24 @@
+layout: single
+panels:
+  - { id: grid, viz: GridViz, title: Sieve of Eratosthenes }
+alt: >-
+  A grid of numbers from 2 up: each still-unmarked number is prime and crosses off its own
+  multiples starting at its square, stepping by itself, until no candidate up to the square
+  root of the range is left to test.
+legendLabels:
+  unvisited: Not yet sieved
+  current: Sieving prime
+  done: Prime
+  invalid: Crossed off
+captions: vizrec
+presets:
+  - id: main
+    label: Range 31
+    stdin: "31\n"
+  - id: small
+    label: Range 13
+    stdin: "13\n"
+consistency:
+  description: The final unmarked numbers match the primes examples/sieve.py prints.
+  example: ../examples/sieve.py
+  compare: output

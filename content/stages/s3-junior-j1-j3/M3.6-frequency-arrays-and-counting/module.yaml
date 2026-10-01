@@ -13,11 +13,11 @@ lessons:
   - frequency-arrays-and-counting
 practice:
   - id: ccc16s1
-    note: Count how many times each letter appears, using the counts to fill a gap.
-    why: A letter-frequency problem, the direct application of this lesson's array.
+    note: Decide whether a word with some letters hidden could be an anagram of another.
+    why: A letter-count comparison problem, close to this lesson's anagram check.
   - id: ccc17s3
-    note: Count how often each length occurs, then use the counts to avoid a slow scan.
+    note: Join pairs of boards to build the longest fence of equal-height pieces.
     why: A frequency-array problem where the counts themselves make a fast solution possible.
-  - id: ccc19j2
-    note: Expand a compressed string, then count how often each character appears in the result.
-    why: A one-pass character count over the string this lesson's pattern builds toward.
+  - id: ccc14j2
+    note: Tally two kinds of votes from a sequence of ballots and report the outcome.
+    why: A minimal two-value frequency count, the smallest version of this lesson's array.

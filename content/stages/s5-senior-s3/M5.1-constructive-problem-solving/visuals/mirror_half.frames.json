@@ -1,0 +1,24 @@
+{"schema":1,
+"kind":"frames",
+"id":"mirror_half",
+"layout":"single",
+"panels":[{"id":"row","viz":"ArrayViz","title":"Building the palindrome"}],
+"alt":"Building a palindromic row of letters by choosing only its first half and mirroring each choice into the matching position on the other side; too short a row has no free position for a second letter, so it is impossible.",
+"legendLabels":{"current":"Chosen","done":"Mirrored","invalid":"No free position"},
+"presets":[
+{"id":"six","label":"Even length","steps":[
+{"caption":"Choose: position 0 is set to a. Mirror it into position 5.","panels":{"row":{"values":["a",null,null,null,null,"a"],"states":"c____c"}}},
+{"caption":"Choose: position 1 is set to a. Mirror it into position 4.","panels":{"row":{"values":["a","a",null,null,"a","a"],"states":"cc__cc"}}},
+{"caption":"Choose: the innermost position, 2, is set to b so the row holds both letters. Mirror it into position 3.","panels":{"row":{"values":["a","a","b","b","a","a"],"states":"cccccc"}}},
+{"caption":"Every mirrored pair matches, so the row reads the same forwards and backwards.","panels":{"row":{"values":["a","a","b","b","a","a"],"states":"dddddd"}}}
+]},
+{"id":"five","label":"Odd length","steps":[
+{"caption":"Choose: position 0 is set to a. Mirror it into position 4.","panels":{"row":{"values":["a",null,null,null,"a"],"states":"c___c"}}},
+{"caption":"Choose: position 1 is set to a. Mirror it into position 3.","panels":{"row":{"values":["a","a",null,"a","a"],"states":"cc_cc"}}},
+{"caption":"Choose: the innermost position, 2, is set to b so the row holds both letters. Mirror it into position 2.","panels":{"row":{"values":["a","a","b","a","a"],"states":"ccccc"}}},
+{"caption":"Every mirrored pair matches, so the row reads the same forwards and backwards.","panels":{"row":{"values":["a","a","b","a","a"],"states":"ddddd"}}}
+]},
+{"id":"two","label":"Too short","steps":[
+{"caption":"Length 2: with only 2 position(s), each one mirrored onto another, there is no position left over to hold a second letter. A palindrome this short can only repeat one letter throughout. Impossible.","panels":{"row":{"values":["?","?"],"states":"xx"}}}
+]}
+]}

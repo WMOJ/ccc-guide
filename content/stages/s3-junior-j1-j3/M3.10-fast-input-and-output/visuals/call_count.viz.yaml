@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: lines, viz: ArrayViz, title: Input lines }
+  - { id: calls, viz: TableViz, title: Calls made }
+alt: >-
+  Counting calls to the input stream for one input with a count on the first line and one value
+  per line after it. A loop that calls input() once per line makes one more call for every
+  line, while a single sys.stdin.read() call takes the whole input at once, so its count stays
+  at one. With a count of 0 both ways make a single call.
+captions: vizrec
+presets:
+  - id: main
+    label: Four values
+    stdin: "4\n2\n4\n6\n8\n"
+  - id: seven
+    label: Seven values
+    stdin: "7\n1\n2\n3\n4\n5\n6\n7\n"
+  - id: empty
+    label: "N = 0"
+    stdin: "0\n"
+consistency:
+  description: The sum equals the output of examples/sum_many.py on the same input.
+  example: ../examples/sum_many.py
+  compare: output

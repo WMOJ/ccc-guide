@@ -1,0 +1,21 @@
+layout: single
+panels:
+  - { id: a, viz: ArrayViz, title: "Values so far" }
+alt: >-
+  A while loop doubles value until it reaches the limit. Each step checks value against the
+  limit and, while the check is True, adds the doubled value to the row of values. The last
+  step shows the check failing and the loop ending. One preset runs the lesson's limit of 50,
+  ending at 64; the other starts with a limit of 1, so the check fails at once and the block
+  never runs.
+captions: vizrec
+presets:
+  - id: main
+    label: Limit 50
+    stdinFile: ../examples/double_until_limit.in
+  - id: never
+    label: Limit 1
+    stdin: "1\n"
+consistency:
+  description: The final value shown matches the output of examples/double_until_limit.py.
+  example: ../examples/double_until_limit.py
+  compare: output

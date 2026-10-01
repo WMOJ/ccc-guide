@@ -4,7 +4,7 @@ status: accepted
 objectives:
   - Define a subproblem as a contiguous interval in a sequence.
   - Compute solutions bottom-up by increasing interval length.
-  - Optimize interval DP with convex hull or monotonicity pruning when O(n³) is too slow.
+  - Speed up a split-point interval DP with Knuth's optimization when its conditions hold.
   - Recognize problems solvable by splitting an interval at each possible position.
 prereqs:
   - M4.11
@@ -14,5 +14,5 @@ lessons:
   - interval-dp
 practice:
   - id: ccc16s4
-    note: Fill a table over subarrays, from shorter intervals to longer ones, to combine adjacent groups.
-    why: An older interval-DP problem that still makes good practice for this module.
+    note: Merge neighboring rice balls in a row to end with the largest single ball.
+    why: Neighbors in a row combine under a rule, the setting this module builds tables for.

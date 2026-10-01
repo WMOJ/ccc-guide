@@ -1,0 +1,16 @@
+{"schema":1,
+"kind":"frames",
+"id":"join_line",
+"layout":"single",
+"panels":[{"id":"line","viz":"ArrayViz"}],
+"alt":"A list of three numbers is converted to three strings, then joined with a space between each pair, giving three characters of data and two separators. The same pattern with a comma gives a comma-separated line. A loop that prints a space after every value would leave one trailing space, shown as an invalid cell.",
+"presets":[
+{"id":"main","label":"3, 5, 2","steps":[
+{"caption":"`nums` holds three numbers. To print them on one line you need text, and `.join()` only accepts text.","panels":{"line":{"values":[3,5,2],"states":"ccc","name":"nums"}}},
+{"caption":"`map(str, nums)` converts each number to its text form. Same digits, but each is now a string.","panels":{"line":{"values":["3","5","2"],"states":"ddd","name":"strings"}}},
+{"caption":"`\" \".join(...)` puts one space (shown as a dot) between each pair. Three values have two gaps, and nothing is added before the first or after the last.","panels":{"line":{"values":["3","·","5","·","2"],"states":"dmdmd","name":"line"}}},
+{"caption":"`print` shows 3 5 2 and moves to the next line, with no space left at the end.","panels":{"line":{"values":["3","·","5","·","2"],"states":"ddddd","name":"line"}}},
+{"caption":"Changing the separator to `\",\"` changes only the separator: `print` shows 3,5,2. The pattern is the same.","panels":{"line":{"values":["3",",","5",",","2"],"states":"dmdmd","name":"line"}}},
+{"caption":"Compare a loop that calls `print(n, end=\" \")` for each number. It writes a space after every value, including the last, so the line ends in a trailing space that a judge may reject.","panels":{"line":{"values":["3","·","5","·","2","·"],"states":"dmdmdx","name":"line"}}}
+]}
+]}

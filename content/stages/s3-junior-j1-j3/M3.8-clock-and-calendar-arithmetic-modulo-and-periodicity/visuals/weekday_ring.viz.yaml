@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: ring, viz: ArrayViz, title: Week ring }
+alt: >-
+  A ring of seven weekday names, Monday through Sunday. A hand starts on Monday, ignores whole
+  weeks, then steps forward (or back, for a negative day number) only the remainder modulo 7,
+  landing on the day name that examples/weekday.py prints.
+captions: vizrec
+presets:
+  - id: day-100
+    label: Day 100
+    stdin: "100\n"
+  - id: huge
+    label: Huge day
+    stdin: "1000000000000\n"
+  - id: before
+    label: Before day 0
+    stdin: "-1\n"
+consistency:
+  description: The weekday named in the last step equals the output of examples/weekday.py.
+  example: ../examples/weekday.py
+  compare: output

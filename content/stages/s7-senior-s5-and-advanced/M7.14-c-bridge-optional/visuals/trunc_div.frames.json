@@ -1,0 +1,27 @@
+{"schema":1,
+"kind":"frames",
+"id":"trunc_div",
+"layout":"row",
+"panels":[{"id":"l","viz":"LineViz","title":"Number line"},{"id":"t","viz":"TableViz","title":"Quotient and remainder"}],
+"alt":"The exact quotient of a divided by b is marked on a number line between two whole numbers. Python's floor division takes the whole number on the left of it, and C++ integer division takes the whole number closer to zero. A table then gives each language's quotient and remainder, where the remainder is a minus quotient times b, and shows that both satisfy quotient times b plus remainder equals a. When the exact quotient is positive, the two languages agree.",
+"legendLabels":{"compare":"Exact a / b","current":"Python floor","done":"C++ toward 0"},
+"presets":[
+{"id":"negdiv","label":"a negative","steps":[
+{"caption":"a is -7 and b is 2. The exact quotient -7 / 2 is -3.5, which sits between -4 and -3 on the number line.","panels":{"l":{"min":-5,"max":5,"tick":1,"points":[{"x":-3.5,"s":"m"}]},"t":{"cells":[["?","?","?"],["?","?","?"]],"rowHeads":["Python","C++"],"colHeads":["q","r","q*b + r"]}}},
+{"caption":"Python's `//` rounds down to -4, the whole number to the left. The remainder is `a - q * b` = -7 - (-4 * 2) = 1, so `%` takes the sign of b.","panels":{"l":{"min":-5,"max":5,"tick":1,"points":[{"x":-3.5,"s":"m"},{"x":-4,"label":"py","s":"c"}]},"t":{"cells":[["-4","1","?"],["?","?","?"]],"states":["cc_","___"],"rowHeads":["Python","C++"],"colHeads":["q","r","q*b + r"]}}},
+{"caption":"C++ cuts the fraction off toward zero and gets -3, not -4. Its remainder is -7 - (-3 * 2) = -1, so C++ `%` takes the sign of a.","panels":{"l":{"min":-5,"max":5,"tick":1,"points":[{"x":-3.5,"s":"m"},{"x":-4,"label":"py","s":"c"},{"x":-3,"label":"c++","s":"d"}]},"t":{"cells":[["-4","1","?"],["-3","-1","?"]],"states":["___","dd_"],"rowHeads":["Python","C++"],"colHeads":["q","r","q*b + r"]}}},
+{"caption":"Each language keeps `q * b + r` equal to a: -8 + (1) = -7 for Python and -6 + (-1) = -7 for C++. The two only differ in which way q rounds.","panels":{"l":{"min":-5,"max":5,"tick":1,"points":[{"x":-3.5,"s":"m"},{"x":-4,"label":"py","s":"c"},{"x":-3,"label":"c++","s":"d"}]},"t":{"cells":[["-4","1","-7"],["-3","-1","-7"]],"states":["__m","__m"],"rowHeads":["Python","C++"],"colHeads":["q","r","q*b + r"]}}}
+]},
+{"id":"pos","label":"Both positive","steps":[
+{"caption":"a is 7 and b is 2. The exact quotient 7 / 2 is 3.5, which sits between 3 and 4 on the number line.","panels":{"l":{"min":-5,"max":5,"tick":1,"points":[{"x":3.5,"s":"m"}]},"t":{"cells":[["?","?","?"],["?","?","?"]],"rowHeads":["Python","C++"],"colHeads":["q","r","q*b + r"]}}},
+{"caption":"Python's `//` rounds down to 3, the whole number to the left. The remainder is `a - q * b` = 7 - (3 * 2) = 1, so `%` takes the sign of b.","panels":{"l":{"min":-5,"max":5,"tick":1,"points":[{"x":3.5,"s":"m"},{"x":3,"label":"py","s":"c"}]},"t":{"cells":[["3","1","?"],["?","?","?"]],"states":["cc_","___"],"rowHeads":["Python","C++"],"colHeads":["q","r","q*b + r"]}}},
+{"caption":"C++ cuts the fraction off toward zero and lands on 3 too: with a positive exact quotient, rounding down and cutting toward zero are the same move. Its remainder is 1.","panels":{"l":{"min":-5,"max":5,"tick":1,"points":[{"x":3.5,"s":"m"},{"x":3,"label":"both","s":"d"}]},"t":{"cells":[["3","1","?"],["3","1","?"]],"states":["___","dd_"],"rowHeads":["Python","C++"],"colHeads":["q","r","q*b + r"]}}},
+{"caption":"Each language keeps `q * b + r` equal to a: 6 + (1) = 7 for Python and 6 + (1) = 7 for C++. The two only differ in which way q rounds.","panels":{"l":{"min":-5,"max":5,"tick":1,"points":[{"x":3.5,"s":"m"},{"x":3,"label":"both","s":"d"}]},"t":{"cells":[["3","1","7"],["3","1","7"]],"states":["__m","__m"],"rowHeads":["Python","C++"],"colHeads":["q","r","q*b + r"]}}}
+]},
+{"id":"negb","label":"b negative","steps":[
+{"caption":"a is 7 and b is -2. The exact quotient 7 / -2 is -3.5, which sits between -4 and -3 on the number line.","panels":{"l":{"min":-5,"max":5,"tick":1,"points":[{"x":-3.5,"s":"m"}]},"t":{"cells":[["?","?","?"],["?","?","?"]],"rowHeads":["Python","C++"],"colHeads":["q","r","q*b + r"]}}},
+{"caption":"Python's `//` rounds down to -4, the whole number to the left. The remainder is `a - q * b` = 7 - (-4 * -2) = -1, so `%` takes the sign of b.","panels":{"l":{"min":-5,"max":5,"tick":1,"points":[{"x":-3.5,"s":"m"},{"x":-4,"label":"py","s":"c"}]},"t":{"cells":[["-4","-1","?"],["?","?","?"]],"states":["cc_","___"],"rowHeads":["Python","C++"],"colHeads":["q","r","q*b + r"]}}},
+{"caption":"C++ cuts the fraction off toward zero and gets -3, not -4. Its remainder is 7 - (-3 * -2) = 1, so C++ `%` takes the sign of a.","panels":{"l":{"min":-5,"max":5,"tick":1,"points":[{"x":-3.5,"s":"m"},{"x":-4,"label":"py","s":"c"},{"x":-3,"label":"c++","s":"d"}]},"t":{"cells":[["-4","-1","?"],["-3","1","?"]],"states":["___","dd_"],"rowHeads":["Python","C++"],"colHeads":["q","r","q*b + r"]}}},
+{"caption":"Each language keeps `q * b + r` equal to a: 8 + (-1) = 7 for Python and 6 + (1) = 7 for C++. The two only differ in which way q rounds.","panels":{"l":{"min":-5,"max":5,"tick":1,"points":[{"x":-3.5,"s":"m"},{"x":-4,"label":"py","s":"c"},{"x":-3,"label":"c++","s":"d"}]},"t":{"cells":[["-4","-1","7"],["-3","1","7"]],"states":["__m","__m"],"rowHeads":["Python","C++"],"colHeads":["q","r","q*b + r"]}}}
+]}
+]}

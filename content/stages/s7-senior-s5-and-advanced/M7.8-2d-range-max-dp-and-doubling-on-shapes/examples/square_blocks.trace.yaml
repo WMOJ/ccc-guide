@@ -1,0 +1,17 @@
+example: square_blocks.py
+alt: >-
+  A short version of the square table for a 3 by 3 grid. The nested loops fill a 2 by 2 table where
+  each entry is the maximum of one 2 by 2 block of the grid. The last line takes the maximum of
+  those four entries, which together cover the whole 3 by 3 square.
+presets:
+  - id: main
+    label: Corner max
+    stdin: "1 5 9\n3 1 4\n2 6 5\n"
+  - id: center
+    label: Center max
+    stdin: "1 2 3\n4 9 5\n6 7 8\n"
+notes:
+  "7": "Level 0 of the table is the grid itself, split into three rows."
+  "10": "`x` and `y` are two neighboring grid rows: the block at `(i, j)` spans both."
+  "13": "`a` and `b` are the two cells of the block in each row."
+  "17": "Four blocks of side 2 cover the 3 by 3 square, sharing the middle cells."

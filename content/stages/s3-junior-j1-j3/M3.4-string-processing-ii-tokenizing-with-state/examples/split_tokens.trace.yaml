@@ -1,0 +1,22 @@
+example: split_tokens.py
+alt: >-
+  The smallest comma tokenizer: it walks the line once, growing the list buf on every
+  non-comma character and moving it into out whole on every comma, then joining each
+  collected token into text only when it is printed.
+presets:
+  - id: main
+    label: Three tokens
+    stdin: "a,b,c\n"
+  - id: trailing
+    label: Trailing comma
+    stdin: "a,\n"
+notes:
+  "7": "`out` starts empty; it only ever holds finished tokens, each still a list of characters."
+  "8": "`buf`, the token being built, starts as an empty list of characters."
+  "10": "A comma means the token building so far is complete."
+  "11": "`buf` itself moves into `out`, unjoined; no characters are copied here."
+  "12": "`buf` resets to an empty list, ready for the next token."
+  "14": "Any other character is appended to `buf`, never rebuilding it."
+  "15": "This check only fires when something is left unfinished after the loop."
+  "16": "In the trailing-comma preset, `buf` is already empty here, so nothing is added."
+  "18": "Each token is joined into text only now, once, right before it is printed."

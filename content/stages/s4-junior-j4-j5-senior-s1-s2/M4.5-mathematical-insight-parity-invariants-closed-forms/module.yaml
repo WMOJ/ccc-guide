@@ -12,9 +12,8 @@ prereqs:
 lessons:
   - mathematical-insight
 practice:
-  - id: ccc18s1
-    note: Determine if a sequence of swaps can reach a target arrangement.
-    why: An invariant determines reachability without simulation.
-  - id: ccc22j5
-    note: Find the total cost after many operations by discovering a pattern.
-    why: Closed-form formula avoids step-by-step simulation.
+  - id: ccc21s2
+    note: Decide how many cells end up one color after a series of row and column flips.
+  - id: ccc17j3
+    note: Decide whether a trip between two points can use up an exact amount of charge.
+    why: Reachability comes down to one parity check on the leftover charge, not a search.

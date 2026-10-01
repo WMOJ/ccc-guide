@@ -1,23 +1,39 @@
 import heapq
+import sys
 
-h = []
-removed = set()
-count = 0
 
-# Add items
-for val in [3, 7, 2, 9, 5]:
-    heapq.heappush(h, -val)
-    count += 1
+def main() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
+    m = int(data[0])
+    pos = 1
 
-print(f"Added 5 items, count = {count}")
+    heap = []
+    pending = {}
+    count = 0
+    for _ in range(m):
+        op = data[pos]
+        value = int(data[pos + 1])
+        pos += 2
+        if op == "A":
+            heapq.heappush(heap, -value)
+            count += 1
+            print(f"Added {value}, count = {count}")
+        else:
+            pending[value] = pending.get(value, 0) + 1
+            count -= 1
+            print(f"Removed {value}, count = {count}")
 
-# Remove item with value 9
-removed.add(9)
-count -= 1
-
-# Find maximum, skipping stale entries already accounted for above
-while h:
-    val = -heapq.heappop(h)
-    if val not in removed:
-        print(f"Maximum: {val}, remaining count: {count}")
+    while heap:
+        value = -heap[0]
+        if pending.get(value, 0) > 0:
+            pending[value] -= 1
+            heapq.heappop(heap)
+            continue
+        print(f"Maximum: {value}, remaining count: {count}")
         break
+
+
+if __name__ == "__main__":
+    main()

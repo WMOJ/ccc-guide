@@ -1,0 +1,21 @@
+layout: row
+panels:
+  - { id: g, viz: GraphViz, title: Graph }
+  - { id: d, viz: StructViz, title: Deque }
+alt: >-
+  0-1 BFS from node 0 on a small graph with weight-0 and weight-1 edges. A weight-0 edge joins
+  the front of the deque, a weight-1 edge joins the back, so the deque always comes out in
+  order of distance. A free route through more edges can beat a direct route with one costly
+  edge.
+captions: vizrec
+presets:
+  - id: doors
+    label: Doors and stairs
+    stdin: "5 5 0\n0 1 1\n0 2 0\n2 3 0\n3 1 0\n1 4 1\n"
+  - id: all-free
+    label: All free
+    stdin: "4 3 0\n0 1 0\n1 2 0\n2 3 0\n"
+consistency:
+  description: The final distances in the visual equal the output of examples/zero_one_bfs.py on each preset.
+  example: ../examples/zero_one_bfs.py
+  compare: output

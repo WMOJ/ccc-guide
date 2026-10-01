@@ -1,0 +1,25 @@
+layout: row
+panels:
+  - { id: t, viz: TreeViz, title: Tree }
+  - { id: a, viz: ArrayViz, title: "The tree list" }
+alt: >-
+  The same four-leaf sum tree drawn twice: as a tree, and as the flat list that stores it. The
+  first preset starts at the leaf for position 1 and halves the index to climb to each parent up
+  to the root. The second preset starts at the root and doubles the index to reach each node's
+  children, until the leaves, which have none.
+captions: vizrec
+legendLabels:
+  current: Node in focus
+  compare: Its children
+  done: Already passed
+presets:
+  - id: up
+    label: Climb to root
+    stdin: "4\n3 1 4 1\nup 1\n"
+  - id: down
+    label: Descend
+    stdin: "4\n3 1 4 1\ndown 0\n"
+consistency:
+  description: The tree list in the visual equals the list printed by examples/tree_build.py.
+  example: ../examples/tree_build.py
+  compare: output

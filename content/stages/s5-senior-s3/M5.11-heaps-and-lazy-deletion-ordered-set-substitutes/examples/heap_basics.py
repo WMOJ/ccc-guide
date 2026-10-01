@@ -1,13 +1,24 @@
 import heapq
+import sys
 
-h = []
-heapq.heappush(h, 5)
-heapq.heappush(h, 2)
-heapq.heappush(h, 8)
-heapq.heappush(h, 1)
 
-print("Heap:", h)
+def main() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
+    n = int(data[0])
+    values = [int(x) for x in data[1:1 + n]]
 
-while h:
-    print(heapq.heappop(h), end=" ")
-print()
+    heap = []
+    for value in values:
+        heapq.heappush(heap, value)
+
+    print("Heap list:", heap)
+
+    while heap:
+        print(heapq.heappop(heap), end=" ")
+    print()
+
+
+if __name__ == "__main__":
+    main()

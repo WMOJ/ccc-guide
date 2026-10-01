@@ -1,0 +1,44 @@
+{"schema":1,
+"kind":"frames",
+"id":"subset_powers",
+"layout":"single",
+"panels":[{"id":"subset","viz":"ArrayViz","title":"Checking every subset"}],
+"alt":"A brute force checking every subset of the powers of 2 up to N, adding up the ones included and comparing the sum to N. Exactly one subset ever matches, whatever N is: the number's own binary representation.",
+"legendLabels":{"current":"Included","done":"Match"},
+"presets":[
+{"id":"five","label":"N = 5","steps":[
+{"caption":"Subset 1 of 8: sums to 0, not 5.","panels":{"subset":{"values":[1,2,4],"states":"___"}}},
+{"caption":"Subset 2 of 8: sums to 1, not 5.","panels":{"subset":{"values":[1,2,4],"states":"c__"}}},
+{"caption":"Subset 3 of 8: sums to 2, not 5.","panels":{"subset":{"values":[1,2,4],"states":"_c_"}}},
+{"caption":"Subset 4 of 8: sums to 3, not 5.","panels":{"subset":{"values":[1,2,4],"states":"cc_"}}},
+{"caption":"Subset 5 of 8: sums to 4, not 5.","panels":{"subset":{"values":[1,2,4],"states":"__c"}}},
+{"caption":"Subset 6 of 8: sums to 5, matching 5.","panels":{"subset":{"values":[1,2,4],"states":"ddd"}}},
+{"caption":"Subset 7 of 8: sums to 6, not 5.","panels":{"subset":{"values":[1,2,4],"states":"_cc"}}},
+{"caption":"Subset 8 of 8: sums to 7, not 5.","panels":{"subset":{"values":[1,2,4],"states":"ccc"}}},
+{"caption":"Every subset of {1, 2, 4} is checked: 1 of them sums to 5.","panels":{"subset":{"values":[1,2,4],"states":"___"}}}
+]},
+{"id":"one","label":"N = 1","steps":[
+{"caption":"Subset 1 of 2: sums to 0, not 1.","panels":{"subset":{"values":[1],"states":"_"}}},
+{"caption":"Subset 2 of 2: sums to 1, matching 1.","panels":{"subset":{"values":[1],"states":"d"}}},
+{"caption":"Every subset of {1} is checked: 1 of them sums to 1.","panels":{"subset":{"values":[1],"states":"_"}}}
+]},
+{"id":"eleven","label":"N = 11","steps":[
+{"caption":"Subset 1 of 16: sums to 0, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"____"}}},
+{"caption":"Subset 2 of 16: sums to 1, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"c___"}}},
+{"caption":"Subset 3 of 16: sums to 2, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"_c__"}}},
+{"caption":"Subset 4 of 16: sums to 3, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"cc__"}}},
+{"caption":"Subset 5 of 16: sums to 4, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"__c_"}}},
+{"caption":"Subset 6 of 16: sums to 5, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"c_c_"}}},
+{"caption":"Subset 7 of 16: sums to 6, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"_cc_"}}},
+{"caption":"Subset 8 of 16: sums to 7, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"ccc_"}}},
+{"caption":"Subset 9 of 16: sums to 8, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"___c"}}},
+{"caption":"Subset 10 of 16: sums to 9, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"c__c"}}},
+{"caption":"Subset 11 of 16: sums to 10, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"_c_c"}}},
+{"caption":"Subset 12 of 16: sums to 11, matching 11.","panels":{"subset":{"values":[1,2,4,8],"states":"dddd"}}},
+{"caption":"Subset 13 of 16: sums to 12, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"__cc"}}},
+{"caption":"Subset 14 of 16: sums to 13, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"c_cc"}}},
+{"caption":"Subset 15 of 16: sums to 14, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"_ccc"}}},
+{"caption":"Subset 16 of 16: sums to 15, not 11.","panels":{"subset":{"values":[1,2,4,8],"states":"cccc"}}},
+{"caption":"Every subset of {1, 2, 4, 8} is checked: 1 of them sums to 11.","panels":{"subset":{"values":[1,2,4,8],"states":"____"}}}
+]}
+]}

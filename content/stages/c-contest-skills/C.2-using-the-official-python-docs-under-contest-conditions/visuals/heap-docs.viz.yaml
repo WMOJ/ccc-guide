@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: heappushpop }
+  - { id: b, viz: ArrayViz, title: heapreplace }
+alt: >-
+  Two heaps, shown in sorted order, start identical. heappushpop pushes the new item and then pops
+  the smallest, so a new item smaller than everything comes straight back out. heapreplace pops the
+  smallest first and then pushes, so the old smallest leaves and the new item stays.
+captions: vizrec
+presets:
+  - id: below
+    label: Below the min
+    stdin: "1 2 4 6\n"
+  - id: above
+    label: Above the min
+    stdin: "5 2 4 6\n"
+  - id: equal
+    label: Equal to min
+    stdin: "2 2 4 6\n"
+consistency:
+  description: The returned values and final heaps equal the output of examples/heap_docs.py on each preset's stdin.
+  example: ../examples/heap_docs.py
+  compare: output

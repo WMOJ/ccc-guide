@@ -1,0 +1,21 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz }
+  - { id: s, viz: TableViz, title: Block sums }
+alt: >-
+  A point update in eight values with blocks of three. One position changes, and its block sum
+  changes by the same difference. No other value or sum is touched. A later range query then
+  reads the new numbers. The presets change a middle position to a larger value and the last
+  position to a smaller one.
+captions: vizrec
+presets:
+  - id: raise
+    label: Raise a value
+    stdin: "8\n3 1 4 1 5 9 2 6\n2\n1 4 10\n2 1 7\n"
+  - id: lower
+    label: Lower a value
+    stdin: "8\n3 1 4 1 5 9 2 6\n2\n1 7 0\n2 6 8\n"
+consistency:
+  description: The answer to the query after the update equals the output of examples/sqrt_sum.py for the same events.
+  example: ../examples/sqrt_sum.py
+  compare: output

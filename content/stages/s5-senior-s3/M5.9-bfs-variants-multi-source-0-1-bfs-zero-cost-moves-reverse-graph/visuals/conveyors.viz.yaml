@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: g, viz: GraphViz, title: Graph }
+  - { id: q, viz: StructViz, title: Queue }
+alt: >-
+  Breadth-first search with forced conveyors on a small graph. Highlighted edges are conveyors;
+  landing on one instantly forces the next move. A conveyor chain that loops back on itself
+  traps its nodes, marked with an x, since the search can never come to rest there. A chain
+  that ends on an ordinary node redirects the search there for free.
+captions: vizrec
+legendLabels:
+  wall: Conveyor
+  invalid: No exit
+presets:
+  - id: trap
+    label: With a loop
+    stdin: "7 4 3\n0 1\n1 2\n2 5\n1 3\n3 4\n4 3\n5 6\n"
+  - id: none
+    label: No conveyors
+    stdin: "4 3 0\n0 1\n1 2\n2 3\n"
+consistency:
+  description: The final distances in the visual equal the output of examples/conveyor_bfs.py on each preset.
+  example: ../examples/conveyor_bfs.py
+  compare: output

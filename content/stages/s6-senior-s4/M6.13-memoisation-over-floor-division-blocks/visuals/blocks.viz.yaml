@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: "n // d for d = 1, 2, ..." }
+  - { id: t, viz: TableViz, title: Blocks }
+alt: >-
+  The values of n divided by d for d from 1 to n, grouped into runs of equal quotients. The loop
+  takes one run at a time, finds its last d with n divided by the quotient, adds the quotient times
+  the run's size as a row of a table, and jumps to the start of the next run.
+captions: vizrec
+presets:
+  - id: eight
+    label: n = 8
+    stdin: "8\n"
+  - id: square
+    label: n = 4
+    stdin: "4\n"
+  - id: one
+    label: n = 1
+    stdin: "1\n"
+consistency:
+  description: The total and the block count in the visual equal the output of examples/floor_division.py.
+  example: ../examples/floor_division.py
+  compare: output

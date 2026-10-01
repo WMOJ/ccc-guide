@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - id: table
+    viz: TableViz
+alt: >-
+  One float goes through two lines. round with two places gives back a float, which prints without
+  any added trailing zero. The f-string spec dot 2 f gives back text with exactly two decimals.
+  The table shows what each line gives and what it prints.
+captions: vizrec
+presets:
+  - id: main
+    label: "3.1"
+    stdinFile: ../examples/round_or_format.in
+  - id: long
+    label: "3.14159"
+    stdin: "3.14159\n"
+  - id: whole
+    label: Whole number
+    stdin: "2\n"
+consistency:
+  description: "rec.output() equals round_or_format.py's real stdout for the same stdin."
+  example: ../examples/round_or_format.py
+  compare: output

@@ -1,0 +1,19 @@
+example: iterative_dfs_true_order.py
+alt: >-
+  The program reads a vertex count, an edge count and that many edges, then walks the tree
+  with one frame per vertex on its own stack: each frame's index advances through that
+  vertex's neighbor list one at a time, only descending into a neighbor the first time it is
+  unvisited, so every vertex gets exactly one parent.
+presets:
+  - id: main
+    label: Small tree
+    stdin: "2 1\n0 1"
+  - id: single
+    label: One vertex
+    stdin: "1 0"
+notes:
+  "27": "`fr` is the stack's top frame, a `[node, index]` pair, not popped yet."
+  "35": "The index has reached the end of `node`'s neighbor list, so its frame is done."
+  "39": "`fr[1]` moves past this neighbor whether or not the search descends into it."
+  "40": "Only an unvisited neighbor gets a parent and a new frame; a visited one is skipped."
+  "44": "The new frame `[nb, 0]` goes on top, so `nb` is explored before `node` resumes."

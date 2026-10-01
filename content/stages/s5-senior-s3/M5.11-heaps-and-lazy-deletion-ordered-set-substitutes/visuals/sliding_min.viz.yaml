@@ -1,0 +1,21 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: Values }
+  - { id: h, viz: StructViz, title: "Heap of (value, index)" }
+alt: >-
+  A sliding-window minimum found with a heap of (value, index) pairs. Every index is pushed once.
+  Before each window is read, entries whose index has already left the window are popped from the
+  top and discarded, since they can never be the minimum again. The window's minimum is whatever
+  valid entry then sits on top.
+captions: vizrec
+presets:
+  - id: eight
+    label: Eight values
+    stdin: "8 3\n3 1 4 1 5 9 2 6\n"
+  - id: leaves
+    label: Minimum leaves
+    stdin: "3 2\n1 3 2\n"
+consistency:
+  description: The reported minimums in the visual equal the output of examples/sliding_min.py.
+  example: ../examples/sliding_min.py
+  compare: output

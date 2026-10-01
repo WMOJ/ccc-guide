@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz }
+alt: >-
+  A table with one row per input size n. For each n it shows how many checks the list-scan version
+  makes and how many lookups the set version makes, counted by running both, with a mark
+  when the list scan passes 10^8. With no repeated value the list scan grows by about a hundred times for each
+  tenfold n and passes 10^8 at n = 20,000. With a repeat at the front both finish at once.
+legendLabels:
+  done: Under 10^8 checks
+  invalid: Over 10^8 checks
+captions: vizrec
+presets:
+  - id: distinct
+    label: No repeat
+    stdin: "distinct\n100 1000 10000 20000\n"
+  - id: front
+    label: Repeat first
+    stdin: "front\n100 1000 10000 20000\n"
+consistency:
+  description: The counts in the table equal the output of examples/count_checks.py on each preset's input.
+  example: ../examples/count_checks.py
+  compare: output

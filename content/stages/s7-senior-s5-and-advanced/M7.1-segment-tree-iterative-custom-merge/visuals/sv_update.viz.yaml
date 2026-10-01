@@ -1,0 +1,24 @@
+layout: single
+panels:
+  - { id: t, viz: TreeViz, title: "Sum tree (#i = index)" }
+alt: >-
+  A point update in an six-leaf sum tree. The new value is written into one leaf, then each
+  ancestor on the way to the root is recomputed from its two children, so only one node per level
+  changes. The presets update a middle leaf and the last leaf; a final whole-array query then reads
+  only the root.
+captions: vizrec
+legendLabels:
+  current: Node recomputed
+  compare: Its children
+  path: Stale until recomputed
+presets:
+  - id: middle
+    label: Middle leaf
+    stdin: "6\n5 3 8 1 4 7\n2\n1 3 10\n2 0 6\n"
+  - id: last
+    label: Last leaf
+    stdin: "6\n5 3 8 1 4 7\n2\n1 5 0\n2 0 6\n"
+consistency:
+  description: The final query result equals the output of examples/tree_update.py.
+  example: ../examples/tree_update.py
+  compare: output

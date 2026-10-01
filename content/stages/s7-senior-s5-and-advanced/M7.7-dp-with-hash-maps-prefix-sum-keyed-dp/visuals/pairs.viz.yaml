@@ -1,0 +1,24 @@
+layout: single
+panels:
+  - { id: array, viz: ArrayViz }
+alt: >-
+  The values, then the values with the target subtracted, then their prefix sums. Cells holding the
+  same prefix value are marked together, and each pair of them bounds a stretch whose shifted sum
+  is zero. The last step counts the pairs.
+legendLabels:
+  compare: Equal prefix value
+captions: vizrec
+presets:
+  - id: main
+    label: Two pairs
+    stdin: "6\n4 7 1 3 5 2\n3\n"
+  - id: equal
+    label: All equal
+    stdin: "4\n3 3 3 3\n3\n"
+  - id: none
+    label: No match
+    stdin: "5\n1 1 1 1 1\n3\n"
+consistency:
+  description: The pair count equals the output of examples/average_subarrays.py on the same input.
+  example: ../examples/average_subarrays.py
+  compare: output

@@ -1,0 +1,21 @@
+layout: row
+panels:
+  - { id: text, viz: ArrayViz, title: Text (both windows) }
+  - { id: hash, viz: ArrayViz, title: hash_a vs hash_b }
+alt: >-
+  Comparing two substrings of the same text by hash instead of character by character. A prefix
+  hash array lets either window's hash be read in O(1), without rebuilding it. Two presets: one
+  where the substrings are equal and their hashes agree, one where they differ and the hashes
+  disagree.
+captions: vizrec
+presets:
+  - id: equal
+    label: Equal
+    stdin: "abcabc 0 3 3\n"
+  - id: different
+    label: Different
+    stdin: "abcabc 0 1 3\n"
+consistency:
+  description: The reported verdict equals the output of examples/hash_compare.py for the same input.
+  example: ../examples/hash_compare.py
+  compare: output

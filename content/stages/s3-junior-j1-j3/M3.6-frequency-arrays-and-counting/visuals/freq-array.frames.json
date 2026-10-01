@@ -3,9 +3,9 @@
 "id":"freq-array",
 "layout":"row",
 "panels":[{"id":"word","viz":"ArrayViz","title":"Word"},{"id":"freq","viz":"ArrayViz","title":"Frequency array (a-h)"}],
-"alt":"The word \"cabbage\" scanned one character at a time, with a pointer moving across it. Beside it, the first 8 slots of the frequency array, one slot per letter a through h, fill in as each character is read: the slots for a, b, c, e and g grow while every other slot stays at 0.",
+"alt":"A word scanned one character at a time, with a pointer moving across it. Beside it, the first 8 slots of the frequency array, one slot per letter a through h, fill in as each lowercase letter is read; a non-letter or uppercase character is skipped without changing any slot. After the scan, the slots are read back in order and printed as \"letter: count\" lines.",
 "presets":[
-{"id":"cabbage","label":"The word \"cabbage\"","steps":[
+{"id":"cabbage","label":"cabbage","steps":[
 {"caption":"Before reading any character, every slot in the frequency array is 0.","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"c______","pointers":[{"name":"i","at":0}]},"freq":{"values":[0,0,0,0,0,0,0,0],"indexBase":0}}},
 {"caption":"Character 'c' at position 0 maps to slot 2. freq[2] becomes 1.","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"c______","pointers":[{"name":"i","at":0}]},"freq":{"values":[0,0,1,0,0,0,0,0],"states":"__c_____","indexBase":0}}},
 {"caption":"Character 'a' at position 1 maps to slot 0. freq[0] becomes 1.","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"dc_____","pointers":[{"name":"i","at":1}]},"freq":{"values":[1,0,1,0,0,0,0,0],"states":"c_______","indexBase":0}}},
@@ -14,6 +14,32 @@
 {"caption":"Character 'a' at position 4 maps to slot 0. freq[0] becomes 2.","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"ddddc__","pointers":[{"name":"i","at":4}]},"freq":{"values":[2,2,1,0,0,0,0,0],"states":"c_______","indexBase":0}}},
 {"caption":"Character 'g' at position 5 maps to slot 6. freq[6] becomes 1.","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"dddddc_","pointers":[{"name":"i","at":5}]},"freq":{"values":[2,2,1,0,0,0,1,0],"states":"______c_","indexBase":0}}},
 {"caption":"Character 'e' at position 6 maps to slot 4. freq[4] becomes 1.","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"ddddddc","pointers":[{"name":"i","at":6}]},"freq":{"values":[2,2,1,0,1,0,1,0],"states":"____c___","indexBase":0}}},
-{"caption":"After the last character, the non-zero slots hold the final letter counts.","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"ddddddd"},"freq":{"values":[2,2,1,0,1,0,1,0],"indexBase":0}}}
+{"caption":"After the last character, the non-zero slots hold the final letter counts. The second loop now reads them back in order, slot 0 to slot 25.","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"ddddddd"},"freq":{"values":[2,2,1,0,1,0,1,0],"indexBase":0}}},
+{"caption":"Slot 0 (letter 'a') is 2, so the loop prints \"a: 2\".","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"ddddddd"},"freq":{"values":[2,2,1,0,1,0,1,0],"states":"c_______","indexBase":0}}},
+{"caption":"Slot 1 (letter 'b') is 2, so the loop prints \"b: 2\".","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"ddddddd"},"freq":{"values":[2,2,1,0,1,0,1,0],"states":"_c______","indexBase":0}}},
+{"caption":"Slot 2 (letter 'c') is 1, so the loop prints \"c: 1\".","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"ddddddd"},"freq":{"values":[2,2,1,0,1,0,1,0],"states":"__c_____","indexBase":0}}},
+{"caption":"Slot 4 (letter 'e') is 1, so the loop prints \"e: 1\".","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"ddddddd"},"freq":{"values":[2,2,1,0,1,0,1,0],"states":"____c___","indexBase":0}}},
+{"caption":"Slot 6 (letter 'g') is 1, so the loop prints \"g: 1\".","panels":{"word":{"values":["c","a","b","b","a","g","e"],"states":"ddddddd"},"freq":{"values":[2,2,1,0,1,0,1,0],"states":"______c_","indexBase":0}}}
+]},
+{"id":"mixed","label":"Mixed case","steps":[
+{"caption":"Before reading any character, every slot in the frequency array is 0.","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"c______","pointers":[{"name":"i","at":0}]},"freq":{"values":[0,0,0,0,0,0,0,0],"indexBase":0}}},
+{"caption":"Character 'C' at position 0 is outside a-z, so the filter skips it. No slot changes.","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"c______","pointers":[{"name":"i","at":0}]},"freq":{"values":[0,0,0,0,0,0,0,0],"indexBase":0}}},
+{"caption":"Character 'a' at position 1 maps to slot 0. freq[0] becomes 1.","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"dc_____","pointers":[{"name":"i","at":1}]},"freq":{"values":[1,0,0,0,0,0,0,0],"states":"c_______","indexBase":0}}},
+{"caption":"Character 'b' at position 2 maps to slot 1. freq[1] becomes 1.","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"ddc____","pointers":[{"name":"i","at":2}]},"freq":{"values":[1,1,0,0,0,0,0,0],"states":"_c______","indexBase":0}}},
+{"caption":"Character 'b' at position 3 maps to slot 1. freq[1] becomes 2.","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"dddc___","pointers":[{"name":"i","at":3}]},"freq":{"values":[1,2,0,0,0,0,0,0],"states":"_c______","indexBase":0}}},
+{"caption":"Character 'a' at position 4 maps to slot 0. freq[0] becomes 2.","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"ddddc__","pointers":[{"name":"i","at":4}]},"freq":{"values":[2,2,0,0,0,0,0,0],"states":"c_______","indexBase":0}}},
+{"caption":"Character 'g' at position 5 maps to slot 6. freq[6] becomes 1.","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"dddddc_","pointers":[{"name":"i","at":5}]},"freq":{"values":[2,2,0,0,0,0,1,0],"states":"______c_","indexBase":0}}},
+{"caption":"Character 'e' at position 6 maps to slot 4. freq[4] becomes 1.","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"ddddddc","pointers":[{"name":"i","at":6}]},"freq":{"values":[2,2,0,0,1,0,1,0],"states":"____c___","indexBase":0}}},
+{"caption":"After the last character, the non-zero slots hold the final letter counts. The second loop now reads them back in order, slot 0 to slot 25.","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"ddddddd"},"freq":{"values":[2,2,0,0,1,0,1,0],"indexBase":0}}},
+{"caption":"Slot 0 (letter 'a') is 2, so the loop prints \"a: 2\".","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"ddddddd"},"freq":{"values":[2,2,0,0,1,0,1,0],"states":"c_______","indexBase":0}}},
+{"caption":"Slot 1 (letter 'b') is 2, so the loop prints \"b: 2\".","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"ddddddd"},"freq":{"values":[2,2,0,0,1,0,1,0],"states":"_c______","indexBase":0}}},
+{"caption":"Slot 4 (letter 'e') is 1, so the loop prints \"e: 1\".","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"ddddddd"},"freq":{"values":[2,2,0,0,1,0,1,0],"states":"____c___","indexBase":0}}},
+{"caption":"Slot 6 (letter 'g') is 1, so the loop prints \"g: 1\".","panels":{"word":{"values":["C","a","b","b","a","g","e"],"states":"ddddddd"},"freq":{"values":[2,2,0,0,1,0,1,0],"states":"______c_","indexBase":0}}}
+]},
+{"id":"single","label":"Single letter","steps":[
+{"caption":"Before reading any character, every slot in the frequency array is 0.","panels":{"word":{"values":["d"],"states":"c","pointers":[{"name":"i","at":0}]},"freq":{"values":[0,0,0,0,0,0,0,0],"indexBase":0}}},
+{"caption":"Character 'd' at position 0 maps to slot 3. freq[3] becomes 1.","panels":{"word":{"values":["d"],"states":"c","pointers":[{"name":"i","at":0}]},"freq":{"values":[0,0,0,1,0,0,0,0],"states":"___c____","indexBase":0}}},
+{"caption":"After the last character, the non-zero slots hold the final letter counts. The second loop now reads them back in order, slot 0 to slot 25.","panels":{"word":{"values":["d"],"states":"d"},"freq":{"values":[0,0,0,1,0,0,0,0],"indexBase":0}}},
+{"caption":"Slot 3 (letter 'd') is 1, so the loop prints \"d: 1\".","panels":{"word":{"values":["d"],"states":"d"},"freq":{"values":[0,0,0,1,0,0,0,0],"states":"___c____","indexBase":0}}}
 ]}
 ]}

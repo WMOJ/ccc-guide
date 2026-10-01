@@ -1,0 +1,26 @@
+layout: single
+panels:
+  - { id: line, viz: LineViz, title: Meetings on a timeline }
+legendLabels:
+  done: Chosen
+  invalid: Skipped
+  current: Being checked
+alt: >-
+  Meetings drawn as bars on a timeline. They are taken in order of end time. A meeting that starts
+  at or after the last chosen end is chosen, and one that starts earlier overlaps and is skipped.
+  A marker shows the last chosen end moving right.
+captions: vizrec
+presets:
+  - id: long
+    label: One long
+    stdin: "5\nA 1 10\nB 2 4\nC 3 6\nD 5 7\nE 8 9\n"
+  - id: touching
+    label: Touching
+    stdin: "3\nA 1 3\nB 3 6\nC 6 9\n"
+  - id: nested
+    label: All overlap
+    stdin: "3\nA 1 5\nB 2 6\nC 3 7\n"
+consistency:
+  description: The count and chosen names equal the two lines examples/intervals.py prints.
+  example: ../examples/intervals.py
+  compare: output

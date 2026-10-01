@@ -1,0 +1,2 @@
+update visits [3, 4, 8]
+query visits [7, 6, 4]

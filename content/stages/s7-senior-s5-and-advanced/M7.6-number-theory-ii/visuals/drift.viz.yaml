@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: c, viz: PlotViz, title: Float against exact }
+alt: >-
+  A chart of the tent map iterated 60 times from the fraction 1 over 11. The exact version keeps an
+  integer numerator and bounces among a few values forever. The float version follows it at first,
+  then drifts away from about step 40 and falls to 0 near step 56, where it stays.
+captions: vizrec
+presets:
+  - id: main
+    label: 1 over 11
+    stdin: "11 1\n"
+  - id: thirteen
+    label: 1 over 13
+    stdin: "13 1\n"
+  - id: five
+    label: 1 over 5
+    stdin: "5 1\n"
+consistency:
+  description: The float and exact values every ten steps equal the output of examples/float_vs_int.py.
+  example: ../examples/float_vs_int.py
+  compare: output

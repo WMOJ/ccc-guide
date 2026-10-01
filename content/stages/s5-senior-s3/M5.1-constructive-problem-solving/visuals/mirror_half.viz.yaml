@@ -1,0 +1,26 @@
+layout: single
+panels:
+  - { id: row, viz: ArrayViz, title: Building the palindrome }
+alt: >-
+  Building a palindromic row of letters by choosing only its first half and mirroring each
+  choice into the matching position on the other side; too short a row has no free position for
+  a second letter, so it is impossible.
+legendLabels:
+  current: Chosen
+  done: Mirrored
+  invalid: No free position
+captions: vizrec
+presets:
+  - id: six
+    label: Even length
+    stdin: "6\n"
+  - id: five
+    label: Odd length
+    stdin: "5\n"
+  - id: two
+    label: Too short
+    stdin: "2\n"
+consistency:
+  description: The printed row, or Impossible, matches examples/mirror_half.py on the same input.
+  example: ../examples/mirror_half.py
+  compare: output

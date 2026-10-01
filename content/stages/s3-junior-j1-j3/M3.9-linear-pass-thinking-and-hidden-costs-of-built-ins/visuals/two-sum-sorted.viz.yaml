@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: numbers, viz: ArrayViz, title: Numbers }
+alt: >-
+  A sorted list of numbers with two pointers, left and right, starting at opposite ends. Each step
+  compares their sum to the target: too small moves left inward, too big moves right inward, and a
+  match stops both pointers where they landed. If the pointers meet with no match, no pair in the
+  list sums to the target.
+captions: vizrec
+presets:
+  - id: match
+    label: Match
+    stdin: "9 1 2 3 5 6\n"
+  - id: none
+    label: No match
+    stdin: "1 1 2 4 8\n"
+  - id: single
+    label: Smallest case
+    stdin: "5 2 3\n"
+consistency:
+  description: The reported pair (or "none") equals the output of examples/two_sum_sorted.py on the same target and numbers.
+  example: ../examples/two_sum_sorted.py
+  compare: output

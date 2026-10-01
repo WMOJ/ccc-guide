@@ -1,0 +1,25 @@
+{"schema":1,
+"kind":"frames",
+"id":"mock-session",
+"layout":"single",
+"panels":[{"id":"line","viz":"LineViz","title":"Mock session by problem"}],
+"alt":"One mock contest logged on a 0 to 180 minute line with a row for each problem. Each bar is one stretch of work ending in a submission: OK for accepted, WA for wrong answer, or an open bar where the clock ran out before a submission. A problem with several bars took several submissions.",
+"legendLabels":{"done":"Accepted","invalid":"Wrong answer","compare":"No submission"},
+"presets":[
+{"id":"mixed","label":"Mixed","steps":[
+{"caption":"Minutes 0 to 10 went to reading the statements. Then minute 10 to 38, problem 1. One stretch, and the submission is accepted. That is 28 minutes in stretches so far.","panels":{"line":{"min":0,"max":180,"tick":30,"intervals":[{"a":10,"b":38,"label":"OK","s":"d","row":0}]}}},
+{"caption":"Minute 38 to 70, problem 2. The submission gets wrong answer. That is 60 minutes in stretches so far.","panels":{"line":{"min":0,"max":180,"tick":30,"intervals":[{"a":10,"b":38,"label":"OK","s":"d","row":0},{"a":38,"b":70,"label":"WA","s":"x","row":1}]}}},
+{"caption":"Minute 70 to 85, problem 2. Another submission, and it gets wrong answer again. That is 75 minutes in stretches so far.","panels":{"line":{"min":0,"max":180,"tick":30,"intervals":[{"a":10,"b":38,"label":"OK","s":"d","row":0},{"a":38,"b":70,"label":"WA","s":"x","row":1},{"a":70,"b":85,"label":"WA","s":"x","row":1}]}}},
+{"caption":"Minute 85 to 130, problem 3. The submission gets wrong answer. That is 120 minutes in stretches so far.","panels":{"line":{"min":0,"max":180,"tick":30,"intervals":[{"a":10,"b":38,"label":"OK","s":"d","row":0},{"a":38,"b":70,"label":"WA","s":"x","row":1},{"a":70,"b":85,"label":"WA","s":"x","row":1},{"a":85,"b":130,"label":"WA","s":"x","row":2}]}}},
+{"caption":"Minute 130 to 152, problem 2. This is its third stretch, and the submission is accepted. That is 142 minutes in stretches so far.","panels":{"line":{"min":0,"max":180,"tick":30,"intervals":[{"a":10,"b":38,"label":"OK","s":"d","row":0},{"a":38,"b":70,"label":"WA","s":"x","row":1},{"a":70,"b":85,"label":"WA","s":"x","row":1},{"a":85,"b":130,"label":"WA","s":"x","row":2},{"a":130,"b":152,"label":"OK","s":"d","row":1}]}}},
+{"caption":"Minute 152 to 180, problem 4. The clock runs out before any submission, so the bar ends open. That is 170 minutes in stretches so far.","panels":{"line":{"min":0,"max":180,"tick":30,"intervals":[{"a":10,"b":38,"label":"OK","s":"d","row":0},{"a":38,"b":70,"label":"WA","s":"x","row":1},{"a":70,"b":85,"label":"WA","s":"x","row":1},{"a":85,"b":130,"label":"WA","s":"x","row":2},{"a":130,"b":152,"label":"OK","s":"d","row":1},{"a":152,"b":180,"label":"no submit","s":"m","row":3}]}}},
+{"caption":"The finished log has one row per problem; a row with several bars took several submissions. Problems 3 and 4 were never accepted, so they come first when upsolving.","panels":{"line":{"min":0,"max":180,"tick":30,"intervals":[{"a":10,"b":38,"label":"OK","s":"d","row":0},{"a":38,"b":70,"label":"WA","s":"x","row":1},{"a":70,"b":85,"label":"WA","s":"x","row":1},{"a":85,"b":130,"label":"WA","s":"x","row":2},{"a":130,"b":152,"label":"OK","s":"d","row":1},{"a":152,"b":180,"label":"no submit","s":"m","row":3}]}}}
+]},
+{"id":"early","label":"Early finish","steps":[
+{"caption":"Minutes 0 to 10 went to reading the statements. Then minute 10 to 30, problem 1. One stretch, and the submission is accepted. That is 20 minutes in stretches so far.","panels":{"line":{"min":0,"max":180,"tick":30,"intervals":[{"a":10,"b":30,"label":"OK","s":"d","row":0}]}}},
+{"caption":"Minute 30 to 60, problem 2. One stretch, and the submission is accepted. That is 50 minutes in stretches so far.","panels":{"line":{"min":0,"max":180,"tick":30,"intervals":[{"a":10,"b":30,"label":"OK","s":"d","row":0},{"a":30,"b":60,"label":"OK","s":"d","row":1}]}}},
+{"caption":"Minute 60 to 95, problem 3. One stretch, and the submission is accepted. That is 85 minutes in stretches so far.","panels":{"line":{"min":0,"max":180,"tick":30,"intervals":[{"a":10,"b":30,"label":"OK","s":"d","row":0},{"a":30,"b":60,"label":"OK","s":"d","row":1},{"a":60,"b":95,"label":"OK","s":"d","row":2}]}}},
+{"caption":"Minute 95 to 140, problem 4. One stretch, and the submission is accepted. That is 130 minutes in stretches so far.","panels":{"line":{"min":0,"max":180,"tick":30,"intervals":[{"a":10,"b":30,"label":"OK","s":"d","row":0},{"a":30,"b":60,"label":"OK","s":"d","row":1},{"a":60,"b":95,"label":"OK","s":"d","row":2},{"a":95,"b":140,"label":"OK","s":"d","row":3}]}}},
+{"caption":"The finished log has one row per problem; a row with several bars took several submissions. Every problem attempted is accepted, and minutes 140 to 180 went unused.","panels":{"line":{"min":0,"max":180,"tick":30,"intervals":[{"a":10,"b":30,"label":"OK","s":"d","row":0},{"a":30,"b":60,"label":"OK","s":"d","row":1},{"a":60,"b":95,"label":"OK","s":"d","row":2},{"a":95,"b":140,"label":"OK","s":"d","row":3}]}}}
+]}
+]}

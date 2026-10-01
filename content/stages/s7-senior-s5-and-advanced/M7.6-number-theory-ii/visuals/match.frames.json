@@ -1,0 +1,29 @@
+{"schema":1,
+"kind":"frames",
+"id":"match",
+"layout":"single",
+"panels":[{"id":"t","viz":"TableViz","title":"Candidates t = r + a * k"}],
+"alt":"A two-row table of candidate values t and their remainders modulo the second period, one column per k. The candidates are tested left to right until one has the wanted remainder. When none of the first lcm over a candidates does, extra columns show the remainders repeating, so no later candidate can work.",
+"legendLabels":{"current":"Candidate tested","compare":"Repeat of earlier","path":"Match"},
+"presets":[
+{"id":"main","label":"Match found","steps":[
+{"caption":"Find the smallest t with t % 12 = 5 and t % 18 = 11. Every t with the first property is 5 + 12k. After 3 candidates, t has moved by 36, which is lcm(12, 18) and a whole number of laps of 18. The remainders then repeat, so 3 candidates are all there is to try. Nothing is tested yet (?).","panels":{"t":{"cells":[["?","?","?"],["?","?","?"]],"states":["___","___"],"rowHeads":["t","% 18"],"colHeads":[0,1,2],"rowTitle":"k"}}},
+{"caption":"k = 0: t = 5 + 12 * 0 = 5, and 5 % 18 = 5, not 11. Try the next k.","panels":{"t":{"cells":[[5,"?","?"],[5,"?","?"]],"states":["c__","c__"],"rowHeads":["t","% 18"],"colHeads":[0,1,2],"rowTitle":"k"}}},
+{"caption":"k = 1: t = 5 + 12 * 1 = 17, and 17 % 18 = 17, not 11. Try the next k.","panels":{"t":{"cells":[[5,17,"?"],[5,17,"?"]],"states":["dc_","dc_"],"rowHeads":["t","% 18"],"colHeads":[0,1,2],"rowTitle":"k"}}},
+{"caption":"k = 2: t = 5 + 12 * 2 = 29, and 29 % 18 = 11. Found: the smallest t is 29.","panels":{"t":{"cells":[[5,17,29],[5,17,11]],"states":["ddd","ddp"],"rowHeads":["t","% 18"],"colHeads":[0,1,2],"rowTitle":"k"}}}
+]},
+{"id":"none","label":"No match","steps":[
+{"caption":"Find the smallest t with t % 12 = 5 and t % 18 = 10. Every t with the first property is 5 + 12k. After 3 candidates, t has moved by 36, which is lcm(12, 18) and a whole number of laps of 18. The remainders then repeat, so 3 candidates are all there is to try. Nothing is tested yet (?).","panels":{"t":{"cells":[["?","?","?","?","?"],["?","?","?","?","?"]],"states":["_____","_____"],"rowHeads":["t","% 18"],"colHeads":[0,1,2,3,4],"rowTitle":"k"}}},
+{"caption":"k = 0: t = 5 + 12 * 0 = 5, and 5 % 18 = 5, not 10. Try the next k.","panels":{"t":{"cells":[[5,"?","?","?","?"],[5,"?","?","?","?"]],"states":["c____","c____"],"rowHeads":["t","% 18"],"colHeads":[0,1,2,3,4],"rowTitle":"k"}}},
+{"caption":"k = 1: t = 5 + 12 * 1 = 17, and 17 % 18 = 17, not 10. Try the next k.","panels":{"t":{"cells":[[5,17,"?","?","?"],[5,17,"?","?","?"]],"states":["dc___","dc___"],"rowHeads":["t","% 18"],"colHeads":[0,1,2,3,4],"rowTitle":"k"}}},
+{"caption":"k = 2: t = 5 + 12 * 2 = 29, and 29 % 18 = 11, not 10. Try the next k.","panels":{"t":{"cells":[[5,17,29,"?","?"],[5,17,11,"?","?"]],"states":["ddc__","ddc__"],"rowHeads":["t","% 18"],"colHeads":[0,1,2,3,4],"rowTitle":"k"}}},
+{"caption":"None of the 3 candidates gave 10. More candidates would not help: k = 3 gives t = 41 with remainder 5, the same as k = 0, and the remainders go round in the same loop of 3. So no t exists.","panels":{"t":{"cells":[[5,17,29,41,53],[5,17,11,5,17]],"states":["dddmm","dddmm"],"rowHeads":["t","% 18"],"colHeads":[0,1,2,3,4],"rowTitle":"k"}}}
+]},
+{"id":"late","label":"Last candidate","steps":[
+{"caption":"Find the smallest t with t % 3 = 1 and t % 4 = 2. Every t with the first property is 1 + 3k. After 4 candidates, t has moved by 12, which is lcm(3, 4) and a whole number of laps of 4. The remainders then repeat, so 4 candidates are all there is to try. Nothing is tested yet (?).","panels":{"t":{"cells":[["?","?","?","?"],["?","?","?","?"]],"states":["____","____"],"rowHeads":["t","% 4"],"colHeads":[0,1,2,3],"rowTitle":"k"}}},
+{"caption":"k = 0: t = 1 + 3 * 0 = 1, and 1 % 4 = 1, not 2. Try the next k.","panels":{"t":{"cells":[[1,"?","?","?"],[1,"?","?","?"]],"states":["c___","c___"],"rowHeads":["t","% 4"],"colHeads":[0,1,2,3],"rowTitle":"k"}}},
+{"caption":"k = 1: t = 1 + 3 * 1 = 4, and 4 % 4 = 0, not 2. Try the next k.","panels":{"t":{"cells":[[1,4,"?","?"],[1,0,"?","?"]],"states":["dc__","dc__"],"rowHeads":["t","% 4"],"colHeads":[0,1,2,3],"rowTitle":"k"}}},
+{"caption":"k = 2: t = 1 + 3 * 2 = 7, and 7 % 4 = 3, not 2. Try the next k.","panels":{"t":{"cells":[[1,4,7,"?"],[1,0,3,"?"]],"states":["ddc_","ddc_"],"rowHeads":["t","% 4"],"colHeads":[0,1,2,3],"rowTitle":"k"}}},
+{"caption":"k = 3: t = 1 + 3 * 3 = 10, and 10 % 4 = 2. Found: the smallest t is 10.","panels":{"t":{"cells":[[1,4,7,10],[1,0,3,2]],"states":["dddd","dddp"],"rowHeads":["t","% 4"],"colHeads":[0,1,2,3],"rowTitle":"k"}}}
+]}
+]}

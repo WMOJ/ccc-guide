@@ -1,3 +1,5 @@
-print(ord("a"))
-print(chr(97))
-print(chr(ord("a") + 1))
+letter = input()
+code = ord(letter)
+print(code)
+print(chr(code))
+print(chr(code + 1))

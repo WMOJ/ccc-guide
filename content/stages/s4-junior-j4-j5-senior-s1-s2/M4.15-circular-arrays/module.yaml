@@ -14,5 +14,7 @@ lessons:
 practice:
   - id: ccc20j4
     note: Check whether one string is a circular shift of another.
+    why: A cyclic shift is a rotation of the string's characters, the same wraparound this lesson builds indices for.
   - id: ccc20s4
-    note: Use circular prefix sums to answer range questions that wrap around.
+    note: Rearrange three groups seated around a circular table so each group ends up sitting together.
+    why: The seats sit in a circle, so "the last seat" and "the first seat" are neighbors, exactly the wraparound this lesson indexes.

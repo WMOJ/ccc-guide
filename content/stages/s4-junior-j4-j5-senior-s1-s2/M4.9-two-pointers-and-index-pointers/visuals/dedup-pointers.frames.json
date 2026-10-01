@@ -1,0 +1,30 @@
+{"schema":1,
+"kind":"frames",
+"id":"dedup-pointers",
+"layout":"single",
+"panels":[{"id":"numbers","viz":"ArrayViz","title":"Array"}],
+"alt":"A sorted array with a write pointer and a read pointer. write only advances, and copies the current value into its own slot, when read finds a value that differs from what write already holds. Slots at or before write are done; the read pointer scans ahead of it.",
+"presets":[
+{"id":"typical","label":"Typical","steps":[
+{"caption":"write starts at index 0, holding arr[0] = 1. read starts one slot ahead.","panels":{"numbers":{"values":[1,1,2,2,3],"states":"c____","pointers":[{"name":"write","at":0},{"name":"read","at":1}]}}},
+{"caption":"arr[1] = 1 repeats the value write already holds (1). read moves on without writing.","panels":{"numbers":{"values":[1,1,2,2,3],"states":"dm___","pointers":[{"name":"write","at":0},{"name":"read","at":1}]}}},
+{"caption":"arr[2] = 2 is new, it does not match arr[write] = 1. write advances to index 1 and stores 2.","panels":{"numbers":{"values":[1,2,2,2,3],"states":"dc___","pointers":[{"name":"write","at":1},{"name":"read","at":3}]}}},
+{"caption":"arr[3] = 2 repeats the value write already holds (2). read moves on without writing.","panels":{"numbers":{"values":[1,2,2,2,3],"states":"dd_m_","pointers":[{"name":"write","at":1},{"name":"read","at":3}]}}},
+{"caption":"arr[4] = 3 is new, it does not match arr[write] = 2. write advances to index 2 and stores 3.","panels":{"numbers":{"values":[1,2,3,2,3],"states":"ddc__","pointers":[{"name":"write","at":2}]}}},
+{"caption":"read has reached the end. The first 3 slots hold the unique values: [1, 2, 3].","panels":{"numbers":{"values":[1,2,3,2,3],"states":"ddd__","pointers":[{"name":"write","at":2}]}}}
+]},
+{"id":"all-equal","label":"All equal","steps":[
+{"caption":"write starts at index 0, holding arr[0] = 4. read starts one slot ahead.","panels":{"numbers":{"values":[4,4,4,4],"states":"c___","pointers":[{"name":"write","at":0},{"name":"read","at":1}]}}},
+{"caption":"arr[1] = 4 repeats the value write already holds (4). read moves on without writing.","panels":{"numbers":{"values":[4,4,4,4],"states":"dm__","pointers":[{"name":"write","at":0},{"name":"read","at":1}]}}},
+{"caption":"arr[2] = 4 repeats the value write already holds (4). read moves on without writing.","panels":{"numbers":{"values":[4,4,4,4],"states":"d_m_","pointers":[{"name":"write","at":0},{"name":"read","at":2}]}}},
+{"caption":"arr[3] = 4 repeats the value write already holds (4). read moves on without writing.","panels":{"numbers":{"values":[4,4,4,4],"states":"d__m","pointers":[{"name":"write","at":0},{"name":"read","at":3}]}}},
+{"caption":"read has reached the end. The first 1 slots hold the unique values: [4].","panels":{"numbers":{"values":[4,4,4,4],"states":"d___","pointers":[{"name":"write","at":0}]}}}
+]},
+{"id":"no-dup","label":"No duplicates","steps":[
+{"caption":"write starts at index 0, holding arr[0] = 1. read starts one slot ahead.","panels":{"numbers":{"values":[1,2,3,4],"states":"c___","pointers":[{"name":"write","at":0},{"name":"read","at":1}]}}},
+{"caption":"arr[1] = 2 is new, it does not match arr[write] = 1. write advances to index 1 and stores 2.","panels":{"numbers":{"values":[1,2,3,4],"states":"dc__","pointers":[{"name":"write","at":1},{"name":"read","at":2}]}}},
+{"caption":"arr[2] = 3 is new, it does not match arr[write] = 2. write advances to index 2 and stores 3.","panels":{"numbers":{"values":[1,2,3,4],"states":"ddc_","pointers":[{"name":"write","at":2},{"name":"read","at":3}]}}},
+{"caption":"arr[3] = 4 is new, it does not match arr[write] = 3. write advances to index 3 and stores 4.","panels":{"numbers":{"values":[1,2,3,4],"states":"dddc","pointers":[{"name":"write","at":3}]}}},
+{"caption":"read has reached the end. The first 4 slots hold the unique values: [1, 2, 3, 4].","panels":{"numbers":{"values":[1,2,3,4],"states":"dddd","pointers":[{"name":"write","at":3}]}}}
+]}
+]}

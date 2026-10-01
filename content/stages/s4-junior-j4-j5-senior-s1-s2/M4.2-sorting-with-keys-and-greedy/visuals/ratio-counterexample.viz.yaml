@@ -1,0 +1,18 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: weight and value }
+alt: >-
+  A table of three boxes' weight and value. Ratio-greedy's load is highlighted first, then the
+  actual best possible combination is highlighted, showing the ratio order misses it.
+captions: vizrec
+presets:
+  - id: counterexample
+    label: Ratio misses it
+    stdin: "3 10\n6 7\n5 5\n5 5\n"
+  - id: matches
+    label: Ratio matches
+    stdin: "3 10\n6 9\n3 3\n3 3\n"
+consistency:
+  description: The greedy and best totals equal the two lines examples/ratio_counterexample.py prints.
+  example: ../examples/ratio_counterexample.py
+  compare: output

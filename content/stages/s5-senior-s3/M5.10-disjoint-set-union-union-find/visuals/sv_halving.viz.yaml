@@ -1,0 +1,21 @@
+layout: row
+panels:
+  - { id: g, viz: GraphViz, title: Forest }
+  - { id: p, viz: ArrayViz, title: parent }
+alt: >-
+  Chain nodes built by naive unions, then a find call on the deepest node. Each step of
+  find points its node straight at its former grandparent instead of its parent, so the chain
+  gets shorter every time it is walked. A second preset finds a node that is already one hop from
+  its root, where halving has nothing left to skip.
+captions: vizrec
+presets:
+  - id: chain
+    label: Chain
+    stdin: "5 4\n0 1\n1 2\n2 3\n3 4\n0\n"
+  - id: shallow
+    label: Shallow
+    stdin: "4 2\n0 1\n2 3\n0\n"
+consistency:
+  description: The parent array and the value find returns equal the output of examples/dsu_halving.py.
+  example: ../examples/dsu_halving.py
+  compare: output

@@ -1,0 +1,48 @@
+{"schema":1,
+"kind":"frames",
+"id":"most-common-face",
+"layout":"row",
+"panels":[{"id":"rolls","viz":"ArrayViz","title":"Rolls"},{"id":"freq","viz":"ArrayViz","title":"freq"}],
+"alt":"A list of die rolls is counted into a 7-slot frequency array, one roll at a time, where slot 1 through 6 hold the faces. Then a second loop scans faces 2 to 6, keeping a pointer named best on the face with the highest count so far; a face only takes over when its count is strictly larger, so on a tie the smaller face stays.",
+"presets":[
+{"id":"main","label":"Rolls","steps":[
+{"caption":"Roll 4 at position 0: freq[4] becomes 1.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"c_______","pointers":[{"name":"i","at":0}]},"freq":{"values":[0,0,0,0,1,0,0],"states":"____c__","indexBase":0}}},
+{"caption":"Roll 2 at position 1: freq[2] becomes 1.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"dc______","pointers":[{"name":"i","at":1}]},"freq":{"values":[0,0,1,0,1,0,0],"states":"__c____","indexBase":0}}},
+{"caption":"Roll 4 at position 2: freq[4] becomes 2.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"ddc_____","pointers":[{"name":"i","at":2}]},"freq":{"values":[0,0,1,0,2,0,0],"states":"____c__","indexBase":0}}},
+{"caption":"Roll 6 at position 3: freq[6] becomes 1.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"dddc____","pointers":[{"name":"i","at":3}]},"freq":{"values":[0,0,1,0,2,0,1],"states":"______c","indexBase":0}}},
+{"caption":"Roll 4 at position 4: freq[4] becomes 3.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"ddddc___","pointers":[{"name":"i","at":4}]},"freq":{"values":[0,0,1,0,3,0,1],"states":"____c__","indexBase":0}}},
+{"caption":"Roll 2 at position 5: freq[2] becomes 2.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"dddddc__","pointers":[{"name":"i","at":5}]},"freq":{"values":[0,0,2,0,3,0,1],"states":"__c____","indexBase":0}}},
+{"caption":"Roll 6 at position 6: freq[6] becomes 2.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"ddddddc_","pointers":[{"name":"i","at":6}]},"freq":{"values":[0,0,2,0,3,0,2],"states":"______c","indexBase":0}}},
+{"caption":"Roll 4 at position 7: freq[4] becomes 4.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"dddddddc","pointers":[{"name":"i","at":7}]},"freq":{"values":[0,0,2,0,4,0,2],"states":"____c__","indexBase":0}}},
+{"caption":"Counting is done. A second loop scans faces 2 to 6 for the largest count. It starts with best = 1, so freq[1] = 0 is the count to beat.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"dddddddd"},"freq":{"values":[0,0,2,0,4,0,2],"states":"_d_____","pointers":[{"name":"best","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[2] is 2, more than freq[1] = 0, so best becomes 2.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"dddddddd"},"freq":{"values":[0,0,2,0,4,0,2],"states":"__c____","pointers":[{"name":"best","at":2,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[3] is 0, not more than freq[2] = 2, so best stays 2.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"dddddddd"},"freq":{"values":[0,0,2,0,4,0,2],"states":"__dc___","pointers":[{"name":"best","at":2,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[4] is 4, more than freq[2] = 2, so best becomes 4.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"dddddddd"},"freq":{"values":[0,0,2,0,4,0,2],"states":"____c__","pointers":[{"name":"best","at":4,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[5] is 0, not more than freq[4] = 4, so best stays 4.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"dddddddd"},"freq":{"values":[0,0,2,0,4,0,2],"states":"____dc_","pointers":[{"name":"best","at":4,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[6] is 2, not more than freq[4] = 4, so best stays 4.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"dddddddd"},"freq":{"values":[0,0,2,0,4,0,2],"states":"____d_c","pointers":[{"name":"best","at":4,"side":"below"}],"indexBase":0}}},
+{"caption":"The scan ends with best = 4: face 4 came up 4 times, the most of any face.","panels":{"rolls":{"values":["4","2","4","6","4","2","6","4"],"states":"dddddddd"},"freq":{"values":[0,0,2,0,4,0,2],"states":"____d__","pointers":[{"name":"best","at":4,"side":"below"}],"indexBase":0}}}
+]},
+{"id":"tie","label":"Tie","steps":[
+{"caption":"Roll 5 at position 0: freq[5] becomes 1.","panels":{"rolls":{"values":["5","5","2","2"],"states":"c___","pointers":[{"name":"i","at":0}]},"freq":{"values":[0,0,0,0,0,1,0],"states":"_____c_","indexBase":0}}},
+{"caption":"Roll 5 at position 1: freq[5] becomes 2.","panels":{"rolls":{"values":["5","5","2","2"],"states":"dc__","pointers":[{"name":"i","at":1}]},"freq":{"values":[0,0,0,0,0,2,0],"states":"_____c_","indexBase":0}}},
+{"caption":"Roll 2 at position 2: freq[2] becomes 1.","panels":{"rolls":{"values":["5","5","2","2"],"states":"ddc_","pointers":[{"name":"i","at":2}]},"freq":{"values":[0,0,1,0,0,2,0],"states":"__c____","indexBase":0}}},
+{"caption":"Roll 2 at position 3: freq[2] becomes 2.","panels":{"rolls":{"values":["5","5","2","2"],"states":"dddc","pointers":[{"name":"i","at":3}]},"freq":{"values":[0,0,2,0,0,2,0],"states":"__c____","indexBase":0}}},
+{"caption":"Counting is done. A second loop scans faces 2 to 6 for the largest count. It starts with best = 1, so freq[1] = 0 is the count to beat.","panels":{"rolls":{"values":["5","5","2","2"],"states":"dddd"},"freq":{"values":[0,0,2,0,0,2,0],"states":"_d_____","pointers":[{"name":"best","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[2] is 2, more than freq[1] = 0, so best becomes 2.","panels":{"rolls":{"values":["5","5","2","2"],"states":"dddd"},"freq":{"values":[0,0,2,0,0,2,0],"states":"__c____","pointers":[{"name":"best","at":2,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[3] is 0, not more than freq[2] = 2, so best stays 2.","panels":{"rolls":{"values":["5","5","2","2"],"states":"dddd"},"freq":{"values":[0,0,2,0,0,2,0],"states":"__dc___","pointers":[{"name":"best","at":2,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[4] is 0, not more than freq[2] = 2, so best stays 2.","panels":{"rolls":{"values":["5","5","2","2"],"states":"dddd"},"freq":{"values":[0,0,2,0,0,2,0],"states":"__d_c__","pointers":[{"name":"best","at":2,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[5] is 2, not more than freq[2] = 2, so best stays 2.","panels":{"rolls":{"values":["5","5","2","2"],"states":"dddd"},"freq":{"values":[0,0,2,0,0,2,0],"states":"__d__c_","pointers":[{"name":"best","at":2,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[6] is 0, not more than freq[2] = 2, so best stays 2.","panels":{"rolls":{"values":["5","5","2","2"],"states":"dddd"},"freq":{"values":[0,0,2,0,0,2,0],"states":"__d___c","pointers":[{"name":"best","at":2,"side":"below"}],"indexBase":0}}},
+{"caption":"The scan ends with best = 2: face 2 came up 2 times, the most of any face.","panels":{"rolls":{"values":["5","5","2","2"],"states":"dddd"},"freq":{"values":[0,0,2,0,0,2,0],"states":"__d____","pointers":[{"name":"best","at":2,"side":"below"}],"indexBase":0}}}
+]},
+{"id":"single","label":"One roll","steps":[
+{"caption":"Roll 6 at position 0: freq[6] becomes 1.","panels":{"rolls":{"values":["6"],"states":"c","pointers":[{"name":"i","at":0}]},"freq":{"values":[0,0,0,0,0,0,1],"states":"______c","indexBase":0}}},
+{"caption":"Counting is done. A second loop scans faces 2 to 6 for the largest count. It starts with best = 1, so freq[1] = 0 is the count to beat.","panels":{"rolls":{"values":["6"],"states":"d"},"freq":{"values":[0,0,0,0,0,0,1],"states":"_d_____","pointers":[{"name":"best","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[2] is 0, not more than freq[1] = 0, so best stays 1.","panels":{"rolls":{"values":["6"],"states":"d"},"freq":{"values":[0,0,0,0,0,0,1],"states":"_dc____","pointers":[{"name":"best","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[3] is 0, not more than freq[1] = 0, so best stays 1.","panels":{"rolls":{"values":["6"],"states":"d"},"freq":{"values":[0,0,0,0,0,0,1],"states":"_d_c___","pointers":[{"name":"best","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[4] is 0, not more than freq[1] = 0, so best stays 1.","panels":{"rolls":{"values":["6"],"states":"d"},"freq":{"values":[0,0,0,0,0,0,1],"states":"_d__c__","pointers":[{"name":"best","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[5] is 0, not more than freq[1] = 0, so best stays 1.","panels":{"rolls":{"values":["6"],"states":"d"},"freq":{"values":[0,0,0,0,0,0,1],"states":"_d___c_","pointers":[{"name":"best","at":1,"side":"below"}],"indexBase":0}}},
+{"caption":"freq[6] is 1, more than freq[1] = 0, so best becomes 6.","panels":{"rolls":{"values":["6"],"states":"d"},"freq":{"values":[0,0,0,0,0,0,1],"states":"______c","pointers":[{"name":"best","at":6,"side":"below"}],"indexBase":0}}},
+{"caption":"The scan ends with best = 6: face 6 came up 1 time, the most of any face.","panels":{"rolls":{"values":["6"],"states":"d"},"freq":{"values":[0,0,0,0,0,0,1],"states":"______d","pointers":[{"name":"best","at":6,"side":"below"}],"indexBase":0}}}
+]}
+]}

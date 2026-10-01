@@ -1,0 +1,19 @@
+layout: row
+panels:
+  - { id: queue, viz: StructViz, title: Line (front first) }
+  - { id: served, viz: ArrayViz }
+alt: >-
+  Serving orders one at a time from the front of a line, in the same order they joined, until
+  none remain.
+captions: vizrec
+presets:
+  - id: main
+    label: Four orders
+    stdin: "pizza burger salad pasta\n"
+  - id: one
+    label: One order
+    stdin: "coffee\n"
+consistency:
+  description: The final served list in the visual equals the output of examples/queue_example.py.
+  example: ../examples/queue_example.py
+  compare: output

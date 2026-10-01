@@ -1,0 +1,27 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz, title: Looking for an inverse }
+alt: >-
+  A two-row table with one column per candidate x. The first row is a times x and the second is
+  that product's remainder after dividing by the modulus. Columns fill from left to right until
+  a remainder of 1 appears, which marks the inverse. In the last preset no remainder is ever 1,
+  so the search ends with no inverse.
+captions: vizrec
+legendLabels:
+  current: Latest candidate
+  invalid: Never 1
+  done: Tried
+presets:
+  - id: main
+    label: 3 mod 7
+    stdin: "3 7\n"
+  - id: four
+    label: 2 mod 7
+    stdin: "2 7\n"
+  - id: none
+    label: 2 mod 6
+    stdin: "2 6\n"
+consistency:
+  description: The inverse found, or the message that none exists, equals the output of examples/inverse_search.py.
+  example: ../examples/inverse_search.py
+  compare: output

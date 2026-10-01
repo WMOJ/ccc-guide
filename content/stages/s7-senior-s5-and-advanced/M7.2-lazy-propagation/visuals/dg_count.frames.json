@@ -1,0 +1,11 @@
+{"schema":1,
+"kind":"frames",
+"id":"dg_count",
+"layout":"single",
+"panels":[{"id":"v","viz":"TableViz","title":"Range from 1 to size - 2"}],
+"alt":"A table comparing two ways to add to every position of a range that nearly fills the array, for array sizes 8, 64, 1,024 and 262,144. Writing each leaf costs as many writes as the range has positions, which grows with the array. Tagging the covering nodes costs 4, 12, 20 and 28 nodes, which grows by 8 each time the size is multiplied by 16.",
+"presets":[
+{"id":"sizes","label":"Four sizes","steps":[
+{"caption":"Take a range that nearly fills the array, from position 1 up to `size - 1`. Adding to it leaf by leaf needs 6 writes at size 8 and 32,766 writes at size 32,768. Tagging the covering nodes needs 4 and 28. Each sixteenfold jump in size adds just 8 nodes.","panels":{"v":{"cells":[[6,126,2046,32766],[4,12,20,28]],"rowHeads":["leaves","nodes"],"colHeads":["8","128","2048","32768"],"colTitle":"array size"}}}
+]}
+]}

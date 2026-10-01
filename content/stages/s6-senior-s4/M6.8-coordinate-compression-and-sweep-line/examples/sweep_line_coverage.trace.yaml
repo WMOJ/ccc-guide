@@ -1,0 +1,34 @@
+example: sweep_line_coverage.py
+alt: >-
+  The program turns each interval into a start event and an end event, sorts the events, then
+  walks them in order. For each event it first adds the stretch since the previous event to
+  covered if any interval was active, then updates active and best.
+presets:
+  - id: main
+    label: Overlapping
+    stdin: "2\n0 5\n3 8\n"
+  - id: gap
+    label: With a gap
+    stdin: "2\n0 3\n5 8\n"
+  - id: touching
+    label: Touching
+    stdin: "2\n0 4\n4 8\n"
+skip:
+  - line: 1
+    keep: 0
+    to: 5
+    label: The file defines main and calls it.
+  - line: 9
+    keep: 1
+    to: 15
+    label: The loop reads the other interval the same way and adds its two events.
+  - line: 21
+    keep: 3
+    to: 29
+    label: The loop handles the last event the same way, then ends.
+notes:
+  "15": "Sorting puts events in position order. At equal positions `(4, -1)` sorts before `(4, 1)`, so an interval that ends where another starts is never counted as overlapping it."
+  "22": "`active` still counts the intervals that were open during the stretch from `prev` to `x`."
+  "23": "The stretch counts once however large `active` is: this adds a length, not a count."
+  "24": "Only now does the event at `x` change `active`."
+  "25": "`best` remembers the largest `active` seen so far."

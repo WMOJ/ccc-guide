@@ -1,0 +1,20 @@
+example: leap_year.py
+alt: >-
+  The program tests whether a year is a leap year by computing three divisibility flags, starting
+  from the divisible-by-4 flag and switching it off for a century year that is not divisible by
+  400, then prints February's length: 29 days in a leap year, 28 otherwise.
+presets:
+  - id: plain
+    label: "2024"
+    stdin: "2024\n"
+  - id: century
+    label: "1900"
+    stdin: "1900\n"
+  - id: four-hundred
+    label: "2000"
+    stdin: "2000\n"
+notes:
+  "11": "Each flag holds True or False. `year % 4 == 0` is True exactly when 4 divides the year evenly."
+  "14": "`leap` starts as the divisible-by-4 flag: every year divisible by 4 is a leap year unless the next rule says otherwise."
+  "15": "The exception: a century year (divisible by 100) that is not also divisible by 400 is not a leap year."
+  "17": "The same choice as the lookup table's February correction: 29 in a leap year, 28 otherwise."

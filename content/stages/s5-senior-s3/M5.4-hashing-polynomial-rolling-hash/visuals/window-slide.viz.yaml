@@ -1,0 +1,21 @@
+layout: row
+panels:
+  - { id: text, viz: ArrayViz, title: Text (window) }
+  - { id: hash, viz: ArrayViz, title: pattern vs window hash }
+alt: >-
+  Sliding a fixed-length window one character right at a time across the text. Each slide drops
+  the outgoing character's contribution, multiplies by the base, and adds the incoming character,
+  turning the old hash into the new one. A second panel compares the window's hash to the
+  pattern's hash at every position.
+captions: vizrec
+presets:
+  - id: match
+    label: Match found
+    stdin: "abacabad ab\n"
+  - id: no-match
+    label: No match
+    stdin: "banana cat\n"
+consistency:
+  description: The reported match positions equal the output of examples/substring_hash.py on the same input.
+  example: ../examples/substring_hash.py
+  compare: output

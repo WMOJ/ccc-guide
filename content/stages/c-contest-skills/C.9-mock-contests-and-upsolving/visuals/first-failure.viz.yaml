@@ -1,0 +1,28 @@
+layout: row
+panels:
+  - { id: array, viz: ArrayViz, title: Input tried }
+  - { id: table, viz: TableViz, title: Both answers }
+alt: >-
+  A search for the smallest input on which a wrong attempt disagrees with a brute force. Inputs are
+  tried shortest first in a fixed order, each shown as an array beside a row comparing the two
+  answers, with runs of matching inputs skipped. The first disagreement is shown, then the repaired
+  attempt agreeing with the brute force.
+captions: vizrec
+legendLabels:
+  done: Answers match
+  invalid: Answers differ
+  path: The true run
+presets:
+  - id: three
+    label: Length 3
+    stdin: "3 3\n"
+  - id: too-short
+    label: Length 2
+    stdin: "2 3\n"
+  - id: two-values
+    label: Two values
+    stdin: "3 2\n"
+consistency:
+  description: The failing input, the two answers and the fixed-attempt count equal the output of examples/upsolve_find.py on each preset's input.
+  example: ../examples/upsolve_find.py
+  compare: output

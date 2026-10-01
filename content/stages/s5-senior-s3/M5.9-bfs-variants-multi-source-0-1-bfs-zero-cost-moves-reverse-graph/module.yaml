@@ -12,7 +12,7 @@ lessons:
   - bfs-variants
 practice:
   - id: ccc18s3
-    note: Search from multiple starting positions while handling conveyors and cameras.
-    why: Combines multi-source BFS with zero-cost-move detection.
+    note: Guide a robot past security cameras and conveyor belts to escape a factory floor.
+    why: The factory's forced conveyor belts need the same cycle-safe handling this lesson builds.
   - id: ccc21s4
-    note: Find optimal daily routes using per-day BFS with reverse-graph distances.
+    note: Find the fastest trip after each change to the order of stops on a subway line, with one-way walkways as another way to travel.

@@ -1,0 +1,30 @@
+{"schema":1,
+"kind":"frames",
+"id":"read_grid",
+"layout":"single",
+"panels":[{"id":"grid","viz":"TableViz","title":"Grid so far"}],
+"alt":"Filling a grid row by row from the flat token list that follows the row and column counts, one value at a time, then summing every cell once the grid is complete.",
+"presets":[
+{"id":"main","label":"2 by 3","steps":[
+{"caption":"rows = 2, cols = 3. Token 2 is 1, placed at grid[0][0].","panels":{"grid":{"cells":[[1,null,null],[null,null,null]],"states":["c__","___"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"rows = 2, cols = 3. Token 3 is 2, placed at grid[0][1].","panels":{"grid":{"cells":[[1,2,null],[null,null,null]],"states":["dc_","___"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"rows = 2, cols = 3. Token 4 is 3, placed at grid[0][2].","panels":{"grid":{"cells":[[1,2,3],[null,null,null]],"states":["ddc","___"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"rows = 2, cols = 3. Token 5 is 4, placed at grid[1][0].","panels":{"grid":{"cells":[[1,2,3],[4,null,null]],"states":["ddd","c__"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"rows = 2, cols = 3. Token 6 is 5, placed at grid[1][1].","panels":{"grid":{"cells":[[1,2,3],[4,5,null]],"states":["ddd","dc_"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"rows = 2, cols = 3. Token 7 is 6, placed at grid[1][2].","panels":{"grid":{"cells":[[1,2,3],[4,5,6]],"states":["ddd","ddc"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"All 6 values placed. Summing every cell gives 21.","panels":{"grid":{"cells":[[1,2,3],[4,5,6]],"states":["ddd","ddd"],"rowTitle":"row","colTitle":"col"}}}
+]},
+{"id":"flat","label":"One line","steps":[
+{"caption":"rows = 2, cols = 3. Token 2 is 1, placed at grid[0][0].","panels":{"grid":{"cells":[[1,null,null],[null,null,null]],"states":["c__","___"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"rows = 2, cols = 3. Token 3 is 2, placed at grid[0][1].","panels":{"grid":{"cells":[[1,2,null],[null,null,null]],"states":["dc_","___"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"rows = 2, cols = 3. Token 4 is 3, placed at grid[0][2].","panels":{"grid":{"cells":[[1,2,3],[null,null,null]],"states":["ddc","___"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"rows = 2, cols = 3. Token 5 is 4, placed at grid[1][0].","panels":{"grid":{"cells":[[1,2,3],[4,null,null]],"states":["ddd","c__"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"rows = 2, cols = 3. Token 6 is 5, placed at grid[1][1].","panels":{"grid":{"cells":[[1,2,3],[4,5,null]],"states":["ddd","dc_"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"rows = 2, cols = 3. Token 7 is 6, placed at grid[1][2].","panels":{"grid":{"cells":[[1,2,3],[4,5,6]],"states":["ddd","ddc"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"All 6 values placed. Summing every cell gives 21.","panels":{"grid":{"cells":[[1,2,3],[4,5,6]],"states":["ddd","ddd"],"rowTitle":"row","colTitle":"col"}}}
+]},
+{"id":"single","label":"1 by 1","steps":[
+{"caption":"rows = 1, cols = 1. Token 2 is 7, placed at grid[0][0].","panels":{"grid":{"cells":[[7]],"states":["c"],"rowTitle":"row","colTitle":"col"}}},
+{"caption":"All 1 value placed. Summing every cell gives 7.","panels":{"grid":{"cells":[[7]],"states":["d"],"rowTitle":"row","colTitle":"col"}}}
+]}
+]}

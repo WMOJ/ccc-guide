@@ -1,0 +1,35 @@
+{"schema":1,
+"kind":"frames",
+"id":"shrink",
+"layout":"row",
+"panels":[{"id":"current","viz":"ArrayViz","title":"Failing input"},{"id":"trial","viz":"ArrayViz","title":"Try without one"}],
+"alt":"Shrinking a failing input. The top array is the input that still makes the two functions disagree, with the element about to be dropped marked. The bottom array is the same input without that element. If the brute force and the fast function still differ on it, it becomes the new failing input; if they agree, the element goes back. When no single drop keeps the difference, the last input is the smallest.",
+"presets":[
+{"id":"long","label":"Five values","steps":[
+{"caption":"The test found [3, -1, 4, -2, 1]: the brute force says 6 and the fast function says 4. Shrinking tries to drop one element at a time and keeps any drop that still fails.","panels":{"current":{"values":[3,-1,4,-2,1],"states":"_____","indexBase":0},"trial":{"values":[3,-1,4,-2,1],"states":"ddddd","indexBase":0}}},
+{"caption":"Drop values[0], which is 3: [-1, 4, -2, 1] gives brute 4 and fast 4. They agree, so this element is needed to show the bug. Put it back.","panels":{"current":{"values":[3,-1,4,-2,1],"states":"x____","indexBase":0},"trial":{"values":[-1,4,-2,1],"states":"mmmm","indexBase":0}}},
+{"caption":"Drop values[1], which is -1: [3, 4, -2, 1] gives brute 7 and fast 4. They still differ, so keep the smaller input and start again from its first element.","panels":{"current":{"values":[3,-1,4,-2,1],"states":"_x___","indexBase":0},"trial":{"values":[3,4,-2,1],"states":"dddd","indexBase":0}}},
+{"caption":"Drop values[0], which is 3: [4, -2, 1] gives brute 4 and fast 4. They agree, so this element is needed to show the bug. Put it back.","panels":{"current":{"values":[3,4,-2,1],"states":"x___","indexBase":0},"trial":{"values":[4,-2,1],"states":"mmm","indexBase":0}}},
+{"caption":"Drop values[1], which is 4: [3, -2, 1] gives brute 3 and fast 3. They agree, so this element is needed to show the bug. Put it back.","panels":{"current":{"values":[3,4,-2,1],"states":"_x__","indexBase":0},"trial":{"values":[3,-2,1],"states":"mmm","indexBase":0}}},
+{"caption":"Drop values[2], which is -2: [3, 4, 1] gives brute 8 and fast 5. They still differ, so keep the smaller input and start again from its first element.","panels":{"current":{"values":[3,4,-2,1],"states":"__x_","indexBase":0},"trial":{"values":[3,4,1],"states":"ddd","indexBase":0}}},
+{"caption":"Drop values[0], which is 3: [4, 1] gives brute 5 and fast 4. They still differ, so keep the smaller input and start again from its first element.","panels":{"current":{"values":[3,4,1],"states":"x__","indexBase":0},"trial":{"values":[4,1],"states":"dd","indexBase":0}}},
+{"caption":"Drop values[0], which is 4: [1] gives brute 1 and fast 1. They agree, so this element is needed to show the bug. Put it back.","panels":{"current":{"values":[4,1],"states":"x_","indexBase":0},"trial":{"values":[1],"states":"m","indexBase":0}}},
+{"caption":"Drop values[1], which is 1: [4] gives brute 4 and fast 4. They agree, so this element is needed to show the bug. Put it back.","panels":{"current":{"values":[4,1],"states":"_x","indexBase":0},"trial":{"values":[4],"states":"m","indexBase":0}}},
+{"caption":"No single drop keeps the mismatch, so [4, 1] is the smallest failing input: the brute force says 5 and the fast function says 4.","panels":{"current":{"values":[4,1],"states":"__","indexBase":0},"trial":{"values":[4,1],"states":"dd","indexBase":0}}}
+]},
+{"id":"three","label":"Three values","steps":[
+{"caption":"The test found [3, 3, -2]: the brute force says 6 and the fast function says 3. Shrinking tries to drop one element at a time and keeps any drop that still fails.","panels":{"current":{"values":[3,3,-2],"states":"___","indexBase":0},"trial":{"values":[3,3,-2],"states":"ddd","indexBase":0}}},
+{"caption":"Drop values[0], which is 3: [3, -2] gives brute 3 and fast 3. They agree, so this element is needed to show the bug. Put it back.","panels":{"current":{"values":[3,3,-2],"states":"x__","indexBase":0},"trial":{"values":[3,-2],"states":"mm","indexBase":0}}},
+{"caption":"Drop values[1], which is 3: [3, -2] gives brute 3 and fast 3. They agree, so this element is needed to show the bug. Put it back.","panels":{"current":{"values":[3,3,-2],"states":"_x_","indexBase":0},"trial":{"values":[3,-2],"states":"mm","indexBase":0}}},
+{"caption":"Drop values[2], which is -2: [3, 3] gives brute 6 and fast 3. They still differ, so keep the smaller input and start again from its first element.","panels":{"current":{"values":[3,3,-2],"states":"__x","indexBase":0},"trial":{"values":[3,3],"states":"dd","indexBase":0}}},
+{"caption":"Drop values[0], which is 3: [3] gives brute 3 and fast 3. They agree, so this element is needed to show the bug. Put it back.","panels":{"current":{"values":[3,3],"states":"x_","indexBase":0},"trial":{"values":[3],"states":"m","indexBase":0}}},
+{"caption":"Drop values[1], which is 3: [3] gives brute 3 and fast 3. They agree, so this element is needed to show the bug. Put it back.","panels":{"current":{"values":[3,3],"states":"_x","indexBase":0},"trial":{"values":[3],"states":"m","indexBase":0}}},
+{"caption":"No single drop keeps the mismatch, so [3, 3] is the smallest failing input: the brute force says 6 and the fast function says 3.","panels":{"current":{"values":[3,3],"states":"__","indexBase":0},"trial":{"values":[3,3],"states":"dd","indexBase":0}}}
+]},
+{"id":"negative","label":"Negative","steps":[
+{"caption":"The test found [-1, -2, -4]: the brute force says -1 and the fast function says 0. Shrinking tries to drop one element at a time and keeps any drop that still fails.","panels":{"current":{"values":[-1,-2,-4],"states":"___","indexBase":0},"trial":{"values":[-1,-2,-4],"states":"ddd","indexBase":0}}},
+{"caption":"Drop values[0], which is -1: [-2, -4] gives brute -2 and fast 0. They still differ, so keep the smaller input and start again from its first element.","panels":{"current":{"values":[-1,-2,-4],"states":"x__","indexBase":0},"trial":{"values":[-2,-4],"states":"dd","indexBase":0}}},
+{"caption":"Drop values[0], which is -2: [-4] gives brute -4 and fast 0. They still differ, so keep the smaller input and start again from its first element.","panels":{"current":{"values":[-2,-4],"states":"x_","indexBase":0},"trial":{"values":[-4],"states":"d","indexBase":0}}},
+{"caption":"No single drop keeps the mismatch, so [-4] is the smallest failing input: the brute force says -4 and the fast function says 0.","panels":{"current":{"values":[-4],"states":"_","indexBase":0},"trial":{"values":[-4],"states":"d","indexBase":0}}}
+]}
+]}

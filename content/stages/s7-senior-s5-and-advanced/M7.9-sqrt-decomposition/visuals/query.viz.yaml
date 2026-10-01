@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz }
+  - { id: s, viz: TableViz, title: Block sums and total }
+alt: >-
+  A range-sum query over eight values in blocks of three. A pointer, lo, starts at the left end of
+  the range. Single values are added until lo reaches a block boundary, then whole blocks are added
+  through their stored sums, then the remaining single values at the right end. The presets query a
+  middle range, a range inside one block, and the whole array.
+captions: vizrec
+presets:
+  - id: middle
+    label: Middle range
+    stdin: "8\n3 1 4 1 5 9 2 6\n1\n2 1 7\n"
+  - id: inside
+    label: Inside a block
+    stdin: "8\n3 1 4 1 5 9 2 6\n1\n2 3 5\n"
+  - id: whole
+    label: Whole array
+    stdin: "8\n3 1 4 1 5 9 2 6\n1\n2 0 8\n"
+consistency:
+  description: The answer at the end of each preset equals the output of examples/sqrt_sum.py for the same single query.
+  example: ../examples/sqrt_sum.py
+  compare: output

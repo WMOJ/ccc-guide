@@ -1,0 +1,28 @@
+layout: row
+panels:
+  - { id: g, viz: GraphViz, title: Numerators reached }
+  - { id: a, viz: ArrayViz, title: Numerators in step order }
+alt: >-
+  The numerators of a repeated map drawn as a directed graph and as a list. Each step adds the next
+  numerator to both, and records its step in a dictionary. When a step produces a numerator that
+  was already recorded, an arrow closes the cycle, the list is bracketed into tail and cycle, and
+  a query about a huge step number is answered from the cycle length.
+captions: vizrec
+legendLabels:
+  current: Newest numerator
+  done: Before the cycle
+  path: In the cycle
+presets:
+  - id: main
+    label: Tail and cycle
+    stdin: "11 1 1000000000000000000\n"
+  - id: pure
+    label: Cycle only
+    stdin: "11 2 1000000000000000000\n"
+  - id: early
+    label: Small step
+    stdin: "11 1 3\n"
+consistency:
+  description: The numerators, the cycle and the answer equal the output of examples/tent_cycle.py.
+  example: ../examples/tent_cycle.py
+  compare: output

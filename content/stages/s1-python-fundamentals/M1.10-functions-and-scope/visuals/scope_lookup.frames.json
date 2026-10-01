@@ -1,0 +1,24 @@
+{"schema":1,
+"kind":"frames",
+"id":"scope_lookup",
+"layout":"row",
+"panels":[{"id":"global_scope","viz":"StructViz","title":"Global scope"},{"id":"local_scope","viz":"StructViz","title":"Local scope"}],
+"alt":"The global scope holds rate, scaled and n. Calling scaled creates a local scope holding only the parameter x. Python finds x in the local scope. It does not find rate there, so it looks in the global scope and finds it. The call returns x times rate and its local scope disappears.",
+"presets":[
+{"id":"main","label":"Input 4","steps":[
+{"caption":"The top-level lines ran: `rate` is 3, `scaled` is a function, and `n` is 4, read from input. All three names live in the global scope. No call is running, so the local scope is empty.","panels":{"global_scope":{"kind":"map","items":[{"k":"rate","v":3,"s":"_"},{"k":"scaled","v":"function"},{"k":"n","v":4}]},"local_scope":{"kind":"map","items":[]}}},
+{"caption":"`scaled(n)` is called. Python makes a local scope for this call and puts the parameter `x` in it, set to 4.","panels":{"global_scope":{"kind":"map","items":[{"k":"rate","v":3,"s":"_"},{"k":"scaled","v":"function"},{"k":"n","v":4}]},"local_scope":{"kind":"map","items":[{"k":"x","v":4,"s":"c"}]}}},
+{"caption":"`x * rate` needs `x` first. Python looks in the local scope, finds `x` there, and uses 4.","panels":{"global_scope":{"kind":"map","items":[{"k":"rate","v":3,"s":"_"},{"k":"scaled","v":"function"},{"k":"n","v":4}]},"local_scope":{"kind":"map","items":[{"k":"x","v":4,"s":"c"}]}}},
+{"caption":"Next it needs `rate`. The local scope has no `rate`, so Python looks in the global scope and finds 3. Reading a global needs no `global` line.","panels":{"global_scope":{"kind":"map","items":[{"k":"rate","v":3,"s":"c"},{"k":"scaled","v":"function"},{"k":"n","v":4}]},"local_scope":{"kind":"map","items":[{"k":"x","v":4}]}}},
+{"caption":"`4 * 3` is 12. `return` hands it back, and the local scope disappears. The global names are unchanged.","panels":{"global_scope":{"kind":"map","items":[{"k":"rate","v":3,"s":"_"},{"k":"scaled","v":"function"},{"k":"n","v":4}]},"local_scope":{"kind":"map","items":[]}}},
+{"caption":"`print(scaled(n))` shows 12, the returned value.","panels":{"global_scope":{"kind":"map","items":[{"k":"rate","v":3,"s":"_"},{"k":"scaled","v":"function"},{"k":"n","v":4}]},"local_scope":{"kind":"map","items":[]}}}
+]},
+{"id":"zero","label":"Input 0","steps":[
+{"caption":"The top-level lines ran: `rate` is 3, `scaled` is a function, and `n` is 0, read from input. All three names live in the global scope. No call is running, so the local scope is empty.","panels":{"global_scope":{"kind":"map","items":[{"k":"rate","v":3,"s":"_"},{"k":"scaled","v":"function"},{"k":"n","v":0}]},"local_scope":{"kind":"map","items":[]}}},
+{"caption":"`scaled(n)` is called. Python makes a local scope for this call and puts the parameter `x` in it, set to 0.","panels":{"global_scope":{"kind":"map","items":[{"k":"rate","v":3,"s":"_"},{"k":"scaled","v":"function"},{"k":"n","v":0}]},"local_scope":{"kind":"map","items":[{"k":"x","v":0,"s":"c"}]}}},
+{"caption":"`x * rate` needs `x` first. Python looks in the local scope, finds `x` there, and uses 0.","panels":{"global_scope":{"kind":"map","items":[{"k":"rate","v":3,"s":"_"},{"k":"scaled","v":"function"},{"k":"n","v":0}]},"local_scope":{"kind":"map","items":[{"k":"x","v":0,"s":"c"}]}}},
+{"caption":"Next it needs `rate`. The local scope has no `rate`, so Python looks in the global scope and finds 3. Reading a global needs no `global` line.","panels":{"global_scope":{"kind":"map","items":[{"k":"rate","v":3,"s":"c"},{"k":"scaled","v":"function"},{"k":"n","v":0}]},"local_scope":{"kind":"map","items":[{"k":"x","v":0}]}}},
+{"caption":"`0 * 3` is 0. `return` hands it back, and the local scope disappears. The global names are unchanged.","panels":{"global_scope":{"kind":"map","items":[{"k":"rate","v":3,"s":"_"},{"k":"scaled","v":"function"},{"k":"n","v":0}]},"local_scope":{"kind":"map","items":[]}}},
+{"caption":"`print(scaled(n))` shows 0, the returned value.","panels":{"global_scope":{"kind":"map","items":[{"k":"rate","v":3,"s":"_"},{"k":"scaled","v":"function"},{"k":"n","v":0}]},"local_scope":{"kind":"map","items":[]}}}
+]}
+]}

@@ -1,0 +1,21 @@
+{"schema":1,
+"kind":"frames",
+"id":"eof-read",
+"layout":"single",
+"panels":[{"id":"a","viz":"ArrayViz","title":"Input lines, pointer"}],
+"alt":"Lines of input are read in a loop, one at a time. The first preset runs eof_pitfall.py's own two lines through a while True loop with no stop condition. It reads both, then reaches for a third line that does not exist, marked invalid, and input() raises EOFError there. The second preset runs read_to_end.py's own three lines through for line in sys.stdin instead. That loop checks for a next line, finds none, and simply stops, with nothing raised at all.",
+"presets":[
+{"id":"pitfall","label":"while True","steps":[
+{"caption":"There are 2 lines of input: 3, 5.","panels":{"a":{"values":[3,5,null],"states":"___","pointers":[{"name":"read","at":0,"strong":true}]}}},
+{"caption":"input() reads 3. total becomes 3.","panels":{"a":{"values":[3,5,null],"states":"d__","pointers":[{"name":"read","at":1,"strong":true}]}}},
+{"caption":"input() reads 5. total becomes 8.","panels":{"a":{"values":[3,5,null],"states":"dd_","pointers":[{"name":"read","at":2,"strong":true}]}}},
+{"caption":"while True: never checks for a stop, so it tries to read a third line. There isn't one, and input() raises EOFError before total can be printed.","panels":{"a":{"values":[3,5,null],"states":"ddx","pointers":[{"name":"read","at":2,"strong":true}]}}}
+]},
+{"id":"safe","label":"for line in stdin","steps":[
+{"caption":"There are 3 lines of input: 3, 5, 7.","panels":{"a":{"values":[3,5,7,null],"states":"____","pointers":[{"name":"read","at":0,"strong":true}]}}},
+{"caption":"input() reads 3. total becomes 3.","panels":{"a":{"values":[3,5,7,null],"states":"d___","pointers":[{"name":"read","at":1,"strong":true}]}}},
+{"caption":"input() reads 5. total becomes 8.","panels":{"a":{"values":[3,5,7,null],"states":"dd__","pointers":[{"name":"read","at":2,"strong":true}]}}},
+{"caption":"input() reads 7. total becomes 15.","panels":{"a":{"values":[3,5,7,null],"states":"ddd_","pointers":[{"name":"read","at":3,"strong":true}]}}},
+{"caption":"for line in sys.stdin: checks for a next line, finds none, and the loop ends there, cleanly, with no error.","panels":{"a":{"values":[3,5,7,null],"states":"dddd","pointers":[{"name":"read","at":3,"strong":true}]}}}
+]}
+]}

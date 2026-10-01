@@ -1,0 +1,25 @@
+layout: row
+panels:
+  - { id: depth, viz: GridViz, title: Depth of each cell }
+  - { id: sizes, viz: TableViz, title: Original sizes }
+alt: >-
+  A grid of compressed cells holding how many rectangles cover each one, beside a table of the
+  original width of each column and original height of each row. The sum moves down the grid one row at
+  a time, multiplying each covered cell's width by its row's height and adding the result to two
+  running totals: the area covered at least once and the area covered at least twice.
+captions: vizrec
+legendLabels: { current: Row being summed, done: Row summed, compare: Depth 2 or more }
+presets:
+  - id: overlap
+    label: Overlapping
+    stdin: "3\n0 0 70 30\n40 20 100 80\n20 60 80 100\n"
+  - id: nested
+    label: Nested
+    stdin: "2\n0 0 100 100\n20 20 60 60\n"
+  - id: touching
+    label: Touching
+    stdin: "2\n0 0 50 40\n50 20 100 60\n"
+consistency:
+  description: The two running totals end equal to what examples/rectangle_overlap.py prints.
+  example: ../examples/rectangle_overlap.py
+  compare: output

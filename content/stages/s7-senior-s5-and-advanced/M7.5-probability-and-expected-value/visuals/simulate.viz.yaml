@@ -1,0 +1,17 @@
+layout: single
+panels:
+  - { id: p, viz: PlotViz, title: Average turns per game }
+alt: >-
+  A chart of the running average number of turns per game against the number of games played,
+  on a scale where each tick is ten times more games. The average starts away from the exact
+  expected value, shown as a dashed horizontal line, and settles close to it as more games are
+  played, without ever being exactly equal.
+captions: vizrec
+presets:
+  - id: main
+    label: Seed 7
+    stdin: "3 0.5 7\n"
+consistency:
+  description: The averages after 10, 100, 1000 and 10000 games equal the output of examples/simulate.py.
+  example: ../examples/simulate.py
+  compare: output

@@ -1,0 +1,27 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz, title: Expected turns left }
+alt: >-
+  A one-row table of e[i], the expected number of turns left from square i, with columns for the
+  squares of a short strip and two squares past its end. The two past-the-end cells start at 0.
+  Then the cells fill from right to left, each one from the two cells to its right, with arrows
+  showing which cells it reads. The leftmost cell is the expected length of the whole game.
+captions: vizrec
+legendLabels:
+  current: Being computed
+  compare: Cells it reads
+  done: Known
+presets:
+  - id: main
+    label: Fair coin
+    stdin: "3 0.5\n"
+  - id: biased
+    label: Biased
+    stdin: "3 0.75\n"
+  - id: longer
+    label: Longer strip
+    stdin: "4 0.5\n"
+consistency:
+  description: The finished list equals the output of examples/expected_backward.py.
+  example: ../examples/expected_backward.py
+  compare: output

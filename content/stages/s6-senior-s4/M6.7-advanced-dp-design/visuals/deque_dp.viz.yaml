@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: "dp (per stone)" }
+  - { id: d, viz: StructViz, title: "Deque (index: dp)" }
+alt: >-
+  A route over stones where each jump covers at most k stones. The dp array fills left to right.
+  A deque of stone indices, with dp values decreasing from front to back, sits beside it. Stones
+  older than the window leave the front, the front gives the best predecessor, and weaker
+  entries leave the back before the new stone joins.
+captions: vizrec
+presets:
+  - id: main
+    label: Mixed scores
+    stdin: "8 3\n2 7 -3 -5 -6 -4 6 1\n"
+  - id: falling
+    label: Falling scores
+    stdin: "8 3\n5 -1 -2 -3 -4 -5 -6 -7\n"
+  - id: one
+    label: Jump of one
+    stdin: "6 1\n4 -2 3 -1 5 2\n"
+consistency:
+  description: The final dp value equals the output of examples/dp_with_deque_max.py.
+  example: ../examples/dp_with_deque_max.py
+  compare: output

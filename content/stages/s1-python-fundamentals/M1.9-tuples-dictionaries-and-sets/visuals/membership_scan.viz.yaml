@@ -1,0 +1,27 @@
+layout: row
+panels:
+  - id: nums
+    viz: ArrayViz
+    title: list nums
+  - id: seen
+    viz: StructViz
+    title: set seen
+alt: >-
+  A list of six numbers and a set holding the same values. Checking whether a target is in the
+  list compares it with one cell after another until it matches or the end is reached. Checking
+  the set takes a single step whether or not the target is there.
+captions: vizrec
+presets:
+  - id: main
+    label: Found late
+    stdinFile: ../examples/membership_scan.in
+  - id: absent
+    label: Not present
+    stdin: "4 9 1 7 6 2\n5\n"
+  - id: first
+    label: Found first
+    stdin: "4 9 1 7 6 2\n4\n"
+consistency:
+  description: "rec.output() equals membership_scan.py's real stdout for the same stdin."
+  example: ../examples/membership_scan.py
+  compare: output

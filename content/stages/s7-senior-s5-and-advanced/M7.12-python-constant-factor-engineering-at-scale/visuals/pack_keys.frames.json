@@ -1,0 +1,28 @@
+{"schema":1,
+"kind":"frames",
+"id":"pack_keys",
+"layout":"row",
+"panels":[{"id":"p","viz":"ArrayViz","title":"Pairs"},{"id":"k","viz":"ArrayViz","title":"Keys"}],
+"alt":"Pairs a and b are packed one at a time into keys a * 1000 + b, which are plain integers. The keys list is then sorted with no key function, and each sorted key is split back into a and b with divmod by 1000. Sorting the keys sorts the pairs by a first and by b when the a values tie.",
+"presets":[
+{"id":"main","label":"Four pairs","steps":[
+{"caption":"Pair 0 is (5, 2). Its key is 5 * 1000 + 2 = 5002: `a` moves up by 1000, so `b` only fills the low digits.","panels":{"p":{"values":["5,2","2,8","5,1","2,3"],"states":"c___","indices":true},"k":{"values":[5002,"?","?","?"],"states":"c___","indices":true}}},
+{"caption":"Pair 1 is (2, 8). Its key is 2 * 1000 + 8 = 2008: `a` moves up by 1000, so `b` only fills the low digits.","panels":{"p":{"values":["5,2","2,8","5,1","2,3"],"states":"dc__","indices":true},"k":{"values":[5002,2008,"?","?"],"states":"dc__","indices":true}}},
+{"caption":"Pair 2 is (5, 1). Its key is 5 * 1000 + 1 = 5001: `a` moves up by 1000, so `b` only fills the low digits.","panels":{"p":{"values":["5,2","2,8","5,1","2,3"],"states":"ddc_","indices":true},"k":{"values":[5002,2008,5001,"?"],"states":"ddc_","indices":true}}},
+{"caption":"Pair 3 is (2, 3). Its key is 2 * 1000 + 3 = 2003: `a` moves up by 1000, so `b` only fills the low digits.","panels":{"p":{"values":["5,2","2,8","5,1","2,3"],"states":"dddc","indices":true},"k":{"values":[5002,2008,5001,2003],"states":"dddc","indices":true}}},
+{"caption":"`keys.sort()` orders plain integers: [2003, 2008, 5001, 5002]. Keys with a smaller `a` come first, and keys with equal `a` are ordered by `b`.","panels":{"p":{"values":["5,2","2,8","5,1","2,3"],"name":"unsorted","indices":true},"k":{"values":[2003,2008,5001,5002],"states":"mmmm","name":"sorted","indices":true}}},
+{"caption":"`divmod(2003, 1000)` is (2, 3): the quotient is `a` and the remainder is `b`.","panels":{"p":{"values":["2,3","?","?","?"],"states":"c___","name":"unpacked","indices":true},"k":{"values":[2003,2008,5001,5002],"states":"c___","name":"sorted","indices":true}}},
+{"caption":"`divmod(2008, 1000)` is (2, 8): the quotient is `a` and the remainder is `b`.","panels":{"p":{"values":["2,3","2,8","?","?"],"states":"dc__","name":"unpacked","indices":true},"k":{"values":[2003,2008,5001,5002],"states":"dc__","name":"sorted","indices":true}}},
+{"caption":"`divmod(5001, 1000)` is (5, 1): the quotient is `a` and the remainder is `b`.","panels":{"p":{"values":["2,3","2,8","5,1","?"],"states":"ddc_","name":"unpacked","indices":true},"k":{"values":[2003,2008,5001,5002],"states":"ddc_","name":"sorted","indices":true}}},
+{"caption":"`divmod(5002, 1000)` is (5, 2): the quotient is `a` and the remainder is `b`.","panels":{"p":{"values":["2,3","2,8","5,1","5,2"],"states":"dddc","name":"unpacked","indices":true},"k":{"values":[2003,2008,5001,5002],"states":"dddc","name":"sorted","indices":true}}}
+]},
+{"id":"limit","label":"Largest b","steps":[
+{"caption":"Pair 0 is (3, 0). Its key is 3 * 1000 + 0 = 3000: `a` moves up by 1000, so `b` only fills the low digits.","panels":{"p":{"values":["3,0","2,999","3,1"],"states":"c__","indices":true},"k":{"values":[3000,"?","?"],"states":"c__","indices":true}}},
+{"caption":"Pair 1 is (2, 999). Its key is 2 * 1000 + 999 = 2999: `a` moves up by 1000, so `b` only fills the low digits. 999 is the largest `b` that fits below 1000.","panels":{"p":{"values":["3,0","2,999","3,1"],"states":"dc_","indices":true},"k":{"values":[3000,2999,"?"],"states":"dc_","indices":true}}},
+{"caption":"Pair 2 is (3, 1). Its key is 3 * 1000 + 1 = 3001: `a` moves up by 1000, so `b` only fills the low digits.","panels":{"p":{"values":["3,0","2,999","3,1"],"states":"ddc","indices":true},"k":{"values":[3000,2999,3001],"states":"ddc","indices":true}}},
+{"caption":"`keys.sort()` orders plain integers: [2999, 3000, 3001]. Keys with a smaller `a` come first, and keys with equal `a` are ordered by `b`.","panels":{"p":{"values":["3,0","2,999","3,1"],"name":"unsorted","indices":true},"k":{"values":[2999,3000,3001],"states":"mmm","name":"sorted","indices":true}}},
+{"caption":"`divmod(2999, 1000)` is (2, 999): the quotient is `a` and the remainder is `b`.","panels":{"p":{"values":["2,999","?","?"],"states":"c__","name":"unpacked","indices":true},"k":{"values":[2999,3000,3001],"states":"c__","name":"sorted","indices":true}}},
+{"caption":"`divmod(3000, 1000)` is (3, 0): the quotient is `a` and the remainder is `b`.","panels":{"p":{"values":["2,999","3,0","?"],"states":"dc_","name":"unpacked","indices":true},"k":{"values":[2999,3000,3001],"states":"dc_","name":"sorted","indices":true}}},
+{"caption":"`divmod(3001, 1000)` is (3, 1): the quotient is `a` and the remainder is `b`.","panels":{"p":{"values":["2,999","3,0","3,1"],"states":"ddc","name":"unpacked","indices":true},"k":{"values":[2999,3000,3001],"states":"ddc","name":"sorted","indices":true}}}
+]}
+]}

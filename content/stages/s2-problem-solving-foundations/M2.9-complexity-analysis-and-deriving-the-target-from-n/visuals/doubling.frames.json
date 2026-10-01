@@ -1,0 +1,28 @@
+{"schema":1,
+"kind":"frames",
+"id":"doubling",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Doubling n"}],
+"alt":"A table that gains a row each time n doubles. The single loop's operation count doubles every time, while the nested pairs loop's count grows by a factor that settles close to four.",
+"presets":[
+{"id":"main","label":"n = 100","steps":[
+{"caption":"At n = 100 a single loop does 100 operations and the pairs loop does 4,950. Now double n and watch both counts.","panels":{"table":{"cells":[["100","4,950","-"]],"states":["ccc"],"rowHeads":["100"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}},
+{"caption":"Double n to 200. The single loop doubles to 200 operations. The pairs loop goes from 4,950 to 19,900, about 4.0 times as many.","panels":{"table":{"cells":[["100","4,950","-"],["200","19,900","4.0x"]],"states":["___","ccc"],"rowHeads":["100","200"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}},
+{"caption":"Double n to 400. The single loop doubles to 400 operations. The pairs loop goes from 19,900 to 79,800, about 4.0 times as many.","panels":{"table":{"cells":[["100","4,950","-"],["200","19,900","4.0x"],["400","79,800","4.0x"]],"states":["___","___","ccc"],"rowHeads":["100","200","400"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}},
+{"caption":"Double n to 800. The single loop doubles to 800 operations. The pairs loop goes from 79,800 to 319,600, about 4.0 times as many.","panels":{"table":{"cells":[["100","4,950","-"],["200","19,900","4.0x"],["400","79,800","4.0x"],["800","319,600","4.0x"]],"states":["___","___","___","ccc"],"rowHeads":["100","200","400","800"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}}
+]},
+{"id":"ten","label":"n = 10","steps":[
+{"caption":"At n = 10 a single loop does 10 operations and the pairs loop does 45. Now double n and watch both counts.","panels":{"table":{"cells":[["10","45","-"]],"states":["ccc"],"rowHeads":["10"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}},
+{"caption":"Double n to 20. The single loop doubles to 20 operations. The pairs loop goes from 45 to 190, about 4.2 times as many.","panels":{"table":{"cells":[["10","45","-"],["20","190","4.2x"]],"states":["___","ccc"],"rowHeads":["10","20"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}},
+{"caption":"Double n to 40. The single loop doubles to 40 operations. The pairs loop goes from 190 to 780, about 4.1 times as many.","panels":{"table":{"cells":[["10","45","-"],["20","190","4.2x"],["40","780","4.1x"]],"states":["___","___","ccc"],"rowHeads":["10","20","40"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}},
+{"caption":"Double n to 80. The single loop doubles to 80 operations. The pairs loop goes from 780 to 3,160, about 4.1 times as many.","panels":{"table":{"cells":[["10","45","-"],["20","190","4.2x"],["40","780","4.1x"],["80","3,160","4.1x"]],"states":["___","___","___","ccc"],"rowHeads":["10","20","40","80"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}},
+{"caption":"Double n to 160. The single loop doubles to 160 operations. The pairs loop goes from 3,160 to 12,720, about 4.0 times as many.","panels":{"table":{"cells":[["10","45","-"],["20","190","4.2x"],["40","780","4.1x"],["80","3,160","4.1x"],["160","12,720","4.0x"]],"states":["___","___","___","___","ccc"],"rowHeads":["10","20","40","80","160"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}}
+]},
+{"id":"tiny","label":"n = 1","steps":[
+{"caption":"At n = 1 a single loop does 1 operation and the pairs loop does 0. Now double n and watch both counts.","panels":{"table":{"cells":[["1","0","-"]],"states":["ccc"],"rowHeads":["1"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}},
+{"caption":"Double n to 2. The single loop doubles to 2 operations. The pairs loop goes from 0 to 1; there is no earlier count to compare.","panels":{"table":{"cells":[["1","0","-"],["2","1","-"]],"states":["___","ccc"],"rowHeads":["1","2"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}},
+{"caption":"Double n to 4. The single loop doubles to 4 operations. The pairs loop goes from 1 to 6, about 6.0 times as many.","panels":{"table":{"cells":[["1","0","-"],["2","1","-"],["4","6","6.0x"]],"states":["___","___","ccc"],"rowHeads":["1","2","4"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}},
+{"caption":"Double n to 8. The single loop doubles to 8 operations. The pairs loop goes from 6 to 28, about 4.7 times as many.","panels":{"table":{"cells":[["1","0","-"],["2","1","-"],["4","6","6.0x"],["8","28","4.7x"]],"states":["___","___","___","ccc"],"rowHeads":["1","2","4","8"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}},
+{"caption":"Double n to 16. The single loop doubles to 16 operations. The pairs loop goes from 28 to 120, about 4.3 times as many.","panels":{"table":{"cells":[["1","0","-"],["2","1","-"],["4","6","6.0x"],["8","28","4.7x"],["16","120","4.3x"]],"states":["___","___","___","___","ccc"],"rowHeads":["1","2","4","8","16"],"colHeads":["single","pairs","vs last"],"rowTitle":"n"}}}
+]}
+]}

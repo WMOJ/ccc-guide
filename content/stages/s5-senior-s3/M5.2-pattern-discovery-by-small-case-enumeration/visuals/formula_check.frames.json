@@ -1,0 +1,14 @@
+{"schema":1,
+"kind":"frames",
+"id":"formula_check",
+"layout":"row",
+"panels":[{"id":"brute","viz":"ArrayViz","title":"Brute force"},{"id":"formula","viz":"ArrayViz","title":"Formula"}],
+"alt":"Comparing the brute-force digital root against the formula 1 plus N minus 1 mod 9, for every N from 1 up to the chosen limit. Every position agrees.",
+"presets":[
+{"id":"six","label":"Up to 6","steps":[
+{"caption":"Brute force and 1 + (N - 1) % 9 agree for every N from 1 to 6.","panels":{"brute":{"values":[1,2,3,4,5,6],"states":"dddddd"},"formula":{"values":[1,2,3,4,5,6],"states":"dddddd"}}}
+]},
+{"id":"four","label":"Up to 4","steps":[
+{"caption":"Brute force and 1 + (N - 1) % 9 agree for every N from 1 to 4.","panels":{"brute":{"values":[1,2,3,4],"states":"dddd"},"formula":{"values":[1,2,3,4],"states":"dddd"}}}
+]}
+]}

@@ -1,0 +1,21 @@
+example: expected_backward.py
+alt: >-
+  The program reads the number of squares and the chance of a 1-step, then fills a list e from the
+  last square backward. Each e[i] starts at 1 for the turn about to be played, then adds the chance
+  of each move times the expected turns left from the square it lands on.
+presets:
+  - id: main
+    label: Fair coin
+    stdin: "3 0.5\n"
+  - id: biased
+    label: Biased
+    stdin: "3 0.75\n"
+  - id: one
+    label: One square
+    stdin: "1 0.5\n"
+notes:
+  "10": "`e[n]` and `e[n + 1]` are past the end of the strip, so they stay 0: no turns are left there."
+  "11": "The loop runs from the last square down to 0, so both cells a square reads are already filled."
+  "12": "Start with 1: one turn is always played from a square that is not past the end."
+  "13": "Add the chance of a 1-step times the turns left from the next square."
+  "14": "Add the chance of a 2-step times the turns left from two squares ahead."

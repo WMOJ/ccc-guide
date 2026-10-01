@@ -1,0 +1,19 @@
+example: min_completion_time.py
+alt: >-
+  The program sorts the job times ascending, then walks the sorted list keeping a running finish
+  time and adding each job's finish time to a total, which is the sum of every finish time.
+presets:
+  - id: main
+    label: Mixed order
+    stdin: "3\n7 3 9\n"
+  - id: reversed
+    label: Longest first
+    stdin: "3\n9 5 2\n"
+  - id: single
+    label: One job
+    stdin: "1\n6\n"
+notes:
+  "16": "Shortest first: the order the exchange argument ends in."
+  "19": "`finish` is when the current job ends; `total` adds up every job's finish time."
+  "21": "This job ends `t` minutes after the previous one ended."
+  "22": "Each job's finish time counts once, and a long early job delays every finish after it."

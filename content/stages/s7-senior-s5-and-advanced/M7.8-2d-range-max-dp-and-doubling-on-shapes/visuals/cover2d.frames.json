@@ -1,0 +1,33 @@
+{"schema":1,
+"kind":"frames",
+"id":"cover2d",
+"layout":"single",
+"panels":[{"id":"g","viz":"GridViz","title":"Grid"}],
+"alt":"A 6 by 6 grid with a square query marked. Four blocks whose side is the largest power of two that fits are laid over the four corners of the square, one at a time. Cells covered by one block are marked, cells covered by two or more blocks are marked differently, and the answer is the maximum of the four block maximums.",
+"legendLabels":{"frontier":"Not yet covered","done":"In one block","compare":"In two or more blocks"},
+"presets":[
+{"id":"side5","label":"Side 5","steps":[
+{"caption":"A query for the maximum of the square of side 5 whose top-left corner is row 0, column 0.","panels":{"g":{"cells":["qqqqq_","qqqqq_","qqqqq_","qqqqq_","qqqqq_","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The largest power of two that fits in 5 is 2^2 = 4, since (5).bit_length() - 1 = 2. Blocks of side 4 will cover the square.","panels":{"g":{"cells":["qqqqq_","qqqqq_","qqqqq_","qqqqq_","qqqqq_","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The top-left block, table level 2 at (0, 0), covers rows 0 to 3 and columns 0 to 3. Its maximum is 35.","panels":{"g":{"cells":["ddddq_","ddddq_","ddddq_","ddddq_","qqqqq_","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The top-right block, table level 2 at (0, 1), covers rows 0 to 3 and columns 1 to 4. Its maximum is 36.","panels":{"g":{"cells":["dmmmd_","dmmmd_","dmmmd_","dmmmd_","qqqqq_","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The bottom-left block, table level 2 at (1, 0), covers rows 1 to 4 and columns 0 to 3. Its maximum is 34.","panels":{"g":{"cells":["dmmmd_","mmmmd_","mmmmd_","mmmmd_","ddddq_","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The bottom-right block, table level 2 at (1, 1), covers rows 1 to 4 and columns 1 to 4. Its maximum is 36.","panels":{"g":{"cells":["dmmmd_","mmmmm_","mmmmm_","mmmmm_","dmmmd_","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The answer is max(35, 36, 34, 36) = 36. Cells shared by two or more blocks were read more than once, which does not change a maximum.","panels":{"g":{"cells":["dmmmd_","mmmmm_","mmmmm_","mmmmm_","dmmmd_","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}}
+]},
+{"id":"side3","label":"Side 3","steps":[
+{"caption":"A query for the maximum of the square of side 3 whose top-left corner is row 1, column 1.","panels":{"g":{"cells":["______","_qqq__","_qqq__","_qqq__","______","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The largest power of two that fits in 3 is 2^1 = 2, since (3).bit_length() - 1 = 1. Blocks of side 2 will cover the square.","panels":{"g":{"cells":["______","_qqq__","_qqq__","_qqq__","______","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The top-left block, table level 1 at (1, 1), covers rows 1 to 2 and columns 1 to 2. Its maximum is 34.","panels":{"g":{"cells":["______","_ddq__","_ddq__","_qqq__","______","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The top-right block, table level 1 at (1, 2), covers rows 1 to 2 and columns 2 to 3. Its maximum is 34.","panels":{"g":{"cells":["______","_dmd__","_dmd__","_qqq__","______","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The bottom-left block, table level 1 at (2, 1), covers rows 2 to 3 and columns 1 to 2. Its maximum is 27.","panels":{"g":{"cells":["______","_dmd__","_mmd__","_ddq__","______","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The bottom-right block, table level 1 at (2, 2), covers rows 2 to 3 and columns 2 to 3. Its maximum is 33.","panels":{"g":{"cells":["______","_dmd__","_mmm__","_dmd__","______","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The answer is max(34, 34, 27, 33) = 34. Cells shared by two or more blocks were read more than once, which does not change a maximum.","panels":{"g":{"cells":["______","_dmd__","_mmm__","_dmd__","______","______"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}}
+]},
+{"id":"side4","label":"Side 4","steps":[
+{"caption":"A query for the maximum of the square of side 4 whose top-left corner is row 2, column 0.","panels":{"g":{"cells":["______","______","qqqq__","qqqq__","qqqq__","qqqq__"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The largest power of two that fits in 4 is 2^2 = 4, since (4).bit_length() - 1 = 2. Blocks of side 4 will cover the square.","panels":{"g":{"cells":["______","______","qqqq__","qqqq__","qqqq__","qqqq__"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"The top-left block, table level 2 at (2, 0), covers rows 2 to 5 and columns 0 to 3. Its maximum is 33. With side a power of two, this is the whole square, and the other three are the same block.","panels":{"g":{"cells":["______","______","dddd__","dddd__","dddd__","dddd__"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}},
+{"caption":"One lookup gives the answer, 33. Four lookups would read the same cell four times.","panels":{"g":{"cells":["______","______","mmmm__","mmmm__","mmmm__","mmmm__"],"values":[[35,23,3,31,20,28],[24,18,34,11,12,19],[6,2,10,33,36,30],[22,14,27,1,29,4],[7,26,13,21,16,15],[25,32,8,17,5,9]]}}}
+]}
+]}

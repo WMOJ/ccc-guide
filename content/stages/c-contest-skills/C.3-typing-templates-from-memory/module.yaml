@@ -2,11 +2,9 @@ id: C.3
 title: Typing templates from memory
 status: accepted
 objectives:
-  - Type the house skeleton from memory without referencing notes.
-  - Type a BFS loop template quickly and accurately.
-  - Type prefix-sum template code for 1D and 2D arrays.
-  - Type circular-array index operations correctly.
-  - Develop muscle memory for common Python patterns.
+  - Name the six templates worth knowing cold and the module that teaches each.
+  - Explain why a template has to be typed from memory during the contest.
+  - Practice a template by retyping it in a blank file and checking it on its small input.
 prereqs: []
 lessons:
   - typing-templates

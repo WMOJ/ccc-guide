@@ -12,11 +12,10 @@ prereqs:
 lessons:
   - hash-based-lookup
 practice:
-  - id: ccc20j2
-    note: Count how many athletes finished in each age category.
-    why: A direct counting problem where a dictionary groups results by key.
   - id: ccc22j4
-    note: Look up which group a name belongs to, checking membership in O(1) per query.
+    note: Check whether students were grouped the way certain pairs asked to be.
   - id: ccc14s2
     note: Build a name-to-partner mapping and check it for symmetry.
-    why: A direct dict-mapping problem, the same shape as this lesson's phone-book example.
+    why: A direct dict-mapping problem on DMOJ, the same shape as this lesson's counting example.
+  - id: ccc24s2
+    note: Count how many times each letter appears in a string, then check a pattern in the counts.

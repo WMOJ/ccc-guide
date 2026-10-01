@@ -1,0 +1,17 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz, title: Plain BFS vs 0-1 BFS }
+alt: >-
+  A table comparing plain BFS, which counts edges, against 0-1 BFS, which respects weight, on
+  the same doors-and-stairs graph. Plain BFS calls node 1 one hop away and node 4 two hops
+  away; 0-1 BFS finds their true cost of 0 and 1, since three free doors beat the direct,
+  costlier stairwell.
+captions: vizrec
+presets:
+  - id: doors
+    label: Doors and stairs
+    stdin: "5 5 0\n0 1 1\n0 2 0\n2 3 0\n3 1 0\n1 4 1\n"
+consistency:
+  description: The 0-1 BFS row equals the output of examples/zero_one_bfs.py.
+  example: ../examples/zero_one_bfs.py
+  compare: output

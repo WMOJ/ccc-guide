@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"bisect-lookup",
+"layout":"single",
+"panels":[{"id":"days","viz":"ArrayViz","title":"Recorded days"}],
+"alt":"Using bisect_right to count how many recorded days fall on or before a query day, even when the query day was never one of the recorded values.",
+"presets":[
+{"id":"main","label":"Mixed queries","steps":[
+{"caption":"4 distinct days were recorded. bisect_right finds where a query day would sit among them, even one that was never recorded.","panels":{"days":{"values":[10,20,20,45],"states":"____","indices":true}}},
+{"caption":"Day 5 sits before every recorded day. bisect_right returns 0: that many recorded days are on or before day 5.","panels":{"days":{"values":[10,20,20,45],"states":"____","pointers":[{"name":"found","at":0}],"indices":true}}},
+{"caption":"Day 10 sits between day 10 and day 20. bisect_right returns 1: that many recorded days are on or before day 10.","panels":{"days":{"values":[10,20,20,45],"states":"____","pointers":[{"name":"found","at":1}],"indices":true}}},
+{"caption":"Day 25 sits between day 20 and day 45. bisect_right returns 3: that many recorded days are on or before day 25.","panels":{"days":{"values":[10,20,20,45],"states":"____","pointers":[{"name":"found","at":3}],"indices":true}}},
+{"caption":"Day 45 sits after every recorded day. bisect_right returns 4: that many recorded days are on or before day 45.","panels":{"days":{"values":[10,20,20,45],"states":"____","pointers":[{"name":"found","at":4}],"indices":true}}},
+{"caption":"Day 1000000000 sits after every recorded day. bisect_right returns 4: that many recorded days are on or before day 1000000000.","panels":{"days":{"values":[10,20,20,45],"states":"____","pointers":[{"name":"found","at":4}],"indices":true}}}
+]},
+{"id":"empty","label":"No days recorded","steps":[
+{"caption":"0 distinct days were recorded. bisect_right finds where a query day would sit among them, even one that was never recorded.","panels":{"days":{"values":["-"],"states":"_","indices":true}}},
+{"caption":"Day 42 sits before every recorded day. bisect_right returns 0: that many recorded days are on or before day 42.","panels":{"days":{"values":["-"],"states":"_","pointers":[{"name":"found","at":0}],"indices":true}}}
+]},
+{"id":"duplicate","label":"All one day","steps":[
+{"caption":"3 distinct days were recorded. bisect_right finds where a query day would sit among them, even one that was never recorded.","panels":{"days":{"values":[7,7,7],"states":"___","indices":true}}},
+{"caption":"Day 6 sits before every recorded day. bisect_right returns 0: that many recorded days are on or before day 6.","panels":{"days":{"values":[7,7,7],"states":"___","pointers":[{"name":"found","at":0}],"indices":true}}},
+{"caption":"Day 7 sits after every recorded day. bisect_right returns 3: that many recorded days are on or before day 7.","panels":{"days":{"values":[7,7,7],"states":"___","pointers":[{"name":"found","at":3}],"indices":true}}},
+{"caption":"Day 8 sits after every recorded day. bisect_right returns 3: that many recorded days are on or before day 8.","panels":{"days":{"values":[7,7,7],"states":"___","pointers":[{"name":"found","at":3}],"indices":true}}}
+]}
+]}

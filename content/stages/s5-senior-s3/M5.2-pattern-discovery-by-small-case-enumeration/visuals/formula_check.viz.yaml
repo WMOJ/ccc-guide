@@ -1,0 +1,19 @@
+layout: row
+panels:
+  - { id: brute, viz: ArrayViz, title: Brute force }
+  - { id: formula, viz: ArrayViz, title: Formula }
+alt: >-
+  Comparing the brute-force digital root against the formula 1 plus N minus 1 mod 9, for every N
+  from 1 up to the chosen limit. Every position agrees.
+captions: vizrec
+presets:
+  - id: six
+    label: Up to 6
+    stdin: "6\n"
+  - id: four
+    label: Up to 4
+    stdin: "4\n"
+consistency:
+  description: The verdict matches examples/formula_check.py on the same input.
+  example: ../examples/formula_check.py
+  compare: output

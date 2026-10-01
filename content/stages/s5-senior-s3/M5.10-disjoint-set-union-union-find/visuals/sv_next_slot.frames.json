@@ -1,0 +1,28 @@
+{"schema":1,
+"kind":"frames",
+"id":"sv_next_slot",
+"layout":"single",
+"panels":[{"id":"p","viz":"ArrayViz","title":"parent (per slot)"}],
+"alt":"A row of parking slots, each numbered, with one extra sentinel slot after the last real one. Each request calls find on slot 1, which skips over every taken slot and lands on the lowest free one; that slot is then marked taken by pointing it at the next slot. When every real slot is full, find reaches the sentinel and the request is turned away.",
+"presets":[
+{"id":"five","label":"Five slots","steps":[
+{"caption":"5 slots start free, each pointing at itself in `parent`. Slot 6 is a sentinel that is never handed out, shown here as the hatched cell: it marks \"nothing free at or after here\".","panels":{"p":{"values":[1,2,3,4,5,6],"states":"_____#","indexBase":1}}},
+{"caption":"A new request. Slot 1 points at itself, so `find(1)` stops at once: slot 1 is free.","panels":{"p":{"values":[1,2,3,4,5,6],"states":"c____#","pointers":[{"name":"request","at":0}],"indexBase":1}}},
+{"caption":"Slot 1 is now taken. `parent[1]` points to 2, so the next `find` skips straight over it.","panels":{"p":{"values":[2,2,3,4,5,6],"states":"c____#","indexBase":1}}},
+{"caption":"A new request. `find(1)` climbs 1 -> 2, hopping over every taken slot, and lands on slot 2, the lowest one still free.","panels":{"p":{"values":[2,2,3,4,5,6],"states":"dc___#","pointers":[{"name":"request","at":0}],"indexBase":1}}},
+{"caption":"Slot 2 is now taken. `parent[2]` points to 3, so the next `find` skips straight over it.","panels":{"p":{"values":[2,3,3,4,5,6],"states":"dc___#","indexBase":1}}},
+{"caption":"A new request. `find(1)` climbs 1 -> 3, hopping over every taken slot, and lands on slot 3, the lowest one still free.","panels":{"p":{"values":[3,3,3,4,5,6],"states":"ddc__#","pointers":[{"name":"request","at":0}],"indexBase":1}}},
+{"caption":"Slot 3 is now taken. `parent[3]` points to 4, so the next `find` skips straight over it.","panels":{"p":{"values":[3,3,4,4,5,6],"states":"ddc__#","indexBase":1}}},
+{"caption":"A new request. `find(1)` climbs 1 -> 4, hopping over every taken slot, and lands on slot 4, the lowest one still free.","panels":{"p":{"values":[4,3,4,4,5,6],"states":"dddc_#","pointers":[{"name":"request","at":0}],"indexBase":1}}},
+{"caption":"Slot 4 is now taken. `parent[4]` points to 5, so the next `find` skips straight over it.","panels":{"p":{"values":[4,3,4,5,5,6],"states":"dddc_#","indexBase":1}}},
+{"caption":"A new request. `find(1)` climbs 1 -> 5, hopping over every taken slot, and lands on slot 5, the lowest one still free.","panels":{"p":{"values":[5,3,4,5,5,6],"states":"ddddc#","pointers":[{"name":"request","at":0}],"indexBase":1}}},
+{"caption":"Slot 5 is now taken. `parent[5]` points to 6, so the next `find` skips straight over it.","panels":{"p":{"values":[5,3,4,5,6,6],"states":"ddddc#","indexBase":1}}},
+{"caption":"A new request. `find(1)` climbs 1 -> 6 and reaches the sentinel at 6, so every real slot is taken. This request gets -1.","panels":{"p":{"values":[6,3,4,5,6,6],"states":"dddddc","pointers":[{"name":"request","at":0}],"indexBase":1}}}
+]},
+{"id":"one","label":"One slot","steps":[
+{"caption":"1 slot starts free, each pointing at itself in `parent`. Slot 2 is a sentinel that is never handed out, shown here as the hatched cell: it marks \"nothing free at or after here\".","panels":{"p":{"values":[1,2],"states":"_#","indexBase":1}}},
+{"caption":"A new request. Slot 1 points at itself, so `find(1)` stops at once: slot 1 is free.","panels":{"p":{"values":[1,2],"states":"c#","pointers":[{"name":"request","at":0}],"indexBase":1}}},
+{"caption":"Slot 1 is now taken. `parent[1]` points to 2, so the next `find` skips straight over it.","panels":{"p":{"values":[2,2],"states":"c#","indexBase":1}}},
+{"caption":"A new request. `find(1)` climbs 1 -> 2 and reaches the sentinel at 2, so every real slot is taken. This request gets -1.","panels":{"p":{"values":[2,2],"states":"dc","pointers":[{"name":"request","at":0}],"indexBase":1}}}
+]}
+]}

@@ -1,0 +1,22 @@
+layout: row
+panels:
+  - { id: h, viz: StructViz, title: "Heap (max, negated)" }
+  - { id: p, viz: TableViz, title: Pending removals }
+alt: >-
+  A multiset kept as a max-heap with a pending-count table, one column per value seen so far. An
+  add pushes a new heap entry. A remove drops the count immediately and increases that value's
+  pending count, without touching the heap. A query pops stale entries, each one lowering its
+  value's pending count by one, until it finds an entry whose pending count is zero: that is the
+  current maximum, even if another entry with the same value was removed.
+captions: vizrec
+presets:
+  - id: duplicate
+    label: Duplicate
+    stdin: "7\nA 3\nA 7\nA 2\nA 9\nA 9\nA 5\nR 9\n"
+  - id: unique
+    label: No duplicates
+    stdin: "5\nA 4\nA 6\nA 1\nR 6\nR 4\n"
+consistency:
+  description: The printed counts and maximum in the visual equal the output of examples/multiset.py.
+  example: ../examples/multiset.py
+  compare: output

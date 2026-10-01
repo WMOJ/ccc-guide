@@ -1,16 +1,22 @@
-s = input()
-tokens = []
-current_token = ""
+import sys
 
-for char in s:
-    if char == ",":
-        tokens.append(current_token)
-        current_token = ""
-    else:
-        current_token += char
 
-if current_token:
-    tokens.append(current_token)
+def main() -> None:
+    raw = sys.stdin.read()
+    line = raw.rstrip("\n")
+    out = []
+    buf = []
+    for ch in line:
+        if ch == ",":
+            out.append(buf)
+            buf = []
+        else:
+            buf.append(ch)
+    if buf:
+        out.append(buf)
+    for t in out:
+        print("".join(t))
 
-for token in tokens:
-    print(token)
+
+if __name__ == "__main__":
+    main()

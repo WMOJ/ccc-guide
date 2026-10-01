@@ -1,0 +1,18 @@
+layout: single
+panels:
+  - { id: stack, viz: StructViz, title: Stack }
+alt: >-
+  An iterative preorder DFS walking down a chain of 8 vertices, one edge case where a
+  recursive DFS would need one call per vertex. The explicit stack shown here never holds more
+  than one waiting vertex, because a chain has only one unvisited neighbor to push at each
+  step, so the mechanism that avoids Python's recursion limit is visible directly in the
+  stack's size.
+captions: vizrec
+presets:
+  - id: chain
+    label: Chain of 8
+    stdin: "8 7\n0 1\n1 2\n2 3\n3 4\n4 5\n5 6\n6 7\n"
+consistency:
+  description: The final preorder matches the order examples/iterative_dfs_basic.py prints on this input.
+  example: ../examples/iterative_dfs_basic.py
+  compare: output

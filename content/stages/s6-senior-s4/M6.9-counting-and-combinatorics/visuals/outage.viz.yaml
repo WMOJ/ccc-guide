@@ -1,0 +1,26 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: Readings }
+  - { id: r, viz: ArrayViz, title: run }
+alt: >-
+  Counting the ranges of consecutive days that contain at least one outage, a reading of 0, by
+  counting the opposite. Each day, run is the number of ranges ending that day that contain no
+  zero, and clean adds them up. The answer is the total number of ranges minus clean.
+captions: vizrec
+legendLabels:
+  done: Clean stretch
+  invalid: Outage
+presets:
+  - id: mixed
+    label: Some outages
+    stdin: "8\n3 0 5 2 0 0 4 1\n"
+  - id: none
+    label: No outages
+    stdin: "5\n4 2 7 1 3\n"
+  - id: all
+    label: All outages
+    stdin: "5\n0 0 0 0 0\n"
+consistency:
+  description: The answer equals the output of examples/outage_ranges.py.
+  example: ../examples/outage_ranges.py
+  compare: output

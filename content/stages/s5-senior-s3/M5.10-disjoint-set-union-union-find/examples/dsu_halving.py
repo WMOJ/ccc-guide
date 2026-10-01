@@ -1,4 +1,7 @@
-def find(parent, x):
+import sys
+
+
+def find(parent: list, x: int) -> int:
     """Find root with path halving."""
     while parent[x] != x:
         parent[x] = parent[parent[x]]  # Skip one level
@@ -6,7 +9,7 @@ def find(parent, x):
     return x
 
 
-def union(parent, a, b):
+def union(parent: list, a: int, b: int) -> None:
     """Merge the groups containing a and b."""
     root_a = find(parent, a)
     root_b = find(parent, b)
@@ -14,15 +17,29 @@ def union(parent, a, b):
         parent[root_a] = root_b
 
 
-# Build a chain by naive unions: 0 <- 1 <- 2 <- 3 <- 4
-parent = list(range(5))
-for i in range(4):
-    union(parent, i, i + 1)
+def main() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
 
-print("Parent array after naive unions:", parent)
+    n = int(data[0])
+    m = int(data[1])
+    parent = list(range(n))
 
-# First find on 0: takes 4 steps without halving
-print("find(0) with path halving:", find(parent, 0))
+    pos = 2
+    for _ in range(m):
+        a = int(data[pos])
+        b = int(data[pos + 1])
+        pos += 2
+        union(parent, a, b)
 
-# After halving, the path is shorter
-print("Parent array after find:", parent)
+    print("Parent array after naive unions:", parent)
+
+    x = int(data[pos])
+    pos += 1
+    print(f"find({x}) with path halving:", find(parent, x))
+    print("Parent array after find:", parent)
+
+
+if __name__ == "__main__":
+    main()

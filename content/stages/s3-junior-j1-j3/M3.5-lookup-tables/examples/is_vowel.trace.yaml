@@ -1,0 +1,15 @@
+example: is_vowel.py
+alt: >-
+  The program builds a dictionary of vowels, then looks up one input letter with .get(),
+  printing True for a stored vowel and False for a consonant that was never stored as a key.
+presets:
+  - id: hit
+    label: Vowel
+    stdin: "e\n"
+  - id: miss
+    label: Consonant
+    stdin: "z\n"
+notes:
+  "10": "vow starts as an empty dict, with no keys stored yet."
+  "11": "This loop runs once for each of the 10 characters in \"aeiouAEIOU\", storing True under each one as a key."
+  "15": "`vow.get(q, False)` returns the stored value if q is a key, or False if it is not, instead of crashing with a KeyError."

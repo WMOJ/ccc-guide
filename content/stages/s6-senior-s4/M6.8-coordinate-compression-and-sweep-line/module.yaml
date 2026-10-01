@@ -14,4 +14,5 @@ lessons:
   - coordinate-compression
 practice:
   - id: ccc14s4
-    note: Find the total window area covered once several tinted panes overlap.
+    note: Find the area of a window where overlapping tinted panes add up to at least a given tint.
+    why: Rectangle corners are the only coordinates that matter, and overlapping rectangles must be counted by depth, which is this lesson's grid.

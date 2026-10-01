@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: chars, viz: ArrayViz, title: Characters }
+  - { id: state, viz: TableViz, title: Parser state }
+alt: >-
+  Classifying each character as a letter or part of a number, and tracking the current token
+  and the tokens found so far as the mode changes. A token closes the moment the character
+  kind changes, and a sign always closes the current token and starts a fresh number, even
+  when the previous token was also a number.
+captions: vizrec
+presets:
+  - id: main
+    label: Mixed
+    stdin: "AB+1C-2E\n"
+  - id: leading-number
+    label: Starts with a number
+    stdin: "+1A-2\n"
+  - id: two-numbers
+    label: Two numbers
+    stdin: "A+12-3B\n"
+consistency:
+  description: The tokens found equal the lines printed by examples/classify_tokens.py.
+  example: ../examples/classify_tokens.py
+  compare: output

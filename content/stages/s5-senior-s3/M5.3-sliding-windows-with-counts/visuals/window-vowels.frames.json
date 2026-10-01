@@ -1,0 +1,32 @@
+{"schema":1,
+"kind":"frames",
+"id":"window-vowels",
+"layout":"single",
+"panels":[{"id":"text","viz":"ArrayViz","title":"Text"}],
+"alt":"A fixed-length window sliding one character at a time over a text, its vowel count updated by adding the new rightmost character and dropping the old leftmost one. The best window seen is highlighted once the scan finishes.",
+"presets":[
+{"id":"typical","label":"K = 3","steps":[
+{"caption":"The first window, text[0:3], holds 2 vowels. Best so far: 2.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"dpp_____","pointers":[{"name":"left","at":0},{"name":"right","at":2}]}}},
+{"caption":"The window slides to text[1:4]: it gains a vowel at text[3] = 'u' and drops text[0] = 'b', not a vowel. Count is now 3. Best so far: 3.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_ppp____","pointers":[{"name":"left","at":1},{"name":"right","at":3}]}}},
+{"caption":"The window slides to text[2:5]: it adds text[4] = 't', not a vowel and drops the vowel at text[1] = 'e'. Count is now 2. Best so far: 3.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_pppd___","pointers":[{"name":"left","at":2},{"name":"right","at":4}]}}},
+{"caption":"The window slides to text[3:6]: it gains a vowel at text[5] = 'i' and drops the vowel at text[2] = 'a'. Count is now 2. Best so far: 3.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_pppdc__","pointers":[{"name":"left","at":3},{"name":"right","at":5}]}}},
+{"caption":"The window slides to text[4:7]: it adds text[6] = 'f', not a vowel and drops the vowel at text[3] = 'u'. Count is now 1. Best so far: 3.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_pppdcd_","pointers":[{"name":"left","at":4},{"name":"right","at":6}]}}},
+{"caption":"The window slides to text[5:8]: it adds text[7] = 'y', not a vowel and drops text[4] = 't', not a vowel. Count is now 1. Best so far: 3.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_ppp_cdd","pointers":[{"name":"left","at":5},{"name":"right","at":7}]}}},
+{"caption":"The scan reaches the end. The best window, text[1:4], holds 3 vowels.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_ppp_cdd","pointers":[{"name":"left","at":5},{"name":"right","at":7}]}}}
+]},
+{"id":"whole","label":"K = whole text","steps":[
+{"caption":"The first window, text[0:8], holds 4 vowels. Best so far: 4.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"dpppdpdd","pointers":[{"name":"left","at":0},{"name":"right","at":7}]}}},
+{"caption":"The scan reaches the end. The best window, text[0:8], holds 4 vowels.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"dpppdpdd","pointers":[{"name":"left","at":0},{"name":"right","at":7}]}}}
+]},
+{"id":"k1","label":"K = 1","steps":[
+{"caption":"The first window, text[0:1], holds 0 vowels. Best so far: 0.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"d_______","pointers":[{"name":"left","at":0},{"name":"right","at":0}]}}},
+{"caption":"The window slides to text[1:2]: it gains a vowel at text[1] = 'e' and drops text[0] = 'b', not a vowel. Count is now 1. Best so far: 1.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_p______","pointers":[{"name":"left","at":1},{"name":"right","at":1}]}}},
+{"caption":"The window slides to text[2:3]: it gains a vowel at text[2] = 'a' and drops the vowel at text[1] = 'e'. Count is now 1. Best so far: 1.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_pc_____","pointers":[{"name":"left","at":2},{"name":"right","at":2}]}}},
+{"caption":"The window slides to text[3:4]: it gains a vowel at text[3] = 'u' and drops the vowel at text[2] = 'a'. Count is now 1. Best so far: 1.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_p_c____","pointers":[{"name":"left","at":3},{"name":"right","at":3}]}}},
+{"caption":"The window slides to text[4:5]: it adds text[4] = 't', not a vowel and drops the vowel at text[3] = 'u'. Count is now 0. Best so far: 1.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_p__d___","pointers":[{"name":"left","at":4},{"name":"right","at":4}]}}},
+{"caption":"The window slides to text[5:6]: it gains a vowel at text[5] = 'i' and drops text[4] = 't', not a vowel. Count is now 1. Best so far: 1.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_p___c__","pointers":[{"name":"left","at":5},{"name":"right","at":5}]}}},
+{"caption":"The window slides to text[6:7]: it adds text[6] = 'f', not a vowel and drops the vowel at text[5] = 'i'. Count is now 0. Best so far: 1.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_p____d_","pointers":[{"name":"left","at":6},{"name":"right","at":6}]}}},
+{"caption":"The window slides to text[7:8]: it adds text[7] = 'y', not a vowel and drops text[6] = 'f', not a vowel. Count is now 0. Best so far: 1.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_p_____d","pointers":[{"name":"left","at":7},{"name":"right","at":7}]}}},
+{"caption":"The scan reaches the end. The best window, text[1:2], holds 1 vowel.","panels":{"text":{"values":["b","e","a","u","t","i","f","y"],"states":"_p_____d","pointers":[{"name":"left","at":7},{"name":"right","at":7}]}}}
+]}
+]}

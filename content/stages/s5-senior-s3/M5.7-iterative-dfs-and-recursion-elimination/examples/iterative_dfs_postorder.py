@@ -1,35 +1,59 @@
-def iterative_postorder_dfs(adj, root):
-    """Iterative postorder DFS using a marker technique."""
-    visited = set()
-    stack = [root]
+import sys
+
+
+def build_adjacency(n, edges):
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    return adj
+
+
+def dfs_postorder(adj, root):
+    seen = [False] * len(adj)
+    stack = [(root, False)]
     order = []
-    MARKER = None
 
     while stack:
-        node = stack[-1]
-        if node is MARKER or node in visited:
-            stack.pop()
-            if node is not MARKER:
-                order.append(node)
+        node, ready = stack.pop()
+        if ready:
+            order.append(node)
             continue
-
-        visited.add(node)
-        stack.append(MARKER)
+        if seen[node]:
+            continue
+        seen[node] = True
+        stack.append((node, True))
         for neighbor in reversed(adj[node]):
-            if neighbor not in visited:
-                stack.append(neighbor)
+            if not seen[neighbor]:
+                stack.append((neighbor, False))
 
     return order
 
 
-adj = {
-    0: [1, 2],
-    1: [3, 4],
-    2: [5],
-    3: [],
-    4: [],
-    5: []
-}
+def solve() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
+    pos = 0
+    n = int(data[pos])
+    m = int(data[pos + 1])
+    pos += 2
 
-result = iterative_postorder_dfs(adj, 0)
-print("Postorder DFS:", result)
+    edges = []
+    for _ in range(m):
+        u = int(data[pos])
+        v = int(data[pos + 1])
+        pos += 2
+        edges.append((u, v))
+
+    adj = build_adjacency(n, edges)
+    order = dfs_postorder(adj, 0)
+    print("Postorder:", order)
+
+
+def main() -> None:
+    solve()
+
+
+if __name__ == "__main__":
+    main()

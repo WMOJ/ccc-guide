@@ -1,0 +1,21 @@
+layout: row
+panels:
+  - { id: tree, viz: TreeViz, title: Search tree }
+  - { id: stack, viz: StructViz, title: Chosen so far }
+alt: >-
+  The choose, explore, unchoose recursion tree for building every permutation of a small list.
+  Each branch chooses one unused element, pushing it onto a stack of the elements chosen so
+  far; reaching a branch where every element is chosen records a permutation; returning from
+  a branch pops that element back off the stack before the next candidate is tried.
+captions: vizrec
+presets:
+  - id: three
+    label: Three items
+    stdin: "1 2 3\n"
+  - id: two
+    label: Two items
+    stdin: "1 2\n"
+consistency:
+  description: The permutations the tree records, in order, equal the lines examples/permutations.py prints for the same input.
+  example: ../examples/permutations.py
+  compare: output

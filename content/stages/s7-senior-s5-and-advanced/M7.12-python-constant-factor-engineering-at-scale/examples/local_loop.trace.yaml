@@ -1,0 +1,15 @@
+example: local_loop.py
+alt: >-
+  The program reads a count and that many numbers. It looks up the list's append method once,
+  stores it in the local name add, then calls add for each number's square inside the loop,
+  so the lookup does not repeat on every pass.
+presets:
+  - id: main
+    label: Three values
+    stdin: "3\n2 5 1\n"
+  - id: single
+    label: One value
+    stdin: "1\n6\n"
+notes:
+  "9": "`squares.append` is looked up here, once. `add` now holds the method itself."
+  "12": "`add(x * x)` calls the stored method. The loop never looks `.append` up again."

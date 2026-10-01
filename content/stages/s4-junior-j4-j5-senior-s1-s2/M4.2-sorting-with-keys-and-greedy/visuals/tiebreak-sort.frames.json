@@ -1,0 +1,19 @@
+{"schema":1,
+"kind":"frames",
+"id":"tiebreak-sort",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Runners by tuple key"}],
+"alt":"A three-row table of runner name, time and bib number, first in input order, then with a tied pair of times highlighted, then rearranged ascending by the tuple (time, bib), fastest first.",
+"presets":[
+{"id":"tied","label":"Tied times","steps":[
+{"caption":"Each runner's key is the tuple (time, bib), read in the order the input lists them.","panels":{"table":{"cells":[["Alice","Bob","Carol"],[12.5,12.5,12],[101,99,100]],"rowHeads":["name","time","bib"],"colHeads":[0,1,2],"colTitle":"position"}}},
+{"caption":"Two runners share the same time, so the first key alone cannot rank them.","panels":{"table":{"cells":[["Alice","Bob","Carol"],[12.5,12.5,12],[101,99,100]],"states":["___","cc_","___"],"rowHeads":["name","time","bib"],"colHeads":[0,1,2],"colTitle":"position"}}},
+{"caption":"The tuple's second element, bib number, breaks the tie: sorted() compares it only when the first elements are equal.","panels":{"table":{"cells":[["Carol","Bob","Alice"],[12,12.5,12.5],[100,99,101]],"states":["___","_cc","___"],"rowHeads":["name","time","bib"],"colHeads":[0,1,2],"colTitle":"position"}}},
+{"caption":"sorted() rearranges the runners by (time, bib), ascending: the fastest time first.","panels":{"table":{"cells":[["Carol","Bob","Alice"],[12,12.5,12.5],[100,99,101]],"rowHeads":["name","time","bib"],"colHeads":[0,1,2],"colTitle":"position"}}}
+]},
+{"id":"distinct","label":"Distinct times","steps":[
+{"caption":"Each runner's key is the tuple (time, bib), read in the order the input lists them.","panels":{"table":{"cells":[["Alice","Bob","Carol"],[10,11,9],[101,99,100]],"rowHeads":["name","time","bib"],"colHeads":[0,1,2],"colTitle":"position"}}},
+{"caption":"Every time is distinct here, so the tuple's second element, bib, never needs to break a tie.","panels":{"table":{"cells":[["Carol","Alice","Bob"],[9,10,11],[100,101,99]],"rowHeads":["name","time","bib"],"colHeads":[0,1,2],"colTitle":"position"}}},
+{"caption":"sorted() rearranges the runners by (time, bib), ascending: the fastest time first.","panels":{"table":{"cells":[["Carol","Alice","Bob"],[9,10,11],[100,101,99]],"rowHeads":["name","time","bib"],"colHeads":[0,1,2],"colTitle":"position"}}}
+]}
+]}

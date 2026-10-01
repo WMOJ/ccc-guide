@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: w, viz: ArrayViz, title: The word being sliced }
+alt: >-
+  A word's characters are sliced three ways: word[1:4], word[:3] and word[3:]. On a
+  full-length word all three slices hold characters; on a one-character word two of
+  the three come out empty, showing that a slice never raises an error.
+captions: vizrec
+presets:
+  - id: main
+    label: Full-length word
+    stdin: "elephant\n"
+  - id: single
+    label: One character
+    stdin: "x\n"
+consistency:
+  description: The three slice results shown match the three lines examples/slice_basics.py prints.
+  example: ../examples/slice_basics.py
+  compare: output

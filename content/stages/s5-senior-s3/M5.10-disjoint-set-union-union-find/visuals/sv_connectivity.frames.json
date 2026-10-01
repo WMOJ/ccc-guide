@@ -1,0 +1,22 @@
+{"schema":1,
+"kind":"frames",
+"id":"sv_connectivity",
+"layout":"row",
+"panels":[{"id":"g","viz":"GraphViz","title":"Network"},{"id":"p","viz":"ArrayViz","title":"parent"}],
+"alt":"Computers start isolated. Each cable unions the two computers it connects. A later query compares the roots found for its two computers: equal roots mean yes, they are connected, even indirectly; different roots mean no.",
+"presets":[
+{"id":"network","label":"Five nodes","steps":[
+{"caption":"5 computers start with no cables between them: each is its own component.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0},{"id":"1","x":1.125,"y":0},{"id":"2","x":2.25,"y":0},{"id":"3","x":3.375,"y":0},{"id":"4","x":4.5,"y":0}],"edges":[]},"p":{"values":[0,1,2,3,4]}}},
+{"caption":"Cable 0-1 is processed: `union(0, 1)` merges their components.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0},{"id":"1","x":1.125,"y":0.6},{"id":"2","x":2.25,"y":0},{"id":"3","x":3.375,"y":0},{"id":"4","x":4.5,"y":0}],"edges":[{"a":"1","b":"0","s":"q"}]},"p":{"values":[0,0,2,3,4]}}},
+{"caption":"Cable 1-2 is processed: `union(1, 2)` merges their components.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0},{"id":"1","x":1.125,"y":0.6},{"id":"2","x":2.25,"y":0.6},{"id":"3","x":3.375,"y":0},{"id":"4","x":4.5,"y":0}],"edges":[{"a":"1","b":"0"},{"a":"2","b":"0"}]},"p":{"values":[0,0,0,3,4]}}},
+{"caption":"Cable 3-4 is processed: `union(3, 4)` merges their components.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0},{"id":"1","x":1.125,"y":0.6},{"id":"2","x":2.25,"y":0.6},{"id":"3","x":3.375,"y":0},{"id":"4","x":4.5,"y":0.6}],"edges":[{"a":"1","b":"0"},{"a":"2","b":"0"},{"a":"4","b":"3","s":"q"}]},"p":{"values":[0,0,0,3,3]}}},
+{"caption":"Query 0, 2: `find(0)` and `find(2)` both return 0. Answer: yes.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0,"s":"m"},{"id":"1","x":1.125,"y":0.6},{"id":"2","x":2.25,"y":0.6,"s":"m"},{"id":"3","x":3.375,"y":0},{"id":"4","x":4.5,"y":0.6}],"edges":[{"a":"1","b":"0"},{"a":"2","b":"0"},{"a":"4","b":"3"}]},"p":{"values":[0,0,0,3,3]}}},
+{"caption":"Query 0, 3: `find(0)` returns 0, `find(3)` returns 3. Answer: no.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0,"s":"m"},{"id":"1","x":1.125,"y":0.6},{"id":"2","x":2.25,"y":0.6},{"id":"3","x":3.375,"y":0,"s":"m"},{"id":"4","x":4.5,"y":0.6}],"edges":[{"a":"1","b":"0"},{"a":"2","b":"0"},{"a":"4","b":"3"}]},"p":{"values":[0,0,0,3,3]}}},
+{"caption":"Query 1, 3: `find(1)` returns 0, `find(3)` returns 3. Answer: no.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0},{"id":"1","x":1.125,"y":0.6,"s":"m"},{"id":"2","x":2.25,"y":0.6},{"id":"3","x":3.375,"y":0,"s":"m"},{"id":"4","x":4.5,"y":0.6}],"edges":[{"a":"1","b":"0"},{"a":"2","b":"0"},{"a":"4","b":"3"}]},"p":{"values":[0,0,0,3,3]}}}
+]},
+{"id":"isolated","label":"Isolated","steps":[
+{"caption":"4 computers start with no cables between them: each is its own component.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0},{"id":"1","x":1.5,"y":0},{"id":"2","x":3,"y":0},{"id":"3","x":4.5,"y":0}],"edges":[]},"p":{"values":[0,1,2,3]}}},
+{"caption":"Cable 0-1 is processed: `union(0, 1)` merges their components.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0},{"id":"1","x":1.5,"y":0.6},{"id":"2","x":3,"y":0},{"id":"3","x":4.5,"y":0}],"edges":[{"a":"1","b":"0","s":"q"}]},"p":{"values":[0,0,2,3]}}},
+{"caption":"Query 2, 3: `find(2)` returns 2, `find(3)` returns 3. Answer: no.","panels":{"g":{"nodes":[{"id":"0","x":0,"y":0},{"id":"1","x":1.5,"y":0.6},{"id":"2","x":3,"y":0,"s":"m"},{"id":"3","x":4.5,"y":0,"s":"m"}],"edges":[{"a":"1","b":"0"}]},"p":{"values":[0,0,2,3]}}}
+]}
+]}

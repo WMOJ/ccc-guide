@@ -2,10 +2,10 @@ id: M7.11
 title: Online algorithms and encrypted input
 status: accepted
 objectives:
-  - Decode encrypted input using the previous answer.
-  - Understand why encryption forces an online algorithm.
-  - Solve problems where queries cannot be sorted or reordered.
-  - Implement fast I/O for problems with many queries and answers.
+  - Decode each query from its raw numbers and the previous answer.
+  - Explain why a chain of answers forces the queries to be handled in order.
+  - Reuse the iterative segment tree of M7.1 for updates and range sums when queries arrive scrambled.
+  - Read all input at once and write the answers once, even when each line depends on the last answer.
 prereqs:
   - M7.1
   - M3.10

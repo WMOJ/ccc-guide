@@ -1,0 +1,21 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Doubling n }
+alt: >-
+  A table that gains a row each time n doubles. The single loop's operation count doubles every
+  time, while the nested pairs loop's count grows by a factor that settles close to four.
+captions: vizrec
+presets:
+  - id: main
+    label: "n = 100"
+    stdin: "100\n"
+  - id: ten
+    label: "n = 10"
+    stdin: "10\n"
+  - id: tiny
+    label: "n = 1"
+    stdin: "1\n"
+consistency:
+  description: The pair count at the starting n equals the output of examples/count_pairs.py on that n.
+  example: ../examples/count_pairs.py
+  compare: output

@@ -13,7 +13,7 @@ lessons:
   - clock-and-calendar-arithmetic
 practice:
   - id: ccc24s1
-    note: Compare values at paired positions around a circular arrangement, wrapping the index with modulo.
+    note: People seated around a circular table, each looking at the seat directly opposite.
   - id: ccc17j4
-    note: Count occurrences of a periodic event across a long span, using cycles and a remainder.
-    why: A periodicity problem matching this lesson's cycle-and-remainder pattern.
+    note: A repeating clock display, counted over a long stretch of time.
+    why: A periodicity problem, the same kind of repeating pattern this lesson counts with cycles and a remainder.

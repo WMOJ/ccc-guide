@@ -1,0 +1,35 @@
+{"schema":1,
+"kind":"frames",
+"id":"mark_scan",
+"layout":"row",
+"panels":[{"id":"array","viz":"ArrayViz","title":"Marks"},{"id":"table","viz":"TableViz","title":"Variables"}],
+"alt":"An array of marks scanned left to right, one position at a time, beside a small table of the loop variable i and the counter count. The position i advances on every mark, while count grows only when a mark is 50 or higher, matching examples/pass_count.py.",
+"presets":[
+{"id":"typical","label":"Mixed","steps":[
+{"caption":"Position 0: mark 45. Is it 50 or higher? count is still 0.","panels":{"array":{"values":[45,50,68],"states":"c__","pointers":[{"name":"i","at":0,"strong":true}],"indices":true},"table":{"cells":[[0],[0]],"states":["c","_"],"rowHeads":["i","count"]}}},
+{"caption":"45 >= 50 is False, so count stays 0. Only i moves on.","panels":{"array":{"values":[45,50,68],"states":"x__","pointers":[{"name":"i","at":0,"strong":true}],"indices":true},"table":{"cells":[[0],[0]],"states":["d","_"],"rowHeads":["i","count"]}}},
+{"caption":"Position 1: mark 50. Is it 50 or higher? count is still 0.","panels":{"array":{"values":[45,50,68],"states":"xc_","pointers":[{"name":"i","at":1,"strong":true}],"indices":true},"table":{"cells":[[1],[0]],"states":["c","_"],"rowHeads":["i","count"]}}},
+{"caption":"50 >= 50 is True, so count += 1 makes count 1.","panels":{"array":{"values":[45,50,68],"states":"xd_","pointers":[{"name":"i","at":1,"strong":true}],"indices":true},"table":{"cells":[[1],[1]],"states":["_","p"],"rowHeads":["i","count"]}}},
+{"caption":"Position 2: mark 68. Is it 50 or higher? count is still 1.","panels":{"array":{"values":[45,50,68],"states":"xdc","pointers":[{"name":"i","at":2,"strong":true}],"indices":true},"table":{"cells":[[2],[1]],"states":["c","_"],"rowHeads":["i","count"]}}},
+{"caption":"68 >= 50 is True, so count += 1 makes count 2.","panels":{"array":{"values":[45,50,68],"states":"xdd","pointers":[{"name":"i","at":2,"strong":true}],"indices":true},"table":{"cells":[[2],[2]],"states":["_","p"],"rowHeads":["i","count"]}}},
+{"caption":"The loop is over. i went through all 3 positions, but count is 2: 2 of the 3 marks passed.","panels":{"array":{"values":[45,50,68],"states":"xdd","indices":true},"table":{"cells":[["-"],[2]],"states":["_","p"],"rowHeads":["i","count"]}}}
+]},
+{"id":"none","label":"No matches","steps":[
+{"caption":"Position 0: mark 10. Is it 50 or higher? count is still 0.","panels":{"array":{"values":[10,20,30],"states":"c__","pointers":[{"name":"i","at":0,"strong":true}],"indices":true},"table":{"cells":[[0],[0]],"states":["c","_"],"rowHeads":["i","count"]}}},
+{"caption":"10 >= 50 is False, so count stays 0. Only i moves on.","panels":{"array":{"values":[10,20,30],"states":"x__","pointers":[{"name":"i","at":0,"strong":true}],"indices":true},"table":{"cells":[[0],[0]],"states":["d","_"],"rowHeads":["i","count"]}}},
+{"caption":"Position 1: mark 20. Is it 50 or higher? count is still 0.","panels":{"array":{"values":[10,20,30],"states":"xc_","pointers":[{"name":"i","at":1,"strong":true}],"indices":true},"table":{"cells":[[1],[0]],"states":["c","_"],"rowHeads":["i","count"]}}},
+{"caption":"20 >= 50 is False, so count stays 0. Only i moves on.","panels":{"array":{"values":[10,20,30],"states":"xx_","pointers":[{"name":"i","at":1,"strong":true}],"indices":true},"table":{"cells":[[1],[0]],"states":["d","_"],"rowHeads":["i","count"]}}},
+{"caption":"Position 2: mark 30. Is it 50 or higher? count is still 0.","panels":{"array":{"values":[10,20,30],"states":"xxc","pointers":[{"name":"i","at":2,"strong":true}],"indices":true},"table":{"cells":[[2],[0]],"states":["c","_"],"rowHeads":["i","count"]}}},
+{"caption":"30 >= 50 is False, so count stays 0. Only i moves on.","panels":{"array":{"values":[10,20,30],"states":"xxx","pointers":[{"name":"i","at":2,"strong":true}],"indices":true},"table":{"cells":[[2],[0]],"states":["d","_"],"rowHeads":["i","count"]}}},
+{"caption":"The loop is over. i went through all 3 positions, but count is 0: 0 of the 3 marks passed.","panels":{"array":{"values":[10,20,30],"states":"xxx","indices":true},"table":{"cells":[["-"],[0]],"states":["_","p"],"rowHeads":["i","count"]}}}
+]},
+{"id":"all","label":"All match","steps":[
+{"caption":"Position 0: mark 80. Is it 50 or higher? count is still 0.","panels":{"array":{"values":[80,90,100],"states":"c__","pointers":[{"name":"i","at":0,"strong":true}],"indices":true},"table":{"cells":[[0],[0]],"states":["c","_"],"rowHeads":["i","count"]}}},
+{"caption":"80 >= 50 is True, so count += 1 makes count 1.","panels":{"array":{"values":[80,90,100],"states":"d__","pointers":[{"name":"i","at":0,"strong":true}],"indices":true},"table":{"cells":[[0],[1]],"states":["_","p"],"rowHeads":["i","count"]}}},
+{"caption":"Position 1: mark 90. Is it 50 or higher? count is still 1.","panels":{"array":{"values":[80,90,100],"states":"dc_","pointers":[{"name":"i","at":1,"strong":true}],"indices":true},"table":{"cells":[[1],[1]],"states":["c","_"],"rowHeads":["i","count"]}}},
+{"caption":"90 >= 50 is True, so count += 1 makes count 2.","panels":{"array":{"values":[80,90,100],"states":"dd_","pointers":[{"name":"i","at":1,"strong":true}],"indices":true},"table":{"cells":[[1],[2]],"states":["_","p"],"rowHeads":["i","count"]}}},
+{"caption":"Position 2: mark 100. Is it 50 or higher? count is still 2.","panels":{"array":{"values":[80,90,100],"states":"ddc","pointers":[{"name":"i","at":2,"strong":true}],"indices":true},"table":{"cells":[[2],[2]],"states":["c","_"],"rowHeads":["i","count"]}}},
+{"caption":"100 >= 50 is True, so count += 1 makes count 3.","panels":{"array":{"values":[80,90,100],"states":"ddd","pointers":[{"name":"i","at":2,"strong":true}],"indices":true},"table":{"cells":[[2],[3]],"states":["_","p"],"rowHeads":["i","count"]}}},
+{"caption":"The loop is over. i went through all 3 positions, but count is 3: 3 of the 3 marks passed.","panels":{"array":{"values":[80,90,100],"states":"ddd","indices":true},"table":{"cells":[["-"],[3]],"states":["_","p"],"rowHeads":["i","count"]}}}
+]}
+]}

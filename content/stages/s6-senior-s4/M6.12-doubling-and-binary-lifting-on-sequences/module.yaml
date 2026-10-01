@@ -2,17 +2,15 @@ id: M6.12
 title: Doubling and binary lifting on sequences
 status: accepted
 objectives:
-  - Build and query a binary-lifting table to jump O(log n) steps in a sequence.
-  - Apply binary lifting to find ancestors in trees and reachable nodes in a graph.
-  - Optimize queries by precomputing powers of two.
+  - Build a doubling table where each entry is the jump before it, applied twice.
+  - Answer a "where do I land after K jumps" query by combining one table entry per set bit of K.
+  - Explain why the table costs O(n log K) to build, each query O(log K), and why the order of the hops does not matter.
 prereqs:
   - M4.15
   - M4.5
 lessons:
   - binary-lifting
 practice:
-  - id: ccc22s3
-    note: Follow a queue of linked instructions to find the first one that fires.
-  - id: ccc19s3
-    note: Find the maximum value on the path between two nodes in a tree.
-    why: An older tree-query problem that still makes good practice for this module.
+  - id: ccc16s5
+    note: Find the state of a ring of cells after an enormous number of generations.
+    why: The same update rule is applied to a ring of cells up to 10^15 times.

@@ -1,0 +1,36 @@
+{"schema":1,
+"kind":"frames",
+"id":"run_detect",
+"layout":"single",
+"panels":[{"id":"chars","viz":"ArrayViz","title":"String"}],
+"alt":"Scanning a string one run at a time. A run-start pointer marks where the current run began, a look pointer checks the next character, and the current run's characters are marked as they are confirmed, until a mismatch or the end of the string closes the run.",
+"presets":[
+{"id":"main","label":"Mixed runs","steps":[
+{"caption":"A new run starts at index 0: 'a'.","panels":{"chars":{"values":["a","a","b","b","c","c"],"states":"c_____","pointers":[{"name":"start","at":0,"strong":true}],"indices":true}}},
+{"caption":"s[1] is also 'a': count becomes 2.","panels":{"chars":{"values":["a","a","b","b","c","c"],"states":"cc____","pointers":[{"name":"start","at":0,"strong":true},{"name":"look","at":1}],"indices":true}}},
+{"caption":"s[2] is 'b', not 'a': the run ends at length 2.","panels":{"chars":{"values":["a","a","b","b","c","c"],"states":"cc____","pointers":[{"name":"start","at":0,"strong":true},{"name":"look","at":2}],"indices":true}}},
+{"caption":"A new run starts at index 2: 'b'.","panels":{"chars":{"values":["a","a","b","b","c","c"],"states":"ddc___","pointers":[{"name":"start","at":2,"strong":true}],"indices":true}}},
+{"caption":"s[3] is also 'b': count becomes 2.","panels":{"chars":{"values":["a","a","b","b","c","c"],"states":"ddcc__","pointers":[{"name":"start","at":2,"strong":true},{"name":"look","at":3}],"indices":true}}},
+{"caption":"s[4] is 'c', not 'b': the run ends at length 2.","panels":{"chars":{"values":["a","a","b","b","c","c"],"states":"ddcc__","pointers":[{"name":"start","at":2,"strong":true},{"name":"look","at":4}],"indices":true}}},
+{"caption":"A new run starts at index 4: 'c'.","panels":{"chars":{"values":["a","a","b","b","c","c"],"states":"ddddc_","pointers":[{"name":"start","at":4,"strong":true}],"indices":true}}},
+{"caption":"s[5] is also 'c': count becomes 2.","panels":{"chars":{"values":["a","a","b","b","c","c"],"states":"ddddcc","pointers":[{"name":"start","at":4,"strong":true},{"name":"look","at":5}],"indices":true}}},
+{"caption":"Index 6 is past the end of the string: the run ends at length 2.","panels":{"chars":{"values":["a","a","b","b","c","c"],"states":"ddddcc","pointers":[{"name":"start","at":4,"strong":true}],"indices":true}}}
+]},
+{"id":"long-run","label":"One long run","steps":[
+{"caption":"A new run starts at index 0: 'a'.","panels":{"chars":{"values":["a","a","a","a"],"states":"c___","pointers":[{"name":"start","at":0,"strong":true}],"indices":true}}},
+{"caption":"s[1] is also 'a': count becomes 2.","panels":{"chars":{"values":["a","a","a","a"],"states":"cc__","pointers":[{"name":"start","at":0,"strong":true},{"name":"look","at":1}],"indices":true}}},
+{"caption":"s[2] is also 'a': count becomes 3.","panels":{"chars":{"values":["a","a","a","a"],"states":"ccc_","pointers":[{"name":"start","at":0,"strong":true},{"name":"look","at":2}],"indices":true}}},
+{"caption":"s[3] is also 'a': count becomes 4.","panels":{"chars":{"values":["a","a","a","a"],"states":"cccc","pointers":[{"name":"start","at":0,"strong":true},{"name":"look","at":3}],"indices":true}}},
+{"caption":"Index 4 is past the end of the string: the run ends at length 4.","panels":{"chars":{"values":["a","a","a","a"],"states":"cccc","pointers":[{"name":"start","at":0,"strong":true}],"indices":true}}}
+]},
+{"id":"no-runs","label":"All different","steps":[
+{"caption":"A new run starts at index 0: 'a'.","panels":{"chars":{"values":["a","b","c","d"],"states":"c___","pointers":[{"name":"start","at":0,"strong":true}],"indices":true}}},
+{"caption":"s[1] is 'b', not 'a': the run ends at length 1.","panels":{"chars":{"values":["a","b","c","d"],"states":"c___","pointers":[{"name":"start","at":0,"strong":true},{"name":"look","at":1}],"indices":true}}},
+{"caption":"A new run starts at index 1: 'b'.","panels":{"chars":{"values":["a","b","c","d"],"states":"dc__","pointers":[{"name":"start","at":1,"strong":true}],"indices":true}}},
+{"caption":"s[2] is 'c', not 'b': the run ends at length 1.","panels":{"chars":{"values":["a","b","c","d"],"states":"dc__","pointers":[{"name":"start","at":1,"strong":true},{"name":"look","at":2}],"indices":true}}},
+{"caption":"A new run starts at index 2: 'c'.","panels":{"chars":{"values":["a","b","c","d"],"states":"ddc_","pointers":[{"name":"start","at":2,"strong":true}],"indices":true}}},
+{"caption":"s[3] is 'd', not 'c': the run ends at length 1.","panels":{"chars":{"values":["a","b","c","d"],"states":"ddc_","pointers":[{"name":"start","at":2,"strong":true},{"name":"look","at":3}],"indices":true}}},
+{"caption":"A new run starts at index 3: 'd'.","panels":{"chars":{"values":["a","b","c","d"],"states":"dddc","pointers":[{"name":"start","at":3,"strong":true}],"indices":true}}},
+{"caption":"Index 4 is past the end of the string: the run ends at length 1.","panels":{"chars":{"values":["a","b","c","d"],"states":"dddc","pointers":[{"name":"start","at":3,"strong":true}],"indices":true}}}
+]}
+]}

@@ -1,0 +1,20 @@
+layout: row
+panels:
+  - id: call
+    viz: StructViz
+    title: Call frame
+  - id: shared
+    viz: StructViz
+    title: Default list
+alt: >-
+  The def line builds one default list, kept with the function. The call with apple appends to
+  that list. The call with pear does not build a new list either, so it appends to the same one,
+  and its result already holds apple.
+captions: vizrec
+presets:
+  - id: main
+    label: apple, then pear
+consistency:
+  description: "rec.output() equals mutable_default_bug.py's real stdout (no stdin needed)."
+  example: ../examples/mutable_default_bug.py
+  compare: output

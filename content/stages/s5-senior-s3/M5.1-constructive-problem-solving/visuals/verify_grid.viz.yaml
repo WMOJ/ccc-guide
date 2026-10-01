@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: counts, viz: TableViz, title: Verifying the grid }
+alt: >-
+  Re-checking a finished grid against every constraint by tallying each row's vowel count, then
+  each column's, and comparing them. A grid where every row and column tallies the same and
+  every row splits exactly in half passes; a grid with even one mismatched row or column fails.
+captions: vizrec
+presets:
+  - id: valid
+    label: Valid grid
+    stdin: "4 4\nabab\nbaba\nabab\nbaba\n"
+  - id: broken
+    label: Broken grid
+    stdin: "4 4\nabab\nbaba\nabab\naaaa\n"
+consistency:
+  description: The printed verdict matches examples/verify_grid.py on the same input.
+  example: ../examples/verify_grid.py
+  compare: output

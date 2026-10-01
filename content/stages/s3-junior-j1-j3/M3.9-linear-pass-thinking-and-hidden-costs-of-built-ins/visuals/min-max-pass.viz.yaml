@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: numbers, viz: ArrayViz, title: Numbers }
+  - { id: best, viz: ArrayViz, title: "min_val, max_val" }
+alt: >-
+  A list of numbers scanned once, left to right, with a pointer on the current number. Beside it, a
+  two-cell array holds the running min_val and max_val, updating only when the current number beats
+  one of them.
+captions: vizrec
+presets:
+  - id: ascending
+    label: Ascending
+    stdin: "1 2 3 4 5\n"
+  - id: descending
+    label: Descending
+    stdin: "5 4 3 2 1\n"
+  - id: single
+    label: Single element
+    stdin: "7\n"
+consistency:
+  description: The final min_val and max_val equal the two numbers printed by examples/min_max_pass.py.
+  example: ../examples/min_max_pass.py
+  compare: output

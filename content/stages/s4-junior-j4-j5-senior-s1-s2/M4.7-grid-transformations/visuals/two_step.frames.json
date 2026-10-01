@@ -1,0 +1,29 @@
+{"schema":1,
+"kind":"frames",
+"id":"two_step",
+"layout":"row",
+"panels":[{"id":"mid","viz":"GridViz","title":"Transposed"},{"id":"out","viz":"GridViz","title":"Rows reversed"}],
+"alt":"Two grids side by side. The left one is the source after a transpose. Each of its rows is highlighted in turn and copied, reversed, into the same row of the right grid, which ends as the source rotated 90 degrees clockwise.",
+"presets":[
+{"id":"rectangle","label":"Rectangle","steps":[
+{"caption":"Step one is already done: transposing the 2-by-3 source gives this 3-by-2 grid on the left. Step two reverses each of its rows, filling the result on the right.","panels":{"mid":{"cells":["__","__","__"],"values":[[1,4],[2,5],[3,6]]},"out":{"cells":["__","__","__"],"values":[["?","?"],["?","?"],["?","?"]]}}},
+{"caption":"Row 0 of the transposed grid is 1, 4. It reads backward in the result. Result row 0 is 4, 1.","panels":{"mid":{"cells":["cc","__","__"],"values":[[1,4],[2,5],[3,6]]},"out":{"cells":["cc","__","__"],"values":[[4,1],["?","?"],["?","?"]]}}},
+{"caption":"Row 1 of the transposed grid is 2, 5. It reads backward in the result. Result row 1 is 5, 2.","panels":{"mid":{"cells":["dd","cc","__"],"values":[[1,4],[2,5],[3,6]]},"out":{"cells":["dd","cc","__"],"values":[[4,1],[5,2],["?","?"]]}}},
+{"caption":"Row 2 of the transposed grid is 3, 6. It reads backward in the result. Result row 2 is 6, 3.","panels":{"mid":{"cells":["dd","dd","cc"],"values":[[1,4],[2,5],[3,6]]},"out":{"cells":["dd","dd","cc"],"values":[[4,1],[5,2],[6,3]]}}},
+{"caption":"Every row is reversed. The result is the source rotated 90 degrees clockwise: the source's top-left value 1 is now in the top-right corner, at row 0, column 1.","panels":{"mid":{"cells":["dd","dd","dd"],"values":[[1,4],[2,5],[3,6]]},"out":{"cells":["dd","dd","dd"],"values":[[4,1],[5,2],[6,3]]}}}
+]},
+{"id":"square","label":"Square","steps":[
+{"caption":"Step one is already done: transposing the 3-by-3 source gives this 3-by-3 grid on the left. Step two reverses each of its rows, filling the result on the right.","panels":{"mid":{"cells":["___","___","___"],"values":[[1,4,7],[2,5,8],[3,6,9]]},"out":{"cells":["___","___","___"],"values":[["?","?","?"],["?","?","?"],["?","?","?"]]}}},
+{"caption":"Row 0 of the transposed grid is 1, 4, 7. It reads backward in the result. Result row 0 is 7, 4, 1.","panels":{"mid":{"cells":["ccc","___","___"],"values":[[1,4,7],[2,5,8],[3,6,9]]},"out":{"cells":["ccc","___","___"],"values":[[7,4,1],["?","?","?"],["?","?","?"]]}}},
+{"caption":"Row 1 of the transposed grid is 2, 5, 8. It reads backward in the result. Result row 1 is 8, 5, 2.","panels":{"mid":{"cells":["ddd","ccc","___"],"values":[[1,4,7],[2,5,8],[3,6,9]]},"out":{"cells":["ddd","ccc","___"],"values":[[7,4,1],[8,5,2],["?","?","?"]]}}},
+{"caption":"Row 2 of the transposed grid is 3, 6, 9. It reads backward in the result. Result row 2 is 9, 6, 3.","panels":{"mid":{"cells":["ddd","ddd","ccc"],"values":[[1,4,7],[2,5,8],[3,6,9]]},"out":{"cells":["ddd","ddd","ccc"],"values":[[7,4,1],[8,5,2],[9,6,3]]}}},
+{"caption":"Every row is reversed. The result is the source rotated 90 degrees clockwise: the source's top-left value 1 is now in the top-right corner, at row 0, column 2.","panels":{"mid":{"cells":["ddd","ddd","ddd"],"values":[[1,4,7],[2,5,8],[3,6,9]]},"out":{"cells":["ddd","ddd","ddd"],"values":[[7,4,1],[8,5,2],[9,6,3]]}}}
+]},
+{"id":"one-row","label":"One row","steps":[
+{"caption":"Step one is already done: transposing the 1-by-3 source gives this 3-by-1 grid on the left. Step two reverses each of its rows, filling the result on the right.","panels":{"mid":{"cells":["_","_","_"],"values":[[1],[2],[3]]},"out":{"cells":["_","_","_"],"values":[["?"],["?"],["?"]]}}},
+{"caption":"Row 0 of the transposed grid is 1. A row of one value reads the same backward. Result row 0 is 1.","panels":{"mid":{"cells":["c","_","_"],"values":[[1],[2],[3]]},"out":{"cells":["c","_","_"],"values":[[1],["?"],["?"]]}}},
+{"caption":"Row 1 of the transposed grid is 2. A row of one value reads the same backward. Result row 1 is 2.","panels":{"mid":{"cells":["d","c","_"],"values":[[1],[2],[3]]},"out":{"cells":["d","c","_"],"values":[[1],[2],["?"]]}}},
+{"caption":"Row 2 of the transposed grid is 3. A row of one value reads the same backward. Result row 2 is 3.","panels":{"mid":{"cells":["d","d","c"],"values":[[1],[2],[3]]},"out":{"cells":["d","d","c"],"values":[[1],[2],[3]]}}},
+{"caption":"Every row is reversed. The result is the source rotated 90 degrees clockwise: the source's top-left value 1 is now in the top-right corner, at row 0, column 0.","panels":{"mid":{"cells":["d","d","d"],"values":[[1],[2],[3]]},"out":{"cells":["d","d","d"],"values":[[1],[2],[3]]}}}
+]}
+]}

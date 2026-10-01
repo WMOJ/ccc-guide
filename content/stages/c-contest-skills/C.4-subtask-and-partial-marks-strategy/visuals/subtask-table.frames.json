@@ -1,0 +1,20 @@
+{"schema":1,
+"kind":"frames",
+"id":"subtask-table",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Additions at each bound"}],
+"alt":"A table with one row per subtask bound and three columns for the plans O(N^3), O(N^2) and O(N). Each cell holds the number of additions that plan does at that bound, written like 4.5e6 for 4.5 times 10^6. A cell is marked done when the count is at most 10^7 and invalid when it is over. Row by row, the bound rules out the plans of lower rows until only the linear plan fits.",
+"presets":[
+{"id":"main","label":"This problem","steps":[
+{"caption":"Subtask 1 bounds N at 300. Slice sums do 4.5e6 additions, within the budget. Running sums do 45,150, within the budget. The prefix plan does 300, within the budget.","panels":{"table":{"cells":[["4.5e6","45,150","300"]],"states":["ddd"],"rowHeads":["N ≤ 300"],"colHeads":["O(N^3)","O(N^2)","O(N)"]}}},
+{"caption":"Subtask 2 bounds N at 4000. Slice sums do 1.1e10 additions, about 1,067 times the budget. Running sums do 8.0e6, within the budget. The prefix plan does 4,000, within the budget.","panels":{"table":{"cells":[["4.5e6","45,150","300"],["1.1e10","8.0e6","4,000"]],"states":["ddd","xdd"],"rowHeads":["N ≤ 300","N ≤ 4000"],"colHeads":["O(N^3)","O(N^2)","O(N)"]}}},
+{"caption":"Subtask 3 bounds N at 10^6. Slice sums do 1.7e17 additions, about 1.7e10 times the budget. Running sums do 5.0e11, about 50,000 times the budget. The prefix plan does 1.0e6, within the budget.","panels":{"table":{"cells":[["4.5e6","45,150","300"],["1.1e10","8.0e6","4,000"],["1.7e17","5.0e11","1.0e6"]],"states":["ddd","xdd","xxd"],"rowHeads":["N ≤ 300","N ≤ 4000","N ≤ 10^6"],"colHeads":["O(N^3)","O(N^2)","O(N)"]}}},
+{"caption":"Each bound rules out the plan that served the row above. In the last row only the prefix plan is within the budget.","panels":{"table":{"cells":[["4.5e6","45,150","300"],["1.1e10","8.0e6","4,000"],["1.7e17","5.0e11","1.0e6"]],"states":["ddd","xdd","xxd"],"rowHeads":["N ≤ 300","N ≤ 4000","N ≤ 10^6"],"colHeads":["O(N^3)","O(N^2)","O(N)"]}}}
+]},
+{"id":"smaller","label":"Smaller bounds","steps":[
+{"caption":"Subtask 1 bounds N at 100. Slice sums do 1.7e5 additions, within the budget. Running sums do 5,050, within the budget. The prefix plan does 100, within the budget.","panels":{"table":{"cells":[["1.7e5","5,050","100"]],"states":["ddd"],"rowHeads":["N ≤ 100"],"colHeads":["O(N^3)","O(N^2)","O(N)"]}}},
+{"caption":"Subtask 2 bounds N at 2000. Slice sums do 1.3e9 additions, about 133 times the budget. Running sums do 2.0e6, within the budget. The prefix plan does 2,000, within the budget.","panels":{"table":{"cells":[["1.7e5","5,050","100"],["1.3e9","2.0e6","2,000"]],"states":["ddd","xdd"],"rowHeads":["N ≤ 100","N ≤ 2000"],"colHeads":["O(N^3)","O(N^2)","O(N)"]}}},
+{"caption":"Subtask 3 bounds N at 200000. Slice sums do 1.3e15 additions, about 1.3e8 times the budget. Running sums do 2.0e10, about 2,000 times the budget. The prefix plan does 2.0e5, within the budget.","panels":{"table":{"cells":[["1.7e5","5,050","100"],["1.3e9","2.0e6","2,000"],["1.3e15","2.0e10","2.0e5"]],"states":["ddd","xdd","xxd"],"rowHeads":["N ≤ 100","N ≤ 2000","N ≤ 200000"],"colHeads":["O(N^3)","O(N^2)","O(N)"]}}},
+{"caption":"Each bound rules out the plan that served the row above. In the last row only the prefix plan is within the budget.","panels":{"table":{"cells":[["1.7e5","5,050","100"],["1.3e9","2.0e6","2,000"],["1.3e15","2.0e10","2.0e5"]],"states":["ddd","xdd","xxd"],"rowHeads":["N ≤ 100","N ≤ 2000","N ≤ 200000"],"colHeads":["O(N^3)","O(N^2)","O(N)"]}}}
+]}
+]}

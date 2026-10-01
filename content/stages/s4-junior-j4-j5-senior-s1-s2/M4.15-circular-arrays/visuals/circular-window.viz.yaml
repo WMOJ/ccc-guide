@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: ring, viz: ArrayViz, title: Circular window }
+alt: >-
+  A window of fixed size sliding one position at a time around a circular array, dropping the
+  element that leaves and adding the element that enters at each step, including windows that
+  wrap past the last index, ending on the window with the largest sum.
+captions: vizrec
+presets:
+  - id: main
+    label: Six values
+    stdin: "6 3\n4 -1 5 2 -3 6\n"
+  - id: whole-array
+    label: Window = array
+    stdin: "4 4\n1 2 3 4\n"
+  - id: single
+    label: Single element
+    stdin: "5 1\n3 -2 7 0 1\n"
+consistency:
+  description: The best sum equals the output of examples/circular_window.py on the same input.
+  example: ../examples/circular_window.py
+  compare: output

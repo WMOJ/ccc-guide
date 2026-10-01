@@ -2,57 +2,58 @@ import sys
 
 
 def main() -> None:
-    input_data = sys.stdin.read().split()
-    n = int(input_data[0])
-
-    xs = []
-    ys = []
+    data = sys.stdin.read().split()
+    n = int(data[0])
+    pos = 1
+    xs = set()
+    ys = set()
     rects = []
-
-    for i in range(n):
-        x1 = int(input_data[1 + i * 4])
-        y1 = int(input_data[1 + i * 4 + 1])
-        x2 = int(input_data[1 + i * 4 + 2])
-        y2 = int(input_data[1 + i * 4 + 3])
+    for _ in range(n):
+        x1 = int(data[pos])
+        y1 = int(data[pos + 1])
+        x2 = int(data[pos + 2])
+        y2 = int(data[pos + 3])
+        pos += 4
         rects.append((x1, y1, x2, y2))
-        xs.extend([x1, x2])
-        ys.extend([y1, y2])
+        xs.add(x1)
+        xs.add(x2)
+        ys.add(y1)
+        ys.add(y2)
 
-    xs = sorted(set(xs))
-    ys = sorted(set(ys))
+    xs = sorted(xs)
+    ys = sorted(ys)
+    x_rank = {x: i for i, x in enumerate(xs)}
+    y_rank = {y: i for i, y in enumerate(ys)}
 
-    # Create difference array
-    diff = [[0] * len(ys) for _ in range(len(xs))]
-
-    # Add rectangles to difference array
+    diff = [[0] * len(xs) for _ in range(len(ys))]
     for x1, y1, x2, y2 in rects:
-        xi1 = xs.index(x1)
-        yi1 = ys.index(y1)
-        xi2 = xs.index(x2)
-        yi2 = ys.index(y2)
+        left = x_rank[x1]
+        right = x_rank[x2]
+        top = y_rank[y1]
+        bottom = y_rank[y2]
+        diff[top][left] += 1
+        diff[top][right] -= 1
+        diff[bottom][left] -= 1
+        diff[bottom][right] += 1
 
-        diff[xi1][yi1] += 1
-        diff[xi2][yi1] -= 1
-        diff[xi1][yi2] -= 1
-        diff[xi2][yi2] += 1
-
-    # Compute 2D prefix sum
-    area = 0
-    for i in range(len(xs) - 1):
-        for j in range(len(ys) - 1):
-            if i > 0:
-                diff[i][j] += diff[i - 1][j]
+    at_least_one = 0
+    at_least_two = 0
+    for j in range(len(ys) - 1):
+        for i in range(len(xs) - 1):
             if j > 0:
-                diff[i][j] += diff[i][j - 1]
+                diff[j][i] += diff[j - 1][i]
+            if i > 0:
+                diff[j][i] += diff[j][i - 1]
             if i > 0 and j > 0:
-                diff[i][j] -= diff[i - 1][j - 1]
+                diff[j][i] -= diff[j - 1][i - 1]
+            area = (xs[i + 1] - xs[i]) * (ys[j + 1] - ys[j])
+            if diff[j][i] >= 1:
+                at_least_one += area
+            if diff[j][i] >= 2:
+                at_least_two += area
 
-            if diff[i][j] > 0:
-                width = xs[i + 1] - xs[i]
-                height = ys[j + 1] - ys[j]
-                area += width * height
-
-    print(area)
+    print(at_least_one)
+    print(at_least_two)
 
 
 if __name__ == "__main__":

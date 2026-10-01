@@ -3,8 +3,8 @@ title: Sparse table
 status: accepted
 objectives:
   - Precompute O(N log N) sparse table for O(1) idempotent range queries.
-  - Implement sparse table using logarithmic doubling.
-  - Optimize queries for min, max, and gcd.
+  - Build the table by doubling: each block is two blocks of half its length.
+  - Answer a min, max or gcd query with two overlapping blocks, and explain why a sum cannot do this.
 prereqs:
   - M6.12
   - M4.6
@@ -12,4 +12,4 @@ lessons:
   - sparse-table-queries
 practice:
   - id: ccc21s5
-    note: Verify that every consecutive range has the same GCD.
+    note: Build a sequence whose stated stretches have the gcds you are given, or report that none exists.

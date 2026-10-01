@@ -1,0 +1,29 @@
+{"schema":1,
+"kind":"frames",
+"id":"multiset",
+"layout":"row",
+"panels":[{"id":"h","viz":"StructViz","title":"Heap (max, negated)"},{"id":"p","viz":"TableViz","title":"Pending removals"}],
+"alt":"A multiset kept as a max-heap with a pending-count table, one column per value seen so far. An add pushes a new heap entry. A remove drops the count immediately and increases that value's pending count, without touching the heap. A query pops stale entries, each one lowering its value's pending count by one, until it finds an entry whose pending count is zero: that is the current maximum, even if another entry with the same value was removed.",
+"presets":[
+{"id":"duplicate","label":"Duplicate","steps":[
+{"caption":"Add 3: it goes into the heap as -3. The multiset now holds 1 item.","panels":{"h":{"kind":"heap","items":[{"id":"e1","v":3,"s":"c"}]},"p":{"cells":[[0]],"rowHeads":["pending"],"colHeads":[3]}}},
+{"caption":"Add 7: it goes into the heap as -7. The multiset now holds 2 items.","panels":{"h":{"kind":"heap","items":[{"id":"e2","v":7,"s":"c"},{"id":"e1","v":3}]},"p":{"cells":[[0,0]],"rowHeads":["pending"],"colHeads":[3,7]}}},
+{"caption":"Add 2: it goes into the heap as -2. The multiset now holds 3 items.","panels":{"h":{"kind":"heap","items":[{"id":"e2","v":7},{"id":"e1","v":3},{"id":"e3","v":2,"s":"c"}]},"p":{"cells":[[0,0,0]],"rowHeads":["pending"],"colHeads":[3,7,2]}}},
+{"caption":"Add 9: it goes into the heap as -9. The multiset now holds 4 items.","panels":{"h":{"kind":"heap","items":[{"id":"e4","v":9,"s":"c"},{"id":"e2","v":7},{"id":"e1","v":3},{"id":"e3","v":2}]},"p":{"cells":[[0,0,0,0]],"rowHeads":["pending"],"colHeads":[3,7,2,9]}}},
+{"caption":"Add 9: it goes into the heap as -9. The multiset now holds 5 items.","panels":{"h":{"kind":"heap","items":[{"id":"e4","v":9},{"id":"e5","v":9,"s":"c"},{"id":"e2","v":7},{"id":"e1","v":3},{"id":"e3","v":2}]},"p":{"cells":[[0,0,0,0]],"rowHeads":["pending"],"colHeads":[3,7,2,9]}}},
+{"caption":"Add 5: it goes into the heap as -5. The multiset now holds 6 items.","panels":{"h":{"kind":"heap","items":[{"id":"e4","v":9},{"id":"e5","v":9},{"id":"e2","v":7},{"id":"e6","v":5,"s":"c"},{"id":"e1","v":3},{"id":"e3","v":2}]},"p":{"cells":[[0,0,0,0,0]],"rowHeads":["pending"],"colHeads":[3,7,2,9,5]}}},
+{"caption":"Remove 9: count drops to 5 right away, but the heap keeps its stale entry. `pending[9]` becomes 1, so a later query can skip it.","panels":{"h":{"kind":"heap","items":[{"id":"e4","v":9},{"id":"e5","v":9},{"id":"e2","v":7},{"id":"e6","v":5},{"id":"e1","v":3},{"id":"e3","v":2}]},"p":{"cells":[[0,0,0,1,0]],"rowHeads":["pending"],"colHeads":[3,7,2,9,5]}}},
+{"caption":"The top of the heap is 9, but `pending[9]` is 1. This entry stands for an item that was removed, so it is discarded and the count stays 5.","panels":{"h":{"kind":"heap","items":[{"id":"e4","v":9,"s":"x"},{"id":"e5","v":9},{"id":"e2","v":7},{"id":"e6","v":5},{"id":"e1","v":3},{"id":"e3","v":2}]},"p":{"cells":[[0,0,0,0,0]],"rowHeads":["pending"],"colHeads":[3,7,2,9,5]}}},
+{"caption":"The top of the heap is 9 and `pending[9]` is 0, so this entry is still in the multiset. It is the maximum.","panels":{"h":{"kind":"heap","items":[{"id":"e5","v":9,"s":"c"},{"id":"e2","v":7},{"id":"e6","v":5},{"id":"e1","v":3},{"id":"e3","v":2}]},"p":{"cells":[[0,0,0,0,0]],"rowHeads":["pending"],"colHeads":[3,7,2,9,5]}}}
+]},
+{"id":"unique","label":"No duplicates","steps":[
+{"caption":"Add 4: it goes into the heap as -4. The multiset now holds 1 item.","panels":{"h":{"kind":"heap","items":[{"id":"e1","v":4,"s":"c"}]},"p":{"cells":[[0]],"rowHeads":["pending"],"colHeads":[4]}}},
+{"caption":"Add 6: it goes into the heap as -6. The multiset now holds 2 items.","panels":{"h":{"kind":"heap","items":[{"id":"e2","v":6,"s":"c"},{"id":"e1","v":4}]},"p":{"cells":[[0,0]],"rowHeads":["pending"],"colHeads":[4,6]}}},
+{"caption":"Add 1: it goes into the heap as -1. The multiset now holds 3 items.","panels":{"h":{"kind":"heap","items":[{"id":"e2","v":6},{"id":"e1","v":4},{"id":"e3","v":1,"s":"c"}]},"p":{"cells":[[0,0,0]],"rowHeads":["pending"],"colHeads":[4,6,1]}}},
+{"caption":"Remove 6: count drops to 2 right away, but the heap keeps its stale entry. `pending[6]` becomes 1, so a later query can skip it.","panels":{"h":{"kind":"heap","items":[{"id":"e2","v":6},{"id":"e1","v":4},{"id":"e3","v":1}]},"p":{"cells":[[0,1,0]],"rowHeads":["pending"],"colHeads":[4,6,1]}}},
+{"caption":"Remove 4: count drops to 1 right away, but the heap keeps its stale entry. `pending[4]` becomes 1, so a later query can skip it.","panels":{"h":{"kind":"heap","items":[{"id":"e2","v":6},{"id":"e1","v":4},{"id":"e3","v":1}]},"p":{"cells":[[1,1,0]],"rowHeads":["pending"],"colHeads":[4,6,1]}}},
+{"caption":"The top of the heap is 6, but `pending[6]` is 1. This entry stands for an item that was removed, so it is discarded and the count stays 1.","panels":{"h":{"kind":"heap","items":[{"id":"e2","v":6,"s":"x"},{"id":"e1","v":4},{"id":"e3","v":1}]},"p":{"cells":[[1,0,0]],"rowHeads":["pending"],"colHeads":[4,6,1]}}},
+{"caption":"The top of the heap is 4, but `pending[4]` is 1. This entry stands for an item that was removed, so it is discarded and the count stays 1.","panels":{"h":{"kind":"heap","items":[{"id":"e1","v":4,"s":"x"},{"id":"e3","v":1}]},"p":{"cells":[[0,0,0]],"rowHeads":["pending"],"colHeads":[4,6,1]}}},
+{"caption":"The top of the heap is 1 and `pending[1]` is 0, so this entry is still in the multiset. It is the maximum.","panels":{"h":{"kind":"heap","items":[{"id":"e3","v":1,"s":"c"}]},"p":{"cells":[[0,0,0]],"rowHeads":["pending"],"colHeads":[4,6,1]}}}
+]}
+]}

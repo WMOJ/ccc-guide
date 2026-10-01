@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: "is_pal[l][r]" }
+alt: >-
+  Filling the is_pal table by increasing interval length. The length-1 diagonal starts true.
+  Each later cell checks whether its ends match and, from length 3 up, follows an arrow to the
+  shorter interval one step in from each end.
+captions: vizrec
+presets:
+  - id: main
+    label: Main
+    stdin: "redder\n"
+  - id: no-match
+    label: No match
+    stdin: "chair\n"
+consistency:
+  description: The reported palindromic substrings equal the output of examples/interval_palindrome.py on the same input.
+  example: ../examples/interval_palindrome.py
+  compare: output

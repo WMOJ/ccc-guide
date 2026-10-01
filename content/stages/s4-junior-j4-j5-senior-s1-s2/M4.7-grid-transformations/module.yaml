@@ -11,5 +11,6 @@ prereqs:
 lessons:
   - grid-transformations
 practice:
-  - id: ccc21j2
-    note: Rotate a grid pattern to find its appearance after applying turns.
+  - id: ccc18s2
+    note: Figure out which 90-degree rotation restores a table of plant growth measurements to its correct order.
+    why: Rotating a grid by quarter turns is the whole problem, the technique this lesson builds.

@@ -1,66 +1,62 @@
 import sys
 
 
-def find(parent, x):
-    if parent[x] != x:
-        parent[x] = find(parent, parent[x])
-    return parent[x]
+def find(parent: list, x: int) -> int:
+    """Find root with path halving."""
+    while parent[x] != x:
+        parent[x] = parent[parent[x]]
+        x = parent[x]
+    return x
 
 
-def union(parent, rank, x, y):
-    root_x = find(parent, x)
-    root_y = find(parent, y)
-
-    if root_x == root_y:
+def union(parent: list, size: list, a: int, b: int) -> bool:
+    """Merge groups containing a and b; False if they were already one group."""
+    root_a = find(parent, a)
+    root_b = find(parent, b)
+    if root_a == root_b:
         return False
-
-    if rank[root_x] < rank[root_y]:
-        parent[root_x] = root_y
-    elif rank[root_x] > rank[root_y]:
-        parent[root_y] = root_x
+    if size[root_a] < size[root_b]:
+        parent[root_a] = root_b
+        size[root_b] += size[root_a]
     else:
-        parent[root_y] = root_x
-        rank[root_x] += 1
-
+        parent[root_b] = root_a
+        size[root_a] += size[root_b]
     return True
 
 
 def main() -> None:
-    input_data = sys.stdin.read().split()
-    if not input_data:
+    data = sys.stdin.read().split()
+    if not data:
         return
 
-    idx = 0
-    n = int(input_data[idx])
-    m = int(input_data[idx + 1])
-    idx += 2
-
+    n = int(data[0])
+    m = int(data[1])
     edges = []
+    pos = 2
     for _ in range(m):
-        u = int(input_data[idx])
-        v = int(input_data[idx + 1])
-        w = int(input_data[idx + 2])
-        idx += 3
+        u = int(data[pos])
+        v = int(data[pos + 1])
+        w = int(data[pos + 2])
+        pos += 3
         edges.append((w, u, v))
-
     edges.sort()
 
     parent = list(range(n))
-    rank = [0] * n
-    total_weight = 0
-    edges_used = 0
-
+    size = [1] * n
+    total = 0
+    chosen = []
     for w, u, v in edges:
-        if union(parent, rank, u, v):
-            total_weight += w
-            edges_used += 1
-            if edges_used == n - 1:
+        if union(parent, size, u, v):
+            total += w
+            chosen.append(f"{u}-{v}")
+            if len(chosen) == n - 1:
                 break
 
-    if edges_used == n - 1:
-        sys.stdout.write(str(total_weight) + "\n")
+    if len(chosen) == n - 1:
+        print(total)
+        print(" ".join(chosen))
     else:
-        sys.stdout.write("-1\n")
+        print(-1)
 
 
 if __name__ == "__main__":

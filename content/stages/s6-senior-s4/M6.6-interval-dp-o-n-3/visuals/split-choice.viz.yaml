@@ -1,0 +1,28 @@
+layout: row
+panels:
+  - { id: arr, viz: ArrayViz, title: Piles }
+  - { id: tab, viz: TableViz, title: "Candidate splits" }
+alt: >-
+  The last merge of a row of piles, tried at every split point k. For each k the left block and the
+  right block have known minimum costs, and the last merge adds the whole range sum. The table
+  lists each k's total and marks the smallest one as the best split.
+captions: vizrec
+legendLabels:
+  current: Trying
+  done: Tried
+  path: Best split
+  compare: Right block
+presets:
+  - id: four
+    label: Four piles
+    stdin: "4\n2 3 5 7\n"
+  - id: five
+    label: Five piles
+    stdin: "5\n4 1 3 2 6\n"
+  - id: equal
+    label: Equal piles
+    stdin: "4\n3 3 3 3\n"
+consistency:
+  description: The best total equals the minimum cost printed by examples/merge_cost.py on each preset.
+  example: ../examples/merge_cost.py
+  compare: output

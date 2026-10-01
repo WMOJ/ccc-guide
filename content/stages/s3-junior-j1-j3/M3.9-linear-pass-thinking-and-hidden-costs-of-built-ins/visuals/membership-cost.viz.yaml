@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: plot, viz: PlotViz, title: Membership checks }
+alt: >-
+  Two lines plotted against how many distinct numbers have been read. Checking each new number
+  against a growing list rises along a curve, since every check rescans everything seen so far.
+  Checking against a set rises in a straight line, one hash lookup per number no matter how large
+  the set has grown.
+captions: vizrec
+presets:
+  - id: main
+    label: "n = 10"
+    stdin: "10\n"
+  - id: mid
+    label: "n = 6"
+    stdin: "6\n"
+  - id: tiny
+    label: "n = 1"
+    stdin: "1\n"
+consistency:
+  description: The final totals equal the two numbers printed by examples/membership_cost.py for the same n.
+  example: ../examples/membership_cost.py
+  compare: output

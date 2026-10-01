@@ -1,0 +1,39 @@
+{"schema":1,
+"kind":"frames",
+"id":"domino_cover",
+"layout":"single",
+"panels":[{"id":"grid","viz":"GridViz","title":"Domino cover"}],
+"alt":"Dominoes placed one at a time on a small board whose squares show (row + col) % 2. Every domino covers one square showing 0 and one showing 1, so the covered count stays balanced. On a board with two opposite corners removed, the squares showing 1 outnumber those showing 0, so two squares are always left over.",
+"legendLabels":{"done":"Covered","current":"New domino","invalid":"Removed","compare":"Left over"},
+"presets":[
+{"id":"cut","label":"Corners cut","steps":[
+{"caption":"A 4 by 4 board with corners (0, 0) and (3, 3) removed. Each square shows (row + col) % 2. 14 squares remain: 6 show 0 and 8 show 1.","panels":{"grid":{"cells":["x___","____","____","___x"],"values":[[null,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,null]]}}},
+{"caption":"Domino 1 covers (0, 1) and (0, 2), which show 1 and 0: one of each. So far 1 square showing 0 and 1 showing 1 are covered.","panels":{"grid":{"cells":["xcc_","____","___m","__mx"],"values":[[null,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,null]]}}},
+{"caption":"Domino 2 covers (0, 3) and (1, 3), which show 1 and 0: one of each. So far 2 squares showing 0 and 2 showing 1 are covered.","panels":{"grid":{"cells":["xddc","___c","___m","__mx"],"values":[[null,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,null]]}}},
+{"caption":"Domino 3 covers (1, 0) and (1, 1), which show 1 and 0: one of each. So far 3 squares showing 0 and 3 showing 1 are covered.","panels":{"grid":{"cells":["xddd","cc_d","___m","__mx"],"values":[[null,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,null]]}}},
+{"caption":"Domino 4 covers (1, 2) and (2, 2), which show 1 and 0: one of each. So far 4 squares showing 0 and 4 showing 1 are covered.","panels":{"grid":{"cells":["xddd","ddcd","__cm","__mx"],"values":[[null,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,null]]}}},
+{"caption":"Domino 5 covers (2, 0) and (2, 1), which show 0 and 1: one of each. So far 5 squares showing 0 and 5 showing 1 are covered.","panels":{"grid":{"cells":["xddd","dddd","ccdm","__mx"],"values":[[null,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,null]]}}},
+{"caption":"Domino 6 covers (3, 0) and (3, 1), which show 1 and 0: one of each. So far 6 squares showing 0 and 6 showing 1 are covered.","panels":{"grid":{"cells":["xddd","dddd","dddm","ccmx"],"values":[[null,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,null]]}}},
+{"caption":"No domino fits any more, leaving (2, 3) and (3, 2) with no partner. Every domino covers one 0 and one 1, but this board has 6 zeros and 8 ones, so the surplus squares cannot be covered by any placement, not only this one.","panels":{"grid":{"cells":["xddd","dddd","dddm","ddmx"],"values":[[null,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,null]]}}}
+]},
+{"id":"full","label":"Full board","steps":[
+{"caption":"A 4 by 4 board, nothing removed. Each square shows (row + col) % 2. 16 squares: 8 show 0 and 8 show 1.","panels":{"grid":{"cells":["____","____","____","____"],"values":[[0,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,0]]}}},
+{"caption":"Domino 1 covers (0, 0) and (0, 1), which show 0 and 1: one of each. So far 1 square showing 0 and 1 showing 1 are covered.","panels":{"grid":{"cells":["cc__","____","____","____"],"values":[[0,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,0]]}}},
+{"caption":"Domino 2 covers (0, 2) and (0, 3), which show 0 and 1: one of each. So far 2 squares showing 0 and 2 showing 1 are covered.","panels":{"grid":{"cells":["ddcc","____","____","____"],"values":[[0,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,0]]}}},
+{"caption":"Domino 3 covers (1, 0) and (1, 1), which show 1 and 0: one of each. So far 3 squares showing 0 and 3 showing 1 are covered.","panels":{"grid":{"cells":["dddd","cc__","____","____"],"values":[[0,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,0]]}}},
+{"caption":"Domino 4 covers (1, 2) and (1, 3), which show 1 and 0: one of each. So far 4 squares showing 0 and 4 showing 1 are covered.","panels":{"grid":{"cells":["dddd","ddcc","____","____"],"values":[[0,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,0]]}}},
+{"caption":"Domino 5 covers (2, 0) and (2, 1), which show 0 and 1: one of each. So far 5 squares showing 0 and 5 showing 1 are covered.","panels":{"grid":{"cells":["dddd","dddd","cc__","____"],"values":[[0,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,0]]}}},
+{"caption":"Domino 6 covers (2, 2) and (2, 3), which show 0 and 1: one of each. So far 6 squares showing 0 and 6 showing 1 are covered.","panels":{"grid":{"cells":["dddd","dddd","ddcc","____"],"values":[[0,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,0]]}}},
+{"caption":"Domino 7 covers (3, 0) and (3, 1), which show 1 and 0: one of each. So far 7 squares showing 0 and 7 showing 1 are covered.","panels":{"grid":{"cells":["dddd","dddd","dddd","cc__"],"values":[[0,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,0]]}}},
+{"caption":"Domino 8 covers (3, 2) and (3, 3), which show 1 and 0: one of each. So far 8 squares showing 0 and 8 showing 1 are covered.","panels":{"grid":{"cells":["dddd","dddd","dddd","ddcc"],"values":[[0,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,0]]}}},
+{"caption":"All 16 squares are covered by 8 dominoes: 8 squares showing 0 and 8 showing 1, matched one to one.","panels":{"grid":{"cells":["dddd","dddd","dddd","dddd"],"values":[[0,1,0,1],[1,0,1,0],[0,1,0,1],[1,0,1,0]]}}}
+]},
+{"id":"odd","label":"Odd board","steps":[
+{"caption":"A 3 by 3 board, nothing removed. Each square shows (row + col) % 2. 9 squares: 5 show 0 and 4 show 1.","panels":{"grid":{"cells":["___","___","___"],"values":[[0,1,0],[1,0,1],[0,1,0]]}}},
+{"caption":"Domino 1 covers (0, 0) and (0, 1), which show 0 and 1: one of each. So far 1 square showing 0 and 1 showing 1 are covered.","panels":{"grid":{"cells":["cc_","___","__m"],"values":[[0,1,0],[1,0,1],[0,1,0]]}}},
+{"caption":"Domino 2 covers (0, 2) and (1, 2), which show 0 and 1: one of each. So far 2 squares showing 0 and 2 showing 1 are covered.","panels":{"grid":{"cells":["ddc","__c","__m"],"values":[[0,1,0],[1,0,1],[0,1,0]]}}},
+{"caption":"Domino 3 covers (1, 0) and (1, 1), which show 1 and 0: one of each. So far 3 squares showing 0 and 3 showing 1 are covered.","panels":{"grid":{"cells":["ddd","ccd","__m"],"values":[[0,1,0],[1,0,1],[0,1,0]]}}},
+{"caption":"Domino 4 covers (2, 0) and (2, 1), which show 0 and 1: one of each. So far 4 squares showing 0 and 4 showing 1 are covered.","panels":{"grid":{"cells":["ddd","ddd","ccm"],"values":[[0,1,0],[1,0,1],[0,1,0]]}}},
+{"caption":"No domino fits any more, leaving (2, 2) with no partner. Every domino covers one 0 and one 1, but this board has 5 zeros and 4 ones, so the surplus squares cannot be covered by any placement, not only this one.","panels":{"grid":{"cells":["ddd","ddd","ddm"],"values":[[0,1,0],[1,0,1],[0,1,0]]}}}
+]}
+]}

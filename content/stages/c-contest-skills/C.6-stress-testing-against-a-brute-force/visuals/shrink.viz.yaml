@@ -1,0 +1,25 @@
+layout: row
+panels:
+  - { id: current, viz: ArrayViz, title: Failing input }
+  - { id: trial, viz: ArrayViz, title: Try without one }
+alt: >-
+  Shrinking a failing input. The top array is the input that still makes the two functions
+  disagree, with the element about to be dropped marked. The bottom array is the same input
+  without that element. If the brute force and the fast function still differ on it, it becomes
+  the new failing input; if they agree, the element goes back. When no single drop keeps the
+  difference, the last input is the smallest.
+captions: vizrec
+presets:
+  - id: long
+    label: Five values
+    stdin: "5\n3 -1 4 -2 1\n"
+  - id: three
+    label: Three values
+    stdin: "3\n3 3 -2\n"
+  - id: negative
+    label: Negative
+    stdin: "3\n-1 -2 -4\n"
+consistency:
+  description: The start, the shrunk input and both answers equal the output of examples/shrink.py on the same stdin.
+  example: ../examples/shrink.py
+  compare: output

@@ -13,7 +13,7 @@ lessons:
   - iterative-dfs-and-recursion-elimination
 practice:
   - id: ccc16s3
-    note: Mark subtrees for removal and count edges carefully to minimize the total length.
-    why: An older tree problem, solvable with an iterative DFS, that still makes good practice for this module.
+    note: Find the shortest route through a tree that visits every marked restaurant.
+    why: An older tree problem you reach with repeated DFS from a candidate endpoint, good practice for the traversals in this module.
   - id: ccc24s4
     note: Colour the nodes of a DFS tree using the parity of each node's depth.

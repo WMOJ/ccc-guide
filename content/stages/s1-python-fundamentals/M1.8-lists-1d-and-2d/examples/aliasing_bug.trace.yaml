@@ -1,8 +1,15 @@
 example: aliasing_bug.py
 alt: >-
-  The program builds a 2-by-3 grid by repeating one row list twice, then
-  changes one cell, which changes both rows because they are the same
-  object.
+  The program builds a grid by repeating one row list, then changes one cell. Every
+  row shows the change, because they are the same list object. A one-row grid has
+  nothing to share.
+presets:
+  - id: main
+    label: Two rows
+    stdin: "2\n3\n"
+  - id: single
+    label: One row
+    stdin: "1\n3\n"
 notes:
-  "1": "`[0] * 3` builds one row. Repeating it with `* 2` copies the reference to that same row twice, not the row itself."
-  "2": "`grid[0][1] = 5` changes the one shared row object, so both `grid[0]` and `grid[1]` show the change."
+  "3": "`[0] * cols` builds one row. Repeating it with `* rows` copies the reference to that same row, not the row itself."
+  "4": "`grid[0][1] = 5` changes the one shared row object, so every entry of `grid` shows the change."

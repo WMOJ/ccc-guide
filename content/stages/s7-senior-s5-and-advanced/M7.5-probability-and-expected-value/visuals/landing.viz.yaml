@@ -1,0 +1,26 @@
+layout: single
+panels:
+  - { id: a, viz: ArrayViz, title: Landing chances }
+alt: >-
+  An array where cell i is the chance that the token lands on square i. Cell 0 starts at 1, and each
+  later cell is filled from the one or two cells before it. A final step brackets the cells for
+  squares 1 and up and adds them, plus 1 for the last turn, to get the expected number of turns.
+captions: vizrec
+legendLabels:
+  current: Being computed
+  compare: Cells it reads
+  done: Known
+presets:
+  - id: main
+    label: Fair coin
+    stdin: "3 0.5\n"
+  - id: longer
+    label: Longer strip
+    stdin: "4 0.5\n"
+  - id: one
+    label: One square
+    stdin: "1 0.5\n"
+consistency:
+  description: The landing chances and the expected turns equal the output of examples/landing_chances.py.
+  example: ../examples/landing_chances.py
+  compare: output

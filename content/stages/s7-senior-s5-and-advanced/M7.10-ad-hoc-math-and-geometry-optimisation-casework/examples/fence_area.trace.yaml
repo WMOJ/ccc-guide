@@ -1,0 +1,20 @@
+example: fence_area.py
+alt: >-
+  The program reads the wire length w and the limit on x, works out the largest allowed x, then
+  tries the whole number w // 4 and the one above it, clamps each into the allowed range, computes
+  the area x * (w - 2 * x) and keeps the larger.
+presets:
+  - id: main
+    label: No limit
+    stdin: "21 99\n"
+  - id: capped
+    label: With a limit
+    stdin: "40 6\n"
+  - id: tiny
+    label: Tiny wire
+    stdin: "3 9\n"
+notes:
+  "11": "`hi` is the largest side length that leaves a positive length on the third side, cut down by the limit."
+  "12": "`w // 4` rounds the peak `w / 4` down. The other candidate is one more."
+  "18": "These two lines pull a pick that falls outside the allowed range back onto its nearest end."
+  "19": "The area is x times the wire left for the third side."

@@ -1,0 +1,28 @@
+layout: single
+panels:
+  - { id: a, viz: ArrayViz }
+alt: >-
+  Five friends each give one gift. A list starts with every friend giving to themselves, then a
+  Fisher-Yates shuffle swaps positions from the right end toward the left, each with a random
+  earlier position. After the shuffle the list is checked: any friend who still gives to
+  themselves is marked invalid and the whole shuffle is thrown away and repeated.
+captions: vizrec
+legendLabels:
+  current: Position i
+  compare: Random j
+  done: Finished
+  invalid: Gives to self
+presets:
+  - id: three-tries
+    label: Three tries
+    stdin: "5 3\n"
+  - id: first-try
+    label: First try
+    stdin: "5 1\n"
+  - id: two-people
+    label: Two people
+    stdin: "2 5\n"
+consistency:
+  description: The number of tries and the final list equal the output of examples/derangement.py.
+  example: ../examples/derangement.py
+  compare: output

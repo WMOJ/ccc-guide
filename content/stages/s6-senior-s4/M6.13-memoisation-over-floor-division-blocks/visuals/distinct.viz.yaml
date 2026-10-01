@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: p, viz: PlotViz, title: Distinct quotients }
+alt: >-
+  A line for n, the number of terms of n divided by d, and a much flatter curve for how many
+  different values those terms take as n grows. A third curve, twice the square root of n,
+  lies right on top of the count.
+captions: vizrec
+presets:
+  - id: hundred
+    label: Up to 100
+    stdin: "100\n"
+  - id: thirty
+    label: Up to 30
+    stdin: "30\n"
+consistency:
+  description: The distinct count and the bound in the visual equal the output of examples/distinct_count.py.
+  example: ../examples/distinct_count.py
+  compare: output

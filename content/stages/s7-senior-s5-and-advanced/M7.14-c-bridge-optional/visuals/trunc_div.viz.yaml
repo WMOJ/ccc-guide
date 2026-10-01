@@ -1,0 +1,29 @@
+layout: row
+panels:
+  - { id: l, viz: LineViz, title: Number line }
+  - { id: t, viz: TableViz, title: Quotient and remainder }
+alt: >-
+  The exact quotient of a divided by b is marked on a number line between two whole numbers.
+  Python's floor division takes the whole number on the left of it, and C++ integer division takes
+  the whole number closer to zero. A table then gives each language's quotient and remainder,
+  where the remainder is a minus quotient times b, and shows that both satisfy quotient times b
+  plus remainder equals a. When the exact quotient is positive, the two languages agree.
+legendLabels:
+  compare: Exact a / b
+  current: Python floor
+  done: C++ toward 0
+captions: vizrec
+presets:
+  - id: negdiv
+    label: a negative
+    stdin: "-7 2\n"
+  - id: pos
+    label: Both positive
+    stdin: "7 2\n"
+  - id: negb
+    label: b negative
+    stdin: "7 -2\n"
+consistency:
+  description: The quotients and remainders equal the lines examples/trunc_div.py prints.
+  example: ../examples/trunc_div.py
+  compare: output

@@ -1,0 +1,20 @@
+{"schema":1,
+"kind":"frames",
+"id":"inversion_invariant",
+"layout":"row",
+"panels":[{"id":"arr","viz":"ArrayViz","title":"Sequence"},{"id":"counts","viz":"TableViz","title":"Inversions and swaps"}],
+"alt":"A sequence being sorted by repeated adjacent swaps, with a running count of its inversions and swaps so far. Each swap that fixes an out-of-order adjacent pair drops the inversion count by exactly one, so the count only ever falls, and the sequence is sorted after exactly as many swaps as it started with inversions.",
+"presets":[
+{"id":"scrambled","label":"Scrambled","steps":[
+{"caption":"Start with [4, 1, 3, 2]. It has 4 inversions: pairs where an earlier value is bigger than a later one.","panels":{"arr":{"values":[4,1,3,2]},"counts":{"cells":[[4,0]],"rowHeads":["so far"],"colHeads":["inversions","swaps"]}}},
+{"caption":"Swap positions 0 and 1 (4 then 1, out of order): the count drops from 4 to 3. Every swap here fixes exactly one inversion.","panels":{"arr":{"values":[1,4,3,2],"states":"mm__"},"counts":{"cells":[[3,1]],"rowHeads":["so far"],"colHeads":["inversions","swaps"]}}},
+{"caption":"Swap positions 1 and 2 (4 then 3, out of order): the count drops from 3 to 2. Every swap here fixes exactly one inversion.","panels":{"arr":{"values":[1,3,4,2],"states":"_mm_"},"counts":{"cells":[[2,2]],"rowHeads":["so far"],"colHeads":["inversions","swaps"]}}},
+{"caption":"Swap positions 2 and 3 (4 then 2, out of order): the count drops from 2 to 1. Every swap here fixes exactly one inversion.","panels":{"arr":{"values":[1,3,2,4],"states":"__mm"},"counts":{"cells":[[1,3]],"rowHeads":["so far"],"colHeads":["inversions","swaps"]}}},
+{"caption":"Swap positions 1 and 2 (3 then 2, out of order): the count drops from 1 to 0. Every swap here fixes exactly one inversion.","panels":{"arr":{"values":[1,2,3,4],"states":"_mm_"},"counts":{"cells":[[0,4]],"rowHeads":["so far"],"colHeads":["inversions","swaps"]}}},
+{"caption":"No adjacent pair is out of order: 0 inversions left, so the array is sorted after exactly 4 swaps, the number it started with.","panels":{"arr":{"values":[1,2,3,4]},"counts":{"cells":[[0,4]],"rowHeads":["so far"],"colHeads":["inversions","swaps"]}}}
+]},
+{"id":"sorted","label":"Already sorted","steps":[
+{"caption":"Start with [1, 2, 3]. It has 0 inversions: pairs where an earlier value is bigger than a later one.","panels":{"arr":{"values":[1,2,3]},"counts":{"cells":[[0,0]],"rowHeads":["so far"],"colHeads":["inversions","swaps"]}}},
+{"caption":"No adjacent pair is out of order: 0 inversions left, so the array is sorted after exactly 0 swaps, the number it started with.","panels":{"arr":{"values":[1,2,3]},"counts":{"cells":[[0,0]],"rowHeads":["so far"],"colHeads":["inversions","swaps"]}}}
+]}
+]}

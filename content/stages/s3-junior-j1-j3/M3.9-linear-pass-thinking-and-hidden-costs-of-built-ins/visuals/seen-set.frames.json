@@ -1,0 +1,29 @@
+{"schema":1,
+"kind":"frames",
+"id":"seen-set",
+"layout":"row",
+"panels":[{"id":"numbers","viz":"ArrayViz","title":"Numbers"},{"id":"seen","viz":"StructViz","title":"Seen set"}],
+"alt":"A list of numbers scanned once, left to right. Beside it, a set grows by one value each time the current number is new. When a number already in the set is read, the scan stops there and reports that number as the first duplicate; if the scan finishes with no repeat, the seen set holds every distinct value read.",
+"presets":[
+{"id":"dup","label":"Has duplicate","steps":[
+{"caption":"Before scanning, the seen set is empty. Nothing has been read yet.","panels":{"numbers":{"values":[1,2,3,2,4,5],"states":"c_____","pointers":[{"name":"i","at":0}]},"seen":{"kind":"set","items":[],"name":"seen"}}},
+{"caption":"1 at position 0 is not in seen, so it joins the set: seen now has 1 value.","panels":{"numbers":{"values":[1,2,3,2,4,5],"states":"dc____","pointers":[{"name":"i","at":1}]},"seen":{"kind":"set","items":[{"v":1}],"name":"seen"}}},
+{"caption":"2 at position 1 is not in seen, so it joins the set: seen now has 2 values.","panels":{"numbers":{"values":[1,2,3,2,4,5],"states":"ddc___","pointers":[{"name":"i","at":2}]},"seen":{"kind":"set","items":[{"v":1},{"v":2}],"name":"seen"}}},
+{"caption":"3 at position 2 is not in seen, so it joins the set: seen now has 3 values.","panels":{"numbers":{"values":[1,2,3,2,4,5],"states":"dddc__","pointers":[{"name":"i","at":3}]},"seen":{"kind":"set","items":[{"v":1},{"v":2},{"v":3}],"name":"seen"}}},
+{"caption":"2 at position 3 is already in seen, so it is the first duplicate. The scan stops here.","panels":{"numbers":{"values":[1,2,3,2,4,5],"states":"dddx__","pointers":[{"name":"i","at":3}]},"seen":{"kind":"set","items":[{"v":1},{"v":2},{"v":3}],"name":"seen"}}}
+]},
+{"id":"clean","label":"No duplicate","steps":[
+{"caption":"Before scanning, the seen set is empty. Nothing has been read yet.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"c____","pointers":[{"name":"i","at":0}]},"seen":{"kind":"set","items":[],"name":"seen"}}},
+{"caption":"1 at position 0 is not in seen, so it joins the set: seen now has 1 value.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"dc___","pointers":[{"name":"i","at":1}]},"seen":{"kind":"set","items":[{"v":1}],"name":"seen"}}},
+{"caption":"2 at position 1 is not in seen, so it joins the set: seen now has 2 values.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"ddc__","pointers":[{"name":"i","at":2}]},"seen":{"kind":"set","items":[{"v":1},{"v":2}],"name":"seen"}}},
+{"caption":"3 at position 2 is not in seen, so it joins the set: seen now has 3 values.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"dddc_","pointers":[{"name":"i","at":3}]},"seen":{"kind":"set","items":[{"v":1},{"v":2},{"v":3}],"name":"seen"}}},
+{"caption":"4 at position 3 is not in seen, so it joins the set: seen now has 4 values.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"ddddc","pointers":[{"name":"i","at":4}]},"seen":{"kind":"set","items":[{"v":1},{"v":2},{"v":3},{"v":4}],"name":"seen"}}},
+{"caption":"5 at position 4 is not in seen, so it joins the set: seen now has 5 values.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"ddddd"},"seen":{"kind":"set","items":[{"v":1},{"v":2},{"v":3},{"v":4},{"v":5}],"name":"seen"}}},
+{"caption":"The scan reached the end with no repeat, so first_dup stays -1.","panels":{"numbers":{"values":[1,2,3,4,5],"states":"ddddd"},"seen":{"kind":"set","items":[{"v":1},{"v":2},{"v":3},{"v":4},{"v":5}],"name":"seen"}}}
+]},
+{"id":"single","label":"Single element","steps":[
+{"caption":"Before scanning, the seen set is empty. Nothing has been read yet.","panels":{"numbers":{"values":[9],"states":"c","pointers":[{"name":"i","at":0}]},"seen":{"kind":"set","items":[],"name":"seen"}}},
+{"caption":"9 at position 0 is not in seen, so it joins the set: seen now has 1 value.","panels":{"numbers":{"values":[9],"states":"d"},"seen":{"kind":"set","items":[{"v":9}],"name":"seen"}}},
+{"caption":"The scan reached the end with no repeat, so first_dup stays -1.","panels":{"numbers":{"values":[9],"states":"d"},"seen":{"kind":"set","items":[{"v":9}],"name":"seen"}}}
+]}
+]}

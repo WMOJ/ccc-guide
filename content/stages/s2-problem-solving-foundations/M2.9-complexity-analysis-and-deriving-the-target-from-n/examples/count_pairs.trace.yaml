@@ -1,0 +1,15 @@
+example: count_pairs.py
+alt: >-
+  The program counts every pair of positions with a nested loop. The outer loop picks a position
+  i. The inner loop then adds one to count for each position after i, so it gets shorter as i grows.
+presets:
+  - id: main
+    label: "n = 4"
+    stdin: "4\n"
+  - id: tiny
+    label: "n = 1"
+    stdin: "1\n"
+notes:
+  "4": "`i` picks the first position of a pair. Each pass of this loop starts a fresh inner loop."
+  "5": "The inner loop starts at `i + 1`, so it runs fewer times every time `i` grows: 3, then 2, then 1, then 0 passes when n is 4."
+  "6": "Every pass through here counts one pair. Six passes in total for n = 4."

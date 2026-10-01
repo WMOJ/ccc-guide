@@ -1,0 +1,21 @@
+example: gcd.py
+alt: >-
+  Euclid's algorithm swaps a and b for b and the remainder of a divided by b, again and again,
+  until b reaches 0; then a is the gcd, and the lcm comes from a, b, and that gcd.
+presets:
+  - id: main
+    label: Typical
+    stdin: "48 18\n"
+  - id: divides
+    label: One divides
+    stdin: "18 6\n"
+  - id: coprime
+    label: Coprime
+    stdin: "17 13\n"
+notes:
+  "5": "Read the whole input at once, the house-skeleton way."
+  "9": "`a` and `b` are the original pair, kept around for the lcm formula."
+  "11": "`x` and `y` are the pair Euclid's algorithm actually shrinks."
+  "14": "One line replaces `(x, y)` with `(y, x % y)`: same gcd, smaller pair."
+  "15": "`y` is 0, so `x` holds the answer: the gcd."
+  "16": "The lcm never needs its own loop: `a * b // g` reuses the gcd just found."

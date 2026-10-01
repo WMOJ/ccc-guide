@@ -1,0 +1,32 @@
+{"schema":1,
+"kind":"frames",
+"id":"memo",
+"layout":"single",
+"panels":[{"id":"t","viz":"TableViz","title":"Memo table"}],
+"alt":"A table with one column for each distinct value of n divided by d, smallest first. The bottom row fills from left to right. Each new entry adds v to a sum of earlier entries, found at the quotients v divided by d, and those quotients are always columns already filled.",
+"presets":[
+{"id":"twelve","label":"n = 12","steps":[
+{"caption":"`12 // d` takes only 6 different values, listed here smallest first. The memo table will hold cost(v) for each, using the rule that cost(v) is v plus the sum of cost(v // d) for d = 2 to v.","panels":{"t":{"cells":[["1","2","3","4","6","12"],["?","?","?","?","?","?"]],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"v = 1 has no d from 2 up to v, so cost(1) is just 1.","panels":{"t":{"cells":[["1","2","3","4","6","12"],[1,"?","?","?","?","?"]],"states":["c_____","c_____"],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"cost(2) = 2 + cost(1) = 3. Every `2 // d` is itself a value of `12 // d`, so the table already holds it.","panels":{"t":{"cells":[["1","2","3","4","6","12"],[1,3,"?","?","?","?"]],"states":["_c____","dc____"],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"cost(3) = 3 + 2 * cost(1) = 5.","panels":{"t":{"cells":[["1","2","3","4","6","12"],[1,3,5,"?","?","?"]],"states":["__c___","ddc___"],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"cost(4) = 4 + cost(2) + 2 * cost(1) = 9.","panels":{"t":{"cells":[["1","2","3","4","6","12"],[1,3,5,9,"?","?"]],"states":["___c__","dddc__"],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"cost(6) = 6 + cost(3) + cost(2) + 3 * cost(1) = 17.","panels":{"t":{"cells":[["1","2","3","4","6","12"],[1,3,5,9,17,"?"]],"states":["____c_","ddddc_"],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"cost(12) = 12 + cost(6) + cost(4) + cost(3) + 2 * cost(2) + 6 * cost(1) = 55.","panels":{"t":{"cells":[["1","2","3","4","6","12"],[1,3,5,9,17,55]],"states":["_____c","dddddc"],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"The table is full. cost(12) = 55 came from 6 entries, not from a table with 12 slots.","panels":{"t":{"cells":[["1","2","3","4","6","12"],[1,3,5,9,17,55]],"states":["______","dddddd"],"rowHeads":["value v","cost(v)"]}}}
+]},
+{"id":"nine","label":"n = 9","steps":[
+{"caption":"`9 // d` takes only 5 different values, listed here smallest first. The memo table will hold cost(v) for each, using the rule that cost(v) is v plus the sum of cost(v // d) for d = 2 to v.","panels":{"t":{"cells":[["1","2","3","4","9"],["?","?","?","?","?"]],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"v = 1 has no d from 2 up to v, so cost(1) is just 1.","panels":{"t":{"cells":[["1","2","3","4","9"],[1,"?","?","?","?"]],"states":["c____","c____"],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"cost(2) = 2 + cost(1) = 3. Every `2 // d` is itself a value of `9 // d`, so the table already holds it.","panels":{"t":{"cells":[["1","2","3","4","9"],[1,3,"?","?","?"]],"states":["_c___","dc___"],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"cost(3) = 3 + 2 * cost(1) = 5.","panels":{"t":{"cells":[["1","2","3","4","9"],[1,3,5,"?","?"]],"states":["__c__","ddc__"],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"cost(4) = 4 + cost(2) + 2 * cost(1) = 9.","panels":{"t":{"cells":[["1","2","3","4","9"],[1,3,5,9,"?"]],"states":["___c_","dddc_"],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"cost(9) = 9 + cost(4) + cost(3) + cost(2) + 5 * cost(1) = 31.","panels":{"t":{"cells":[["1","2","3","4","9"],[1,3,5,9,31]],"states":["____c","ddddc"],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"The table is full. cost(9) = 31 came from 5 entries, not from a table with 9 slots.","panels":{"t":{"cells":[["1","2","3","4","9"],[1,3,5,9,31]],"states":["_____","ddddd"],"rowHeads":["value v","cost(v)"]}}}
+]},
+{"id":"one","label":"n = 1","steps":[
+{"caption":"`1 // d` takes only 1 different value, listed here smallest first. The memo table will hold cost(v) for each, using the rule that cost(v) is v plus the sum of cost(v // d) for d = 2 to v.","panels":{"t":{"cells":[["1"],["?"]],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"v = 1 has no d from 2 up to v, so cost(1) is just 1.","panels":{"t":{"cells":[["1"],[1]],"states":["c","c"],"rowHeads":["value v","cost(v)"]}}},
+{"caption":"The table is full. cost(1) = 1 came from 1 entry, not from a table with 1 slots.","panels":{"t":{"cells":[["1"],[1]],"states":["_","d"],"rowHeads":["value v","cost(v)"]}}}
+]}
+]}

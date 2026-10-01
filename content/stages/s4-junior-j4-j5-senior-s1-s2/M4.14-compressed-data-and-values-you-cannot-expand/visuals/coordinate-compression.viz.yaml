@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: values, viz: ArrayViz, title: Original values }
+  - { id: compressed, viz: ArrayViz, title: Compressed ranks }
+alt: >-
+  Compressing six huge values, two of them repeated, into small ranks: sorting the distinct
+  values and numbering them from 0, then filling the compressed array one entry at a time by
+  looking each original value up in the rank dictionary.
+captions: vizrec
+presets:
+  - id: main
+    label: Duplicates
+    stdin: "6\n500 7 500 42 7 999\n"
+  - id: all-same
+    label: All same
+    stdin: "4\n321 321 321 321\n"
+  - id: no-repeats
+    label: Out of order
+    stdin: "4\n9 321 2 88\n"
+consistency:
+  description: The finished compressed array equals the output of examples/compress_ranks.py on the same input.
+  example: ../examples/compress_ranks.py
+  compare: output

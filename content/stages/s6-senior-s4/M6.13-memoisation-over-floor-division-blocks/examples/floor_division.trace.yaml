@@ -1,0 +1,19 @@
+example: floor_division.py
+alt: >-
+  The loop reads a block start d, finds the shared quotient q and the last d with that quotient,
+  adds q times the block's size to the total, and jumps to the start of the next block.
+presets:
+  - id: eight
+    label: n = 8
+    stdin: "8\n"
+  - id: square
+    label: n = 4
+    stdin: "4\n"
+  - id: one
+    label: n = 1
+    stdin: "1\n"
+notes:
+  "15": "`q` is the quotient shared by every `d` from here up to `last`."
+  "16": "The largest `d` whose quotient is still `q`: dividing `n` by `q` finds it."
+  "18": "One multiplication covers the whole block, however many `d` values it holds."
+  "20": "Jump straight past the block: the next block starts one after `last`."

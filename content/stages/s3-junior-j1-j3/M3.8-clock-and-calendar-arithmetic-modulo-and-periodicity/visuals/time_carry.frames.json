@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"time_carry",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Carrying"}],
+"alt":"A three-row table that converts a total number of minutes into days, hours and minutes. Each row divides its total by the size of its unit, keeps the remainder, and carries the quotient into the next row, matching examples/clock_carry.py.",
+"presets":[
+{"id":"next-day","label":"Next day","steps":[
+{"caption":"Start at 22:40 and add 530 minutes. Everything becomes minutes first: 22 * 60 + 40 + 530 = 1890.","panels":{"table":{"cells":[[1890,60,"?","?"],["?",24,"?","?"],["?","-","-","?"]],"states":["c___","____","____"],"rowHeads":["minutes","hours","days"],"colHeads":["total","size","carry","keep"]}}},
+{"caption":"divmod(1890, 60) gives 31 and 30: 30 minutes stay on the clock, and 31 hours carry over to the next row.","panels":{"table":{"cells":[[1890,60,31,30],["?",24,"?","?"],["?","-","-","?"]],"states":["__dp","____","____"],"rowHeads":["minutes","hours","days"],"colHeads":["total","size","carry","keep"]}}},
+{"caption":"divmod(31, 24) gives 1 and 7: 7 hours stay on the clock, and 1 day carries over.","panels":{"table":{"cells":[[1890,60,31,30],[31,24,1,7],["?","-","-",1]],"states":["____","c_dp","____"],"rowHeads":["minutes","hours","days"],"colHeads":["total","size","carry","keep"]}}},
+{"caption":"Nothing is left to carry. The answer is 1 day later, hour 7, minute 30.","panels":{"table":{"cells":[[1890,60,31,30],[31,24,1,7],[1,"-","-",1]],"states":["___p","___p","___p"],"rowHeads":["minutes","hours","days"],"colHeads":["total","size","carry","keep"]}}}
+]},
+{"id":"midnight","label":"Midnight","steps":[
+{"caption":"Start at 23:50 and add 10 minutes. Everything becomes minutes first: 23 * 60 + 50 + 10 = 1440.","panels":{"table":{"cells":[[1440,60,"?","?"],["?",24,"?","?"],["?","-","-","?"]],"states":["c___","____","____"],"rowHeads":["minutes","hours","days"],"colHeads":["total","size","carry","keep"]}}},
+{"caption":"divmod(1440, 60) gives 24 and 0: 0 minutes stay on the clock, and 24 hours carry over to the next row.","panels":{"table":{"cells":[[1440,60,24,0],["?",24,"?","?"],["?","-","-","?"]],"states":["__dp","____","____"],"rowHeads":["minutes","hours","days"],"colHeads":["total","size","carry","keep"]}}},
+{"caption":"divmod(24, 24) gives 1 and 0: 0 hours stay on the clock, and 1 day carries over.","panels":{"table":{"cells":[[1440,60,24,0],[24,24,1,0],["?","-","-",1]],"states":["____","c_dp","____"],"rowHeads":["minutes","hours","days"],"colHeads":["total","size","carry","keep"]}}},
+{"caption":"Nothing is left to carry. The answer is 1 day later, hour 0, minute 0.","panels":{"table":{"cells":[[1440,60,24,0],[24,24,1,0],[1,"-","-",1]],"states":["___p","___p","___p"],"rowHeads":["minutes","hours","days"],"colHeads":["total","size","carry","keep"]}}}
+]},
+{"id":"many-days","label":"Many days","steps":[
+{"caption":"Start at 23:59 and add 5000 minutes. Everything becomes minutes first: 23 * 60 + 59 + 5000 = 6439.","panels":{"table":{"cells":[[6439,60,"?","?"],["?",24,"?","?"],["?","-","-","?"]],"states":["c___","____","____"],"rowHeads":["minutes","hours","days"],"colHeads":["total","size","carry","keep"]}}},
+{"caption":"divmod(6439, 60) gives 107 and 19: 19 minutes stay on the clock, and 107 hours carry over to the next row.","panels":{"table":{"cells":[[6439,60,107,19],["?",24,"?","?"],["?","-","-","?"]],"states":["__dp","____","____"],"rowHeads":["minutes","hours","days"],"colHeads":["total","size","carry","keep"]}}},
+{"caption":"divmod(107, 24) gives 4 and 11: 11 hours stay on the clock, and 4 days carry over.","panels":{"table":{"cells":[[6439,60,107,19],[107,24,4,11],["?","-","-",4]],"states":["____","c_dp","____"],"rowHeads":["minutes","hours","days"],"colHeads":["total","size","carry","keep"]}}},
+{"caption":"Nothing is left to carry. The answer is 4 days later, hour 11, minute 19.","panels":{"table":{"cells":[[6439,60,107,19],[107,24,4,11],[4,"-","-",4]],"states":["___p","___p","___p"],"rowHeads":["minutes","hours","days"],"colHeads":["total","size","carry","keep"]}}}
+]}
+]}

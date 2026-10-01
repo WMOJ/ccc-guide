@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz, title: Positions and block sums }
+alt: >-
+  A row of values folded into rows of the block size, one row per block. Each block's sum is
+  filled in one block at a time, and the last block is shorter when the length does not divide
+  evenly. The presets use eight values and six values.
+captions: vizrec
+presets:
+  - id: eight
+    label: Eight values
+    stdin: "8\n3 1 4 1 5 9 2 6\n1\n2 0 8\n"
+  - id: six
+    label: Six values
+    stdin: "6\n3 1 4 1 5 9\n1\n2 0 6\n"
+consistency:
+  description: The total of the block sums equals the whole-array answer printed by examples/sqrt_sum.py for the same input.
+  example: ../examples/sqrt_sum.py
+  compare: output

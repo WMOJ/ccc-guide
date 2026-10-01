@@ -1,0 +1,5 @@
+n = 100: first-element pivot 3825, random pivot 374
+n = 200: first-element pivot 15150, random pivot 464
+n = 400: first-element pivot 60300, random pivot 787
+n = 800: first-element pivot 240600, random pivot 2783
+n = 1600: first-element pivot 961200, random pivot 5646

@@ -12,10 +12,10 @@ lessons:
   - loop-and-count-problems
 practice:
   - id: ccc22j2
-    note: Process two lines of data per player and flag those meeting a condition.
+    note: Rate soccer players from their goals and fouls.
   - id: ccc20j3
-    note: Scan a comma-separated line of numbers, tracking the minimum and maximum as you go.
-    why: A running-minimum-and-maximum scan, the same one-pass shape as this lesson's counters.
-  - id: ccc19j2
-    note: Expand a run-length compressed string and process the result in a loop.
-    why: A one-pass scan with a running total, in the same style as this lesson's examples.
+    note: Find the frame around a set of paint-drop coordinates on a canvas.
+    why: A running minimum-and-maximum scan, initializing four accumulators before the loop and updating them inside it, the same shape as this lesson's counters.
+  - id: ccc17j2
+    note: Add a number to itself shifted left by one or more zeros.
+    why: A loop that adds to a running total on every iteration, the same accumulator shape this lesson teaches, summing instead of counting.

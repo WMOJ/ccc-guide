@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Doubling table }
+alt: >-
+  A table with one row per station and one column per level k. Column up[0] starts filled with
+  each station's teleporter. Each later column is filled one cell at a time: up[k][v] is found by
+  reading two cells of the column to its left, the one for station v and the one for the station
+  that cell names.
+captions: vizrec
+presets:
+  - id: main
+    label: Tail and loop
+    stdin: "8 1\n1 2 3 4 5 6 7 3\n0 13\n"
+  - id: loops
+    label: Two loops
+    stdin: "8 1\n1 2 3 0 5 6 7 4\n0 13\n"
+  - id: dead
+    label: Dead end
+    stdin: "8 1\n1 2 3 4 5 6 7 7\n0 13\n"
+consistency:
+  description: The finished table equals the rows up[0] to up[LOG - 1] that examples/build_table.py prints.
+  example: ../examples/build_table.py
+  compare: output

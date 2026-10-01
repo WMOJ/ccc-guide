@@ -1,0 +1,47 @@
+{"schema":1,
+"kind":"frames",
+"id":"window-slide",
+"layout":"single",
+"panels":[{"id":"g","viz":"GridViz","title":"Grid and window"}],
+"alt":"A grid of positive and negative numbers with a square window that visits every position. For each window the caption shows the four prefix-table reads and the sum they give. The best window so far stays marked, and the last step marks the best window.",
+"legendLabels":{"current":"Window being summed","done":"Best window so far"},
+"presets":[
+{"id":"five","label":"5 by 5","steps":[
+{"caption":"A 5 by 5 grid and a 2 by 2 window. The prefix table P, built once as in M4.3, lets each window's sum come from four reads. The window visits every position, top-left corner by top-left corner.","panels":{"g":{"cells":[".....",".....",".....",".....","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 0, column 0: 6 - 0 - 0 + 0 = 6. New best, 6.","panels":{"g":{"cells":["cc...","cc...",".....",".....","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 0, column 1: 8 - 0 - 3 + 0 = 5. Best stays 6.","panels":{"g":{"cells":["dcc..","dcc..",".....",".....","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 0, column 2: 14 - 0 - 6 + 0 = 8. New best, 8.","panels":{"g":{"cells":["..cc.","..cc.",".....",".....","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 0, column 3: 15 - 0 - 8 + 0 = 7. Best stays 8.","panels":{"g":{"cells":["..dcc","..dcc",".....",".....","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 1, column 0: 10 - (-1) - 0 + 0 = 11. New best, 11.","panels":{"g":{"cells":[".....","cc...","cc...",".....","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 1, column 1: 19 - 2 - 3 + 1 = 15. New best, 15.","panels":{"g":{"cells":[".....",".cc..",".cc..",".....","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 1, column 2: 23 - 2 - 10 + (-1) = 10. Best stays 15.","panels":{"g":{"cells":[".....",".dcc.",".dcc.",".....","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 1, column 3: 25 - 6 - 19 + 2 = 2. Best stays 15.","panels":{"g":{"cells":[".....",".ddcc",".ddcc",".....","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 2, column 0: 12 - 6 - 0 + 0 = 6. Best stays 15.","panels":{"g":{"cells":[".....",".dd..","ccd..","cc...","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 2, column 1: 23 - 8 - 2 + 3 = 16. New best, 16.","panels":{"g":{"cells":[".....",".....",".cc..",".cc..","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 2, column 2: 35 - 14 - 12 + 6 = 15. Best stays 16.","panels":{"g":{"cells":[".....",".....",".dcc.",".dcc.","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 2, column 3: 33 - 15 - 23 + 8 = 3. Best stays 16.","panels":{"g":{"cells":[".....",".....",".ddcc",".ddcc","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 3, column 0: 14 - 10 - 0 + 0 = 4. Best stays 16.","panels":{"g":{"cells":[".....",".....",".dd..","ccd..","cc..."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 3, column 1: 25 - 19 - 7 + 3 = 2. Best stays 16.","panels":{"g":{"cells":[".....",".....",".dd..",".cc..",".cc.."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 3, column 2: 38 - 23 - 14 + 10 = 11. Best stays 16.","panels":{"g":{"cells":[".....",".....",".dd..",".dcc.","..cc."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Window at row 3, column 3: 38 - 25 - 25 + 19 = 7. Best stays 16.","panels":{"g":{"cells":[".....",".....",".dd..",".ddcc","...cc"],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}},
+{"caption":"Every one of the 16 windows is checked. The best sum is 16, with the window's top-left corner at row 2, column 1.","panels":{"g":{"cells":[".....",".....",".dd..",".dd..","....."],"values":[[1,-2,3,0,4],[2,5,-1,6,-3],[0,4,7,-2,1],[-1,3,2,8,-4],[5,-3,0,1,2]]}}}
+]},
+{"id":"whole","label":"Whole grid","steps":[
+{"caption":"A 3 by 3 grid and a 3 by 3 window. The prefix table P, built once as in M4.3, lets each window's sum come from four reads. The window visits every position, top-left corner by top-left corner.","panels":{"g":{"cells":["...","...","..."],"values":[[1,2,3],[4,5,6],[7,8,9]]}}},
+{"caption":"Window at row 0, column 0: 45 - 0 - 0 + 0 = 45. New best, 45.","panels":{"g":{"cells":["ccc","ccc","ccc"],"values":[[1,2,3],[4,5,6],[7,8,9]]}}},
+{"caption":"The window fits in one place only. The best sum is 45, with the window's top-left corner at row 0, column 0.","panels":{"g":{"cells":["ddd","ddd","ddd"],"values":[[1,2,3],[4,5,6],[7,8,9]]}}}
+]},
+{"id":"negative","label":"All negative","steps":[
+{"caption":"A 4 by 4 grid and a 2 by 2 window. The prefix table P, built once as in M4.3, lets each window's sum come from four reads. The window visits every position, top-left corner by top-left corner.","panels":{"g":{"cells":["....","....","....","...."],"values":[[-5,-2,-8,-1],[-3,-9,-4,-6],[-7,-1,-2,-5],[-4,-6,-3,-8]]}}},
+{"caption":"Window at row 0, column 0: (-19) - 0 - 0 + 0 = (-19). New best, (-19).","panels":{"g":{"cells":["cc..","cc..","....","...."],"values":[[-5,-2,-8,-1],[-3,-9,-4,-6],[-7,-1,-2,-5],[-4,-6,-3,-8]]}}},
+{"caption":"Window at row 0, column 1: (-31) - 0 - (-8) + 0 = (-23). Best stays (-19).","panels":{"g":{"cells":["dcc.","dcc.","....","...."],"values":[[-5,-2,-8,-1],[-3,-9,-4,-6],[-7,-1,-2,-5],[-4,-6,-3,-8]]}}},
+{"caption":"Window at row 0, column 2: (-38) - 0 - (-19) + 0 = (-19). Best stays (-19).","panels":{"g":{"cells":["ddcc","ddcc","....","...."],"values":[[-5,-2,-8,-1],[-3,-9,-4,-6],[-7,-1,-2,-5],[-4,-6,-3,-8]]}}},
+{"caption":"Window at row 1, column 0: (-27) - (-7) - 0 + 0 = (-20). Best stays (-19).","panels":{"g":{"cells":["dd..","cc..","cc..","...."],"values":[[-5,-2,-8,-1],[-3,-9,-4,-6],[-7,-1,-2,-5],[-4,-6,-3,-8]]}}},
+{"caption":"Window at row 1, column 1: (-41) - (-15) - (-15) + (-5) = (-16). New best, (-16).","panels":{"g":{"cells":["....",".cc.",".cc.","...."],"values":[[-5,-2,-8,-1],[-3,-9,-4,-6],[-7,-1,-2,-5],[-4,-6,-3,-8]]}}},
+{"caption":"Window at row 1, column 2: (-53) - (-16) - (-27) + (-7) = (-17). Best stays (-16).","panels":{"g":{"cells":["....",".dcc",".dcc","...."],"values":[[-5,-2,-8,-1],[-3,-9,-4,-6],[-7,-1,-2,-5],[-4,-6,-3,-8]]}}},
+{"caption":"Window at row 2, column 0: (-37) - (-19) - 0 + 0 = (-18). Best stays (-16).","panels":{"g":{"cells":["....",".dd.","ccd.","cc.."],"values":[[-5,-2,-8,-1],[-3,-9,-4,-6],[-7,-1,-2,-5],[-4,-6,-3,-8]]}}},
+{"caption":"Window at row 2, column 1: (-54) - (-31) - (-19) + (-8) = (-12). New best, (-12).","panels":{"g":{"cells":["....","....",".cc.",".cc."],"values":[[-5,-2,-8,-1],[-3,-9,-4,-6],[-7,-1,-2,-5],[-4,-6,-3,-8]]}}},
+{"caption":"Window at row 2, column 2: (-74) - (-38) - (-37) + (-19) = (-18). Best stays (-12).","panels":{"g":{"cells":["....","....",".dcc",".dcc"],"values":[[-5,-2,-8,-1],[-3,-9,-4,-6],[-7,-1,-2,-5],[-4,-6,-3,-8]]}}},
+{"caption":"Every one of the 9 windows is checked. The best sum is -12, with the window's top-left corner at row 2, column 1.","panels":{"g":{"cells":["....","....",".dd.",".dd."],"values":[[-5,-2,-8,-1],[-3,-9,-4,-6],[-7,-1,-2,-5],[-4,-6,-3,-8]]}}}
+]}
+]}

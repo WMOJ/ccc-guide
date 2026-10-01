@@ -1,2 +1,8 @@
-Added 5 items, count = 5
-Maximum: 7, remaining count: 4
+Added 3, count = 1
+Added 7, count = 2
+Added 2, count = 3
+Added 9, count = 4
+Added 9, count = 5
+Added 5, count = 6
+Removed 9, count = 5
+Maximum: 9, remaining count: 5

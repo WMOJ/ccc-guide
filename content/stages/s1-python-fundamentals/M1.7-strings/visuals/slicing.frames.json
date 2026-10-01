@@ -1,0 +1,20 @@
+{"schema":1,
+"kind":"frames",
+"id":"slicing",
+"layout":"single",
+"panels":[{"id":"w","viz":"ArrayViz","title":"The word being sliced"}],
+"alt":"A word's characters are sliced three ways: word[1:4], word[:3] and word[3:]. On a full-length word all three slices hold characters; on a one-character word two of the three come out empty, showing that a slice never raises an error.",
+"presets":[
+{"id":"main","label":"Full-length word","steps":[
+{"caption":"Start with the word \"elephant\".","panels":{"w":{"values":["e","l","e","p","h","a","n","t"],"indices":true}}},
+{"caption":"`word[1:4]` is \"lep\": everything from index 1 up to, but not including, index 4.","panels":{"w":{"values":["e","l","e","p","h","a","n","t"],"states":"_ccc____","ranges":[{"from":1,"to":3,"label":"word[1:4]"}],"indices":true}}},
+{"caption":"`word[:3]` is \"ele\": leaving out the start begins from index 0.","panels":{"w":{"values":["e","l","e","p","h","a","n","t"],"states":"ccc_____","ranges":[{"from":0,"to":2,"label":"word[:3]"}],"indices":true}}},
+{"caption":"`word[3:]` is \"phant\": leaving out the stop runs to the end of the word.","panels":{"w":{"values":["e","l","e","p","h","a","n","t"],"states":"___ccccc","ranges":[{"from":3,"to":7,"label":"word[3:]"}],"indices":true}}}
+]},
+{"id":"single","label":"One character","steps":[
+{"caption":"Start with the word \"x\".","panels":{"w":{"values":["x"],"indices":true}}},
+{"caption":"`word[1:4]` is \"\": nothing is left starting from index 1, so the slice is empty.","panels":{"w":{"values":["x"],"states":"_","indices":true}}},
+{"caption":"`word[:3]` is \"x\": leaving out the start begins from index 0.","panels":{"w":{"values":["x"],"states":"c","ranges":[{"from":0,"to":0,"label":"word[:3]"}],"indices":true}}},
+{"caption":"`word[3:]` is \"\": index 3 is already at or past the last character.","panels":{"w":{"values":["x"],"states":"_","indices":true}}}
+]}
+]}

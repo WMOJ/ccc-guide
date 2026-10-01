@@ -1,0 +1,23 @@
+example: stress_test.py
+alt: >-
+  The program seeds Python's random generator, then repeats a trial: make a small random list,
+  ask the brute force and the fast function for the best subarray sum, and compare. It stops at the
+  first trial where the two answers differ and prints that trial's number, the input and both
+  answers. The steps inside the brute force and the fast function are skipped, so the loop itself
+  stays in view.
+presets:
+  - id: main
+    label: Seed 13
+    stdin: "13\n"
+  - id: negative
+    label: Seed 24
+    stdin: "24\n"
+skip:
+  - { line: 1, keep: 0, to: 61, label: "The imports and the four function definitions run first." }
+  - { line: 46, keep: 0, to: 49, label: "Trial 1 makes an input and runs both functions; they agree." }
+  - { line: 14, keep: 1, to: 48, label: "The brute force tries every start and end and keeps the largest sum." }
+  - { line: 23, keep: 1, to: 49, label: "The fast function answers from the prefix sums and the running minimum." }
+notes:
+  "9": "The list comprehension's `for` runs inside it, out of sight. The finished list of random values is what gets returned."
+  "49": "If the two answers differ, the loop stops here. Otherwise the next trial starts."
+  "50": "`failed` remembers which trial found the difference."

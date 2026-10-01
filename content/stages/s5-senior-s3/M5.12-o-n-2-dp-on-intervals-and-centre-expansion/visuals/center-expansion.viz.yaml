@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: text, viz: ArrayViz, title: String }
+  - { id: best, viz: ArrayViz, title: Best so far }
+alt: >-
+  Expanding outward from every possible center of a string, one character at a time, to find the
+  longest palindrome. Odd centers sit on a single character; even centers sit between two. Most
+  centers are skipped once their result is known; the winning center is animated in full.
+captions: vizrec
+presets:
+  - id: odd
+    label: Odd
+    stdin: "kayaks\n"
+  - id: even
+    label: Even
+    stdin: "deed\n"
+  - id: no-match
+    label: No match
+    stdin: "chair\n"
+consistency:
+  description: The reported longest palindrome equals the output of examples/palindrome_centres.py on the same input.
+  example: ../examples/palindrome_centres.py
+  compare: output

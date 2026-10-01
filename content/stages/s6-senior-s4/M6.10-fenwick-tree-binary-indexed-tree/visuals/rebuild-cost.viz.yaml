@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: prefix, viz: ArrayViz, title: Prefix sums }
+  - { id: tree, viz: ArrayViz, title: Fenwick tree }
+alt: >-
+  A prefix sum array above a Fenwick tree for the same six elements. One element then goes up
+  by 5. Every prefix sum entry from that position on has to be rewritten, which can be nearly
+  the whole array, while the Fenwick tree changes only a few entries.
+captions: vizrec
+legendLabels: { current: Rewritten }
+presets:
+  - id: three
+    label: Position 3
+    stdin: "6\n3 2 1 4 5 1\n2\nU 3 5\nQ 1 6\n"
+  - id: seven
+    label: Near the end
+    stdin: "6\n3 2 1 4 5 1\n2\nU 5 5\nQ 1 6\n"
+  - id: first
+    label: Position 1
+    stdin: "6\n3 2 1 4 5 1\n2\nU 1 5\nQ 1 6\n"
+consistency:
+  description: The total of all elements after the update equals what examples/fenwick_basic.py prints.
+  example: ../examples/fenwick_basic.py
+  compare: output

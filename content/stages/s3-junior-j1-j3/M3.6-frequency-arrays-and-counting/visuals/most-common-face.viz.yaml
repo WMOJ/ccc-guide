@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: rolls, viz: ArrayViz, title: Rolls }
+  - { id: freq, viz: ArrayViz, title: freq }
+alt: >-
+  A list of die rolls is counted into a 7-slot frequency array, one roll at a time, where slot 1
+  through 6 hold the faces. Then a second loop scans faces 2 to 6, keeping a pointer named best on
+  the face with the highest count so far; a face only takes over when its count is strictly larger,
+  so on a tie the smaller face stays.
+captions: vizrec
+presets:
+  - id: main
+    label: Rolls
+    stdin: "4 2 4 6 4 2 6 4\n"
+  - id: tie
+    label: Tie
+    stdin: "5 5 2 2\n"
+  - id: single
+    label: One roll
+    stdin: "6\n"
+consistency:
+  description: The best face and its count equal the output of examples/most_common_face.py on the same input.
+  example: ../examples/most_common_face.py
+  compare: output

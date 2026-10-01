@@ -1,0 +1,20 @@
+{"schema":1,
+"kind":"frames",
+"id":"chain-depth",
+"layout":"single",
+"panels":[{"id":"stack","viz":"StructViz","title":"Stack"}],
+"alt":"An iterative preorder DFS walking down a chain of 8 vertices, one edge case where a recursive DFS would need one call per vertex. The explicit stack shown here never holds more than one waiting vertex, because a chain has only one unvisited neighbor to push at each step, so the mechanism that avoids Python's recursion limit is visible directly in the stack's size.",
+"presets":[
+{"id":"chain","label":"Chain of 8","steps":[
+{"caption":"The stack starts with just the root. This chain is 8 vertices long, far too deep for a small recursion limit, but the stack holds one entry.","panels":{"stack":{"kind":"stack","items":[{"v":"0"}],"name":"stack"}}},
+{"caption":"Vertex 0 is visited: visit number 1 of 8. A recursive DFS would now be 1 calls deep on its own call stack; this explicit stack still holds at most one waiting vertex.","panels":{"stack":{"kind":"stack","items":[{"v":"1"}],"name":"stack"}}},
+{"caption":"Vertex 1 is visited: visit number 2 of 8. A recursive DFS would now be 2 calls deep on its own call stack; this explicit stack still holds at most one waiting vertex.","panels":{"stack":{"kind":"stack","items":[{"v":"2"}],"name":"stack"}}},
+{"caption":"Vertex 2 is visited: visit number 3 of 8. A recursive DFS would now be 3 calls deep on its own call stack; this explicit stack still holds at most one waiting vertex.","panels":{"stack":{"kind":"stack","items":[{"v":"3"}],"name":"stack"}}},
+{"caption":"Vertex 3 is visited: visit number 4 of 8. A recursive DFS would now be 4 calls deep on its own call stack; this explicit stack still holds at most one waiting vertex.","panels":{"stack":{"kind":"stack","items":[{"v":"4"}],"name":"stack"}}},
+{"caption":"Vertex 4 is visited: visit number 5 of 8. A recursive DFS would now be 5 calls deep on its own call stack; this explicit stack still holds at most one waiting vertex.","panels":{"stack":{"kind":"stack","items":[{"v":"5"}],"name":"stack"}}},
+{"caption":"Vertex 5 is visited: visit number 6 of 8. A recursive DFS would now be 6 calls deep on its own call stack; this explicit stack still holds at most one waiting vertex.","panels":{"stack":{"kind":"stack","items":[{"v":"6"}],"name":"stack"}}},
+{"caption":"Vertex 6 is visited: visit number 7 of 8. A recursive DFS would now be 7 calls deep on its own call stack; this explicit stack still holds at most one waiting vertex.","panels":{"stack":{"kind":"stack","items":[{"v":"7"}],"name":"stack"}}},
+{"caption":"Vertex 7 is visited: visit number 8 of 8. A recursive DFS would now be 8 calls deep on its own call stack; this explicit stack still holds at most one waiting vertex.","panels":{"stack":{"kind":"stack","items":[],"name":"stack"}}},
+{"caption":"Every vertex is visited. A recursive version needed a call stack 8 frames deep to reach the far end; this loop never held more than one entry on its own stack.","panels":{"stack":{"kind":"stack","items":[],"name":"stack"}}}
+]}
+]}

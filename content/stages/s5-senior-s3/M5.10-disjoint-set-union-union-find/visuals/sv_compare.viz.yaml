@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: naive, viz: GraphViz, title: Naive union }
+  - { id: sized, viz: GraphViz, title: Union by size }
+alt: >-
+  The same sequence of unions applied to two forests. The naive forest always puts the first
+  root under the second, so a chain-shaped sequence builds one long chain. The by-size forest puts
+  the smaller tree under the larger, so the same sequence builds a flat star with sizes shown on
+  its root. The captions report each forest's height after every union.
+captions: vizrec
+presets:
+  - id: chain
+    label: Chain order
+    stdin: "5 4\n0 1\n1 2\n2 3\n3 4\n"
+  - id: star
+    label: Star order
+    stdin: "5 4\n1 0\n2 0\n3 0\n4 0\n"
+  - id: eight
+    label: Eight
+    stdin: "8 7\n0 1\n1 2\n2 3\n3 4\n4 5\n5 6\n6 7\n"
+consistency:
+  description: The parent arrays and heights equal the output of examples/union_order.py.
+  example: ../examples/union_order.py
+  compare: output

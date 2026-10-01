@@ -2,10 +2,10 @@ import os
 import subprocess
 
 test_dir = "tests"
-names = sorted(name[:-4] for name in os.listdir(test_dir) if name.endswith(".txt"))
+names = sorted(name[:-3] for name in os.listdir(test_dir) if name.endswith(".in"))
 
 for base in names:
-    with open(f"{test_dir}/{base}.txt") as f:
+    with open(f"{test_dir}/{base}.in") as f:
         official_input = f.read()
     with open(f"{test_dir}/{base}.out") as f:
         official_output = f.read()
@@ -21,4 +21,4 @@ for base in names:
     if result.stdout == official_output:
         print(base, "matches")
     else:
-        print(base, "does NOT match")
+        print(base, "differs")

@@ -12,9 +12,9 @@ lessons:
   - formula-plus-condition-problems
 practice:
   - id: ccc22j1
-    note: Work out a fair price for a shared batch of cupcakes.
+    note: Work out how many cupcakes are left over after handing them out to a class.
   - id: ccc21j1
-    note: Decide how long a kettle needs before water is ready.
+    note: Compute a pressure reading from a boiling point, then classify it as above, at, or below sea level.
   - id: ccc14j1
-    note: Classify a triangle as acute, right, or obtuse from its three angles.
-    why: One of the earliest J1 problems, and still a plain formula-then-branch shape.
+    note: Classify a triangle as equilateral, isosceles, scalene, or invalid from its three angles.
+    why: Four comparisons checked in order, the same if/elif/else shape this lesson teaches, without a formula in front of it.

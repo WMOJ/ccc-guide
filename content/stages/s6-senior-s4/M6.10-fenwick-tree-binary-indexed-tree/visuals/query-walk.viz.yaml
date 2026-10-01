@@ -1,0 +1,25 @@
+layout: row
+panels:
+  - { id: values, viz: ArrayViz, title: Elements }
+  - { id: tree, viz: ArrayViz, title: Fenwick tree }
+alt: >-
+  A range-sum query on a Fenwick tree. The sum of positions l to r is the prefix sum up to r
+  minus the prefix sum up to l minus 1. Each prefix sum starts at a position, adds that tree
+  entry, then removes the lowest set bit from the position and repeats until it reaches 0. The
+  blocks that the visited entries cover are marked on the elements and fit end to end.
+captions: vizrec
+legendLabels: { current: Block being added, done: Already added }
+presets:
+  - id: middle
+    label: Range 3 to 7
+    stdin: "8\n3 2 1 4 5 1 2 3\n1\nQ 3 7\n"
+  - id: whole
+    label: Whole array
+    stdin: "8\n3 2 1 4 5 1 2 3\n1\nQ 1 8\n"
+  - id: single
+    label: One element
+    stdin: "8\n3 2 1 4 5 1 2 3\n1\nQ 5 5\n"
+consistency:
+  description: The range sum equals what examples/fenwick_basic.py prints for the same query.
+  example: ../examples/fenwick_basic.py
+  compare: output

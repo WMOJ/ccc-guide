@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz, title: "Stack work per day" }
+alt: >-
+  A table with one row per day, listing the temperature, how many days were popped, and how many
+  were pushed, with running totals in the last two columns. A single day can pop several days at
+  once, yet the total number of pops never exceeds the total number of pushes, so the whole scan
+  stays under twice the number of days.
+captions: vizrec
+presets:
+  - id: mixed
+    label: Mixed
+    stdin: "8\n68 66 64 65 71 69 72 70\n"
+  - id: falling
+    label: Falling
+    stdin: "8\n75 73 71 69 67 65 63 61\n"
+  - id: rising
+    label: Rising
+    stdin: "8\n60 62 64 66 68 70 72 74\n"
+consistency:
+  description: The waits computed alongside equal the output of examples/next_greater.py.
+  example: ../examples/next_greater.py
+  compare: output

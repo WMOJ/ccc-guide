@@ -1,0 +1,25 @@
+{"schema":1,
+"kind":"frames",
+"id":"build_transform",
+"layout":"row",
+"panels":[{"id":"source","viz":"ArrayViz","title":"Source word"},{"id":"parts","viz":"ArrayViz","title":"Parts so far"}],
+"alt":"Building a list of parts one character at a time. Each step marks the source character being read and shows the parts list one entry longer, with a vowel replaced by an asterisk and every other character copied as is.",
+"presets":[
+{"id":"main","label":"Mixed","steps":[
+{"caption":"s[0] is 'h', not a vowel: append 'h' to parts.","panels":{"source":{"values":["h","e","l","l","o"],"states":"c____","pointers":[{"name":"i","at":0}]},"parts":{"values":["h"],"states":"c"}}},
+{"caption":"s[1] is 'e', a vowel: append '*' to parts.","panels":{"source":{"values":["h","e","l","l","o"],"states":"dc___","pointers":[{"name":"i","at":1}]},"parts":{"values":["h","*"],"states":"dc"}}},
+{"caption":"s[2] is 'l', not a vowel: append 'l' to parts.","panels":{"source":{"values":["h","e","l","l","o"],"states":"ddc__","pointers":[{"name":"i","at":2}]},"parts":{"values":["h","*","l"],"states":"ddc"}}},
+{"caption":"s[3] is 'l', not a vowel: append 'l' to parts.","panels":{"source":{"values":["h","e","l","l","o"],"states":"dddc_","pointers":[{"name":"i","at":3}]},"parts":{"values":["h","*","l","l"],"states":"dddc"}}},
+{"caption":"s[4] is 'o', a vowel: append '*' to parts.","panels":{"source":{"values":["h","e","l","l","o"],"states":"ddddc","pointers":[{"name":"i","at":4}]},"parts":{"values":["h","*","l","l","*"],"states":"ddddc"}}}
+]},
+{"id":"no-vowels","label":"No vowels","steps":[
+{"caption":"s[0] is 'b', not a vowel: append 'b' to parts.","panels":{"source":{"values":["b","c","d","f","g"],"states":"c____","pointers":[{"name":"i","at":0}]},"parts":{"values":["b"],"states":"c"}}},
+{"caption":"s[1] is 'c', not a vowel: append 'c' to parts.","panels":{"source":{"values":["b","c","d","f","g"],"states":"dc___","pointers":[{"name":"i","at":1}]},"parts":{"values":["b","c"],"states":"dc"}}},
+{"caption":"s[2] is 'd', not a vowel: append 'd' to parts.","panels":{"source":{"values":["b","c","d","f","g"],"states":"ddc__","pointers":[{"name":"i","at":2}]},"parts":{"values":["b","c","d"],"states":"ddc"}}},
+{"caption":"s[3] is 'f', not a vowel: append 'f' to parts.","panels":{"source":{"values":["b","c","d","f","g"],"states":"dddc_","pointers":[{"name":"i","at":3}]},"parts":{"values":["b","c","d","f"],"states":"dddc"}}},
+{"caption":"s[4] is 'g', not a vowel: append 'g' to parts.","panels":{"source":{"values":["b","c","d","f","g"],"states":"ddddc","pointers":[{"name":"i","at":4}]},"parts":{"values":["b","c","d","f","g"],"states":"ddddc"}}}
+]},
+{"id":"single","label":"Single vowel","steps":[
+{"caption":"s[0] is 'a', a vowel: append '*' to parts.","panels":{"source":{"values":["a"],"states":"c","pointers":[{"name":"i","at":0}]},"parts":{"values":["*"],"states":"c"}}}
+]}
+]}

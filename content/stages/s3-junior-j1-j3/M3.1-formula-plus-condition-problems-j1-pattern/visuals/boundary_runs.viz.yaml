@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: table, viz: TableViz, title: Test runs }
+  - { id: line, viz: LineViz, title: Tiers }
+alt: >-
+  Three boundary tests of the shipping program run one after another. Each run fills in a row
+  of the table with its cost and printed tier, and marks the cost on a number line of the three
+  tiers, so the learner sees which side of a boundary each value lands on.
+captions: vizrec
+presets:
+  - id: at-20
+    label: Near 20
+    stdin: "9 10\n10 0\n10 10\n"
+  - id: at-50
+    label: Near 50
+    stdin: "24 10\n25 0\n25 10\n"
+  - id: rounding
+    label: Rounding
+    stdin: "10 0\n10 9\n10 10\n"
+consistency:
+  description: The first run's tier equals the output of examples/shipping_cost.py, which reads only the first two numbers of the same input.
+  example: ../examples/shipping_cost.py
+  compare: output

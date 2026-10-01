@@ -1,5 +1,5 @@
 id: M6.13
-title: Memoisation over floor-division blocks
+title: Memoization over floor-division blocks
 status: accepted
 objectives:
   - Recognize when a sum over floor division takes only O(sqrt(n)) distinct values.
@@ -11,8 +11,6 @@ prereqs:
 lessons:
   - floor-division-blocks
 practice:
-  - id: ccc20s1
-    note: Work with a sprinter's recorded checkpoint times to find a consistent picture of the race.
-    why: An older problem whose numeric structure still makes good practice for this module.
-  - id: ccc21s1
-    note: Cut a fence into pieces while respecting a length-based rule.
+  - id: ccc18s4
+    note: Count the tree shapes that can be built for a given weight.
+    why: The count for one large weight depends on floor divisions of that same weight, the quantity this module works with.

@@ -2,19 +2,28 @@ import sys
 
 
 def main() -> None:
-    data = sys.stdin.read().split()
-    n = int(data[0])
+    raw = sys.stdin.read()
+    tokens = raw.split()
+    n = int(tokens[0])
+    points = []
+    xs = []
+    ys = []
+    pos = 1
+    for _ in range(n):
+        x = int(tokens[pos])
+        y = int(tokens[pos + 1])
+        pos += 2
+        points.append((x, y))
+        xs.append(x)
+        ys.append(y)
 
-    # Read points into parallel lists
-    x_coords = []
-    y_coords = []
-    for i in range(1, 2 * n + 1, 2):
-        x_coords.append(int(data[i]))
-        y_coords.append(int(data[i + 1]))
-
-    # Process: find sum of all coordinates
-    total = sum(x_coords) + sum(y_coords)
-    sys.stdout.write(f"{total}\n")
+    by_tuples = 0
+    for x, y in points:
+        by_tuples += x * y
+    by_lists = 0
+    for i in range(n):
+        by_lists += xs[i] * ys[i]
+    print(by_tuples, by_lists)
 
 
 if __name__ == "__main__":

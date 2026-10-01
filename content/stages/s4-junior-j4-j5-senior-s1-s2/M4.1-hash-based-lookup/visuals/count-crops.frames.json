@@ -1,0 +1,28 @@
+{"schema":1,
+"kind":"frames",
+"id":"count-crops",
+"layout":"row",
+"panels":[{"id":"fields","viz":"ArrayViz","title":"Fields"},{"id":"counts","viz":"TableViz","title":"crop_count"}],
+"alt":"Scanning a list of crops field by field, updating a dictionary of counts with crop_count.get(crop, 0) + 1 each time, then reading off how many crops ended with a count above one.",
+"presets":[
+{"id":"mixed","label":"Mixed","steps":[
+{"caption":"crop_count[\"corn\"] becomes 1, the first time \"corn\" appears.","panels":{"fields":{"values":["corn","oat","corn","pea"],"states":"c___","pointers":[{"name":"i","at":0}]},"counts":{"cells":[[1]],"states":["c"],"rowHeads":["count"],"colHeads":["corn"],"colTitle":"crop"}}},
+{"caption":"crop_count[\"oat\"] becomes 1, the first time \"oat\" appears.","panels":{"fields":{"values":["corn","oat","corn","pea"],"states":"dc__","pointers":[{"name":"i","at":1}]},"counts":{"cells":[[1,1]],"states":["_c"],"rowHeads":["count"],"colHeads":["corn","oat"],"colTitle":"crop"}}},
+{"caption":"crop_count[\"corn\"] becomes 2. \"corn\" has appeared before.","panels":{"fields":{"values":["corn","oat","corn","pea"],"states":"ddc_","pointers":[{"name":"i","at":2}]},"counts":{"cells":[[2,1]],"states":["c_"],"rowHeads":["count"],"colHeads":["corn","oat"],"colTitle":"crop"}}},
+{"caption":"crop_count[\"pea\"] becomes 1, the first time \"pea\" appears.","panels":{"fields":{"values":["corn","oat","corn","pea"],"states":"dddc","pointers":[{"name":"i","at":3}]},"counts":{"cells":[[2,1,1]],"states":["__c"],"rowHeads":["count"],"colHeads":["corn","oat","pea"],"colTitle":"crop"}}},
+{"caption":"After the scan, 1 crop appears more than once, namely corn.","panels":{"fields":{"values":["corn","oat","corn","pea"],"states":"dddd"},"counts":{"cells":[[2,1,1]],"rowHeads":["count"],"colHeads":["corn","oat","pea"],"colTitle":"crop"}}}
+]},
+{"id":"no-repeats","label":"No repeats","steps":[
+{"caption":"crop_count[\"corn\"] becomes 1, the first time \"corn\" appears.","panels":{"fields":{"values":["corn","oat","pea"],"states":"c__","pointers":[{"name":"i","at":0}]},"counts":{"cells":[[1]],"states":["c"],"rowHeads":["count"],"colHeads":["corn"],"colTitle":"crop"}}},
+{"caption":"crop_count[\"oat\"] becomes 1, the first time \"oat\" appears.","panels":{"fields":{"values":["corn","oat","pea"],"states":"dc_","pointers":[{"name":"i","at":1}]},"counts":{"cells":[[1,1]],"states":["_c"],"rowHeads":["count"],"colHeads":["corn","oat"],"colTitle":"crop"}}},
+{"caption":"crop_count[\"pea\"] becomes 1, the first time \"pea\" appears.","panels":{"fields":{"values":["corn","oat","pea"],"states":"ddc","pointers":[{"name":"i","at":2}]},"counts":{"cells":[[1,1,1]],"states":["__c"],"rowHeads":["count"],"colHeads":["corn","oat","pea"],"colTitle":"crop"}}},
+{"caption":"After the scan, every crop appears exactly once.","panels":{"fields":{"values":["corn","oat","pea"],"states":"ddd"},"counts":{"cells":[[1,1,1]],"rowHeads":["count"],"colHeads":["corn","oat","pea"],"colTitle":"crop"}}}
+]},
+{"id":"all-repeat","label":"All repeat","steps":[
+{"caption":"crop_count[\"corn\"] becomes 1, the first time \"corn\" appears.","panels":{"fields":{"values":["corn","corn","corn","corn"],"states":"c___","pointers":[{"name":"i","at":0}]},"counts":{"cells":[[1]],"states":["c"],"rowHeads":["count"],"colHeads":["corn"],"colTitle":"crop"}}},
+{"caption":"crop_count[\"corn\"] becomes 2. \"corn\" has appeared before.","panels":{"fields":{"values":["corn","corn","corn","corn"],"states":"dc__","pointers":[{"name":"i","at":1}]},"counts":{"cells":[[2]],"states":["c"],"rowHeads":["count"],"colHeads":["corn"],"colTitle":"crop"}}},
+{"caption":"crop_count[\"corn\"] becomes 3. \"corn\" has appeared before.","panels":{"fields":{"values":["corn","corn","corn","corn"],"states":"ddc_","pointers":[{"name":"i","at":2}]},"counts":{"cells":[[3]],"states":["c"],"rowHeads":["count"],"colHeads":["corn"],"colTitle":"crop"}}},
+{"caption":"crop_count[\"corn\"] becomes 4. \"corn\" has appeared before.","panels":{"fields":{"values":["corn","corn","corn","corn"],"states":"dddc","pointers":[{"name":"i","at":3}]},"counts":{"cells":[[4]],"states":["c"],"rowHeads":["count"],"colHeads":["corn"],"colTitle":"crop"}}},
+{"caption":"After the scan, 1 crop appears more than once, namely corn.","panels":{"fields":{"values":["corn","corn","corn","corn"],"states":"dddd"},"counts":{"cells":[[4]],"rowHeads":["count"],"colHeads":["corn"],"colTitle":"crop"}}}
+]}
+]}

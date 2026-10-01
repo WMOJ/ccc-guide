@@ -1,0 +1,36 @@
+{"schema":1,
+"kind":"frames",
+"id":"outage",
+"layout":"row",
+"panels":[{"id":"a","viz":"ArrayViz","title":"Readings"},{"id":"r","viz":"ArrayViz","title":"run"}],
+"alt":"Counting the ranges of consecutive days that contain at least one outage, a reading of 0, by counting the opposite. Each day, run is the number of ranges ending that day that contain no zero, and clean adds them up. The answer is the total number of ranges minus clean.",
+"legendLabels":{"done":"Clean stretch","invalid":"Outage"},
+"presets":[
+{"id":"mixed","label":"Some outages","steps":[
+{"caption":"Day 0 reads 3, so `run` becomes 1: 1 range ends on day 0 without containing an outage. `clean` grows to 1.","panels":{"a":{"values":[3,0,5,2,0,0,4,1],"states":"c_______","ranges":[{"from":0,"to":0,"label":"clean run"}],"indices":true},"r":{"values":[1,"-","-","-","-","-","-","-"],"states":"d_______","indices":true}}},
+{"caption":"Day 1 reads 0, an outage, so `run` resets to 0: no range ending on day 1 is clean. `clean` stays 1.","panels":{"a":{"values":[3,0,5,2,0,0,4,1],"states":"_x______","indices":true},"r":{"values":[1,0,"-","-","-","-","-","-"],"states":"dd______","indices":true}}},
+{"caption":"Day 2 reads 5, so `run` becomes 1: 1 range ends on day 2 without containing an outage. `clean` grows to 2.","panels":{"a":{"values":[3,0,5,2,0,0,4,1],"states":"_xc_____","ranges":[{"from":2,"to":2,"label":"clean run"}],"indices":true},"r":{"values":[1,0,1,"-","-","-","-","-"],"states":"ddd_____","indices":true}}},
+{"caption":"Day 3 reads 2, so `run` becomes 2: 2 ranges end on day 3 without containing an outage. `clean` grows to 4.","panels":{"a":{"values":[3,0,5,2,0,0,4,1],"states":"_xdc____","ranges":[{"from":2,"to":3,"label":"clean run"}],"indices":true},"r":{"values":[1,0,1,2,"-","-","-","-"],"states":"dddd____","indices":true}}},
+{"caption":"Day 4 reads 0, an outage, so `run` resets to 0: no range ending on day 4 is clean. `clean` stays 4.","panels":{"a":{"values":[3,0,5,2,0,0,4,1],"states":"_x__x___","indices":true},"r":{"values":[1,0,1,2,0,"-","-","-"],"states":"ddddd___","indices":true}}},
+{"caption":"Day 5 reads 0, an outage, so `run` resets to 0: no range ending on day 5 is clean. `clean` stays 4.","panels":{"a":{"values":[3,0,5,2,0,0,4,1],"states":"_x__xx__","indices":true},"r":{"values":[1,0,1,2,0,0,"-","-"],"states":"dddddd__","indices":true}}},
+{"caption":"Day 6 reads 4, so `run` becomes 1: 1 range ends on day 6 without containing an outage. `clean` grows to 5.","panels":{"a":{"values":[3,0,5,2,0,0,4,1],"states":"_x__xxc_","ranges":[{"from":6,"to":6,"label":"clean run"}],"indices":true},"r":{"values":[1,0,1,2,0,0,1,"-"],"states":"ddddddd_","indices":true}}},
+{"caption":"Day 7 reads 1, so `run` becomes 2: 2 ranges end on day 7 without containing an outage. `clean` grows to 7.","panels":{"a":{"values":[3,0,5,2,0,0,4,1],"states":"_x__xxdc","ranges":[{"from":6,"to":7,"label":"clean run"}],"indices":true},"r":{"values":[1,0,1,2,0,0,1,2],"states":"dddddddd","indices":true}}},
+{"caption":"All 8 days are read. There are 8 * 9 / 2 = 36 ranges in all and 7 of them are clean, so 36 - 7 = 29 ranges contain at least one outage.","panels":{"a":{"values":[3,0,5,2,0,0,4,1],"states":"_x__xx__","indices":true},"r":{"values":[1,0,1,2,0,0,1,2],"states":"dddddddd","indices":true}}}
+]},
+{"id":"none","label":"No outages","steps":[
+{"caption":"Day 0 reads 4, so `run` becomes 1: 1 range ends on day 0 without containing an outage. `clean` grows to 1.","panels":{"a":{"values":[4,2,7,1,3],"states":"c____","ranges":[{"from":0,"to":0,"label":"clean run"}],"indices":true},"r":{"values":[1,"-","-","-","-"],"states":"d____","indices":true}}},
+{"caption":"Day 1 reads 2, so `run` becomes 2: 2 ranges end on day 1 without containing an outage. `clean` grows to 3.","panels":{"a":{"values":[4,2,7,1,3],"states":"dc___","ranges":[{"from":0,"to":1,"label":"clean run"}],"indices":true},"r":{"values":[1,2,"-","-","-"],"states":"dd___","indices":true}}},
+{"caption":"Day 2 reads 7, so `run` becomes 3: 3 ranges end on day 2 without containing an outage. `clean` grows to 6.","panels":{"a":{"values":[4,2,7,1,3],"states":"ddc__","ranges":[{"from":0,"to":2,"label":"clean run"}],"indices":true},"r":{"values":[1,2,3,"-","-"],"states":"ddd__","indices":true}}},
+{"caption":"Day 3 reads 1, so `run` becomes 4: 4 ranges end on day 3 without containing an outage. `clean` grows to 10.","panels":{"a":{"values":[4,2,7,1,3],"states":"dddc_","ranges":[{"from":0,"to":3,"label":"clean run"}],"indices":true},"r":{"values":[1,2,3,4,"-"],"states":"dddd_","indices":true}}},
+{"caption":"Day 4 reads 3, so `run` becomes 5: 5 ranges end on day 4 without containing an outage. `clean` grows to 15.","panels":{"a":{"values":[4,2,7,1,3],"states":"ddddc","ranges":[{"from":0,"to":4,"label":"clean run"}],"indices":true},"r":{"values":[1,2,3,4,5],"states":"ddddd","indices":true}}},
+{"caption":"All 5 days are read. There are 5 * 6 / 2 = 15 ranges in all and 15 of them are clean, so 15 - 15 = 0 ranges contain at least one outage.","panels":{"a":{"values":[4,2,7,1,3],"states":"_____","indices":true},"r":{"values":[1,2,3,4,5],"states":"ddddd","indices":true}}}
+]},
+{"id":"all","label":"All outages","steps":[
+{"caption":"Day 0 reads 0, an outage, so `run` resets to 0: no range ending on day 0 is clean. `clean` stays 0.","panels":{"a":{"values":[0,0,0,0,0],"states":"x____","indices":true},"r":{"values":[0,"-","-","-","-"],"states":"d____","indices":true}}},
+{"caption":"Day 1 reads 0, an outage, so `run` resets to 0: no range ending on day 1 is clean. `clean` stays 0.","panels":{"a":{"values":[0,0,0,0,0],"states":"xx___","indices":true},"r":{"values":[0,0,"-","-","-"],"states":"dd___","indices":true}}},
+{"caption":"Day 2 reads 0, an outage, so `run` resets to 0: no range ending on day 2 is clean. `clean` stays 0.","panels":{"a":{"values":[0,0,0,0,0],"states":"xxx__","indices":true},"r":{"values":[0,0,0,"-","-"],"states":"ddd__","indices":true}}},
+{"caption":"Day 3 reads 0, an outage, so `run` resets to 0: no range ending on day 3 is clean. `clean` stays 0.","panels":{"a":{"values":[0,0,0,0,0],"states":"xxxx_","indices":true},"r":{"values":[0,0,0,0,"-"],"states":"dddd_","indices":true}}},
+{"caption":"Day 4 reads 0, an outage, so `run` resets to 0: no range ending on day 4 is clean. `clean` stays 0.","panels":{"a":{"values":[0,0,0,0,0],"states":"xxxxx","indices":true},"r":{"values":[0,0,0,0,0],"states":"ddddd","indices":true}}},
+{"caption":"All 5 days are read. There are 5 * 6 / 2 = 15 ranges in all and 0 of them are clean, so 15 - 0 = 15 ranges contain at least one outage.","panels":{"a":{"values":[0,0,0,0,0],"states":"xxxxx","indices":true},"r":{"values":[0,0,0,0,0],"states":"ddddd","indices":true}}}
+]}
+]}

@@ -1,0 +1,35 @@
+{"schema":1,
+"kind":"frames",
+"id":"read_grid",
+"layout":"row",
+"panels":[{"id":"tokens","viz":"ArrayViz","title":"Input tokens"},{"id":"grid","viz":"GridViz","title":"Stored grid"}],
+"alt":"The input text is split into tokens. The first two tokens are the row and column counts, read with int(). The next r tokens are the rows, sliced off the front of the list one row at a time, and each becomes one row of the grid.",
+"presets":[
+{"id":"board","label":"3 by 4","steps":[
+{"caption":"`sys.stdin.read().split()` cuts the input at whitespace into 5 tokens: the two counts, then one token per row. The grid on the right is what the row tokens will become.","panels":{"tokens":{"values":["3","4","..##","#...","...."],"states":"_____","indices":true},"grid":{"cells":["____","____","____"],"values":[[".",".","#","#"],["#",".",".","."],[".",".",".","."]]}}},
+{"caption":"`r = int(data[0])` reads the first token, 3. The board has 3 rows.","panels":{"tokens":{"values":["3","4","..##","#...","...."],"states":"c____","indices":true},"grid":{"cells":["____","____","____"],"values":[[".",".","#","#"],["#",".",".","."],[".",".",".","."]]}}},
+{"caption":"`c = int(data[1])` reads the second token, 4. Every row has 4 columns.","panels":{"tokens":{"values":["3","4","..##","#...","...."],"states":"dc___","indices":true},"grid":{"cells":["____","____","____"],"values":[[".",".","#","#"],["#",".",".","."],[".",".",".","."]]}}},
+{"caption":"`data[2:2 + r]` is `data[2:5]`: exactly the 3 tokens after the counts. Each one is a whole row, because a row has no spaces inside it.","panels":{"tokens":{"values":["3","4","..##","#...","...."],"states":"ddmmm","ranges":[{"from":2,"to":4,"label":"data[2:5]"}],"indices":true},"grid":{"cells":["____","____","____"],"values":[[".",".","#","#"],["#",".",".","."],[".",".",".","."]]}}},
+{"caption":"`grid[0]` is `data[2]`, the string `..##`. Its 4 characters fill row 0 of the grid.","panels":{"tokens":{"values":["3","4","..##","#...","...."],"states":"ddcmm","indices":true},"grid":{"cells":["cccc","____","____"],"values":[[".",".","#","#"],["#",".",".","."],[".",".",".","."]]}}},
+{"caption":"`grid[1]` is `data[3]`, the string `#...`. Its 4 characters fill row 1 of the grid.","panels":{"tokens":{"values":["3","4","..##","#...","...."],"states":"dddcm","indices":true},"grid":{"cells":["dddd","cccc","____"],"values":[[".",".","#","#"],["#",".",".","."],[".",".",".","."]]}}},
+{"caption":"`grid[2]` is `data[4]`, the string `....`. Its 4 characters fill row 2 of the grid.","panels":{"tokens":{"values":["3","4","..##","#...","...."],"states":"ddddc","indices":true},"grid":{"cells":["dddd","dddd","cccc"],"values":[[".",".","#","#"],["#",".",".","."],[".",".",".","."]]}}},
+{"caption":"The grid holds 3 rows of 4 characters. `grid[2][3]` is `'.'`, the last cell of the last row. Scanning this grid, as count_marks.py does, finds 3 marks.","panels":{"tokens":{"values":["3","4","..##","#...","...."],"states":"ddddd","indices":true},"grid":{"cells":["dddd","dddd","dddd"],"values":[[".",".","#","#"],["#",".",".","."],[".",".",".","."]]}}}
+]},
+{"id":"wide","label":"2 by 5","steps":[
+{"caption":"`sys.stdin.read().split()` cuts the input at whitespace into 4 tokens: the two counts, then one token per row. The grid on the right is what the row tokens will become.","panels":{"tokens":{"values":["2","5","#...#",".#.#."],"states":"____","indices":true},"grid":{"cells":["_____","_____"],"values":[["#",".",".",".","#"],[".","#",".","#","."]]}}},
+{"caption":"`r = int(data[0])` reads the first token, 2. The board has 2 rows.","panels":{"tokens":{"values":["2","5","#...#",".#.#."],"states":"c___","indices":true},"grid":{"cells":["_____","_____"],"values":[["#",".",".",".","#"],[".","#",".","#","."]]}}},
+{"caption":"`c = int(data[1])` reads the second token, 5. Every row has 5 columns.","panels":{"tokens":{"values":["2","5","#...#",".#.#."],"states":"dc__","indices":true},"grid":{"cells":["_____","_____"],"values":[["#",".",".",".","#"],[".","#",".","#","."]]}}},
+{"caption":"`data[2:2 + r]` is `data[2:4]`: exactly the 2 tokens after the counts. Each one is a whole row, because a row has no spaces inside it.","panels":{"tokens":{"values":["2","5","#...#",".#.#."],"states":"ddmm","ranges":[{"from":2,"to":3,"label":"data[2:4]"}],"indices":true},"grid":{"cells":["_____","_____"],"values":[["#",".",".",".","#"],[".","#",".","#","."]]}}},
+{"caption":"`grid[0]` is `data[2]`, the string `#...#`. Its 5 characters fill row 0 of the grid.","panels":{"tokens":{"values":["2","5","#...#",".#.#."],"states":"ddcm","indices":true},"grid":{"cells":["ccccc","_____"],"values":[["#",".",".",".","#"],[".","#",".","#","."]]}}},
+{"caption":"`grid[1]` is `data[3]`, the string `.#.#.`. Its 5 characters fill row 1 of the grid.","panels":{"tokens":{"values":["2","5","#...#",".#.#."],"states":"dddc","indices":true},"grid":{"cells":["ddddd","ccccc"],"values":[["#",".",".",".","#"],[".","#",".","#","."]]}}},
+{"caption":"The grid holds 2 rows of 5 characters. `grid[1][4]` is `'.'`, the last cell of the last row. Scanning this grid, as count_marks.py does, finds 4 marks.","panels":{"tokens":{"values":["2","5","#...#",".#.#."],"states":"dddd","indices":true},"grid":{"cells":["ddddd","ddddd"],"values":[["#",".",".",".","#"],[".","#",".","#","."]]}}}
+]},
+{"id":"single","label":"One row","steps":[
+{"caption":"`sys.stdin.read().split()` cuts the input at whitespace into 3 tokens: the two counts, then one token per row. The grid on the right is what the row tokens will become.","panels":{"tokens":{"values":["1","3",".#."],"states":"___","indices":true},"grid":{"cells":["___"],"values":[[".","#","."]]}}},
+{"caption":"`r = int(data[0])` reads the first token, 1. The board has 1 rows.","panels":{"tokens":{"values":["1","3",".#."],"states":"c__","indices":true},"grid":{"cells":["___"],"values":[[".","#","."]]}}},
+{"caption":"`c = int(data[1])` reads the second token, 3. Every row has 3 columns.","panels":{"tokens":{"values":["1","3",".#."],"states":"dc_","indices":true},"grid":{"cells":["___"],"values":[[".","#","."]]}}},
+{"caption":"`data[2:2 + r]` is `data[2:3]`: exactly the 1 tokens after the counts. Each one is a whole row, because a row has no spaces inside it.","panels":{"tokens":{"values":["1","3",".#."],"states":"ddm","ranges":[{"from":2,"to":2,"label":"data[2:3]"}],"indices":true},"grid":{"cells":["___"],"values":[[".","#","."]]}}},
+{"caption":"`grid[0]` is `data[2]`, the string `.#.`. Its 3 characters fill row 0 of the grid.","panels":{"tokens":{"values":["1","3",".#."],"states":"ddc","indices":true},"grid":{"cells":["ccc"],"values":[[".","#","."]]}}},
+{"caption":"The grid holds 1 rows of 3 characters. `grid[0][2]` is `'.'`, the last cell of the last row. Scanning this grid, as count_marks.py does, finds 1 marks.","panels":{"tokens":{"values":["1","3",".#."],"states":"ddd","indices":true},"grid":{"cells":["ddd"],"values":[[".","#","."]]}}}
+]}
+]}

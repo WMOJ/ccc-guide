@@ -1,0 +1,22 @@
+{"schema":1,
+"kind":"frames",
+"id":"stairs-memo",
+"layout":"single",
+"panels":[{"id":"memo","viz":"ArrayViz","title":"memo"}],
+"alt":"The memo array filling in as the top-down recursion returns. A cell starts empty; the first time its stair is needed, the recursion computes it and stores the result; every later call for that same stair looks the stored value up instead of recomputing it.",
+"presets":[
+{"id":"five","label":"Target 5","steps":[
+{"caption":"`ways(4)` is computed for the first time and stored: `memo[4] = 2`.","panels":{"memo":{"values":[null,null,null,null,2],"states":"....c","name":"memo"}}},
+{"caption":"`ways(3)` is computed for the first time and stored: `memo[3] = 3`.","panels":{"memo":{"values":[null,null,null,3,2],"states":"...cd","name":"memo"}}},
+{"caption":"`ways(4)` is needed again. `memo[4]` already holds 2, so it is looked up instead of recomputed.","panels":{"memo":{"values":[null,null,null,3,2],"states":"...dc","name":"memo"}}},
+{"caption":"`ways(2)` is computed for the first time and stored: `memo[2] = 5`.","panels":{"memo":{"values":[null,null,5,3,2],"states":"..cdd","name":"memo"}}},
+{"caption":"`ways(3)` is needed again. `memo[3]` already holds 3, so it is looked up instead of recomputed.","panels":{"memo":{"values":[null,null,5,3,2],"states":"..dcd","name":"memo"}}},
+{"caption":"`ways(1)` is computed for the first time and stored: `memo[1] = 8`.","panels":{"memo":{"values":[null,8,5,3,2],"states":".cddd","name":"memo"}}},
+{"caption":"`ways(2)` is needed again. `memo[2]` already holds 5, so it is looked up instead of recomputed.","panels":{"memo":{"values":[null,8,5,3,2],"states":".dcdd","name":"memo"}}},
+{"caption":"`ways(0)` is computed for the first time and stored: `memo[0] = 13`.","panels":{"memo":{"values":[13,8,5,3,2],"states":"cdddd","name":"memo"}}}
+]},
+{"id":"two","label":"Target 2","steps":[
+{"caption":"`ways(1)` is computed for the first time and stored: `memo[1] = 2`.","panels":{"memo":{"values":[null,2],"states":".c","name":"memo"}}},
+{"caption":"`ways(0)` is computed for the first time and stored: `memo[0] = 3`.","panels":{"memo":{"values":[3,2],"states":"cd","name":"memo"}}}
+]}
+]}

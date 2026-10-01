@@ -1,0 +1,21 @@
+{"schema":1,
+"kind":"frames",
+"id":"visited_cells",
+"layout":"row",
+"panels":[{"id":"grid","viz":"GridViz","title":"Grid"},{"id":"visited","viz":"StructViz","title":"visited"}],
+"alt":"A 3 by 3 grid sits beside a set of (row, col) tuples. Each input line names one cell. A new pair is added to the set and marked on the grid. A pair already in the set is reported as a repeat and changes nothing. The last step shows how many different cells were stored.",
+"presets":[
+{"id":"main","label":"One repeat","steps":[
+{"caption":"`(1, 2) in visited` is False, so `visited.add((1, 2))` stores the whole pair as one value. The grid marks row 1, column 2.","panels":{"grid":{"cells":["...","..c","..."],"values":[["-","-","-"],["-","-","v"],["-","-","-"]]},"visited":{"kind":"set","items":[{"v":"(1, 2)","s":"c"}]}}},
+{"caption":"`(0, 0) in visited` is False, so `visited.add((0, 0))` stores the whole pair as one value. The grid marks row 0, column 0.","panels":{"grid":{"cells":["c..","..d","..."],"values":[["v","-","-"],["-","-","v"],["-","-","-"]]},"visited":{"kind":"set","items":[{"v":"(1, 2)","s":"_"},{"v":"(0, 0)","s":"c"}]}}},
+{"caption":"The pair (1, 2) is already in `visited`, so `(row, col) in visited` is True. The program prints \"again 1 2\" and adds nothing.","panels":{"grid":{"cells":["d..","..x","..."],"values":[["v","-","-"],["-","-","v"],["-","-","-"]]},"visited":{"kind":"set","items":[{"v":"(1, 2)","s":"x"},{"v":"(0, 0)","s":"_"}]}}},
+{"caption":"`(2, 1) in visited` is False, so `visited.add((2, 1))` stores the whole pair as one value. The grid marks row 2, column 1.","panels":{"grid":{"cells":["d..","..d",".c."],"values":[["v","-","-"],["-","-","v"],["-","v","-"]]},"visited":{"kind":"set","items":[{"v":"(1, 2)","s":"_"},{"v":"(0, 0)","s":"_"},{"v":"(2, 1)","s":"c"}]}}},
+{"caption":"`len(visited)` is 3, the number of different cells stored, however many lines named them.","panels":{"grid":{"cells":["d..","..d",".d."],"values":[["v","-","-"],["-","-","v"],["-","v","-"]]},"visited":{"kind":"set","items":[{"v":"(1, 2)","s":"_"},{"v":"(0, 0)","s":"_"},{"v":"(2, 1)","s":"_"}]}}}
+]},
+{"id":"all_same","label":"Same cell","steps":[
+{"caption":"`(0, 0) in visited` is False, so `visited.add((0, 0))` stores the whole pair as one value. The grid marks row 0, column 0.","panels":{"grid":{"cells":["c..","...","..."],"values":[["v","-","-"],["-","-","-"],["-","-","-"]]},"visited":{"kind":"set","items":[{"v":"(0, 0)","s":"c"}]}}},
+{"caption":"The pair (0, 0) is already in `visited`, so `(row, col) in visited` is True. The program prints \"again 0 0\" and adds nothing.","panels":{"grid":{"cells":["x..","...","..."],"values":[["v","-","-"],["-","-","-"],["-","-","-"]]},"visited":{"kind":"set","items":[{"v":"(0, 0)","s":"x"}]}}},
+{"caption":"The pair (0, 0) is already in `visited`, so `(row, col) in visited` is True. The program prints \"again 0 0\" and adds nothing.","panels":{"grid":{"cells":["x..","...","..."],"values":[["v","-","-"],["-","-","-"],["-","-","-"]]},"visited":{"kind":"set","items":[{"v":"(0, 0)","s":"x"}]}}},
+{"caption":"`len(visited)` is 1, the number of different cells stored, however many lines named them.","panels":{"grid":{"cells":["d..","...","..."],"values":[["v","-","-"],["-","-","-"],["-","-","-"]]},"visited":{"kind":"set","items":[{"v":"(0, 0)","s":"_"}]}}}
+]}
+]}

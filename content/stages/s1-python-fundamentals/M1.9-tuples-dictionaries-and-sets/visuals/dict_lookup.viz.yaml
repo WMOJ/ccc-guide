@@ -1,0 +1,20 @@
+layout: row
+panels:
+  - id: ages
+    viz: StructViz
+    title: ages
+  - id: shown
+    viz: StructViz
+    title: Printed
+alt: >-
+  A dict named ages starts with Ana and Bo. Reading the key Bo gives 13. Storing Cy adds a third
+  pair. Asking whether Cy is a key prints True, and asking about Dee prints False, because Dee
+  was never stored.
+captions: vizrec
+presets:
+  - id: main
+    label: Store and look up
+consistency:
+  description: "rec.output() equals dict_basics.py's real stdout (no stdin needed)."
+  example: ../examples/dict_basics.py
+  compare: output

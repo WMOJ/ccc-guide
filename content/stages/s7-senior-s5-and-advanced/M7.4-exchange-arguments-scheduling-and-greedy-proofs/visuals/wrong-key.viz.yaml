@@ -1,0 +1,27 @@
+layout: row
+panels:
+  - { id: t, viz: TableViz, title: Jobs }
+  - { id: line, viz: LineViz, title: Timeline in minutes }
+legendLabels:
+  compare: Shortest first (top)
+  done: Smallest t/w (bottom)
+alt: >-
+  A table of four jobs with their time, weight and time-over-weight ratio, above a timeline. The
+  top row schedules the jobs shortest first and adds up each job's weight times finish time. The
+  bottom row schedules them by smallest time over weight and gets a lower total, so sorting by
+  time alone is the wrong key once weights differ.
+captions: vizrec
+presets:
+  - id: heavy
+    label: Mixed weights
+    stdin: "4\nA 3 1\nB 2 4\nC 4 2\nD 1 1\n"
+  - id: equal
+    label: Equal weights
+    stdin: "4\nA 3 1\nB 2 1\nC 4 1\nD 1 1\n"
+  - id: two
+    label: Two jobs
+    stdin: "2\nA 3 1\nB 4 10\n"
+consistency:
+  description: The ratio order and its cost equal the two lines examples/weighted_jobs.py prints.
+  example: ../examples/weighted_jobs.py
+  compare: output

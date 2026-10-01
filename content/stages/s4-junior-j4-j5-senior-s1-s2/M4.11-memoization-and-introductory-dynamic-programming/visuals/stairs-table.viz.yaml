@@ -1,0 +1,20 @@
+layout: single
+panels:
+  - { id: table, viz: ArrayViz, title: ways }
+alt: >-
+  The bottom-up ways table filling in from the top of the staircase down to the bottom. The two
+  cells at and past the top start at 1. Each earlier cell reads the two cells one and two steps
+  ahead of it and stores their sum, so every cell it needs is already filled by the time it is
+  computed.
+captions: vizrec
+presets:
+  - id: five
+    label: Target 5
+    stdin: "5\n"
+  - id: two
+    label: Target 2
+    stdin: "2\n"
+consistency:
+  description: The final answer the visual returns equals the output of examples/count_stairs_table.py on the same target.
+  example: ../examples/count_stairs_table.py
+  compare: output

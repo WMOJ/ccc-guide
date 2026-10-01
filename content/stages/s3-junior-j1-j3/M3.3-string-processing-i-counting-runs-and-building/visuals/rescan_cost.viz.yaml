@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: cost, viz: PlotViz, title: Comparisons made }
+alt: >-
+  Counting the comparisons a run scan makes on one string, with two plans. Restarting the scan
+  at every index, i += 1, re-checks the rest of a long run each time, so its total climbs
+  steeply. Jumping i past the whole run, i += count, checks each character about once, so its
+  total stays low.
+captions: vizrec
+presets:
+  - id: main
+    label: One long run
+    stdin: "aaaaaaaa\n"
+  - id: two-runs
+    label: Two runs
+    stdin: "aaaabbbb\n"
+  - id: no-runs
+    label: All different
+    stdin: "abcdefgh\n"
+consistency:
+  description: The two totals equal the two numbers printed by examples/rescan_cost.py.
+  example: ../examples/rescan_cost.py
+  compare: output

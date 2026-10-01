@@ -1,0 +1,26 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: One checkpoint }
+alt: >-
+  A table with one row per problem, showing how many subtasks have cleared and the estimated minutes
+  for the next one. The checkpoint tests each estimate against the minutes left, marks it as fitting
+  or not, and picks the fitting subtask with the smallest estimate, or reports that nothing fits.
+captions: vizrec
+legendLabels:
+  done: Fits the time left
+  invalid: Does not fit
+  path: Picked
+presets:
+  - id: minute-90
+    label: Minute 90
+    stdin: "90\n2 -\n1 45\n0 20\n1 70\n0 30\n"
+  - id: minute-165
+    label: Minute 165
+    stdin: "15\n2 -\n1 45\n0 20\n1 70\n0 12\n"
+  - id: minute-175
+    label: Nothing fits
+    stdin: "5\n2 -\n1 45\n0 20\n1 70\n0 30\n"
+consistency:
+  description: The pick equals the line examples/checkpoint.py prints on each preset's input.
+  example: ../examples/checkpoint.py
+  compare: output

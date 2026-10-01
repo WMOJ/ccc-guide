@@ -1,0 +1,16 @@
+example: largest_gap.py
+alt: >-
+  The program reads n and then the values, and collects the gap between each pair of neighbors in a
+  list named gaps before printing the largest one. With n = 1 the loop never runs, gaps stays
+  empty, and max(gaps) raises a ValueError on line 14. With n = 3 it collects three gaps and
+  prints the largest.
+presets:
+  - id: one
+    label: n = 1
+    stdin: "1\n5\n"
+  - id: three
+    label: n = 3
+    stdin: "3\n3 9 4\n"
+notes:
+  "9": "`range(1, n)` visits `n - 1` values of `i`, one for each pair of neighbors."
+  "14": "`max` picks the largest item of `gaps`, so it needs at least one item to pick from."

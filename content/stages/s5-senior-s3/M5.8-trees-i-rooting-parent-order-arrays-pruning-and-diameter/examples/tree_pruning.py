@@ -1,36 +1,64 @@
+import sys
 from collections import deque
 
 
-def prune_leaves(adj):
-    """Prune leaves layer by layer."""
-    n = len(adj)
+def build_adjacency(n: int, edges: list) -> list:
+    adj = [[] for _ in range(n)]
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    return adj
+
+
+def prune_unimportant_leaves(n: int, adj: list, important: list) -> tuple:
+    """Repeatedly remove leaves that are not important, layer by layer."""
     degree = [len(adj[i]) for i in range(n)]
-    queue = deque([i for i in range(n) if degree[i] <= 1])
-    layers = []
-
+    removed = [False] * n
+    queue = deque(i for i in range(n) if degree[i] == 1 and not important[i])
+    removed_edges = 0
     while queue:
-        layer = []
-        for _ in range(len(queue)):
-            u = queue.popleft()
-            layer.append(u)
-            for v in adj[u]:
-                degree[v] -= 1
-                if degree[v] == 1:
-                    queue.append(v)
-        layers.append(layer)
+        node = queue.popleft()
+        if removed[node]:
+            continue
+        removed[node] = True
+        for neighbor in adj[node]:
+            if removed[neighbor]:
+                continue
+            degree[neighbor] -= 1
+            removed_edges += 1
+            if degree[neighbor] == 1 and not important[neighbor]:
+                queue.append(neighbor)
+    kept = [i for i in range(n) if not removed[i]]
+    return kept, removed_edges
 
-    return layers
+
+def main() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
+
+    pos = 0
+    n = int(data[pos])
+    k = int(data[pos + 1])
+    pos += 2
+
+    important = [False] * n
+    for _ in range(k):
+        important[int(data[pos])] = True
+        pos += 1
+
+    edges = []
+    for _ in range(n - 1):
+        a = int(data[pos])
+        b = int(data[pos + 1])
+        pos += 2
+        edges.append((a, b))
+
+    adj = build_adjacency(n, edges)
+    kept, removed_edges = prune_unimportant_leaves(n, adj, important)
+    print("Rooms kept:", kept)
+    print("Hallways closed:", removed_edges)
 
 
-adj = [
-    [1, 2],
-    [0, 3, 4],
-    [0, 5],
-    [1],
-    [1],
-    [2]
-]
-
-layers = prune_leaves(adj)
-for i, layer in enumerate(layers):
-    print(f"Layer {i}: {layer}")
+if __name__ == "__main__":
+    main()

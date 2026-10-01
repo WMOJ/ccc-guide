@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"reverse-pointers",
+"layout":"single",
+"panels":[{"id":"numbers","viz":"ArrayViz","title":"Array"}],
+"alt":"An array with a left pointer and a right pointer starting at opposite ends. Each step swaps the two pointed-at values, then moves both pointers one slot inward, until they meet (an odd-length array) or cross (an even-length one) with the array fully reversed.",
+"presets":[
+{"id":"odd","label":"Odd length","steps":[
+{"caption":"left starts at index 0 (1), right starts at index 4 (5).","panels":{"numbers":{"values":[1,2,3,4,5],"states":"_____","pointers":[{"name":"left","at":0},{"name":"right","at":4}]}}},
+{"caption":"Swap positions 0 and 4: they now hold 5 and 1. Both pointers step one slot inward.","panels":{"numbers":{"values":[5,2,3,4,1],"states":"p___p","pointers":[{"name":"left","at":0},{"name":"right","at":4}]}}},
+{"caption":"left is now at index 1, right is now at index 3.","panels":{"numbers":{"values":[5,2,3,4,1],"states":"d___d","pointers":[{"name":"left","at":1},{"name":"right","at":3}]}}},
+{"caption":"Swap positions 1 and 3: they now hold 4 and 2. Both pointers step one slot inward.","panels":{"numbers":{"values":[5,4,3,2,1],"states":"dp_pd","pointers":[{"name":"left","at":1},{"name":"right","at":3}]}}},
+{"caption":"left and right meet at the same slot. The array is fully reversed: [5, 4, 3, 2, 1].","panels":{"numbers":{"values":[5,4,3,2,1],"states":"dd_dd","pointers":[{"name":"left","at":2},{"name":"right","at":2}]}}}
+]},
+{"id":"even","label":"Even length","steps":[
+{"caption":"left starts at index 0 (1), right starts at index 3 (4).","panels":{"numbers":{"values":[1,2,3,4],"states":"____","pointers":[{"name":"left","at":0},{"name":"right","at":3}]}}},
+{"caption":"Swap positions 0 and 3: they now hold 4 and 1. Both pointers step one slot inward.","panels":{"numbers":{"values":[4,2,3,1],"states":"p__p","pointers":[{"name":"left","at":0},{"name":"right","at":3}]}}},
+{"caption":"left is now at index 1, right is now at index 2.","panels":{"numbers":{"values":[4,2,3,1],"states":"d__d","pointers":[{"name":"left","at":1},{"name":"right","at":2}]}}},
+{"caption":"Swap positions 1 and 2: they now hold 3 and 2. Both pointers step one slot inward.","panels":{"numbers":{"values":[4,3,2,1],"states":"dppd","pointers":[{"name":"left","at":1},{"name":"right","at":2}]}}},
+{"caption":"left and right cross without a middle slot. The array is fully reversed: [4, 3, 2, 1].","panels":{"numbers":{"values":[4,3,2,1],"states":"dddd"}}}
+]},
+{"id":"single","label":"Single element","steps":[
+{"caption":"A single element has no partner to swap with; it is already its own reverse.","panels":{"numbers":{"values":[7],"states":"_","pointers":[{"name":"left","at":0},{"name":"right","at":0}]}}},
+{"caption":"left and right meet at the same slot. The array is fully reversed: [7].","panels":{"numbers":{"values":[7],"states":"_","pointers":[{"name":"left","at":0},{"name":"right","at":0}]}}}
+]}
+]}

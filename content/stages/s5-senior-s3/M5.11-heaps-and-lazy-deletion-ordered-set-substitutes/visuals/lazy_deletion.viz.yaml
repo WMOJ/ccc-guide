@@ -1,0 +1,21 @@
+layout: row
+panels:
+  - { id: h, viz: StructViz, title: Heap }
+  - { id: b, viz: TableViz, title: "best[item]" }
+alt: >-
+  A heap of (priority, job) entries next to a table of each job's current best priority. Updating
+  a job pushes a new entry and changes its cell in the table. Handing out the next job pops the
+  heap's top entry: if it matches the table, that job is handed out; if not, it is a stale entry
+  left behind by an earlier update, and it is discarded.
+captions: vizrec
+presets:
+  - id: stream
+    label: Main stream
+    stdin: "3 9\nU 0 8\nU 0 2\nQ\nU 1 5\nQ\nU 2 9\nQ\nU 1 3\nQ\n"
+  - id: twice
+    label: Improves twice
+    stdin: "3 8\nU 0 9\nU 0 5\nU 0 1\nQ\nU 1 5\nQ\nU 2 9\nQ\n"
+consistency:
+  description: The update, skip and hand-out lines in the visual equal the output of examples/lazy_deletion.py.
+  example: ../examples/lazy_deletion.py
+  compare: output

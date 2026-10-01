@@ -1,0 +1,35 @@
+{"schema":1,
+"kind":"frames",
+"id":"triangular_pairs",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Pairing the terms"}],
+"alt":"The terms 1 through n written forwards in one row and backwards in a second row, with each column summed. Every column adds to n + 1 and there are n columns, so the two rows total n times n + 1, and one row alone is half of that.",
+"presets":[
+{"id":"six","label":"Six terms","steps":[
+{"caption":"Write the terms in a row: 1 + 2 + 3 + 4 + 5 + 6. Their sum is what we want.","panels":{"table":{"cells":[[1,2,3,4,5,6],[null,null,null,null,null,null],[null,null,null,null,null,null]],"states":["______","______","______"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5","6"]}}},
+{"caption":"Write the same terms again in the second row, backwards (6 down to 1). Both rows have the same sum, so together they add to twice the answer.","panels":{"table":{"cells":[[1,2,3,4,5,6],[6,5,4,3,2,1],[null,null,null,null,null,null]],"states":["______","______","______"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5","6"]}}},
+{"caption":"Column 1: 1 + 6 = 7, the same as 6 + 1.","panels":{"table":{"cells":[[1,2,3,4,5,6],[6,5,4,3,2,1],[7,null,null,null,null,null]],"states":["c_____","c_____","c_____"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5","6"]}}},
+{"caption":"Column 2: 2 + 5 = 7, the same as 6 + 1.","panels":{"table":{"cells":[[1,2,3,4,5,6],[6,5,4,3,2,1],[7,7,null,null,null,null]],"states":["_c____","_c____","_c____"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5","6"]}}},
+{"caption":"Column 3: 3 + 4 = 7, the same as 6 + 1.","panels":{"table":{"cells":[[1,2,3,4,5,6],[6,5,4,3,2,1],[7,7,7,null,null,null]],"states":["__c___","__c___","__c___"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5","6"]}}},
+{"caption":"Column 4: 4 + 3 = 7, the same as 6 + 1.","panels":{"table":{"cells":[[1,2,3,4,5,6],[6,5,4,3,2,1],[7,7,7,7,null,null]],"states":["___c__","___c__","___c__"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5","6"]}}},
+{"caption":"Column 5: 5 + 2 = 7, the same as 6 + 1.","panels":{"table":{"cells":[[1,2,3,4,5,6],[6,5,4,3,2,1],[7,7,7,7,7,null]],"states":["____c_","____c_","____c_"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5","6"]}}},
+{"caption":"Column 6: 6 + 1 = 7, the same as 6 + 1.","panels":{"table":{"cells":[[1,2,3,4,5,6],[6,5,4,3,2,1],[7,7,7,7,7,7]],"states":["_____c","_____c","_____c"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5","6"]}}},
+{"caption":"All 6 columns add to 7, so both rows together total 6 * 7 = 42. One row alone is half: 42 // 2 = 21.","panels":{"table":{"cells":[[1,2,3,4,5,6],[6,5,4,3,2,1],[7,7,7,7,7,7]],"states":["______","______","______"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5","6"]}}}
+]},
+{"id":"five","label":"Five terms","steps":[
+{"caption":"Write the terms in a row: 1 + 2 + 3 + 4 + 5. Their sum is what we want.","panels":{"table":{"cells":[[1,2,3,4,5],[null,null,null,null,null],[null,null,null,null,null]],"states":["_____","_____","_____"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5"]}}},
+{"caption":"Write the same terms again in the second row, backwards (5 down to 1). Both rows have the same sum, so together they add to twice the answer.","panels":{"table":{"cells":[[1,2,3,4,5],[5,4,3,2,1],[null,null,null,null,null]],"states":["_____","_____","_____"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5"]}}},
+{"caption":"Column 1: 1 + 5 = 6, the same as 5 + 1.","panels":{"table":{"cells":[[1,2,3,4,5],[5,4,3,2,1],[6,null,null,null,null]],"states":["c____","c____","c____"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5"]}}},
+{"caption":"Column 2: 2 + 4 = 6, the same as 5 + 1.","panels":{"table":{"cells":[[1,2,3,4,5],[5,4,3,2,1],[6,6,null,null,null]],"states":["_c___","_c___","_c___"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5"]}}},
+{"caption":"Column 3: 3 + 3 = 6, the same as 5 + 1.","panels":{"table":{"cells":[[1,2,3,4,5],[5,4,3,2,1],[6,6,6,null,null]],"states":["__c__","__c__","__c__"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5"]}}},
+{"caption":"Column 4: 4 + 2 = 6, the same as 5 + 1.","panels":{"table":{"cells":[[1,2,3,4,5],[5,4,3,2,1],[6,6,6,6,null]],"states":["___c_","___c_","___c_"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5"]}}},
+{"caption":"Column 5: 5 + 1 = 6, the same as 5 + 1.","panels":{"table":{"cells":[[1,2,3,4,5],[5,4,3,2,1],[6,6,6,6,6]],"states":["____c","____c","____c"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5"]}}},
+{"caption":"All 5 columns add to 6, so both rows together total 5 * 6 = 30. One row alone is half: 30 // 2 = 15.","panels":{"table":{"cells":[[1,2,3,4,5],[5,4,3,2,1],[6,6,6,6,6]],"states":["_____","_____","_____"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1","2","3","4","5"]}}}
+]},
+{"id":"one","label":"One term","steps":[
+{"caption":"Write the single term, 1, in a row. Its sum is 1.","panels":{"table":{"cells":[[1],[null],[null]],"states":["_","_","_"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1"]}}},
+{"caption":"Write the same terms again in the second row, backwards (1 down to 1). Both rows have the same sum, so together they add to twice the answer.","panels":{"table":{"cells":[[1],[1],[null]],"states":["_","_","_"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1"]}}},
+{"caption":"Column 1: 1 + 1 = 2, the same as 1 + 1.","panels":{"table":{"cells":[[1],[1],[2]],"states":["c","c","c"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1"]}}},
+{"caption":"The one column adds to 2, so both rows together total 1 * 2 = 2. One row alone is half: 2 // 2 = 1.","panels":{"table":{"cells":[[1],[1],[2]],"states":["_","_","_"],"rowHeads":["forwards","backwards","sum"],"colHeads":["1"]}}}
+]}
+]}

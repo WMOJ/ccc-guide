@@ -1,0 +1,6 @@
+step 10: float 0.9090909090909065, exact 10/11
+step 20: float 0.9090909090882633, exact 10/11
+step 30: float 0.9090909063816071, exact 10/11
+step 40: float 0.909088134765625, exact 10/11
+step 50: float 0.90625, exact 10/11
+step 60: float 0.0, exact 10/11

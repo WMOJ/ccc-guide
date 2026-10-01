@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: chars, viz: ArrayViz, title: Line }
+  - { id: state, viz: TableViz, title: Tokenizer state }
+alt: >-
+  Splitting a line on the two-character delimiter "::". At each index the scan looks at a
+  two-character slice. A match closes the current token and jumps the index by 2, past both
+  colons. Anything else adds one character to the token being built and moves by 1, so a lone
+  colon stays inside its token.
+captions: vizrec
+presets:
+  - id: main
+    label: Two fields
+    stdin: "a::bc::d\n"
+  - id: lone
+    label: Lone colon
+    stdin: "a:b::c\n"
+  - id: empty
+    label: Empty token
+    stdin: "a::::b\n"
+consistency:
+  description: The tokens found equal the lines printed by examples/multi_delim.py.
+  example: ../examples/multi_delim.py
+  compare: output

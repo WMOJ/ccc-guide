@@ -1,0 +1,48 @@
+{"schema":1,
+"kind":"frames",
+"id":"shuffle",
+"layout":"single",
+"panels":[{"id":"a","viz":"ArrayViz"}],
+"alt":"Five friends each give one gift. A list starts with every friend giving to themselves, then a Fisher-Yates shuffle swaps positions from the right end toward the left, each with a random earlier position. After the shuffle the list is checked: any friend who still gives to themselves is marked invalid and the whole shuffle is thrown away and repeated.",
+"legendLabels":{"current":"Position i","compare":"Random j","done":"Finished","invalid":"Gives to self"},
+"presets":[
+{"id":"three-tries","label":"Three tries","steps":[
+{"caption":"Try 1 starts with `gift[i] = i`: every friend gives to themselves. The shuffle fixes one position at a time, starting at position 4 and stopping at 1.","panels":{"a":{"values":[0,1,2,3,4],"name":"gift, try 1","indices":true}}},
+{"caption":"`random.randint(0, 4)` gives j = 1, so `gift[4]` and `gift[1]` swap. Position 4 is now finished.","panels":{"a":{"values":[0,4,2,3,1],"states":"_m__c","pointers":[{"name":"i","at":4},{"name":"j","at":1}],"name":"gift, try 1","indices":true}}},
+{"caption":"`random.randint(0, 3)` gives j = 1, so `gift[3]` and `gift[1]` swap. Positions 3 to 4 are now finished.","panels":{"a":{"values":[0,3,2,4,1],"states":"_m_cd","pointers":[{"name":"i","at":3},{"name":"j","at":1}],"name":"gift, try 1","indices":true}}},
+{"caption":"`random.randint(0, 2)` gives j = 1, so `gift[2]` and `gift[1]` swap. Positions 2 to 4 are now finished.","panels":{"a":{"values":[0,2,3,4,1],"states":"_mcdd","pointers":[{"name":"i","at":2},{"name":"j","at":1}],"name":"gift, try 1","indices":true}}},
+{"caption":"`random.randint(0, 1)` gives j = 1, the same position, so `gift[1]` swaps with itself and stays 2.","panels":{"a":{"values":[0,2,3,4,1],"states":"_cddd","pointers":[{"name":"i, j","at":1}],"name":"gift, try 1","indices":true}}},
+{"caption":"Checking the finished shuffle: Friend 0 gives to themselves, so it is not valid. Throw it away and shuffle again.","panels":{"a":{"values":[0,2,3,4,1],"states":"xdddd","name":"gift, try 1","indices":true}}},
+{"caption":"Try 2 starts over from the same list, `gift[i] = i`.","panels":{"a":{"values":[0,1,2,3,4],"name":"gift, try 2","indices":true}}},
+{"caption":"`random.randint(0, 4)` gives j = 4, the same position, so `gift[4]` swaps with itself and stays 4.","panels":{"a":{"values":[0,1,2,3,4],"states":"____c","pointers":[{"name":"i, j","at":4}],"name":"gift, try 2","indices":true}}},
+{"caption":"`random.randint(0, 3)` gives j = 0, so `gift[3]` and `gift[0]` swap. Positions 3 to 4 are now finished.","panels":{"a":{"values":[3,1,2,0,4],"states":"m__cd","pointers":[{"name":"i","at":3},{"name":"j","at":0}],"name":"gift, try 2","indices":true}}},
+{"caption":"`random.randint(0, 2)` gives j = 2, the same position, so `gift[2]` swaps with itself and stays 2.","panels":{"a":{"values":[3,1,2,0,4],"states":"__cdd","pointers":[{"name":"i, j","at":2}],"name":"gift, try 2","indices":true}}},
+{"caption":"`random.randint(0, 1)` gives j = 0, so `gift[1]` and `gift[0]` swap. Positions 1 to 4 are now finished.","panels":{"a":{"values":[1,3,2,0,4],"states":"mcddd","pointers":[{"name":"i","at":1},{"name":"j","at":0}],"name":"gift, try 2","indices":true}}},
+{"caption":"Checking the finished shuffle: Friends 2 and 4 give to themselves, so it is not valid. Throw it away and shuffle again.","panels":{"a":{"values":[1,3,2,0,4],"states":"ddxdx","name":"gift, try 2","indices":true}}},
+{"caption":"Try 3 starts over from the same list, `gift[i] = i`.","panels":{"a":{"values":[0,1,2,3,4],"name":"gift, try 3","indices":true}}},
+{"caption":"`random.randint(0, 4)` gives j = 3, so `gift[4]` and `gift[3]` swap. Position 4 is now finished.","panels":{"a":{"values":[0,1,2,4,3],"states":"___mc","pointers":[{"name":"i","at":4},{"name":"j","at":3}],"name":"gift, try 3","indices":true}}},
+{"caption":"`random.randint(0, 3)` gives j = 2, so `gift[3]` and `gift[2]` swap. Positions 3 to 4 are now finished.","panels":{"a":{"values":[0,1,4,2,3],"states":"__mcd","pointers":[{"name":"i","at":3},{"name":"j","at":2}],"name":"gift, try 3","indices":true}}},
+{"caption":"`random.randint(0, 2)` gives j = 2, the same position, so `gift[2]` swaps with itself and stays 4.","panels":{"a":{"values":[0,1,4,2,3],"states":"__cdd","pointers":[{"name":"i, j","at":2}],"name":"gift, try 3","indices":true}}},
+{"caption":"`random.randint(0, 1)` gives j = 0, so `gift[1]` and `gift[0]` swap. Positions 1 to 4 are now finished.","panels":{"a":{"values":[1,0,4,2,3],"states":"mcddd","pointers":[{"name":"i","at":1},{"name":"j","at":0}],"name":"gift, try 3","indices":true}}},
+{"caption":"Checking the finished shuffle: no friend gives to themselves. Try 3 is the answer, `1 0 4 2 3`, after 3 tries.","panels":{"a":{"values":[1,0,4,2,3],"states":"ddddd","name":"gift, try 3","indices":true}}}
+]},
+{"id":"first-try","label":"First try","steps":[
+{"caption":"Try 1 starts with `gift[i] = i`: every friend gives to themselves. The shuffle fixes one position at a time, starting at position 4 and stopping at 1.","panels":{"a":{"values":[0,1,2,3,4],"name":"gift, try 1","indices":true}}},
+{"caption":"`random.randint(0, 4)` gives j = 1, so `gift[4]` and `gift[1]` swap. Position 4 is now finished.","panels":{"a":{"values":[0,4,2,3,1],"states":"_m__c","pointers":[{"name":"i","at":4},{"name":"j","at":1}],"name":"gift, try 1","indices":true}}},
+{"caption":"`random.randint(0, 3)` gives j = 0, so `gift[3]` and `gift[0]` swap. Positions 3 to 4 are now finished.","panels":{"a":{"values":[3,4,2,0,1],"states":"m__cd","pointers":[{"name":"i","at":3},{"name":"j","at":0}],"name":"gift, try 1","indices":true}}},
+{"caption":"`random.randint(0, 2)` gives j = 1, so `gift[2]` and `gift[1]` swap. Positions 2 to 4 are now finished.","panels":{"a":{"values":[3,2,4,0,1],"states":"_mcdd","pointers":[{"name":"i","at":2},{"name":"j","at":1}],"name":"gift, try 1","indices":true}}},
+{"caption":"`random.randint(0, 1)` gives j = 0, so `gift[1]` and `gift[0]` swap. Positions 1 to 4 are now finished.","panels":{"a":{"values":[2,3,4,0,1],"states":"mcddd","pointers":[{"name":"i","at":1},{"name":"j","at":0}],"name":"gift, try 1","indices":true}}},
+{"caption":"Checking the finished shuffle: no friend gives to themselves. Try 1 is the answer, `2 3 4 0 1`, after 1 try.","panels":{"a":{"values":[2,3,4,0,1],"states":"ddddd","name":"gift, try 1","indices":true}}}
+]},
+{"id":"two-people","label":"Two people","steps":[
+{"caption":"Try 1 starts with `gift[i] = i`: every friend gives to themselves. The shuffle fixes one position at a time, starting at position 1.","panels":{"a":{"values":[0,1],"name":"gift, try 1","indices":true}}},
+{"caption":"`random.randint(0, 1)` gives j = 1, the same position, so `gift[1]` swaps with itself and stays 1.","panels":{"a":{"values":[0,1],"states":"_c","pointers":[{"name":"i, j","at":1}],"name":"gift, try 1","indices":true}}},
+{"caption":"Checking the finished shuffle: Friends 0 and 1 give to themselves, so it is not valid. Throw it away and shuffle again.","panels":{"a":{"values":[0,1],"states":"xx","name":"gift, try 1","indices":true}}},
+{"caption":"Try 2 starts over from the same list, `gift[i] = i`.","panels":{"a":{"values":[0,1],"name":"gift, try 2","indices":true}}},
+{"caption":"`random.randint(0, 1)` gives j = 1, the same position, so `gift[1]` swaps with itself and stays 1.","panels":{"a":{"values":[0,1],"states":"_c","pointers":[{"name":"i, j","at":1}],"name":"gift, try 2","indices":true}}},
+{"caption":"Checking the finished shuffle: Friends 0 and 1 give to themselves, so it is not valid. Throw it away and shuffle again.","panels":{"a":{"values":[0,1],"states":"xx","name":"gift, try 2","indices":true}}},
+{"caption":"Try 3 starts over from the same list, `gift[i] = i`.","panels":{"a":{"values":[0,1],"name":"gift, try 3","indices":true}}},
+{"caption":"`random.randint(0, 1)` gives j = 0, so `gift[1]` and `gift[0]` swap. Position 1 is now finished.","panels":{"a":{"values":[1,0],"states":"mc","pointers":[{"name":"i","at":1},{"name":"j","at":0}],"name":"gift, try 3","indices":true}}},
+{"caption":"Checking the finished shuffle: no friend gives to themselves. Try 3 is the answer, `1 0`, after 3 tries.","panels":{"a":{"values":[1,0],"states":"dd","name":"gift, try 3","indices":true}}}
+]}
+]}

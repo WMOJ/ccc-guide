@@ -1,0 +1,33 @@
+{"schema":1,
+"kind":"frames",
+"id":"merge-pointers",
+"layout":"row",
+"panels":[{"id":"a","viz":"ArrayViz","title":"List A (i)"},{"id":"b","viz":"ArrayViz","title":"List B (j)"}],
+"alt":"Two sorted lists, A and B, each with its own index pointer, i and j. At each step the smaller of the two pointed-at values moves into the merged result and that pointer advances. When one list runs out, the rest of the other list is copied over unchanged, since it is already sorted.",
+"presets":[
+{"id":"interleaved","label":"Interleaved","steps":[
+{"caption":"i starts at index 0 of A, j starts at index 0 of B. merged is empty.","panels":{"a":{"values":[1,3,5,7],"states":"____","pointers":[{"name":"i","at":0}]},"b":{"values":[2,4,6,8],"states":"____","pointers":[{"name":"j","at":0}]}}},
+{"caption":"A[0] = 1 is at most B[0] = 2, so it comes next. merged so far: [1]. i advances.","panels":{"a":{"values":[1,3,5,7],"states":"d___","pointers":[{"name":"i","at":1}]},"b":{"values":[2,4,6,8],"states":"____","pointers":[{"name":"j","at":0}]}}},
+{"caption":"B[0] = 2 is smaller than A[1] = 3, so it comes next. merged so far: [1, 2]. j advances.","panels":{"a":{"values":[1,3,5,7],"states":"d___","pointers":[{"name":"i","at":1}]},"b":{"values":[2,4,6,8],"states":"d___","pointers":[{"name":"j","at":1}]}}},
+{"caption":"A[1] = 3 is at most B[1] = 4, so it comes next. merged so far: [1, 2, 3]. i advances.","panels":{"a":{"values":[1,3,5,7],"states":"dd__","pointers":[{"name":"i","at":2}]},"b":{"values":[2,4,6,8],"states":"d___","pointers":[{"name":"j","at":1}]}}},
+{"caption":"B[1] = 4 is smaller than A[2] = 5, so it comes next. merged so far: [1, 2, 3, 4]. j advances.","panels":{"a":{"values":[1,3,5,7],"states":"dd__","pointers":[{"name":"i","at":2}]},"b":{"values":[2,4,6,8],"states":"dd__","pointers":[{"name":"j","at":2}]}}},
+{"caption":"A[2] = 5 is at most B[2] = 6, so it comes next. merged so far: [1, 2, 3, 4, 5]. i advances.","panels":{"a":{"values":[1,3,5,7],"states":"ddd_","pointers":[{"name":"i","at":3}]},"b":{"values":[2,4,6,8],"states":"dd__","pointers":[{"name":"j","at":2}]}}},
+{"caption":"B[2] = 6 is smaller than A[3] = 7, so it comes next. merged so far: [1, 2, 3, 4, 5, 6]. j advances.","panels":{"a":{"values":[1,3,5,7],"states":"ddd_","pointers":[{"name":"i","at":3}]},"b":{"values":[2,4,6,8],"states":"ddd_","pointers":[{"name":"j","at":3}]}}},
+{"caption":"A[3] = 7 is at most B[3] = 8, so it comes next. merged so far: [1, 2, 3, 4, 5, 6, 7]. i advances.","panels":{"a":{"values":[1,3,5,7],"states":"dddd"},"b":{"values":[2,4,6,8],"states":"ddd_","pointers":[{"name":"j","at":3}]}}},
+{"caption":"A is exhausted. The rest of B, [8], is already sorted, so it is copied over as is. merged: [1, 2, 3, 4, 5, 6, 7, 8].","panels":{"a":{"values":[1,3,5,7],"states":"dddd"},"b":{"values":[2,4,6,8],"states":"dddd"}}}
+]},
+{"id":"exhausts","label":"One runs out","steps":[
+{"caption":"i starts at index 0 of A, j starts at index 0 of B. merged is empty.","panels":{"a":{"values":[1,2],"states":"__","pointers":[{"name":"i","at":0}]},"b":{"values":[3,4,5,6,7],"states":"_____","pointers":[{"name":"j","at":0}]}}},
+{"caption":"A[0] = 1 is at most B[0] = 3, so it comes next. merged so far: [1]. i advances.","panels":{"a":{"values":[1,2],"states":"d_","pointers":[{"name":"i","at":1}]},"b":{"values":[3,4,5,6,7],"states":"_____","pointers":[{"name":"j","at":0}]}}},
+{"caption":"A[1] = 2 is at most B[0] = 3, so it comes next. merged so far: [1, 2]. i advances.","panels":{"a":{"values":[1,2],"states":"dd"},"b":{"values":[3,4,5,6,7],"states":"_____","pointers":[{"name":"j","at":0}]}}},
+{"caption":"A is exhausted. The rest of B, [3, 4, 5, 6, 7], is already sorted, so it is copied over as is. merged: [1, 2, 3, 4, 5, 6, 7].","panels":{"a":{"values":[1,2],"states":"dd"},"b":{"values":[3,4,5,6,7],"states":"ddddd"}}}
+]},
+{"id":"ties","label":"Equal values","steps":[
+{"caption":"i starts at index 0 of A, j starts at index 0 of B. merged is empty.","panels":{"a":{"values":[2,2,4],"states":"___","pointers":[{"name":"i","at":0}]},"b":{"values":[2,3],"states":"__","pointers":[{"name":"j","at":0}]}}},
+{"caption":"A[0] = 2 is at most B[0] = 2, so it comes next. merged so far: [2]. i advances.","panels":{"a":{"values":[2,2,4],"states":"d__","pointers":[{"name":"i","at":1}]},"b":{"values":[2,3],"states":"__","pointers":[{"name":"j","at":0}]}}},
+{"caption":"A[1] = 2 is at most B[0] = 2, so it comes next. merged so far: [2, 2]. i advances.","panels":{"a":{"values":[2,2,4],"states":"dd_","pointers":[{"name":"i","at":2}]},"b":{"values":[2,3],"states":"__","pointers":[{"name":"j","at":0}]}}},
+{"caption":"B[0] = 2 is smaller than A[2] = 4, so it comes next. merged so far: [2, 2, 2]. j advances.","panels":{"a":{"values":[2,2,4],"states":"dd_","pointers":[{"name":"i","at":2}]},"b":{"values":[2,3],"states":"d_","pointers":[{"name":"j","at":1}]}}},
+{"caption":"B[1] = 3 is smaller than A[2] = 4, so it comes next. merged so far: [2, 2, 2, 3]. j advances.","panels":{"a":{"values":[2,2,4],"states":"dd_","pointers":[{"name":"i","at":2}]},"b":{"values":[2,3],"states":"dd"}}},
+{"caption":"B is exhausted. The rest of A, [4], is already sorted, so it is copied over as is. merged: [2, 2, 2, 3, 4].","panels":{"a":{"values":[2,2,4],"states":"ddd"},"b":{"values":[2,3],"states":"dd"}}}
+]}
+]}

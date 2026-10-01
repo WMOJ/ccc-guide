@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz, title: Memo table }
+alt: >-
+  A table with one column for each distinct value of n divided by d, smallest first. The bottom row
+  fills from left to right. Each new entry adds v to a sum of earlier entries, found at the
+  quotients v divided by d, and those quotients are always columns already filled.
+captions: vizrec
+presets:
+  - id: twelve
+    label: n = 12
+    stdin: "12\n"
+  - id: nine
+    label: n = 9
+    stdin: "9\n"
+  - id: one
+    label: n = 1
+    stdin: "1\n"
+consistency:
+  description: The number of memo entries and cost(n) in the visual equal the output of examples/block_memo.py.
+  example: ../examples/block_memo.py
+  compare: output

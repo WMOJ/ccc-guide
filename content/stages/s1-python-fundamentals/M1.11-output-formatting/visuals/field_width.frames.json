@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"field_width",
+"layout":"single",
+"panels":[{"id":"text","viz":"ArrayViz","title":"Field text"}],
+"alt":"A float is formatted with the spec greater-than 7 point 2 f. First the decimals are fixed at two. Then the width of 7 is applied, with padding spaces shown as dots on the left. A number already wider than 7 gets no padding. The last step shows the printed field.",
+"presets":[
+{"id":"main","label":"3.14159","steps":[
+{"caption":"`x` holds 3.14159. The spec `>7.2f` has three parts: `.2f` for the decimals, `7` for the width, and `>` for the alignment. Python applies them in that order.","panels":{"text":{"values":["3",".","1","4","1","5","9"],"states":"ccccccc"}}},
+{"caption":"`.2f` turns the float into text with exactly two digits after the point: 3.14. That text is 4 characters long.","panels":{"text":{"values":["3",".","1","4"],"states":"dddd"}}},
+{"caption":"`7` asks for a field at least 7 wide. The text is 4, so 3 padding spaces are needed, drawn here as dots. `>` puts them on the left, which lines the text up against the right edge.","panels":{"text":{"values":["·","·","·","3",".","1","4"],"states":"mmmdddd","ranges":[{"from":0,"to":6,"label":"width 7"}]}}},
+{"caption":"`print` shows [   3.14]. The brackets belong to the f-string, so you can see where the field begins and ends.","panels":{"text":{"values":["·","·","·","3",".","1","4"],"states":"ddddddd"}}}
+]},
+{"id":"wide","label":"Too wide","steps":[
+{"caption":"`x` holds 12345.6. The spec `>7.2f` has three parts: `.2f` for the decimals, `7` for the width, and `>` for the alignment. Python applies them in that order.","panels":{"text":{"values":["1","2","3","4","5",".","6"],"states":"ccccccc"}}},
+{"caption":"`.2f` turns the float into text with exactly two digits after the point: 12345.60. That text is 8 characters long.","panels":{"text":{"values":["1","2","3","4","5",".","6","0"],"states":"dddddddd"}}},
+{"caption":"`7` asks for a field at least 7 wide. The text is already 8, so no padding is added. A width is a minimum: Python never cuts a number short to fit it.","panels":{"text":{"values":["1","2","3","4","5",".","6","0"],"states":"dddddddd","ranges":[{"from":0,"to":7,"label":"wider than 7"}]}}},
+{"caption":"`print` shows [12345.60]. The brackets belong to the f-string, so you can see where the field begins and ends.","panels":{"text":{"values":["1","2","3","4","5",".","6","0"],"states":"dddddddd"}}}
+]},
+{"id":"whole","label":"Whole number","steps":[
+{"caption":"`x` holds 7.0. The spec `>7.2f` has three parts: `.2f` for the decimals, `7` for the width, and `>` for the alignment. Python applies them in that order.","panels":{"text":{"values":["7",".","0"],"states":"ccc"}}},
+{"caption":"`.2f` turns the float into text with exactly two digits after the point: 7.00. That text is 4 characters long.","panels":{"text":{"values":["7",".","0","0"],"states":"dddd"}}},
+{"caption":"`7` asks for a field at least 7 wide. The text is 4, so 3 padding spaces are needed, drawn here as dots. `>` puts them on the left, which lines the text up against the right edge.","panels":{"text":{"values":["·","·","·","7",".","0","0"],"states":"mmmdddd","ranges":[{"from":0,"to":6,"label":"width 7"}]}}},
+{"caption":"`print` shows [   7.00]. The brackets belong to the f-string, so you can see where the field begins and ends.","panels":{"text":{"values":["·","·","·","7",".","0","0"],"states":"ddddddd"}}}
+]}
+]}

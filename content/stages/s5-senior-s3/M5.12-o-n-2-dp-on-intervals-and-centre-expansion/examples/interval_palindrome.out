@@ -1,10 +1,4 @@
-Palindrome: a
-Palindrome: aba
-Palindrome: ababa
-Palindrome: b
-Palindrome: bab
-Palindrome: a
-Palindrome: aba
-Palindrome: b
-Palindrome: a
-Total: 9
+length 2: 'dd'
+length 4: 'edde'
+length 6: 'redder'
+total: 9

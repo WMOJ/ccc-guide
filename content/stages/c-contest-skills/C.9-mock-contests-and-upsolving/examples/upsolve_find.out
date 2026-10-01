@@ -1,0 +1,3 @@
+first failing input: [0, 0, 1]
+brute force says 2, attempt says 1
+fixed attempt differs from brute force on 0 of 39 inputs

@@ -1,0 +1,33 @@
+{"schema":1,
+"kind":"frames",
+"id":"set_duplicate",
+"layout":"row",
+"panels":[{"id":"seen","viz":"StructViz","title":"seen"},{"id":"unique","viz":"StructViz","title":"unique"}],
+"alt":"The set seen fills with 3 and 5, and a second add of 3 is rejected because a set never stores a duplicate. The set unique then builds the same way from a line of numbers read from input, one duplicate token at a time being rejected, ending sorted.",
+"presets":[
+{"id":"main","label":"Two repeated tokens","steps":[
+{"caption":"`seen = set()` starts empty, then `seen.add(3)` inserts 3.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"c"}]},"unique":{"kind":"set","items":[]}}},
+{"caption":"Adding 3 again does nothing. A set never stores the same value twice, so `seen` still holds only one 3.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"x"}]},"unique":{"kind":"set","items":[]}}},
+{"caption":"`seen.add(5)` inserts 5. `seen` now holds 3 and 5.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"c"}]},"unique":{"kind":"set","items":[]}}},
+{"caption":"`len(seen)` is 2, not 3: the second `add(3)` never grew the set.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[]}}},
+{"caption":"`3 in seen` is True, checked the same way as `in` on a dict's keys.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"c"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[]}}},
+{"caption":"The comprehension reads 2 and adds it to `unique`.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[{"v":2,"s":"c"}]}}},
+{"caption":"The next token is 2 again. Adding a duplicate to a set changes nothing, so `unique` still holds [2].","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[{"v":2,"s":"x"}]}}},
+{"caption":"The comprehension reads 3 and adds it to `unique`.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[{"v":2,"s":"d"},{"v":3,"s":"c"}]}}},
+{"caption":"The comprehension reads 4 and adds it to `unique`.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[{"v":2,"s":"d"},{"v":3,"s":"d"},{"v":4,"s":"c"}]}}},
+{"caption":"The next token is 3 again. Adding a duplicate to a set changes nothing, so `unique` still holds [2, 3, 4].","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[{"v":2,"s":"d"},{"v":3,"s":"x"},{"v":4,"s":"d"}]}}},
+{"caption":"`sorted(unique)` prints [2, 3, 4]: every duplicate token collapsed into the one value already there.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[{"v":2,"s":"d"},{"v":3,"s":"d"},{"v":4,"s":"d"}]}}}
+]},
+{"id":"all_same","label":"Every token equal","steps":[
+{"caption":"`seen = set()` starts empty, then `seen.add(3)` inserts 3.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"c"}]},"unique":{"kind":"set","items":[]}}},
+{"caption":"Adding 3 again does nothing. A set never stores the same value twice, so `seen` still holds only one 3.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"x"}]},"unique":{"kind":"set","items":[]}}},
+{"caption":"`seen.add(5)` inserts 5. `seen` now holds 3 and 5.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"c"}]},"unique":{"kind":"set","items":[]}}},
+{"caption":"`len(seen)` is 2, not 3: the second `add(3)` never grew the set.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[]}}},
+{"caption":"`3 in seen` is True, checked the same way as `in` on a dict's keys.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"c"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[]}}},
+{"caption":"The comprehension reads 6 and adds it to `unique`.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[{"v":6,"s":"c"}]}}},
+{"caption":"The next token is 6 again. Adding a duplicate to a set changes nothing, so `unique` still holds [6].","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[{"v":6,"s":"x"}]}}},
+{"caption":"The next token is 6 again. Adding a duplicate to a set changes nothing, so `unique` still holds [6].","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[{"v":6,"s":"x"}]}}},
+{"caption":"The next token is 6 again. Adding a duplicate to a set changes nothing, so `unique` still holds [6].","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[{"v":6,"s":"x"}]}}},
+{"caption":"`sorted(unique)` prints [6]: every duplicate token collapsed into the one value already there.","panels":{"seen":{"kind":"set","items":[{"v":3,"s":"d"},{"v":5,"s":"d"}]},"unique":{"kind":"set","items":[{"v":6,"s":"d"}]}}}
+]}
+]}

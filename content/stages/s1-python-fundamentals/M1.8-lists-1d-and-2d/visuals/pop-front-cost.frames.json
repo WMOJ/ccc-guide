@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"pop-front-cost",
+"layout":"single",
+"panels":[{"id":"a","viz":"ArrayViz"}],
+"alt":"A list has its first value removed with pop(0). The removed cell becomes an empty gap, and every later value moves one slot left, one step at a time, until the gap leaves the end of the list. A second list has its last value removed with pop(), and nothing moves. Presets use lists of four values and of two values.",
+"presets":[
+{"id":"main","label":"Four values","steps":[
+{"caption":"front = [10, 20, 30, 40]. `front.pop(0)` removes the value at index 0, which is 10.","panels":{"a":{"values":[10,20,30,40],"states":"c___","name":"front","indices":true}}},
+{"caption":"10 is gone, so index 0 is empty. A list has no gaps, so Python closes it by moving every later value one slot left.","panels":{"a":{"values":["",20,30,40],"states":"x___","name":"front","indices":true}}},
+{"caption":"20 moves from index 1 to index 0. The empty slot is now at index 1.","panels":{"a":{"values":[20,"",30,40],"states":"dx__","name":"front","indices":true}}},
+{"caption":"30 moves from index 2 to index 1. The empty slot is now at index 2.","panels":{"a":{"values":[20,30,"",40],"states":"ddx_","name":"front","indices":true}}},
+{"caption":"40 moves from index 3 to index 2. That was the last move: `pop(0)` moved 3 values, and the cell at index 3 leaves the list.","panels":{"a":{"values":[20,30,40,""],"states":"dddx","name":"front","indices":true}}},
+{"caption":"Now `front` is [20, 30, 40]. One `pop(0)` on a list of 4 values cost 3 moves, and a longer list costs more.","panels":{"a":{"values":[20,30,40],"states":"ddd","name":"front","indices":true}}},
+{"caption":"back = [10, 20, 30, 40]. `back.pop()` with no index removes the last value, 40, at index 3.","panels":{"a":{"values":[10,20,30,40],"states":"___c","name":"back","indices":true}}},
+{"caption":"Now `back` is [10, 20, 30]. Nothing sits after the removed value, so no value moved and every other index stayed the same.","panels":{"a":{"values":[10,20,30],"states":"ddd","name":"back","indices":true}}}
+]},
+{"id":"small","label":"Two values","steps":[
+{"caption":"front = [7, 9]. `front.pop(0)` removes the value at index 0, which is 7.","panels":{"a":{"values":[7,9],"states":"c_","name":"front","indices":true}}},
+{"caption":"7 is gone, so index 0 is empty. A list has no gaps, so Python closes it by moving every later value one slot left.","panels":{"a":{"values":["",9],"states":"x_","name":"front","indices":true}}},
+{"caption":"9 moves from index 1 to index 0. That was the last move: `pop(0)` moved 1 value, and the cell at index 1 leaves the list.","panels":{"a":{"values":[9,""],"states":"dx","name":"front","indices":true}}},
+{"caption":"Now `front` is [9]. One `pop(0)` on a list of 2 values cost 1 move, and a longer list costs more.","panels":{"a":{"values":[9],"states":"d","name":"front","indices":true}}},
+{"caption":"back = [7, 9]. `back.pop()` with no index removes the last value, 9, at index 1.","panels":{"a":{"values":[7,9],"states":"_c","name":"back","indices":true}}},
+{"caption":"Now `back` is [7]. Nothing sits after the removed value, so no value moved and every other index stayed the same.","panels":{"a":{"values":[7],"states":"d","name":"back","indices":true}}}
+]}
+]}

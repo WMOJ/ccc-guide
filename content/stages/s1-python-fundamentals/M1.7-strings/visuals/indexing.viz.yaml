@@ -1,0 +1,21 @@
+layout: single
+panels:
+  - { id: w, viz: ArrayViz, title: "The word, by position" }
+alt: >-
+  A word is shown one character per cell with its positive indices under the cells. A pointer
+  moves to word[0], the first character, then to word[-1], the last, then to word[-len(word)],
+  which lands on the first character again. A final pointer sits past the last cell at index
+  10, where no character exists, so Python raises IndexError. Presets use a seven-letter word
+  and a three-letter word.
+captions: vizrec
+presets:
+  - id: main
+    label: Seven letters
+    stdinFile: ../examples/first_and_last.in
+  - id: short
+    label: Three letters
+    stdin: "cat\n"
+consistency:
+  description: The first and last characters shown match the two lines examples/first_and_last.py prints.
+  example: ../examples/first_and_last.py
+  compare: output

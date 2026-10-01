@@ -1,0 +1,20 @@
+layout: single
+panels:
+  - { id: cap, viz: ArrayViz, title: Candidate capacities }
+alt: >-
+  A strip of candidate truck capacities, each marked feasible or not by how many trips it needs.
+  The false candidates come first and the true candidates come after, with no true candidate
+  before a false one. Binary search narrows lo and hi toward the smallest true candidate. A
+  second preset has a single package, where lo and hi already agree and the search does nothing.
+captions: vizrec
+presets:
+  - id: example
+    label: Three packages
+    stdin: "3 2\n3 4 5\n"
+  - id: single
+    label: One package
+    stdin: "1 1\n4\n"
+consistency:
+  description: The final lo equals the output of examples/capacity_search.py for the same input.
+  example: ../examples/capacity_search.py
+  compare: output

@@ -1,11 +1,38 @@
-n = int(input())
-readings = [tuple(map(int, input().split())) for _ in range(n)]
+import sys
 
-unique_days = sorted({day for day, _ in readings})
-day_to_compressed = {day: i for i, day in enumerate(unique_days)}
 
-event_types = [set() for _ in unique_days]
-for day, event_type in readings:
-    event_types[day_to_compressed[day]].add(event_type)
+def main() -> None:
+    data = sys.stdin.read().split()
+    pos = 0
+    n = int(data[pos])
+    pos += 1
+    days = []
+    types = []
+    for _ in range(n):
+        day = int(data[pos])
+        pos += 1
+        event_type = int(data[pos])
+        pos += 1
+        days.append(day)
+        types.append(event_type)
 
-print("\n".join(str(len(s)) for s in event_types))
+    uniq = sorted(set(days))
+    rank = {}
+    for i, day in enumerate(uniq):
+        rank[day] = i
+
+    seen = []
+    for day in uniq:
+        seen.append(set())
+    for k in range(n):
+        d = days[k]
+        t = types[k]
+        r = rank[d]
+        seen[r].add(t)
+
+    counts = [len(s) for s in seen]
+    print("\n".join(map(str, counts)))
+
+
+if __name__ == "__main__":
+    main()

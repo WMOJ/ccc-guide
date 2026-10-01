@@ -1,0 +1,43 @@
+{"schema":1,
+"kind":"frames",
+"id":"to-diff",
+"layout":"row",
+"panels":[{"id":"arr","viz":"ArrayViz","title":"array"},{"id":"diff","viz":"ArrayViz","title":"diff"}],
+"alt":"An array turned into its difference array by subtracting each neighbor, then the difference array turned back into the original array by a prefix sum, showing the two are the same data in two forms.",
+"presets":[
+{"id":"typical","label":"Typical","steps":[
+{"caption":"This is the original array. Read it once, front to back, to build its difference array.","panels":{"arr":{"values":[3,5,5,2,2]},"diff":{"values":[null,null,null,null,null]}}},
+{"caption":"diff[0] copies arr[0] directly: 3. There is no earlier entry to subtract.","panels":{"arr":{"values":[3,5,5,2,2],"pointers":[{"name":"i","at":0,"side":"above","strong":true}]},"diff":{"values":[3,null,null,null,null],"states":"c____"}}},
+{"caption":"diff[1] = arr[1] - arr[0] = 5 - 3 = 2.","panels":{"arr":{"values":[3,5,5,2,2],"pointers":[{"name":"i","at":1,"side":"above","strong":true}]},"diff":{"values":[3,2,null,null,null],"states":"dc___"}}},
+{"caption":"diff[2] = arr[2] - arr[1] = 5 - 5 = 0.","panels":{"arr":{"values":[3,5,5,2,2],"pointers":[{"name":"i","at":2,"side":"above","strong":true}]},"diff":{"values":[3,2,0,null,null],"states":"ddc__"}}},
+{"caption":"diff[3] = arr[3] - arr[2] = 2 - 5 = -3.","panels":{"arr":{"values":[3,5,5,2,2],"pointers":[{"name":"i","at":3,"side":"above","strong":true}]},"diff":{"values":[3,2,0,-3,null],"states":"dddc_"}}},
+{"caption":"diff[4] = arr[4] - arr[3] = 2 - 2 = 0.","panels":{"arr":{"values":[3,5,5,2,2],"pointers":[{"name":"i","at":4,"side":"above","strong":true}]},"diff":{"values":[3,2,0,-3,0],"states":"ddddc"}}},
+{"caption":"That is the difference array. Now prefix-sum it, left to right, to rebuild the original.","panels":{"arr":{"values":[null,null,null,null,null]},"diff":{"values":[3,2,0,-3,0]}}},
+{"caption":"rebuilt[0] is just diff[0]: 3.","panels":{"arr":{"values":[3,null,null,null,null],"states":"c____"},"diff":{"values":[3,2,0,-3,0],"pointers":[{"name":"i","at":0,"side":"above","strong":true}]}}},
+{"caption":"rebuilt[1] = rebuilt[0] + diff[1] = 3 + 2 = 5.","panels":{"arr":{"values":[3,5,null,null,null],"states":"dc___"},"diff":{"values":[3,2,0,-3,0],"pointers":[{"name":"i","at":1,"side":"above","strong":true}]}}},
+{"caption":"rebuilt[2] = rebuilt[1] + diff[2] = 5 + 0 = 5.","panels":{"arr":{"values":[3,5,5,null,null],"states":"ddc__"},"diff":{"values":[3,2,0,-3,0],"pointers":[{"name":"i","at":2,"side":"above","strong":true}]}}},
+{"caption":"rebuilt[3] = rebuilt[2] + diff[3] = 5 + -3 = 2.","panels":{"arr":{"values":[3,5,5,2,null],"states":"dddc_"},"diff":{"values":[3,2,0,-3,0],"pointers":[{"name":"i","at":3,"side":"above","strong":true}]}}},
+{"caption":"rebuilt[4] = rebuilt[3] + diff[4] = 2 + 0 = 2.","panels":{"arr":{"values":[3,5,5,2,2],"states":"ddddc"},"diff":{"values":[3,2,0,-3,0],"pointers":[{"name":"i","at":4,"side":"above","strong":true}]}}},
+{"caption":"The rebuilt array, [3, 5, 5, 2, 2], matches the original exactly. diff and arr hold the same information in two different forms; a prefix sum turns one into the other.","panels":{"arr":{"values":[3,5,5,2,2]},"diff":{"values":[3,2,0,-3,0]}}}
+]},
+{"id":"constant","label":"Constant","steps":[
+{"caption":"This is the original array. Read it once, front to back, to build its difference array.","panels":{"arr":{"values":[7,7,7,7]},"diff":{"values":[null,null,null,null]}}},
+{"caption":"diff[0] copies arr[0] directly: 7. There is no earlier entry to subtract.","panels":{"arr":{"values":[7,7,7,7],"pointers":[{"name":"i","at":0,"side":"above","strong":true}]},"diff":{"values":[7,null,null,null],"states":"c___"}}},
+{"caption":"diff[1] = arr[1] - arr[0] = 7 - 7 = 0.","panels":{"arr":{"values":[7,7,7,7],"pointers":[{"name":"i","at":1,"side":"above","strong":true}]},"diff":{"values":[7,0,null,null],"states":"dc__"}}},
+{"caption":"diff[2] = arr[2] - arr[1] = 7 - 7 = 0.","panels":{"arr":{"values":[7,7,7,7],"pointers":[{"name":"i","at":2,"side":"above","strong":true}]},"diff":{"values":[7,0,0,null],"states":"ddc_"}}},
+{"caption":"diff[3] = arr[3] - arr[2] = 7 - 7 = 0.","panels":{"arr":{"values":[7,7,7,7],"pointers":[{"name":"i","at":3,"side":"above","strong":true}]},"diff":{"values":[7,0,0,0],"states":"dddc"}}},
+{"caption":"That is the difference array. Now prefix-sum it, left to right, to rebuild the original.","panels":{"arr":{"values":[null,null,null,null]},"diff":{"values":[7,0,0,0]}}},
+{"caption":"rebuilt[0] is just diff[0]: 7.","panels":{"arr":{"values":[7,null,null,null],"states":"c___"},"diff":{"values":[7,0,0,0],"pointers":[{"name":"i","at":0,"side":"above","strong":true}]}}},
+{"caption":"rebuilt[1] = rebuilt[0] + diff[1] = 7 + 0 = 7.","panels":{"arr":{"values":[7,7,null,null],"states":"dc__"},"diff":{"values":[7,0,0,0],"pointers":[{"name":"i","at":1,"side":"above","strong":true}]}}},
+{"caption":"rebuilt[2] = rebuilt[1] + diff[2] = 7 + 0 = 7.","panels":{"arr":{"values":[7,7,7,null],"states":"ddc_"},"diff":{"values":[7,0,0,0],"pointers":[{"name":"i","at":2,"side":"above","strong":true}]}}},
+{"caption":"rebuilt[3] = rebuilt[2] + diff[3] = 7 + 0 = 7.","panels":{"arr":{"values":[7,7,7,7],"states":"dddc"},"diff":{"values":[7,0,0,0],"pointers":[{"name":"i","at":3,"side":"above","strong":true}]}}},
+{"caption":"The rebuilt array, [7, 7, 7, 7], matches the original exactly. diff and arr hold the same information in two different forms; a prefix sum turns one into the other.","panels":{"arr":{"values":[7,7,7,7]},"diff":{"values":[7,0,0,0]}}}
+]},
+{"id":"single","label":"Single element","steps":[
+{"caption":"This is the original array. Read it once, front to back, to build its difference array.","panels":{"arr":{"values":[9]},"diff":{"values":[null]}}},
+{"caption":"diff[0] copies arr[0] directly: 9. There is no earlier entry to subtract.","panels":{"arr":{"values":[9],"pointers":[{"name":"i","at":0,"side":"above","strong":true}]},"diff":{"values":[9],"states":"c"}}},
+{"caption":"That is the difference array. Now prefix-sum it, left to right, to rebuild the original.","panels":{"arr":{"values":[null]},"diff":{"values":[9]}}},
+{"caption":"rebuilt[0] is just diff[0]: 9.","panels":{"arr":{"values":[9],"states":"c"},"diff":{"values":[9],"pointers":[{"name":"i","at":0,"side":"above","strong":true}]}}},
+{"caption":"The rebuilt array, [9], matches the original exactly. diff and arr hold the same information in two different forms; a prefix sum turns one into the other.","panels":{"arr":{"values":[9]},"diff":{"values":[9]}}}
+]}
+]}

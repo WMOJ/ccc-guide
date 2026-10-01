@@ -1,0 +1,29 @@
+layout: row
+panels:
+  - { id: list, viz: ArrayViz }
+  - { id: checks, viz: TableViz }
+alt: >-
+  A list of numbers and a table of three checks that a special checker runs on a contestant's
+  answer: there are two numbers, both come from different positions of the list, and they sum to
+  the target. The positions the answer uses are marked in the list, and each check turns to a
+  result as it runs. A valid pair that differs from the reference pair is accepted, and an answer
+  that reuses one position or misses the sum is rejected.
+legendLabels:
+  compare: Used by the answer
+  done: Passed
+  invalid: Failed
+captions: vizrec
+presets:
+  - id: other
+    label: Another pair
+    stdin: "5 12\n3 9 7 5 6\n5 7\n"
+  - id: reuse
+    label: Reused number
+    stdin: "5 12\n3 9 7 5 6\n6 6\n"
+  - id: wrong_sum
+    label: Wrong sum
+    stdin: "5 12\n3 9 7 5 6\n9 7\n"
+consistency:
+  description: The final verdict equals the output of examples/check_pair.py on each preset's input.
+  example: ../examples/check_pair.py
+  compare: output

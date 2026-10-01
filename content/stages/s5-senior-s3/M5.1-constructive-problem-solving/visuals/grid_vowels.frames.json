@@ -1,0 +1,23 @@
+{"schema":1,
+"kind":"frames",
+"id":"grid_vowels",
+"layout":"single",
+"panels":[{"id":"board","viz":"GridViz","title":"Grid under construction"}],
+"alt":"Building an N by M grid of vowels and consonants by a checkerboard pattern, row by row, until every row and every column has the same vowel count; or detecting immediately that no such grid can exist when that count cannot split evenly.",
+"legendLabels":{"current":"Attempted","done":"Placed","invalid":"Cannot match"},
+"presets":[
+{"id":"valid","label":"Valid","steps":[
+{"caption":"Row 0: (row + col) % 2 decides vowel or consonant, 2 vowels and 2 consonants.","panels":{"board":{"cells":["dddd","____","____","____"],"values":[["a","b","a","b"],[null,null,null,null],[null,null,null,null],[null,null,null,null]]}}},
+{"caption":"Row 1: (row + col) % 2 decides vowel or consonant, 2 vowels and 2 consonants.","panels":{"board":{"cells":["dddd","dddd","____","____"],"values":[["a","b","a","b"],["b","a","b","a"],[null,null,null,null],[null,null,null,null]]}}},
+{"caption":"Row 2: (row + col) % 2 decides vowel or consonant, 2 vowels and 2 consonants.","panels":{"board":{"cells":["dddd","dddd","dddd","____"],"values":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],[null,null,null,null]]}}},
+{"caption":"Row 3: (row + col) % 2 decides vowel or consonant, 2 vowels and 2 consonants.","panels":{"board":{"cells":["dddd","dddd","dddd","dddd"],"values":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"],["b","a","b","a"]]}}}
+]},
+{"id":"impossible","label":"Impossible","steps":[
+{"caption":"Try splitting every row evenly: 2 vowels and 2 consonants each, 6 vowels across all 3 rows.","panels":{"board":{"cells":["cccc","cccc","cccc"],"values":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"]]}}},
+{"caption":"Spread evenly over 4 columns, each needs 6 / 4 = 1.5 vowels, not a whole number. Impossible.","panels":{"board":{"cells":["xxxx","xxxx","xxxx"],"values":[["a","b","a","b"],["b","a","b","a"],["a","b","a","b"]]}}}
+]},
+{"id":"minimal","label":"Minimal","steps":[
+{"caption":"Row 0: (row + col) % 2 decides vowel or consonant, 1 vowel and 1 consonant.","panels":{"board":{"cells":["dd","__"],"values":[["a","b"],[null,null]]}}},
+{"caption":"Row 1: (row + col) % 2 decides vowel or consonant, 1 vowel and 1 consonant.","panels":{"board":{"cells":["dd","dd"],"values":[["a","b"],["b","a"]]}}}
+]}
+]}

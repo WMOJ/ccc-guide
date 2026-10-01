@@ -1,0 +1,38 @@
+{"schema":1,
+"kind":"frames",
+"id":"reflect",
+"layout":"row",
+"panels":[{"id":"source","viz":"GridViz","title":"Source"},{"id":"result","viz":"GridViz","title":"Result"}],
+"alt":"A source grid next to a result grid. The visual first builds the horizontal reflection, each row reversed left to right, then clears and builds the vertical reflection, the row order reversed top to bottom.",
+"presets":[
+{"id":"letters","label":"Letters","steps":[
+{"caption":"The source is 2 rows by 3 columns. Reflecting horizontally reverses each row left to right; the shape stays the same.","panels":{"source":{"cells":["___","___"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["___","___"],"values":[["?","?","?"],["?","?","?"]]}}},
+{"caption":"old[0][0] = 'A' moves to new[0][2]: row 0 reverses left to right.","panels":{"source":{"cells":["c__","___"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["__c","___"],"values":[["?","?","A"],["?","?","?"]]}}},
+{"caption":"old[0][1] = 'B' moves to new[0][1]: row 0 reverses left to right.","panels":{"source":{"cells":["dc_","___"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["_cd","___"],"values":[["?","B","A"],["?","?","?"]]}}},
+{"caption":"old[0][2] = 'C' moves to new[0][0]: row 0 reverses left to right.","panels":{"source":{"cells":["ddc","___"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["cdd","___"],"values":[["C","B","A"],["?","?","?"]]}}},
+{"caption":"old[1][0] = 'D' moves to new[1][2]: row 1 reverses left to right.","panels":{"source":{"cells":["ddd","c__"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["ddd","__c"],"values":[["C","B","A"],["?","?","D"]]}}},
+{"caption":"old[1][1] = 'E' moves to new[1][1]: row 1 reverses left to right.","panels":{"source":{"cells":["ddd","dc_"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["ddd","_cd"],"values":[["C","B","A"],["?","E","D"]]}}},
+{"caption":"old[1][2] = 'F' moves to new[1][0]: row 1 reverses left to right.","panels":{"source":{"cells":["ddd","ddc"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["ddd","cdd"],"values":[["C","B","A"],["F","E","D"]]}}},
+{"caption":"The horizontal reflection is done. Every row now reads backward.","panels":{"source":{"cells":["ddd","ddd"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["ddd","ddd"],"values":[["C","B","A"],["F","E","D"]]}}},
+{"caption":"Now reflect the same source vertically: reverse the order of the rows top to bottom, leaving each row's own contents unchanged.","panels":{"source":{"cells":["___","___"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["___","___"],"values":[["?","?","?"],["?","?","?"]]}}},
+{"caption":"old[0][0] = 'A' moves to new[1][0]: row 0 becomes row 1.","panels":{"source":{"cells":["c__","___"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["___","c__"],"values":[["?","?","?"],["A","?","?"]]}}},
+{"caption":"old[0][1] = 'B' moves to new[1][1]: row 0 becomes row 1.","panels":{"source":{"cells":["dc_","___"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["___","dc_"],"values":[["?","?","?"],["A","B","?"]]}}},
+{"caption":"old[0][2] = 'C' moves to new[1][2]: row 0 becomes row 1.","panels":{"source":{"cells":["ddc","___"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["___","ddc"],"values":[["?","?","?"],["A","B","C"]]}}},
+{"caption":"old[1][0] = 'D' moves to new[0][0]: row 1 becomes row 0.","panels":{"source":{"cells":["ddd","c__"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["c__","ddd"],"values":[["D","?","?"],["A","B","C"]]}}},
+{"caption":"old[1][1] = 'E' moves to new[0][1]: row 1 becomes row 0.","panels":{"source":{"cells":["ddd","dc_"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["dc_","ddd"],"values":[["D","E","?"],["A","B","C"]]}}},
+{"caption":"old[1][2] = 'F' moves to new[0][2]: row 1 becomes row 0.","panels":{"source":{"cells":["ddd","ddc"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["ddc","ddd"],"values":[["D","E","F"],["A","B","C"]]}}},
+{"caption":"The vertical reflection is done. The rows are in reverse order; each row's own contents did not change.","panels":{"source":{"cells":["ddd","ddd"],"values":[["A","B","C"],["D","E","F"]]},"result":{"cells":["ddd","ddd"],"values":[["D","E","F"],["A","B","C"]]}}}
+]},
+{"id":"single-row","label":"Single row","steps":[
+{"caption":"The source is 1 rows by 3 columns. Reflecting horizontally reverses each row left to right; the shape stays the same.","panels":{"source":{"cells":["___"],"values":[["X","Y","Z"]]},"result":{"cells":["___"],"values":[["?","?","?"]]}}},
+{"caption":"old[0][0] = 'X' moves to new[0][2]: row 0 reverses left to right.","panels":{"source":{"cells":["c__"],"values":[["X","Y","Z"]]},"result":{"cells":["__c"],"values":[["?","?","X"]]}}},
+{"caption":"old[0][1] = 'Y' moves to new[0][1]: row 0 reverses left to right.","panels":{"source":{"cells":["dc_"],"values":[["X","Y","Z"]]},"result":{"cells":["_cd"],"values":[["?","Y","X"]]}}},
+{"caption":"old[0][2] = 'Z' moves to new[0][0]: row 0 reverses left to right.","panels":{"source":{"cells":["ddc"],"values":[["X","Y","Z"]]},"result":{"cells":["cdd"],"values":[["Z","Y","X"]]}}},
+{"caption":"The horizontal reflection is done. Every row now reads backward.","panels":{"source":{"cells":["ddd"],"values":[["X","Y","Z"]]},"result":{"cells":["ddd"],"values":[["Z","Y","X"]]}}},
+{"caption":"Now reflect the same source vertically: reverse the order of the rows top to bottom, leaving each row's own contents unchanged.","panels":{"source":{"cells":["___"],"values":[["X","Y","Z"]]},"result":{"cells":["___"],"values":[["?","?","?"]]}}},
+{"caption":"old[0][0] = 'X' moves to new[0][0]: row 0 becomes row 0.","panels":{"source":{"cells":["c__"],"values":[["X","Y","Z"]]},"result":{"cells":["c__"],"values":[["X","?","?"]]}}},
+{"caption":"old[0][1] = 'Y' moves to new[0][1]: row 0 becomes row 0.","panels":{"source":{"cells":["dc_"],"values":[["X","Y","Z"]]},"result":{"cells":["dc_"],"values":[["X","Y","?"]]}}},
+{"caption":"old[0][2] = 'Z' moves to new[0][2]: row 0 becomes row 0.","panels":{"source":{"cells":["ddc"],"values":[["X","Y","Z"]]},"result":{"cells":["ddc"],"values":[["X","Y","Z"]]}}},
+{"caption":"The vertical reflection is done. The rows are in reverse order; each row's own contents did not change.","panels":{"source":{"cells":["ddd"],"values":[["X","Y","Z"]]},"result":{"cells":["ddd"],"values":[["X","Y","Z"]]}}}
+]}
+]}

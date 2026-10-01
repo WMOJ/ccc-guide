@@ -1,0 +1,27 @@
+{"schema":1,
+"kind":"frames",
+"id":"exchange-argument",
+"layout":"single",
+"panels":[{"id":"jobs","viz":"ArrayViz","title":"Jobs by processing time"}],
+"alt":"Jobs shown by processing time. An adjacent out-of-order pair is marked, then swapped shortest first, with the drop in their combined finish time labeled, then the whole list settles into shortest-first order.",
+"presets":[
+{"id":"default","label":"Mixed","steps":[
+{"caption":"These jobs run one after another on a single machine, in the order they arrive.","panels":{"jobs":{"values":[7,3,9,2]}}},
+{"caption":"Jobs at positions 0 and 1 are out of order: 7 runs before 3. Only their own two finish times change if they swap, and those add up to 2 x 7 + 3 = 17.","panels":{"jobs":{"values":[7,3,9,2],"pointers":[{"name":"i","at":0,"side":"above","strong":true},{"name":"i+1","at":1,"side":"above"}]}}},
+{"caption":"Swap them, shortest first: their two finish times now add up to 2 x 3 + 7 = 13, which is 4 less. Putting the shorter job first never costs more, and strictly helps whenever the jobs differ.","panels":{"jobs":{"values":[3,7,9,2],"pointers":[{"name":"i","at":0,"side":"above","strong":true},{"name":"i+1","at":1,"side":"above"}],"compare":{"a":0,"b":1,"text":"-4"}}}},
+{"caption":"Repeating this swap at every out-of-order adjacent pair, each time strictly improving or leaving the total unchanged, ends with the whole list shortest first.","skipped":2,"panels":{"jobs":{"values":[3,7,9,2]}}},
+{"caption":"Sorted shortest first: 2, 3, 7, 9. The sum of every finish time is 40, the smallest possible for these jobs.","panels":{"jobs":{"values":[2,3,7,9]}}}
+]},
+{"id":"sorted","label":"Already sorted","steps":[
+{"caption":"These jobs run one after another on a single machine, in the order they arrive.","panels":{"jobs":{"values":[2,5,9]}}},
+{"caption":"Every adjacent pair is already shortest first, so no swap changes the total.","panels":{"jobs":{"values":[2,5,9]}}},
+{"caption":"Sorted shortest first: 2, 5, 9. The sum of every finish time is 25, the smallest possible for these jobs.","panels":{"jobs":{"values":[2,5,9]}}}
+]},
+{"id":"reversed","label":"Worst case","steps":[
+{"caption":"These jobs run one after another on a single machine, in the order they arrive.","panels":{"jobs":{"values":[9,7,5,2]}}},
+{"caption":"Jobs at positions 0 and 1 are out of order: 9 runs before 7. Only their own two finish times change if they swap, and those add up to 2 x 9 + 7 = 25.","panels":{"jobs":{"values":[9,7,5,2],"pointers":[{"name":"i","at":0,"side":"above","strong":true},{"name":"i+1","at":1,"side":"above"}]}}},
+{"caption":"Swap them, shortest first: their two finish times now add up to 2 x 7 + 9 = 23, which is 2 less. Putting the shorter job first never costs more, and strictly helps whenever the jobs differ.","panels":{"jobs":{"values":[7,9,5,2],"pointers":[{"name":"i","at":0,"side":"above","strong":true},{"name":"i+1","at":1,"side":"above"}],"compare":{"a":0,"b":1,"text":"-2"}}}},
+{"caption":"Repeating this swap at every out-of-order adjacent pair, each time strictly improving or leaving the total unchanged, ends with the whole list shortest first.","skipped":2,"panels":{"jobs":{"values":[7,9,5,2]}}},
+{"caption":"Sorted shortest first: 2, 5, 7, 9. The sum of every finish time is 46, the smallest possible for these jobs.","panels":{"jobs":{"values":[2,5,7,9]}}}
+]}
+]}

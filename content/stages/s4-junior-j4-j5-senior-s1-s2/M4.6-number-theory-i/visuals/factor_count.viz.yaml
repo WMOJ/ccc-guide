@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Factoring n }
+alt: >-
+  Trial division factors a number one prime at a time. Each prime gets a row showing its exponent,
+  the exponent-plus-one choices it gives a divisor, and the running divisor count, which is the
+  product of the choices. A prime left over after the loop gets a row with exponent 1.
+captions: vizrec
+presets:
+  - id: square
+    label: "36"
+    stdin: "36\n"
+  - id: leftover
+    label: "60"
+    stdin: "60\n"
+  - id: prime
+    label: A prime
+    stdin: "13\n"
+consistency:
+  description: The factorization and divisor count equal the output of examples/factor_and_count.py.
+  example: ../examples/factor_and_count.py
+  compare: output

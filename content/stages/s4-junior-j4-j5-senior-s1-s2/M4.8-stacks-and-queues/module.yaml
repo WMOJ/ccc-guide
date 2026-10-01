@@ -11,5 +11,9 @@ prereqs:
 lessons:
   - stacks-and-queues
 practice:
-  - id: ccc22j2
-    note: Match opening and closing brackets using a stack.
+  - id: ccc15s1
+    note: Total a sequence of numbers your boss reads aloud, where "zero" means undo the last one.
+    why: Practice using a stack to undo the most recent addition, not just to count how many there were.
+  - id: ccc14s3
+    note: Decide whether a line of railway cars can reach the lake in sorted order, using one holding track.
+    why: Practice using a stack as the one place values can wait before they are released in order.

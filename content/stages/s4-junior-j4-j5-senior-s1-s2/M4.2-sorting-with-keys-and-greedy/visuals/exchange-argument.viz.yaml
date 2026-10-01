@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: jobs, viz: ArrayViz, title: Jobs by processing time }
+alt: >-
+  Jobs shown by processing time. An adjacent out-of-order pair is marked, then swapped shortest
+  first, with the drop in their combined finish time labeled, then the whole list settles into
+  shortest-first order.
+captions: vizrec
+presets:
+  - id: default
+    label: Mixed
+    stdin: "4\n7 3 9 2\n"
+  - id: sorted
+    label: Already sorted
+    stdin: "3\n2 5 9\n"
+  - id: reversed
+    label: Worst case
+    stdin: "4\n9 7 5 2\n"
+consistency:
+  description: The sorted order and total equal the two lines examples/min_completion_time.py prints.
+  example: ../examples/min_completion_time.py
+  compare: output

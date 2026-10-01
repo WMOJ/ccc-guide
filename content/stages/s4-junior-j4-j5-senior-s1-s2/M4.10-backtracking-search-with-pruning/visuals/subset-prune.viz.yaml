@@ -1,0 +1,20 @@
+layout: single
+panels:
+  - { id: tree, viz: TreeViz, title: Search tree }
+alt: >-
+  The skip-or-take recursion tree for choosing a subset that sums to a target. Each node shows
+  the running sum so far. A branch whose running sum already passes the target is marked pruned
+  and never grows children; a branch that reaches every element with the sum exactly on target
+  is marked as a match.
+captions: vizrec
+presets:
+  - id: reachable
+    label: Target 3
+    stdin: "3 3\n5 3 2\n"
+  - id: unreachable
+    label: Target 1
+    stdin: "3 1\n5 3 2\n"
+consistency:
+  description: The number of matching subsets the visual records equals the output of examples/subset_sum.py on the same input.
+  example: ../examples/subset_sum.py
+  compare: output

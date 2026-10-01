@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: array, viz: ArrayViz, title: Scores }
+  - { id: table, viz: TableViz, title: Accumulators }
+alt: >-
+  An array of scores scanned left to right, beside a table of the counters high and low and the
+  flag all_high. Each position updates one counter, and the flag turns False the first time a
+  score is not above 75 and never turns back, matching examples/flag_and_count.py.
+captions: vizrec
+presets:
+  - id: typical
+    label: Mixed
+    stdin: "4\n80\n90\n70\n85\n"
+  - id: all-pass
+    label: All pass
+    stdin: "3\n80\n90\n100\n"
+  - id: none-pass
+    label: None pass
+    stdin: "3\n10\n20\n30\n"
+consistency:
+  description: The two printed lines equal the output of examples/flag_and_count.py.
+  example: ../examples/flag_and_count.py
+  compare: output

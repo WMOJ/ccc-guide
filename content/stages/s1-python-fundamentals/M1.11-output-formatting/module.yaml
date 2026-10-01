@@ -13,6 +13,6 @@ lessons:
 practice:
   - id: ccc21s1
     note: Add up the areas of several trapezoid-shaped fence pieces, printing the exact total.
-  - id: ccc18j3
-    note: Print a small table of numbers as evenly spaced, space-separated rows.
-    why: Tries the same kind of formatted output on DMOJ, which holds 2014 to 2020.
+  - id: ccc19j3
+    note: Print a run-length compressed version of text, with the count and letter formatted together.
+    why: Tries the same kind of exact-format output on DMOJ, which holds 2014 to 2020.

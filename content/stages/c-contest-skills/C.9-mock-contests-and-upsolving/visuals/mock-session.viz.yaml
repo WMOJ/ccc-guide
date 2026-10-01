@@ -1,0 +1,24 @@
+layout: single
+panels:
+  - { id: line, viz: LineViz, title: Mock session by problem }
+alt: >-
+  One mock contest logged on a 0 to 180 minute line with a row for each problem. Each bar is one
+  stretch of work ending in a submission: OK for accepted, WA for wrong answer, or an open bar
+  where the clock ran out before a submission. A problem with several bars took several
+  submissions.
+captions: vizrec
+legendLabels:
+  done: Accepted
+  invalid: Wrong answer
+  compare: No submission
+presets:
+  - id: mixed
+    label: Mixed
+    stdin: "6\n1 10 38 A\n2 38 70 W\n2 70 85 W\n3 85 130 W\n2 130 152 A\n4 152 180 N\n"
+  - id: early
+    label: Early finish
+    stdin: "4\n1 10 30 A\n2 30 60 A\n3 60 95 A\n4 95 140 A\n"
+consistency:
+  description: The per-problem summary equals the output of examples/mock_log.py on each preset's input.
+  example: ../examples/mock_log.py
+  compare: output

@@ -1,0 +1,27 @@
+layout: single
+panels:
+  - { id: line, viz: LineViz, title: Schedule in minutes }
+legendLabels:
+  done: On time
+  invalid: Late
+  compare: Pair being checked
+  frontier: Deadline
+alt: >-
+  Jobs laid end to end on a timeline, each with a deadline marker. Adjacent pairs whose deadlines
+  are out of order are swapped, with the pair's worst lateness before and after and the whole
+  schedule's worst lateness. The schedule ends in earliest-deadline-first order.
+captions: vizrec
+presets:
+  - id: mixed
+    label: Mixed
+    stdin: "3\nA 4 7\nB 2 4\nC 3 5\n"
+  - id: sorted
+    label: Already sorted
+    stdin: "3\nA 2 3\nB 2 5\nC 3 9\n"
+  - id: reversed
+    label: Worst case
+    stdin: "4\nA 2 9\nB 2 7\nC 2 5\nD 2 3\n"
+consistency:
+  description: The final order and worst lateness equal the two lines examples/lateness.py prints.
+  example: ../examples/lateness.py
+  compare: output

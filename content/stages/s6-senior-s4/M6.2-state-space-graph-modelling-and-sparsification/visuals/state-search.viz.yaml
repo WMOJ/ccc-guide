@@ -1,0 +1,25 @@
+layout: row
+panels:
+  - { id: t, viz: TableViz, title: Best distance per state }
+  - { id: h, viz: StructViz, title: Heap }
+alt: >-
+  A search over states, each a room plus the checkpoints collected so far. A table with one cell per
+  state fills in only where the search reaches: a cell holds the best distance found for that state,
+  and it is marked settled when its heap entry comes out. The heap holds distance, room and
+  checkpoints entries; the smallest comes out first and out-of-date entries are thrown away. Cells
+  the search never reaches stay as dashes.
+captions: vizrec
+presets:
+  - id: two-stops
+    label: Two stops
+    stdin: "5 5 2\n0 1 2\n1 2 3\n0 3 1\n3 4 6\n2 4 2\n2 3\n"
+  - id: start-stop
+    label: Start stop
+    stdin: "5 5 2\n0 1 2\n1 2 3\n0 3 1\n3 4 6\n2 4 2\n0 2\n"
+  - id: cut-off
+    label: Cut off
+    stdin: "5 4 2\n0 1 2\n1 2 3\n0 3 1\n2 3 5\n2 4\n"
+consistency:
+  description: The distance and the settled count equal the output of examples/checkpoint_search.py.
+  example: ../examples/checkpoint_search.py
+  compare: output

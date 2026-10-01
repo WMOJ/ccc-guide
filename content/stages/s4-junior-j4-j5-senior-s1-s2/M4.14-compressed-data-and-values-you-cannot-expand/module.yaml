@@ -12,8 +12,8 @@ prereqs:
 lessons:
   - coordinate-compression
 practice:
-  - id: ccc15j4
-    note: Track events over a wide time range using a dictionary keyed by time, not a huge array.
-    why: An older problem where a dictionary keyed by time stands in for full coordinate compression.
   - id: ccc22j5
     note: Narrow a huge coordinate plane down to a small set of candidate points worth checking.
+  - id: ccc14s4
+    note: Find the total area covered at or above a threshold, from a handful of huge rectangles.
+    why: The rectangle corners are exactly the coordinates to compress, extended to two dimensions.

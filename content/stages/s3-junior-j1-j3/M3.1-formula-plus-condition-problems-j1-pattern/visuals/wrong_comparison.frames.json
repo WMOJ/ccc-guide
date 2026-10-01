@@ -1,0 +1,23 @@
+{"schema":1,
+"kind":"frames",
+"id":"wrong_comparison",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Two versions"}],
+"alt":"A two-row table comparing the correct chain of at-most comparisons with a chain that uses strictly-less-than. On a cost that sits exactly on a boundary the two versions print different tiers, while on a cost away from a boundary they agree and hide the mistake.",
+"presets":[
+{"id":"on-20","label":"Cost 20","steps":[
+{"caption":"The cost is 20. Two versions of the same chain differ only in the comparison: <= against <.","panels":{"table":{"cells":[["<= 20, <= 50","?"],["< 20, < 50","?"]],"states":["c_","__"],"rowHeads":["right","wrong"],"colHeads":["checks","prints"]}}},
+{"caption":"With <=, the first check is 20 <= 20 and the second is 20 <= 50. The program prints Standard, which is what the problem asks.","panels":{"table":{"cells":[["<= 20, <= 50","Standard"],["< 20, < 50","?"]],"states":["_d","c_"],"rowHeads":["right","wrong"],"colHeads":["checks","prints"]}}},
+{"caption":"With <, 20 is not below the boundary, so it falls through to the next branch and the program prints Priority. That is wrong, and only a test on the boundary shows it.","panels":{"table":{"cells":[["<= 20, <= 50","Standard"],["< 20, < 50","Priority"]],"states":["_d","_x"],"rowHeads":["right","wrong"],"colHeads":["checks","prints"]}}}
+]},
+{"id":"on-50","label":"Cost 50","steps":[
+{"caption":"The cost is 50. Two versions of the same chain differ only in the comparison: <= against <.","panels":{"table":{"cells":[["<= 20, <= 50","?"],["< 20, < 50","?"]],"states":["c_","__"],"rowHeads":["right","wrong"],"colHeads":["checks","prints"]}}},
+{"caption":"With <=, the first check is 50 <= 20 and the second is 50 <= 50. The program prints Priority, which is what the problem asks.","panels":{"table":{"cells":[["<= 20, <= 50","Priority"],["< 20, < 50","?"]],"states":["_d","c_"],"rowHeads":["right","wrong"],"colHeads":["checks","prints"]}}},
+{"caption":"With <, 50 is not below the boundary, so it falls through to the next branch and the program prints Express. That is wrong, and only a test on the boundary shows it.","panels":{"table":{"cells":[["<= 20, <= 50","Priority"],["< 20, < 50","Express"]],"states":["_d","_x"],"rowHeads":["right","wrong"],"colHeads":["checks","prints"]}}}
+]},
+{"id":"away","label":"Cost 18","steps":[
+{"caption":"The cost is 18. Two versions of the same chain differ only in the comparison: <= against <.","panels":{"table":{"cells":[["<= 20, <= 50","?"],["< 20, < 50","?"]],"states":["c_","__"],"rowHeads":["right","wrong"],"colHeads":["checks","prints"]}}},
+{"caption":"With <=, the first check is 18 <= 20 and the second is 18 <= 50. The program prints Standard, which is what the problem asks.","panels":{"table":{"cells":[["<= 20, <= 50","Standard"],["< 20, < 50","?"]],"states":["_d","c_"],"rowHeads":["right","wrong"],"colHeads":["checks","prints"]}}},
+{"caption":"With <, the answer is also Standard. This cost sits away from a boundary, so the wrong comparison hides and this test would not catch it.","panels":{"table":{"cells":[["<= 20, <= 50","Standard"],["< 20, < 50","Standard"]],"states":["_d","_d"],"rowHeads":["right","wrong"],"colHeads":["checks","prints"]}}}
+]}
+]}

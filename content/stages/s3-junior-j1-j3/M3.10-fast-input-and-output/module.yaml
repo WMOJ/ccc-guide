@@ -12,8 +12,5 @@ prereqs:
 lessons:
   - fast-input-and-output
 practice:
-  - id: ccc15s2
-    note: Process many assignments efficiently; the input size makes fast I/O worth using.
-    why: A large-input problem where the house skeleton pattern avoids slow input() calls.
   - id: ccc25j4
-    note: Scan a large run of daily records fast enough to stay inside the time limit.
+    note: Find the longest run of sunny days if one day's record could be changed.

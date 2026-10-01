@@ -3,7 +3,7 @@ title: O(N^2) DP on intervals and centre expansion
 status: accepted
 objectives:
   - Recognize interval DP patterns and implement centre-expansion recurrences.
-  - Optimize space by keeping only per-length aggregates instead of full 2D tables.
+  - Optimize space by keeping only the longest length found at each center instead of a full 2D table.
   - Handle both odd and even-length intervals in expansion.
   - Choose the right recurrence to stay in O(N^2) time on moderately sized inputs.
 prereqs:
@@ -12,7 +12,7 @@ lessons:
   - interval-dp-expansion
 practice:
   - id: ccc16j3
-    note: Count palindromic substrings using centre expansion and dynamic programming.
-    why: An older palindrome-counting problem that still makes good practice for this module.
+    note: Find the length of the longest palindrome hidden inside a word.
+    why: A DMOJ-era problem whose whole task is exactly this module's centre-expansion technique.
   - id: ccc23s2
-    note: Check a sequence for a symmetric shape by expanding outward from each candidate centre.
+    note: Find the least unevenness of a mountain range when it is cropped to different lengths, comparing heights inward from each end.

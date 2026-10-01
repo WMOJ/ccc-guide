@@ -1,0 +1,24 @@
+{"schema":1,
+"kind":"frames",
+"id":"clamp-updates",
+"layout":"single",
+"panels":[{"id":"line","viz":"LineViz","title":"Requested range, clamped"}],
+"alt":"Each requested range drawn on the index line as invalid where it reaches past the array, then clipped to the array's valid indices and marked applied, or, when clipping leaves nothing inside the array, marked skipped instead.",
+"presets":[
+{"id":"clamped","label":"Needs clamping","steps":[
+{"caption":"Update 1 asks for [-2, 2]. Valid indices run 0 to 4.","panels":{"line":{"min":-3,"max":11,"tick":1,"intervals":[{"a":-2,"b":2,"label":"raw","s":"x","row":0}]}}},
+{"caption":"Clamped to [0, 2]: l = max(-2, 0) = 0, r = min(2, 4) = 2. Apply diff[0] += 5, diff[3] -= 5.","panels":{"line":{"min":-3,"max":11,"tick":1,"intervals":[{"a":0,"b":2,"label":"clamped","s":"d","row":0}]}}},
+{"caption":"Update 2 asks for [3, 10]. Valid indices run 0 to 4.","panels":{"line":{"min":-3,"max":11,"tick":1,"intervals":[{"a":0,"b":2,"label":"clamped","s":"d","row":0},{"a":3,"b":10,"label":"raw","s":"x","row":1}]}}},
+{"caption":"Clamped to [3, 4]: l = max(3, 0) = 3, r = min(10, 4) = 4. Apply diff[3] += 2, diff[5] -= 2.","panels":{"line":{"min":-3,"max":11,"tick":1,"intervals":[{"a":0,"b":2,"label":"clamped","s":"d","row":0},{"a":3,"b":4,"label":"clamped","s":"d","row":1}]}}},
+{"caption":"Update 3 asks for [6, 8]. Valid indices run 0 to 4.","panels":{"line":{"min":-3,"max":11,"tick":1,"intervals":[{"a":0,"b":2,"label":"clamped","s":"d","row":0},{"a":3,"b":4,"label":"clamped","s":"d","row":1},{"a":6,"b":8,"label":"raw","s":"x","row":2}]}}},
+{"caption":"Clamped, l = max(6, 0) = 6 and r = min(8, 4) = 4. Since l is past r, nothing of this range is inside the array: skip it.","panels":{"line":{"min":-3,"max":11,"tick":1,"intervals":[{"a":0,"b":2,"label":"clamped","s":"d","row":0},{"a":3,"b":4,"label":"clamped","s":"d","row":1},{"a":6,"b":8,"label":"raw","s":"x","row":2}]}}},
+{"caption":"Every update is clamped or skipped, and applied to diff. Rebuilding gives [5, 5, 5, 2, 2], matching examples/clamp_updates.py.","panels":{"line":{"min":-3,"max":11,"tick":1,"intervals":[{"a":0,"b":2,"label":"clamped","s":"d","row":0},{"a":3,"b":4,"label":"clamped","s":"d","row":1},{"a":6,"b":8,"label":"raw","s":"x","row":2}]}}}
+]},
+{"id":"in-bounds","label":"Already in range","steps":[
+{"caption":"Update 1 asks for [0, 1]. Valid indices run 0 to 4.","panels":{"line":{"min":-1,"max":5,"tick":1,"intervals":[{"a":0,"b":1,"label":"raw","s":"x","row":0}]}}},
+{"caption":"Clamped to [0, 1]: l = max(0, 0) = 0, r = min(1, 4) = 1. Apply diff[0] += 4, diff[2] -= 4.","panels":{"line":{"min":-1,"max":5,"tick":1,"intervals":[{"a":0,"b":1,"label":"clamped","s":"d","row":0}]}}},
+{"caption":"Update 2 asks for [2, 4]. Valid indices run 0 to 4.","panels":{"line":{"min":-1,"max":5,"tick":1,"intervals":[{"a":0,"b":1,"label":"clamped","s":"d","row":0},{"a":2,"b":4,"label":"raw","s":"x","row":1}]}}},
+{"caption":"Clamped to [2, 4]: l = max(2, 0) = 2, r = min(4, 4) = 4. Apply diff[2] += 3, diff[5] -= 3.","panels":{"line":{"min":-1,"max":5,"tick":1,"intervals":[{"a":0,"b":1,"label":"clamped","s":"d","row":0},{"a":2,"b":4,"label":"clamped","s":"d","row":1}]}}},
+{"caption":"Every update is clamped or skipped, and applied to diff. Rebuilding gives [4, 4, 3, 3, 3], matching examples/clamp_updates.py.","panels":{"line":{"min":-1,"max":5,"tick":1,"intervals":[{"a":0,"b":1,"label":"clamped","s":"d","row":0},{"a":2,"b":4,"label":"clamped","s":"d","row":1}]}}}
+]}
+]}

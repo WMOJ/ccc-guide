@@ -1,0 +1,18 @@
+layout: single
+panels:
+  - { id: line, viz: LineViz, title: Ranges on the index line }
+alt: >-
+  Each range update drawn as a bar over the array's index line, one row per range so overlapping
+  ranges stay visible, building up to all ranges shown at once.
+captions: vizrec
+presets:
+  - id: overlapping
+    label: Overlapping
+    stdin: "5 3\n0 2 3\n1 4 2\n3 3 1\n"
+  - id: spread
+    label: Spread out
+    stdin: "9 3\n0 1 2\n3 4 1\n6 8 3\n"
+consistency:
+  description: The rebuilt array equals the line examples/range_updates.py prints.
+  example: ../examples/range_updates.py
+  compare: output

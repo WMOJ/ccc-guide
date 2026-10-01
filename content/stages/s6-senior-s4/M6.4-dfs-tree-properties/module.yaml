@@ -5,11 +5,11 @@ objectives:
   - Classify edges in a DFS tree as tree, back, forward, and cross edges.
   - Compute discovery and finish times for each node.
   - Use DFS timing to detect cycles and perform topological sorting.
-  - Apply DFS tree structure to solve graph connectivity problems.
+  - Grow a DFS forest by starting a new tree at every node no earlier tree reached.
 prereqs:
   - M5.7
 lessons:
   - dfs-tree
 practice:
   - id: ccc24s4
-    note: Classify the edges of a DFS tree to tell a simple path apart from a cycle.
+    note: Paint as few roads as possible so that every unpainted road has a red-and-blue alternating route between its ends.

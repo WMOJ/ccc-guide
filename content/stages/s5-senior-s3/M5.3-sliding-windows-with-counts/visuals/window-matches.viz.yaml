@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: text, viz: ArrayViz, title: Text }
+  - { id: counts, viz: TableViz, title: Counts }
+alt: >-
+  A text with a fixed-length window (a right and a left pointer, K apart) sliding one character at
+  a time, beside a table of window letter counts against the target pattern's counts. A matches
+  counter, described in the caption, tracks how many letters currently agree; a start position is
+  highlighted whenever every letter agrees at once.
+captions: vizrec
+presets:
+  - id: match
+    label: Match found
+    stdin: "cbaebabc\nabc"
+  - id: none
+    label: No match
+    stdin: "xxyyzzww\nab"
+  - id: single
+    label: Length-1 pattern
+    stdin: "aabaa\na"
+consistency:
+  description: The printed match starts equal the output of examples/window_matches.py on the same text and pattern.
+  example: ../examples/window_matches.py
+  compare: output

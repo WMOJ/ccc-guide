@@ -1,0 +1,20 @@
+{"schema":1,
+"kind":"frames",
+"id":"double-until-limit",
+"layout":"single",
+"panels":[{"id":"a","viz":"ArrayViz","title":"Values so far"}],
+"alt":"A while loop doubles value until it reaches the limit. Each step checks value against the limit and, while the check is True, adds the doubled value to the row of values. The last step shows the check failing and the loop ending. One preset runs the lesson's limit of 50, ending at 64; the other starts with a limit of 1, so the check fails at once and the block never runs.",
+"presets":[
+{"id":"main","label":"Limit 50","steps":[
+{"caption":"Check value < limit: 1 < 50 is True, so the block runs and value becomes 2.","panels":{"a":{"values":[1],"states":"c","pointers":[{"name":"value","at":0,"strong":true}],"name":"limit 50"}}},
+{"caption":"Check value < limit: 2 < 50 is True, so the block runs and value becomes 4.","panels":{"a":{"values":[1,2],"states":"dc","pointers":[{"name":"value","at":1,"strong":true}],"name":"limit 50"}}},
+{"caption":"Check value < limit: 4 < 50 is True, so the block runs and value becomes 8.","panels":{"a":{"values":[1,2,4],"states":"ddc","pointers":[{"name":"value","at":2,"strong":true}],"name":"limit 50"}}},
+{"caption":"Check value < limit: 8 < 50 is True, so the block runs and value becomes 16.","panels":{"a":{"values":[1,2,4,8],"states":"dddc","pointers":[{"name":"value","at":3,"strong":true}],"name":"limit 50"}}},
+{"caption":"Check value < limit: 16 < 50 is True, so the block runs and value becomes 32.","panels":{"a":{"values":[1,2,4,8,16],"states":"ddddc","pointers":[{"name":"value","at":4,"strong":true}],"name":"limit 50"}}},
+{"caption":"Check value < limit: 32 < 50 is True, so the block runs and value becomes 64.","panels":{"a":{"values":[1,2,4,8,16,32],"states":"dddddc","pointers":[{"name":"value","at":5,"strong":true}],"name":"limit 50"}}},
+{"caption":"Check value < limit: 64 < 50 is False, so the loop ends and print(value) shows 64.","panels":{"a":{"values":[1,2,4,8,16,32,64],"states":"ddddddc","pointers":[{"name":"value","at":6,"strong":true}],"name":"limit 50"}}}
+]},
+{"id":"never","label":"Limit 1","steps":[
+{"caption":"Check value < limit: 1 < 1 is False, so the loop ends and print(value) shows 1.","panels":{"a":{"values":[1],"states":"c","pointers":[{"name":"value","at":0,"strong":true}],"name":"limit 1"}}}
+]}
+]}

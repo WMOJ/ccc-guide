@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - id: grid
+    viz: GridViz
+    title: Grid
+  - id: visited
+    viz: StructViz
+    title: visited
+alt: >-
+  A 3 by 3 grid sits beside a set of (row, col) tuples. Each input line names one cell. A new pair
+  is added to the set and marked on the grid. A pair already in the set is reported as a repeat
+  and changes nothing. The last step shows how many different cells were stored.
+captions: vizrec
+presets:
+  - id: main
+    label: One repeat
+    stdinFile: ../examples/visited_cells.in
+  - id: all_same
+    label: Same cell
+    stdin: "3\n0 0\n0 0\n0 0\n"
+consistency:
+  description: "rec.output() equals visited_cells.py's real stdout for the same stdin."
+  example: ../examples/visited_cells.py
+  compare: output

@@ -11,10 +11,9 @@ prereqs:
 lessons:
   - string-processing-counting-runs-and-building
 practice:
-  - id: ccc22j3
-    note: Compress a string by counting consecutive identical characters.
-  - id: ccc20s1
-    note: Scan a list of values and sort them to work out a consistent pattern.
-    why: A scan-and-sort problem that reuses the character-by-character pass from this lesson.
-  - id: ccc24j3
-    note: Find a specific ranked value among a set of scores, by counting or sorting.
+  - id: ccc19j3
+    note: Compress a message by writing each run as its length and its symbol.
+    why: The same run-length encoding this lesson builds, on a line of symbols instead of a word.
+  - id: ccc15j3
+    note: Recode a word by replacing each consonant with a three-letter pattern.
+    why: Builds a new string one character at a time, the same shape as this lesson's transform example.

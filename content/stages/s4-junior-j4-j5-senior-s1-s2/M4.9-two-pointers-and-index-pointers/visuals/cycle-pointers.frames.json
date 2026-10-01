@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"cycle-pointers",
+"layout":"single",
+"panels":[{"id":"nxt","viz":"ArrayViz","title":"nxt array"}],
+"alt":"An array of next-indices with a slow pointer moving one step at a time and a fast pointer moving two steps at a time. If fast ever lands on the same index as slow, the sequence contains a cycle, and walking forward from that meeting point back to itself gives the cycle's length. If fast runs off the end of the sequence first, there is no cycle.",
+"presets":[
+{"id":"cycle","label":"Has a cycle","steps":[
+{"caption":"slow and fast both start at index 0.","panels":{"nxt":{"values":[1,2,3,1],"states":"c___","pointers":[{"name":"slow","at":0}],"name":"nxt"}}},
+{"caption":"slow moves one step, from 0 to 1. fast moves two steps, from 0 to 2. Not the same index yet.","panels":{"nxt":{"values":[1,2,3,1],"states":"_cm_","pointers":[{"name":"slow","at":1},{"name":"fast","at":2}],"name":"nxt"}}},
+{"caption":"slow moves one step, from 1 to 2. fast moves two steps, from 2 to 1. Not the same index yet.","panels":{"nxt":{"values":[1,2,3,1],"states":"_mc_","pointers":[{"name":"slow","at":2},{"name":"fast","at":1}],"name":"nxt"}}},
+{"caption":"slow moves one step, from 2 to 3. fast moves two steps, from 1 to 3. They land on the same index: a cycle exists, met at index 3.","panels":{"nxt":{"values":[1,2,3,1],"states":"___p","pointers":[{"name":"slow","at":3}],"name":"nxt"}}},
+{"caption":"Walking forward from the meeting point back to itself takes 3 steps: the cycle length is 3.","panels":{"nxt":{"values":[1,2,3,1],"states":"___p","pointers":[{"name":"slow","at":3}],"name":"nxt"}}}
+]},
+{"id":"terminal","label":"No cycle","steps":[
+{"caption":"slow and fast both start at index 0.","panels":{"nxt":{"values":[1,2,3,-1],"states":"c___","pointers":[{"name":"slow","at":0}],"name":"nxt"}}},
+{"caption":"slow moves one step, from 0 to 1. fast moves two steps, from 0 to 2. Not the same index yet.","panels":{"nxt":{"values":[1,2,3,-1],"states":"_cm_","pointers":[{"name":"slow","at":1},{"name":"fast","at":2}],"name":"nxt"}}},
+{"caption":"slow moves one step, from 1 to 2. fast moves two steps, from 2 to -1. Not the same index yet.","panels":{"nxt":{"values":[1,2,3,-1],"states":"__c_","pointers":[{"name":"slow","at":2}],"name":"nxt"}}},
+{"caption":"fast is at index past the end: the next step runs off the sequence. There is no cycle to find.","panels":{"nxt":{"values":[1,2,3,-1],"states":"__c_","pointers":[{"name":"slow","at":2}],"name":"nxt"}}}
+]},
+{"id":"tiny-loop","label":"1-node loop","steps":[
+{"caption":"slow and fast both start at index 0.","panels":{"nxt":{"values":[0],"states":"c","pointers":[{"name":"slow","at":0}],"name":"nxt"}}},
+{"caption":"slow moves one step, from 0 to 0. fast moves two steps, from 0 to 0. They land on the same index: a cycle exists, met at index 0.","panels":{"nxt":{"values":[0],"states":"p","pointers":[{"name":"slow","at":0}],"name":"nxt"}}},
+{"caption":"Walking forward from the meeting point back to itself takes 1 step: the cycle length is 1.","panels":{"nxt":{"values":[0],"states":"p","pointers":[{"name":"slow","at":0}],"name":"nxt"}}}
+]}
+]}

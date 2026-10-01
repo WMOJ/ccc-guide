@@ -2,10 +2,10 @@ id: M7.8
 title: 2D range-max DP and doubling on shapes
 status: accepted
 objectives:
-  - Apply 2D DP to compute maximum values over rectangular regions.
-  - Use doubling on geometric shapes to build solutions from smaller pieces.
-  - Combine overlapping sub-shapes to construct a larger shape solution.
-  - Recognize when full-scale solutions are infeasible and focus on partial subtasks.
+  - Build a table of block maximums by doubling the block side, and answer a square query with four overlapping blocks.
+  - Explain why this table answers square queries and why the overlap is safe for a maximum.
+  - Cover a triangle of size K with three overlapping smaller triangles, and build the sizes by repeated doubling.
+  - Compute the maximum of every triangle of one size from three lookups per triangle.
 prereqs:
   - M6.12
   - M7.3
@@ -13,5 +13,5 @@ lessons:
   - range-max-doubling
 practice:
   - id: ccc19s5
-    note: A triangular grid of values, queried and updated many times.
-    why: An older problem with a small first subtask, good for practicing a partial attempt.
+    note: Find the largest value in every same-size triangle of a triangular array of numbers.
+    why: The task asks for a maximum over every sub-triangle of one size in a triangle of up to 3,000 rows, the shape this lesson builds.

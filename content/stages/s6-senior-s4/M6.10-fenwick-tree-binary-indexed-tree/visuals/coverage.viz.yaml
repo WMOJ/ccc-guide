@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: values, viz: ArrayViz, title: Elements }
+  - { id: tree, viz: ArrayViz, title: Fenwick tree }
+alt: >-
+  The elements of an array above the Fenwick tree built from them. One tree position at a time
+  is filled in. The block of elements it covers is marked on the elements, and that block always
+  ends at the position and is as long as the position's lowest set bit.
+captions: vizrec
+legendLabels: { current: Being filled, done: Filled }
+presets:
+  - id: eight
+    label: Eight elements
+    stdin: "8\n3 2 1 4 5 1 2 3\n"
+  - id: six
+    label: Six elements
+    stdin: "6\n3 2 1 4 5 1\n"
+  - id: ones
+    label: All ones
+    stdin: "8\n1 1 1 1 1 1 1 1\n"
+consistency:
+  description: The position, bits, block length, block and sum printed per position match examples/tree_ranges.py.
+  example: ../examples/tree_ranges.py
+  compare: output

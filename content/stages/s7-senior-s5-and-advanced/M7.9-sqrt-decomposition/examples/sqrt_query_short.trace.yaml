@@ -1,0 +1,19 @@
+example: sqrt_query_short.py
+alt: >-
+  A short version of the range-sum program for eight values and one query. It picks the block
+  size, builds one sum per block, then answers the query in three loops: single values up to the
+  next block boundary, whole blocks through their stored sums, and single values at the right end.
+presets:
+  - id: main
+    label: Middle range
+    stdin: "1 7\n3 1 4 1 5 9 2 6\n"
+  - id: inside
+    label: Inside a block
+    stdin: "3 5\n3 1 4 1 5 9 2 6\n"
+notes:
+  "6": "The query is the half-open range from `lo` up to, but not including, `hi`."
+  "10": "The block size for eight values: the smallest `b` with `b * b` at least 8. The full program finds it with a loop."
+  "12": "One sum per block. The last block may be shorter."
+  "16": "Values before the next block boundary are added one at a time. `lo % b` is zero once `lo` reaches a boundary."
+  "19": "A whole block at a time: one stored sum replaces `b` values."
+  "22": "What is left at the right end is added one value at a time."

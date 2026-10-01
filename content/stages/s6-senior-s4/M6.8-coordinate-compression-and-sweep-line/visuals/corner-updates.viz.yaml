@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: diff, viz: TableViz, title: diff table }
+alt: >-
+  The diff table of a compressed grid, headed by the original x and y coordinates. Each rectangle
+  changes only its four corner entries, by plus 1, minus 1, minus 1 and plus 1. Then a running
+  sum taken one row at a time turns the marks into the number of rectangles that cover each cell.
+captions: vizrec
+legendLabels: { compare: Corner updated, current: Row being summed, done: Row summed }
+presets:
+  - id: overlap
+    label: Overlapping
+    stdin: "3\n0 0 70 30\n40 20 100 80\n20 60 80 100\n"
+  - id: nested
+    label: Nested
+    stdin: "2\n0 0 100 100\n20 20 60 60\n"
+  - id: touching
+    label: Touching
+    stdin: "2\n0 0 50 40\n50 20 100 60\n"
+consistency:
+  description: The two areas recorded equal what examples/rectangle_overlap.py prints.
+  example: ../examples/rectangle_overlap.py
+  compare: output

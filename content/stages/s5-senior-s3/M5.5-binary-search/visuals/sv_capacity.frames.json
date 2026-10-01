@@ -1,0 +1,19 @@
+{"schema":1,
+"kind":"frames",
+"id":"sv_capacity",
+"layout":"single",
+"panels":[{"id":"cap","viz":"ArrayViz","title":"Candidate capacities"}],
+"alt":"A strip of candidate truck capacities, each marked feasible or not by how many trips it needs. The false candidates come first and the true candidates come after, with no true candidate before a false one. Binary search narrows lo and hi toward the smallest true candidate. A second preset has a single package, where lo and hi already agree and the search does nothing.",
+"presets":[
+{"id":"example","label":"Three packages","steps":[
+{"caption":"Every capacity from the heaviest package, 5, to carrying everything in one trip, 12, is a candidate. A capacity needing at most 2 trips is feasible (marked done); one needing more is not (marked invalid).","panels":{"cap":{"values":[5,6,7,8,9,10,11,12],"states":"xxdddddd","pointers":[{"name":"lo","at":0,"side":"below"},{"name":"hi","at":7,"side":"below"}]}}},
+{"caption":"Capacity 8 needs 2 trip(s), at most 2. It is feasible, so the answer could be 8 or smaller: `hi` moves to 8.","panels":{"cap":{"values":[5,6,7,8,9,10,11,12],"states":"xxdddddd","pointers":[{"name":"lo","at":0,"side":"below"},{"name":"hi","at":7,"side":"below"},{"name":"mid","at":3,"side":"above","strong":true}]}}},
+{"caption":"Capacity 6 needs 3 trips, more than 2. It is not feasible, so `lo` moves to 7.","panels":{"cap":{"values":[5,6,7,8,9,10,11,12],"states":"xxdd____","pointers":[{"name":"lo","at":0,"side":"below"},{"name":"hi","at":3,"side":"below"},{"name":"mid","at":1,"side":"above","strong":true}]}}},
+{"caption":"Capacity 7 needs 2 trip(s), at most 2. It is feasible, so the answer could be 7 or smaller: `hi` moves to 7.","panels":{"cap":{"values":[5,6,7,8,9,10,11,12],"states":"__dd____","pointers":[{"name":"lo","at":2,"side":"below"},{"name":"hi","at":3,"side":"below"},{"name":"mid","at":2,"side":"above","strong":true}]}}},
+{"caption":"`lo` and `hi` meet at 7. Every smaller capacity is infeasible and every capacity from here up is feasible, so 7 is the smallest capacity that still works.","panels":{"cap":{"values":[5,6,7,8,9,10,11,12],"states":"__d_____","pointers":[{"name":"lo","at":2,"side":"below"},{"name":"hi","at":2,"side":"below"}]}}}
+]},
+{"id":"single","label":"One package","steps":[
+{"caption":"Every capacity from the heaviest package, 4, to carrying everything in one trip, 4, is a candidate. A capacity needing at most 1 trips is feasible (marked done); one needing more is not (marked invalid).","panels":{"cap":{"values":[4],"states":"d","pointers":[{"name":"lo","at":0,"side":"below"},{"name":"hi","at":0,"side":"below"}]}}},
+{"caption":"`lo` and `hi` meet at 4. Every smaller capacity is infeasible and every capacity from here up is feasible, so 4 is the smallest capacity that still works.","panels":{"cap":{"values":[4],"states":"d","pointers":[{"name":"lo","at":0,"side":"below"},{"name":"hi","at":0,"side":"below"}]}}}
+]}
+]}

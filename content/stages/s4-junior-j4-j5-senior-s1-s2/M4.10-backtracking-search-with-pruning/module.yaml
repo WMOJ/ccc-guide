@@ -5,7 +5,7 @@ objectives:
   - Explore all possibilities using recursion and backtrack when a path fails.
   - Prune search branches early to avoid exploring impossible solutions.
   - Recognize problems that fit the backtracking pattern.
-  - Handle recursion depth limits with iterative approaches.
+  - Explain why backtracking's recursion depth is bounded by the number of choices made, not by the size of the input.
 prereqs:
   - M1.14
   - M2.5
@@ -13,4 +13,7 @@ lessons:
   - backtracking
 practice:
   - id: ccc19j5
-    note: Search for a valid configuration with constraints, backtracking out of dead ends.
+    note: Turn a starting sequence into a target sequence using a limited number of substitution rules.
+    why: Each substitution choice must be tried and, if it cannot reach the target within the allowed steps, undone, the same choose-explore-unchoose shape this lesson builds.
+  - id: ccc23j5
+    note: Find every place a word appears in a grid of letters, including paths that turn once.

@@ -1,0 +1,19 @@
+{"schema":1,
+"kind":"frames",
+"id":"build_output",
+"layout":"row",
+"panels":[{"id":"values","viz":"ArrayViz","title":"Input values"},{"id":"results","viz":"ArrayViz","title":"Squared results"}],
+"alt":"Squaring each input value and appending its result to a results list, then joining and writing the whole list once instead of printing each result as it is computed.",
+"presets":[
+{"id":"main","label":"Four values","steps":[
+{"caption":"values[0] is 2. Its square is 2 * 2 = 4, appended to results.","panels":{"values":{"values":[2,5,3,10],"states":"c___"},"results":{"values":["4"],"states":"d"}}},
+{"caption":"values[1] is 5. Its square is 5 * 5 = 25, appended to results.","panels":{"values":{"values":[2,5,3,10],"states":"dc__"},"results":{"values":["4","25"],"states":"dd"}}},
+{"caption":"values[2] is 3. Its square is 3 * 3 = 9, appended to results.","panels":{"values":{"values":[2,5,3,10],"states":"ddc_"},"results":{"values":["4","25","9"],"states":"ddd"}}},
+{"caption":"values[3] is 10. Its square is 10 * 10 = 100, appended to results.","panels":{"values":{"values":[2,5,3,10],"states":"dddc"},"results":{"values":["4","25","9","100"],"states":"dddd"}}},
+{"caption":"All results are collected. The join plus a final newline builds one string, '4\\n25\\n9\\n100\\n', and write is called once.","panels":{"values":{"values":[2,5,3,10],"states":"dddd"},"results":{"values":["4","25","9","100"],"states":"cccc"}}}
+]},
+{"id":"single","label":"One value","steps":[
+{"caption":"values[0] is 7. Its square is 7 * 7 = 49, appended to results.","panels":{"values":{"values":[7],"states":"c"},"results":{"values":["49"],"states":"d"}}},
+{"caption":"All results are collected. The join plus a final newline builds one string, '49\\n', and write is called once.","panels":{"values":{"values":[7],"states":"d"},"results":{"values":["49"],"states":"c"}}}
+]}
+]}

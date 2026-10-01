@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"bracket_delete",
+"layout":"single",
+"panels":[{"id":"chars","viz":"ArrayViz","title":"String left"}],
+"alt":"A bracket string shrinking as the brute-force check deletes one adjacent opener and closer pair per pass. The nested string takes one pass per pair, each pass rescanning from the left, while the crossing string has no adjacent pair to delete and stops with characters left over.",
+"presets":[
+{"id":"nested","label":"Nested","steps":[
+{"caption":"The brute force deletes adjacent pairs until none is left. Start with (((()))), 8 characters. Each pass scans from the left for an opener directly followed by its closer.","panels":{"chars":{"values":["(","(","(","(",")",")",")",")"],"indices":true}}},
+{"caption":"Pass 1: the scan reaches the pair at positions 3 and 4 after 5 look-ups. Delete it. Total look-ups: 5.","panels":{"chars":{"values":["(","(","(","(",")",")",")",")"],"states":"___mm___","indices":true}}},
+{"caption":"Pass 2: the scan reaches the pair at positions 2 and 3 after 4 look-ups. Delete it. Total look-ups: 9.","panels":{"chars":{"values":["(","(","(",")",")",")"],"states":"__mm__","indices":true}}},
+{"caption":"Pass 3: the scan reaches the pair at positions 1 and 2 after 3 look-ups. Delete it. Total look-ups: 12.","panels":{"chars":{"values":["(","(",")",")"],"states":"_mm_","indices":true}}},
+{"caption":"Pass 4: the pair at positions 0 and 1 is found after 2 look-ups. Deleting it leaves nothing, so the string is valid. Total look-ups: 14.","panels":{"chars":{"values":["(",")"],"states":"dd","indices":true}}}
+]},
+{"id":"mixed","label":"Mixed","steps":[
+{"caption":"The brute force deletes adjacent pairs until none is left. Start with {[()()]}, 8 characters. Each pass scans from the left for an opener directly followed by its closer.","panels":{"chars":{"values":["{","[","(",")","(",")","]","}"],"indices":true}}},
+{"caption":"Pass 1: the scan reaches the pair at positions 2 and 3 after 4 look-ups. Delete it. Total look-ups: 4.","panels":{"chars":{"values":["{","[","(",")","(",")","]","}"],"states":"__mm____","indices":true}}},
+{"caption":"Pass 2: the scan reaches the pair at positions 2 and 3 after 4 look-ups. Delete it. Total look-ups: 8.","panels":{"chars":{"values":["{","[","(",")","]","}"],"states":"__mm__","indices":true}}},
+{"caption":"Pass 3: the scan reaches the pair at positions 1 and 2 after 3 look-ups. Delete it. Total look-ups: 11.","panels":{"chars":{"values":["{","[","]","}"],"states":"_mm_","indices":true}}},
+{"caption":"Pass 4: the pair at positions 0 and 1 is found after 2 look-ups. Deleting it leaves nothing, so the string is valid. Total look-ups: 13.","panels":{"chars":{"values":["{","}"],"states":"dd","indices":true}}}
+]},
+{"id":"crossing","label":"Crossing","steps":[
+{"caption":"The brute force deletes adjacent pairs until none is left. Start with ([)], 4 characters. Each pass scans from the left for an opener directly followed by its closer.","panels":{"chars":{"values":["(","[",")","]"],"indices":true}}},
+{"caption":"Pass 1: scanning all 4 characters finds no adjacent pair, so nothing more can be deleted. ([)] is left, which is not empty: invalid. Total look-ups: 4.","panels":{"chars":{"values":["(","[",")","]"],"states":"xxxx","indices":true}}}
+]}
+]}

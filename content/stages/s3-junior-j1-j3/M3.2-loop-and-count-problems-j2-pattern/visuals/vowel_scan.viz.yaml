@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Words }
+alt: >-
+  A table with one row per word, filled in as the loop runs. Each row shows the word, its first
+  letter, and whether that letter is a vowel, while a counter grows for every yes, matching
+  examples/vowel_count.py.
+captions: vizrec
+presets:
+  - id: typical
+    label: Mixed
+    stdin: "4\napple\nbanana\norange\ngrape\n"
+  - id: none
+    label: No vowels
+    stdin: "3\nfig\nkiwi\nplum\n"
+  - id: capital
+    label: Capitals
+    stdin: "3\nEgg\nowl\nTree\n"
+consistency:
+  description: The final vowel_count equals the output of examples/vowel_count.py.
+  example: ../examples/vowel_count.py
+  compare: output

@@ -1,0 +1,29 @@
+layout: single
+panels:
+  - { id: arr, viz: ArrayViz, title: "Values" }
+alt: >-
+  A row of values with a pointer i moving left to right. Each step compares values[i] with the
+  value before it, and two labeled ranges show the current run and the best run recorded so far.
+  On the sample the longest run ends before the last value, so the program prints the right
+  answer. When the longest run reaches the last value, the loop ends without recording it and the
+  program prints a smaller number than expected.
+legendLabels:
+  current: Compared now
+  compare: Value before it
+  done: Already compared
+  path: Longest run, unrecorded
+captions: vizrec
+presets:
+  - id: sample
+    label: Sample
+    stdin: "6\n1 1 2 2 2 3\n"
+  - id: at_end
+    label: Run at end
+    stdin: "4\n3 1 1 1\n"
+  - id: all_equal
+    label: All equal
+    stdin: "5\n4 4 4 4 4\n"
+consistency:
+  description: The number the figure prints equals the output of examples/longest_run.py on each preset's input.
+  example: ../examples/longest_run.py
+  compare: output

@@ -11,7 +11,9 @@ prereqs:
 lessons:
   - exchange-arguments
 practice:
-  - id: ccc18s3
-    note: Schedule tasks with deadlines to maximise the number of completed jobs.
-  - id: ccc17s2
-    note: Choose non-overlapping intervals to maximise coverage of a timeline.
+  - id: ccc15s2
+    note: Hand out jerseys of different sizes to as many athletes as possible, given each athlete's size request.
+    why: Matching requests to supplies where the order of assignment decides the count is the kind of choice an exchange argument settles.
+  - id: ccc15s3
+    note: Dock as many arriving planes as possible at an airport's numbered gates.
+    why: Each plane must take a gate at or below its limit, and the order in which gates are given out decides how many planes fit.

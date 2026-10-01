@@ -1,0 +1,28 @@
+{"schema":1,
+"kind":"frames",
+"id":"heap_tree",
+"layout":"row",
+"panels":[{"id":"t","viz":"TreeViz","title":"Heap as a tree"},{"id":"a","viz":"ArrayViz","title":"Heap list"}],
+"alt":"Pushing values into a heap and popping them out again. Each push places a value at the end of the list and moves it up past any bigger parent. Each pop removes the root, moves the last item into its place, and sifts that item down past any smaller child, always keeping the smallest value at the root.",
+"presets":[
+{"id":"five","label":"Five items","steps":[
+{"caption":"Push 5: it starts at the end of the list, then moves up past any parent that is bigger than it. It settles at index 0.","panels":{"t":{"root":{"id":"0","label":"5","s":"c"}},"a":{"values":[5],"states":"c","name":"heap"}}},
+{"caption":"Push 2: it starts at the end of the list, then moves up past any parent that is bigger than it. It settles at index 0.","panels":{"t":{"root":{"id":"0","label":"2","s":"c","children":[{"id":"1","label":"5"}]}},"a":{"values":[2,5],"states":"c_","name":"heap"}}},
+{"caption":"Push 8: it starts at the end of the list, then moves up past any parent that is bigger than it. It settles at index 2.","panels":{"t":{"root":{"id":"0","label":"2","children":[{"id":"1","label":"5"},{"id":"2","label":"8","s":"c"}]}},"a":{"values":[2,5,8],"states":"__c","name":"heap"}}},
+{"caption":"Push 1: it starts at the end of the list, then moves up past any parent that is bigger than it. It settles at index 0.","panels":{"t":{"root":{"id":"0","label":"1","s":"c","children":[{"id":"1","label":"2","children":[{"id":"3","label":"5"}]},{"id":"2","label":"8"}]}},"a":{"values":[1,2,8,5],"states":"c___","name":"heap"}}},
+{"caption":"Push 9: it starts at the end of the list, then moves up past any parent that is bigger than it. It settles at index 4.","panels":{"t":{"root":{"id":"0","label":"1","children":[{"id":"1","label":"2","children":[{"id":"3","label":"5"},{"id":"4","label":"9","s":"c"}]},{"id":"2","label":"8"}]}},"a":{"values":[1,2,8,5,9],"states":"____c","name":"heap"}}},
+{"caption":"The root, 1, is the smallest item in the heap, so `heappop` returns it next.","panels":{"t":{"root":{"id":"0","label":"1","s":"c","children":[{"id":"1","label":"2","children":[{"id":"3","label":"5"},{"id":"4","label":"9"}]},{"id":"2","label":"8"}]}},"a":{"values":[1,2,8,5,9],"states":"c____","name":"heap"}}},
+{"caption":"The last item in the list, 2, moves to the root and sifts down past any child that is smaller than it, until both of its children are at least as big.","panels":{"t":{"root":{"id":"0","label":"2","s":"c","children":[{"id":"1","label":"5","children":[{"id":"3","label":"9"}]},{"id":"2","label":"8"}]}},"a":{"values":[2,5,8,9],"states":"c___","name":"heap"}}},
+{"caption":"The root, 2, is the smallest item in the heap, so `heappop` returns it next.","panels":{"t":{"root":{"id":"0","label":"2","s":"c","children":[{"id":"1","label":"5","children":[{"id":"3","label":"9"}]},{"id":"2","label":"8"}]}},"a":{"values":[2,5,8,9],"states":"c___","name":"heap"}}},
+{"caption":"The last item in the list, 5, moves to the root and sifts down past any child that is smaller than it, until both of its children are at least as big.","panels":{"t":{"root":{"id":"0","label":"5","s":"c","children":[{"id":"1","label":"9"},{"id":"2","label":"8"}]}},"a":{"values":[5,9,8],"states":"c__","name":"heap"}}},
+{"caption":"The root, 5, is the smallest item in the heap, so `heappop` returns it next.","panels":{"t":{"root":{"id":"0","label":"5","s":"c","children":[{"id":"1","label":"9"},{"id":"2","label":"8"}]}},"a":{"values":[5,9,8],"states":"c__","name":"heap"}}},
+{"caption":"The last item in the list, 8, moves to the root and sifts down past any child that is smaller than it, until both of its children are at least as big.","panels":{"t":{"root":{"id":"0","label":"8","s":"c","children":[{"id":"1","label":"9"}]}},"a":{"values":[8,9],"states":"c_","name":"heap"}}},
+{"caption":"The root, 8, is the smallest item in the heap, so `heappop` returns it next.","panels":{"t":{"root":{"id":"0","label":"8","s":"c","children":[{"id":"1","label":"9"}]}},"a":{"values":[8,9],"states":"c_","name":"heap"}}},
+{"caption":"The last item in the list, 9, moves to the root and sifts down past any child that is smaller than it, until both of its children are at least as big.","panels":{"t":{"root":{"id":"0","label":"9","s":"c"}},"a":{"values":[9],"states":"c","name":"heap"}}},
+{"caption":"9 is the only item left. Popping it empties the heap.","panels":{"t":{"root":{"id":"0","label":"9","s":"c"}},"a":{"values":[9],"states":"c","name":"heap"}}}
+]},
+{"id":"one","label":"One item","steps":[
+{"caption":"Push 4: it starts at the end of the list, then moves up past any parent that is bigger than it. It settles at index 0.","panels":{"t":{"root":{"id":"0","label":"4","s":"c"}},"a":{"values":[4],"states":"c","name":"heap"}}},
+{"caption":"4 is the only item left. Popping it empties the heap.","panels":{"t":{"root":{"id":"0","label":"4","s":"c"}},"a":{"values":[4],"states":"c","name":"heap"}}}
+]}
+]}

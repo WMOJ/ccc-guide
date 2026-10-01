@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: numbers, viz: ArrayViz, title: Array }
+alt: >-
+  A sorted array with a write pointer and a read pointer. write only advances, and copies the
+  current value into its own slot, when read finds a value that differs from what write already
+  holds. Slots at or before write are done; the read pointer scans ahead of it.
+captions: vizrec
+presets:
+  - id: typical
+    label: Typical
+    stdin: "5 1 1 2 2 3\n"
+  - id: all-equal
+    label: All equal
+    stdin: "4 4 4 4 4\n"
+  - id: no-dup
+    label: No duplicates
+    stdin: "4 1 2 3 4\n"
+consistency:
+  description: The printed unique values equal the output of examples/remove_duplicates.py on the same array.
+  example: ../examples/remove_duplicates.py
+  compare: output

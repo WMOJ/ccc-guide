@@ -1,10 +1,23 @@
+import sys
 from collections import deque
 
-queue = deque()
-queue.append(1)
-queue.append(2)
-queue.append(3)
 
-print(queue.popleft())
-print(queue.popleft())
-print(queue.popleft())
+def main() -> None:
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+
+    values = [int(x) for x in input_data]
+
+    d = deque()
+    for i, val in enumerate(values):
+        if i % 2 == 0:
+            d.append(val)
+        else:
+            d.appendleft(val)
+
+    sys.stdout.write(" ".join(str(x) for x in d) + "\n")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,39 @@
+{"schema":1,
+"kind":"frames",
+"id":"pass-token",
+"layout":"single",
+"panels":[{"id":"ring","viz":"ArrayViz","title":"Circle of players"}],
+"alt":"A token passed one seat at a time around a circle of players, wrapping from the last seat back to seat 0 with (current + 1) % n, ending on the seat the pass count lands on.",
+"presets":[
+{"id":"main","label":"Five players","steps":[
+{"caption":"The token starts with player 0, one of 5 seats arranged in a circle.","panels":{"ring":{"values":[0,1,2,3,4],"states":"c____","pointers":[{"name":"token","at":0,"strong":true}],"circular":true}}},
+{"caption":"Pass 1: player 0 passes to (player 0 + 1) % 5 = 1.","panels":{"ring":{"values":[0,1,2,3,4],"states":"_c___","pointers":[{"name":"token","at":1,"strong":true}],"circular":true}}},
+{"caption":"Pass 2: player 1 passes to (player 1 + 1) % 5 = 2.","panels":{"ring":{"values":[0,1,2,3,4],"states":"__c__","pointers":[{"name":"token","at":2,"strong":true}],"circular":true}}},
+{"caption":"Pass 3: player 2 passes to (player 2 + 1) % 5 = 3.","panels":{"ring":{"values":[0,1,2,3,4],"states":"___c_","pointers":[{"name":"token","at":3,"strong":true}],"circular":true}}},
+{"caption":"Pass 4: player 3 passes to (player 3 + 1) % 5 = 4.","panels":{"ring":{"values":[0,1,2,3,4],"states":"____c","pointers":[{"name":"token","at":4,"strong":true}],"circular":true}}},
+{"caption":"Pass 5: player 4 passes to (player 4 + 1) % 5 = 0. The count reaches the last seat and wraps straight back to player 0.","panels":{"ring":{"values":[0,1,2,3,4],"states":"c____","pointers":[{"name":"token","at":0,"strong":true}],"circular":true}}},
+{"caption":"Pass 6: player 0 passes to (player 0 + 1) % 5 = 1.","panels":{"ring":{"values":[0,1,2,3,4],"states":"_c___","pointers":[{"name":"token","at":1,"strong":true}],"circular":true}}},
+{"caption":"Pass 7: player 1 passes to (player 1 + 1) % 5 = 2.","panels":{"ring":{"values":[0,1,2,3,4],"states":"__c__","pointers":[{"name":"token","at":2,"strong":true}],"circular":true}}},
+{"caption":"Pass 8: player 2 passes to (player 2 + 1) % 5 = 3.","panels":{"ring":{"values":[0,1,2,3,4],"states":"___c_","pointers":[{"name":"token","at":3,"strong":true}],"circular":true}}},
+{"caption":"Pass 9: player 3 passes to (player 3 + 1) % 5 = 4.","panels":{"ring":{"values":[0,1,2,3,4],"states":"____c","pointers":[{"name":"token","at":4,"strong":true}],"circular":true}}},
+{"caption":"Pass 10: player 4 passes to (player 4 + 1) % 5 = 0. The count reaches the last seat and wraps straight back to player 0.","panels":{"ring":{"values":[0,1,2,3,4],"states":"c____","pointers":[{"name":"token","at":0,"strong":true}],"circular":true}}},
+{"caption":"Pass 11: player 0 passes to (player 0 + 1) % 5 = 1.","panels":{"ring":{"values":[0,1,2,3,4],"states":"_c___","pointers":[{"name":"token","at":1,"strong":true}],"circular":true}}},
+{"caption":"Pass 12: player 1 passes to (player 1 + 1) % 5 = 2.","panels":{"ring":{"values":[0,1,2,3,4],"states":"__c__","pointers":[{"name":"token","at":2,"strong":true}],"circular":true}}},
+{"caption":"After 12 passes, player 2 holds the token. 12 % 5 = 2 names the same seat directly, with no loop needed.","panels":{"ring":{"values":[0,1,2,3,4],"states":"__c__","pointers":[{"name":"token","at":2,"strong":true}],"circular":true}}}
+]},
+{"id":"one-player","label":"One player","steps":[
+{"caption":"The token starts with player 0, one of 1 seat arranged in a circle.","panels":{"ring":{"values":[0],"states":"c","pointers":[{"name":"token","at":0,"strong":true}],"circular":true}}},
+{"caption":"Pass 1: player 0 passes to (player 0 + 1) % 1 = 0. The count reaches the last seat and wraps straight back to player 0.","panels":{"ring":{"values":[0],"states":"c","pointers":[{"name":"token","at":0,"strong":true}],"circular":true}}},
+{"caption":"Pass 2: player 0 passes to (player 0 + 1) % 1 = 0. The count reaches the last seat and wraps straight back to player 0.","panels":{"ring":{"values":[0],"states":"c","pointers":[{"name":"token","at":0,"strong":true}],"circular":true}}},
+{"caption":"Pass 3: player 0 passes to (player 0 + 1) % 1 = 0. The count reaches the last seat and wraps straight back to player 0.","panels":{"ring":{"values":[0],"states":"c","pointers":[{"name":"token","at":0,"strong":true}],"circular":true}}},
+{"caption":"After 3 passes, player 0 holds the token. 3 % 1 = 0 names the same seat directly, with no loop needed.","panels":{"ring":{"values":[0],"states":"c","pointers":[{"name":"token","at":0,"strong":true}],"circular":true}}}
+]},
+{"id":"full-lap","label":"Full lap","steps":[
+{"caption":"The token starts with player 0, one of 4 seats arranged in a circle.","panels":{"ring":{"values":[0,1,2,3],"states":"c___","pointers":[{"name":"token","at":0,"strong":true}],"circular":true}}},
+{"caption":"Pass 1: player 0 passes to (player 0 + 1) % 4 = 1.","panels":{"ring":{"values":[0,1,2,3],"states":"_c__","pointers":[{"name":"token","at":1,"strong":true}],"circular":true}}},
+{"caption":"Pass 2: player 1 passes to (player 1 + 1) % 4 = 2.","panels":{"ring":{"values":[0,1,2,3],"states":"__c_","pointers":[{"name":"token","at":2,"strong":true}],"circular":true}}},
+{"caption":"Pass 3: player 2 passes to (player 2 + 1) % 4 = 3.","panels":{"ring":{"values":[0,1,2,3],"states":"___c","pointers":[{"name":"token","at":3,"strong":true}],"circular":true}}},
+{"caption":"Pass 4: player 3 passes to (player 3 + 1) % 4 = 0. The count reaches the last seat and wraps straight back to player 0.","panels":{"ring":{"values":[0,1,2,3],"states":"c___","pointers":[{"name":"token","at":0,"strong":true}],"circular":true}}},
+{"caption":"After 4 passes, player 0 holds the token. 4 % 4 = 0 names the same seat directly, with no loop needed.","panels":{"ring":{"values":[0,1,2,3],"states":"c___","pointers":[{"name":"token","at":0,"strong":true}],"circular":true}}}
+]}
+]}

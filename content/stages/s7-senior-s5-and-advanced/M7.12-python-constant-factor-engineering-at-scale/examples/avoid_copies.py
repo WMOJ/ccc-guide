@@ -2,20 +2,25 @@ import sys
 
 
 def main() -> None:
-    data = sys.stdin.read().split()
-    n = int(data[0])
+    raw = sys.stdin.read()
+    tokens = raw.split()
+    n = int(tokens[0])
+    values = []
+    for k in range(n):
+        values.append(int(tokens[1 + k]))
 
-    # Slow: concatenating strings
-    # result = ""
-    # for i in range(1, n + 1):
-    #     result += data[i] + " "
+    rest = values
+    total = 0
+    copied = 0
+    while rest:
+        total += rest[0]
+        rest = rest[1:]
+        copied += len(rest)
 
-    # Fast: appending to list and joining once
-    output = []
-    for i in range(1, n + 1):
-        output.append(data[i])
-
-    sys.stdout.write(" ".join(output) + "\n")
+    index_total = 0
+    for i in range(n):
+        index_total += values[i]
+    print(total, copied, index_total)
 
 
 if __name__ == "__main__":

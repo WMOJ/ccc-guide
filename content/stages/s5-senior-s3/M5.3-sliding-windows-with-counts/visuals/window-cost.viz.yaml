@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: plot, viz: PlotViz, title: Operations }
+alt: >-
+  Two lines plotted against how many windows have been processed. Recomputing every window from
+  scratch rises steeply, K operations per window. Sliding the window rises much more slowly, a
+  fixed 2 operations per window after the first, since only one character leaves and one arrives.
+captions: vizrec
+presets:
+  - id: main
+    label: "K = 3"
+    stdin: "beautify 3\n"
+  - id: longer
+    label: "K = 4"
+    stdin: "beautify 4\n"
+consistency:
+  description: The final operation totals equal the two numbers printed by examples/window_cost.py for the same text and K.
+  example: ../examples/window_cost.py
+  compare: output

@@ -1,0 +1,19 @@
+{"schema":1,
+"kind":"frames",
+"id":"column_table",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz"}],
+"alt":"A table of names and scores fills in one row at a time. Each row prints with the name left-aligned in 10 characters and the score right-aligned in 5, so every score's last digit lines up under the one above it.",
+"presets":[
+{"id":"main","label":"Three rows","steps":[
+{"caption":"Row 0: f\"{name:<10}{score:>5}\" left-aligns \"Ana\" in 10 characters and right-aligns 92 in 5.","panels":{"table":{"cells":[["Ana·······","···92"],[null,null],[null,null]],"states":["cc","__","__"],"colHeads":["name","score"]}}},
+{"caption":"Row 1: f\"{name:<10}{score:>5}\" left-aligns \"Bo\" in 10 characters and right-aligns 7 in 5.","panels":{"table":{"cells":[["Ana·······","···92"],["Bo········","····7"],[null,null]],"states":["dd","cc","__"],"colHeads":["name","score"]}}},
+{"caption":"Row 2: f\"{name:<10}{score:>5}\" left-aligns \"Charlie\" in 10 characters and right-aligns 100 in 5.","panels":{"table":{"cells":[["Ana·······","···92"],["Bo········","····7"],["Charlie···","··100"]],"states":["dd","dd","cc"],"colHeads":["name","score"]}}},
+{"caption":"Every row lines up under the last one: the name column always starts at position 0, and the score column always ends at position 14, however long each name or score is.","panels":{"table":{"cells":[["Ana·······","···92"],["Bo········","····7"],["Charlie···","··100"]],"states":["dd","dd","dd"],"colHeads":["name","score"]}}}
+]},
+{"id":"long_name","label":"Long name","steps":[
+{"caption":"Row 0: f\"{name:<10}{score:>5}\" left-aligns \"Al\" in 10 characters and right-aligns 3 in 5.","panels":{"table":{"cells":[["Al········","····3"],[null,null]],"states":["cc","__"],"colHeads":["name","score"]}}},
+{"caption":"Row 1: f\"{name:<10}{score:>5}\" prints \"Christopher\" in its own 11 characters, past the 10-character minimum and right-aligns 150 in 5.","panels":{"table":{"cells":[["Al········","····3"],["Christopher","··150"]],"states":["dd","cc"],"colHeads":["name","score"]}}},
+{"caption":"\"Christopher\" is 11 characters, more than the 10-character field. A width in a format spec is only a minimum: it never cuts text short, so this row's score field starts later than a shorter name's would.","panels":{"table":{"cells":[["Al········","····3"],["Christopher","··150"]],"states":["dd","dd"],"colHeads":["name","score"]}}}
+]}
+]}

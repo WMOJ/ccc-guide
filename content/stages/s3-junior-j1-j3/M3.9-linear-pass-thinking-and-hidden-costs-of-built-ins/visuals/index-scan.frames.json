@@ -1,0 +1,36 @@
+{"schema":1,
+"kind":"frames",
+"id":"index-scan",
+"layout":"row",
+"panels":[{"id":"numbers","viz":"ArrayViz","title":"Numbers"},{"id":"cost","viz":"TableViz","title":"Cost so far"}],
+"alt":"A list of numbers scanned from the front, one comparison per cell, while looking for a target. Beside it, a small table counts the list scan's comparisons against a set lookup's single comparison. The scan stops at a match, or runs to the end when the value is missing.",
+"presets":[
+{"id":"end","label":"Near the end","steps":[
+{"caption":"Looking for 6 among 8 numbers. A list has to scan from the front, one comparison per cell. A set would find 6 with one hash lookup.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"c_______","pointers":[{"name":"i","at":0}]},"cost":{"cells":[[0],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[0] is 5, not 6. That was comparison 1; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dc______","pointers":[{"name":"i","at":1}]},"cost":{"cells":[[1],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[1] is 8, not 6. That was comparison 2; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"ddc_____","pointers":[{"name":"i","at":2}]},"cost":{"cells":[[2],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[2] is 2, not 6. That was comparison 3; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dddc____","pointers":[{"name":"i","at":3}]},"cost":{"cells":[[3],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[3] is 9, not 6. That was comparison 4; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"ddddc___","pointers":[{"name":"i","at":4}]},"cost":{"cells":[[4],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[4] is 4, not 6. That was comparison 5; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dddddc__","pointers":[{"name":"i","at":5}]},"cost":{"cells":[[5],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[5] is 7, not 6. That was comparison 6; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"ddddddc_","pointers":[{"name":"i","at":6}]},"cost":{"cells":[[6],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[6] is 1, not 6. That was comparison 7; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dddddddc","pointers":[{"name":"i","at":7}]},"cost":{"cells":[[7],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[7] is 6, a match after 8 comparisons. The scan stops at position 7.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dddddddp","pointers":[{"name":"i","at":7}]},"cost":{"cells":[[8],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}}
+]},
+{"id":"front","label":"Near the front","steps":[
+{"caption":"Looking for 8 among 8 numbers. A list has to scan from the front, one comparison per cell. A set would find 8 with one hash lookup.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"c_______","pointers":[{"name":"i","at":0}]},"cost":{"cells":[[0],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[0] is 5, not 8. That was comparison 1; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dc______","pointers":[{"name":"i","at":1}]},"cost":{"cells":[[1],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[1] is 8, a match after 2 comparisons. The scan stops at position 1.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dp______","pointers":[{"name":"i","at":1}]},"cost":{"cells":[[2],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}}
+]},
+{"id":"missing","label":"Not present","steps":[
+{"caption":"Looking for 3 among 8 numbers. A list has to scan from the front, one comparison per cell. A set would find 3 with one hash lookup.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"c_______","pointers":[{"name":"i","at":0}]},"cost":{"cells":[[0],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[0] is 5, not 3. That was comparison 1; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dc______","pointers":[{"name":"i","at":1}]},"cost":{"cells":[[1],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[1] is 8, not 3. That was comparison 2; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"ddc_____","pointers":[{"name":"i","at":2}]},"cost":{"cells":[[2],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[2] is 2, not 3. That was comparison 3; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dddc____","pointers":[{"name":"i","at":3}]},"cost":{"cells":[[3],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[3] is 9, not 3. That was comparison 4; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"ddddc___","pointers":[{"name":"i","at":4}]},"cost":{"cells":[[4],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[4] is 4, not 3. That was comparison 5; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dddddc__","pointers":[{"name":"i","at":5}]},"cost":{"cells":[[5],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[5] is 7, not 3. That was comparison 6; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"ddddddc_","pointers":[{"name":"i","at":6}]},"cost":{"cells":[[6],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[6] is 1, not 3. That was comparison 7; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dddddddc","pointers":[{"name":"i","at":7}]},"cost":{"cells":[[7],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"numbers[7] is 6, not 3. That was comparison 8; the scan moves on.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dddddddd"},"cost":{"cells":[[8],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}},
+{"caption":"The scan reached the end after 8 comparisons without finding 3, so the answer is -1. A missing value costs the most, because every cell is checked.","panels":{"numbers":{"values":[5,8,2,9,4,7,1,6],"states":"dddddddd"},"cost":{"cells":[[8],[1]],"rowHeads":["list scan","set lookup"],"colHeads":["comparisons"]}}}
+]}
+]}

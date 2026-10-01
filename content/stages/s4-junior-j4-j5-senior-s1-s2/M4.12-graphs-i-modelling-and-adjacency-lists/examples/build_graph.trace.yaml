@@ -1,0 +1,16 @@
+example: build_graph.py
+alt: >-
+  The program reads a vertex count, an edge count, then that many edges, appending each
+  endpoint to the other's neighbor list before printing every vertex's list.
+presets:
+  - id: main
+    label: One edge
+    stdin: "3 1\n0 1"
+  - id: branch
+    label: One hub vertex
+    stdin: "3 2\n0 1\n0 2"
+notes:
+  "12": "`g` starts as one empty list per vertex, indices 0 through `n - 1`."
+  "17": "`a` and `b` are read from `data` by position, then `pos` moves past both on line 19."
+  "20": "This line adds `b` to `a`'s list. The line below adds `a` to `b`'s list, so the same edge lands in both places."
+  "24": "This line runs once per vertex, after every edge has already been read."

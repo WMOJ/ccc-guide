@@ -14,7 +14,7 @@ lessons:
   - constructive-building
 practice:
   - id: ccc23s3
-    note: Build a palindromic poster on a grid by choosing characters for each cell.
+    note: Fill a grid with letters so an exact number of its rows and columns read the same forwards and backwards.
   - id: ccc19s3
-    note: Fill a grid so all rows and columns have the same sum.
-    why: An older constructive-casework problem with the same build-and-verify approach.
+    note: Fill in the missing values of a 3-by-3 grid so every row and column forms an arithmetic sequence.
+    why: An older construction problem, built directly from the values already fixed rather than searched for.

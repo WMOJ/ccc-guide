@@ -1,0 +1,22 @@
+{"schema":1,
+"kind":"frames",
+"id":"branch_order",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Branch check"}],
+"alt":"A three-row table for the if, elif, and else conditions of the shipping-cost formula, checked from top to bottom. The row whose condition is first true is marked as the winner, and the rows below it are never checked.",
+"presets":[
+{"id":"if-wins","label":"If wins","steps":[
+{"caption":"The cost is 10. Python checks the first condition: is it at most 20?","panels":{"table":{"cells":[["cost <= 20"],["cost <= 50"],["(always runs)"]],"states":["c","_","_"],"rowHeads":["if","elif","else"],"colTitle":"Condition"}}},
+{"caption":"It is. A cost of 10 takes the if branch right away, and the elif and else are skipped entirely.","panels":{"table":{"cells":[["cost <= 20"],["cost <= 50"],["(always runs)"]],"states":["p","_","_"],"rowHeads":["if","elif","else"],"colTitle":"Condition"}}}
+]},
+{"id":"elif-wins","label":"Elif wins","steps":[
+{"caption":"The cost is 30. Python checks the first condition: is it at most 20?","panels":{"table":{"cells":[["cost <= 20"],["cost <= 50"],["(always runs)"]],"states":["c","_","_"],"rowHeads":["if","elif","else"],"colTitle":"Condition"}}},
+{"caption":"A cost of 30 is over 20, so Python moves on to the elif: is it at most 50?","panels":{"table":{"cells":[["cost <= 20"],["cost <= 50"],["(always runs)"]],"states":["x","c","_"],"rowHeads":["if","elif","else"],"colTitle":"Condition"}}},
+{"caption":"It is. The elif branch runs here, so the else never gets a turn.","panels":{"table":{"cells":[["cost <= 20"],["cost <= 50"],["(always runs)"]],"states":["x","p","_"],"rowHeads":["if","elif","else"],"colTitle":"Condition"}}}
+]},
+{"id":"else-wins","label":"Else wins","steps":[
+{"caption":"The cost is 60. Python checks the first condition: is it at most 20?","panels":{"table":{"cells":[["cost <= 20"],["cost <= 50"],["(always runs)"]],"states":["c","_","_"],"rowHeads":["if","elif","else"],"colTitle":"Condition"}}},
+{"caption":"A cost of 60 is over 20, so Python moves on to the elif: is it at most 50?","panels":{"table":{"cells":[["cost <= 20"],["cost <= 50"],["(always runs)"]],"states":["x","c","_"],"rowHeads":["if","elif","else"],"colTitle":"Condition"}}},
+{"caption":"A cost of 60 is over 50 too, so neither the if nor the elif ever matched. Whatever is left over runs the else.","panels":{"table":{"cells":[["cost <= 20"],["cost <= 50"],["(always runs)"]],"states":["x","x","p"],"rowHeads":["if","elif","else"],"colTitle":"Condition"}}}
+]}
+]}

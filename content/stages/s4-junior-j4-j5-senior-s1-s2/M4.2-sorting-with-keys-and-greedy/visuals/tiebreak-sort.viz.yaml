@@ -1,0 +1,18 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Runners by tuple key }
+alt: >-
+  A three-row table of runner name, time and bib number, first in input order, then with a tied
+  pair of times highlighted, then rearranged ascending by the tuple (time, bib), fastest first.
+captions: vizrec
+presets:
+  - id: tied
+    label: Tied times
+    stdin: "3\nAlice 12.5 101\nBob 12.5 99\nCarol 12.0 100\n"
+  - id: distinct
+    label: Distinct times
+    stdin: "3\nAlice 10.0 101\nBob 11.0 99\nCarol 9.0 100\n"
+consistency:
+  description: The final table's order equals the lines examples/tiebreak_sort.py prints.
+  example: ../examples/tiebreak_sort.py
+  compare: output

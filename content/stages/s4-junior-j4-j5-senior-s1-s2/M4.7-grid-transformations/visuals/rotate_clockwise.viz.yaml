@@ -1,0 +1,19 @@
+layout: row
+panels:
+  - { id: source, viz: GridViz, title: Source }
+  - { id: target, viz: GridViz, title: Target }
+alt: >-
+  A source grid and an empty target grid of swapped dimensions. Each source cell moves to the
+  target at its column and n minus one minus row, filling the target one cell at a time.
+captions: vizrec
+presets:
+  - id: rectangle
+    label: Rectangle
+    stdin: "2 3\n1 2 3\n4 5 6\n"
+  - id: square
+    label: Square
+    stdin: "3 3\n1 2 3\n4 5 6\n7 8 9\n"
+consistency:
+  description: The target grid the visual ends with equals the output of examples/rotate_clockwise.py on each preset.
+  example: ../examples/rotate_clockwise.py
+  compare: output

@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: t, viz: TableViz, title: "Days" }
+  - { id: s, viz: StructViz, title: "Stack (day: temp)" }
+alt: >-
+  A row of daily temperatures with a row of waits beneath it, next to a stack of day numbers that
+  are still waiting for a warmer day. Each new day pops every day on top of the stack that is
+  cooler, filling in how long each of them waited, and then is pushed itself. Days left on the
+  stack at the end keep a wait of 0.
+captions: vizrec
+presets:
+  - id: mixed
+    label: Mixed
+    stdin: "6\n68 66 64 65 71 69\n"
+  - id: falling
+    label: Falling
+    stdin: "6\n75 73 70 68 66 64\n"
+  - id: rising
+    label: Rising
+    stdin: "6\n60 62 64 66 68 70\n"
+consistency:
+  description: The wait row equals the output of examples/next_greater.py.
+  example: ../examples/next_greater.py
+  compare: output

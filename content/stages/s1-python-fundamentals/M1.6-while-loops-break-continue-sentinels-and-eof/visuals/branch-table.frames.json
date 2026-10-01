@@ -1,0 +1,25 @@
+{"schema":1,
+"kind":"frames",
+"id":"branch-table",
+"layout":"single",
+"panels":[{"id":"t","viz":"TableViz","title":"One row per number read"}],
+"alt":"A table gains one row for each number the loop reads, showing which branch that number takes and the running total after it. A positive number is added, a negative number takes continue and leaves the total unchanged, and a 0 takes break and ends the loop. One preset mixes all three; one has only negatives before the 0; one starts with the 0.",
+"presets":[
+{"id":"main","label":"Mixed","steps":[
+{"caption":"`n` is 4: not 0 and not negative, so `total += n` runs and total becomes 4.","panels":{"t":{"cells":[[4,"add",4]],"states":["ccc"],"colHeads":["n","branch","total"]}}},
+{"caption":"`n` is -1, which is negative. `continue` jumps back to the top of the loop and skips `total += n`, so total stays 4.","panels":{"t":{"cells":[[4,"add",4],[-1,"continue",4]],"states":["ddd","ccc"],"colHeads":["n","branch","total"]}}},
+{"caption":"`n` is 6: not 0 and not negative, so `total += n` runs and total becomes 10.","panels":{"t":{"cells":[[4,"add",4],[-1,"continue",4],[6,"add",10]],"states":["ddd","ddd","ccc"],"colHeads":["n","branch","total"]}}},
+{"caption":"`n` is 0, so `break` leaves the loop at once. Nothing below it runs, and total stays 10.","panels":{"t":{"cells":[[4,"add",4],[-1,"continue",4],[6,"add",10],[0,"break",10]],"states":["ddd","ddd","ddd","xxx"],"colHeads":["n","branch","total"]}}},
+{"caption":"The loop is over, so `print(total)` shows 10.","panels":{"t":{"cells":[[4,"add",4],[-1,"continue",4],[6,"add",10],[0,"break",10]],"states":["ddd","ddd","ddd","xxx"],"colHeads":["n","branch","total"]}}}
+]},
+{"id":"negatives","label":"Only negatives","steps":[
+{"caption":"`n` is -2, which is negative. `continue` jumps back to the top of the loop and skips `total += n`, so total stays 0.","panels":{"t":{"cells":[[-2,"continue",0]],"states":["ccc"],"colHeads":["n","branch","total"]}}},
+{"caption":"`n` is -3, which is negative. `continue` jumps back to the top of the loop and skips `total += n`, so total stays 0.","panels":{"t":{"cells":[[-2,"continue",0],[-3,"continue",0]],"states":["ddd","ccc"],"colHeads":["n","branch","total"]}}},
+{"caption":"`n` is 0, so `break` leaves the loop at once. Nothing below it runs, and total stays 0.","panels":{"t":{"cells":[[-2,"continue",0],[-3,"continue",0],[0,"break",0]],"states":["ddd","ddd","xxx"],"colHeads":["n","branch","total"]}}},
+{"caption":"The loop is over, so `print(total)` shows 0.","panels":{"t":{"cells":[[-2,"continue",0],[-3,"continue",0],[0,"break",0]],"states":["ddd","ddd","xxx"],"colHeads":["n","branch","total"]}}}
+]},
+{"id":"zero","label":"Zero first","steps":[
+{"caption":"`n` is 0, so `break` leaves the loop at once. Nothing below it runs, and total stays 0.","panels":{"t":{"cells":[[0,"break",0]],"states":["xxx"],"colHeads":["n","branch","total"]}}},
+{"caption":"The loop is over, so `print(total)` shows 0.","panels":{"t":{"cells":[[0,"break",0]],"states":["xxx"],"colHeads":["n","branch","total"]}}}
+]}
+]}

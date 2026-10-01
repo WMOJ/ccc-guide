@@ -1,0 +1,26 @@
+layout: single
+panels:
+  - { id: t, viz: TreeViz, title: "Sum and tag (#i +tag)" }
+alt: >-
+  A lazy segment tree over six values followed through a short list of operations, one step per
+  operation. An update leaves tags on a few covering nodes and recomputes the sums above them. A
+  query reads the nodes that cover its range, and pushes a tag down one level at each partly
+  covered node on the way. The second preset updates a whole range, then queries a block that the
+  tag covers exactly and a single element beneath it.
+captions: vizrec
+legendLabels:
+  current: Covered by the operation
+  compare: Tag pushed from here
+  path: Received pushed tag
+  done: Sum recomputed
+presets:
+  - id: example
+    label: Two updates
+    stdin: "6\n2 4 1 3 5 2\n5\n1 1 5 5\n1 2 4 3\n2 0 6\n2 3 4\n2 1 3\n"
+  - id: whole
+    label: Whole range
+    stdin: "6\n2 4 1 3 5 2\n3\n1 0 6 4\n2 1 2\n2 4 6\n"
+consistency:
+  description: The answers printed by examples/lazy_tree.py on each preset's operations equal the query answers the visual computes.
+  example: ../examples/lazy_tree.py
+  compare: output

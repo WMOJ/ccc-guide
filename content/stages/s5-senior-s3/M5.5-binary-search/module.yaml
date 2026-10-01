@@ -11,5 +11,5 @@ prereqs:
 lessons:
   - binary-search-fundamentals
 practice:
-  - id: ccc21s3
-    note: Find the concert with the best time match using binary search on sorted data.
+  - id: ccc26s4
+    note: Find the smallest side-track capacity that still lets a train of minecarts sort itself.

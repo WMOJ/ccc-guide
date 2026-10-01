@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: chars, viz: ArrayViz, title: Characters }
+  - { id: stack, viz: StructViz, title: Stack }
+alt: >-
+  Reading a bracket string one character at a time, pushing every opener onto a stack and
+  popping it when a matching closer arrives, marking the string valid when the stack ends empty
+  and invalid on a mismatch, an empty stack facing a closer, or unclosed openers at the end.
+captions: vizrec
+presets:
+  - id: valid
+    label: Valid
+    stdin: "{[()()]}\n"
+  - id: crossing
+    label: Crossing
+    stdin: "([)]\n"
+  - id: unclosed
+    label: Unclosed
+    stdin: "(()\n"
+consistency:
+  description: The final valid/invalid result in the visual equals the output of examples/match_brackets.py.
+  example: ../examples/match_brackets.py
+  compare: output

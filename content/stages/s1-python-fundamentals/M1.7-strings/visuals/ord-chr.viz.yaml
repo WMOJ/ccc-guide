@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz, title: "Calls so far" }
+alt: >-
+  A table gains one row for each of the example's three calls. The first turns a letter
+  into its code point. The second turns that code point back into the letter. The third gives the next character. Presets use a lowercase a, an uppercase A, and the letter z, whose next
+  code point is not a letter.
+captions: vizrec
+presets:
+  - id: lower
+    label: Lowercase a
+    stdinFile: ../examples/ord_chr_basics.in
+  - id: upper
+    label: Uppercase A
+    stdin: "A\n"
+  - id: edge
+    label: After z
+    stdin: "z\n"
+consistency:
+  description: The code point and two characters shown match the three lines examples/ord_chr_basics.py prints.
+  example: ../examples/ord_chr_basics.py
+  compare: output

@@ -1,0 +1,20 @@
+layout: row
+panels:
+  - { id: text, viz: ArrayViz, title: Text (first window) }
+  - { id: hash, viz: ArrayViz, title: window_hash }
+alt: >-
+  Building the hash of the text's first window one character at a time: each step multiplies the
+  running hash by the base and adds the new character's code, the same formula used to hash the
+  pattern. The last step compares the finished window_hash to pattern_hash.
+captions: vizrec
+presets:
+  - id: match
+    label: Match
+    stdin: "abacabad ab\n"
+  - id: no-match
+    label: No match
+    stdin: "banana cat\n"
+consistency:
+  description: The reported match positions equal the output of examples/substring_hash.py on the same input.
+  example: ../examples/substring_hash.py
+  compare: output

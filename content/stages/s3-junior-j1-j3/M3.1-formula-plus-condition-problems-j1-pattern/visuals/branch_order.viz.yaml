@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Branch check }
+alt: >-
+  A three-row table for the if, elif, and else conditions of the shipping-cost formula,
+  checked from top to bottom. The row whose condition is first true is marked as the
+  winner, and the rows below it are never checked.
+captions: vizrec
+presets:
+  - id: if-wins
+    label: If wins
+    stdin: "5\n0\n"
+  - id: elif-wins
+    label: Elif wins
+    stdin: "15\n0\n"
+  - id: else-wins
+    label: Else wins
+    stdin: "30\n0\n"
+consistency:
+  description: The printed label matches the output of examples/shipping_cost.py on the same input.
+  example: ../examples/shipping_cost.py
+  compare: output

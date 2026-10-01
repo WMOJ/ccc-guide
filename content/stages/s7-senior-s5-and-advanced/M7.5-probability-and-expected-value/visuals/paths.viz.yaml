@@ -1,0 +1,29 @@
+layout: row
+panels:
+  - { id: tree, viz: TreeViz, title: Tree of paths }
+  - { id: table, viz: TableViz, title: Weighted sum }
+alt: >-
+  A probability tree for a token that moves 1 or 2 squares each turn until it reaches the end of a
+  short strip. Every leaf is one complete path, labeled with its number of turns, and every node
+  notes the chance of reaching it. The animation visits the leaves one by one and fills a table
+  with each path's chance, its turns and their product. The products add up to the expected number
+  of turns.
+captions: vizrec
+legendLabels:
+  current: Path being added
+  path: Route to it
+  done: Already added
+presets:
+  - id: main
+    label: Fair coin
+    stdin: "3 0.5\n"
+  - id: biased
+    label: Biased
+    stdin: "3 0.75\n"
+  - id: one
+    label: One square
+    stdin: "1 0.5\n"
+consistency:
+  description: The path count and the expected turns equal the output of examples/expected_by_paths.py.
+  example: ../examples/expected_by_paths.py
+  compare: output

@@ -1,0 +1,28 @@
+layout: row
+panels:
+  - { id: a, viz: GridViz, title: Level below }
+  - { id: b, viz: GridViz, title: New level }
+alt: >-
+  A triangle of numbers stored as a grid, beside the next size of triangle maxima. Each new size
+  is built from three lookups in the size below, one at the apex and two at the bottom corners of
+  the new triangle. The sizes grow 1, 2, 3, 5 and so on, about doubling each time, until the wanted
+  size is reached, and the last step lists the maximum of every triangle of that size.
+legendLabels:
+  compare: Read for this cell
+  current: Being computed
+  wall: No triangle here
+captions: vizrec
+presets:
+  - id: size5
+    label: Size 5
+    stdin: "6 5\n17\n8 21\n15 6 30\n9 25 2 18\n14 7 22 11 5\n1 19 10 26 13 20\n"
+  - id: whole
+    label: Size 6
+    stdin: "6 6\n17\n8 21\n15 6 30\n9 25 2 18\n14 7 22 11 5\n1 19 10 26 13 20\n"
+  - id: size2
+    label: Size 2
+    stdin: "6 2\n17\n8 21\n15 6 30\n9 25 2 18\n14 7 22 11 5\n1 19 10 26 13 20\n"
+consistency:
+  description: The maxima listed equal the output of examples/triangle_doubling.py on the same input.
+  example: ../examples/triangle_doubling.py
+  compare: output

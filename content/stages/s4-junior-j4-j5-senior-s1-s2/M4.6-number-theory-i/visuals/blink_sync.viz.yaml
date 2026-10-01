@@ -1,0 +1,21 @@
+layout: single
+panels:
+  - { id: line, viz: LineViz, title: Blink schedule }
+alt: >-
+  A timeline marking when light A blinks, when light B blinks, and when both blink together,
+  with a query time and the next shared blink it lands on.
+captions: vizrec
+presets:
+  - id: main
+    label: Typical
+    stdin: "1\n4 6 5\n"
+  - id: synced
+    label: Synced
+    stdin: "1\n4 6 12\n"
+  - id: coprime
+    label: Coprime
+    stdin: "1\n3 4 7\n"
+consistency:
+  description: The next shared blink matches the answer examples/blink_sync.py prints.
+  example: ../examples/blink_sync.py
+  compare: output

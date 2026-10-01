@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: a, viz: ArrayViz, title: "Input lines, pointer" }
+alt: >-
+  Lines of input are read in a loop, one at a time. The first preset runs eof_pitfall.py's own
+  two lines through a while True loop with no stop condition. It reads both, then reaches for a
+  third line that does not exist, marked invalid, and input() raises EOFError there. The second
+  preset runs read_to_end.py's own three lines through for line in sys.stdin instead. That loop
+  checks for a next line, finds none, and simply stops, with nothing raised at all.
+captions: vizrec
+presets:
+  - id: pitfall
+    label: while True
+    stdin: "3\n5\n"
+  - id: safe
+    label: for line in stdin
+    stdin: "3\n5\n7\n"
+consistency:
+  description: >-
+    The total shown matches the output of examples/read_to_end.py on each preset's own input (a
+    consistency check cannot run against eof_pitfall.py, which is meant to crash).
+  example: ../examples/read_to_end.py
+  compare: output

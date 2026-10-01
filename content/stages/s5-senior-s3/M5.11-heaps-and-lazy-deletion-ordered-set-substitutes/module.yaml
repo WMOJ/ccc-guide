@@ -3,9 +3,9 @@ title: Heaps and lazy deletion; ordered-set substitutes
 status: accepted
 objectives:
   - Implement min-heaps and max-heaps using heapq and negation.
-  - Detect and skip out-of-date entries using validity checks.
-  - Simulate multiset operations and keep running aggregates.
-  - Maintain a sliding window minimum using a lazy-deletion deque.
+  - Detect out-of-date heap entries and skip them by checking a table of current values.
+  - Simulate multiset operations with a pending-count dict that removes safely under duplicates.
+  - Maintain a sliding-window minimum with a heap, discarding expired entries lazily.
 prereqs:
   - M4.2
   - M4.1
@@ -13,7 +13,6 @@ lessons:
   - heaps-and-lazy-deletion
 practice:
   - id: ccc21s4
-    note: Find the minimum of dynamic expressions using lazy-deletion heaps to track candidates.
+    note: Rerun a fastest-trip search on a subway line whose stop order changes before every trip, with walkways as another way between stations.
   - id: ccc25s3
-    note: Track the best combination of items in a changing collection under updates.
-    why: A greedy problem over a changing collection, solved with heaps and lazy deletion.
+    note: Choose the prettiest set of colored pens for a picture, with one swap allowed, after updates change the pens available.

@@ -1,0 +1,28 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: Candidates }
+  - { id: t, viz: TableViz, title: Rounds }
+alt: >-
+  Random-pivot quickselect on a short list. Each round picks a random candidate as the pivot,
+  splits the candidates into smaller, equal and larger groups, and keeps only the group that
+  holds the wanted position. The table beside it records the pivot and the group sizes of
+  each round, and the search ends when the equal group holds the wanted position.
+captions: vizrec
+legendLabels:
+  current: Pivot
+  frontier: Kept
+  done: Discarded
+presets:
+  - id: typical
+    label: Typical
+    stdin: "8 4 7\n7 2 8 1 6 3 5 4\n"
+  - id: sorted
+    label: Sorted input
+    stdin: "8 4 1\n1 2 3 4 5 6 7 8\n"
+  - id: equal
+    label: All equal
+    stdin: "8 4 1\n4 4 4 4 4 4 4 4\n"
+consistency:
+  description: The answer and round count equal the output of examples/quickselect.py.
+  example: ../examples/quickselect.py
+  compare: output

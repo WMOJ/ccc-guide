@@ -1,0 +1,27 @@
+layout: row
+panels:
+  - { id: t, viz: TableViz, title: Jobs }
+  - { id: line, viz: LineViz, title: Timeline in minutes }
+legendLabels:
+  done: Not swapped
+  compare: Swapped pair
+alt: >-
+  Three jobs run back to back. The first is fixed. The other two, x then y, are drawn on a
+  timeline with their finish times and combined weighted cost, then swapped on a second row with
+  the new cost. The last step shows the whole difference: x first makes y wait for x, y first
+  makes x wait for y, and the delay from the fixed first job cancels out.
+captions: vizrec
+presets:
+  - id: helps
+    label: Swap helps
+    stdin: "3\nP 2 1\nA 3 1\nB 2 4\n"
+  - id: tie
+    label: Tie
+    stdin: "3\nP 2 1\nA 2 1\nB 4 2\n"
+  - id: keep
+    label: Keep order
+    stdin: "3\nP 2 1\nA 1 4\nB 3 1\n"
+consistency:
+  description: Finish times use the formula of examples/weighted_jobs.py, whose answer on the same three jobs the recording carries.
+  example: ../examples/weighted_jobs.py
+  compare: output

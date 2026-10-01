@@ -1,0 +1,11 @@
+{"schema":1,
+"kind":"frames",
+"id":"compare",
+"layout":"row",
+"panels":[{"id":"a","viz":"GraphViz","title":"Listed order"},{"id":"b","viz":"GraphViz","title":"Cheapest first"}],
+"alt":"Two spanning trees of the same six-city graph, one chosen by taking edges in the order they were listed and one by taking them cheapest first. Both connect every city without a cycle, but the first costs 35 and the second costs 23.",
+"presets":[
+{"id":"main","label":"Six cities","steps":[
+{"caption":"Both trees use the same cycle check and connect all 6 cities. Taking the edges in the order they were listed costs 35. Taking them cheapest first costs 23, the minimum: sorting is what makes the greedy choice optimal.","panels":{"a":{"nodes":[{"id":"0","x":0.5,"y":2},{"id":"1","x":2.5,"y":3.6},{"id":"2","x":2,"y":2},{"id":"3","x":2.5,"y":0.4},{"id":"4","x":4.6,"y":2},{"id":"5","x":4.6,"y":0.4}],"edges":[{"a":"0","b":"1","w":5,"s":"p"},{"a":"0","b":"2","w":8,"s":"p"},{"a":"0","b":"3","w":6,"s":"p"},{"a":"1","b":"2","w":3},{"a":"1","b":"4","w":7,"s":"p"},{"a":"2","b":"3","w":4},{"a":"3","b":"4","w":2},{"a":"3","b":"5","w":9,"s":"p"}]},"b":{"nodes":[{"id":"0","x":0.5,"y":2},{"id":"1","x":2.5,"y":3.6},{"id":"2","x":2,"y":2},{"id":"3","x":2.5,"y":0.4},{"id":"4","x":4.6,"y":2},{"id":"5","x":4.6,"y":0.4}],"edges":[{"a":"0","b":"1","w":5,"s":"p"},{"a":"0","b":"2","w":8},{"a":"0","b":"3","w":6},{"a":"1","b":"2","w":3,"s":"p"},{"a":"1","b":"4","w":7},{"a":"2","b":"3","w":4,"s":"p"},{"a":"3","b":"4","w":2,"s":"p"},{"a":"3","b":"5","w":9,"s":"p"}]}}}
+]}
+]}

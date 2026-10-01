@@ -18,5 +18,6 @@ def main() -> None:
 
     sys.stdout.write(str(total) + "\n")
 
+
 if __name__ == "__main__":
     main()

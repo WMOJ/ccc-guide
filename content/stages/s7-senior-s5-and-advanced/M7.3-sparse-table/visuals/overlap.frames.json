@@ -1,0 +1,30 @@
+{"schema":1,
+"kind":"frames",
+"id":"overlap",
+"layout":"single",
+"panels":[{"id":"array","viz":"ArrayViz","title":"Array"}],
+"alt":"An array with a query range covered by two overlapping blocks. Cells in both blocks are marked. Combining the two block results with minimum or gcd gives the true answer, because counting the shared cells twice changes nothing; combining them with a sum gives too large an answer.",
+"legendLabels":{"frontier":"In the range","done":"In one block","compare":"In both blocks"},
+"presets":[
+{"id":"sum","label":"Sum fails","steps":[
+{"caption":"The query asks for the sum of a[1..5], length 5. Two blocks of length 4 will cover it, one from each end.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_qqqqq__","name":"a"}}},
+{"caption":"Block 1 covers a[1..4]. Its sum is 20.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_ddddq__","ranges":[{"from":1,"to":4,"label":"block 1: 20","side":"above"}],"name":"a"}}},
+{"caption":"Block 2 covers a[2..5]. Its sum is 19.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_dmmmd__","ranges":[{"from":1,"to":4,"label":"block 1: 20","side":"above"},{"from":2,"to":5,"label":"block 2: 19","side":"below"}],"name":"a"}}},
+{"caption":"a[2..4] (7, 4, 6) lies in both blocks, so it was counted twice.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_dmmmd__","ranges":[{"from":1,"to":4,"label":"block 1: 20","side":"above"},{"from":2,"to":5,"label":"block 2: 19","side":"below"}],"name":"a"}}},
+{"caption":"Combining the blocks gives 20 + 19 = 39, but the true sum of the range is 22. The shared cells were added twice, so a sum cannot use overlapping blocks.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_dmmmd__","ranges":[{"from":1,"to":4,"label":"block 1: 20","side":"above"},{"from":2,"to":5,"label":"block 2: 19","side":"below"}],"name":"a"}}}
+]},
+{"id":"min","label":"Min works","steps":[
+{"caption":"The query asks for the minimum of a[1..5], length 5. Two blocks of length 4 will cover it, one from each end.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_qqqqq__","name":"a"}}},
+{"caption":"Block 1 covers a[1..4]. Its minimum is 3.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_ddddq__","ranges":[{"from":1,"to":4,"label":"block 1: 3","side":"above"}],"name":"a"}}},
+{"caption":"Block 2 covers a[2..5]. Its minimum is 2.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_dmmmd__","ranges":[{"from":1,"to":4,"label":"block 1: 3","side":"above"},{"from":2,"to":5,"label":"block 2: 2","side":"below"}],"name":"a"}}},
+{"caption":"a[2..4] (7, 4, 6) lies in both blocks, so it was counted twice.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_dmmmd__","ranges":[{"from":1,"to":4,"label":"block 1: 3","side":"above"},{"from":2,"to":5,"label":"block 2: 2","side":"below"}],"name":"a"}}},
+{"caption":"Combining the blocks gives min(3, 2) = 2, and the true minimum of the range is 2. Counting the shared cells twice changes nothing for a minimum.","panels":{"array":{"values":[5,3,7,4,6,2,8,3],"states":"_dmmmd__","ranges":[{"from":1,"to":4,"label":"block 1: 3","side":"above"},{"from":2,"to":5,"label":"block 2: 2","side":"below"}],"name":"a"}}}
+]},
+{"id":"gcd","label":"Gcd works","steps":[
+{"caption":"The query asks for the gcd of a[1..5], length 5. Two blocks of length 4 will cover it, one from each end.","panels":{"array":{"values":[12,18,30,24,36,6,9,15],"states":"_qqqqq__","name":"a"}}},
+{"caption":"Block 1 covers a[1..4]. Its gcd is 6.","panels":{"array":{"values":[12,18,30,24,36,6,9,15],"states":"_ddddq__","ranges":[{"from":1,"to":4,"label":"block 1: 6","side":"above"}],"name":"a"}}},
+{"caption":"Block 2 covers a[2..5]. Its gcd is 6.","panels":{"array":{"values":[12,18,30,24,36,6,9,15],"states":"_dmmmd__","ranges":[{"from":1,"to":4,"label":"block 1: 6","side":"above"},{"from":2,"to":5,"label":"block 2: 6","side":"below"}],"name":"a"}}},
+{"caption":"a[2..4] (30, 24, 36) lies in both blocks, so it was counted twice.","panels":{"array":{"values":[12,18,30,24,36,6,9,15],"states":"_dmmmd__","ranges":[{"from":1,"to":4,"label":"block 1: 6","side":"above"},{"from":2,"to":5,"label":"block 2: 6","side":"below"}],"name":"a"}}},
+{"caption":"Combining the blocks gives gcd(6, 6) = 6, and the true gcd of the range is 6. Counting the shared cells twice changes nothing for a gcd.","panels":{"array":{"values":[12,18,30,24,36,6,9,15],"states":"_dmmmd__","ranges":[{"from":1,"to":4,"label":"block 1: 6","side":"above"},{"from":2,"to":5,"label":"block 2: 6","side":"below"}],"name":"a"}}}
+]}
+]}

@@ -1,0 +1,21 @@
+{"schema":1,
+"kind":"frames",
+"id":"slice_copies",
+"layout":"row",
+"panels":[{"id":"s","viz":"ArrayViz","title":"rest = rest[1:]"},{"id":"i","viz":"ArrayViz","title":"Index i"}],
+"alt":"Two ways to consume a list from the front. With slicing, each pass takes the first item and builds a new list of the remaining items, copying them. With an index, the list stays where it is and the index moves one place right. The captions keep a running count of items copied by slicing, which adds up to n(n-1)/2, while the index version copies nothing.",
+"legendLabels":{"compare":"Copied"},
+"presets":[
+{"id":"five","label":"Five values","steps":[
+{"caption":"`rest[0]` is 4, so `total` is 4. `rest[1:]` builds a new list and copies the other 4 items, so `copied` is 4. The index version reads `values[0]` in place and copies nothing.","panels":{"s":{"values":[4,2,7,1,3],"states":"cmmmm","pointers":[{"name":"rest","at":0}]},"i":{"values":[4,2,7,1,3],"states":"c____","pointers":[{"name":"i","at":0}]}}},
+{"caption":"`rest[0]` is 2, so `total` is 6. `rest[1:]` builds a new list and copies the other 3 items, so `copied` is 7. The index version reads `values[1]` in place and copies nothing.","panels":{"s":{"values":[2,7,1,3],"states":"cmmm","pointers":[{"name":"rest","at":0}]},"i":{"values":[4,2,7,1,3],"states":"dc___","pointers":[{"name":"i","at":1}]}}},
+{"caption":"`rest[0]` is 7, so `total` is 13. `rest[1:]` builds a new list and copies the other 2 items, so `copied` is 9. The index version reads `values[2]` in place and copies nothing.","panels":{"s":{"values":[7,1,3],"states":"cmm","pointers":[{"name":"rest","at":0}]},"i":{"values":[4,2,7,1,3],"states":"ddc__","pointers":[{"name":"i","at":2}]}}},
+{"caption":"`rest[0]` is 1, so `total` is 14. `rest[1:]` builds a new list and copies the other 1 item, so `copied` is 10. The index version reads `values[3]` in place and copies nothing.","panels":{"s":{"values":[1,3],"states":"cm","pointers":[{"name":"rest","at":0}]},"i":{"values":[4,2,7,1,3],"states":"dddc_","pointers":[{"name":"i","at":3}]}}},
+{"caption":"`rest[0]` is 3, so `total` is 17. `rest[1:]` would be empty, nothing is copied, and `copied` stays 10. The index version reads `values[4]` in place.","panels":{"s":{"values":[3],"states":"c","pointers":[{"name":"rest","at":0}]},"i":{"values":[4,2,7,1,3],"states":"ddddc","pointers":[{"name":"i","at":4}]}}},
+{"caption":"Both versions reach a total of 17. Slicing copied 10 items along the way, which is 5 * 4 / 2, and the index version copied none. `rest` ended as an empty list.","panels":{"s":{"values":[3],"states":"d","name":"last rest"},"i":{"values":[4,2,7,1,3],"states":"ddddd"}}}
+]},
+{"id":"single","label":"One value","steps":[
+{"caption":"`rest[0]` is 9, so `total` is 9. `rest[1:]` would be empty, nothing is copied, and `copied` stays 0. The index version reads `values[0]` in place.","panels":{"s":{"values":[9],"states":"c","pointers":[{"name":"rest","at":0}]},"i":{"values":[9],"states":"c","pointers":[{"name":"i","at":0}]}}},
+{"caption":"Both versions reach a total of 9. Slicing copied 0 items along the way, which is 1 * 0 / 2, and the index version copied none. `rest` ended as an empty list.","panels":{"s":{"values":[9],"states":"d","name":"last rest"},"i":{"values":[9],"states":"d"}}}
+]}
+]}

@@ -1,0 +1,25 @@
+layout: row
+panels:
+  - { id: a, viz: ArrayViz, title: "grid, entry by entry" }
+  - { id: b, viz: TableViz, title: "The row lists in memory" }
+alt: >-
+  A grid is built two ways. First grid = [[0] * cols] * rows makes one row list and puts that
+  same list in every entry of grid, so changing one cell changes every row. Then the list
+  comprehension makes one separate row list per entry, so changing one cell changes only its
+  own row. Presets use a grid of two rows by three columns, three rows by four columns, and a
+  single row, where sharing cannot be seen.
+captions: vizrec
+presets:
+  - id: main
+    label: 2 by 3
+    stdinFile: ../examples/aliasing_bug.in
+  - id: bigger
+    label: 3 by 4
+    stdin: "3\n4\n"
+  - id: single
+    label: One row
+    stdin: "1\n3\n"
+consistency:
+  description: The grid printed for the shared-row build matches the output of examples/aliasing_bug.py.
+  example: ../examples/aliasing_bug.py
+  compare: output

@@ -13,4 +13,7 @@ lessons:
   - memoization-and-dynamic-programming
 practice:
   - id: ccc15j5
-    note: Count the ways to reach a target using memoized recursion over smaller subproblems.
+    note: Give out pieces of pie to a line of people so each person's share never decreases.
+    why: A count of arrangements built from smaller pie-and-people subproblems, the shape a memoized recursion fits.
+  - id: ccc22s1
+    note: Count the ways to write a number as an unordered sum of two fixed piece sizes.

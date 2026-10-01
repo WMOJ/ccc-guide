@@ -3,9 +3,11 @@ import { layoutPanel } from "@/lib/viz/layout";
 import {
   FRAME_SCHEMAS,
   type FrameByViz,
+  legendLabelsSchema,
   PANEL_VIZ,
   type PanelSpec,
   type PanelVizName,
+  type VizState,
 } from "@/lib/viz/schema";
 import { FigureShell } from "./FigureShell";
 import type { FigureInfo } from "./figure-context";
@@ -25,8 +27,20 @@ export interface DiagramProps {
   step?: number;
   /** Panel title for the inline form. */
   title?: string;
+  /** Inline form: per-figure legend names for states (the file form reads the frames file's). */
+  legendLabels?: Partial<Record<VizState, string>>;
   baseDir?: string;
   figure?: FigureInfo;
+}
+
+function checkedLabels(labels: unknown): Partial<Record<VizState, string>> {
+  const parsed = legendLabelsSchema.safeParse(labels);
+  if (!parsed.success) {
+    throw new Error(
+      `<Diagram legendLabels>: ${parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ")}`,
+    );
+  }
+  return parsed.data;
 }
 
 /** A static picture from any visualizer: pure server-rendered SVG, no JavaScript. */
@@ -37,6 +51,7 @@ export function Diagram({
   preset,
   step = 0,
   title,
+  legendLabels,
   baseDir,
   figure,
 }: DiagramProps) {
@@ -45,6 +60,7 @@ export function Diagram({
   let scenes: VizScene[];
   let boxes: { width: number; height: number }[];
   let alt = figure?.alt;
+  let labels = legendLabels === undefined ? undefined : checkedLabels(legendLabels);
   if (frames !== undefined) {
     const file = loadFrames(baseDir, frames);
     const ip = presetIndex(file.presets, preset, frames);
@@ -56,6 +72,7 @@ export function Diagram({
     scenes = prepared.map((p) => p.scenes[ip]?.[step]).filter((s) => s !== undefined);
     boxes = scenes.map((s) => ({ width: s.width, height: s.height }));
     alt ??= file.alt;
+    labels ??= file.legendLabels;
   } else {
     if (!viz || !(PANEL_VIZ as readonly string[]).includes(viz)) {
       throw new Error(`<Diagram viz="${viz}">: viz must be one of ${PANEL_VIZ.join(", ")}`);
@@ -80,7 +97,7 @@ export function Diagram({
     <FigureShell kind="diagram" figure={figure} alt={alt}>
       <div className="vz-frame vz-static">
         <FramesStage layout={layout} panels={panels} scenes={scenes} boxes={boxes} stepLabel="" />
-        <Legend states={legendStates(scenes)} />
+        <Legend states={legendStates(scenes)} labels={labels} />
       </div>
     </FigureShell>
   );

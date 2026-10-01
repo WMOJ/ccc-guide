@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"event_cycles",
+"layout":"single",
+"panels":[{"id":"line","viz":"LineViz","title":"Day range"}],
+"alt":"Counting how many times a periodic event lands within a range of days, by finding how many full cycles fit in the span since the first event, then checking whether one more event fits in what is left over.",
+"presets":[
+{"id":"main","label":"Full cycles","steps":[
+{"caption":"The first event is day 1. It repeats every 3 days.","panels":{"line":{"min":0,"max":10,"points":[{"x":1,"label":"1","s":"c"}]}}},
+{"caption":"That leaves days 1 to 9 to check: 10 - 1 = 9 days.","panels":{"line":{"min":0,"max":10,"points":[{"x":1,"label":"1","s":"c"}],"intervals":[{"a":1,"b":9,"label":"span 9","s":"q","row":0}]}}},
+{"caption":"9 // 3 = 3 full cycles fit in that span, each with one event: day 1, day 4, day 7.","panels":{"line":{"min":0,"max":10,"points":[{"x":1,"label":"1","s":"d"},{"x":4,"label":"4","s":"d"},{"x":7,"label":"7","s":"d"}]}}},
+{"caption":"The remainder is 9 % 3 = 0, so no partial cycle is left over.","panels":{"line":{"min":0,"max":10,"points":[{"x":1,"label":"1","s":"d"},{"x":4,"label":"4","s":"d"},{"x":7,"label":"7","s":"d"}]}}},
+{"caption":"3 full cycles plus 0 from the remainder: the event happens 3 times in this range.","panels":{"line":{"min":0,"max":10,"points":[{"x":1,"label":"1","s":"d"},{"x":4,"label":"4","s":"d"},{"x":7,"label":"7","s":"d"}]}}}
+]},
+{"id":"remainder","label":"Plus a remainder","steps":[
+{"caption":"The first event is day 2. It repeats every 4 days.","panels":{"line":{"min":0,"max":11,"points":[{"x":2,"label":"2","s":"c"}]}}},
+{"caption":"That leaves days 2 to 10 to check: 11 - 2 = 9 days.","panels":{"line":{"min":0,"max":11,"points":[{"x":2,"label":"2","s":"c"}],"intervals":[{"a":2,"b":10,"label":"span 9","s":"q","row":0}]}}},
+{"caption":"9 // 4 = 2 full cycles fit in that span, each with one event: day 2, day 6.","panels":{"line":{"min":0,"max":11,"points":[{"x":2,"label":"2","s":"d"},{"x":6,"label":"6","s":"d"}]}}},
+{"caption":"The remainder is 9 % 4 = 1, big enough to fit one more event on day 10 before the range ends. That is the plus one.","panels":{"line":{"min":0,"max":11,"points":[{"x":2,"label":"2","s":"d"},{"x":6,"label":"6","s":"d"},{"x":10,"label":"10","s":"m"}]}}},
+{"caption":"2 full cycles plus 1 from the remainder: the event happens 3 times in this range.","panels":{"line":{"min":0,"max":11,"points":[{"x":2,"label":"2","s":"d"},{"x":6,"label":"6","s":"d"},{"x":10,"label":"10","s":"m"}]}}}
+]},
+{"id":"none","label":"Not started yet","steps":[
+{"caption":"The full range here is day 0 up to day 4 (5 days). The event's first occurrence is day 50, outside that range.","panels":{"line":{"min":0,"max":5}}},
+{"caption":"No event lands inside day 0 to day 4, so the count is 0.","panels":{"line":{"min":0,"max":5}}}
+]}
+]}

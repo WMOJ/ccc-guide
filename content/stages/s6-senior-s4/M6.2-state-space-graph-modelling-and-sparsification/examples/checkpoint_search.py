@@ -3,62 +3,53 @@ import sys
 
 
 def main() -> None:
-    input_data = sys.stdin.read().split()
-    if not input_data:
-        return
+    data = sys.stdin.read().split()
+    n = int(data[0])
+    m = int(data[1])
+    k = int(data[2])
+    pos = 3
+    adj = [[] for _ in range(n)]
+    for _ in range(m):
+        u = int(data[pos])
+        v = int(data[pos + 1])
+        w = int(data[pos + 2])
+        pos += 3
+        adj[u].append((v, w))
+        adj[v].append((u, w))
 
-    idx = 0
-    n_rooms = int(input_data[idx])
-    n_edges = int(input_data[idx + 1])
-    n_checkpoints = int(input_data[idx + 2])
-    idx += 3
+    bit = [0] * n
+    for i in range(k):
+        bit[int(data[pos])] = 1 << i
+        pos += 1
+    size = 1 << k
+    full = size - 1
 
-    # Build adjacency list
-    adj = [[] for _ in range(n_rooms)]
-    for _ in range(n_edges):
-        u = int(input_data[idx])
-        v = int(input_data[idx + 1])
-        cost = int(input_data[idx + 2])
-        idx += 3
-        adj[u].append((v, cost))
-        adj[v].append((u, cost))
+    best = [-1] * (n * size)
+    done = [False] * (n * size)
+    settled = 0
+    answer = -1
+    best[bit[0]] = 0
+    heap = [(0, 0, bit[0])]
+    while heap:
+        d, u, mask = heapq.heappop(heap)
+        s = u * size + mask
+        if done[s]:
+            continue  # an out-of-date entry
+        done[s] = True
+        settled += 1
+        if mask == full:
+            answer = d
+            break
+        for v, w in adj[u]:
+            nmask = mask | bit[v]
+            t = v * size + nmask
+            nd = d + w
+            if not done[t] and (best[t] == -1 or nd < best[t]):
+                best[t] = nd
+                heapq.heappush(heap, (nd, v, nmask))
 
-    # Read checkpoints to collect
-    checkpoints = []
-    for _ in range(n_checkpoints):
-        checkpoints.append(int(input_data[idx]))
-        idx += 1
-
-    checkpoint_set = frozenset(checkpoints)
-    start_state = (0, frozenset())
-    best = {}
-
-    pq = [(0, start_state)]
-    while pq:
-        dist, state = heapq.heappop(pq)
-        room, collected = state
-
-        if state in best:
-            continue
-        best[state] = dist
-
-        if collected == checkpoint_set:
-            sys.stdout.write(str(dist) + "\n")
-            return
-
-        for next_room, cost in adj[room]:
-            new_collected = collected | (
-                frozenset([next_room])
-                if next_room in checkpoints
-                else frozenset()
-            )
-            next_state = (next_room, new_collected)
-            next_dist = dist + cost
-
-            if next_state not in best:
-                heapq.heappush(pq, (next_dist, next_state))
-
-    sys.stdout.write("-1\n")
+    print("distance", answer)
+    print("settled", settled, "of", n * size, "states")
 
 
 if __name__ == "__main__":

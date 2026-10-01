@@ -1,0 +1,34 @@
+{"schema":1,
+"kind":"frames",
+"id":"anagram-check",
+"layout":"single",
+"panels":[{"id":"counts","viz":"TableViz","title":"counts"}],
+"alt":"A table with one column per distinct letter and two rows, one holding the counts for word A and one for word B. The counts fill in as each word is scanned in turn, then the two rows are compared column by column. In the matching preset the rows end identical, giving \"Anagram\". In the mismatch preset some columns differ, giving \"Not anagram\".",
+"presets":[
+{"id":"match","label":"Match","steps":[
+{"caption":"Both count rows start at 0 for every letter that appears in either word: a, b, d.","panels":{"counts":{"cells":[[0,0,0],[0,0,0]],"states":["___","___"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d"],"colTitle":"letter"}}},
+{"caption":"Reading \"b\" from \"bad\": counts_a for b becomes 1.","panels":{"counts":{"cells":[[0,1,0],[0,0,0]],"states":["_c_","___"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d"],"colTitle":"letter"}}},
+{"caption":"Reading \"a\" from \"bad\": counts_a for a becomes 1.","panels":{"counts":{"cells":[[1,1,0],[0,0,0]],"states":["c__","___"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d"],"colTitle":"letter"}}},
+{"caption":"Reading \"d\" from \"bad\": counts_a for d becomes 1.","panels":{"counts":{"cells":[[1,1,1],[0,0,0]],"states":["__c","___"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d"],"colTitle":"letter"}}},
+{"caption":"Reading \"d\" from \"dab\": counts_b for d becomes 1.","panels":{"counts":{"cells":[[1,1,1],[0,0,1]],"states":["___","__c"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d"],"colTitle":"letter"}}},
+{"caption":"Reading \"a\" from \"dab\": counts_b for a becomes 1.","panels":{"counts":{"cells":[[1,1,1],[1,0,1]],"states":["___","c__"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d"],"colTitle":"letter"}}},
+{"caption":"Reading \"b\" from \"dab\": counts_b for b becomes 1.","panels":{"counts":{"cells":[[1,1,1],[1,1,1]],"states":["___","_c_"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d"],"colTitle":"letter"}}},
+{"caption":"Comparing column by column: every count matches, so the words are anagrams.","panels":{"counts":{"cells":[[1,1,1],[1,1,1]],"states":["ddd","ddd"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d"],"colTitle":"letter"}}}
+]},
+{"id":"mismatch","label":"Mismatch","steps":[
+{"caption":"Both count rows start at 0 for every letter that appears in either word: a, b, d, g.","panels":{"counts":{"cells":[[0,0,0,0],[0,0,0,0]],"states":["____","____"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d","g"],"colTitle":"letter"}}},
+{"caption":"Reading \"b\" from \"bad\": counts_a for b becomes 1.","panels":{"counts":{"cells":[[0,1,0,0],[0,0,0,0]],"states":["_c__","____"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d","g"],"colTitle":"letter"}}},
+{"caption":"Reading \"a\" from \"bad\": counts_a for a becomes 1.","panels":{"counts":{"cells":[[1,1,0,0],[0,0,0,0]],"states":["c___","____"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d","g"],"colTitle":"letter"}}},
+{"caption":"Reading \"d\" from \"bad\": counts_a for d becomes 1.","panels":{"counts":{"cells":[[1,1,1,0],[0,0,0,0]],"states":["__c_","____"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d","g"],"colTitle":"letter"}}},
+{"caption":"Reading \"b\" from \"bag\": counts_b for b becomes 1.","panels":{"counts":{"cells":[[1,1,1,0],[0,1,0,0]],"states":["____","_c__"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d","g"],"colTitle":"letter"}}},
+{"caption":"Reading \"a\" from \"bag\": counts_b for a becomes 1.","panels":{"counts":{"cells":[[1,1,1,0],[1,1,0,0]],"states":["____","c___"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d","g"],"colTitle":"letter"}}},
+{"caption":"Reading \"g\" from \"bag\": counts_b for g becomes 1.","panels":{"counts":{"cells":[[1,1,1,0],[1,1,0,1]],"states":["____","___c"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d","g"],"colTitle":"letter"}}},
+{"caption":"Comparing column by column: the counts differ at d (1 against 0), g (0 against 1). Not an anagram.","panels":{"counts":{"cells":[[1,1,1,0],[1,1,0,1]],"states":["ddmm","ddmm"],"rowHeads":["counts_a","counts_b"],"colHeads":["a","b","d","g"],"colTitle":"letter"}}}
+]},
+{"id":"single","label":"Single letter","steps":[
+{"caption":"Both count rows start at 0 for every letter that appears in either word: a.","panels":{"counts":{"cells":[[0],[0]],"states":["_","_"],"rowHeads":["counts_a","counts_b"],"colHeads":["a"],"colTitle":"letter"}}},
+{"caption":"Reading \"a\" from \"a\": counts_a for a becomes 1.","panels":{"counts":{"cells":[[1],[0]],"states":["c","_"],"rowHeads":["counts_a","counts_b"],"colHeads":["a"],"colTitle":"letter"}}},
+{"caption":"Reading \"a\" from \"a\": counts_b for a becomes 1.","panels":{"counts":{"cells":[[1],[1]],"states":["_","c"],"rowHeads":["counts_a","counts_b"],"colHeads":["a"],"colTitle":"letter"}}},
+{"caption":"Comparing column by column: every count matches, so the words are anagrams.","panels":{"counts":{"cells":[[1],[1]],"states":["d","d"],"rowHeads":["counts_a","counts_b"],"colHeads":["a"],"colTitle":"letter"}}}
+]}
+]}

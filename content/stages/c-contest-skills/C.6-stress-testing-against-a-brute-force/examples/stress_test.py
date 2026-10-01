@@ -1,47 +1,62 @@
 import random
+import sys
 
 
-def brute_force_max_sum(arr):
-    """Find the maximum sum of any contiguous subarray (brute force)."""
-    max_sum = arr[0]
-    for i in range(len(arr)):
-        current_sum = 0
-        for j in range(i, len(arr)):
-            current_sum += arr[j]
-            max_sum = max(max_sum, current_sum)
-    return max_sum
+def new_case():
+    n = random.randint(1, 3)
+    return [
+        random.randint(-3, 3)
+        for _ in range(n)
+    ]
 
 
-def fast_max_sum(arr):
-    """Find the maximum sum of any contiguous subarray (Kadane's algorithm)."""
-    max_sum = arr[0]
-    current_sum = arr[0]
-    for i in range(1, len(arr)):
-        current_sum = max(arr[i], current_sum + arr[i])
-        max_sum = max(max_sum, current_sum)
-    return max_sum
+def brute(values):
+    n = len(values)
+    return max(
+        sum(values[i:j + 1])
+        for i in range(n)
+        for j in range(i, n)
+    )
 
 
-# Set seed for reproducible random inputs
-random.seed(42)
+def fast(values):
+    n = len(values)
+    total = 0
+    prefix = [0]
+    for v in values:
+        total += v
+        prefix.append(total)
+    low = prefix[1]
+    best = values[0]
+    for j in range(n):
+        end = prefix[j + 1]
+        cand = end - low
+        best = max(best, cand)
+        low = min(low, end)
+    return best
 
-mismatches = 0
-for test_num in range(1000):
-    n = random.randint(2, 20)
-    arr = [random.randint(-100, 100) for _ in range(n)]
 
-    brute = brute_force_max_sum(arr)
-    fast = fast_max_sum(arr)
+def main() -> None:
+    raw = sys.stdin.read()
+    tokens = raw.split()
+    seed = int(tokens[0])
+    random.seed(seed)
+    failed = None
+    for trial in range(1, 1001):
+        values = new_case()
+        want = brute(values)
+        got = fast(values)
+        if want != got:
+            failed = trial
+            break
+    if failed is None:
+        print("no mismatch")
+    else:
+        print("trial", failed)
+        print("input", values)
+        print("brute", want)
+        print("fast", got)
 
-    if brute != fast:
-        mismatches += 1
-        print(f"Test {test_num}: MISMATCH")
-        print(f"  Input: {arr}")
-        print(f"  Brute force: {brute}")
-        print(f"  Fast solution: {fast}")
-        print()
 
-if mismatches == 0:
-    print("All 1000 tests passed!")
-else:
-    print(f"{mismatches} test(s) failed out of 1000.")
+if __name__ == "__main__":
+    main()

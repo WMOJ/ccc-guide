@@ -1,0 +1,22 @@
+{"schema":1,
+"kind":"frames",
+"id":"max_heap",
+"layout":"row",
+"panels":[{"id":"s","viz":"ArrayViz","title":"Stored (negated)"},{"id":"v","viz":"ArrayViz","title":"Represented values"}],
+"alt":"A max-heap built by pushing negated values into Python's min-heap. The stored panel always holds the negative of the represented panel at the same index. Popping returns the most negative stored entry, which negates back to the largest represented value, so values come out from biggest to smallest.",
+"presets":[
+{"id":"three","label":"Three items","steps":[
+{"caption":"Push 10: it is stored as -10, so the heap keeps the biggest value where a min-heap would keep the smallest.","panels":{"s":{"values":[-10],"states":"c","name":"stored"},"v":{"values":[10],"states":"c","name":"represented"}}},
+{"caption":"Push 3: it is stored as -3, so the heap keeps the biggest value where a min-heap would keep the smallest.","panels":{"s":{"values":[-10,-3],"states":"_c","name":"stored"},"v":{"values":[10,3],"states":"_c","name":"represented"}}},
+{"caption":"Push 7: it is stored as -7, so the heap keeps the biggest value where a min-heap would keep the smallest.","panels":{"s":{"values":[-10,-3,-7],"states":"__c","name":"stored"},"v":{"values":[10,3,7],"states":"__c","name":"represented"}}},
+{"caption":"The root is stored as -10, so it represents 10, the biggest value still in the heap. Negating it on the way out gives back 10.","panels":{"s":{"values":[-10,-3,-7],"states":"c__","name":"stored"},"v":{"values":[10,3,7],"states":"c__","name":"represented"}}},
+{"caption":"After the pop, the last stored value moves to the root and sifts down, keeping the biggest remaining value, 7, at the top.","panels":{"s":{"values":[-7,-3],"states":"c_","name":"stored"},"v":{"values":[7,3],"states":"c_","name":"represented"}}},
+{"caption":"The root is stored as -7, so it represents 7, the biggest value still in the heap. Negating it on the way out gives back 7.","panels":{"s":{"values":[-7,-3],"states":"c_","name":"stored"},"v":{"values":[7,3],"states":"c_","name":"represented"}}},
+{"caption":"After the pop, the last stored value moves to the root and sifts down, keeping the biggest remaining value, 3, at the top.","panels":{"s":{"values":[-3],"states":"c","name":"stored"},"v":{"values":[3],"states":"c","name":"represented"}}},
+{"caption":"3 is the only item left. Popping it empties the heap.","panels":{"s":{"values":[-3],"states":"c","name":"stored"},"v":{"values":[3],"states":"c","name":"represented"}}}
+]},
+{"id":"one","label":"One item","steps":[
+{"caption":"Push 6: it is stored as -6, so the heap keeps the biggest value where a min-heap would keep the smallest.","panels":{"s":{"values":[-6],"states":"c","name":"stored"},"v":{"values":[6],"states":"c","name":"represented"}}},
+{"caption":"6 is the only item left. Popping it empties the heap.","panels":{"s":{"values":[-6],"states":"c","name":"stored"},"v":{"values":[6],"states":"c","name":"represented"}}}
+]}
+]}

@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: segments, viz: ArrayViz, title: Runs }
+  - { id: cumulative, viz: ArrayViz, title: Cumulative length }
+alt: >-
+  Answering "what is at position p" on a run-length-compressed sequence without expanding it, by
+  building a cumulative-length array from the run lengths and walking it until a boundary passes
+  the query position.
+captions: vizrec
+presets:
+  - id: main
+    label: Middle runs
+    stdin: "3\n12 R\n3 G\n7 B\n4\n0 11 13 21\n"
+  - id: single
+    label: One run
+    stdin: "1\n10 X\n2\n0 9\n"
+  - id: boundary
+    label: On a boundary
+    stdin: "3\n12 R\n3 G\n7 B\n2\n12 15\n"
+consistency:
+  description: The answers printed match the output of examples/query_position.py on the same input.
+  example: ../examples/query_position.py
+  compare: output

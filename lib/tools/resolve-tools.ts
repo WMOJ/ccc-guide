@@ -35,8 +35,8 @@ export function resolvePypy38(): string {
   if (!candidate) {
     throw new Error(
       "PyPy 3.8 not found. Set PYPY38=/path/to/pypy3.8, or install it and put it on PATH " +
-        "(e.g. `brew install pypy3.8` or download from https://pypy.org/download.html — pick the " +
-        "3.8 line, since PyPy also ships 3.9/3.10 builds).",
+        "(e.g. `uv python install pypy3.8`, or download from https://pypy.org/download.html — pick " +
+        "the 3.8 line, since PyPy also ships 3.9/3.10 builds; see the tool-setup skill).",
     );
   }
   const version = execFileSync(candidate, ["-c", "import sys; print(sys.version)"], {

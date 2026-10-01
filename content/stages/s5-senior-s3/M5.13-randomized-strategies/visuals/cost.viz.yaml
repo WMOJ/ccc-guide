@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz }
+alt: >-
+  A table of comparison counts for finding the middle value of a list, for growing list sizes.
+  One column uses the first element as the pivot and one uses a random pivot. On sorted input
+  the first-element column grows about four times each time the size doubles, while the random
+  column roughly doubles.
+captions: vizrec
+presets:
+  - id: sorted
+    label: Sorted input
+    stdin: "sorted 1\n100 200 400 800 1600\n"
+  - id: shuffled
+    label: Shuffled input
+    stdin: "shuffled 1\n100 200 400 800 1600\n"
+  - id: equal
+    label: All equal
+    stdin: "equal 1\n100 200 400 800 1600\n"
+consistency:
+  description: The counts equal the output of examples/pivot_cost.py.
+  example: ../examples/pivot_cost.py
+  compare: output

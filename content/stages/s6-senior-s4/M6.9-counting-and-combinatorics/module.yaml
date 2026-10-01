@@ -2,11 +2,10 @@ id: M6.9
 title: Counting and combinatorics
 status: accepted
 objectives:
-  - Count instead of enumerating to solve combinatorial problems in linear time.
-  - Apply complementary counting to avoid hard cases.
-  - Use binomial coefficients and products of counts.
-  - Maintain counts with a sliding pointer for dynamic constraints.
-  - Solve circular and geometric counting problems.
+  - Count groups of equal items with a frequency table instead of listing every pair.
+  - Use binomial coefficients and products of counts to count selections and splits.
+  - Apply complementary counting to count the opposite case and subtract it from the total.
+  - Maintain a count with two pointers over a sorted array as a range constraint slides forward.
 prereqs:
   - M4.3
   - M4.15
@@ -15,7 +14,7 @@ lessons:
   - counting-problems
 practice:
   - id: ccc22s4
-    note: Count triplets in a sequence that satisfy a specific ordering condition.
+    note: Count the triples of points on a circle whose triangle contains the center.
   - id: ccc17j5
-    note: Count pairs of items whose properties combine to meet a target.
-    why: An older junior counting problem that still makes good practice for this module.
+    note: Join pieces of wood in pairs into boards, then count the boards of each length.
+    why: Pairs of pieces are counted by the length they add up to, a counting problem over groups of equal totals.

@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: month, viz: ArrayViz, title: days_in_month }
+  - { id: before, viz: ArrayViz, title: days_before }
+alt: >-
+  Building days_before from days_in_month in one pass, then answering a day-of-year query by
+  reading one entry of days_before and adding the day of the month, instead of re-summing every
+  month before it.
+captions: vizrec
+presets:
+  - id: january
+    label: January
+    stdin: "1\n1 1\n"
+  - id: mid
+    label: June
+    stdin: "1\n6 15\n"
+  - id: december
+    label: December
+    stdin: "1\n12 31\n"
+consistency:
+  description: The day-of-year answer equals the output of examples/day_of_year.py on the same input.
+  example: ../examples/day_of_year.py
+  compare: output

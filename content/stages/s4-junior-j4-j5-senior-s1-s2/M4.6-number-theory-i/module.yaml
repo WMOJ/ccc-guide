@@ -12,7 +12,8 @@ prereqs:
 lessons:
   - number-theory-i
 practice:
-  - id: ccc22j3
-    note: Count how many pairs of heights in a list share a common factor.
-  - id: ccc21j4
-    note: Determine the least common multiple of two numbers to time events.
+  - id: ccc19s2
+    note: Find two primes that add up to twice a given number.
+    why: Directly exercises primality testing by trial division.
+  - id: ccc25s2
+    note: Find one character deep inside a huge repeating decoded pattern.

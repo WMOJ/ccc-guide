@@ -1,0 +1,25 @@
+layout: row
+panels:
+  - { id: first, viz: ArrayViz, title: First 6 values }
+  - { id: second, viz: ArrayViz, title: "9 higher, same 6" }
+alt: >-
+  Tabulating the digital root for two consecutive blocks of nine numbers, one position at a
+  time. The second block always repeats the first exactly, wherever the first block starts.
+legendLabels:
+  current: Computing
+  done: Matched
+captions: vizrec
+presets:
+  - id: from-1
+    label: Start at 1
+    stdin: "1\n"
+  - id: from-19
+    label: Start at 19
+    stdin: "19\n"
+  - id: from-91
+    label: Start at 91
+    stdin: "91\n"
+consistency:
+  description: The first block of 6 values matches examples/root_cycle.py on the same input.
+  example: ../examples/root_cycle.py
+  compare: output

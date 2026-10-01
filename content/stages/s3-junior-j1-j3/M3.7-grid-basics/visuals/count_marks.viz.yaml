@@ -1,0 +1,21 @@
+layout: single
+panels:
+  - { id: grid, viz: GridViz, title: Board }
+alt: >-
+  A grid scanned in row-major order. Each cell becomes current once, and a running count goes
+  up by one every time the current cell holds a mark.
+captions: vizrec
+presets:
+  - id: scattered
+    label: Scattered
+    stdin: "3 4\n..##\n#...\n....\n"
+  - id: none
+    label: None
+    stdin: "3 4\n....\n....\n....\n"
+  - id: full
+    label: Full
+    stdin: "2 3\n###\n###\n"
+consistency:
+  description: The count the visual ends with equals the output of examples/count_marks.py on each preset.
+  example: ../examples/count_marks.py
+  compare: output

@@ -1,0 +1,5 @@
+widths [20, 20, 30, 10, 20]
+heights [20, 10, 30, 20, 20]
+columns 0 to 3 rows 0 to 2
+columns 2 to 5 rows 1 to 4
+columns 1 to 4 rows 3 to 5

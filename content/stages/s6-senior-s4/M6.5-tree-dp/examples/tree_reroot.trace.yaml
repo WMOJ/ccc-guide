@@ -1,0 +1,21 @@
+example: tree_reroot.py
+alt: >-
+  The program reads a tree, roots it at node 0 with a BFS, then makes two passes over the BFS
+  order: backward to fill size and down for every node, then forward to fill ans, the sum of
+  distances from each node to all the others.
+presets:
+  - id: main
+    label: Four nodes
+    stdin: "4\n0 1\n1 2\n1 3\n"
+  - id: chain
+    label: Chain
+    stdin: "4\n0 1\n1 2\n2 3\n"
+  - id: single
+    label: One node
+    stdin: "1\n"
+skip:
+  - { line: 12, keep: 1, to: 19, label: "Reading the edges into the adjacency list adj is skipped." }
+  - { line: 23, keep: 1, to: 30, label: "The rest of the BFS from node 0 fills parent and order, the same rooting as in the trees lesson." }
+notes:
+  "37": "`down[p]` gains `down[u]` plus one for each of the `s` nodes in `u`'s subtree: each is one edge farther from `p`."
+  "45": "`ans[c]` is `ans[p]` with the subtree's `s` nodes one edge closer and the other `far` nodes one edge farther."

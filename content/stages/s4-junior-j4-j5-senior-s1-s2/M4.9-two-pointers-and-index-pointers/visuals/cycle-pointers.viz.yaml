@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: nxt, viz: ArrayViz, title: "nxt array" }
+alt: >-
+  An array of next-indices with a slow pointer moving one step at a time and a fast pointer moving
+  two steps at a time. If fast ever lands on the same index as slow, the sequence contains a cycle,
+  and walking forward from that meeting point back to itself gives the cycle's length. If fast runs
+  off the end of the sequence first, there is no cycle.
+captions: vizrec
+presets:
+  - id: cycle
+    label: Has a cycle
+    stdin: "4 1 2 3 1 0\n"
+  - id: terminal
+    label: No cycle
+    stdin: "4 1 2 3 -1 0\n"
+  - id: tiny-loop
+    label: 1-node loop
+    stdin: "1 0 0\n"
+consistency:
+  description: The printed cycle length (or "no cycle") equals the output of examples/cycle_pointers.py on the same sequence and start.
+  example: ../examples/cycle_pointers.py
+  compare: output

@@ -1,0 +1,28 @@
+layout: row
+panels:
+  - { id: t, viz: TreeViz, title: "Sum tree (#i = index)" }
+  - { id: v, viz: TableViz, title: Loop state }
+alt: >-
+  A range-sum query on a six-leaf tree. Two indices, lo and hi, start at the two ends of the
+  range in the leaf row. At each level, an odd lo or an odd hi means a node just inside the range
+  is taken, then both indices halve to move up a level. The three presets query a middle range,
+  the whole array, and a single element.
+captions: vizrec
+legendLabels:
+  current: lo node
+  compare: hi node, not in range
+  done: Node taken
+presets:
+  - id: middle
+    label: Middle range
+    stdin: "6\n5 3 8 1 4 7\n1\n1 5\n"
+  - id: whole
+    label: Whole array
+    stdin: "6\n5 3 8 1 4 7\n1\n0 6\n"
+  - id: single
+    label: One element
+    stdin: "6\n5 3 8 1 4 7\n1\n3 4\n"
+consistency:
+  description: The answer at the end of each preset equals the output of examples/tree_query.py.
+  example: ../examples/tree_query.py
+  compare: output

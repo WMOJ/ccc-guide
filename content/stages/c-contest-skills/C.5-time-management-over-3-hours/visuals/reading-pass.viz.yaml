@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Statements read }
+alt: >-
+  A table with one row per problem and columns for the brute force's growth and the bound on N in
+  each of three subtasks. Each bound is raised to the brute force's power and compared with a budget
+  of ten million operations, then marked as within budget or over, row by row.
+captions: vizrec
+legendLabels:
+  done: Within budget
+  invalid: Over budget
+presets:
+  - id: mixed
+    label: Mixed
+    stdin: "4\n2 100 5000 200000\n1 1000 50000 500000\n3 50 200 1000\n2 300 2000 100000\n"
+  - id: heavy
+    label: None reached
+    stdin: "3\n3 500 2000 10000\n2 10000 50000 200000\n3 300 1000 5000\n"
+consistency:
+  description: The per-problem lines equal the output of examples/reading_pass.py on each preset's input.
+  example: ../examples/reading_pass.py
+  compare: output

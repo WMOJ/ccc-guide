@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Sparse table of minimums }
+alt: >-
+  A table with one row per array position i and one column per level k. Column sp[0] starts as the
+  array. Each cell of a later column is filled from two cells of the column to its left, the two
+  blocks of half the length that together make its block, and holds their minimum. A dash marks a
+  start where a block that long would run past the end.
+captions: vizrec
+presets:
+  - id: main
+    label: Eight values
+    stdin: "8\n5 3 7 4 6 2 8 3\n"
+  - id: seven
+    label: Seven values
+    stdin: "7\n5 3 7 1 4 2 6\n"
+  - id: pair
+    label: Two values
+    stdin: "2\n4 9\n"
+consistency:
+  description: The finished table equals the rows sp[0] to sp[LOG - 1] that examples/sparse_build.py prints.
+  example: ../examples/sparse_build.py
+  compare: output

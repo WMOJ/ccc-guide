@@ -2,11 +2,11 @@ id: M7.12
 title: Python constant-factor engineering at scale
 status: accepted
 objectives:
-  - Identify performance bottlenecks in Python programs that run on PyPy.
-  - Use flat 1D lists and parallel lists instead of tuples and dictionaries.
-  - Encode integers into single values to reduce memory and cache misses.
-  - Read input in one call, join output, and measure on maximum-size test cases.
-  - Know when further optimisation returns diminishing marks and when to stop.
+  - Estimate whether a plan's operation count fits the budget before trimming constant factors.
+  - Store a grid in one flat list and move between cells with index arithmetic.
+  - Replace pairs with parallel lists or a single packed integer key.
+  - Bind repeated lookups to local names and avoid slices and copies inside loops.
+  - Recognize when a constant-factor change cannot rescue a plan that does too much work.
 prereqs:
   - M2.9
   - M3.10
@@ -15,8 +15,7 @@ lessons:
   - constant-factor-engineering
 practice:
   - id: ccc19s4
-    note: Find the minimum cost to process a stream of updates to a flat array.
-    why: An older large-input problem, good for practicing fast I/O and tight loops.
-  - id: ccc15s5
-    note: Compute the shortest meeting time for scheduled intervals.
-    why: An older problem that builds timing-critical fast-I/O and loop skills.
+    note: Split a row of attractions into days and score each day by its best attraction.
+    why: The input is one long row of values, which suits the flat-list habits and tight loops in this lesson.
+  - id: ccc25s5
+    note: Report the earliest finishing time of a homework list as assignments are added and removed.

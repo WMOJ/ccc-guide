@@ -21,7 +21,6 @@ one-letter codes of lib/viz/schema.ts.
 
 import atexit
 import json
-import os
 import sys
 
 STATE_CODES = {
@@ -319,11 +318,12 @@ def plot(x, y, series, markers=None, vline=None, band=None):
 class Recorder:
     """Collects the steps of one preset run and prints them as JSON when the script ends.
 
-    A `.viz.py` must not print anything itself: standard output carries the recording.
+    A `.viz.py` must not print anything itself: standard output carries the recording. It sees
+    only its preset's stdin, never the preset id, so a visual cannot drift from the example that
+    reads the same input: vary a preset through its stdin alone.
     """
 
     def __init__(self):
-        self.preset = os.environ.get("VIZREC_PRESET", "")
         self._stdout = sys.stdout
         self.stdin = sys.stdin.read()
         self._lines = self.stdin.split("\n")

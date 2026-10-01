@@ -1,0 +1,33 @@
+{"schema":1,
+"kind":"frames",
+"id":"ladder-vs-table",
+"layout":"row",
+"panels":[{"id":"ladder","viz":"ArrayViz","title":"if/elif chain"},{"id":"table","viz":"ArrayViz","title":"Lookup table"}],
+"alt":"Comparing an if/elif chain against a lookup table answering the same query, the days in a given month. The chain checks one month at a time until it matches; the table jumps straight to the matching month's index in one step, no matter which month is asked.",
+"presets":[
+{"id":"january","label":"Best case","steps":[
+{"caption":"elif month == 1 is true: the chain took 1 comparison to get here. The table needed one index, days_in_month[1], to reach the same answer.","panels":{"ladder":{"values":[1],"states":"m","indexBase":1},"table":{"values":[31],"states":"c","indexBase":1}}}
+]},
+{"id":"june","label":"Middle","steps":[
+{"caption":"elif month == 1 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[1],"states":"c","indexBase":1},"table":{"values":[31],"states":"_","indexBase":1}}},
+{"caption":"elif month == 2 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[1,2],"states":"dc","indexBase":1},"table":{"values":[31,28],"states":"__","indexBase":1}}},
+{"caption":"elif month == 3 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[1,2,3],"states":"ddc","indexBase":1},"table":{"values":[31,28,31],"states":"___","indexBase":1}}},
+{"caption":"elif month == 4 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[1,2,3,4],"states":"dddc","indexBase":1},"table":{"values":[31,28,31,30],"states":"____","indexBase":1}}},
+{"caption":"elif month == 5 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[1,2,3,4,5],"states":"ddddc","indexBase":1},"table":{"values":[31,28,31,30,31],"states":"_____","indexBase":1}}},
+{"caption":"elif month == 6 is true: the chain took 6 comparisons to get here. The table needed one index, days_in_month[6], to reach the same answer.","panels":{"ladder":{"values":[1,2,3,4,5,6],"states":"dddddm","indexBase":1},"table":{"values":[31,28,31,30,31,30],"states":"_____c","indexBase":1}}}
+]},
+{"id":"december","label":"Worst case","steps":[
+{"caption":"elif month == 1 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[1],"states":"c","indexBase":1},"table":{"values":[31],"states":"_","indexBase":1}}},
+{"caption":"elif month == 2 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[1,2],"states":"dc","indexBase":1},"table":{"values":[31,28],"states":"__","indexBase":1}}},
+{"caption":"elif month == 3 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[1,2,3],"states":"ddc","indexBase":1},"table":{"values":[31,28,31],"states":"___","indexBase":1}}},
+{"caption":"elif month == 4 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[1,2,3,4],"states":"dddc","indexBase":1},"table":{"values":[31,28,31,30],"states":"____","indexBase":1}}},
+{"caption":"elif month == 5 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[1,2,3,4,5],"states":"ddddc","indexBase":1},"table":{"values":[31,28,31,30,31],"states":"_____","indexBase":1}}},
+{"caption":"elif month == 6 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[1,2,3,4,5,6],"states":"dddddc","indexBase":1},"table":{"values":[31,28,31,30,31,30],"states":"______","indexBase":1}}},
+{"caption":"elif month == 7 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[2,3,4,5,6,7],"states":"dddddc","indexBase":2},"table":{"values":[28,31,30,31,30,31],"states":"______","indexBase":2}}},
+{"caption":"elif month == 8 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[3,4,5,6,7,8],"states":"dddddc","indexBase":3},"table":{"values":[31,30,31,30,31,31],"states":"______","indexBase":3}}},
+{"caption":"elif month == 9 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[4,5,6,7,8,9],"states":"dddddc","indexBase":4},"table":{"values":[30,31,30,31,31,30],"states":"______","indexBase":4}}},
+{"caption":"elif month == 10 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[5,6,7,8,9,10],"states":"dddddc","indexBase":5},"table":{"values":[31,30,31,31,30,31],"states":"______","indexBase":5}}},
+{"caption":"elif month == 11 is false, so the chain moves to the next elif.","panels":{"ladder":{"values":[6,7,8,9,10,11],"states":"dddddc","indexBase":6},"table":{"values":[30,31,31,30,31,30],"states":"______","indexBase":6}}},
+{"caption":"elif month == 12 is true: the chain took 12 comparisons to get here. The table needed one index, days_in_month[12], to reach the same answer.","panels":{"ladder":{"values":[7,8,9,10,11,12],"states":"dddddm","indexBase":7},"table":{"values":[31,31,30,31,30,31],"states":"_____c","indexBase":7}}}
+]}
+]}

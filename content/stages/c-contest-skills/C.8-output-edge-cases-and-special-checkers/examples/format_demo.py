@@ -1,17 +1,16 @@
-"""Four common output shapes, each written the way a judge expects it."""
+import sys
 
-# A single integer.
-n = 42
-print(n)
 
-# Several integers on one line, one space between them, no trailing space.
-numbers = [1, 2, 3, 4, 5]
-print(" ".join(map(str, numbers)))
+def main() -> None:
+    raw = sys.stdin.read()
+    tokens = raw.split()
+    built = ""
+    for t in tokens:
+        built += t + " "
+    joined = " ".join(tokens)
+    print(repr(built))
+    print(repr(joined))
 
-# A float rounded to a fixed number of decimal places, not Python's default.
-value = 3.14159
-print(f"{value:.2f}")
 
-# One item per line, with no blank line at the end.
-items = ["apple", "banana", "cherry"]
-print("\n".join(items))
+if __name__ == "__main__":
+    main()

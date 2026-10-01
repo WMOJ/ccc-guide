@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - id: seen
+    viz: StructViz
+    title: seen
+  - id: unique
+    viz: StructViz
+    title: unique
+alt: >-
+  The set seen fills with 3 and 5, and a second add of 3 is rejected because a set never stores a
+  duplicate. The set unique then builds the same way from a line of numbers read from input, one
+  duplicate token at a time being rejected, ending sorted.
+captions: vizrec
+presets:
+  - id: main
+    label: Two repeated tokens
+    stdin: "2 2 3 4 3\n"
+  - id: all_same
+    label: Every token equal
+    stdin: "6 6 6 6\n"
+consistency:
+  description: "rec.output() equals set_basics.py's real stdout for the same stdin."
+  example: ../examples/set_basics.py
+  compare: output

@@ -1,0 +1,24 @@
+layout: row
+panels:
+  - { id: parts, viz: TableViz, title: Cost parts }
+  - { id: line, viz: LineViz, title: Tiers }
+alt: >-
+  The shipping cost built from two parts, weight times 2 and distance divided by 10 rounded
+  down, then placed on a number line whose three bands are the Standard, Priority and Express
+  tiers. The band holding the cost is the label the program prints, matching
+  examples/shipping_cost.py.
+captions: vizrec
+presets:
+  - id: typical
+    label: Typical
+    stdin: "4\n70\n"
+  - id: on-50
+    label: Cost 50
+    stdin: "20\n100\n"
+  - id: over-50
+    label: Over 50
+    stdin: "26\n5\n"
+consistency:
+  description: The tier in the last step equals the output of examples/shipping_cost.py.
+  example: ../examples/shipping_cost.py
+  compare: output

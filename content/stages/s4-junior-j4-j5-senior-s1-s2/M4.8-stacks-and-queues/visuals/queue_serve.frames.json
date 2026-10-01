@@ -1,0 +1,19 @@
+{"schema":1,
+"kind":"frames",
+"id":"queue_serve",
+"layout":"row",
+"panels":[{"id":"queue","viz":"StructViz","title":"Line (front first)"},{"id":"served","viz":"ArrayViz"}],
+"alt":"Serving orders one at a time from the front of a line, in the same order they joined, until none remain.",
+"presets":[
+{"id":"main","label":"Four orders","steps":[
+{"caption":"4 orders wait in line with 'pizza' at the front. Nothing has been served yet.","panels":{"queue":{"kind":"queue","items":[{"v":"pizza"},{"v":"burger"},{"v":"salad"},{"v":"pasta"}]},"served":{"values":["-"],"states":"_","name":"Served"}}},
+{"caption":"'pizza' was at the front and is served next. 3 orders remain and 'burger' is now at the front.","panels":{"queue":{"kind":"queue","items":[{"v":"burger"},{"v":"salad"},{"v":"pasta"}]},"served":{"values":["pizza"],"states":"d","name":"Served"}}},
+{"caption":"'burger' was at the front and is served next. 2 orders remain and 'salad' is now at the front.","panels":{"queue":{"kind":"queue","items":[{"v":"salad"},{"v":"pasta"}]},"served":{"values":["pizza","burger"],"states":"dd","name":"Served"}}},
+{"caption":"'salad' was at the front and is served next. 1 order remains and 'pasta' is now at the front.","panels":{"queue":{"kind":"queue","items":[{"v":"pasta"}]},"served":{"values":["pizza","burger","salad"],"states":"ddd","name":"Served"}}},
+{"caption":"'pasta' was at the front and is served next. The line is empty.","panels":{"queue":{"kind":"queue","items":[{"v":"empty","s":"_"}]},"served":{"values":["pizza","burger","salad","pasta"],"states":"dddd","name":"Served"}}}
+]},
+{"id":"one","label":"One order","steps":[
+{"caption":"1 order waits in line with 'coffee' at the front. Nothing has been served yet.","panels":{"queue":{"kind":"queue","items":[{"v":"coffee"}]},"served":{"values":["-"],"states":"_","name":"Served"}}},
+{"caption":"'coffee' was at the front and is served next. The line is empty.","panels":{"queue":{"kind":"queue","items":[{"v":"empty","s":"_"}]},"served":{"values":["coffee"],"states":"d","name":"Served"}}}
+]}
+]}

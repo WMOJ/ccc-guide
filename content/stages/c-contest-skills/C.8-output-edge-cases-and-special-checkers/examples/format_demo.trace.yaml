@@ -1,0 +1,19 @@
+example: format_demo.py
+alt: >-
+  The program reads the numbers as tokens and builds one line two ways. A loop that adds a space
+  after every token leaves a trailing space, and the variable built shows it inside its quotes.
+  Joining the tokens with a space puts separators only between them, so joined has none at the end.
+presets:
+  - id: three
+    label: Three values
+    stdin: "3 1 4\n"
+  - id: one
+    label: One value
+    stdin: "7\n"
+  - id: none
+    label: No values
+    stdin: ""
+notes:
+  "9": "The space after each token is added by the loop, so `built` ends with a space. Look inside the quotes."
+  "10": "`join` puts a space only between tokens, so `joined` ends at the last token."
+  "11": "`repr` prints the quotes, so the trailing space inside `built` is visible."

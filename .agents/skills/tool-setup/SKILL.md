@@ -20,7 +20,8 @@ npx playwright install chromium webkit
 ```
 
 This downloads into Playwright's default user cache (`~/Library/Caches/ms-playwright` on macOS) —
-do not set `PLAYWRIGHT_BROWSERS_PATH`. Then confirm the E2E/visual/a11y suites launch headlessly:
+do not set `PLAYWRIGHT_BROWSERS_PATH`. If your shell already exports it (or `RUFF_CACHE_DIR`)
+pointing somewhere else, run the gates with `env -u PLAYWRIGHT_BROWSERS_PATH -u RUFF_CACHE_DIR`. Then confirm the E2E/visual/a11y suites launch headlessly:
 
 ```bash
 npm run test:e2e
@@ -38,7 +39,9 @@ output.
 
 Install, a normal user-level install, whichever is easiest on the machine:
 
-- macOS with Homebrew, if a 3.8 formula is available: `brew install pypy3.8`.
+- With `uv` (works on macOS arm64, where Homebrew has no 3.8 formula):
+  `uv python install pypy-3.8.16-macos-aarch64-none` (pick the matching platform from
+  `uv python list --all-versions | grep pypy-3.8`). uv links it as `~/.local/bin/pypy3.8`.
 - Otherwise, the official tarball for the 3.8 line from https://pypy.org/download.html, unpacked
   anywhere under the user's home (for example `~/.local/pypy3.8/`).
 
@@ -47,12 +50,12 @@ Then either put its `bin/` on `PATH` as `pypy3.8`, or export `PYPY38=/path/to/py
 
 ## ruff and vermin
 
-Pinned to **ruff 0.16.8** and **vermin 1.8.0**. Install via pipx (isolated, recommended) or
-`pip install --user`:
+Pinned to **ruff 0.16.8** and **vermin 1.8.0**. Install isolated, via `uv tool` or pipx (both
+put the executables in `~/.local/bin`), or `pip install --user`:
 
 ```bash
-pipx install ruff==0.16.8
-pipx install vermin==1.8.0
+uv tool install ruff==0.16.8 && uv tool install vermin==1.8.0
+# or: pipx install ruff==0.16.8 && pipx install vermin==1.8.0
 # or: pip install --user ruff==0.16.8 vermin==1.8.0
 ```
 

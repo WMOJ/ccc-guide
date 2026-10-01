@@ -1,0 +1,40 @@
+{"schema":1,
+"kind":"frames",
+"id":"vowel_scan",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Words"}],
+"alt":"A table with one row per word, filled in as the loop runs. Each row shows the word, its first letter, and whether that letter is a vowel, while a counter grows for every yes, matching examples/vowel_count.py.",
+"presets":[
+{"id":"typical","label":"Mixed","steps":[
+{"caption":"Count the words whose first letter is a vowel. The loop reads 4 words, and the test looks only at word[0].","panels":{"table":{"cells":[["apple","?","?"],["banana","?","?"],["orange","?","?"],["grape","?","?"]],"states":["___","___","___","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"Word 1 is apple. Its first letter, word[0], is a.","panels":{"table":{"cells":[["apple","a","?"],["banana","?","?"],["orange","?","?"],["grape","?","?"]],"states":["_c_","___","___","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"a is in \"aeiouAEIOU\", so vowel_count becomes 1.","panels":{"table":{"cells":[["apple","a","yes"],["banana","?","?"],["orange","?","?"],["grape","?","?"]],"states":["__d","___","___","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"Word 2 is banana. Its first letter, word[0], is b.","panels":{"table":{"cells":[["apple","a","yes"],["banana","b","?"],["orange","?","?"],["grape","?","?"]],"states":["__d","_c_","___","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"b is not in \"aeiouAEIOU\", so vowel_count stays 1.","panels":{"table":{"cells":[["apple","a","yes"],["banana","b","no"],["orange","?","?"],["grape","?","?"]],"states":["__d","__x","___","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"Word 3 is orange. Its first letter, word[0], is o.","panels":{"table":{"cells":[["apple","a","yes"],["banana","b","no"],["orange","o","?"],["grape","?","?"]],"states":["__d","__x","_c_","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"o is in \"aeiouAEIOU\", so vowel_count becomes 2.","panels":{"table":{"cells":[["apple","a","yes"],["banana","b","no"],["orange","o","yes"],["grape","?","?"]],"states":["__d","__x","__d","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"Word 4 is grape. Its first letter, word[0], is g.","panels":{"table":{"cells":[["apple","a","yes"],["banana","b","no"],["orange","o","yes"],["grape","g","?"]],"states":["__d","__x","__d","_c_"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"g is not in \"aeiouAEIOU\", so vowel_count stays 2.","panels":{"table":{"cells":[["apple","a","yes"],["banana","b","no"],["orange","o","yes"],["grape","g","no"]],"states":["__d","__x","__d","__x"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"The loop is over. vowel_count is 2, the number printed.","panels":{"table":{"cells":[["apple","a","yes"],["banana","b","no"],["orange","o","yes"],["grape","g","no"]],"states":["__d","__x","__d","__x"],"colHeads":["word","word[0]","vowel?"]}}}
+]},
+{"id":"none","label":"No vowels","steps":[
+{"caption":"Count the words whose first letter is a vowel. The loop reads 3 words, and the test looks only at word[0].","panels":{"table":{"cells":[["fig","?","?"],["kiwi","?","?"],["plum","?","?"]],"states":["___","___","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"Word 1 is fig. Its first letter, word[0], is f.","panels":{"table":{"cells":[["fig","f","?"],["kiwi","?","?"],["plum","?","?"]],"states":["_c_","___","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"f is not in \"aeiouAEIOU\", so vowel_count stays 0.","panels":{"table":{"cells":[["fig","f","no"],["kiwi","?","?"],["plum","?","?"]],"states":["__x","___","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"Word 2 is kiwi. Its first letter, word[0], is k.","panels":{"table":{"cells":[["fig","f","no"],["kiwi","k","?"],["plum","?","?"]],"states":["__x","_c_","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"k is not in \"aeiouAEIOU\", so vowel_count stays 0.","panels":{"table":{"cells":[["fig","f","no"],["kiwi","k","no"],["plum","?","?"]],"states":["__x","__x","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"Word 3 is plum. Its first letter, word[0], is p.","panels":{"table":{"cells":[["fig","f","no"],["kiwi","k","no"],["plum","p","?"]],"states":["__x","__x","_c_"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"p is not in \"aeiouAEIOU\", so vowel_count stays 0.","panels":{"table":{"cells":[["fig","f","no"],["kiwi","k","no"],["plum","p","no"]],"states":["__x","__x","__x"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"The loop is over. vowel_count is 0, the number printed.","panels":{"table":{"cells":[["fig","f","no"],["kiwi","k","no"],["plum","p","no"]],"states":["__x","__x","__x"],"colHeads":["word","word[0]","vowel?"]}}}
+]},
+{"id":"capital","label":"Capitals","steps":[
+{"caption":"Count the words whose first letter is a vowel. The loop reads 3 words, and the test looks only at word[0].","panels":{"table":{"cells":[["Egg","?","?"],["owl","?","?"],["Tree","?","?"]],"states":["___","___","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"Word 1 is Egg. Its first letter, word[0], is E.","panels":{"table":{"cells":[["Egg","E","?"],["owl","?","?"],["Tree","?","?"]],"states":["_c_","___","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"E is in \"aeiouAEIOU\", so vowel_count becomes 1.","panels":{"table":{"cells":[["Egg","E","yes"],["owl","?","?"],["Tree","?","?"]],"states":["__d","___","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"Word 2 is owl. Its first letter, word[0], is o.","panels":{"table":{"cells":[["Egg","E","yes"],["owl","o","?"],["Tree","?","?"]],"states":["__d","_c_","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"o is in \"aeiouAEIOU\", so vowel_count becomes 2.","panels":{"table":{"cells":[["Egg","E","yes"],["owl","o","yes"],["Tree","?","?"]],"states":["__d","__d","___"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"Word 3 is Tree. Its first letter, word[0], is T.","panels":{"table":{"cells":[["Egg","E","yes"],["owl","o","yes"],["Tree","T","?"]],"states":["__d","__d","_c_"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"T is not in \"aeiouAEIOU\", so vowel_count stays 2.","panels":{"table":{"cells":[["Egg","E","yes"],["owl","o","yes"],["Tree","T","no"]],"states":["__d","__d","__x"],"colHeads":["word","word[0]","vowel?"]}}},
+{"caption":"The loop is over. vowel_count is 2, the number printed.","panels":{"table":{"cells":[["Egg","E","yes"],["owl","o","yes"],["Tree","T","no"]],"states":["__d","__d","__x"],"colHeads":["word","word[0]","vowel?"]}}}
+]}
+]}

@@ -1,0 +1,23 @@
+{"schema":1,
+"kind":"frames",
+"id":"blink_sync",
+"layout":"single",
+"panels":[{"id":"line","viz":"LineViz","title":"Blink schedule"}],
+"alt":"A timeline marking when light A blinks, when light B blinks, and when both blink together, with a query time and the next shared blink it lands on.",
+"presets":[
+{"id":"main","label":"Typical","steps":[
+{"caption":"Light A blinks every 4s (the A marks), light B every 6s (the B marks). Both blink together every lcm(4, 6) = 12s (the both marks).","panels":{"line":{"min":0,"max":12,"intervals":[{"a":4,"b":4,"label":"A","s":"q","row":0},{"a":8,"b":8,"label":"A","s":"q","row":0},{"a":12,"b":12,"label":"A","s":"q","row":0},{"a":6,"b":6,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"both","s":"d","row":2}]}}},
+{"caption":"The query asks for the first shared blink at or after second 5.","panels":{"line":{"min":0,"max":12,"points":[{"x":5,"label":"t","s":"m"}],"intervals":[{"a":4,"b":4,"label":"A","s":"q","row":0},{"a":8,"b":8,"label":"A","s":"q","row":0},{"a":12,"b":12,"label":"A","s":"q","row":0},{"a":6,"b":6,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"both","s":"d","row":2}]}}},
+{"caption":"5 % 12 = 5, so the next shared blink is 5 + (12 - 5) = 12.","panels":{"line":{"min":0,"max":12,"points":[{"x":5,"label":"t","s":"m"},{"x":12,"label":"12","s":"p"}],"intervals":[{"a":4,"b":4,"label":"A","s":"q","row":0},{"a":8,"b":8,"label":"A","s":"q","row":0},{"a":12,"b":12,"label":"A","s":"q","row":0},{"a":6,"b":6,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"both","s":"d","row":2}]}}}
+]},
+{"id":"synced","label":"Synced","steps":[
+{"caption":"Light A blinks every 4s (the A marks), light B every 6s (the B marks). Both blink together every lcm(4, 6) = 12s (the both marks).","panels":{"line":{"min":0,"max":12,"intervals":[{"a":4,"b":4,"label":"A","s":"q","row":0},{"a":8,"b":8,"label":"A","s":"q","row":0},{"a":12,"b":12,"label":"A","s":"q","row":0},{"a":6,"b":6,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"both","s":"d","row":2}]}}},
+{"caption":"The query asks for the first shared blink at or after second 12.","panels":{"line":{"min":0,"max":12,"points":[{"x":12,"label":"t","s":"m"}],"intervals":[{"a":4,"b":4,"label":"A","s":"q","row":0},{"a":8,"b":8,"label":"A","s":"q","row":0},{"a":12,"b":12,"label":"A","s":"q","row":0},{"a":6,"b":6,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"both","s":"d","row":2}]}}},
+{"caption":"12 % 12 = 0: second 12 is already a shared blink.","panels":{"line":{"min":0,"max":12,"points":[{"x":12,"label":"t=12","s":"p"}],"intervals":[{"a":4,"b":4,"label":"A","s":"q","row":0},{"a":8,"b":8,"label":"A","s":"q","row":0},{"a":12,"b":12,"label":"A","s":"q","row":0},{"a":6,"b":6,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"both","s":"d","row":2}]}}}
+]},
+{"id":"coprime","label":"Coprime","steps":[
+{"caption":"Light A blinks every 3s (the A marks), light B every 4s (the B marks). Both blink together every lcm(3, 4) = 12s (the both marks).","panels":{"line":{"min":0,"max":12,"intervals":[{"a":3,"b":3,"label":"A","s":"q","row":0},{"a":6,"b":6,"label":"A","s":"q","row":0},{"a":9,"b":9,"label":"A","s":"q","row":0},{"a":12,"b":12,"label":"A","s":"q","row":0},{"a":4,"b":4,"label":"B","s":"q","row":1},{"a":8,"b":8,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"both","s":"d","row":2}]}}},
+{"caption":"The query asks for the first shared blink at or after second 7.","panels":{"line":{"min":0,"max":12,"points":[{"x":7,"label":"t","s":"m"}],"intervals":[{"a":3,"b":3,"label":"A","s":"q","row":0},{"a":6,"b":6,"label":"A","s":"q","row":0},{"a":9,"b":9,"label":"A","s":"q","row":0},{"a":12,"b":12,"label":"A","s":"q","row":0},{"a":4,"b":4,"label":"B","s":"q","row":1},{"a":8,"b":8,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"both","s":"d","row":2}]}}},
+{"caption":"7 % 12 = 7, so the next shared blink is 7 + (12 - 7) = 12.","panels":{"line":{"min":0,"max":12,"points":[{"x":7,"label":"t","s":"m"},{"x":12,"label":"12","s":"p"}],"intervals":[{"a":3,"b":3,"label":"A","s":"q","row":0},{"a":6,"b":6,"label":"A","s":"q","row":0},{"a":9,"b":9,"label":"A","s":"q","row":0},{"a":12,"b":12,"label":"A","s":"q","row":0},{"a":4,"b":4,"label":"B","s":"q","row":1},{"a":8,"b":8,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"B","s":"q","row":1},{"a":12,"b":12,"label":"both","s":"d","row":2}]}}}
+]}
+]}

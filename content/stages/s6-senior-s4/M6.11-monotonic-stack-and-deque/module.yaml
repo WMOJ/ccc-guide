@@ -4,8 +4,8 @@ status: accepted
 objectives:
   - Use a monotonic stack to find the next greater element in linear time.
   - Track the maximum in a sliding window with a monotonic deque.
-  - Reuse the same sliding-window deque to answer a feasibility check over a shrinking range.
-  - Solve classic window-maximum problems in linear time.
+  - Use a monotonic stack to find how far each bar can stretch, sizing the largest rectangle in a histogram.
+  - Explain why the total work is linear, because each index is pushed once and popped at most once.
 prereqs:
   - M4.8
   - M5.3
@@ -13,7 +13,7 @@ lessons:
   - monotonic-structures
 practice:
   - id: ccc19s4
-    note: Plan a multi-day itinerary that visits the most cities under a travel budget.
-    why: An older windowed-search problem that still makes good practice for this module.
+    note: Split a row of attractions into days and score each day by its best attraction.
+    why: Each day's score is a maximum over a block of consecutive attractions, the question the deque answers.
   - id: ccc26s4
-    note: Track which minecarts can still reach the end of the line as tracks change.
+    note: Sort a row of minecarts with the help of a last-in, first-out side track.

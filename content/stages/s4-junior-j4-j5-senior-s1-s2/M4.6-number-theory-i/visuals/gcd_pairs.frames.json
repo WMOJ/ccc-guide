@@ -1,0 +1,27 @@
+{"schema":1,
+"kind":"frames",
+"id":"gcd_pairs",
+"layout":"single",
+"panels":[{"id":"table","viz":"TableViz","title":"Shrinking pairs"}],
+"alt":"Euclid's algorithm reduces a pair of numbers to a smaller pair with the same gcd, step by step, until the second number reaches 0; the first number left is the gcd.",
+"presets":[
+{"id":"main","label":"Typical","steps":[
+{"caption":"Start with the pair (48, 18). The numbers that divide both are 1 2 3 6; the largest of them is the gcd.","panels":{"table":{"cells":[[48,18,"1 2 3 6"]],"states":["ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}},
+{"caption":"48 % 18 = 12, so (18, 12) replaces (48, 18). A number dividing both 48 and 18 also divides 12, and the reverse holds, so the shared list is still 1 2 3 6.","panels":{"table":{"cells":[[48,18,"1 2 3 6"],[18,12,"1 2 3 6"]],"states":["ddd","ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}},
+{"caption":"18 % 12 = 6, so (12, 6) replaces (18, 12). A number dividing both 18 and 12 also divides 6, and the reverse holds, so the shared list is still 1 2 3 6.","panels":{"table":{"cells":[[48,18,"1 2 3 6"],[18,12,"1 2 3 6"],[12,6,"1 2 3 6"]],"states":["ddd","ddd","ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}},
+{"caption":"12 % 6 = 0, so (6, 0) replaces (12, 6). Every number divides 0, so the shared divisors are just the divisors of 6: 1 2 3 6.","panels":{"table":{"cells":[[48,18,"1 2 3 6"],[18,12,"1 2 3 6"],[12,6,"1 2 3 6"],[6,0,"1 2 3 6"]],"states":["ddd","ddd","ddd","ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}},
+{"caption":"The second number is 0, so the largest shared divisor is the first number: gcd = 6. The lcm follows: 48 * 18 // 6 = 144.","panels":{"table":{"cells":[[48,18,"1 2 3 6"],[18,12,"1 2 3 6"],[12,6,"1 2 3 6"],[6,0,"1 2 3 6"]],"states":["ddd","ddd","ddd","ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}}
+]},
+{"id":"divides","label":"One divides","steps":[
+{"caption":"Start with the pair (18, 6). The numbers that divide both are 1 2 3 6; the largest of them is the gcd.","panels":{"table":{"cells":[[18,6,"1 2 3 6"]],"states":["ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}},
+{"caption":"18 % 6 = 0, so (6, 0) replaces (18, 6). Every number divides 0, so the shared divisors are just the divisors of 6: 1 2 3 6.","panels":{"table":{"cells":[[18,6,"1 2 3 6"],[6,0,"1 2 3 6"]],"states":["ddd","ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}},
+{"caption":"The second number is 0, so the largest shared divisor is the first number: gcd = 6. The lcm follows: 18 * 6 // 6 = 18.","panels":{"table":{"cells":[[18,6,"1 2 3 6"],[6,0,"1 2 3 6"]],"states":["ddd","ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}}
+]},
+{"id":"coprime","label":"Coprime","steps":[
+{"caption":"Start with the pair (17, 13). The numbers that divide both are 1; the largest of them is the gcd.","panels":{"table":{"cells":[[17,13,"1"]],"states":["ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}},
+{"caption":"17 % 13 = 4, so (13, 4) replaces (17, 13). A number dividing both 17 and 13 also divides 4, and the reverse holds, so the shared list is still 1.","panels":{"table":{"cells":[[17,13,"1"],[13,4,"1"]],"states":["ddd","ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}},
+{"caption":"13 % 4 = 1, so (4, 1) replaces (13, 4). A number dividing both 13 and 4 also divides 1, and the reverse holds, so the shared list is still 1.","panels":{"table":{"cells":[[17,13,"1"],[13,4,"1"],[4,1,"1"]],"states":["ddd","ddd","ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}},
+{"caption":"4 % 1 = 0, so (1, 0) replaces (4, 1). Every number divides 0, so the shared divisors are just the divisors of 1: 1.","panels":{"table":{"cells":[[17,13,"1"],[13,4,"1"],[4,1,"1"],[1,0,"1"]],"states":["ddd","ddd","ddd","ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}},
+{"caption":"The second number is 0, so the largest shared divisor is the first number: gcd = 1. The lcm follows: 17 * 13 // 1 = 221.","panels":{"table":{"cells":[[17,13,"1"],[13,4,"1"],[4,1,"1"],[1,0,"1"]],"states":["ddd","ddd","ddd","ccc"],"colHeads":["a","b","shared"],"rowTitle":"pair"}}}
+]}
+]}

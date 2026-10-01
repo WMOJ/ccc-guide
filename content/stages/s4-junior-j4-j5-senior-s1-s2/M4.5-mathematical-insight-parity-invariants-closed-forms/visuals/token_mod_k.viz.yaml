@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Position mod 2 }
+alt: >-
+  A token that only ever moves by +4 or -6, so its position modulo 2 never changes. A target whose
+  difference from the start is odd is ruled out instantly by one remainder; an even difference is
+  always reachable, shown here by the moves +4, -6, +4 closing a difference of 2.
+captions: vizrec
+presets:
+  - id: reachable
+    label: Reachable
+    stdin: "1\n0 2\n"
+  - id: unreachable
+    label: Unreachable
+    stdin: "1\n0 5\n"
+  - id: downward
+    label: Downward
+    stdin: "1\n10 2\n"
+consistency:
+  description: The yes/no answer equals the output of examples/token_reachability.py on the same single-query input.
+  example: ../examples/token_reachability.py
+  compare: output

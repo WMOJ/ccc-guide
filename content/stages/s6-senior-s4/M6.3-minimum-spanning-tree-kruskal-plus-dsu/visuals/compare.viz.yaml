@@ -1,0 +1,17 @@
+layout: row
+panels:
+  - { id: a, viz: GraphViz, title: Listed order }
+  - { id: b, viz: GraphViz, title: Cheapest first }
+alt: >-
+  Two spanning trees of the same six-city graph, one chosen by taking edges in the order they
+  were listed and one by taking them cheapest first. Both connect every city without a cycle, but
+  the first costs 35 and the second costs 23.
+captions: vizrec
+presets:
+  - id: main
+    label: Six cities
+    stdin: "6 8\n0 1 5\n0 2 8\n0 3 6\n1 2 3\n1 4 7\n2 3 4\n3 4 2\n3 5 9\n"
+consistency:
+  description: The cost and edges of the cheapest-first tree equal the output of examples/kruskal_mst.py.
+  example: ../examples/kruskal_mst.py
+  compare: output

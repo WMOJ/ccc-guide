@@ -1,0 +1,21 @@
+layout: row
+panels:
+  - { id: s, viz: ArrayViz, title: Stored (negated) }
+  - { id: v, viz: ArrayViz, title: Represented values }
+alt: >-
+  A max-heap built by pushing negated values into Python's min-heap. The stored panel always holds
+  the negative of the represented panel at the same index. Popping returns the most negative
+  stored entry, which negates back to the largest represented value, so values come out from
+  biggest to smallest.
+captions: vizrec
+presets:
+  - id: three
+    label: Three items
+    stdin: "3\n10 3 7\n"
+  - id: one
+    label: One item
+    stdin: "1\n6\n"
+consistency:
+  description: The stored list and the descending pop order in the visual equal the output of examples/max_heap.py.
+  example: ../examples/max_heap.py
+  compare: output

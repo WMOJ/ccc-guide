@@ -1,0 +1,38 @@
+{"schema":1,
+"kind":"frames",
+"id":"segment-query",
+"layout":"row",
+"panels":[{"id":"segments","viz":"ArrayViz","title":"Runs"},{"id":"cumulative","viz":"ArrayViz","title":"Cumulative length"}],
+"alt":"Answering \"what is at position p\" on a run-length-compressed sequence without expanding it, by building a cumulative-length array from the run lengths and walking it until a boundary passes the query position.",
+"presets":[
+{"id":"main","label":"Middle runs","steps":[
+{"caption":"3 runs make up the sequence, each far too long to store one slot per position. cumulative starts with one entry, 0, before any run is counted.","panels":{"segments":{"values":["R","G","B"],"states":"___"},"cumulative":{"values":[0],"states":"d","indexBase":0}}},
+{"caption":"cumulative[1] is cumulative[0] plus the length of run 0 (R, length 12): 0 + 12 = 12.","panels":{"segments":{"values":["R","G","B"],"states":"c__"},"cumulative":{"values":[0,12],"states":"dd","pointers":[{"name":"k","at":1}],"indexBase":0}}},
+{"caption":"cumulative[2] is cumulative[1] plus the length of run 1 (G, length 3): 12 + 3 = 15.","panels":{"segments":{"values":["R","G","B"],"states":"dc_"},"cumulative":{"values":[0,12,15],"states":"ddd","pointers":[{"name":"k","at":2}],"indexBase":0}}},
+{"caption":"cumulative[3] is cumulative[2] plus the length of run 2 (B, length 7): 15 + 7 = 22.","panels":{"segments":{"values":["R","G","B"],"states":"ddc"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"k","at":3}],"indexBase":0}}},
+{"caption":"cumulative[0] = 0 is at or before 0, and cumulative[1] = 12 is past it: position 0 falls inside run 0, so the answer is R.","panels":{"segments":{"values":["R","G","B"],"states":"c__"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"start","at":0},{"name":"end","at":1}],"indexBase":0}}},
+{"caption":"cumulative[0] = 0 is at or before 11, and cumulative[1] = 12 is past it: position 11 falls inside run 0, so the answer is R.","panels":{"segments":{"values":["R","G","B"],"states":"c__"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"start","at":0},{"name":"end","at":1}],"indexBase":0}}},
+{"caption":"Position 13: cumulative[1] = 12 is at or before it, so run 0 (R) ends too early. Move to run 1.","panels":{"segments":{"values":["R","G","B"],"states":"c__"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"boundary","at":1}],"indexBase":0}}},
+{"caption":"cumulative[1] = 12 is at or before 13, and cumulative[2] = 15 is past it: position 13 falls inside run 1, so the answer is G.","panels":{"segments":{"values":["R","G","B"],"states":"dc_"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"start","at":1},{"name":"end","at":2}],"indexBase":0}}},
+{"caption":"Position 21: cumulative[1] = 12 is at or before it, so run 0 (R) ends too early. Move to run 1.","panels":{"segments":{"values":["R","G","B"],"states":"c__"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"boundary","at":1}],"indexBase":0}}},
+{"caption":"Position 21: cumulative[2] = 15 is at or before it, so run 1 (G) ends too early. Move to run 2.","panels":{"segments":{"values":["R","G","B"],"states":"dc_"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"boundary","at":2}],"indexBase":0}}},
+{"caption":"cumulative[2] = 15 is at or before 21, and cumulative[3] = 22 is past it: position 21 falls inside run 2, so the answer is B.","panels":{"segments":{"values":["R","G","B"],"states":"ddc"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"start","at":2},{"name":"end","at":3}],"indexBase":0}}}
+]},
+{"id":"single","label":"One run","steps":[
+{"caption":"1 runs make up the sequence, each far too long to store one slot per position. cumulative starts with one entry, 0, before any run is counted.","panels":{"segments":{"values":["X"],"states":"_"},"cumulative":{"values":[0],"states":"d","indexBase":0}}},
+{"caption":"cumulative[1] is cumulative[0] plus the length of run 0 (X, length 10): 0 + 10 = 10.","panels":{"segments":{"values":["X"],"states":"c"},"cumulative":{"values":[0,10],"states":"dd","pointers":[{"name":"k","at":1}],"indexBase":0}}},
+{"caption":"cumulative[0] = 0 is at or before 0, and cumulative[1] = 10 is past it: position 0 falls inside run 0, so the answer is X.","panels":{"segments":{"values":["X"],"states":"c"},"cumulative":{"values":[0,10],"states":"dd","pointers":[{"name":"start","at":0},{"name":"end","at":1}],"indexBase":0}}},
+{"caption":"cumulative[0] = 0 is at or before 9, and cumulative[1] = 10 is past it: position 9 falls inside run 0, so the answer is X.","panels":{"segments":{"values":["X"],"states":"c"},"cumulative":{"values":[0,10],"states":"dd","pointers":[{"name":"start","at":0},{"name":"end","at":1}],"indexBase":0}}}
+]},
+{"id":"boundary","label":"On a boundary","steps":[
+{"caption":"3 runs make up the sequence, each far too long to store one slot per position. cumulative starts with one entry, 0, before any run is counted.","panels":{"segments":{"values":["R","G","B"],"states":"___"},"cumulative":{"values":[0],"states":"d","indexBase":0}}},
+{"caption":"cumulative[1] is cumulative[0] plus the length of run 0 (R, length 12): 0 + 12 = 12.","panels":{"segments":{"values":["R","G","B"],"states":"c__"},"cumulative":{"values":[0,12],"states":"dd","pointers":[{"name":"k","at":1}],"indexBase":0}}},
+{"caption":"cumulative[2] is cumulative[1] plus the length of run 1 (G, length 3): 12 + 3 = 15.","panels":{"segments":{"values":["R","G","B"],"states":"dc_"},"cumulative":{"values":[0,12,15],"states":"ddd","pointers":[{"name":"k","at":2}],"indexBase":0}}},
+{"caption":"cumulative[3] is cumulative[2] plus the length of run 2 (B, length 7): 15 + 7 = 22.","panels":{"segments":{"values":["R","G","B"],"states":"ddc"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"k","at":3}],"indexBase":0}}},
+{"caption":"Position 12: cumulative[1] = 12 is at or before it, so run 0 (R) ends too early. Move to run 1.","panels":{"segments":{"values":["R","G","B"],"states":"c__"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"boundary","at":1}],"indexBase":0}}},
+{"caption":"cumulative[1] = 12 is at or before 12, and cumulative[2] = 15 is past it: position 12 falls inside run 1, so the answer is G.","panels":{"segments":{"values":["R","G","B"],"states":"dc_"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"start","at":1},{"name":"end","at":2}],"indexBase":0}}},
+{"caption":"Position 15: cumulative[1] = 12 is at or before it, so run 0 (R) ends too early. Move to run 1.","panels":{"segments":{"values":["R","G","B"],"states":"c__"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"boundary","at":1}],"indexBase":0}}},
+{"caption":"Position 15: cumulative[2] = 15 is at or before it, so run 1 (G) ends too early. Move to run 2.","panels":{"segments":{"values":["R","G","B"],"states":"dc_"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"boundary","at":2}],"indexBase":0}}},
+{"caption":"cumulative[2] = 15 is at or before 15, and cumulative[3] = 22 is past it: position 15 falls inside run 2, so the answer is B.","panels":{"segments":{"values":["R","G","B"],"states":"ddc"},"cumulative":{"values":[0,12,15,22],"states":"dddd","pointers":[{"name":"start","at":2},{"name":"end","at":3}],"indexBase":0}}}
+]}
+]}

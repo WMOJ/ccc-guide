@@ -1,0 +1,22 @@
+{"schema":1,
+"kind":"frames",
+"id":"indexing",
+"layout":"single",
+"panels":[{"id":"w","viz":"ArrayViz","title":"The word, by position"}],
+"alt":"A word is shown one character per cell with its positive indices under the cells. A pointer moves to word[0], the first character, then to word[-1], the last, then to word[-len(word)], which lands on the first character again. A final pointer sits past the last cell at index 10, where no character exists, so Python raises IndexError. Presets use a seven-letter word and a three-letter word.",
+"presets":[
+{"id":"main","label":"Seven letters","steps":[
+{"caption":"The word \"pumpkin\" has 7 characters. Indexing reads one of them by position, and the positions run from 0 to 6.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"indices":true}}},
+{"caption":"`word[0]` is \"p\". Positions start at 0, so index 0 is the first character.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"states":"c______","pointers":[{"name":"[0]","at":0,"strong":true}],"indices":true}}},
+{"caption":"`word[-1]` is \"n\". A negative index counts back from the end, so -1 is always the last character, index 6 here.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"states":"______c","pointers":[{"name":"[-1]","at":6,"strong":true}],"indices":true}}},
+{"caption":"`word[-7]` is \"p\", the same character as `word[0]`. -7 is -len(word), the furthest back an index can go.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"states":"c______","pointers":[{"name":"[-7]","at":0,"strong":true}],"indices":true}}},
+{"caption":"`word[10]` points past the last index, 6. No character is there, so Python raises `IndexError` instead of returning anything.","panels":{"w":{"values":["p","u","m","p","k","i","n"],"states":"_______","pointers":[{"name":"[10]","at":7,"strong":true}],"indices":true}}}
+]},
+{"id":"short","label":"Three letters","steps":[
+{"caption":"The word \"cat\" has 3 characters. Indexing reads one of them by position, and the positions run from 0 to 2.","panels":{"w":{"values":["c","a","t"],"indices":true}}},
+{"caption":"`word[0]` is \"c\". Positions start at 0, so index 0 is the first character.","panels":{"w":{"values":["c","a","t"],"states":"c__","pointers":[{"name":"[0]","at":0,"strong":true}],"indices":true}}},
+{"caption":"`word[-1]` is \"t\". A negative index counts back from the end, so -1 is always the last character, index 2 here.","panels":{"w":{"values":["c","a","t"],"states":"__c","pointers":[{"name":"[-1]","at":2,"strong":true}],"indices":true}}},
+{"caption":"`word[-3]` is \"c\", the same character as `word[0]`. -3 is -len(word), the furthest back an index can go.","panels":{"w":{"values":["c","a","t"],"states":"c__","pointers":[{"name":"[-3]","at":0,"strong":true}],"indices":true}}},
+{"caption":"`word[10]` points past the last index, 2. No character is there, so Python raises `IndexError` instead of returning anything.","panels":{"w":{"values":["c","a","t"],"states":"___","pointers":[{"name":"[10]","at":3,"strong":true}],"indices":true}}}
+]}
+]}

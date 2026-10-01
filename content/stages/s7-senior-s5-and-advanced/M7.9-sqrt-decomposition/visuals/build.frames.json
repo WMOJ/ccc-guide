@@ -1,0 +1,21 @@
+{"schema":1,
+"kind":"frames",
+"id":"build",
+"layout":"single",
+"panels":[{"id":"t","viz":"TableViz","title":"Positions and block sums"}],
+"alt":"A row of values folded into rows of the block size, one row per block. Each block's sum is filled in one block at a time, and the last block is shorter when the length does not divide evenly. The presets use eight values and six values.",
+"presets":[
+{"id":"eight","label":"Eight values","steps":[
+{"caption":"8 values, so the block size is `b` = 3, the smallest number whose square reaches 8. Each row of the table is one block of up to 3 positions. The sums are not computed yet.","panels":{"t":{"cells":[[3,1,4,"?"],[1,5,9,"?"],[2,6,"-","?"]],"states":["____","____","____"],"rowHeads":["0-2","3-5","6-7"],"colHeads":["+0","+1","+2","sum"]}}},
+{"caption":"`sums[0]` is the total of positions 0-2: 3 + 1 + 4 = 8.","panels":{"t":{"cells":[[3,1,4,8],[1,5,9,"?"],[2,6,"-","?"]],"states":["cccc","____","____"],"rowHeads":["0-2","3-5","6-7"],"colHeads":["+0","+1","+2","sum"]}}},
+{"caption":"`sums[1]` is the total of positions 3-5: 1 + 5 + 9 = 15.","panels":{"t":{"cells":[[3,1,4,8],[1,5,9,15],[2,6,"-","?"]],"states":["___d","cccc","____"],"rowHeads":["0-2","3-5","6-7"],"colHeads":["+0","+1","+2","sum"]}}},
+{"caption":"`sums[2]` is the total of positions 6-7: 2 + 6 = 8. This last block has only 2 values, so it is shorter.","panels":{"t":{"cells":[[3,1,4,8],[1,5,9,15],[2,6,"-",8]],"states":["___d","___d","cccc"],"rowHeads":["0-2","3-5","6-7"],"colHeads":["+0","+1","+2","sum"]}}},
+{"caption":"Done: 3 sums for 8 values. Position `i` lives in block `i // 3`, so position 7 is in block 2. Adding all the sums gives 31, the total of every value.","panels":{"t":{"cells":[[3,1,4,8],[1,5,9,15],[2,6,"-",8]],"states":["___d","___d","___d"],"rowHeads":["0-2","3-5","6-7"],"colHeads":["+0","+1","+2","sum"]}}}
+]},
+{"id":"six","label":"Six values","steps":[
+{"caption":"6 values, so the block size is `b` = 3, the smallest number whose square reaches 6. Each row of the table is one block of up to 3 positions. The sums are not computed yet.","panels":{"t":{"cells":[[3,1,4,"?"],[1,5,9,"?"]],"states":["____","____"],"rowHeads":["0-2","3-5"],"colHeads":["+0","+1","+2","sum"]}}},
+{"caption":"`sums[0]` is the total of positions 0-2: 3 + 1 + 4 = 8.","panels":{"t":{"cells":[[3,1,4,8],[1,5,9,"?"]],"states":["cccc","____"],"rowHeads":["0-2","3-5"],"colHeads":["+0","+1","+2","sum"]}}},
+{"caption":"`sums[1]` is the total of positions 3-5: 1 + 5 + 9 = 15.","panels":{"t":{"cells":[[3,1,4,8],[1,5,9,15]],"states":["___d","cccc"],"rowHeads":["0-2","3-5"],"colHeads":["+0","+1","+2","sum"]}}},
+{"caption":"Done: 2 sums for 6 values. Position `i` lives in block `i // 3`, so position 5 is in block 1. Adding all the sums gives 23, the total of every value.","panels":{"t":{"cells":[[3,1,4,8],[1,5,9,15]],"states":["___d","___d"],"rowHeads":["0-2","3-5"],"colHeads":["+0","+1","+2","sum"]}}}
+]}
+]}

@@ -1,0 +1,19 @@
+{"schema":1,
+"kind":"frames",
+"id":"zip-pairs",
+"layout":"row",
+"panels":[{"id":"a","viz":"ArrayViz","title":"names"},{"id":"b","viz":"ArrayViz","title":"scores"}],
+"alt":"Two lists are read together with zip. Each pass pairs the values at the same index, marked in both lists, and prints them. When the lists have the same length, both run out together. When one list is longer, zip stops as soon as the shorter one ends and the extra values in the longer list are never visited.",
+"legendLabels":{"current":"Paired now","done":"Already paired","invalid":"Never visited","unvisited":"Not yet paired"},
+"presets":[
+{"id":"main","label":"Same length","steps":[
+{"caption":"`zip(names, scores)` pairs the values at the same index. Pass 0 pairs \"Ana\" with 10, and the loop prints `Ana 10`.","panels":{"a":{"values":["Ana","Bo"],"states":"c.","pointers":[{"name":"name","at":0,"strong":true}],"indices":true},"b":{"values":[10,20],"states":"c.","pointers":[{"name":"score","at":0,"strong":true}],"indices":true}}},
+{"caption":"Pass 1 pairs index 1 of both lists: \"Bo\" with 20. The loop prints `Bo 20`.","panels":{"a":{"values":["Ana","Bo"],"states":"dc","pointers":[{"name":"name","at":1,"strong":true}],"indices":true},"b":{"values":[10,20],"states":"dc","pointers":[{"name":"score","at":1,"strong":true}],"indices":true}}},
+{"caption":"Both lists run out together after 2 passes, so the loop ends.","panels":{"a":{"values":["Ana","Bo"],"states":"dd","indices":true},"b":{"values":[10,20],"states":"dd","indices":true}}}
+]},
+{"id":"uneven","label":"Uneven","steps":[
+{"caption":"`zip(names, scores)` pairs the values at the same index. Pass 0 pairs \"Ana\" with 10, and the loop prints `Ana 10`.","panels":{"a":{"values":["Ana","Bo","Cy"],"states":"c..","pointers":[{"name":"name","at":0,"strong":true}],"indices":true},"b":{"values":[10,20],"states":"c.","pointers":[{"name":"score","at":0,"strong":true}],"indices":true}}},
+{"caption":"Pass 1 pairs index 1 of both lists: \"Bo\" with 20. The loop prints `Bo 20`.","panels":{"a":{"values":["Ana","Bo","Cy"],"states":"dc.","pointers":[{"name":"name","at":1,"strong":true}],"indices":true},"b":{"values":[10,20],"states":"dc","pointers":[{"name":"score","at":1,"strong":true}],"indices":true}}},
+{"caption":"`scores` has only 2 values, so `zip` stops after pass 1. The extra values in `names` are never visited.","panels":{"a":{"values":["Ana","Bo","Cy"],"states":"ddx","indices":true},"b":{"values":[10,20],"states":"dd","indices":true}}}
+]}
+]}

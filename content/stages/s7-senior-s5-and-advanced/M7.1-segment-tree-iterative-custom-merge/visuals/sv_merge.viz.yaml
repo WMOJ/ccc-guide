@@ -1,0 +1,24 @@
+layout: single
+panels:
+  - { id: v, viz: TableViz, title: "Four numbers per node" }
+alt: >-
+  A maximum-subarray query where every node stores four numbers: total, prefix, suffix and inside.
+  Each step merges the next covering node into left_part or right_part and shows which of three
+  candidates gave the new best run inside: the left side's best, the right side's best, or a run
+  crossing the boundary. The presets query a range that uses nodes on both sides and a range of
+  mostly negative values.
+captions: vizrec
+legendLabels:
+  current: Node taken
+  done: Merged result
+presets:
+  - id: both
+    label: Both sides
+    stdin: "9\n-2 1 -3 4 -1 2 1 -5 4\n1\n2 1 7\n"
+  - id: negative
+    label: Negatives
+    stdin: "9\n-2 1 -3 4 -1 2 1 -5 4\n1\n2 0 3\n"
+consistency:
+  description: The answer at the end of each preset equals the output of examples/max_subarray.py.
+  example: ../examples/max_subarray.py
+  compare: output

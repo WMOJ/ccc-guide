@@ -1,0 +1,18 @@
+example: tally_blocks.py
+alt: >-
+  The program keeps, for two problems, the minutes spent so far and whether the problem's subtask
+  has cleared. It reads the two costs and the number of blocks, then adds each block of minutes to its problem's total and
+  marks the subtask cleared once the total reaches the cost, however many blocks that took.
+presets:
+  - id: rotate
+    label: Rotating
+    stdin: "30\n25\n3\n1\n20\n2\n25\n1\n15\n"
+  - id: stay
+    label: Staying
+    stdin: "30\n25\n2\n1\n35\n2\n25\n"
+  - id: short
+    label: Short blocks
+    stdin: "30\n25\n3\n1\n10\n2\n10\n1\n10\n"
+notes:
+  "11": "The block's minutes join that problem's running total, which is kept from one block to the next."
+  "13": "The total has reached the cost, so this subtask is now cleared."

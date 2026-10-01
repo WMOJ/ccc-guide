@@ -1,0 +1,24 @@
+{"schema":1,
+"kind":"frames",
+"id":"rebuild-cost",
+"layout":"row",
+"panels":[{"id":"prefix","viz":"ArrayViz","title":"Prefix sums"},{"id":"tree","viz":"ArrayViz","title":"Fenwick tree"}],
+"alt":"A prefix sum array above a Fenwick tree for the same six elements. One element then goes up by 5. Every prefix sum entry from that position on has to be rewritten, which can be nearly the whole array, while the Fenwick tree changes only a few entries.",
+"legendLabels":{"current":"Rewritten"},
+"presets":[
+{"id":"three","label":"Position 3","steps":[
+{"caption":"The same 6 elements, stored two ways. prefix[i] is the total of the first i elements, with prefix[0] = 0. Each tree[i] is the total of a block that ends at i.","panels":{"prefix":{"values":[0,3,5,6,10,15,16],"indexBase":0},"tree":{"values":[3,5,1,10,5,6],"indexBase":1}}},
+{"caption":"Element 3 goes up by 5. Every prefix entry from prefix[3] to prefix[6] includes that element, so all 4 of them must be rewritten. The earlier the position, the more entries: at position 1 with 100,000 elements, all 100,000 entries.","panels":{"prefix":{"values":[0,3,5,11,15,20,21],"states":"___cccc","indexBase":0},"tree":{"values":[3,5,1,10,5,6],"indexBase":1}}},
+{"caption":"The Fenwick tree rewrites only the blocks that contain position 3: tree[3], tree[4]. That is 2 of 6 entries. For 100,000 elements no update touches more than 17.","panels":{"prefix":{"values":[0,3,5,11,15,20,21],"indexBase":0},"tree":{"values":[3,5,6,15,5,6],"states":"__cc__","indexBase":1}}}
+]},
+{"id":"seven","label":"Near the end","steps":[
+{"caption":"The same 6 elements, stored two ways. prefix[i] is the total of the first i elements, with prefix[0] = 0. Each tree[i] is the total of a block that ends at i.","panels":{"prefix":{"values":[0,3,5,6,10,15,16],"indexBase":0},"tree":{"values":[3,5,1,10,5,6],"indexBase":1}}},
+{"caption":"Element 5 goes up by 5. Every prefix entry from prefix[5] to prefix[6] includes that element, so all 2 of them must be rewritten. The earlier the position, the more entries: at position 1 with 100,000 elements, all 100,000 entries.","panels":{"prefix":{"values":[0,3,5,6,10,20,21],"states":"_____cc","indexBase":0},"tree":{"values":[3,5,1,10,5,6],"indexBase":1}}},
+{"caption":"The Fenwick tree rewrites only the blocks that contain position 5: tree[5], tree[6]. That is 2 of 6 entries. For 100,000 elements no update touches more than 17.","panels":{"prefix":{"values":[0,3,5,6,10,20,21],"indexBase":0},"tree":{"values":[3,5,1,10,10,11],"states":"____cc","indexBase":1}}}
+]},
+{"id":"first","label":"Position 1","steps":[
+{"caption":"The same 6 elements, stored two ways. prefix[i] is the total of the first i elements, with prefix[0] = 0. Each tree[i] is the total of a block that ends at i.","panels":{"prefix":{"values":[0,3,5,6,10,15,16],"indexBase":0},"tree":{"values":[3,5,1,10,5,6],"indexBase":1}}},
+{"caption":"Element 1 goes up by 5. Every prefix entry from prefix[1] to prefix[6] includes that element, so all 6 of them must be rewritten. The earlier the position, the more entries: at position 1 with 100,000 elements, all 100,000 entries.","panels":{"prefix":{"values":[0,8,10,11,15,20,21],"states":"_cccccc","indexBase":0},"tree":{"values":[3,5,1,10,5,6],"indexBase":1}}},
+{"caption":"The Fenwick tree rewrites only the blocks that contain position 1: tree[1], tree[2], tree[4]. That is 3 of 6 entries. For 100,000 elements no update touches more than 17.","panels":{"prefix":{"values":[0,8,10,11,15,20,21],"indexBase":0},"tree":{"values":[8,10,1,15,5,6],"states":"cc_c__","indexBase":1}}}
+]}
+]}

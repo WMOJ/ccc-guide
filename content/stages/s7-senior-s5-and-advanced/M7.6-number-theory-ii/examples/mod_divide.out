@@ -1,0 +1,4 @@
+inverse of 8: 125000001
+same as pow(8, -1, 1000000007): True
+23 / 8 mod 1000000007 = 875000009
+check: True

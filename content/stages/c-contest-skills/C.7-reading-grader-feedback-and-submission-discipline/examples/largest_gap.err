@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "largest_gap.py", line 18, in <module>
+    main()
+  File "largest_gap.py", line 14, in main
+    print(max(gaps))
+ValueError: arg is an empty sequence

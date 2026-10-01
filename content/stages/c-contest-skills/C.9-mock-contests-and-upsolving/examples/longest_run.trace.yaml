@@ -1,0 +1,18 @@
+example: longest_run.py
+alt: >-
+  The program finds the longest strictly increasing run in a list. It keeps the current run length
+  and the best so far, adds one when a value is larger than the one before it, and on any other
+  step sets the run to 0 instead of 1, which is the bug the lesson tracks down.
+presets:
+  - id: fails
+    label: 0 0 1
+    stdin: "0 0 1\n"
+  - id: works
+    label: 0 1
+    stdin: "0 1\n"
+  - id: single
+    label: Single value
+    stdin: "5\n"
+notes:
+  "14": "The value is not larger than the one before it, so the run ends. The code sets `run` to 0, but the new run already contains this value, so it should start at 1."
+  "15": "`best` keeps the larger of itself and `run`, so it can only grow."

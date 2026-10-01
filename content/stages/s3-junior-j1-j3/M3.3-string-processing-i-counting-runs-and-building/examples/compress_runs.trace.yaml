@@ -1,0 +1,21 @@
+example: compress_runs.py
+alt: >-
+  The program scans a string one run at a time, appending each run's length and character to a
+  list of output pieces, then joins that list into the encoded output once, at the end.
+presets:
+  - id: main
+    label: Mixed runs
+    stdin: "aabbcc\n"
+  - id: no-repeats
+    label: No repeats
+    stdin: "abc\n"
+notes:
+  "8": "`out` starts empty. Each run adds two entries to it: a length, then a character."
+  "11": "`c` is the character starting the next run, at index `i`."
+  "14": "Checks whether the next character still matches `c`."
+  "15": "A mismatch ends the inner loop right here, without a separate bounds check."
+  "16": "A match raises `k`, the run's length so far, by one and loops back to check again."
+  "17": "The run's length joins `out` as a string, not added onto a result string."
+  "18": "`c` joins `out` right after its length."
+  "19": "`i` jumps past the whole run just counted, straight to the next one."
+  "20": "`\"\".join(out)` builds the final string once, after every run has been recorded."

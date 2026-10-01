@@ -2,7 +2,7 @@ id: M5.13
 title: Randomized strategies
 status: accepted
 objectives:
-  - Use random shuffling and random guesses to explore the solution space.
+  - Use a random shuffle and random pivot choices to find an answer or avoid a worst-case input.
   - Calculate the probability of failure and choose enough trials.
   - Use a fixed random seed for reproducibility in testing and debugging.
   - Reason about when randomization is fast enough for a given time limit.
@@ -11,4 +11,6 @@ prereqs:
   - M4.6
 lessons:
   - randomized-strategies
-practice: []
+practice:
+  - id: ccc26s3
+    note: Choose two separate groups of cards whose totals share a common factor.

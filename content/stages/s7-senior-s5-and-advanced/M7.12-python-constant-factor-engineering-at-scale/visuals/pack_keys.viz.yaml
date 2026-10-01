@@ -1,0 +1,20 @@
+layout: row
+panels:
+  - { id: p, viz: ArrayViz, title: Pairs }
+  - { id: k, viz: ArrayViz, title: Keys }
+alt: >-
+  Pairs a and b are packed one at a time into keys a * 1000 + b, which are plain integers. The
+  keys list is then sorted with no key function, and each sorted key is split back into a and b
+  with divmod by 1000. Sorting the keys sorts the pairs by a first and by b when the a values tie.
+captions: vizrec
+presets:
+  - id: main
+    label: Four pairs
+    stdin: "4\n5 2\n2 8\n5 1\n2 3\n"
+  - id: limit
+    label: Largest b
+    stdin: "3\n3 0\n2 999\n3 1\n"
+consistency:
+  description: The pairs after sorting equal the lines examples/sorted_pairs.py prints.
+  example: ../examples/sorted_pairs.py
+  compare: output

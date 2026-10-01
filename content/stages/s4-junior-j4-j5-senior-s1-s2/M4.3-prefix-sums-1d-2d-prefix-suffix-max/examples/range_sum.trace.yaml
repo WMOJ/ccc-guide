@@ -1,0 +1,18 @@
+example: range_sum.py
+alt: >-
+  The program reads the daily rainfall, builds the prefix list with a running total, then answers
+  each range query by subtracting two prefix entries: prefix[j + 1] minus prefix[i].
+presets:
+  - id: main
+    label: Middle range
+    stdin: "5\n10 20 15 30 25\n1\n1 3\n"
+  - id: single
+    label: One day
+    stdin: "5\n10 20 15 30 25\n1\n2 2\n"
+notes:
+  "15": "`total` is the running sum; it starts at 0 because zero days have zero rainfall."
+  "16": "`prefix[0]` is 0, the entry that lets a range starting at day 0 still subtract something."
+  "19": "Each new entry is the previous total plus one more day, so `prefix` ends one entry longer than `rainfall`."
+  "28": "`hi` is the total through day `j`, read straight from the list."
+  "29": "`lo` is the total before day `i`; no day is added up again."
+  "30": "`hi - lo` is the rainfall from day `i` through day `j`."

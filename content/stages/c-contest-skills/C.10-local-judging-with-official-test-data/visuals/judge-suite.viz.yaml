@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: table, viz: TableViz, title: Judging a suite }
+alt: >-
+  A table that gains one row per test as the judging loop runs. Each row shows the test's input,
+  what the solution printed, the official output, and a verdict of matches or differs. A failing
+  test does not stop the loop, so the final step shows every failure together.
+captions: vizrec
+presets:
+  - id: one
+    label: One differs
+    stdin: "5\n3\n6\n8\n16\n5\n10\n4\n9\n6\n12\n"
+  - id: all
+    label: All match
+    stdin: "3\n3\n6\n8\n16\n5\n10\n"
+  - id: first
+    label: First differs
+    stdin: "3\n3\n7\n8\n16\n5\n10\n"
+consistency:
+  description: The verdict lines equal the output of examples/judge_loop.py on each preset's stdin.
+  example: ../examples/judge_loop.py
+  compare: output

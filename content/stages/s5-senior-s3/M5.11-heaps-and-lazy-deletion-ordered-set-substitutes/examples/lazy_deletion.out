@@ -1,3 +1,10 @@
-Popping from heap:
-Item 0 with priority 2
-Skipping stale entry (8, 0)
+Update job 0 to priority 8
+Update job 0 to priority 2
+Job 0 at priority 2 is handed out
+Update job 1 to priority 5
+Job 1 at priority 5 is handed out
+Update job 2 to priority 9
+Skipping stale entry (priority 8, job 0)
+Job 2 at priority 9 is handed out
+Update job 1 to priority 3
+Job 1 at priority 3 is handed out

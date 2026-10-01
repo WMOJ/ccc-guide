@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: tokens, viz: ArrayViz, title: Input tokens }
+  - { id: grid, viz: GridViz, title: Stored grid }
+alt: >-
+  The input text is split into tokens. The first two tokens are the row and column counts, read
+  with int(). The next r tokens are the rows, sliced off the front of the list one row at a
+  time, and each becomes one row of the grid.
+captions: vizrec
+presets:
+  - id: board
+    label: 3 by 4
+    stdin: "3 4\n..##\n#...\n....\n"
+  - id: wide
+    label: 2 by 5
+    stdin: "2 5\n#...#\n.#.#.\n"
+  - id: single
+    label: One row
+    stdin: "1 3\n.#.\n"
+consistency:
+  description: The mark count the visual ends with equals the output of examples/count_marks.py on each preset.
+  example: ../examples/count_marks.py
+  compare: output

@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: arr, viz: ArrayViz, title: array }
+  - { id: diff, viz: ArrayViz, title: diff }
+alt: >-
+  An array turned into its difference array by subtracting each neighbor, then the difference
+  array turned back into the original array by a prefix sum, showing the two are the same data
+  in two forms.
+captions: vizrec
+presets:
+  - id: typical
+    label: Typical
+    stdin: "5\n3 5 5 2 2\n"
+  - id: constant
+    label: Constant
+    stdin: "4\n7 7 7 7\n"
+  - id: single
+    label: Single element
+    stdin: "1\n9\n"
+consistency:
+  description: diff then rebuilt equal the two lines examples/to_diff.py prints.
+  example: ../examples/to_diff.py
+  compare: output

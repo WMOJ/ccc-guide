@@ -1,0 +1,26 @@
+{"schema":1,
+"kind":"frames",
+"id":"grid-build",
+"layout":"row",
+"panels":[{"id":"a","viz":"ArrayViz","title":"grid, entry by entry"},{"id":"b","viz":"TableViz","title":"The row lists in memory"}],
+"alt":"A grid is built two ways. First grid = [[0] * cols] * rows makes one row list and puts that same list in every entry of grid, so changing one cell changes every row. Then the list comprehension makes one separate row list per entry, so changing one cell changes only its own row. Presets use a grid of two rows by three columns, three rows by four columns, and a single row, where sharing cannot be seen.",
+"presets":[
+{"id":"main","label":"2 by 3","steps":[
+{"caption":"`[[0] * 3] * 2` builds one row list, row 1, holding 3 zeros. `* 2` does not copy it: all 2 entries of `grid` point at row 1.","panels":{"a":{"values":["row 1","row 1"],"states":"mm","indices":true},"b":{"cells":[[0,0,0]],"states":["ddd"],"rowHeads":["row 1"],"colHeads":[0,1,2]}}},
+{"caption":"`grid[0][1] = 5` changes row 1. Every entry points at row 1, so all 2 rows show the 5. `print(grid)` shows [[0, 5, 0], [0, 5, 0]].","panels":{"a":{"values":["row 1","row 1"],"states":"mm","indices":true},"b":{"cells":[[0,5,0]],"states":["dcd"],"rowHeads":["row 1"],"colHeads":[0,1,2]}}},
+{"caption":"`[[0] * 3 for _ in range(2)]` runs `[0] * 3` once per row, so the 2 entries of `grid` hold 2 different row lists.","panels":{"a":{"values":["row 1","row 2"],"states":"dd","indices":true},"b":{"cells":[[0,0,0],[0,0,0]],"states":["ddd","ddd"],"rowHeads":["row 1","row 2"],"colHeads":[0,1,2]}}},
+{"caption":"`grid[0][1] = 5` changes only row 1. The other rows keep their zeros. `print(grid)` shows [[0, 5, 0], [0, 0, 0]].","panels":{"a":{"values":["row 1","row 2"],"states":"dd","indices":true},"b":{"cells":[[0,5,0],[0,0,0]],"states":["dcd","ddd"],"rowHeads":["row 1","row 2"],"colHeads":[0,1,2]}}}
+]},
+{"id":"bigger","label":"3 by 4","steps":[
+{"caption":"`[[0] * 4] * 3` builds one row list, row 1, holding 4 zeros. `* 3` does not copy it: all 3 entries of `grid` point at row 1.","panels":{"a":{"values":["row 1","row 1","row 1"],"states":"mmm","indices":true},"b":{"cells":[[0,0,0,0]],"states":["dddd"],"rowHeads":["row 1"],"colHeads":[0,1,2,3]}}},
+{"caption":"`grid[0][1] = 5` changes row 1. Every entry points at row 1, so all 3 rows show the 5. `print(grid)` shows [[0, 5, 0, 0], [0, 5, 0, 0], [0, 5, 0, 0]].","panels":{"a":{"values":["row 1","row 1","row 1"],"states":"mmm","indices":true},"b":{"cells":[[0,5,0,0]],"states":["dcdd"],"rowHeads":["row 1"],"colHeads":[0,1,2,3]}}},
+{"caption":"`[[0] * 4 for _ in range(3)]` runs `[0] * 4` once per row, so the 3 entries of `grid` hold 3 different row lists.","panels":{"a":{"values":["row 1","row 2","row 3"],"states":"ddd","indices":true},"b":{"cells":[[0,0,0,0],[0,0,0,0],[0,0,0,0]],"states":["dddd","dddd","dddd"],"rowHeads":["row 1","row 2","row 3"],"colHeads":[0,1,2,3]}}},
+{"caption":"`grid[0][1] = 5` changes only row 1. The other rows keep their zeros. `print(grid)` shows [[0, 5, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]].","panels":{"a":{"values":["row 1","row 2","row 3"],"states":"ddd","indices":true},"b":{"cells":[[0,5,0,0],[0,0,0,0],[0,0,0,0]],"states":["dcdd","dddd","dddd"],"rowHeads":["row 1","row 2","row 3"],"colHeads":[0,1,2,3]}}}
+]},
+{"id":"single","label":"One row","steps":[
+{"caption":"`[[0] * 3] * 1` builds one row list, row 1, and `* 1` keeps just that one entry. With a single entry, there is nothing for a second row to share.","panels":{"a":{"values":["row 1"],"states":"d","indices":true},"b":{"cells":[[0,0,0]],"states":["ddd"],"rowHeads":["row 1"],"colHeads":[0,1,2]}}},
+{"caption":"`grid[0][1] = 5` changes row 1, the only row. `print(grid)` shows [[0, 5, 0]].","panels":{"a":{"values":["row 1"],"states":"d","indices":true},"b":{"cells":[[0,5,0]],"states":["dcd"],"rowHeads":["row 1"],"colHeads":[0,1,2]}}},
+{"caption":"`[[0] * 3 for _ in range(1)]` also builds one row list, row 1, for the single entry of `grid`.","panels":{"a":{"values":["row 1"],"states":"d","indices":true},"b":{"cells":[[0,0,0]],"states":["ddd"],"rowHeads":["row 1"],"colHeads":[0,1,2]}}},
+{"caption":"`grid[0][1] = 5` changes only row 1. With one row, both ways give the same grid. `print(grid)` shows [[0, 5, 0]].","panels":{"a":{"values":["row 1"],"states":"d","indices":true},"b":{"cells":[[0,5,0]],"states":["dcd"],"rowHeads":["row 1"],"colHeads":[0,1,2]}}}
+]}
+]}

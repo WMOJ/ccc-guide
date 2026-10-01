@@ -1,0 +1,31 @@
+{"schema":1,
+"kind":"frames",
+"id":"rotate_clockwise",
+"layout":"row",
+"panels":[{"id":"source","viz":"GridViz","title":"Source"},{"id":"target","viz":"GridViz","title":"Target"}],
+"alt":"A source grid and an empty target grid of swapped dimensions. Each source cell moves to the target at its column and n minus one minus row, filling the target one cell at a time.",
+"presets":[
+{"id":"rectangle","label":"Rectangle","steps":[
+{"caption":"The source is 2 rows by 3 columns. The target has 3 rows by 2 columns, every cell still marked ?, because rotating 90 degrees swaps the dimensions.","panels":{"source":{"cells":["___","___"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["__","__","__"],"values":[["?","?"],["?","?"],["?","?"]]}}},
+{"caption":"old[0][0] = 1 moves to new[0][1]: a clockwise turn sends row 0 to column 1, and column 0 to row 0.","panels":{"source":{"cells":["c__","___"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["_c","__","__"],"values":[["?",1],["?","?"],["?","?"]]}}},
+{"caption":"old[0][1] = 2 moves to new[1][1]: a clockwise turn sends row 0 to column 1, and column 1 to row 1.","panels":{"source":{"cells":["dc_","___"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["_d","_c","__"],"values":[["?",1],["?",2],["?","?"]]}}},
+{"caption":"old[0][2] = 3 moves to new[2][1]: a clockwise turn sends row 0 to column 1, and column 2 to row 2.","panels":{"source":{"cells":["ddc","___"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["_d","_d","_c"],"values":[["?",1],["?",2],["?",3]]}}},
+{"caption":"old[1][0] = 4 moves to new[0][0]: a clockwise turn sends row 1 to column 0, and column 0 to row 0.","panels":{"source":{"cells":["ddd","c__"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["cd","_d","_d"],"values":[[4,1],["?",2],["?",3]]}}},
+{"caption":"old[1][1] = 5 moves to new[1][0]: a clockwise turn sends row 1 to column 0, and column 1 to row 1.","panels":{"source":{"cells":["ddd","dc_"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["dd","cd","_d"],"values":[[4,1],[5,2],["?",3]]}}},
+{"caption":"old[1][2] = 6 moves to new[2][0]: a clockwise turn sends row 1 to column 0, and column 2 to row 2.","panels":{"source":{"cells":["ddd","ddc"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["dd","dd","cd"],"values":[[4,1],[5,2],[6,3]]}}},
+{"caption":"Every source cell has moved. The target is the source rotated 90 degrees clockwise.","panels":{"source":{"cells":["ddd","ddd"],"values":[[1,2,3],[4,5,6]]},"target":{"cells":["dd","dd","dd"],"values":[[4,1],[5,2],[6,3]]}}}
+]},
+{"id":"square","label":"Square","steps":[
+{"caption":"The source is 3 rows by 3 columns. The target has 3 rows by 3 columns, every cell still marked ?, because rotating 90 degrees swaps the dimensions.","panels":{"source":{"cells":["___","___","___"],"values":[[1,2,3],[4,5,6],[7,8,9]]},"target":{"cells":["___","___","___"],"values":[["?","?","?"],["?","?","?"],["?","?","?"]]}}},
+{"caption":"old[0][0] = 1 moves to new[0][2]: a clockwise turn sends row 0 to column 2, and column 0 to row 0.","panels":{"source":{"cells":["c__","___","___"],"values":[[1,2,3],[4,5,6],[7,8,9]]},"target":{"cells":["__c","___","___"],"values":[["?","?",1],["?","?","?"],["?","?","?"]]}}},
+{"caption":"old[0][1] = 2 moves to new[1][2]: a clockwise turn sends row 0 to column 2, and column 1 to row 1.","panels":{"source":{"cells":["dc_","___","___"],"values":[[1,2,3],[4,5,6],[7,8,9]]},"target":{"cells":["__d","__c","___"],"values":[["?","?",1],["?","?",2],["?","?","?"]]}}},
+{"caption":"old[0][2] = 3 moves to new[2][2]: a clockwise turn sends row 0 to column 2, and column 2 to row 2.","panels":{"source":{"cells":["ddc","___","___"],"values":[[1,2,3],[4,5,6],[7,8,9]]},"target":{"cells":["__d","__d","__c"],"values":[["?","?",1],["?","?",2],["?","?",3]]}}},
+{"caption":"old[1][0] = 4 moves to new[0][1]: a clockwise turn sends row 1 to column 1, and column 0 to row 0.","panels":{"source":{"cells":["ddd","c__","___"],"values":[[1,2,3],[4,5,6],[7,8,9]]},"target":{"cells":["_cd","__d","__d"],"values":[["?",4,1],["?","?",2],["?","?",3]]}}},
+{"caption":"old[1][1] = 5 moves to new[1][1]: a clockwise turn sends row 1 to column 1, and column 1 to row 1.","panels":{"source":{"cells":["ddd","dc_","___"],"values":[[1,2,3],[4,5,6],[7,8,9]]},"target":{"cells":["_dd","_cd","__d"],"values":[["?",4,1],["?",5,2],["?","?",3]]}}},
+{"caption":"old[1][2] = 6 moves to new[2][1]: a clockwise turn sends row 1 to column 1, and column 2 to row 2.","panels":{"source":{"cells":["ddd","ddc","___"],"values":[[1,2,3],[4,5,6],[7,8,9]]},"target":{"cells":["_dd","_dd","_cd"],"values":[["?",4,1],["?",5,2],["?",6,3]]}}},
+{"caption":"old[2][0] = 7 moves to new[0][0]: a clockwise turn sends row 2 to column 0, and column 0 to row 0.","panels":{"source":{"cells":["ddd","ddd","c__"],"values":[[1,2,3],[4,5,6],[7,8,9]]},"target":{"cells":["cdd","_dd","_dd"],"values":[[7,4,1],["?",5,2],["?",6,3]]}}},
+{"caption":"old[2][1] = 8 moves to new[1][0]: a clockwise turn sends row 2 to column 0, and column 1 to row 1.","panels":{"source":{"cells":["ddd","ddd","dc_"],"values":[[1,2,3],[4,5,6],[7,8,9]]},"target":{"cells":["ddd","cdd","_dd"],"values":[[7,4,1],[8,5,2],["?",6,3]]}}},
+{"caption":"old[2][2] = 9 moves to new[2][0]: a clockwise turn sends row 2 to column 0, and column 2 to row 2.","panels":{"source":{"cells":["ddd","ddd","ddc"],"values":[[1,2,3],[4,5,6],[7,8,9]]},"target":{"cells":["ddd","ddd","cdd"],"values":[[7,4,1],[8,5,2],[9,6,3]]}}},
+{"caption":"Every source cell has moved. The target is the source rotated 90 degrees clockwise.","panels":{"source":{"cells":["ddd","ddd","ddd"],"values":[[1,2,3],[4,5,6],[7,8,9]]},"target":{"cells":["ddd","ddd","ddd"],"values":[[7,4,1],[8,5,2],[9,6,3]]}}}
+]}
+]}

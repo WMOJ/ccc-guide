@@ -1,0 +1,22 @@
+layout: single
+panels:
+  - { id: grid, viz: GridViz, title: Bounds check }
+alt: >-
+  A grid with a ring of invalid positions around it. The current cell is checked in each of the
+  four directions; a neighbor landing inside the grid is marked valid, one landing in the ring
+  is rejected by the bounds check.
+captions: vizrec
+presets:
+  - id: middle
+    label: Middle
+    stdin: "4 4\n....\n....\n....\n....\n1 2\n"
+  - id: edge
+    label: Edge
+    stdin: "4 4\n....\n....\n....\n....\n0 2\n"
+  - id: corner
+    label: Corner
+    stdin: "4 4\n....\n....\n....\n....\n0 0\n"
+consistency:
+  description: The neighbor count the visual ends with equals the output of examples/neighbor_check.py on each preset.
+  example: ../examples/neighbor_check.py
+  compare: output

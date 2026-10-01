@@ -1,0 +1,24 @@
+layout: single
+panels:
+  - id: text
+    viz: ArrayViz
+    title: Text built
+alt: >-
+  The hours field is built first, then the colon, then the minutes field. A value with one digit
+  gets a padding zero in front, drawn with its own state. A value that already has two digits is
+  left alone. The finished text is printed.
+captions: vizrec
+presets:
+  - id: main
+    label: 7 and 5
+    stdinFile: ../examples/zero_padding.in
+  - id: two_digits
+    label: 12 and 30
+    stdin: "12 30\n"
+  - id: zeros
+    label: 0 and 0
+    stdin: "0 0\n"
+consistency:
+  description: "rec.output() equals zero_padding.py's real stdout for the same stdin."
+  example: ../examples/zero_padding.py
+  compare: output

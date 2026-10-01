@@ -1,0 +1,32 @@
+{"schema":1,
+"kind":"frames",
+"id":"membership_scan",
+"layout":"row",
+"panels":[{"id":"nums","viz":"ArrayViz","title":"list nums"},{"id":"seen","viz":"StructViz","title":"set seen"}],
+"alt":"A list of six numbers and a set holding the same values. Checking whether a target is in the list compares it with one cell after another until it matches or the end is reached. Checking the set takes a single step whether or not the target is there.",
+"presets":[
+{"id":"main","label":"Found late","steps":[
+{"caption":"`nums` holds 6 numbers in order, and `seen = set(nums)` holds the same values. The question is whether 7 is among them.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"......"},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`7 in nums` compares 7 with `nums[0]`, which is 4. No match, so it moves to the next cell.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"d.....","pointers":[{"name":"i","at":0}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`7 in nums` compares 7 with `nums[1]`, which is 9. No match, so it moves to the next cell.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"dd....","pointers":[{"name":"i","at":1}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`7 in nums` compares 7 with `nums[2]`, which is 1. No match, so it moves to the next cell.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"ddd...","pointers":[{"name":"i","at":2}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`nums[3]` is 7, equal to 7. The scan stops with True after 4 comparisons.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"dddc..","pointers":[{"name":"i","at":3}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`7 in seen` does not scan. The set goes straight to where 7 would be stored and finds it there: True, in one step.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"dddc..","pointers":[{"name":"i","at":3}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"c"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}}
+]},
+{"id":"absent","label":"Not present","steps":[
+{"caption":"`nums` holds 6 numbers in order, and `seen = set(nums)` holds the same values. The question is whether 5 is among them.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"......"},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`5 in nums` compares 5 with `nums[0]`, which is 4. No match, so it moves to the next cell.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"d.....","pointers":[{"name":"i","at":0}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`5 in nums` compares 5 with `nums[1]`, which is 9. No match, so it moves to the next cell.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"dd....","pointers":[{"name":"i","at":1}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`5 in nums` compares 5 with `nums[2]`, which is 1. No match, so it moves to the next cell.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"ddd...","pointers":[{"name":"i","at":2}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`5 in nums` compares 5 with `nums[3]`, which is 7. No match, so it moves to the next cell.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"dddd..","pointers":[{"name":"i","at":3}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`5 in nums` compares 5 with `nums[4]`, which is 6. No match, so it moves to the next cell.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"ddddd.","pointers":[{"name":"i","at":4}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`5 in nums` compares 5 with `nums[5]`, which is 2. No match, so it moves to the next cell.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"dddddd","pointers":[{"name":"i","at":5}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"The scan ran off the end after 6 comparisons. 5 is not in `nums`, so the answer is False.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"dddddd","pointers":[{"name":"i","at":5}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`5 in seen` does not scan either. The set checks where 5 would be stored, finds nothing, and answers False in one step.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"dddddd","pointers":[{"name":"i","at":5}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}}
+]},
+{"id":"first","label":"Found first","steps":[
+{"caption":"`nums` holds 6 numbers in order, and `seen = set(nums)` holds the same values. The question is whether 4 is among them.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"......"},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`nums[0]` is 4, equal to 4. The scan stops with True after 1 comparison.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"c.....","pointers":[{"name":"i","at":0}]},"seen":{"kind":"set","items":[{"v":4,"s":"_"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}},
+{"caption":"`4 in seen` does not scan. The set goes straight to where 4 would be stored and finds it there: True, in one step.","panels":{"nums":{"values":[4,9,1,7,6,2],"states":"c.....","pointers":[{"name":"i","at":0}]},"seen":{"kind":"set","items":[{"v":4,"s":"c"},{"v":9,"s":"_"},{"v":1,"s":"_"},{"v":7,"s":"_"},{"v":6,"s":"_"},{"v":2,"s":"_"}]}}}
+]}
+]}

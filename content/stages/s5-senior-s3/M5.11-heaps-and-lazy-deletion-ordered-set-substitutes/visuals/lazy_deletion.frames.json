@@ -1,0 +1,32 @@
+{"schema":1,
+"kind":"frames",
+"id":"lazy_deletion",
+"layout":"row",
+"panels":[{"id":"h","viz":"StructViz","title":"Heap"},{"id":"b","viz":"TableViz","title":"best[item]"}],
+"alt":"A heap of (priority, job) entries next to a table of each job's current best priority. Updating a job pushes a new entry and changes its cell in the table. Handing out the next job pops the heap's top entry: if it matches the table, that job is handed out; if not, it is a stale entry left behind by an earlier update, and it is discarded.",
+"presets":[
+{"id":"stream","label":"Main stream","steps":[
+{"caption":"Update job 0 to priority 8: a new entry goes into the heap, and `best[0]` becomes 8.","panels":{"h":{"kind":"heap","items":[{"id":"1","v":"8, j0","s":"c"}]},"b":{"cells":[[8,"-","-"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Update job 0 to priority 2: a new entry goes into the heap, and `best[0]` becomes 2.","panels":{"h":{"kind":"heap","items":[{"id":"2","v":"2, j0","s":"c"},{"id":"1","v":"8, j0","s":"c"}]},"b":{"cells":[[2,"-","-"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Pop `(2, j0)`. It matches `best[0]` = 2, so job 0 is handed out at priority 2.","panels":{"h":{"kind":"heap","items":[{"id":"2","v":"2, j0","s":"c"},{"id":"1","v":"8, j0","s":"c"}]},"b":{"cells":[[2,"-","-"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Update job 1 to priority 5: a new entry goes into the heap, and `best[1]` becomes 5.","panels":{"h":{"kind":"heap","items":[{"id":"3","v":"5, j1","s":"c"},{"id":"1","v":"8, j0"}]},"b":{"cells":[["out",5,"-"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Pop `(5, j1)`. It matches `best[1]` = 5, so job 1 is handed out at priority 5.","panels":{"h":{"kind":"heap","items":[{"id":"3","v":"5, j1","s":"c"},{"id":"1","v":"8, j0"}]},"b":{"cells":[["out",5,"-"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Update job 2 to priority 9: a new entry goes into the heap, and `best[2]` becomes 9.","panels":{"h":{"kind":"heap","items":[{"id":"1","v":"8, j0"},{"id":"4","v":"9, j2","s":"c"}]},"b":{"cells":[["out","out",9]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Pop `(8, j0)`. `best[0]` is already handed out, which does not match, so this entry is stale and is discarded.","panels":{"h":{"kind":"heap","items":[{"id":"1","v":"8, j0","s":"x"},{"id":"4","v":"9, j2"}]},"b":{"cells":[["out","out",9]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Pop `(9, j2)`. It matches `best[2]` = 9, so job 2 is handed out at priority 9.","panels":{"h":{"kind":"heap","items":[{"id":"4","v":"9, j2","s":"c"}]},"b":{"cells":[["out","out",9]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Update job 1 to priority 3: a new entry goes into the heap, and `best[1]` becomes 3.","panels":{"h":{"kind":"heap","items":[{"id":"5","v":"3, j1","s":"c"}]},"b":{"cells":[["out",3,"out"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Pop `(3, j1)`. It matches `best[1]` = 3, so job 1 is handed out at priority 3.","panels":{"h":{"kind":"heap","items":[{"id":"5","v":"3, j1","s":"c"}]},"b":{"cells":[["out",3,"out"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}}
+]},
+{"id":"twice","label":"Improves twice","steps":[
+{"caption":"Update job 0 to priority 9: a new entry goes into the heap, and `best[0]` becomes 9.","panels":{"h":{"kind":"heap","items":[{"id":"1","v":"9, j0","s":"c"}]},"b":{"cells":[[9,"-","-"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Update job 0 to priority 5: a new entry goes into the heap, and `best[0]` becomes 5.","panels":{"h":{"kind":"heap","items":[{"id":"2","v":"5, j0","s":"c"},{"id":"1","v":"9, j0","s":"c"}]},"b":{"cells":[[5,"-","-"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Update job 0 to priority 1: a new entry goes into the heap, and `best[0]` becomes 1.","panels":{"h":{"kind":"heap","items":[{"id":"3","v":"1, j0","s":"c"},{"id":"2","v":"5, j0","s":"c"},{"id":"1","v":"9, j0","s":"c"}]},"b":{"cells":[[1,"-","-"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Pop `(1, j0)`. It matches `best[0]` = 1, so job 0 is handed out at priority 1.","panels":{"h":{"kind":"heap","items":[{"id":"3","v":"1, j0","s":"c"},{"id":"2","v":"5, j0","s":"c"},{"id":"1","v":"9, j0","s":"c"}]},"b":{"cells":[[1,"-","-"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Update job 1 to priority 5: a new entry goes into the heap, and `best[1]` becomes 5.","panels":{"h":{"kind":"heap","items":[{"id":"2","v":"5, j0"},{"id":"4","v":"5, j1","s":"c"},{"id":"1","v":"9, j0"}]},"b":{"cells":[["out",5,"-"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Pop `(5, j0)`. `best[0]` is already handed out, which does not match, so this entry is stale and is discarded.","panels":{"h":{"kind":"heap","items":[{"id":"2","v":"5, j0","s":"x"},{"id":"4","v":"5, j1"},{"id":"1","v":"9, j0","s":"x"}]},"b":{"cells":[["out",5,"-"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Pop `(5, j1)`. It matches `best[1]` = 5, so job 1 is handed out at priority 5.","panels":{"h":{"kind":"heap","items":[{"id":"4","v":"5, j1","s":"c"},{"id":"1","v":"9, j0"}]},"b":{"cells":[["out",5,"-"]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Update job 2 to priority 9: a new entry goes into the heap, and `best[2]` becomes 9.","panels":{"h":{"kind":"heap","items":[{"id":"1","v":"9, j0"},{"id":"5","v":"9, j2","s":"c"}]},"b":{"cells":[["out","out",9]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Pop `(9, j0)`. `best[0]` is already handed out, which does not match, so this entry is stale and is discarded.","panels":{"h":{"kind":"heap","items":[{"id":"1","v":"9, j0","s":"x"},{"id":"5","v":"9, j2"}]},"b":{"cells":[["out","out",9]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}},
+{"caption":"Pop `(9, j2)`. It matches `best[2]` = 9, so job 2 is handed out at priority 9.","panels":{"h":{"kind":"heap","items":[{"id":"5","v":"9, j2","s":"c"}]},"b":{"cells":[["out","out",9]],"rowHeads":["best"],"colHeads":["j0","j1","j2"]}}}
+]}
+]}

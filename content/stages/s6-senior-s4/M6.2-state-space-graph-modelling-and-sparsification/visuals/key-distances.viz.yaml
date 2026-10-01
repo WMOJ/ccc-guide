@@ -1,0 +1,29 @@
+layout: row
+panels:
+  - { id: g, viz: GraphViz, title: Map }
+  - { id: t, viz: TableViz, title: Key-room distances }
+legendLabels:
+  current: Start
+  compare: Checkpoint
+  path: Shortest route
+  done: Known
+alt: >-
+  Shrinking a map to its key rooms. The start and the checkpoints are the key rooms. For each pair
+  of key rooms the shortest route across the full map is highlighted and its distance goes into a
+  table. At the end the map is replaced by a small graph of only the key rooms, joined by edges
+  weighted with those shortest distances.
+captions: vizrec
+presets:
+  - id: two-stops
+    label: Two stops
+    stdin: "5 5 2\n0 1 2\n1 2 3\n0 3 1\n3 4 6\n2 4 2\n2 3\n"
+  - id: through
+    label: Through a stop
+    stdin: "5 5 2\n0 1 2\n1 2 3\n0 3 1\n3 4 6\n2 4 2\n1 2\n"
+  - id: cut-off
+    label: Cut off
+    stdin: "5 4 2\n0 1 2\n1 2 3\n0 3 1\n2 3 5\n2 4\n"
+consistency:
+  description: The distance and the settled count equal the output of examples/key_points.py.
+  example: ../examples/key_points.py
+  compare: output

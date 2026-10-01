@@ -1,0 +1,20 @@
+layout: row
+panels:
+  - id: global_scope
+    viz: StructViz
+    title: Global scope
+  - id: local_scope
+    viz: StructViz
+    title: Local scope (inside add)
+alt: >-
+  The global scope holds one name, total, starting at 0. Calling add(x) pushes a local scope
+  holding only x. Because add declares global total, every call changes the same global total
+  instead of creating a local copy, ending at 8 after add(5) then add(3).
+captions: vizrec
+presets:
+  - id: main
+    label: add(5) then add(3)
+consistency:
+  description: "rec.output() equals global_keyword.py's real stdout (no stdin needed)."
+  example: ../examples/global_keyword.py
+  compare: output

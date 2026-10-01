@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: numbers, viz: ArrayViz, title: Array }
+alt: >-
+  A sorted array with a left pointer and a right pointer. When the two pointed-at values sum to at
+  most K, every position between left and right also pairs with left at or under K, since the
+  array is sorted, so that whole range is counted at once and left moves in. Otherwise right moves
+  in without counting anything.
+captions: vizrec
+presets:
+  - id: typical
+    label: Typical
+    stdin: "5 6 1 2 3 4 5\n"
+  - id: none
+    label: K too small
+    stdin: "5 1 1 2 3 4 5\n"
+  - id: all
+    label: K covers all
+    stdin: "5 100 1 2 3 4 5\n"
+consistency:
+  description: The printed count equals the output of examples/count_pairs.py on the same array and K.
+  example: ../examples/count_pairs.py
+  compare: output

@@ -1,11 +1,14 @@
-def find(parent, x):
+import sys
+
+
+def find(parent: list, x: int) -> int:
     """Follow parent pointers to the root."""
     while parent[x] != x:
         x = parent[x]
     return x
 
 
-def union(parent, a, b):
+def union(parent: list, a: int, b: int) -> None:
     """Merge the groups containing a and b."""
     root_a = find(parent, a)
     root_b = find(parent, b)
@@ -13,19 +16,30 @@ def union(parent, a, b):
         parent[root_a] = root_b
 
 
-# Start with 5 independent elements
-parent = [0, 1, 2, 3, 4]
+def main() -> None:
+    data = sys.stdin.read().split()
+    if not data:
+        return
 
-# Union 0 and 1
-union(parent, 0, 1)
-print("After union(0, 1):", parent)
+    n = int(data[0])
+    m = int(data[1])
+    parent = list(range(n))
 
-# Union 2 and 3
-union(parent, 2, 3)
-print("After union(2, 3):", parent)
+    pos = 2
+    for _ in range(m):
+        a = int(data[pos])
+        b = int(data[pos + 1])
+        pos += 2
+        union(parent, a, b)
+        print(f"After union({a}, {b}):", parent)
 
-# Check connectivity
-print("find(0):", find(parent, 0))
-print("find(1):", find(parent, 1))
-print("find(2):", find(parent, 2))
-print("find(3):", find(parent, 3))
+    q = int(data[pos])
+    pos += 1
+    for _ in range(q):
+        x = int(data[pos])
+        pos += 1
+        print(f"find({x}):", find(parent, x))
+
+
+if __name__ == "__main__":
+    main()

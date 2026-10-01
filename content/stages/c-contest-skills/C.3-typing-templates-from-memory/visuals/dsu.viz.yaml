@@ -1,0 +1,27 @@
+layout: row
+panels:
+  - { id: arr, viz: ArrayViz, title: parent }
+  - { id: forest, viz: GraphViz, title: Sets as a forest }
+alt: >-
+  The union-find template on six nodes. Every node starts as its own root. Each union finds the
+  two roots and hangs the root of the smaller set under the other, updating the size. A query
+  compares the roots of two nodes. The parent array and the forest of arrows to parents are drawn
+  side by side, and any parent cell rewritten by path halving is marked.
+legendLabels:
+  current: Root
+  compare: Parent rewritten
+captions: vizrec
+presets:
+  - id: main
+    label: Three unions
+    stdin: "6 3\n0 1\n2 3\n1 3\n2\n3 1\n0 4\n"
+  - id: same
+    label: Already joined
+    stdin: "6 3\n0 1\n1 2\n0 2\n2\n2 0\n1 5\n"
+  - id: apart
+    label: No unions
+    stdin: "6 0\n1\n0 5\n"
+consistency:
+  description: The yes and no answers equal the output of examples/template_dsu.py on each preset.
+  example: ../examples/template_dsu.py
+  compare: output

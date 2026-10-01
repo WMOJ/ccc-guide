@@ -1,0 +1,29 @@
+{"schema":1,
+"kind":"frames",
+"id":"map_order",
+"layout":"row",
+"panels":[{"id":"d","viz":"ArrayViz","title":"Python dict"},{"id":"m","viz":"ArrayViz","title":"C++ std::map"}],
+"alt":"The same words are counted into two containers. The Python dict keeps each key in the order it first appeared, so a new key goes at the end. A C++ std::map keeps keys sorted, so a new key goes in its sorted position. A repeated key only raises its count. After the last word the program prints both orders.",
+"presets":[
+{"id":"main","label":"Unsorted","steps":[
+{"caption":"`d` is new. The dict puts it at the end, position 0. The map puts it in sorted position 0, among the keys ['d'].","panels":{"d":{"values":["d:1"],"states":"c"},"m":{"values":["d:1"],"states":"c"}}},
+{"caption":"`b` is new. The dict puts it at the end, position 1. The map puts it in sorted position 0, among the keys ['b', 'd'].","panels":{"d":{"values":["d:1","b:1"],"states":"_c"},"m":{"values":["b:1","d:1"],"states":"c_"}}},
+{"caption":"`d` is already there, so both containers only raise its count to 2.","panels":{"d":{"values":["d:2","b:1"],"states":"c_"},"m":{"values":["b:1","d:2"],"states":"_c"}}},
+{"caption":"`a` is new. The dict puts it at the end, position 2. The map puts it in sorted position 0, among the keys ['a', 'b', 'd'].","panels":{"d":{"values":["d:2","b:1","a:1"],"states":"__c"},"m":{"values":["a:1","b:1","d:2"],"states":"c__"}}},
+{"caption":"`c` is new. The dict puts it at the end, position 3. The map puts it in sorted position 2, among the keys ['a', 'b', 'c', 'd'].","panels":{"d":{"values":["d:2","b:1","a:1","c:1"],"states":"___c"},"m":{"values":["a:1","b:1","c:1","d:2"],"states":"__c_"}}},
+{"caption":"`b` is already there, so both containers only raise its count to 2.","panels":{"d":{"values":["d:2","b:2","a:1","c:1"],"states":"_c__"},"m":{"values":["a:1","b:2","c:1","d:2"],"states":"_c__"}}},
+{"caption":"The program prints the dict in the order keys first appeared and the map in key order. The orders differ.","panels":{"d":{"values":["d:2","b:2","a:1","c:1"],"states":"dddd"},"m":{"values":["a:1","b:2","c:1","d:2"],"states":"dddd"}}}
+]},
+{"id":"sorted","label":"Sorted input","steps":[
+{"caption":"`a` is new. The dict puts it at the end, position 0. The map puts it in sorted position 0, among the keys ['a'].","panels":{"d":{"values":["a:1"],"states":"c"},"m":{"values":["a:1"],"states":"c"}}},
+{"caption":"`b` is new. The dict puts it at the end, position 1. The map puts it in sorted position 1, among the keys ['a', 'b'].","panels":{"d":{"values":["a:1","b:1"],"states":"_c"},"m":{"values":["a:1","b:1"],"states":"_c"}}},
+{"caption":"`c` is new. The dict puts it at the end, position 2. The map puts it in sorted position 2, among the keys ['a', 'b', 'c'].","panels":{"d":{"values":["a:1","b:1","c:1"],"states":"__c"},"m":{"values":["a:1","b:1","c:1"],"states":"__c"}}},
+{"caption":"The program prints the dict in the order keys first appeared and the map in key order. The two orders match.","panels":{"d":{"values":["a:1","b:1","c:1"],"states":"ddd"},"m":{"values":["a:1","b:1","c:1"],"states":"ddd"}}}
+]},
+{"id":"one","label":"One key","steps":[
+{"caption":"`x` is new. The dict puts it at the end, position 0. The map puts it in sorted position 0, among the keys ['x'].","panels":{"d":{"values":["x:1"],"states":"c"},"m":{"values":["x:1"],"states":"c"}}},
+{"caption":"`x` is already there, so both containers only raise its count to 2.","panels":{"d":{"values":["x:2"],"states":"c"},"m":{"values":["x:2"],"states":"c"}}},
+{"caption":"`x` is already there, so both containers only raise its count to 3.","panels":{"d":{"values":["x:3"],"states":"c"},"m":{"values":["x:3"],"states":"c"}}},
+{"caption":"The program prints the dict in the order keys first appeared and the map in key order. The two orders match.","panels":{"d":{"values":["x:3"],"states":"d"},"m":{"values":["x:3"],"states":"d"}}}
+]}
+]}

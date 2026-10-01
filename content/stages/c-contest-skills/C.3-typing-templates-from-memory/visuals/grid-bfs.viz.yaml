@@ -1,0 +1,24 @@
+layout: single
+panels:
+  - { id: grid, viz: GridViz, title: Grid with distances }
+alt: >-
+  The grid BFS template on a three by three grid. The start cell is distance 0. Each cell taken
+  from the queue checks its four neighbors in the template's order, and a neighbor that is on the
+  grid, not a wall and still at distance -1 gets one more than the current cell. The search stops
+  when E comes off the queue, or ends with -1 when the queue runs empty first.
+legendLabels:
+  frontier: In the queue
+  current: Taken from the queue
+  done: Finished
+captions: vizrec
+presets:
+  - id: main
+    label: Reach E
+    stdin: "3 3\nS.#\n...\n#.E\n"
+  - id: blocked
+    label: No path
+    stdin: "3 3\nS.#\n.#.\n#.E\n"
+consistency:
+  description: The printed distance (or -1) equals the output of examples/template_grid_bfs.py on each preset.
+  example: ../examples/template_grid_bfs.py
+  compare: output

@@ -12,4 +12,4 @@ lessons:
   - difference-arrays
 practice:
   - id: ccc26j5
-    note: Apply a +1/-1 update at each interval's clipped ends and answer queries in O(1) with a prefix sum.
+    note: Lights mounted above a row of parking spots each illuminate a range of nearby spots; work out which spots ever get lit.

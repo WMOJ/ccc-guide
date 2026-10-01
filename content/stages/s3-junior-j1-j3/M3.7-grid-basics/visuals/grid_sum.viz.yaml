@@ -1,0 +1,23 @@
+layout: row
+panels:
+  - { id: grid, viz: GridViz, title: Numbers }
+  - { id: totals, viz: ArrayViz }
+alt: >-
+  A grid of numbers with an array of totals beside it. Each row is highlighted in turn and its
+  sum is written into the row-sum array. Then each column is highlighted in turn, the row index
+  changing while the column index stays fixed, and its sum is written into the column-sum array.
+captions: vizrec
+presets:
+  - id: board
+    label: 3 by 4
+    stdin: "3 4\n1 2 3 4\n5 6 7 8\n9 10 11 12\n"
+  - id: square
+    label: 2 by 2
+    stdin: "2 2\n4 1\n2 3\n"
+  - id: column
+    label: One column
+    stdin: "3 1\n5\n7\n2\n"
+consistency:
+  description: The sums the visual ends with equal the output of examples/grid_sum.py on each preset.
+  example: ../examples/grid_sum.py
+  compare: output

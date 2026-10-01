@@ -1,0 +1,33 @@
+{"schema":1,
+"kind":"frames",
+"id":"grid-query",
+"layout":"single",
+"panels":[{"id":"g","viz":"GridViz","title":"Gauges counted so far"}],
+"alt":"A grid of rain gauge readings. The query rectangle is marked first. Then four prefix entries are combined: the big top-left block is counted once, the strip above and the strip to the left are subtracted, and the corner they both removed is added back, leaving only the rectangle counted.",
+"legendLabels":{"done":"Counted once","invalid":"Subtracted too often","current":"Query rectangle"},
+"presets":[
+{"id":"inside","label":"Inside","steps":[
+{"caption":"The query asks for the gauges from row 1 to 2 and column 1 to 2, marked here. The four steps after this one reach that rectangle using only prefix entries.","panels":{"g":{"cells":["____","_cc_","_cc_"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"Start with prefix[3][3] = 28: every gauge from the top-left corner through row 2 and column 2, each counted once.","panels":{"g":{"cells":["ddd_","ddd_","ddd_"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"Subtract prefix[1][3] = 7, the strip above the rectangle. Running total: 21.","panels":{"g":{"cells":["____","ddd_","ddd_"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"Subtract prefix[3][1] = 10, the strip to the left of the rectangle. Running total: 11.","panels":{"g":{"cells":["x___","_dd_","_dd_"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"The corner above and to the left was subtracted twice, once in each strip. Add prefix[1][1] = 2 back. Running total: 13.","panels":{"g":{"cells":["____","_dd_","_dd_"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"Only the rectangle is left counted once: 28 - 7 - 10 + 2 = 13 mm, the same as adding the rectangle's 4 gauges directly.","panels":{"g":{"cells":["____","_dd_","_dd_"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}}
+]},
+{"id":"edge","label":"Top row","steps":[
+{"caption":"The query asks for the gauges from row 0 to 1 and column 1 to 2, marked here. The four steps after this one reach that rectangle using only prefix entries.","panels":{"g":{"cells":["_cc_","_cc_","____"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"Start with prefix[2][3] = 20: every gauge from the top-left corner through row 1 and column 2, each counted once.","panels":{"g":{"cells":["ddd_","ddd_","____"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"Row 0 is the top row, so there is no strip above the rectangle: prefix[0][3] is 0. Running total: 20.","panels":{"g":{"cells":["ddd_","ddd_","____"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"Subtract prefix[2][1] = 7, the strip to the left of the rectangle. Running total: 13.","panels":{"g":{"cells":["_dd_","_dd_","____"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"The corner above and to the left holds no gauges here, so adding prefix[0][1] = 0 changes nothing. Running total: 13.","panels":{"g":{"cells":["_dd_","_dd_","____"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"Only the rectangle is left counted once: 20 - 0 - 7 + 0 = 13 mm, the same as adding the rectangle's 4 gauges directly.","panels":{"g":{"cells":["_dd_","_dd_","____"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}}
+]},
+{"id":"single","label":"One gauge","steps":[
+{"caption":"The query asks for the gauges from row 1 to 1 and column 2 to 2, marked here. The four steps after this one reach that rectangle using only prefix entries.","panels":{"g":{"cells":["____","__c_","____"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"Start with prefix[2][3] = 20: every gauge from the top-left corner through row 1 and column 2, each counted once.","panels":{"g":{"cells":["ddd_","ddd_","____"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"Subtract prefix[1][3] = 7, the strip above the rectangle. Running total: 13.","panels":{"g":{"cells":["____","ddd_","____"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"Subtract prefix[2][2] = 14, the strip to the left of the rectangle. Running total: -1.","panels":{"g":{"cells":["xx__","__d_","____"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"The corner above and to the left was subtracted twice, once in each strip. Add prefix[1][2] = 3 back. Running total: 2.","panels":{"g":{"cells":["____","__d_","____"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}},
+{"caption":"Only the rectangle is left counted once: 20 - 7 - 14 + 3 = 2 mm, the same as adding the rectangle's 1 gauge directly.","panels":{"g":{"cells":["____","__d_","____"],"values":[[2,1,4,3],[5,6,2,1],[3,4,1,2]]}}}
+]}
+]}

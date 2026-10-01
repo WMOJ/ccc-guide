@@ -1,0 +1,37 @@
+{"schema":1,
+"kind":"frames",
+"id":"flag_scan",
+"layout":"row",
+"panels":[{"id":"array","viz":"ArrayViz","title":"Scores"},{"id":"table","viz":"TableViz","title":"Accumulators"}],
+"alt":"An array of scores scanned left to right, beside a table of the counters high and low and the flag all_high. Each position updates one counter, and the flag turns False the first time a score is not above 75 and never turns back, matching examples/flag_and_count.py.",
+"presets":[
+{"id":"typical","label":"Mixed","steps":[
+{"caption":"Position 0: score 80. Is it above 75?","panels":{"array":{"values":[80,90,70,85],"states":"c___","pointers":[{"name":"i","at":0,"strong":true}],"indices":true},"table":{"cells":[[0],[0],["True"]],"rowHeads":["high","low","all_high"]}}},
+{"caption":"80 > 75 is True, so high becomes 1. low is 0 and all_high stays True.","panels":{"array":{"values":[80,90,70,85],"states":"d___","pointers":[{"name":"i","at":0,"strong":true}],"indices":true},"table":{"cells":[[1],[0],["True"]],"states":["p","_","_"],"rowHeads":["high","low","all_high"]}}},
+{"caption":"Position 1: score 90. Is it above 75?","panels":{"array":{"values":[80,90,70,85],"states":"dc__","pointers":[{"name":"i","at":1,"strong":true}],"indices":true},"table":{"cells":[[1],[0],["True"]],"rowHeads":["high","low","all_high"]}}},
+{"caption":"90 > 75 is True, so high becomes 2. low is 0 and all_high stays True.","panels":{"array":{"values":[80,90,70,85],"states":"dd__","pointers":[{"name":"i","at":1,"strong":true}],"indices":true},"table":{"cells":[[2],[0],["True"]],"states":["p","_","_"],"rowHeads":["high","low","all_high"]}}},
+{"caption":"Position 2: score 70. Is it above 75?","panels":{"array":{"values":[80,90,70,85],"states":"ddc_","pointers":[{"name":"i","at":2,"strong":true}],"indices":true},"table":{"cells":[[2],[0],["True"]],"rowHeads":["high","low","all_high"]}}},
+{"caption":"70 > 75 is False, so low becomes 1 and all_high becomes False for good.","panels":{"array":{"values":[80,90,70,85],"states":"ddx_","pointers":[{"name":"i","at":2,"strong":true}],"indices":true},"table":{"cells":[[2],[1],["False"]],"states":["_","p","p"],"rowHeads":["high","low","all_high"]}}},
+{"caption":"Position 3: score 85. Is it above 75?","panels":{"array":{"values":[80,90,70,85],"states":"ddxc","pointers":[{"name":"i","at":3,"strong":true}],"indices":true},"table":{"cells":[[2],[1],["False"]],"rowHeads":["high","low","all_high"]}}},
+{"caption":"85 > 75 is True, so high becomes 3. low is 1 and all_high stays False.","panels":{"array":{"values":[80,90,70,85],"states":"ddxd","pointers":[{"name":"i","at":3,"strong":true}],"indices":true},"table":{"cells":[[3],[1],["False"]],"states":["p","_","_"],"rowHeads":["high","low","all_high"]}}},
+{"caption":"The scan is done: high = 3, low = 1, all_high = False. The program prints 3 1, then No.","panels":{"array":{"values":[80,90,70,85],"states":"ddxd","indices":true},"table":{"cells":[[3],[1],["False"]],"states":["p","p","p"],"rowHeads":["high","low","all_high"]}}}
+]},
+{"id":"all-pass","label":"All pass","steps":[
+{"caption":"Position 0: score 80. Is it above 75?","panels":{"array":{"values":[80,90,100],"states":"c__","pointers":[{"name":"i","at":0,"strong":true}],"indices":true},"table":{"cells":[[0],[0],["True"]],"rowHeads":["high","low","all_high"]}}},
+{"caption":"80 > 75 is True, so high becomes 1. low is 0 and all_high stays True.","panels":{"array":{"values":[80,90,100],"states":"d__","pointers":[{"name":"i","at":0,"strong":true}],"indices":true},"table":{"cells":[[1],[0],["True"]],"states":["p","_","_"],"rowHeads":["high","low","all_high"]}}},
+{"caption":"Position 1: score 90. Is it above 75?","panels":{"array":{"values":[80,90,100],"states":"dc_","pointers":[{"name":"i","at":1,"strong":true}],"indices":true},"table":{"cells":[[1],[0],["True"]],"rowHeads":["high","low","all_high"]}}},
+{"caption":"90 > 75 is True, so high becomes 2. low is 0 and all_high stays True.","panels":{"array":{"values":[80,90,100],"states":"dd_","pointers":[{"name":"i","at":1,"strong":true}],"indices":true},"table":{"cells":[[2],[0],["True"]],"states":["p","_","_"],"rowHeads":["high","low","all_high"]}}},
+{"caption":"Position 2: score 100. Is it above 75?","panels":{"array":{"values":[80,90,100],"states":"ddc","pointers":[{"name":"i","at":2,"strong":true}],"indices":true},"table":{"cells":[[2],[0],["True"]],"rowHeads":["high","low","all_high"]}}},
+{"caption":"100 > 75 is True, so high becomes 3. low is 0 and all_high stays True.","panels":{"array":{"values":[80,90,100],"states":"ddd","pointers":[{"name":"i","at":2,"strong":true}],"indices":true},"table":{"cells":[[3],[0],["True"]],"states":["p","_","_"],"rowHeads":["high","low","all_high"]}}},
+{"caption":"The scan is done: high = 3, low = 0, all_high = True. The program prints 3 0, then Yes.","panels":{"array":{"values":[80,90,100],"states":"ddd","indices":true},"table":{"cells":[[3],[0],["True"]],"states":["p","p","p"],"rowHeads":["high","low","all_high"]}}}
+]},
+{"id":"none-pass","label":"None pass","steps":[
+{"caption":"Position 0: score 10. Is it above 75?","panels":{"array":{"values":[10,20,30],"states":"c__","pointers":[{"name":"i","at":0,"strong":true}],"indices":true},"table":{"cells":[[0],[0],["True"]],"rowHeads":["high","low","all_high"]}}},
+{"caption":"10 > 75 is False, so low becomes 1 and all_high becomes False for good.","panels":{"array":{"values":[10,20,30],"states":"x__","pointers":[{"name":"i","at":0,"strong":true}],"indices":true},"table":{"cells":[[0],[1],["False"]],"states":["_","p","p"],"rowHeads":["high","low","all_high"]}}},
+{"caption":"Position 1: score 20. Is it above 75?","panels":{"array":{"values":[10,20,30],"states":"xc_","pointers":[{"name":"i","at":1,"strong":true}],"indices":true},"table":{"cells":[[0],[1],["False"]],"rowHeads":["high","low","all_high"]}}},
+{"caption":"20 > 75 is False, so low becomes 2 and all_high becomes False for good.","panels":{"array":{"values":[10,20,30],"states":"xx_","pointers":[{"name":"i","at":1,"strong":true}],"indices":true},"table":{"cells":[[0],[2],["False"]],"states":["_","p","p"],"rowHeads":["high","low","all_high"]}}},
+{"caption":"Position 2: score 30. Is it above 75?","panels":{"array":{"values":[10,20,30],"states":"xxc","pointers":[{"name":"i","at":2,"strong":true}],"indices":true},"table":{"cells":[[0],[2],["False"]],"rowHeads":["high","low","all_high"]}}},
+{"caption":"30 > 75 is False, so low becomes 3 and all_high becomes False for good.","panels":{"array":{"values":[10,20,30],"states":"xxx","pointers":[{"name":"i","at":2,"strong":true}],"indices":true},"table":{"cells":[[0],[3],["False"]],"states":["_","p","p"],"rowHeads":["high","low","all_high"]}}},
+{"caption":"The scan is done: high = 0, low = 3, all_high = False. The program prints 0 3, then No.","panels":{"array":{"values":[10,20,30],"states":"xxx","indices":true},"table":{"cells":[[0],[3],["False"]],"states":["p","p","p"],"rowHeads":["high","low","all_high"]}}}
+]}
+]}

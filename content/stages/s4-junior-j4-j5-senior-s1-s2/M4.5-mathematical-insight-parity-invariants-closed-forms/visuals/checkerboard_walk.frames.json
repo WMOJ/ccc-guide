@@ -1,0 +1,33 @@
+{"schema":1,
+"kind":"frames",
+"id":"checkerboard_walk",
+"layout":"single",
+"panels":[{"id":"board","viz":"GridViz","title":"Checkerboard walk"}],
+"alt":"A token walking a shortest path to a target on a checkerboard, then spending any spare moves in pairs, stepping out to a neighbor and back. An even surplus of spare moves lands back on the target; an odd surplus strands the token on the neighbor instead; too few moves rules out the target before a single step is taken.",
+"legendLabels":{"wall":"Shaded square","compare":"Target"},
+"presets":[
+{"id":"even-surplus","label":"Even surplus","steps":[
+{"caption":"The shortest path from (0, 0) to (2, 3) takes 5 moves. There are 7 moves to spend.","panels":{"board":{"cells":["c#_#_#","#_#_#_","_#_m_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Move 1: step to (1, 0), color 1. 6 moves left.","panels":{"board":{"cells":["_#_#_#","c_#_#_","_#_m_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Move 2: step to (2, 0), color 0. 5 moves left.","panels":{"board":{"cells":["_#_#_#","#_#_#_","c#_m_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Move 3: step to (2, 1), color 1. 4 moves left.","panels":{"board":{"cells":["_#_#_#","#_#_#_","_c_m_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Move 4: step to (2, 2), color 0. 3 moves left.","panels":{"board":{"cells":["_#_#_#","#_#_#_","_#cm_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Move 5: step to (2, 3), color 1. 2 moves left.","panels":{"board":{"cells":["_#_#_#","#_#_#_","_#_c_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Spend a pair of spare moves: step out to (2, 2), color 0. 1 move left.","panels":{"board":{"cells":["_#_#_#","#_#_#_","_#cm_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Step back to the target (2, 3), color 1. 0 moves left.","panels":{"board":{"cells":["_#_#_#","#_#_#_","_#_c_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Every spare move was spent in a pair, so the token ends on the target (2, 3) with 0 moves left. The answer is yes.","panels":{"board":{"cells":["_#_#_#","#_#_#_","_#_c_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}}
+]},
+{"id":"odd-surplus","label":"Odd surplus","steps":[
+{"caption":"The shortest path from (0, 0) to (2, 3) takes 5 moves. There are 6 moves to spend.","panels":{"board":{"cells":["c#_#_#","#_#_#_","_#_m_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Move 1: step to (1, 0), color 1. 5 moves left.","panels":{"board":{"cells":["_#_#_#","c_#_#_","_#_m_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Move 2: step to (2, 0), color 0. 4 moves left.","panels":{"board":{"cells":["_#_#_#","#_#_#_","c#_m_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Move 3: step to (2, 1), color 1. 3 moves left.","panels":{"board":{"cells":["_#_#_#","#_#_#_","_c_m_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Move 4: step to (2, 2), color 0. 2 moves left.","panels":{"board":{"cells":["_#_#_#","#_#_#_","_#cm_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"Move 5: step to (2, 3), color 1. 1 move left.","panels":{"board":{"cells":["_#_#_#","#_#_#_","_#_c_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"One spare move is left over: step out to (2, 2), color 0, with no move left to step back. The token lands beside the target, not on it, so the answer is no.","panels":{"board":{"cells":["_#_#_#","#_#_#_","_#cm_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}}
+]},
+{"id":"too-few","label":"Too few","steps":[
+{"caption":"The shortest path from (0, 0) to (2, 3) takes 5 moves. There are 3 moves to spend.","panels":{"board":{"cells":["c#_#_#","#_#_#_","_#_m_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}},
+{"caption":"3 moves is fewer than the 5 needed just to get there, so the answer is no, decided before taking a single step.","panels":{"board":{"cells":["c#_#_#","#_#_#_","_#_m_#","#_#_#_","_#_#_#","#_#_#_"],"values":[[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0],[0,1,0,1,0,1],[1,0,1,0,1,0]]}}}
+]}
+]}

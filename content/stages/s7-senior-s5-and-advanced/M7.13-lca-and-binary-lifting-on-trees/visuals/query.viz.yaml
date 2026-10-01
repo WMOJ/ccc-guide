@@ -1,0 +1,31 @@
+layout: row
+panels:
+  - { id: tree, viz: TreeViz, title: Tree with depths }
+  - { id: table, viz: TableViz, title: Nodes a and b }
+alt: >-
+  A rooted tree with depths, and a table holding the two query nodes a and b. First the deeper
+  node climbs by the depth difference, using one table lookup per set bit. If the nodes are then
+  equal, that node is the answer. Otherwise both nodes try the levels from highest to lowest,
+  jumping together whenever their targets differ and skipping a level when the targets match, and
+  the answer is the parent of where they stop.
+legendLabels:
+  current: Node a
+  compare: Node b
+  frontier: Jump target
+  invalid: Same target, skip
+  path: Answer
+captions: vizrec
+presets:
+  - id: main
+    label: Both deep
+    stdin: "9\n0 1\n1 2\n2 3\n2 4\n3 5\n4 6\n5 7\n6 8\n1\n7 8\n"
+  - id: uneven
+    label: Uneven
+    stdin: "9\n0 1\n1 2\n2 3\n2 4\n3 5\n4 6\n5 7\n6 8\n1\n6 7\n"
+  - id: ancestor
+    label: Ancestor
+    stdin: "9\n0 1\n1 2\n2 3\n2 4\n3 5\n4 6\n5 7\n6 8\n1\n7 3\n"
+consistency:
+  description: The answer and distance equal what examples/lca_query.py prints for the same single query.
+  example: ../examples/lca_query.py
+  compare: output

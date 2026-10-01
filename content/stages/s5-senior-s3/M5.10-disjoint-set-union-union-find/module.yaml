@@ -13,8 +13,8 @@ lessons:
   - union-find-connectivity
 practice:
   - id: ccc15s3
-    note: Find the next available gate on a linear arrangement using DSU next-free optimization.
+    note: Dock as many arriving planes as possible at an airport's numbered gates.
     why: A direct application of the next-free-slot trick from this module.
   - id: ccc17s4
-    note: Merge components with DSU while breaking ties between equally cheap connections.
+    note: Choose which pipes keep a city's buildings connected at the lowest maintenance cost.
     why: The full problem builds a minimum spanning tree, a later module's topic, but its DSU merging step is good practice here.

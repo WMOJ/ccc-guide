@@ -1,0 +1,24 @@
+layout: single
+panels:
+  - { id: g, viz: GraphViz, title: Cities }
+alt: >-
+  For each edge Kruskal's algorithm accepts, one group of cities is marked as one side of a cut
+  and every other city is the other side. The edges crossing that cut are highlighted, and the
+  cheapest of them is the accepted edge.
+captions: vizrec
+legendLabels:
+  frontier: Crosses the cut
+  path: Cheapest across it
+  done: Already accepted
+  compare: One side of the cut
+presets:
+  - id: main
+    label: Six cities
+    stdin: "6 8\n0 1 5\n0 2 8\n0 3 6\n1 2 3\n1 4 7\n2 3 4\n3 4 2\n3 5 9\n"
+  - id: ties
+    label: Equal costs
+    stdin: "5 5\n0 1 4\n0 2 1\n0 3 4\n1 4 4\n3 4 4\n"
+consistency:
+  description: The total cost and the accepted edges in the visual equal the output of examples/kruskal_mst.py.
+  example: ../examples/kruskal_mst.py
+  compare: output

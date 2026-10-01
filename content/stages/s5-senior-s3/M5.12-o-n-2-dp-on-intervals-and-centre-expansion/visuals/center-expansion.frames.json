@@ -1,0 +1,50 @@
+{"schema":1,
+"kind":"frames",
+"id":"center-expansion",
+"layout":"row",
+"panels":[{"id":"text","viz":"ArrayViz","title":"String"},{"id":"best","viz":"ArrayViz","title":"Best so far"}],
+"alt":"Expanding outward from every possible center of a string, one character at a time, to find the longest palindrome. Odd centers sit on a single character; even centers sit between two. Most centers are skipped once their result is known; the winning center is animated in full.",
+"presets":[
+{"id":"odd","label":"Odd","steps":[
+{"caption":"Center at 0 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["k","a","y","a","k","s"],"states":"______","name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"Even center between 0 and 1: no match, skipped.","skipped":1,"panels":{"text":{"values":["k","a","y","a","k","s"],"states":"______","name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"Center at 1 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["k","a","y","a","k","s"],"states":"______","name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"Even center between 1 and 2: no match, skipped.","skipped":1,"panels":{"text":{"values":["k","a","y","a","k","s"],"states":"______","name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"Odd center at index 2: 'y' matches itself, length 1.","panels":{"text":{"values":["k","a","y","a","k","s"],"states":"______","pointers":[{"name":"L","at":2,"side":"above"},{"name":"R","at":2,"side":"above"}],"compare":{"a":2,"b":2,"text":"match"},"name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"'a' matches 'a': the palindrome grows to 'aya', length 3.","panels":{"text":{"values":["k","a","y","a","k","s"],"states":"_ddd__","pointers":[{"name":"L","at":1,"side":"above"},{"name":"R","at":3,"side":"above"}],"compare":{"a":1,"b":3,"text":"match"},"name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"'k' matches 'k': the palindrome grows to 'kayak', length 5.","panels":{"text":{"values":["k","a","y","a","k","s"],"states":"ddddd_","pointers":[{"name":"L","at":0,"side":"above"},{"name":"R","at":4,"side":"above"}],"compare":{"a":0,"b":4,"text":"match"},"name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"Expansion reaches the edge of the string at index -1 or 5: stop.","panels":{"text":{"values":["k","a","y","a","k","s"],"states":"ddddd_","pointers":[{"name":"L","at":-1,"side":"above"},{"name":"R","at":5,"side":"above"}],"name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"New best: 'kayak', length 5.","panels":{"text":{"values":["k","a","y","a","k","s"],"states":"ddddd_","name":"text"},"best":{"values":["kayak"],"name":"best"}}},
+{"caption":"Even center between 2 and 3: no match, skipped.","skipped":1,"panels":{"text":{"values":["k","a","y","a","k","s"],"states":"ddddd_","name":"text"},"best":{"values":["kayak"],"name":"best"}}},
+{"caption":"Center at 3 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["k","a","y","a","k","s"],"states":"ddddd_","name":"text"},"best":{"values":["kayak"],"name":"best"}}},
+{"caption":"Even center between 3 and 4: no match, skipped.","skipped":1,"panels":{"text":{"values":["k","a","y","a","k","s"],"states":"ddddd_","name":"text"},"best":{"values":["kayak"],"name":"best"}}},
+{"caption":"Center at 4 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["k","a","y","a","k","s"],"states":"ddddd_","name":"text"},"best":{"values":["kayak"],"name":"best"}}},
+{"caption":"Even center between 4 and 5: no match, skipped.","skipped":1,"panels":{"text":{"values":["k","a","y","a","k","s"],"states":"ddddd_","name":"text"},"best":{"values":["kayak"],"name":"best"}}},
+{"caption":"Center at 5 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["k","a","y","a","k","s"],"states":"ddddd_","name":"text"},"best":{"values":["kayak"],"name":"best"}}}
+]},
+{"id":"even","label":"Even","steps":[
+{"caption":"Center at 0 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["d","e","e","d"],"states":"____","name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"Even center between 0 and 1: no match, skipped.","skipped":1,"panels":{"text":{"values":["d","e","e","d"],"states":"____","name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"Center at 1 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["d","e","e","d"],"states":"____","name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"Even center between 1 and 2: 'e' matches 'e', length 2.","panels":{"text":{"values":["d","e","e","d"],"states":"____","pointers":[{"name":"L","at":1,"side":"above"},{"name":"R","at":2,"side":"above"}],"compare":{"a":1,"b":2,"text":"match"},"name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"'d' matches 'd': the palindrome grows to 'deed', length 4.","panels":{"text":{"values":["d","e","e","d"],"states":"dddd","pointers":[{"name":"L","at":0,"side":"above"},{"name":"R","at":3,"side":"above"}],"compare":{"a":0,"b":3,"text":"match"},"name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"Expansion reaches the edge of the string at index -1 or 4: stop.","panels":{"text":{"values":["d","e","e","d"],"states":"dddd","pointers":[{"name":"L","at":-1,"side":"above"},{"name":"R","at":4,"side":"above"}],"name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"New best: 'deed', length 4.","panels":{"text":{"values":["d","e","e","d"],"states":"dddd","name":"text"},"best":{"values":["deed"],"name":"best"}}},
+{"caption":"Center at 2 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["d","e","e","d"],"states":"dddd","name":"text"},"best":{"values":["deed"],"name":"best"}}},
+{"caption":"Even center between 2 and 3: no match, skipped.","skipped":1,"panels":{"text":{"values":["d","e","e","d"],"states":"dddd","name":"text"},"best":{"values":["deed"],"name":"best"}}},
+{"caption":"Center at 3 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["d","e","e","d"],"states":"dddd","name":"text"},"best":{"values":["deed"],"name":"best"}}}
+]},
+{"id":"no-match","label":"No match","steps":[
+{"caption":"Odd center at index 0: 'c' matches itself, length 1.","panels":{"text":{"values":["c","h","a","i","r"],"states":"_____","pointers":[{"name":"L","at":0,"side":"above"},{"name":"R","at":0,"side":"above"}],"compare":{"a":0,"b":0,"text":"match"},"name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"Expansion reaches the edge of the string at index -1 or 1: stop.","panels":{"text":{"values":["c","h","a","i","r"],"states":"d____","pointers":[{"name":"L","at":-1,"side":"above"},{"name":"R","at":1,"side":"above"}],"name":"text"},"best":{"values":["(none)"],"name":"best"}}},
+{"caption":"New best: 'c', length 1.","panels":{"text":{"values":["c","h","a","i","r"],"states":"d____","name":"text"},"best":{"values":["c"],"name":"best"}}},
+{"caption":"Even center between 0 and 1: no match, skipped.","skipped":1,"panels":{"text":{"values":["c","h","a","i","r"],"states":"d____","name":"text"},"best":{"values":["c"],"name":"best"}}},
+{"caption":"Center at 1 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["c","h","a","i","r"],"states":"d____","name":"text"},"best":{"values":["c"],"name":"best"}}},
+{"caption":"Even center between 1 and 2: no match, skipped.","skipped":1,"panels":{"text":{"values":["c","h","a","i","r"],"states":"d____","name":"text"},"best":{"values":["c"],"name":"best"}}},
+{"caption":"Center at 2 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["c","h","a","i","r"],"states":"d____","name":"text"},"best":{"values":["c"],"name":"best"}}},
+{"caption":"Even center between 2 and 3: no match, skipped.","skipped":1,"panels":{"text":{"values":["c","h","a","i","r"],"states":"d____","name":"text"},"best":{"values":["c"],"name":"best"}}},
+{"caption":"Center at 3 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["c","h","a","i","r"],"states":"d____","name":"text"},"best":{"values":["c"],"name":"best"}}},
+{"caption":"Even center between 3 and 4: no match, skipped.","skipped":1,"panels":{"text":{"values":["c","h","a","i","r"],"states":"d____","name":"text"},"best":{"values":["c"],"name":"best"}}},
+{"caption":"Center at 4 (odd): longest palindrome here is length 1, not the best.","skipped":1,"panels":{"text":{"values":["c","h","a","i","r"],"states":"d____","name":"text"},"best":{"values":["c"],"name":"best"}}}
+]}
+]}

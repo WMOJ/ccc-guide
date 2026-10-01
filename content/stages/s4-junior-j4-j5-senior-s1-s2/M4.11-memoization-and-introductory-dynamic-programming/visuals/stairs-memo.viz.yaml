@@ -1,0 +1,19 @@
+layout: single
+panels:
+  - { id: memo, viz: ArrayViz, title: memo }
+alt: >-
+  The memo array filling in as the top-down recursion returns. A cell starts empty; the first
+  time its stair is needed, the recursion computes it and stores the result; every later call
+  for that same stair looks the stored value up instead of recomputing it.
+captions: vizrec
+presets:
+  - id: five
+    label: Target 5
+    stdin: "5\n"
+  - id: two
+    label: Target 2
+    stdin: "2\n"
+consistency:
+  description: The final answer the visual returns equals the output of examples/count_stairs_memo.py on the same target.
+  example: ../examples/count_stairs_memo.py
+  compare: output

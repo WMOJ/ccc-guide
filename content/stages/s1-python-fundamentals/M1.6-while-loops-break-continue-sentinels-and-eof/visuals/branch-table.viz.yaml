@@ -1,0 +1,23 @@
+layout: single
+panels:
+  - { id: t, viz: TableViz, title: "One row per number read" }
+alt: >-
+  A table gains one row for each number the loop reads, showing which branch that number takes
+  and the running total after it. A positive number is added, a negative number takes continue
+  and leaves the total unchanged, and a 0 takes break and ends the loop. One preset mixes all
+  three; one has only negatives before the 0; one starts with the 0.
+captions: vizrec
+presets:
+  - id: main
+    label: Mixed
+    stdinFile: ../examples/skip_and_sum.in
+  - id: negatives
+    label: Only negatives
+    stdin: "-2\n-3\n0\n"
+  - id: zero
+    label: Zero first
+    stdin: "0\n"
+consistency:
+  description: The final total shown matches the output of examples/skip_and_sum.py.
+  example: ../examples/skip_and_sum.py
+  compare: output

@@ -12,4 +12,5 @@ lessons:
   - window-counting
 practice:
   - id: ccc20s3
-    note: Find windows that are permutations of a target string using a fixed-length sliding window.
+    note: Count the distinct substrings of a longer text that are rearrangements of a shorter one.
+    why: A fixed-length window with letter counts, matched through a matches counter, is exactly the technique this lesson builds.

@@ -1,0 +1,19 @@
+layout: row
+panels:
+  - { id: values, viz: ArrayViz, title: Input values }
+  - { id: results, viz: ArrayViz, title: Squared results }
+alt: >-
+  Squaring each input value and appending its result to a results list, then joining and writing
+  the whole list once instead of printing each result as it is computed.
+captions: vizrec
+presets:
+  - id: main
+    label: Four values
+    stdin: "4\n2 5 3 10\n"
+  - id: single
+    label: One value
+    stdin: "1\n7\n"
+consistency:
+  description: The final results in the visual equal the output of examples/write_once.py.
+  example: ../examples/write_once.py
+  compare: output
