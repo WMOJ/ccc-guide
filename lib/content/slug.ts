@@ -1,4 +1,4 @@
-// lib/content/slug.ts — filesystem naming helpers for content/ and tests/fixtures/content/
+// lib/content/slug.ts — filesystem naming helpers for content/
 // (layout: stages/<sN-name>/<ModuleId-slug>/; module folders are found by their `<id>-` prefix
 // alone, in lib/content/course.ts).
 

@@ -29,7 +29,7 @@ const SCHEMAS: Record<VisualFileKind, ZodType> = {
   "trace-yaml": traceYamlSchema,
 };
 
-/** Validate text as the given kind (exported for tests and fixtures). */
+/** Validate text as the given kind (used by the runtime loader). */
 export function validateVisualText(
   text: string,
   kind: VisualFileKind,

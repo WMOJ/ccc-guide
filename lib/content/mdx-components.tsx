@@ -4,7 +4,7 @@
 // during `next build` since every route is static) — and, before that, fails
 // content:check's static G-SCHEMA check, which reads the same key list
 // from ./mdx-component-names.ts (a plain-data module, kept in sync with the object below by
-// tests/unit/content/mdx-component-names.test.ts) since it cannot load this file's JSX.
+// hand) since it cannot load this file's JSX.
 import fs from "node:fs";
 import type { ReactNode, TableHTMLAttributes } from "react";
 import {

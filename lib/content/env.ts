@@ -1,10 +1,9 @@
 // lib/content/env.ts — draft visibility environment.
 //
-// Production (VERCEL_ENV === "production") renders only "accepted" modules and never mounts the
-// fixture course. Everything else (local dev/build, Vercel previews) is "preview": it also
-// renders "gated" and "reviewed" (with a Draft badge) and mounts the fixture course as stage
-// "fx". Local builds count as preview unless ETCCC_ENV=production is set, for a production-mode
-// test without an actual Vercel production deploy.
+// Production (VERCEL_ENV === "production") renders only "accepted" modules. Everything else
+// (local dev/build, Vercel previews) is "preview": it also renders "gated" and "reviewed" (with a
+// Draft badge). Local builds count as preview unless ETCCC_ENV=production is set, for a
+// production-mode build without an actual Vercel production deploy.
 
 export type BuildEnv = "production" | "preview";
 

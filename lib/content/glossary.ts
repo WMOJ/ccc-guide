@@ -1,17 +1,14 @@
-// lib/content/glossary.ts — loads content/glossary.yaml (+ the fixture's, non-production) into
-// GlossaryTermView[].
+// lib/content/glossary.ts — loads content/glossary.yaml into GlossaryTermView[].
 import fs from "node:fs";
 import path from "node:path";
 import { parse } from "yaml";
 import { getCourse } from "./course";
-import { getBuildEnv } from "./env";
 import { glossarySchema } from "./schemas";
 import type { GlossaryTermView } from "./types";
 
 type GlossaryTermEntry = ReturnType<typeof glossarySchema.parse>["terms"][number];
 
 const REAL_FILE = path.join(process.cwd(), "content", "glossary.yaml");
-const FIXTURE_FILE = path.join(process.cwd(), "tests", "fixtures", "content", "glossary.yaml");
 
 function readTerms(file: string): GlossaryTermEntry[] {
   if (!fs.existsSync(file)) return [];
@@ -25,9 +22,7 @@ let cached: GlossaryTermView[] | null = null;
 
 export function getGlossaryTerms(): GlossaryTermView[] {
   if (CACHE && cached) return cached;
-  const terms = [...readTerms(REAL_FILE)];
-  if (getBuildEnv() !== "production") terms.push(...readTerms(FIXTURE_FILE));
-  cached = terms
+  cached = readTerms(REAL_FILE)
     .map((t) => ({
       id: t.id,
       term: t.term,

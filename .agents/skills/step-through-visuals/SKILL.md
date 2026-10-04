@@ -22,8 +22,6 @@ server-rendered and fully meaningful on its own, with no autoplay.
   12 px, sideways scroll at 390 px and console errors. Read that report only: by owner rule no
   agent opens the PNGs (or any screenshot). Check a figure by reading its source and frames JSON
   against the limits below and its captions against the prose.
-- The tracer itself (`tools/viz/trace.py`) is exercised directly by
-  `tests/unit/viz/tracer.test.ts` (skipped with a visible reason when PyPy 3.8 isn't available).
 
 ## What G-VIZ checks
 
@@ -40,8 +38,8 @@ visual.
 - Fully keyboard-operable (play/pause, step, scrub, presets); no flashing; `prefers-reduced-motion`
   turns transitions into snaps or cross-fades.
 - State is never shown by color alone.
-- Checked at 390×844 (phone), 768×1024, 1440×900, plus a 1920×1080 smoke (G-VISUAL, G-PAGE) — a
-  visual that only reads at desktop width is a bug, not a tradeoff.
+- Must read at 390×844 (phone), 768×1024, 1440×900 and 1920×1080 — a visual that only reads at
+  desktop width is a bug, not a tradeoff.
 - Size a preset for a phone: arrays ≤ ~10 cells, grids ≤ ~6×6, graphs/trees ≤ ~9 nodes,
   ≤ ~40 steps per preset.
 
@@ -51,8 +49,8 @@ visual.
   a third quantity goes into a node value (`vz.graph(..., value_label=)`), a caption, or one
   TableViz with a row per quantity. The Zod limits in `lib/viz/schema.ts` cap cells, nodes and
   label lengths; read them before sizing a preset.
-- The first step is what renders without JavaScript, and `test:e2e` fails if the first panel of
-  that step draws nothing or draws no text: never open on an empty structure (fold "starts
+- The first step is what renders without JavaScript, so its first panel must draw something with
+  text in it: never open on an empty structure (fold "starts
   empty" into the first real change), and give grid cells values, not state alone.
 - Schema caps worth knowing before sizing: at most 3 presets per visual, and a `TableViz` at most
   10 rows and 10 columns. At 390 px, a table or grid of about 6 columns with short labels is the
@@ -106,5 +104,5 @@ visual.
 1. Reproduce with `npm run check:viz -- --scope <module id>` before touching anything.
 2. If the diff is in the data, fix the `.viz.py` source and regenerate — never hand-patch the
    JSON.
-3. If the diff is visual only (layout, color, motion), it is a G-VISUAL baseline question — see the
-   `verifying-changes` skill.
+3. If the diff is visual only (layout, color, motion), check it from text with `viz:shots` — see
+   the `verifying-changes` skill.

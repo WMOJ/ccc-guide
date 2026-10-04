@@ -3,7 +3,7 @@
 import { z } from "zod";
 
 const moduleIdRe = /^(M\d+\.\d+|C\.\d+)$/;
-const stageIdRe = /^(s\d+|c|fx)$/;
+const stageIdRe = /^(s\d+|c)$/;
 const moduleStatusEnum = z.enum(["planned", "drafted", "gated", "reviewed", "accepted"]);
 
 // --- content/course.yaml ----------------------------------------------------------------------
@@ -17,7 +17,7 @@ export const courseModuleSchema = z.strictObject({
 });
 
 export const courseStageSchema = z.strictObject({
-  id: z.string().regex(stageIdRe, "stage id must look like s0..s7, c or fx"),
+  id: z.string().regex(stageIdRe, "stage id must look like s0..s7 or c"),
   number: z.string().min(1),
   title: z.string().min(1),
   goal: z.string().optional(),

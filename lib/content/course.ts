@@ -1,52 +1,32 @@
 // lib/content/course.ts — the course structure loader.
 //
-// Reads content/course.yaml (real course) and, in non-production builds, also
-// tests/fixtures/content/course.yaml (the "fx" fixture stage) and merges them. For
-// every module, checks whether it has been authored on disk: a directory named `<id>-…` under
+// Reads content/course.yaml. For every module, checks whether it has been authored on disk: a directory named `<id>-…` under
 // stages/<stageDir>/ holding module.yaml (status, objectives, practice) and module.mdx (the page
 // body). A module is readable only when its status is visible in this build and module.mdx
 // exists; anything else renders as "Coming soon" with no link.
 import fs from "node:fs";
 import path from "node:path";
 import { parse } from "yaml";
-import { getBuildEnv, visibleStatuses } from "./env";
+import { visibleStatuses } from "./env";
 import { type CourseStageEntry, courseSchema, moduleFileSchema } from "./schemas";
 import { MODULE_BODY_FILE, stageDirName } from "./slug";
 import type { ModuleLink, ModuleNavLink, ModuleStatus, StageLink } from "./types";
 
-const REAL_ROOT = path.join(process.cwd(), "content");
-const FIXTURE_ROOT = path.join(process.cwd(), "tests", "fixtures", "content");
+const CONTENT_ROOT = path.join(process.cwd(), "content");
 
-interface StageSource {
-  entry: CourseStageEntry;
-  root: string;
-}
-
-function readCourseYaml(root: string): CourseStageEntry[] {
-  const file = path.join(root, "course.yaml");
+function readCourseYaml(): CourseStageEntry[] {
+  const file = path.join(CONTENT_ROOT, "course.yaml");
   if (!fs.existsSync(file)) return [];
   const raw = fs.readFileSync(file, "utf8");
   const data = courseSchema.parse(parse(raw));
   return data.stages;
 }
 
-function collectStageSources(): StageSource[] {
-  const real = readCourseYaml(REAL_ROOT).map((entry) => ({ entry, root: REAL_ROOT }));
-  if (getBuildEnv() === "production") return real;
-  const fixture = readCourseYaml(FIXTURE_ROOT).map((entry) => ({ entry, root: FIXTURE_ROOT }));
-  return [...real, ...fixture];
-}
-
 /** The module's directory: the folder under its stage whose name starts with `<id>-` and holds a
  * module.yaml. Only the id prefix matters, so a course.yaml title can change without renaming the
  * folder. */
-function findModuleDir(
-  root: string,
-  stageId: string,
-  stageTitle: string,
-  moduleId: string,
-): string | null {
-  const stageDir = path.join(root, "stages", stageDirName(stageId, stageTitle));
+function findModuleDir(stageId: string, stageTitle: string, moduleId: string): string | null {
+  const stageDir = path.join(CONTENT_ROOT, "stages", stageDirName(stageId, stageTitle));
   if (!fs.existsSync(stageDir)) return null;
   for (const entry of fs.readdirSync(stageDir, { withFileTypes: true })) {
     if (entry.isDirectory() && entry.name.startsWith(`${moduleId}-`)) {
@@ -60,10 +40,9 @@ function findModuleDir(
 function buildModuleLink(
   stageId: string,
   stageTitle: string,
-  root: string,
   entry: { id: string; title: string; status: ModuleStatus },
 ): ModuleLink {
-  const dir = findModuleDir(root, stageId, stageTitle, entry.id);
+  const dir = findModuleDir(stageId, stageTitle, entry.id);
   // An authored module's own module.yaml status is the working status (authors move it through
   // drafted -> gated -> reviewed); course.yaml's copy only matters for unauthored modules.
   // content:check (G-SCHEMA) keeps the two in agreement wherever "accepted" is involved.
@@ -82,14 +61,13 @@ function buildModuleLink(
 }
 
 export function getCourse(): { stages: StageLink[] } {
-  const sources = collectStageSources();
-  const stages: StageLink[] = sources.map(({ entry, root }) => ({
+  const stages: StageLink[] = readCourseYaml().map((entry) => ({
     id: entry.id,
     number: entry.number,
     title: entry.title,
     goal: entry.goal,
     href: `/learn#stage-${entry.id}`,
-    modules: entry.modules.map((m) => buildModuleLink(entry.id, entry.title, root, m)),
+    modules: entry.modules.map((m) => buildModuleLink(entry.id, entry.title, m)),
   }));
   return { stages };
 }
@@ -112,11 +90,11 @@ export function getModuleAuthoredData(
   practice: { id: string; note?: string; why?: string }[];
   dir: string | null;
 } {
-  for (const { entry, root } of collectStageSources()) {
+  for (const entry of readCourseYaml()) {
     if (entry.id !== stageId) continue;
     const moduleEntry = entry.modules.find((m) => m.id === moduleId);
     if (!moduleEntry) continue;
-    const dir = findModuleDir(root, stageId, entry.title, moduleId);
+    const dir = findModuleDir(stageId, entry.title, moduleId);
     if (!dir) return { objectives: [], practice: [], dir: null };
     const moduleData = moduleFileSchema.parse(
       parse(fs.readFileSync(path.join(dir, "module.yaml"), "utf8")),

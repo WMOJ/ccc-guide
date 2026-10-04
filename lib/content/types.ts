@@ -29,7 +29,7 @@ export interface ModuleNavLink {
 }
 
 export interface StageLink {
-  /** `s0`…`s7`, `c`, `fx`. */
+  /** `s0`…`s7`, `c`. */
   id: string;
   /** Display number: "0"…"7", "C". */
   number: string;

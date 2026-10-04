@@ -22,10 +22,7 @@ const PYPY38 = resolvePypy38();
 const scopeIndex = process.argv.indexOf("--scope");
 const SCOPE = scopeIndex !== -1 ? process.argv[scopeIndex + 1] : undefined;
 
-const CONTENT_ROOTS = [
-  path.join(APP_ROOT, "content"),
-  path.join(APP_ROOT, "tests", "fixtures", "content"),
-].filter((r) => fs.existsSync(r));
+const CONTENT_ROOT = path.join(APP_ROOT, "content");
 
 function walk(dir: string, out: string[]) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -58,7 +55,7 @@ function run(pyFile: string): { stdout: string; stderr: string; status: number |
 
 function main() {
   const pyFiles: string[] = [];
-  for (const root of CONTENT_ROOTS) walk(root, pyFiles);
+  walk(CONTENT_ROOT, pyFiles);
   const scoped = pyFiles.filter((f) => !SCOPE || f.includes(SCOPE));
 
   let wroteOut = 0;

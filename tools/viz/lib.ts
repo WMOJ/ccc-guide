@@ -30,7 +30,6 @@ export function pypyPath(): string {
 export const TOOLS_DIR = path.join(APP_ROOT, "tools", "viz");
 export const DEFAULT_ROOTS = [
   path.join(APP_ROOT, "content"),
-  path.join(APP_ROOT, "tests", "fixtures", "content"),
   path.join(APP_ROOT, "app", "dev", "viz"),
 ];
 export const DEFAULT_BYTES = 150_000;
@@ -338,7 +337,6 @@ export function generate(src: VisualSource): Generated {
 
 export interface Args {
   scope?: string;
-  /** `--root=<dir>` (repeatable, relative to the repo root): replaces DEFAULT_ROOTS (gate fixtures). */
   roots: string[];
   flags: Set<string>;
   rest: string[];
@@ -347,7 +345,6 @@ export interface Args {
 export function parseArgs(argv: string[]): Args {
   const flags = new Set<string>();
   const rest: string[] = [];
-  const extraRoots: string[] = [];
   let scope: string | undefined;
   for (let i = 0; i < argv.length; i += 1) {
     const a = argv[i] as string;
@@ -356,14 +353,12 @@ export function parseArgs(argv: string[]): Args {
       i += 1;
     } else if (a.startsWith("--scope=")) {
       scope = a.slice("--scope=".length);
-    } else if (a.startsWith("--root=")) {
-      extraRoots.push(path.resolve(APP_ROOT, a.slice("--root=".length)));
     } else if (a.startsWith("--")) {
       flags.add(a.slice(2));
     } else {
       rest.push(a);
     }
   }
-  const roots = extraRoots.length > 0 ? extraRoots : DEFAULT_ROOTS;
+  const roots = DEFAULT_ROOTS;
   return scope === undefined ? { roots, flags, rest } : { scope, roots, flags, rest };
 }

@@ -507,7 +507,7 @@ Every interactive component has default, hover, focus-visible, active, and (wher
 - **Titles with code**: module titles may contain backtick spans; `RichTitle` renders them as inline `<code>` in the sidebar, index rows and continue block.
 - **Copy**: every UI string comes from `content/ui/strings.yaml` through `ui()` (server) or props (client). Client components never import copy.
 - **Client code** is limited to: copy button, mark-as-read, live read cells, continue block, search dialog and page, mobile drawer. Term uses a native popover and needs no script.
-- **`/dev/design`** (preview builds only, 404 in production) shows every component in every state, with sample problems resolved from the registry. It is the target for pixel review and visual baselines.
+- **`/dev/design`** (preview builds only, 404 in production) shows every component in every state, with sample problems resolved from the registry. It is the target for pixel review.
 
 ## Visual Language
 

@@ -31,8 +31,7 @@ const nextConfig: NextConfig = {
   // which is also where `next dev` writes — running one while the other is up kills the dev
   // server (BUILD_ID changes under it). Unset (the default) still resolves to `.next`, so Vercel's
   // own deployment build — which never sets this — is unaffected; every *local* script that
-  // might run alongside someone's `next dev` (verify:full's G-BUILD, the test:e2e/visual/a11y
-  // Playwright webServers, scripts/check-production-mode.mjs's own production-env build) sets it
+  // might run alongside someone's `next dev` (verify:full's G-BUILD, links:internal) sets it
   // explicitly to a directory nothing else writes to. `npm run dev`/`npm run start` never set it,
   // so they keep using `.next` as always.
   distDir: process.env.ETCCC_DIST_DIR || ".next",

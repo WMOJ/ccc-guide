@@ -1,6 +1,6 @@
 ---
 name: tool-setup
-description: Check for and install the external tools this repo's gates need (Playwright browsers, PyPy 3.8, ruff, vermin) — normal, system-wide installs, nothing confined to the repo. Load before running verify:fast/verify:full for the first time on a machine, or when a gate reports a missing tool.
+description: Check for and install the external tools this repo's gates need (Playwright's Chromium, PyPy 3.8, ruff, vermin) — normal, system-wide installs, nothing confined to the repo. Load before running verify:fast/verify:full for the first time on a machine, or when a gate reports a missing tool.
 ---
 
 # Tool setup
@@ -10,27 +10,23 @@ downloaded into the repo, sandboxed, or redirected. Check first; install only wh
 
 ## Playwright + Chromium
 
-Check: `npx playwright --version` should print **1.63.0** (the pinned `@playwright/test` version
-in `package.json`).
+Needed for `viz:shots` (G-VIZ-SHOTS). Check: `npx playwright --version` should print **1.63.0**
+(the pinned `playwright` version in `package.json`).
 
-Install (after `npm ci`, so the pinned `@playwright/test` is present):
+Install (after `npm ci`, so the pinned `playwright` is present):
 
 ```bash
-npx playwright install chromium webkit
+npx playwright install chromium
 ```
 
 This downloads into Playwright's default user cache (`~/Library/Caches/ms-playwright` on macOS) —
 do not set `PLAYWRIGHT_BROWSERS_PATH`. If your shell already exports it (or `RUFF_CACHE_DIR`)
-pointing somewhere else, run the gates with `env -u PLAYWRIGHT_BROWSERS_PATH -u RUFF_CACHE_DIR`. Then confirm the E2E/visual/a11y suites launch headlessly:
-
-```bash
-npm run test:e2e
-```
+pointing somewhere else, run the gates with `env -u PLAYWRIGHT_BROWSERS_PATH -u RUFF_CACHE_DIR`.
 
 ## PyPy 3.8
 
 Needed for `check:python` (G-PY-38/G-PY-RUN), `gen:outputs`, `gen:viz`, `check:viz`, the G-PREREQ
-part of `content:check`, and `tests/unit/viz/tracer.test.ts`. Pinned to **PyPy 3.8 v7.3.11**
+part of `content:check`. Pinned to **PyPy 3.8 v7.3.11**
 (Python 3.8.16) — any PyPy build of the 3.8.x line works; PyPy also ships 3.9/3.10 builds, which do
 not.
 

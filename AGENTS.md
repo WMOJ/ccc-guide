@@ -45,25 +45,24 @@ npm run dev              # next dev
 npm run build            # production build (through scripts/build-lock.mjs)
 npm run lint             # biome check .
 npm run typecheck        # tsc --noEmit
-npm run test:unit        # vitest
-npm run verify:fast      # the fast gates (lint, types, unit, schema, style, R14, links, ...)
-npm run verify:full      # verify:fast + build + prod-mode check + Playwright + links + viz:shots
+npm run verify:fast      # the fast gates (lint, types, schema, style, R14, links, ...)
+npm run verify:full      # verify:fast + build + internal links + viz:shots
 ```
 
 `verify:full` must be green before any change is considered done. See the `verifying-changes`
-skill for what each gate checks and how the Playwright suites are wired.
+skill for what each gate checks.
 
 ## Tool prerequisites
 
 Node version is pinned in `package.json`'s `engines`. Everything else (PyPy 3.8, ruff, vermin,
-Playwright's browsers) is a normal, system-wide install — see the `tool-setup` skill for exact
+Playwright's Chromium) is a normal, system-wide install — see the `tool-setup` skill for exact
 pinned versions, install steps, and a one-line check for each.
 
 ## Broad rules every change must respect
 
-- **No agent views images** (owner rule): no reading PNG/JPG screenshots or baselines, no browser
-  or computer-use screenshots. Check visuals from text (source, frames JSON, `check:viz`,
-  `viz:shots`'s text report); new visual baselines are accepted unseen.
+- **No agent views images** (owner rule): no reading PNG/JPG screenshots, no browser or
+  computer-use screenshots. Check visuals from text (source, frames JSON, `check:viz`,
+  `viz:shots`'s text report).
 - **Light mode only.** No dark theme, no `prefers-color-scheme: dark`, no `dark:` classes.
 - **Every shown code sample is Python 3.8**, because that is what the CCC grader's PyPy runs. A
   deliberately invalid example is labeled "not valid on the CCC grader"; a deliberately failing one

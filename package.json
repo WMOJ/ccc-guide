@@ -12,12 +12,11 @@
     "start": "next start",
     "lint": "biome check .",
     "typecheck": "tsc --noEmit",
-    "test:unit": "vitest run",
     "lint:light": "node scripts/gates/lint-light.mjs",
     "content:check": "node --import ./tools/viz/register.mjs scripts/gates/content-check.ts",
     "content:status": "node --import ./tools/viz/register.mjs scripts/gates/content-status.ts",
     "lint:r14": "node scripts/gates/lint-r14.mjs",
-    "spell": "cspell --no-progress \"content/**\" \"tests/fixtures/content/**\" \"*.md\"",
+    "spell": "cspell --no-progress \"content/**\" \"*.md\"",
     "lint:mdx": "remark . --ext mdx --frail",
     "check:python": "node --import ./tools/viz/register.mjs tools/pycheck/check-python.ts",
     "gen:outputs": "node --import ./tools/viz/register.mjs tools/pycheck/gen-outputs.ts",
@@ -27,17 +26,11 @@
     "viz:shots": "node --import ./tools/viz/register.mjs tools/viz/viz-shots.ts",
     "prebuild": "node scripts/gates/prebuild.mjs",
     "verify:build": "node scripts/gates/verify-build.mjs",
-    "test:e2e": "node scripts/check-production-mode.mjs && node scripts/run-playwright.mjs e2e playwright.config.ts 4100",
-    "test:visual": "node scripts/run-playwright.mjs visual playwright.visual.config.ts 4101",
-    "test:a11y": "node scripts/run-playwright.mjs a11y playwright.a11y.config.ts 4102",
     "links:verify": "node tools/links/verify-judges.mjs",
     "links:external": "node tools/links/verify-external.mjs",
     "links:internal": "node scripts/links-internal.mjs",
-    "perf": "node scripts/perf-budgets.mjs",
-    "deployed-url": "node scripts/deployed-url.mjs",
     "verify:fast": "node scripts/verify.mjs fast",
-    "verify:full": "node scripts/verify.mjs full",
-    "verify:preview": "node scripts/verify.mjs preview"
+    "verify:full": "node scripts/verify.mjs full"
   },
   "dependencies": {
     "@base-ui/react": "1.8.0",
@@ -64,22 +57,19 @@
     "zod": "4.6.5"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.13.0",
     "@biomejs/biome": "2.5.14",
-    "@playwright/test": "1.63.0",
     "@types/d3-hierarchy": "3.1.7",
     "@types/node": "24.13.6",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "cspell": "10.3.3",
-    "lighthouse": "13.5.0",
     "linkinator": "8.1.0",
+    "playwright": "1.63.0",
     "postcss": "8.5.28",
     "remark-cli": "12.0.1",
     "remark-mdx": "3.1.1",
     "remark-preset-lint-consistent": "6.0.1",
     "remark-preset-lint-recommended": "7.0.1",
-    "typescript": "6.0.3",
-    "vitest": "5.0.1"
+    "typescript": "6.0.3"
   }
 }

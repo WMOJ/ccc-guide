@@ -1,5 +1,5 @@
-// The shared player's state machine (StepThrough, CodeTrace, Scene): pure, so it is unit tested
-// without a browser. Playback timing lives in the client player; this only decides states.
+// The shared player's state machine (StepThrough, CodeTrace, Scene): pure and free of
+// browser APIs. Playback timing lives in the client player; this only decides states.
 
 /** Milliseconds per step and per transition at each speed (DESIGN.md → Motion, [W3] timings). */
 export const SPEEDS = [

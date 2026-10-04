@@ -1,20 +1,15 @@
-# Build and test output
+# Build output
 node_modules/
 .next/
 .next-*/
 out/
 test-results/
-playwright-report/
 *.tsbuildinfo
 
 # tools/pycheck scratch (fenced-code-block temp files, deleted at the end of every run;
 # gitignored as a safety net if a run is interrupted)
 .pycheck-scratch/
 __pycache__/
-
-# scripts/check-production-mode.mjs's isolated production build (G-E2E production-mode proof);
-# deleted at the end of every run, gitignored as a safety net if a run is interrupted
-.next-prod-check/
 
 # Secrets and machine-local config
 .env*
@@ -27,6 +22,6 @@ __pycache__/
 # OS
 .DS_Store
 
-# Run logs and reports written by manual tools (link verification, perf budgets) — regenerated
+# Run logs and reports written by manual tools (link verification) — regenerated
 # on each run, not scratch by definition but not meant to be committed either
 reports/

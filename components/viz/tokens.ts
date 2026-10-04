@@ -33,16 +33,6 @@ export const vizStroke = {
   dash: "var(--viz-dash)",
 } as const;
 
-/** Every CSS custom property the library reads (a unit test checks globals.css defines them). */
-export const VIZ_CSS_VARS = [
-  ...Object.values(vizColor),
-  ...Object.values(vizStroke),
-  "var(--viz-grid-size)",
-  "var(--viz-grid-opacity)",
-  "var(--dur-viz)",
-  "var(--ease-draft)",
-].map((v) => v.slice(4, -1));
-
 /** Legend labels and the non-colour cue of each state (DESIGN.md → State vocabulary). */
 export const STATE_META: Record<Exclude<VizState, "none">, { label: string; cue: string }> = {
   unvisited: { label: "Not reached", cue: "thin outline" },

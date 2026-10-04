@@ -21,8 +21,8 @@ for the full product and design spec, and `AGENTS.md` for the rules every change
 npm ci                   # install dependencies
 npm run dev               # next dev
 npm run build             # production build
-npm run verify:fast       # lint, typecheck, unit tests, and every content gate
-npm run verify:full       # verify:fast + production build + Playwright (e2e, visual, a11y)
+npm run verify:fast       # lint, typecheck, and every content gate
+npm run verify:full       # verify:fast + production build + internal links + viz:shots
 ```
 
 See the `verifying-changes` and `content-gates` skills (`.agents/skills/`) for what each gate

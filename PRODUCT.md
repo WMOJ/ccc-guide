@@ -74,7 +74,6 @@ The only course that goes from "never programmed" to CCC Senior S5 **in Python 3
 
 - Course structure: module IDs and titles (score lines and any "Contest payoff" framing are never surfaced in the app).
 - Registry: 119 CCC 2014–2026 problems (`content/registry/ccc-problems.yaml`).
-- Fixture course for previews: `tests/fixtures/content/` (stage `fx`).
 - There are **no** testimonials, user counts, results, outcomes or endorsements, and none may be fabricated.
 
 ## Product Principles
@@ -90,5 +89,5 @@ The only course that goes from "never programmed" to CCC Senior S5 **in Python 3
 - **WCAG 2.2 AA** throughout: visible focus, adequate target sizes (24 px minimum, 44 px for primary touch targets on phones), skip link, logical headings, code blocks scroll inside themselves.
 - Visuals: every one in a `Figure` with caption and text alternative; step-throughs offer "Read the steps as text"; caption regions are `aria-live="polite"`; players are fully keyboard-operable; no flashing, no motion without a user action; `prefers-reduced-motion` turns transitions into snaps or cross-fades.
 - State in visuals is never shown by colour alone (colour-blind safe, readable in greyscale).
-- Viewports tested: 390×844, 768×1024, 1440×900, plus a 1920×1080 smoke.
+- Viewports supported: 390×844, 768×1024, 1440×900, plus a 1920×1080 smoke.
 - Reader is an absolute beginner and a teenager: plain words in UI copy, no jargon in labels, every term defined on first use.
