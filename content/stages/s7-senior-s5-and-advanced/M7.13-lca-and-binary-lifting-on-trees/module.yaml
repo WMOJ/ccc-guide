@@ -1,14 +1,8 @@
 id: M7.13
-title: LCA and binary lifting on trees
 status: accepted
 objectives:
   - Find the lowest common ancestor of two nodes by walking up the tree, and see why that is slow on a deep tree.
   - Build the ancestor table up[k][v] from the parent array of a BFS-rooted tree.
   - Answer an LCA query by equalizing the depths with the table, then jumping both nodes together from the highest level down.
   - Compute the distance between two nodes from their depths and their LCA.
-prereqs:
-  - M5.8
-  - M6.12
-lessons:
-  - binary-lifting
 practice: []

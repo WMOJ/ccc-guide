@@ -1,0 +1,71 @@
+A token starts on square 0 of a strip. Each turn a fair coin decides the move: heads moves it one square, tails moves it two. The game ends as soon as the token reaches square 3 or goes past it. How many turns does a game last, on average? That average is the <Term id="expected-value">expected value</Term> of the number of turns: every way the game can go, weighted by its chance.
+
+## Expected value from the definition
+
+Every sequence of moves is a path, and its chance is the product of the chances of its moves. A path that lasts `t` turns with chance `c` contributes `c * t` to the expected value, and the expected value is the sum of these contributions over all paths. Step through the tree of this 3-square game below. The presets give the coin a 3/4 chance of heads, and shrink the strip to one square.
+
+<Figure caption="Every path of a short game, with its chance and its number of turns, added into a weighted sum">
+  <StepThrough frames="visuals/paths.frames.json" preset="main" />
+</Figure>
+
+The five paths have chances 1/8, 1/8, 1/4, 1/4 and 1/4, which total 1. The weighted sum is 9/4, so a game lasts 2.25 turns on average. No single game lasts 2.25 turns, since it lasts 2 or 3. The expected value describes the long run.
+
+<Code file="examples/expected_by_paths.py" showOutput caption="The same sum for any strip, walking every path with an explicit stack" />
+
+The stack holds `(square, chance, turns)` for each path still being played. A path that reaches the end adds `chance * turns` to `expected`. The count of paths is the trouble: each extra square multiplies it by about 1.6. A strip of 30 squares has 2,178,309 paths, and a strip of 40 has 267,914,296. With N up to 10^5, the size M2.9 pairs with an O(N) plan, enumerating paths is out of the question.
+
+## Work backward from the end
+
+Look at what the future of a game depends on. Once the token sits on square 2, the rest of the game is the same however it got there. So give each square its own answer: `e[i]` is the expected number of turns still to play from square `i`. At or past the end nothing is left, so `e` is 0 there. Anywhere else one turn is played, and then the token is on square `i + 1` with chance `p` or on square `i + 2` with chance `q = 1 - p`:
+
+`e[i] = 1 + p * e[i + 1] + q * e[i + 2]`
+
+This is correct because it is the definition again, weighted over only the first move. After that move the game restarts from a new square, and its expected value is that square's `e`. Every cell reads cells to its right, so fill the list from right to left, the order of the bottom-up table in M4.11. Step through it below, and try the longer strip.
+
+<Figure caption="The list e filling from the end of the strip toward square 0, each cell from the two to its right">
+  <StepThrough frames="visuals/backward.frames.json" preset="main" />
+</Figure>
+
+The leftmost cell, 2.25, agrees with the tree. The longer strip gives 2.875, which is 23/8. Each square is computed once, so the cost is N steps instead of a count that grows with every square. The code is one loop. Trace it below on the fair coin, the biased coin, and a one-square strip.
+
+<Code file="examples/expected_backward.py" showOutput caption="Expected turns from every square, filled from the end" />
+
+<Figure caption="The loop of expected_backward.py, with e filled one square at a time">
+  <CodeTrace trace="examples/expected_backward.trace.json" preset="main" />
+</Figure>
+
+Lines 13 and 14 add one weighted term each. In the trace, `e[i]` starts at 1 for the turn about to be played, then grows by `p * e[i + 1]` and `q * e[i + 2]`.
+
+## Add expected values, even for dependent pieces
+
+A second route needs no recurrence for `e`. Count turns by where they end. Each turn lands the token on one square. Squares 1 and 2 are landed on at most once each, and the final turn lands at or past the end. So the number of turns is 1 plus the number of squares among 1 and 2 that the token lands on.
+
+<Term id="linearity-of-expectation">Linearity of expectation</Term> says the expected value of a sum is the sum of the expected values. A square counts 1 if the token lands on it and 0 if not, so its expected value is just the chance of landing there. That holds although the pieces depend on each other: landing on square 2 is more likely when square 1 was landed on. Nothing has to be known about how they interact. Step through the landing chances below.
+
+<Figure caption="The chance of landing on each square, filled left to right, then added with 1 for the last turn">
+  <StepThrough frames="visuals/landing.frames.json" preset="main" />
+</Figure>
+
+A square is reached from the square one before it with a 1-step, or two before it with a 2-step, so `land[i] = p * land[i - 1] + q * land[i - 2]`.
+
+<Code file="examples/landing_chances.py" showOutput caption="Landing chances going forward, and the expected turns from their sum" />
+
+Both routes print 2.25. Use the backward list when each state's future is a fresh game. Use linearity when the quantity you want splits into pieces whose chances are easy to get.
+
+## What the number means
+
+To see what an expected value promises, simulate. The program below plays the game with a seeded random generator, so every run prints the same numbers, and reports the running average.
+
+<Code file="examples/simulate.py" showOutput caption="Average turns after 10, 100, 1000 and 10000 simulated games" />
+
+<Figure caption="The running average of simulated games settling toward the exact expected value, shown as a dashed line">
+  <StepThrough frames="visuals/simulate.frames.json" preset="main" />
+</Figure>
+
+The average drifts toward 2.25 and stays close to it, yet it is still a sample. A simulation is a rough check on an exact computation, and it cannot replace one.
+
+## Printing the answer
+
+The chances here are sums of powers of two, so the floats are exact. A chance like 0.1 is not, and each operation adds a relative error near 10^-16. Over a million squares the total error stays far below a typical tolerance. Keep full precision until the last step, then format once, as in `f"{expected:.4f}"`, with as many digits as the statement asks for. When a statement wants the answer as an exact fraction modulo a prime, M7.6 shows the tool for the division. On PyPy, one flat list of floats and one loop are enough: a million squares is a million iterations.
+
+Reach for this when a question asks for an average or a chance over random choices. If the situation after a move depends only on where you are, define a value per state and fill it from the end. If the target is a count, try linearity first.

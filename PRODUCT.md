@@ -10,9 +10,9 @@ web
 
 ## Users
 
-**One learner, a secondary-school student, who has never written a line of code.** They read on a laptop at a desk after school, for 20 to 60 minutes at a time, over many months (Inferred from the ~215-lesson scope and "months of study"). A phone is the second device: a lesson started on the laptop is sometimes finished on the bus or in bed, so phones must be comfortable, not just functional.
+**One learner, a secondary-school student, who has never written a line of code.** They read on a laptop at a desk after school, for 20 to 60 minutes at a time, over many months (Inferred from the 104-module scope and "months of study"). A phone is the second device: a module started on the laptop is sometimes finished on the bus or in bed, so phones must be comfortable, not just functional.
 
-The learner's job on a lesson page is to **understand one idea well enough to use it on a real problem later**: read the explanation, look at the example code and its output, step through the animation until the idea clicks, then leave the app to practise on an online judge. They come back to the course map to find where they stopped.
+The learner's job on a module page is to **understand one idea well enough to use it on a real problem later**: read the explanation, look at the example code and its output, step through the animation until the idea clicks, then leave the app to practise on an online judge. They come back to the course map to find where they stopped.
 
 Secondary readers (not designed for, but present): the Manager (a parent or mentor figure who built the course and reviews it on preview links) and reviewers checking the content.
 
@@ -22,7 +22,7 @@ A free, non-commercial reading course that takes the learner from zero programmi
 
 It teaches with prose, worked examples, read-only Python code, input and output panels, and a large number of animated step-throughs and code traces recorded at authoring time. Practice happens **outside** the app, on WMOJ and DMOJ, through a short list of real CCC problems at the end of each module.
 
-Success is quiet: the learner keeps coming back, reads a lesson to the end, understands it, and goes to practise. There are no scores, streaks or dashboards to measure it.
+Success is quiet: the learner keeps coming back, reads a module to the end, understands it, and goes to practise. There are no scores, streaks or dashboards to measure it.
 
 ## Positioning
 
@@ -30,7 +30,7 @@ The only course that goes from "never programmed" to CCC Senior S5 **in Python 3
 
 ## Operating Context
 
-- **Reading sessions**, long-form: a lesson is about 800 to 1,300 words plus code and visuals. Scale: about 215 lessons in 104 modules across stages 0 to 7 plus a contest-skills track C.
+- **Reading sessions**, long-form: a module is one page of about 800 to 1,300 words plus code and visuals. Scale: 104 modules across stages 0 to 7 plus a contest-skills track C.
 - **Leaving and returning**: the learner copies code into their own editor (copy button) and opens judge problems in new tabs. "Mark as read" and "Continue where you left off" are the only state, held in one localStorage key.
 - **Surfaces and their modes** (Impeccable modes):
 
@@ -39,11 +39,10 @@ The only course that goes from "never programmed" to CCC Senior S5 **in Python 3
   | `/` | Home: what the course is, how to use it, continue, stage overview | Read (a docs index is Read, not Persuade) |
   | `/start` | Getting started: how practice works on the judges, what the CCC is | Read |
   | `/learn` | Course map: stages → modules, read marks, "Coming soon" | Read, with light Operate wayfinding |
-  | `/learn/[stage]/[module]` | Module overview: objectives, lessons, practice list, prerequisites | Read |
-  | `/learn/[stage]/[module]/[lesson]` | **Lesson reader** (the core surface) | Read |
+  | `/learn/[stage]/[module]` | **Module page** (the core surface): objectives, the reading, then its practice list. Old `/learn/[stage]/[module]/[slug]` links redirect here | Read |
   | `/problems` | All 119 registry problems by year and level, with judge links and "taught in" backlinks | Read, reference table |
   | `/search` and the header dialog | Full search | Operate |
-  | `/glossary` | Terms, each linked to its introducing lesson | Read, reference |
+  | `/glossary` | Terms, each linked to its introducing module | Read, reference |
   | `/about` | Credits, CEMC attribution, judge acknowledgements, "this app is free" | Read |
   | 404 | Friendly not-found with links back | Read |
   | `/dev/viz` | Visual gallery, previews only | Internal |
@@ -80,7 +79,7 @@ The only course that goes from "never programmed" to CCC Senior S5 **in Python 3
 
 ## Product Principles
 
-1. **The page is for reading.** Every screen serves comprehension of one idea at a time; chrome recedes, the lesson column leads.
+1. **The page is for reading.** Every screen serves comprehension of one idea at a time; chrome recedes, the module column leads.
 2. **Show it running, never claim it.** Outputs, traces and animations come from real runs; nothing checkable is typed by hand.
 3. **Steady, not pressuring.** No scores, streaks, targets or urgency; the only progress signal is a quiet "read" mark the learner sets.
 4. **Practice lives on the judges.** The app teaches and points; it never solves, hints, or grades.

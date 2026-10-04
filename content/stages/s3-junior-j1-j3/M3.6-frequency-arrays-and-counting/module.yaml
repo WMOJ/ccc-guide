@@ -1,16 +1,10 @@
 id: M3.6
-title: Frequency arrays and counting
 status: accepted
 objectives:
   - Build a frequency array to count how often each value appears.
   - Use an array index to represent a value so counting happens in one pass.
   - Apply frequency counting to solve real problems with character and digit counts.
   - Recognize when a frequency array is the right tool and when it is not.
-prereqs:
-  - M1.8
-  - M1.9
-lessons:
-  - frequency-arrays-and-counting
 practice:
   - id: ccc16s1
     note: Decide whether a word with some letters hidden could be an anagram of another.

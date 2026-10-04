@@ -1,0 +1,57 @@
+Some problems describe a process directly: something happens each minute, each round or each turn, and the question asks what the process looks like at the end. A <Term id="simulation">simulation</Term> solves these by running that same process inside your program, one step at a time, exactly as the story describes it happening.
+
+## Model the process literally
+
+A simulation needs one variable for every piece of state the process tracks, updated exactly the way the story says it changes. Larger simulations track more state at once, such as a position for every player, or a count for every kind of item on hand. Whatever the story tracks, name a variable for it, and change that variable only where the story says its value changes. A simulation that invents an extra rule the statement never mentioned, or skips a rule it does mention, no longer matches the process it was supposed to model.
+
+## Read
+
+Here is an invented mini-problem: a library desk opens for N minutes. Before minute i, `arrivals[i]` patrons join the line. After they join, the desk serves one patron from the line, if anyone is waiting. Find the longest the line ever gets.
+
+## Find the bounds
+
+An invented input specification: line 1 holds N (1 ≤ N ≤ 1000), line 2 holds N integers, `arrivals[1]` to `arrivals[N]` (0 ≤ `arrivals[i]` ≤ 1000).
+
+## Work the sample by hand
+
+<Figure caption="The library line over five minutes: arrivals join, then one patron is served">
+  <StepThrough frames="visuals/library-line.frames.json" preset="sample" />
+</Figure>
+
+Minute 1 brings 2 arrivals, so the line grows from 0 to 2, the longest it has been so far. One patron is served, leaving 1. Minute 2 brings no one, so the line stays at 1 before service and drops to 0 after. Minute 3 brings 1 arrival, rebuilding the line to 1 and back down to 0. Minute 4 brings 3 arrivals, its biggest jump, growing the line to 3, a new longest, before service brings it to 2. Minute 5 brings no one, so the line drops from 2 to 1.
+
+## Plan in words
+
+1. Keep two counters: the current line length, and the longest length seen so far. Start both at 0.
+2. For each minute in order: add that minute's arrivals to the line length, then update the longest-so-far if the line length is now larger. If the line length is not 0, serve one patron by subtracting 1.
+3. After the last minute, the longest-so-far holds the answer.
+
+## Code
+
+<Code file="examples/library_line.py" showOutput caption="Simulating the library line minute by minute" />
+
+`queue_length` and `max_length` are the two pieces of state the story needs, once the two input lines are read. Every line of the loop matches one sentence of the problem: arrivals join first, the running longest is checked, and then one patron leaves if the line is not empty. The printed `3` matches the peak found while working through the sample by hand in the figure above, minute by minute, in the same order the code runs them.
+
+## Test edge cases
+
+Run the hand-worked sample through the finished code and check that `3` still comes out. Then check a minute list of all zeros, where the longest should stay `0`. Also check a single minute with a large arrival count and no others, where the longest equals that one minute's arrivals.
+
+## Submit
+
+Once the sample and the edge cases agree with the plan, the simulation is ready to submit.
+
+## Recognizing a simulation problem
+
+A problem is a good fit for simulation when its story already describes the exact steps to take, in order. The input also needs to be small enough to take every step without running out of time. Nothing about "the library line" needs a clever shortcut. The process itself is the entire algorithm.
+
+Contrast this with a problem that only describes the starting and ending conditions, leaving the steps between them for you to work out. That kind of problem usually needs a different approach. A later module covers judging directly from a problem's bounds when the input is too large to simulate every step one at a time. Another covers trying every possible answer instead of following a single described process. For now, the test is simple. If the statement already tells you what happens at each step, in order, simulating that story is the algorithm.
+
+## Common mistakes
+
+A common mistake is updating the state variables in the wrong order, such as serving a patron before that minute's arrivals have joined the line. Reread the story's exact order, sentence by sentence, and match your code's order of operations to it line by line. Another is forgetting a piece of state the story implies but never states directly, such as the running longest here. It has to be tracked explicitly, the same as the line length itself, or the final answer has nothing at all left to report.
+
+Print statements placed inside the loop while writing a simulation, showing the state after every step, catch both mistakes quickly. Compare that printed trace, step by step, against the figure above or your own hand-worked run. Remove the print statements once the simulation matches, since a contest submission should print only the final answer the problem asks for.
+
+## Recap
+
+A simulation models a process literally, with one variable for every piece of state the story tracks, updated in the exact order the story describes. Work a small sample by hand first, matching each step to a sentence of the problem. Then check that the code's result, and its order of updates, agree with that hand-worked run. A problem whose story already is the algorithm, on input small enough to step through fully, is exactly what simulation is for.

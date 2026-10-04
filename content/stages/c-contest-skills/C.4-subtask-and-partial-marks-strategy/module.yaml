@@ -1,14 +1,8 @@
 id: C.4
-title: Subtask and partial-marks strategy
 status: accepted
 objectives:
   - Recognize how each subtask's bound on N sets the complexity a plan needs.
   - Solve the smallest subtask with a brute force, then remove its repeated work to reach the larger bounds.
   - Count a plan's operations at a subtask's bound to see which subtasks it can clear.
   - Decide which working program to submit first when no single program clears every subtask yet.
-prereqs:
-  - M2.1
-  - M2.9
-lessons:
-  - partial-marks-strategy
 practice: []

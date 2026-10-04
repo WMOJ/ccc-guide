@@ -1,12 +1,7 @@
 id: C.2
-title: Using the official Python docs under contest conditions
 status: accepted
 objectives:
   - Find a function's exact signature quickly on docs.python.org, for modules such as heapq, bisect, collections, itertools, and math.
   - Read a page's "Added in version" and "Changed in version" notes, and judge from them whether a feature is safe to use on Python 3.8.
   - State that the official Python documentation is the only outside reference the contest rules allow.
-prereqs:
-  - M1.13
-lessons:
-  - using-the-official-python-docs-under-contest-conditions
 practice: []

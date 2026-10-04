@@ -1,0 +1,55 @@
+Every program in this course will fail at least once while you are writing it. That is normal. What matters is reading what Python tells you when it stops, instead of guessing.
+
+## Anatomy of a traceback
+
+When a program stops with an error, Python prints a <Term id="traceback">traceback</Term>. It is not random noise. It always has the same shape, and reading it in order tells you where to look first.
+
+<Code file="examples/misspelled_name.py" expectError="NameError" caption="A variable name typed differently than it was assigned" />
+
+The first line, `Traceback (most recent call last):`, only announces that an error is coming. The next line names the file and the line number: `line 2` here. The line after that repeats the source line itself, so you can see it without opening the file. The last line is the one to read first in practice: the error's type, a colon, and a short message about what went wrong.
+
+Here that last line is `NameError: name 'totall' is not defined. Did you mean: total?` The program assigned `total` on line 1, then tried to print `totall`, a name it never created. Python even guesses the name you probably meant, which is often the fix.
+
+A traceback can run longer than this one once a program calls functions inside functions, since each call adds its own file-and-line entry above the last. Reading it bottom to top still works the same way: the error type and message come last, and the line just above them is where Python was when it happened.
+
+## `SyntaxError`: the program never starts running
+
+<Code file="examples/unterminated_string.py" expectError="SyntaxError" caption="A string that is missing its closing quote" />
+
+This traceback looks different. There is no `Traceback (most recent call last):` line and no `in <module>`, because the program never started running; only a file name and a line number introduce it. Python reads and checks the whole file's grammar before it runs a single line, and a `SyntaxError` means that check failed. Here the string on line 1 opens with a quote and never closes it, leaving Python no way to tell where it was supposed to end.
+
+A `SyntaxError` points at where Python noticed the problem, with a small `^` mark under it. The mistake itself sits at that spot or just before it: an unclosed bracket, for one, is often reported a line or more after the line that opened it. No part of the program has run yet, so nothing has been printed and no variable has been created.
+
+## `NameError`: a name Python has never seen
+
+A `NameError` means the program tried to use a name that has not been assigned. That can come from a typo like the one above, or from using a variable before its first assignment. Python only knows the names it has already run past. A name used one line early, before its assignment, is exactly as unknown to Python as one that is never assigned at all.
+
+## `TypeError`: an operator does not work on these types
+
+<Code file="examples/mixed_types.py" expectError="TypeError" caption="Adding a string and a number with `+`" />
+
+`price` holds the text `"3"`, not the number `3`, since it was written in quotes. The `+` operator joins two strings, and it adds two numbers, but a string and a number are neither case, so Python raises `TypeError: unsupported operand type(s) for +: 'str' and 'int'`. The fix is to convert one side to match the other, often with `int()` on the text.
+
+## `ValueError`: the right type, the wrong value
+
+<Code file="examples/word_as_number.py" expectError="ValueError" caption="Converting text that is not a number" />
+
+`int()` expects text that looks like a whole number. `"twelve"` is text, the type `int()` accepts, but its value is not something `int()` can read as digits. Python raises a `ValueError` instead of a `TypeError`, since the text you gave it was the right type and only its value was wrong. Converting text your program reads from standard input can fail for the same reason, whenever that text turns out not to be a number after all.
+
+## Watching a program run into an error
+
+A traceback only shows where a program stopped. A step-through shows how far it got before that, which is often the more useful question when you are debugging.
+
+<Figure caption="A program that creates two variables, then crashes on a third name it never assigned">
+  <CodeTrace trace="examples/subtotal_and_tip.trace.json" />
+</Figure>
+
+By the time line 3 crashes, `subtotal` and `shipping` already exist with the values from lines 1 and 2. Only the misspelled `shiping` is missing. Seeing which variables already exist at the moment of the crash is often the fastest way to spot a typo, faster than rereading the whole file line by line.
+
+## Errors you will meet later
+
+Four more errors come up once later modules introduce the features that can raise them. Indexing past the end of a string or a list raises `IndexError`, covered when strings and lists arrive. Looking up a missing key in a dictionary raises `KeyError`, covered with dictionaries. Dividing by zero raises `ZeroDivisionError`, covered in the module on integer arithmetic. A function that calls itself with no way to stop raises `RecursionError`, covered with recursion. The standard input module also mentioned a program that calls `input()` more times than there are lines waiting. That stops with `EOFError`, covered once a later module reads several lines in a loop.
+
+A common mistake is changing code at random after seeing an error, without reading which line and which error type it names. Read the last line first, find the line number above it, and change only what that combination points to.
+
+This lesson covered how to read a traceback's file name, line number and error type, the four errors `SyntaxError`, `NameError`, `TypeError` and `ValueError`, and which later module covers each of `IndexError`, `KeyError`, `ZeroDivisionError`, `RecursionError` and `EOFError`.

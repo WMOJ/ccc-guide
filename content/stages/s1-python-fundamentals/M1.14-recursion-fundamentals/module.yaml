@@ -1,14 +1,9 @@
 id: M1.14
-title: Recursion fundamentals
 status: accepted
 objectives:
   - Split a problem into a base case and a recursive case.
   - Trace how the call stack grows as newer calls stack on top, then unwinds as each one finishes.
   - Recognize the recursion limit and read a `RecursionError`.
-prereqs:
-  - M1.10
-lessons:
-  - recursion-fundamentals
 practice:
   - id: ccc15j5
     note: Count the ways to hand out pieces of pie to a group of people, in order.

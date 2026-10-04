@@ -1,0 +1,121 @@
+Take the text `"beautify"` and ask which 3-character stretch has the most vowels. Checking every
+one of the 6 windows by rescanning its 3 characters from scratch works, but it re-reads characters
+the previous window already looked at. A <Term id="sliding-window">sliding window</Term> avoids
+that. Two pointers, `left` and `right`, mark a contiguous range. M4.9's read and write pointers can drift arbitrarily far apart. Here, both ends only move forward
+and stay exactly K apart, or within whatever property the problem sets. That keeps the window's contents summarized
+by running counts, built once from a frequency array (M3.6), so each slide updates the count in
+O(1) instead of rescanning the window.
+
+## Fixed-length windows
+
+Some problems ask about every substring of a fixed length K. Which one has the most vowels, does
+it match a target pattern, does it hold exactly three of some letter. Checking each window by
+rescanning its K characters costs O(K) per window, and there are roughly N windows, so the whole
+scan costs O(N · K). For N and K both up to 200,000 (M2.9's bound-setting territory), that is up to
+4 × 10¹⁰ character checks, far past what PyPy finishes inside a judge's time limit.
+
+A window fixes that by sliding instead of rescanning: add the new rightmost character, drop the old
+leftmost one, and the running count updates in O(1). The window always holds exactly K characters
+throughout; only its position moves.
+
+<Code file="examples/window_vowels.py" showOutput caption="The most vowels in any window of length K" />
+
+Step through the slide below on `"beautify"` with K = 3. Each step adds one character on the right
+and drops one on the left, and the running count only ever changes by the two characters involved.
+The best window, `"eau"`, is highlighted once the scan finds it. The "K = whole text" preset shows
+the case with no sliding at all, a single window; "K = 1" shows the smallest window, one character
+sliding the whole way.
+
+<Figure caption="A fixed-length window sliding one character at a time, its vowel count updated by adding the new character and dropping the old one">
+  <StepThrough frames="visuals/window-vowels.frames.json" preset="typical" />
+</Figure>
+
+## Tracking matches instead of comparing every count
+
+Some fixed-length problems need more than one running total: matching a whole pattern needs to
+compare 26 letter counts, not just one. Rebuilding that comparison, checking all 26 counts against
+the target on every slide, costs O(26) per step even though only two letters changed. A <Term
+id="matches-counter">matches counter</Term> avoids that. Instead of recomparing every count, it
+tracks how many of the 26 letters currently have the count the target wants. That number updates by
+1 whenever a single count crosses into or out of agreement.
+
+Adding a letter increments its window count, then adjusts `matches`: +1 if the new count now equals
+the target, −1 if the count used to equal the target and no longer does. Removing a letter runs the
+same check before decrementing the count. An empty window already agrees with the target everywhere
+the target wants a zero count, so `matches` starts there, not at 0. The window fully matches exactly
+when `matches` reaches 26, letters the target wants at zero included, and every update stays O(1).
+
+<Code file="examples/window_matches.py" showOutput caption="Finding every start of a permutation of a pattern with a fixed-length window and a matches counter" />
+
+Step through the scan below on `"cbaebabc"` against the pattern `"abc"`. The window's letter
+counts sit beside the target's; a start position lights up whenever they agree everywhere, which
+happens at positions 0 and 5. The "no match" preset never reaches full agreement, and the length-1
+pattern shows the counter at its smallest: one letter, one count to track.
+
+<Figure caption="A fixed-length window sliding one character at a time, with its counts checked against a target through a matches counter">
+  <StepThrough frames="visuals/window-matches.frames.json" preset="match" />
+</Figure>
+
+That invariant is what makes the O(1) update safe. Each event changes exactly one count, so at
+most one letter can cross into or out of agreement, and checking before and after that single
+change is enough.
+
+## Variable-length windows
+
+Some problems do not fix the window's length; instead it grows and shrinks to maintain a property.
+Finding the longest substring with at most K distinct letters is the standard example. Grow the
+window from the right. The moment it holds more than K distinct letters, shrink from the left,
+dropping letters and their counts, until it is back down to K. Every character is still added and
+removed at most once across the whole scan, so the total cost stays O(n) even as the window's
+length keeps changing.
+
+Shrinking `left` never throws away a better answer. It only advances when the window it is leaving
+holds too many distinct letters. Any window ending at the current `right` that still satisfies the
+property keeps its full length, since it starts at or to the right of wherever `left` already
+stands.
+
+<Code file="examples/longest_substring.py" showOutput caption="The longest substring with at most K distinct characters" />
+
+Trace it on `"aabbbccc"` with K = 2. The window grows freely through `a`, `aa`, `aab`, up to
+`aabbb`, five characters, since it never holds more than 2 distinct letters. Adding the first `c`
+pushes distinct letters to 3, so the left pointer drops both `a`s, back down to `bbbc`. From there
+the window keeps growing as the last two `c`s arrive, `b` and `c` the whole way, ending at
+`bbbccc`, six characters, the longest window in the string.
+
+<Figure caption="A variable-length window growing from the right and shrinking from the left to stay at K distinct letters">
+  <StepThrough frames="visuals/window-distinct.frames.json" preset="k2" />
+</Figure>
+
+K = 1 forces a shrink on almost every new letter, and the "never shrinks" preset holds one letter
+the whole way through, so the window only ever grows. In every case `left` still only moves
+forward, so it never undoes the O(n) bound.
+
+## What sliding actually saves
+
+The vowel-counting example above hides a real cost difference: rescanning a window from scratch
+costs K operations, but sliding costs a fixed 2 no matter how large K is. Both numbers below come
+from running the actual counting code both ways on the same text, not an estimate.
+
+<Figure caption="Cumulative operations for recomputing each window from scratch against sliding it, on the same text">
+  <StepThrough frames="visuals/window-cost.frames.json" preset="main" />
+</Figure>
+
+On `"beautify"` with K = 3, six windows cost 18 operations rescanned from scratch against 13 slid.
+The gap widens with K: the "K = 4" preset costs 20 against 12 on the same text. Scale that to
+N = K = 200,000 and rescanning costs the 4 × 10¹⁰ from earlier, while sliding costs about 2N, four
+hundred thousand: the whole reason a fixed-length window is worth building.
+
+## Keeping it fast on PyPy
+
+Count with a plain list, `counts = [0] * 26` indexed by `ord(char) - ord('a')`, not a dictionary.
+Array indexing beats a hash lookup. The gap adds up over millions of slides on PyPy.
+`collections.Counter` is convenient for a one-off count outside the hot loop, but inside it a flat
+list stays fastest.
+
+## Recognizing which window you need
+
+A fixed-length window fits questions about every substring of exactly length K. A variable-length
+window fits questions where the property itself decides the size. "At most K distinct characters,"
+say, or "sum at most a target." A matches counter is not a third kind of window. It is how
+either kind checks its property in O(1) instead of O(26), by tracking how many counts currently
+agree with a target rather than recomparing all of them.

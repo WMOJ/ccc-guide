@@ -5,8 +5,6 @@
 function proseOnly(mdx: string): string {
   return (
     mdx
-      // frontmatter
-      .replace(/^---\n[\s\S]*?\n---\n/, "")
       // fenced code blocks (```...```)
       .replace(/```[\s\S]*?```/g, " ")
       // JSX/MDX component tags, e.g. <Code .../> or <Callout kind="note">...</Callout> tags

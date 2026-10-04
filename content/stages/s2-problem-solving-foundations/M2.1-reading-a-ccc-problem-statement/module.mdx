@@ -1,0 +1,61 @@
+Every problem in the contest, from the practice problems in the module on values and variables to the hardest Senior problem, is written from a similar set of sections. This lesson walks through that shape once, so you can read any statement the same way from here on.
+
+## The usual sections
+
+Most recent CCC statements share the same sections, in this order. First the description, then the input specification, then a subtask table, then the output specification, then a sample input and output, and sometimes technical notes at the end. Older statements, and every J1–J2 problem, can skip the subtask table and state partial marks as a sentence inside the input specification instead. The description tells you the story and the question in plain words. The input specification says exactly what lines your program reads and the range each value can take. A subtask table, where a statement has one, usually follows right after the input specification, and lists smaller versions of the problem, each worth part of the total. The output specification states precisely what to print. A sample input and output follow, usually with a short explanation of how that particular answer was reached. Technical notes, when present, add anything unusual: a warning about the numbers' size, or a note that more than one correct answer is accepted.
+
+Here is an invented statement, built to show every section in one place.
+
+> **Problem: Race Bibs**
+>
+> N runners start a race, numbered 1 to N in starting order. Runner i finishes in `t_i` seconds. Output how many runners finished in strictly less time than runner 1.
+>
+> **Input Specification**
+> Line 1: N (1 ≤ N ≤ 1000).
+> Line 2: N integers, `t_1` to `t_N` (1 ≤ `t_i` ≤ 100000), separated by spaces.
+>
+> **Subtask Table**
+> Subtask 1 (2 marks): N ≤ 10.
+> Subtask 2 (5 marks): no further restriction.
+>
+> **Output Specification**
+> One line: the number of runners who beat runner 1's time.
+>
+> **Sample Input**
+> ```
+> 5
+> 40 10 40 25 50
+> ```
+>
+> **Sample Output**
+> ```
+> 2
+> ```
+> Runner 1 finished in 40 seconds. Runners 2 and 4 finished faster, at 10 and 25 seconds. Runner 3 tied at 40, which does not count as strictly less.
+>
+> **Technical Notes**
+> Finish times are not given in sorted order.
+
+## Underline every bound
+
+The input specification is the part of a statement worth reading twice. Every number in it is a promise: your program only has to work for values inside that range, and nothing outside it. In "Race Bibs", `N` never exceeds `1000`, and every finish time stays between `1` and `100000`. Underline both bounds before you write a line of code. They tell you how large a loop can run, and whether a value could be zero or negative. An ordinary Python `int` is always enough on its own, since Python integers have no fixed size.
+
+A bound also tells you what does not need handling. Nothing in "Race Bibs" says N could be 0, so a program that assumes at least one runner is safe. Read the bound as the full set of inputs you must handle, not as a target to guess around.
+
+## The subtask table as a fact list
+
+The subtask table lists shrunken versions of the full problem, each with its own, smaller bound. Subtask 1 of "Race Bibs" only ever sees `N` up to 10. That is a fact about what the grader will feed your program on that subtask, not a suggestion about how to solve it. A single solution that handles the full bound earns every subtask below it too. You do not need that solution before submitting anything, though. The grader keeps your best submission for each problem, so a correct version for just the smallest subtask is worth sending in as soon as you have one. When the full solution feels out of reach, the smallest subtask's bound tells you exactly how small a correct, simpler approach needs to be.
+
+## 1-indexing and "any valid answer"
+
+"Race Bibs" numbers runners starting from 1, not 0. A statement that describes something as "the k-th runner" or "runner i" almost always means this same 1-indexed counting. Check the description and the sample explanation together to confirm where the numbering starts. Mixing up a 1-indexed description with 0-indexed Python indexing is one of the most common sources of an answer that is off by exactly one.
+
+Some statements accept more than one correct output. A line reading "if several runners tie, output any one of their numbers" means your program does not need to match a single official answer. It only needs to output something the checker accepts as correct. Read this wording carefully. It changes what your program is allowed to print, and it appears far less often than a single, exact expected output.
+
+## Reading before coding
+
+Read a statement fully, sections and all, before writing anything. Underline the input specification's bounds, work through the sample by hand to check you understand the story, and only then start planning code. The module on algorithm-first thinking builds directly on this habit.
+
+## Recap
+
+Most CCC statements share the same sections: description, input specification, a subtask table, output specification, sample input and output, and sometimes technical notes. Older and early-Junior statements can fold the subtask marks into a sentence instead. Underline every bound in the input specification before coding, since it states precisely what your program must handle. Read the subtask table as a set of facts about smaller versions of the same problem. Watch for 1-indexed counting and "any valid answer" wording, since both change what a correct program needs to do.

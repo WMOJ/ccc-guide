@@ -1,0 +1,57 @@
+A solution that works on the sample input is not yet a solution. The sample is one ordinary case. A statement's bounds usually allow several unusual ones too, called <Term id="edge-case">edge cases</Term>. The smallest input a bound permits, every value equal to every other, and two or more answers tied for first are all edge cases. A program built and tested against only the ordinary case often breaks on exactly these. Its reasoning quietly assumed they would not happen.
+
+## Reading edge cases out of a bound
+
+Every bound in an input specification is a promise about what your program must handle. It is not a hint about what a typical test looks like. `1 ≤ N ≤ 1000` promises `N = 1` is possible. A working solution must handle it correctly, not just avoid crashing on it. A value allowed to repeat means every value could be the same one. A comparison between two quantities means they could tie. Read each bound, and ask what the most extreme value inside it would do to your plan, before writing any code.
+
+## Read
+
+Here is an invented mini-problem: given N scores, count how many of them equal the highest score.
+
+## Find the bounds
+
+An invented input specification: line 1 holds N (1 ≤ N ≤ 1000), line 2 holds N integers, the scores (0 ≤ score ≤ 100).
+
+## Work the sample by hand
+
+Take a small sample: `7, 9, 9, 5`. The highest score is `9`, reached by two of the four, so the count is `2`.
+
+## Plan in words
+
+1. Find the highest score in the list.
+2. Count how many scores in the list equal that highest score.
+3. Print the count.
+
+## Code
+
+<Code file="examples/count_top_scores.py" showOutput caption="Counting how many scores tie for the highest" />
+
+The code sets `best` to `max(scores)` and then counts every score equal to it. That is a direct match for the question asked.
+
+## Test edge cases
+
+This is the step where a problem's edge cases get checked, and this mini-problem has several worth checking by hand.
+
+The bound allows `N = 1`. With a single score, that score is trivially the highest score, and the count is `1`. The code above handles this correctly without any special case. `max` of a one-item list is that item, and the loop counts it once.
+
+Every score equal is another case this bound allows. The statement never rules it out. If all four scores were `4`, the highest score would be `4`, shared by all four, so the count is `4`. Nothing about "counting how many equal the highest" stops being true when every value is the same one. Even at the far end of the bound, with all `1000` scores equal, the same reasoning still holds. The highest score is that one shared value. Every score equals it, so the count comes out to `1000`.
+
+A common mistake is writing code that only works when there is a single clear highest score. It quietly assumes a tie will not happen, because the sample did not show one. Checking a plan against a tied case before submitting catches this mistake far earlier than a failing test does.
+
+Now suppose a close variant of this problem asked for the lowest score strictly below the highest score, instead of a count. The all-equal case above already showed that every score can equal the highest score. When that happens, no score is strictly below it, and the search this variant needs comes up with nothing at all. A real "no valid answer" case needs the statement to say what to print for it. Suppose this variant's statement said "print `-1` if all scores are equal". A solution then has to notice that its search never found a lower score, and print `-1` for that case, rather than printing whatever value the search happens to leave behind. This is the all-equal case again, seen from a different angle. Here, it is the exact case where the answer changes shape, not only a case the code must survive.
+
+## Submit
+
+Once the sample and every edge case above agree with the plan, the solution is ready to submit.
+
+## When a bound allows something the statement rules out elsewhere
+
+Sometimes one part of a statement allows a case that another part of the same statement excludes. A statement might allow `N = 0` in its bound, while also promising that there is always at least one score. That makes `N = 0` a case your program never has to handle, even though the number itself passed the bound check on its own. Read every part of a statement before deciding a case is real. Coding a special case for something the statement has already ruled out elsewhere wastes time, without changing anything a test can check.
+
+The opposite mistake costs more. It means assuming a statement rules out a case it never mentions at all. If a statement never says scores are distinct, do not write code that only works when they are. A statement's wording sometimes leaves a case unsettled, neither clearly allowed nor clearly ruled out. Plan for that case as if it were possible, since the tests are free to include it.
+
+Not every kind of edge case can be shown this early. A problem describing a network of connections can have pieces that never connect to each other at all. That is a case worth checking for on its own. A later module on graphs covers spotting and handling it.
+
+## Recap
+
+A bound in an input specification is a promise about every value your program must handle, not only the ones a sample happens to show. Check the smallest input a bound allows, every value being equal, and any comparison that could tie, against the statement's exact wording, not against what feels like a normal case. When a count or a search could come up empty, check the statement for what it says to print in that case, rather than guessing. When one part of a statement rules out a case another part's bound would otherwise allow, trust the part that rules it out. Otherwise, plan for a case the wording never actually excludes.

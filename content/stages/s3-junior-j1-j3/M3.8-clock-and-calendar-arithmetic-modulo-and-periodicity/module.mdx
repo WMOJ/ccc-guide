@@ -1,0 +1,95 @@
+Picture a digital clock that only shows the hour, 0 to 23. It reads 22 right now. An alarm is set to ring 5 hours from now. Add 22 and 5 and you get 27, but the clock has no hour 27. It counts up to 23, then circles back to 0.
+
+Any count that repeats on a fixed cycle works this way: clock hours, days of the week, seats around a table. That repeating is called <Term id="periodicity">periodicity</Term>, and the length of one cycle is its period. <Term id="modulo">Modulo</Term>, written `%` in Python, wraps a number back into range. `a % b` is the remainder after dividing `a` by `b`. For any `b` above 0, that remainder lands between 0 and `b - 1`, however large or negative `a` is. `27 % 24` is 3, so the alarm rings at 3 o'clock.
+
+## Modulo always lands in range
+
+In Python, `-3 % 24` is 21, not -3. The result is always adjusted into the range 0 to 23, which is what a clock needs: 3 hours before midnight reads 21, not -3.
+
+Step through the program below. It reads an hour and an offset and prints the hour after adding them. Try both presets: one adds forward past midnight, the other subtracts past 0.
+
+<Figure caption="Adding an hour offset and wrapping the result back into 0 through 23">
+  <CodeTrace trace="examples/clock_wrap.trace.json" preset="main" />
+</Figure>
+
+Watch the last line run in each preset. `27 % 24` is 3. `-3 % 24` is 21. Both land inside 0 to 23 in a single line, with no separate check for a sum that went too high or too low.
+
+Now watch the same sum as a hand moving around a 24-position wheel, one hour at a time. The third preset adds 50 hours, more than two laps.
+
+<Figure caption="A clock hand moving one hour at a time, wrapping past 23 back to 0">
+  <StepThrough frames="visuals/clock_hand.frames.json" preset="forward" />
+</Figure>
+
+The hand passes 23, wraps to 0, and stops at 3, the same hour `27 % 24` names. Going backward wraps the other way, from 0 to 23. In the laps preset, the 48 hours of two full laps change nothing, so only the leftover 2 hours move the hand. Modulo is exactly that shortcut: it throws away whole laps and keeps the leftover.
+
+## Carrying minutes into hours and days
+
+Real clock problems have several units at once. Say a meeting starts at 22:40 and runs 530 minutes. When does it end, and on which day? Turn the start time into minutes, add, and then split the total back up with `divmod`, which returns the quotient and the remainder together. Each remainder stays in its unit, and each quotient carries into the next unit up.
+
+<Code file="examples/clock_carry.py" showOutput caption="Adding minutes to a time of day, carrying into hours and days" />
+
+The output `1 7 30` means 1 day later, at hour 7, minute 30. Step through the carrying below, and try the midnight preset, where the total is exactly 1,440 minutes.
+
+<Figure caption="Turning a total of minutes into days, hours and minutes with two divmod calls">
+  <StepThrough frames="visuals/time_carry.frames.json" preset="next-day" />
+</Figure>
+
+The first `divmod` splits 1,890 minutes into 31 hours and 30 minutes. The 31 hours then become the total for the next row, where `divmod(31, 24)` gives 1 day and 7 hours. Each `divmod` uses the size of its own unit: 60 minutes to an hour, 24 hours to a day.
+
+## A schedule with billions of days
+
+Now a bigger question. A maintenance check happens every `period` days, starting on day `offset`. How many times does it happen within the first `days` days? A senior-level bound might let `days` run past 10^12.
+
+The most direct plan checks every day from 0 up to `days - 1` and counts the ones where the check falls:
+
+```python
+period, offset, days = 3, 1, 10
+count = 0
+for d in range(days):
+    if d % period == offset % period:
+        count += 1
+```
+
+That loop does one comparison per day. PyPy runs on the order of 10^7 to 10^8 simple operations a second. At `days` = 10^12, the loop needs about 10^12 operations, somewhere between ten thousand and a hundred thousand seconds. No judge waits that long, and the answer does not need a day-by-day count at all.
+
+## Counting by cycles, not by days
+
+The checks land on day `offset`, `offset + period`, `offset + 2 * period`, and so on. From day `offset` to the last day of the range, day `days - 1`, there are `days - offset` days. Call that the span. Dividing the span by `period` gives how many full cycles fit inside it, and each full cycle holds exactly one check. The remainder holds one more check if it is not 0, and none if it is.
+
+Step through this on three ranges: one that divides evenly, one with a remainder that adds an extra check, and one where the check has not started yet.
+
+<Figure caption="Counting a periodic event by full cycles, plus a remainder">
+  <StepThrough frames="visuals/event_cycles.frames.json" preset="main" />
+</Figure>
+
+In the first preset, 9 days split into 3 full cycles with nothing left over. In the second, 9 days hold 2 full cycles of 4 plus 1 leftover day, and the leftover day starts a third check. When the range ends before day `offset`, the check happens 0 times and no division is needed.
+
+<Code file="examples/event_count.py" showOutput caption="Counting a periodic event by cycles and a remainder" />
+
+`span // period` is the number of full cycles. `span % period` is what is left over. If that remainder is 0, the last full cycle covers every check up to the end of the range. If it is not 0, one more check fits in the leftover days.
+
+Why is this safe for any span? Cut the days from `offset` to `days - 1` into blocks of `period` consecutive days, the first block starting at `offset`. Every full block starts with exactly one check and holds no other, since the next check is a full period later. A partial block at the end also starts with a check, because it begins exactly `period` days after the previous one. So the count is the number of blocks: `span // period` full ones, plus one more if a partial block is left. That argument does not care how big `days` gets, so the same division and remainder answer it for 9 days or 9 trillion.
+
+## Making it fast on PyPy
+
+`event_count.py` does a fixed, small amount of arithmetic no matter what `days` is, so there is no loop to speed up. It reads all of its input with one `sys.stdin.read().split()` call. A problem that asks for many independent checks keeps that shape: one read, then work through the tokens by position. The total stays proportional to how many checks are asked, not to how large any day count is.
+
+## Circular sequences
+
+Modulo also picks an index out of a list that repeats. Suppose day 0 of a year is a Monday, and a problem asks which day of the week a given day number falls on.
+
+<Code file="examples/weekday.py" showOutput caption="Looking up the weekday for any day number" />
+
+`100 % 7` is 2, so `DAY_NAMES[2]` is `"Wednesday"`. The list has 7 entries, and the day number can be any size; `% 7` always lands on an index the list can answer. Step through the ring below. The hand ignores whole weeks and moves only the remainder. The second preset uses a day number of one trillion, and the third goes before day 0.
+
+<Figure caption="A 7-day ring: whole weeks are skipped and only the remainder moves the hand" alt="A circular array of seven weekday names, Monday through Sunday, with a hand that starts on Monday, skips whole weeks, and steps forward or back the remainder modulo 7 to land on the weekday that weekday.py prints.">
+  <StepThrough frames="visuals/weekday_ring.frames.json" preset="day-100" />
+</Figure>
+
+The ring wraps from Sunday back to Monday, the way the calendar wraps from one week into the next. A trillion days takes only four steps, because the hand never walks the weeks. Day -1 lands on Sunday, since `-1 % 7` is 6.
+
+Two slips are worth knowing. The first is the wrong modulus: a 7-day cycle needs `% 7`, a 12-hour clock needs `% 12`, and a 24-hour one needs `% 24`. Using `% 12` on a 24-hour value wraps at the wrong point and gives a plausible-looking wrong answer rather than a crash.
+
+The second appears once several values are each reduced before being combined. `(a % m) + (b % m)` can add up to `2 * m - 2`, outside the range 0 to `m - 1`. Reduce the whole sum once, at the end, with `(a + b) % m`, and it always lands back in range.
+
+Whenever a problem's story repeats on a fixed cycle, modulo turns it into one division and one remainder, whatever the cycle's length and however large the count of steps.

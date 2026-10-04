@@ -1,16 +1,10 @@
 id: M6.2
-title: State-space graph modelling and sparsification
 status: accepted
 objectives:
   - Model a problem as a shortest-path search by representing states as nodes.
   - Identify which edges matter in practice, even when the full state graph is enormous.
   - Search only the states reachable from the start, and stop as soon as the goal is settled.
   - Measure the sparsified graph's size and confirm it gives the same answer.
-prereqs:
-  - M6.1
-  - M4.2
-lessons:
-  - state-space-modelling
 practice:
   - id: ccc25s4
     note: Cross rooms and tunnels of different temperatures, where the boots you wear decide which tunnels you can enter.

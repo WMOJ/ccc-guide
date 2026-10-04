@@ -1,15 +1,9 @@
 id: M6.10
-title: Fenwick tree (Binary Indexed Tree)
 status: accepted
 objectives:
   - Understand how a Fenwick tree stores partial sums with O(log n) operations.
   - Implement update and range-sum queries using bit manipulation.
   - Apply Fenwick trees to dynamic range-sum problems where prefix sums fail.
-prereqs:
-  - M4.3
-  - M2.9
-lessons:
-  - fenwick-tree
 practice:
   - id: ccc17s5
     note: Answer passenger totals over ranges of stations while trains move along their lines.

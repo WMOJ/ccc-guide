@@ -1,27 +1,29 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import type { LessonPageProps } from "@/components/layout/props";
+import type { ModuleNavLink, ModulePageProps } from "@/components/layout/props";
 import { cn } from "@/components/ui/cn";
 import { MarkAsRead } from "@/components/ui/MarkAsRead";
 import { RichTitle } from "@/components/ui/RichTitle";
 import { ui } from "@/components/ui/ui-strings";
-import { plainTitle } from "@/lib/content/title";
 
-/** The ruled block that ends every lesson: mark as read, then Previous and Next. */
+/** A prev/next link's text: the module id (small, muted), then its title. */
+function NavTarget({ link }: { link: ModuleNavLink }) {
+  return (
+    <span className="font-semibold text-ink text-ui group-hover:underline group-hover:underline-offset-[0.2em]">
+      <span className="mr-1 font-normal text-ink-3 text-small tnum">{link.id}</span>{" "}
+      <RichTitle text={link.title} />
+    </span>
+  );
+}
+
+/** The ruled block that ends every module page: mark as read, then Previous and Next. */
 export function ClosingTitleBlock({
-  lessonId,
+  moduleId,
   nav,
 }: {
-  lessonId: string;
-  nav: LessonPageProps["nav"];
+  moduleId: string;
+  nav: ModulePageProps["nav"];
 }) {
-  const s = ui().lesson;
-  const next = nav.next ?? { href: "/learn", title: s.backToMap, moduleTitle: undefined };
-  // The next lesson's module title is context, so it is left out when it only repeats the lesson
-  // title (a one-lesson module usually names its lesson after itself).
-  const nextModuleTitle =
-    next.moduleTitle && plainTitle(next.moduleTitle) !== plainTitle(next.title)
-      ? next.moduleTitle
-      : undefined;
+  const s = ui().module;
   return (
     <section
       aria-label={s.markRead}
@@ -29,7 +31,7 @@ export function ClosingTitleBlock({
     >
       <div className="py-4">
         <MarkAsRead
-          lessonId={lessonId}
+          moduleId={moduleId}
           labels={{ markRead: s.markRead, read: s.read, markedOn: s.markedOn, undo: s.undo }}
         />
       </div>
@@ -47,15 +49,13 @@ export function ClosingTitleBlock({
               <ArrowLeft aria-hidden="true" size={14} strokeWidth={2} />
               {s.previous}
             </span>
-            <span className="font-semibold text-ink text-ui group-hover:underline group-hover:underline-offset-[0.2em]">
-              <RichTitle text={nav.prev.title} />
-            </span>
+            <NavTarget link={nav.prev} />
           </a>
         ) : (
           <span aria-hidden="true" className="hidden sm:block sm:border-rule sm:border-r" />
         )}
         <a
-          href={next.href}
+          href={nav.next?.href ?? "/learn"}
           rel={nav.next ? "next" : undefined}
           className={cn(
             "group flex flex-col items-end gap-0.5 py-4 text-right hover:bg-board sm:pl-4",
@@ -66,14 +66,13 @@ export function ClosingTitleBlock({
             {s.next}
             <ArrowRight aria-hidden="true" size={14} strokeWidth={2} />
           </span>
-          <span className="font-semibold text-ink text-ui group-hover:underline group-hover:underline-offset-[0.2em]">
-            <RichTitle text={next.title} />
-          </span>
-          {nextModuleTitle ? (
-            <span className="text-ink-3 text-small">
-              <RichTitle text={nextModuleTitle} />
+          {nav.next ? (
+            <NavTarget link={nav.next} />
+          ) : (
+            <span className="font-semibold text-ink text-ui group-hover:underline group-hover:underline-offset-[0.2em]">
+              {s.backToMap}
             </span>
-          ) : null}
+          )}
         </a>
       </nav>
     </section>

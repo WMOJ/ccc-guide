@@ -1,0 +1,63 @@
+Picture a sorted class list and a question: how many students scored exactly 85? Scanning every name to count them costs one comparison per student. A sorted list holds a shortcut: compare the middle name, decide which half can still contain 85, and throw the other half away. Repeat on the half that is left. Each comparison halves the work, so `N` names cost about $\log_2 N$ comparisons instead of `N`. This is <Term id="binary-search">binary search</Term>, and it applies to more than positions in an array.
+
+## Using bisect_left and bisect_right
+
+Python's `bisect` module already implements this halving over a sorted list. `bisect_left(arr, x)` returns the leftmost index where `x` could be inserted without breaking the order. If `x` already appears, that index is its first occurrence. `bisect_right(arr, x)` returns the index just past the last occurrence instead. Subtracting the two gives the count of `x` in the array, in O(log N), with no explicit loop of your own.
+
+<Code file="examples/bisect_positions.py" showOutput caption="bisect_left and bisect_right on a sorted array with duplicates" />
+
+The array has three 2s, so `bisect_left` for 2 lands on the first of them and `bisect_right` lands one past the last, four apart from three of them plus the boundary. A value with no duplicates, like 4, gets the same index from both functions: there is exactly one place it could go, and nothing to be first or last of.
+
+Step through both searches below. `bisect_left` and `bisect_right` run the same halving loop, only differing in which side of an equal element they keep.
+
+<Figure caption="bisect_left and bisect_right narrowing lo and hi on the same array">
+  <StepThrough frames="visuals/sv_bisect.frames.json" preset="duplicates" />
+</Figure>
+
+Both searches shrink toward the same neighborhood, but `bisect_left`'s comparison (`arr[mid] < x`) stops as soon as it meets an equal element, while `bisect_right`'s (`arr[mid] <= x`) steps past it. The second preset searches for a value that never appears; both functions agree on the single index where it would go. The third searches past every element, and both land one past the final index, the same "one past the end" position `hi` starts at.
+
+## Binary search on the answer
+
+A different family of problems hands you no array at all. Instead, you are asked for the smallest or largest number satisfying some condition, and checking one candidate costs real work of its own. Suppose that condition is monotone: once a value works, every larger value works too, or every smaller one does. Then the same halving idea searches the values directly, never touching an array.
+
+Suppose a delivery truck makes several trips, in a fixed order, and cannot reorder the packages waiting for it. What is the smallest capacity that still gets every package delivered in that many trips? Checking one candidate capacity `cap` is a greedy pass: start a new trip whenever adding the next package would exceed `cap`, and count the trips used. If `cap` needs three trips, any larger capacity needs three or fewer, since a bigger truck only combines loads, never splits them. The condition "needs at most the allowed number of trips" is monotone in `cap`, so binary search applies to the capacity itself.
+
+With `n` up to $2 \cdot 10^5$ packages and capacities up to the sum of all weights, checking every candidate capacity one by one costs a full greedy pass per candidate. Near the largest weights that is up to `n` candidates, each an O(n) pass. That is an O(n^2) plan, reaching $4 \cdot 10^{10}$ operations at the bound, far past what a judge finishes in time. Binary search checks only about $\log_2$(total weight) candidates, each still an O(n) pass, for O(n log(total weight)) overall.
+
+<Code file="examples/capacity_search.py" showOutput caption="Binary search over the truck's capacity, not over an array index" />
+
+`lo` starts at the heaviest single package, since the truck must carry it alone at least once. `hi` starts at the sum of every weight, since one trip can always carry everything. Every capacity from `lo` to `hi` is a candidate. The ones that fail come first and the ones that work come after, with no working one before a failing one, because of that same monotonicity.
+
+<Figure caption="Binary search narrowing lo and hi over candidate capacities, feasible ones marked done and infeasible ones marked invalid">
+  <StepThrough frames="visuals/sv_capacity.frames.json" preset="example" />
+</Figure>
+
+Checking the midpoint capacity tells you which side of the true boundary you are on. A feasible mid means the answer is `mid` or smaller, so `hi` moves down to it; an infeasible mid means the answer is larger, so `lo` moves past it. The second preset has a single package, where `lo` and `hi` already agree and the loop never runs at all, the smallest case the invariant still has to hold for.
+
+Step through the program itself below, watching `lo`, `hi`, and `mid` change as `trips_for` is called on each candidate.
+
+<Figure caption="capacity_search.py tracing lo, hi, mid, and trips_for on the three-package input">
+  <CodeTrace trace="examples/capacity_search.trace.json" />
+</Figure>
+
+`trips_for` runs once per candidate `mid`, exactly as the array search calls `arr[mid]` once per candidate index. Binary search on the answer is the same algorithm, aimed at a range of values instead of a range of indices.
+
+## Why it works, and how it breaks
+
+The loop keeps an invariant: every value below `lo` has been shown infeasible, and every value at or above `hi` is either feasible or has not been ruled out. The true answer is always somewhere in `[lo, hi]`. Checking `mid` shrinks that range by roughly half either way, so after about $\log_2(hi - lo)$ checks, `lo` and `hi` meet on the answer. This reasoning depends entirely on monotonicity. If a candidate could fail right after a smaller one succeeded, the split point this loop assumes would not exist. The search could then converge on a value that only looks right because the loop stopped there. Confirm the monotonicity on paper, with a couple of concrete numbers, before writing the search.
+
+Keeping that invariant true depends on getting both updates right, and one wrong update is the most common bug in this template. The loop condition must be `lo < hi`, not `lo <= hi`: once they meet, there is nothing left to narrow. The update on success must be `hi = mid`, since `mid` itself might be the answer and moving `hi` past it would discard a value the invariant still needs to hold onto. Step through the same three packages searched twice below, once with each update rule.
+
+<Figure caption="The same search run twice: hi = mid keeps a feasible mid in play, hi = mid - 1 throws it away">
+  <StepThrough frames="visuals/sv_offbyone.frames.json" preset="compare" />
+</Figure>
+
+Compare that against `hi = mid - 1`, changing only the one line the figure above just stepped through:
+
+<Code file="examples/capacity_search_broken.py" lines="28-33" highlight="31" showOutput caption="The same search with hi = mid - 1 in place of hi = mid" />
+
+On these three packages weighing 5, 4, and 2 with at most two trips allowed, this update discards capacity 6, the true answer, the moment it is checked. It treats a feasible `mid` the same way the correct code treats an infeasible one. The search still terminates, printing 5, but 5 fails its own check: `trips_for` on these packages needs three trips at capacity 5, not two. A broken update does not always announce itself with an infinite loop. It can just as easily hand back a wrong number that looks plausible until you check it. Python has no integer overflow to worry about here, unlike the classic `mid = (lo + hi) // 2` trap in fixed-width languages, but that only removes one hazard, not the two update rules above.
+
+## When to reach for which tool
+
+If the data is already sorted and you want a position or a count, call `bisect_left` or `bisect_right`. They are part of the standard library, implemented in C even under PyPy, so there is no reason to hand-write this loop for that case. If instead you are hunting for a number that satisfies a monotone condition, and testing one candidate is its own small computation, write that check as a function. Then binary search on the answer, using that function. Keep `lo`, `hi`, and the candidate function as local variables. Read all input at once, the way `capacity_search.py` does, so the cost stays in the check itself rather than in Python's own overhead. Both tools are the same halving idea: one searches positions in an array you already have, the other searches values you have not enumerated at all.

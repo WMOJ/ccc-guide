@@ -1,0 +1,65 @@
+A grid has 1000 rows and 1000 columns, and your plan visits each cell once and looks at its right and lower neighbors. That is about 3 million steps, comfortably inside the `10^7` to `10^8` simple operations a second that M2.9 uses for PyPy. The plan is sound. What is left is how much extra work each step carries: a second list to index into, a tuple to build, a method to look up, a list to copy. A multiplier in front of N that Big-O ignores is a constant factor, and this lesson is about keeping it small.
+
+## Count first, then trim
+
+Constant-factor work only matters when the operation count already fits the budget. A plan that compares every pair of `2 * 10^5` values does about `4 * 10^10` comparisons, and no rearrangement of the code closes a gap of that size. Change the plan first. Once the count is within a small multiple of the budget, the habits below decide whether the program lands inside it. Input and output are covered in M3.10: read once with `sys.stdin.read().split()` and write once. Every example here uses that shape.
+
+## One flat list for a grid
+
+A grid stored as a list of lists holds one list per row plus an outer list, so reading a cell is two subscripts: `grid[r][c]`. A flat list keeps all `rows * cols` values in one list, row after row. Cell `(r, c)` sits at index `r * cols + c`, because each full row before it contributes `cols` values. The neighbor to the right is the next index. The neighbor below is `cols` indexes further on.
+
+<Code file="examples/flat_grid.py" showOutput caption="A 2 by 4 grid stored as one list, with the right and lower neighbors of a cell" />
+
+Step through the index arithmetic below. The grid and the list hold the same eight values, and each step marks a cell in both. Try all three presets.
+
+<Figure caption="Cell (r, c) of a 2 by 4 grid is cells[r * 4 + c]; its neighbors are 1 and 4 indexes away">
+  <StepThrough frames="visuals/flat_index.frames.json" preset="middle" />
+</Figure>
+
+The "Right edge" preset shows the one trap. Index `3 + 1` is 4, a perfectly valid position, but it is cell `(1, 0)` on the next row, not a neighbor of `(0, 3)`. A flat list cannot tell you a row ended, so the code checks `c + 1 < cols` before it steps by 1, and `r + 1 < rows` before it steps by `cols`. In the "Corner" preset both checks fail and the program prints `none` twice. The same index works for a `visited` list of booleans or a distance list, one slot per cell, with no tuples as keys.
+
+## Parallel lists and packed keys
+
+A list of pairs holds one tuple object per pair, and each tuple points at its two numbers. Two parallel lists, `xs` and `ys`, where `xs[i]` and `ys[i]` belong together, hold nothing but numbers. PyPy stores a list made only of small integers as a plain array of machine integers, so this layout is compact and quick to walk.
+
+<Code file="examples/flat_lists.py" showOutput caption="The same sum of x times y, from a list of tuples and from parallel lists" />
+
+Both loops print 30. Parallel lists have one drawback: sorting one list leaves the other behind. Packing fixes that by folding the pair into one integer. If `b` is always below `BASE`, the key `a * BASE + b` stores `a` in the high part and `b` in the low part, and `divmod(key, BASE)` splits it again. Comparing two keys compares `a` first and `b` only when the `a` values tie, so sorting plain integers sorts the pairs.
+
+<Code file="examples/sorted_pairs.py" showOutput caption="Sorting pairs by packing each into one integer key" />
+
+Step through the packing, the sort and the splitting below. The "Largest b" preset uses `b = 999`, the biggest value that fits.
+
+<Figure caption="Pairs packed into keys a * 1000 + b, sorted as plain integers, and split back with divmod">
+  <StepThrough frames="visuals/pack_keys.frames.json" preset="main" />
+</Figure>
+
+In that preset the key 2999 sorts just before 3000, the key of `(3, 0)`, which is the right order. The limit matters: if `b` could reach 1000, the pair `(2, 1000)` would pack to 3000, the same key as `(3, 0)`, and the two pairs could not be told apart. Choose `BASE` above the largest `b`, and keep both values non-negative. Flat grid indexes are the same idea, packing a row and a column into one integer. A packed key also works as a dictionary key or a set member, with no tuple to build.
+
+## Look things up once
+
+Writing `squares.append(x * x)` in a loop makes Python find the `append` method on the list every pass. Binding it first, `add = squares.append`, does the lookup once and leaves only the call inside the loop. The same holds for any name a loop reads repeatedly: a method, a function from a module, a length. The house skeleton already puts the work inside `main()`, so its names are locals, which are the cheapest names to read.
+
+<Figure caption="The lookup of squares.append runs once, at line 9; the loop only calls add">
+  <CodeTrace trace="examples/local_loop.trace.json" preset="main" />
+</Figure>
+
+Follow `add` in the trace: it is created once, before the loop, and every pass through line 12 reuses it. With three values the loop runs three times, so the lookup happens once instead of three times. PyPy's compiler removes much of this cost on its own, so treat the binding as a cheap habit, never as the fix for a plan that does too much work.
+
+## Avoid copies in a loop
+
+Slicing builds a new list. A loop that consumes a list from the front with `rest = rest[1:]` copies everything that is left on every pass, so it copies `(n - 1) + (n - 2) + ... + 0`, which is `n * (n - 1) / 2` items, about `5 * 10^9` for `n = 10^5`. The fix is an index that moves along the original list, which copies nothing.
+
+<Code file="examples/avoid_copies.py" showOutput caption="Consuming a list by slicing and by index; the program counts the items the slices copy" />
+
+The program prints the total, the count of copied items, and the index version's total. The figure below runs both versions side by side.
+
+<Figure caption="Slicing copies the remaining items on every pass; the index only moves right">
+  <StepThrough frames="visuals/slice_copies.frames.json" preset="five" />
+</Figure>
+
+The marked cells on the left are the items copied in that pass, and the running `copied` count reaches 10 for five values. The one-value preset copies nothing. A `values[i:j]` or a `list(values)` inside a loop body builds a list in the same way. Keep the copy out of the loop, or read the original in place.
+
+## Where to stop
+
+When a program is within the budget, stop. Flat indexes, packed keys, one-time lookups and a slice-free loop each shave a constant per step, and they keep code short once you have the habit. None of them changes the growth of the count. Reach for them after the count says you are close to the limit, and change one thing at a time so you can tell which change helped.

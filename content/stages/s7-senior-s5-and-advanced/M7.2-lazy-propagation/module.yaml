@@ -1,12 +1,7 @@
 id: M7.2
-title: Lazy propagation
 status: accepted
 objectives:
   - Implement range updates in a segment tree using lazy propagation.
   - Defer combining updates until nodes are accessed in queries.
   - Compose pending tags and keep a recursive lazy tree fast on PyPy.
-prereqs:
-  - M7.1
-lessons:
-  - lazy-propagation-strategy
 practice: []

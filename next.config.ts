@@ -36,7 +36,18 @@ const nextConfig: NextConfig = {
   // explicitly to a directory nothing else writes to. `npm run dev`/`npm run start` never set it,
   // so they keep using `.next` as always.
   distDir: process.env.ETCCC_DIST_DIR || ".next",
-  // No `output: 'export'`: a regular Vercel build keeps next.config headers working.
+  // No `output: 'export'`: a regular Vercel build keeps next.config headers and redirects working.
+  async redirects() {
+    return [
+      {
+        // Each module used to hold its reading under a third segment (/learn/s1/M1.1/<slug>).
+        // Every module is now one page, so an old link lands on it (308; the query passes through).
+        source: "/learn/:stage/:module/:slug",
+        destination: "/learn/:stage/:module",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

@@ -1,0 +1,75 @@
+Add up `n // d` for every `d` from 1 to 8. The terms are 8, 4, 2, 2, 1, 1, 1, 1, and they sum to 20. Look at how they repeat: the two 2s sit side by side, and so do the four 1s. As `d` grows, `n // d` only falls, and it falls in steps, so equal values always come in runs. A run of consecutive `d` with the same quotient is a block, and one multiplication can add up a whole block at once.
+
+That matters once `n` is large. Suppose a problem asks for this sum with `n` up to $10^{12}$. A loop over every `d` takes $10^{12}$ steps, far past the $10^8$ or so that a program can afford. The blocks cut it to about $2 \cdot 10^6$. The rest of this lesson shows why, and how to reuse the same blocks for memoization.
+
+## Runs of equal quotients
+
+Step through the loop below on `n = 8`. The array shows `n // d`, and the table gains one row per block.
+
+<Figure caption="Each step finds one block of equal quotients and adds q times its size" alt="An array of n divided by d for d from 1 up to n, with the current run of equal values marked, beside a table with one row per block showing the block's d range, its quotient, its size and what it adds. The loop jumps from the end of one block to the start of the next. Other presets use n equal to 4 and 1.">
+  <StepThrough frames="visuals/blocks.frames.json" preset="eight" />
+</Figure>
+
+The third block is `d = 3` and `d = 4`. Both have quotient 2, so the block adds $2 \cdot 2 = 4$, and the next block starts at `d = 5`. Four blocks stand in for eight terms.
+
+## Finding where a block ends
+
+The loop has to know the last `d` whose quotient is still `q`. It is `n // q`. To see why, note that $n // d \ge q$ holds exactly when $d \le n / q$, so the largest `d` that still has a quotient of at least `q` is `n // q`. Quotients never rise as `d` grows, so at that `d` the quotient is exactly `q`. The next block then starts one past it.
+
+Since the loop runs only while `d <= n`, the quotient `q` is at least 1, so `n // q` never divides by zero. A loop that ran past `n` would meet `q = 0` and need a guard.
+
+<Code file="examples/floor_division.py" showOutput caption="Summing n // d over blocks instead of over every d" />
+
+For `n = 100` the sum is 482, found in 19 blocks rather than 100 terms. Trace the same loop line by line below, and try the presets, including `n = 1`.
+
+<Figure caption="The block loop, traced line by line" alt="The floor division program's lines with the current line marked and the values of n, total, blocks, d, q, last and count at each step, for n equal to 8, 4 and 1.">
+  <CodeTrace trace="examples/floor_division.trace.json" preset="eight" />
+</Figure>
+
+Each pass computes `q`, finds `last`, adds `q * count` to `total`, and sets `d` to `last + 1`. That last assignment is the jump, and it is the reason the loop body runs once per block, not once per `d`.
+
+## Why there are only about 2 sqrt(n) blocks
+
+Split `d` at $\sqrt{n}$. There are at most $\sqrt{n}$ values of `d` up to it, so they give at most $\sqrt{n}$ quotients. Above it, `d` times `n // d` is at most `n`, so the quotient is below $\sqrt{n}$, and there are fewer than $\sqrt{n}$ such values. The total is at most about $2\sqrt{n}$. This needs `n` held fixed while `d` varies. For one fixed `d` and a changing `n`, no such saving exists.
+
+The program below measures it by brute force for every `n` up to 100, which is fine for a check of this size.
+
+<Code file="examples/distinct_count.py" showOutput caption="The number of distinct quotients at n = 100, next to 2 times the whole-number square root" />
+
+The output says 19 distinct quotients and a bound of 20. Watch how the count grows with `n` in the plot below, against the straight line of terms.
+
+<Figure caption="Distinct values of n // d grow like sqrt(n), while the number of terms grows like n" alt="A plot of n, the number of terms n divided by d, rising as a straight line, and a much flatter curve for how many different values those terms take. A third curve, twice the square root of n, follows the count closely.">
+  <StepThrough frames="visuals/distinct.frames.json" preset="hundred" />
+</Figure>
+
+The gap widens with `n`. At $n = 10^6$ the count is 1,999 against a million terms.
+
+## Divisor-counting sums
+
+A classic sum is the total number of divisors of the numbers 1 to `n`. Each `d` divides exactly `n // d` of them, namely `d`, `2d`, `3d` and so on up to `n`. So that total equals the sum of `n // d`, and blocks apply directly. Step through the grid below, where each row is one `d` and each column one `i`.
+
+<Figure caption="Rows of multiples add up to the sum of n // d, which is also the sum of the divisor counts" alt="A grid with a row for each d and a column for each i, with an x where d divides i. Each row adds n divided by d marks. The total number of marks equals the sum of the divisor counts of the columns. Other presets use n equal to 4 and 1.">
+  <StepThrough frames="visuals/multiples.frames.json" preset="six" />
+</Figure>
+
+<Code file="examples/divisor_count.py" showOutput caption="Counting divisors by marking multiples, and again by blocks" />
+
+For `n = 10` both methods give 27. Marking multiples costs about $n \ln n$ steps, which is fine up to a few million and too many beyond that. The block loop costs about $2\sqrt{n}$ either way.
+
+## Memoizing over the blocks
+
+Sometimes each term is not a number but a value that depends on `n // d`. Say `cost(v)` is `v` plus the sum of `cost(v // d)` for `d` from 2 to `v`, with `cost(1) = 1`. The facts that make this cheap are simple: `v // d` for `v = n // a` equals `n // (a * d)`, which is again a value of the form `n // something`. So every subproblem that appears is one of the roughly $2\sqrt{n}$ quotients of `n`, and the memoization of M4.11 needs a table of that size instead of one of size `n`.
+
+The program finds those quotients with the block loop, sorts them smallest first, and fills `cost` in that order. Each entry sums its own blocks, so it only looks up entries already stored.
+
+<Code file="examples/block_memo.py" showOutput caption="A memo table over the distinct values of n // d" />
+
+For `n = 12` there are 6 values and `cost(12)` is 55. Step through how the table fills.
+
+<Figure caption="The memo table has one column per distinct n // d, and each entry reads only earlier entries" alt="A table with one column for each distinct value of n divided by d, smallest first, and a bottom row of costs that fills from left to right. Each entry adds v to a sum of earlier entries, at the quotients v divided by d. Other presets use n equal to 9 and 1.">
+  <StepThrough frames="visuals/memo.frames.json" preset="twelve" />
+</Figure>
+
+Each entry here costs about $2\sqrt{v}$ blocks, so for $n = 10^6$ the whole table takes roughly $1.6 \cdot 10^5$ steps. The dictionary is keyed by integers, and the loops are plain `while` loops with no recursion, which PyPy handles well. Filling from small values up also means no recursion limit is needed.
+
+Reach for this when a sum or recurrence depends on `n // d` for every `d`, and `n` is too large to loop over. Count the distinct quotients first, then decide whether a plain block sum or a memo table over them fits.

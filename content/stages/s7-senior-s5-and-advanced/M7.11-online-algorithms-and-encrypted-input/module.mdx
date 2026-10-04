@@ -1,0 +1,63 @@
+The shop from M7.1 is back, with sales `5 3 8 1 4 7` for days 0 to 5. The same two events arrive, a total over some days and a correction to one day, but each line is scrambled. The line `2 1 4` does not say "sum days 1 to 4". Its numbers mean something only after you add the answer to the previous total and take the result modulo 6. A problem like this is an <Term id="online-algorithm">online algorithm</Term> problem: every line must be answered before the next one can be understood.
+
+## A line means nothing until the last answer is known
+
+Here is the rule for this lesson. A range line is `2 x y`, and its ends are `(x + last) % n` and `(y + last) % n`, where `last` is the answer to the most recent range question and starts at 0. An update line is `1 x y`, with position `(x + last) % n` and new value `(y + last) % 100`. Updates have no answer, so they leave `last` alone. Step through the table below. The first preset has four lines, and the second has two lines with identical text.
+
+<Figure caption="Decoding four lines: each line's `last` is the answer of a range question above it" alt="A table with one row per encrypted line and columns for the raw text, the last answer, what the line means, and the answer. Lines are decoded one at a time, and an arrow links each last value to the answer it came from. The presets use four lines with an update, and two range lines with the same raw text.">
+  <StepThrough frames="visuals/decode.frames.json" preset="main" />
+</Figure>
+
+The first line used `last` = 0 and asked for days 1 to 4. The update in line 2 used the 16 from line 1, and lines 3 and 4 each used the answer above them. In the second preset the first two lines are the same text, `2 2 5`, and they mean different questions, because the second is decoded with the answer of the first. Decoding can also put the ends the wrong way round, as it does there, so the program swaps them when the first end is larger.
+
+## What the chain rules out
+
+Without encryption you could read every query first, sort them, and answer them in a convenient order. Here a line's meaning depends on an answer that does not exist yet. A plan that skips ahead decodes with the wrong `last` and answers a different question. The next figure shows two such shortcuts going wrong.
+
+<Figure caption="Two shortcuts that fail: handling two lines in another order, and copying the answer of a repeated line" alt="A table of encrypted lines. First only the raw text is known. Then a shortcut is shown going wrong, either handling two lines in a different order or copying the answer of a repeated line. Finally the lines are decoded in the order given. The presets use four lines to reorder and two lines with the same raw text.">
+  <StepThrough frames="visuals/order.frames.json" preset="reorder" />
+</Figure>
+
+Nothing stops you from reading the raw numbers early, as the first step shows. Reading needs no answers, so reading all the input at once, as M3.10 taught, is still the right choice. Only decoding and answering have to happen in order. The second preset shows why answers cannot be cached by raw text either: one raw line was two questions.
+
+## The decode in code
+
+The trace below is a short version of the program. It takes two range lines and uses a plain slice sum where the tree will go, so the focus stays on `last`. Step through it with both presets. The second preset feeds the repeated line.
+
+<Figure caption="The decode loop: the answer to one line is stored in `last` and used to decode the next">
+  <CodeTrace trace="examples/online_short.trace.json" preset="main" />
+</Figure>
+
+In the trace, `last` keeps the answer of line 1 until line 2 has been decoded. Python's `%` returns a value between 0 and `n - 1` for a positive `n`, even if the left side is negative. So if a cipher subtracts, as in `(x - last) % n`, you need no extra `+ n`.
+
+## The tree stays the same
+
+Slicing costs as much as the range is long. With n and q up to `2 * 10^5`, that is up to 4 * 10^10 steps, which M2.9's budget of about 10^8 rules out. The iterative segment tree from M7.1 needs at most about 36 nodes per question and about `log2(size)` recomputations per update. Its code does not change. Only the decoding lines are new. Step through the tree answering the same four lines.
+
+<Figure caption="The M7.1 sum tree answering the decoded lines: nodes are taken for a range, and a path is recomputed for an update" alt="A sum tree over six values answering four encrypted lines in order. A range question marks the few nodes whose sums are added, and an update marks the leaf and ancestors that are recomputed. The presets are four lines, and a second input in which the same raw line is decoded twice.">
+  <StepThrough frames="visuals/tree.frames.json" preset="main" />
+</Figure>
+
+Line 1 took 3 nodes for 4 days, and line 3 took 2 nodes for all 6 days, because the padding leaves keep the root from answering. The update in line 2 rewrote the leaf and 3 ancestors. The decoded questions are the ones in the first figure.
+
+<Code file="examples/online_tree.py" showOutput caption="The M7.1 tree with decoding added: answers 16, 37 and 22" />
+
+The decoding sits in two places. Both branches start from `last`. The range branch swaps the ends if needed, turns them into the half-open `lo` and `hi` that the tree loop expects, and stores the answer in `last` after the loop.
+
+## Fast input and output
+
+When the input is an ordinary file, as here, one `sys.stdin.read().split()` reads every token up front. Loop over the tokens with an index `pos`, append each answer to a list, and write the list once at the end with `sys.stdout.write`, which costs less than 10^5 separate prints. The dependency on `last` constrains the order of the work, not how you read or write.
+
+On PyPy, keep the tree in one flat list of ints, as in M7.1, and let `last` be a plain local variable. The loop then costs about the same as the loop without encryption plus two modulo operations per line.
+
+## Two slips to avoid
+
+Decode both numbers of a range line with the same `last`, and only then store the new answer. In the program, `first` and `second` are both computed before `last` changes, so the order is safe. Computing `first`, answering, and then decoding `second` with the new `last` would give a different range.
+
+The other slip is updating `last` on an update line. Here updates have no answer, so `last` keeps the value from the latest range question, as the table showed in line 2 of the first preset. A problem statement says which lines produce an answer, and the decode must follow it exactly.
+
+To check a tree version, write a slice-sum version of the whole program, like the one in the trace but with updates as `a[p] = v`. Compare the answers on the same input. If they differ, the tree is at fault, because both versions share the same decoding lines.
+
+## When to reach for it
+
+A problem states that each query's numbers are hidden by the previous answer, or that answers must be given before the next line is read. Decode one line at a time, keep `last` in a variable, and choose a structure with cheap updates and queries. A segment tree is the one this course has built.

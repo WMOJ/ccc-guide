@@ -1,11 +1,7 @@
 id: C.1
-title: CCC rules and integrity
 status: accepted
 objectives:
   - Say what the 2026 CCC rules allow you to use during the contest, and what they forbid.
   - Explain why the rules forbid outside code and outside help, in your own words.
   - Describe the contest's single timed window and what happens after it ends.
-prereqs: []
-lessons:
-  - ccc-rules-and-integrity
 practice: []

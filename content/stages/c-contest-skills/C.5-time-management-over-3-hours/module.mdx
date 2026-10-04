@@ -1,0 +1,59 @@
+Suppose the clock reads minute 75 and you have just cleared the first <Term id="subtask">subtask</Term> of problem 4. The second subtask needs an idea you do not have yet, and 105 minutes remain. You can keep thinking about problem 4, or you can put it down and start a problem you have not opened. Neither choice is obviously right, and the contest does not pause while you decide. This lesson gives you a way to make that choice from evidence. The three hours are one budget of minutes, each subtask costs some of it, and you can review what remains at moments you set in advance.
+
+Every number in this lesson's figures is made up for the example. No real contest or typical contestant is being described.
+
+## Two plans over the same 180 minutes
+
+Step through the timeline below. Each bar is a block of minutes on one problem, and the digit on it is the problem number (R is the reading pass). Plan A is the top row and plan B is the row below it. The legend says whether a block cleared a subtask or cleared none. The chart underneath counts subtasks cleared at the end of each block. The "Dead end" preset gives problem 4 a second subtask that has no idea behind it. On "Stay pays", the second subtask of problem 4 does clear.
+
+<Figure caption="Two example plans over 180 minutes: plan A keeps its last 105 minutes on problem 4, plan B moves between problems in shorter blocks">
+  <StepThrough frames="visuals/two-plans.frames.json" preset="dead-end" />
+</Figure>
+
+On "Dead end", plan A clears a subtask in each of its first two working blocks and then spends 105 minutes without clearing another. Plan B gives problem 4 the same first 30 minutes, then starts problems 2, 3 and 5 and clears the first subtask of each, finishing with 6 against 3. Switch to "Stay pays" and the result flips to 4 against 3. Problem 4's second subtask does clear for plan A, while plan B's blocks on problems 2, 3 and 5 were each too short to reach a first subtask. Rotating is a bet that the next block elsewhere will clear something. It loses when those blocks are too short.
+
+## Minutes add up per problem
+
+Both plans in the figure come from one idea: the minutes you put into a problem accumulate, and a subtask clears once the total reaches its cost. Blocks on the same problem add together even when other problems sit between them. The short program below keeps two problems' totals and shows exactly that. Step through the three presets and watch `used` grow.
+
+<Figure caption="Blocks of minutes adding into each problem's total; a subtask clears when its total reaches its cost">
+  <CodeTrace trace="examples/tally_blocks.trace.json" preset="rotate" />
+</Figure>
+
+On "Rotating", problem 1 receives 20 minutes, then problem 2 receives 25, which equals its cost, so it clears at once. Problem 1 then receives 15 more, which brings `used[0]` to 35 and past its cost of 30. "Staying" ends with the same totals, so the order of the blocks made no difference there. "Short blocks" ends with `[20, 10]` and nothing cleared, which is what happened to plan B on "Stay pays". The model leaves out the cost of switching, which in a real contest is the minutes you need to reload a problem into your head. Longer blocks make that cost smaller relative to the work.
+
+`plan_timeline.py` runs the same tally over five problems and many subtasks. Its core is this function, and its two output lines are the ones the figure's last step states.
+
+<Code file="examples/plan_timeline.py" lines="4-17" showOutput caption="The tally behind both plans: add each block to its problem, then count the subtask costs reached" />
+
+## Read every statement first
+
+Both plans start with a reading pass, because you cannot compare problems you have not read. The pass has one product: for each subtask, whether a <Term id="brute-force">brute force</Term> is enough. The complexity module turns a bound on N into an operation count, so you can do that on paper. The table below uses a budget of 10 million operations, in line with that module's estimate for PyPy. Step through the rows and try the second preset.
+
+<Figure caption="The reading pass as a table: each subtask's bound on N, raised to the power its brute force grows by, against a 10 million operation budget">
+  <StepThrough frames="visuals/reading-pass.frames.json" preset="mixed" />
+</Figure>
+
+Problem 2's linear brute force is within budget even at 500,000, while problem 3's cubic one stops at 200. The subtasks marked within budget are where your estimates will be smallest, since a brute force you can already write needs no new idea. The marked-over subtasks are the ones that need an idea, and that is where a stuck stretch like plan A's tends to begin. The second preset shows a contest where no brute force is within budget. The 10 million figure is an estimate, so a subtask marked over may still run in time, and the subtask strategy module covers choosing between them.
+
+<Code file="examples/reading_pass.py" showOutput caption="The same marking in code, run on the first preset's input" />
+
+## Checkpoints
+
+A checkpoint is a moment you fix in advance, such as the end of each block, when you stop and re-read what is left. You write down for every problem how many subtasks have cleared and your estimate for the next one. Then you compare each estimate with the minutes remaining. The figure below applies one simple rule: among the subtasks that fit in the remaining time, start the one with the smallest estimate. Try the three presets.
+
+<Figure caption="One checkpoint: test each problem's next estimate against the minutes left, then pick the smallest that fits">
+  <StepThrough frames="visuals/checkpoint.frames.json" preset="minute-90" />
+</Figure>
+
+At minute 90, problem 3's 20 minutes is the smallest estimate, so the checkpoint picks problem 3, even though problem 5's first subtask is also within reach. At minute 165 only problem 5's 12 minutes fits in the 15 left. At minute 175, nothing fits, and the remaining five minutes go to re-checking the programs you already submitted on small cases, the way the stress-testing module describes.
+
+The short program below is that rule. It reads the minutes left and each problem's estimate, skips a problem with no subtask left, and keeps the smallest estimate that fits.
+
+<Code file="examples/checkpoint.py" showOutput caption="The checkpoint rule, run on the minute 90 input from the figure" />
+
+The rule is one option, not the only one. It ignores that subtasks carry different marks, which the statement lists, and your estimates will be wrong by varying amounts. What the checkpoint guarantees is that you compare options instead of continuing on momentum. The estimates are your own guesses, so a checkpoint only helps as much as your estimates do. Timing yourself on past contests is how they get better, which the mock contests module takes up.
+
+## When to reach for this
+
+Set the checkpoints before the contest starts: after the reading pass, and after each block. Decide what triggers a move, such as a block reaching its estimate with no new idea. Then use the checkpoint to choose where the next block goes, from the estimates you wrote down and the minutes left.

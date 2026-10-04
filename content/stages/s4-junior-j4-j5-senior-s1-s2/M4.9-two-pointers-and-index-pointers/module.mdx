@@ -1,0 +1,145 @@
+Take the sorted list `[1, 1, 2, 2, 3]` and imagine packing its unique values to the front, using no
+extra array: end up with `[1, 2, 3]` sitting in the first three slots. Doing that, and problems like
+it, calls for <Term id="two-pointers">two pointers</Term>: track two positions into a sequence, move
+each one in a predictable direction, and never backtrack. M3.9 already showed one shape of this
+idea. Two pointers start at opposite ends of a sorted array and close in based on the current sum,
+finding a pair that adds to a target. This lesson covers the rest of that family. It has pointers that rearrange an array in place,
+pointers that walk two arrays at once, and pointers that turn a nested count into a single pass.
+
+## Read and write pointers
+
+Removing duplicates from a sorted array in place uses two pointers that move at different speeds
+through the *same* array. A read pointer scans every element. A write pointer only advances when
+read finds a value that differs from what write already holds, and when it does, write copies that
+new value into its own slot.
+
+Take `[1, 1, 2, 2, 3]`. write starts at index 0, holding the value 1. read checks index 1: still 1,
+matching what write holds, so read moves on without writing. At index 2 the value is 2, which is
+new, so write advances to index 1 and stores it. The pattern repeats for the second 2 (skipped) and
+the 3 (written). By the time read reaches the end, the first three slots hold `[1, 2, 3]`.
+
+<Code file="examples/remove_duplicates.py" showOutput caption="Removing duplicates from a sorted array with read and write pointers" />
+
+Everything at or before write is exactly the distinct values seen so far, in the order they first
+appeared. That holds because read only skips a value when it just matched the one write is
+holding. The array is sorted, so equal values always sit next to each other, and one look back is
+all a value ever needs to know whether it is new.
+
+Step through the scan below. The typical case collapses two runs of duplicates. An all-equal array
+collapses every slot down to one write. An already-unique array writes on every single step, since
+write never falls behind read.
+
+<Figure caption="A read pointer scanning every element, a write pointer only advancing on a new value">
+  <StepThrough frames="visuals/dedup-pointers.frames.json" preset="typical" />
+</Figure>
+
+Initialize write to the first index, not one past it, or the very first value never gets counted.
+That is the one place this pattern is easy to get backward.
+
+## Index pointers across two arrays
+
+A second shape uses one pointer per array instead of two pointers into the same one. Merging two
+already-sorted lists into a single sorted list is the standard example. Pointer `i` walks list `A`,
+pointer `j` walks list `B`, and at each step the smaller of the two pointed-at values moves into the
+result while its pointer advances.
+
+<Code file="examples/merge_sorted.py" showOutput caption="Merging two sorted lists with one index pointer per list" />
+
+Step through the merge below. The interleaved preset alternates which list wins at almost every
+step. The second preset shows the shape that trips people up: once `A` runs out, whatever is left
+of `B` is already sorted and gets copied over untouched, with no more comparisons needed. The third
+preset ties two equal values, which the `<=` in the comparison sends to `A` first, keeping the
+merge stable.
+
+<Figure caption="Two index pointers, one per sorted list, feeding the smaller value into the merged result each step">
+  <StepThrough frames="visuals/merge-pointers.frames.json" preset="interleaved" />
+</Figure>
+
+Both pointers only ever move forward and together cover `A` and `B` exactly once, so the whole
+merge costs O(n + m), the sizes of the two lists added together, not multiplied.
+
+## Pointers closing in from both ends
+
+A third shape starts one pointer at each end of a single array and walks them toward each other.
+Reversing an array in place uses it directly: swap the two ends, move each pointer one step inward,
+and stop once they meet or cross.
+
+<Code file="examples/reverse_array.py" showOutput caption="Reversing an array in place with two pointers" />
+
+Step through the reversal below. Try all three presets.
+
+<Figure caption="left and right pointers swapping their way inward until they meet or cross">
+  <StepThrough frames="visuals/reverse-pointers.frames.json" preset="odd" />
+</Figure>
+
+An odd-length array leaves one middle slot the pointers meet on with nothing left to swap; an
+even-length array has them cross between two slots instead. A single element needs no swap at all,
+since it is already its own reverse.
+
+## Fast and slow pointers: cycles and meeting points
+
+The same closing-in idea extends past arrays and past matching speeds. Given a sequence where each
+position points to the next one, send a slow pointer one step at a time and a fast pointer two
+steps at a time. Inside a cycle, they will meet. Without one, fast runs off the end first.
+
+Why must they meet? Once both pointers are inside the cycle, fast gains exactly one step on slow
+every move, since fast covers two steps to slow's one. A gap that shrinks by one every move, on a
+cycle of finite length, must reach zero, so fast is guaranteed to land exactly on slow within one
+lap. Outside a cycle there is no lap to complete: fast simply reaches the sequence's dead end first.
+
+<Code file="examples/cycle_pointers.py" showOutput caption="Detecting a cycle with fast and slow pointers, and measuring its length" />
+
+Step through the search below. The first preset finds a cycle and measures its length by walking
+forward from the meeting point back to itself. The second preset ends at a dead end, with no cycle.
+The third is the smallest possible cycle: a single position that points to itself.
+
+<Figure caption="A slow pointer moving one step and a fast pointer moving two steps, meeting inside a cycle or running off the end without one">
+  <StepThrough frames="visuals/cycle-pointers.frames.json" preset="cycle" />
+</Figure>
+
+The data structure and the question both changed, from pairs to a single chain, from a sum to a
+meeting point. The core trick did not: two positions advancing at different rates until something
+forces them together.
+
+## Counting with pointers instead of checking every pair
+
+The pair-sum shape from M3.9 extends naturally to counting. Given a sorted array, how many pairs
+sum to at most K? Checking every pair directly is the nested-loop shape M2.9 uses to derive a
+target from n. It costs O(n²): for n up to 100,000, that is roughly ten billion comparisons, far
+past what PyPy finishes inside a judge's time limit.
+
+Two pointers cut that to O(n). Start `left` at 0 and `right` at the last index. If `arr[left] +
+arr[right] <= K`, every value between `left` and `right` is at most `arr[right]`, so it also sums to
+at most K when paired with `arr[left]`. That is `right - left` valid pairs counted in one
+comparison, not one at a time, and `left` can move on since every pair it forms with a valid partner
+is now accounted for. If the sum is over K, `arr[right]` cannot pair with anything smaller and still
+fit, so `right` moves in instead. Either pointer moves inward on every step and can move at most n
+times total, so the whole count is one pass.
+
+<Code file="examples/count_pairs.py" showOutput caption="Counting pairs with sum at most K using two pointers on a sorted array" />
+
+Step through the count below. Each step where the sum fits adds a whole range of pairs at once,
+labeled on the array. The "K too small" preset never adds anything and ends at 0. The "K covers
+all" preset adds every remaining pair on every step, reaching the full n(n-1)/2 total.
+
+<Figure caption="left and right counting a whole range of pairs at once whenever their sum fits, instead of checking each pair separately">
+  <StepThrough frames="visuals/count-pairs.frames.json" preset="typical" />
+</Figure>
+
+## Keeping it fast on PyPy
+
+Every example above reads its input with one call to `sys.stdin.read().split()` and prints its
+answer once at the end, never inside the loop. Each one tracks its pointers as plain local
+integers and indexes a flat list directly, `arr[left]`, `arr[right]`. None of them slices a new
+list or calls `.pop(0)`, which would shift every remaining element and turn an O(n) pass back into
+O(n²). Local integer variables and direct indexing are what PyPy resolves fastest.
+
+## Recognizing when to reach for this
+
+Two pointers fit whenever a problem is about pairs, in-place rearrangement, merging sorted data, or
+counting something you would otherwise check one item at a time. The tell is always the same. Can
+one comparison rule out a whole side of the remaining search space, the way a large sum rules out
+the current `right`, or a matching value rules out advancing `write`? If yes, a nested loop is very
+likely trading away a one-pass answer. Before reaching for it, check which direction each pointer
+is allowed to move and why. A two-pointer scan that lets a pointer move the wrong way, or move
+without ruling anything out, gives up its correctness along with its speed.

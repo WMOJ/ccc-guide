@@ -1,0 +1,79 @@
+Earlier modules stored values and computed with them, but every line ran no matter what. Many CCC problems need a program to do one thing or another, depending on the input: print a different word, add a bonus, or skip a step. This lesson covers comparing values, branching on the result, and combining more than one condition.
+
+## Comparing values
+
+A <Term id="comparison-operator">comparison operator</Term> compares two values and returns a boolean, `True` or `False`. Python has six of them: `==` for equal, `!=` for not equal, `<` and `<=` for less than (or equal), and `>` and `>=` for greater than (or equal).
+
+<Code file="examples/compare_scores.py" showOutput caption="Six comparison operators on two numbers" />
+
+`a` holds `7` and `b` holds `10`. `a == b` is `False`, since the two numbers differ, and `a != b` is `True` for the same reason. `a < b` is `True`, and `a >= b` is `False`, since `7` is neither greater than nor equal to `10`.
+
+A common mistake is writing `=` where a comparison is meant. A single `=` is assignment, storing a value under a name. A double `==` is comparison, checking whether two values are equal, and does not change either one.
+
+`in` is also a comparison operator. It checks whether a value shows up inside a piece of text (or another sequence you meet in a later module), and returns a boolean the same way `==` does.
+
+<Code file="examples/letter_in_vowels.py" showOutput caption="Testing membership with in" />
+
+`letter` holds `"a"`, and `"a" in vowels` is `True`, since `vowels` contains that letter. `"z" in vowels` is `False`, since `vowels` does not contain `"z"`.
+
+## Branching with `if` and `else`
+
+An `if` statement runs a block of code only when a condition is `True`, and skips it otherwise. Adding `else` gives the program something to run instead, when the condition is `False`.
+
+<Code file="examples/pass_fail.py" showOutput caption="A two-way branch with if and else" />
+
+`score` holds `42`. The condition `score >= 50` is `False`, so the `if` block never runs, and Python runs the `else` block instead, printing `"fail"`.
+
+Only one of the two blocks ever runs for a given value of `score`. Indentation marks which lines belong to which block; every line indented under `if` or `else` belongs to that branch alone.
+
+## Three or more branches with `elif`
+
+Some decisions need more than two outcomes. The `elif` keyword, short for "else if", checks another condition when the one above it was `False`, and can appear as many times as you need between `if` and an optional final `else`.
+
+<Code file="examples/temperature_band.py" showOutput caption="Three outcomes with if, elif and else" />
+
+`temp` holds `15`. `temp < 10` is `False`, so Python checks the `elif`: `temp < 25` is `True`, so it prints `"mild"` and stops there. The final `else` never runs, since the `elif` above already matched. Python checks each condition in order and stops at the first one that is `True`, so only one branch ever runs, however many `elif` lines a chain has.
+
+## Combining conditions with `and`, `or` and `not`
+
+A <Term id="boolean-operator">boolean operator</Term> combines or inverts boolean values. `and` gives `True` only when both sides are `True`. `or` gives `True` when at least one side is `True`. `not` flips a single boolean the other way.
+
+<Code file="examples/age_and_height.py" showOutput caption="and, or and not combining conditions" />
+
+`age` holds `13` and `height` holds `140`. `age >= 12 and height >= 130` is `True`, since both conditions hold. `age < 10 or height < 100` is `False`, since neither condition holds on its own. `not age >= 18` is `True`, since `age >= 18` is `False`, and `not` flips it.
+
+## A comparison that raises an error
+
+Python can only compare values it knows how to order. Comparing a piece of text straight from `input()` against a number, without converting it first, raises a `TypeError`.
+
+<Code file="examples/compare_raw_input.py" expectError="TypeError" caption="Comparing text against a number without converting it first" />
+
+`age` holds the text `input()` returned, never converted with `int()`. Python cannot decide whether a piece of text is less than the number `18`, so it stops with a `TypeError` instead of guessing. The fix is the one earlier modules already covered: convert with `int()` before comparing a value read from input.
+
+## Conditional expressions
+
+A <Term id="conditional-expression">conditional expression</Term> picks one of two values in a single line, without a full `if` block. It reads as `a if condition else b`: `a` when the condition is `True`, `b` when it is `False`.
+
+<Code file="examples/parity_label.py" showOutput caption="Picking one of two values with a conditional expression" />
+
+`count % 2` is `1` for the odd number `7`, so `count % 2 == 1` is `True` and the expression picks `"odd"`. Reach for a conditional expression when you need a single either/or value. A decision with more than two outcomes, or one that runs more than one line, still needs a full `if`/`elif`/`else` block.
+
+## Chaining comparisons
+
+Python also lets you chain comparisons in one expression, without writing `and` yourself.
+
+<Code file="examples/age_in_range.py" showOutput caption="Chaining two comparisons into one bounds check" />
+
+`age` holds `13`. `0 <= age <= 130` is `True` exactly when both `0 <= age` and `age <= 130` hold, which they do here. `0 <= age <= 10` is `False`, since `age` is not less than or equal to `10`. A chained comparison reads the same way you would say the bound aloud. Reach for one whenever a problem asks whether a value sits between two limits, instead of writing the same check with `and` by hand.
+
+## Tracing an if/elif/else chain
+
+<Figure caption="Reading a score and choosing one of three letter grades">
+  <CodeTrace trace="examples/grade_classifier.trace.json" />
+</Figure>
+
+All three presets read one score from standard input and run the exact same `if`/`elif`/`else` chain of code, but each one still takes a different branch depending on what it read. A score of `95` matches the `if`. A score of `75` skips the `if` and matches the `elif`. A score of `50` matches neither, so it falls through to `else`. Watch how `grade` gets its value from only one of the three assignments, whichever branch the score in that preset lands in.
+
+## Recap
+
+This lesson covered the six comparison operators and `in`, branching with `if`, `elif` and `else`, and combining or chaining conditions with `and`, `or`, `not` and chained comparisons. It also covered picking a single either/or value with a conditional expression. The four problems below all turn a small set of numbers into a decision.

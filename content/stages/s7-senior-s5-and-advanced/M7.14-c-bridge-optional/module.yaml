@@ -1,13 +1,8 @@
 id: M7.14
-title: C++ bridge (optional)
 status: accepted
 objectives:
   - Read short C++ snippets by matching each construct to the Python idea it mirrors.
   - Map C++ containers such as vector, map, set, pair and priority_queue to the Python structures you know.
   - Predict where fixed-width integers, division and the remainder operator differ from Python's.
   - Read references and pass-by-value in function signatures.
-prereqs:
-  - M6.13
-lessons:
-  - cpp-basics-and-translation
 practice: []

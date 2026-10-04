@@ -30,9 +30,9 @@ def draw(order, hot=()):
 
 
 cur = list(jobs)
-worst = max(lateness(cur))
-lates = lateness(cur)
-worst_name = cur[lates.index(worst)][0]
+job_lateness = lateness(cur)
+worst = max(job_lateness)
+worst_name = cur[job_lateness.index(worst)][0]
 start = worst
 rec.step(
     "Jobs run left to right in input order. A marker dX is job X's deadline. Jobs drawn as late "

@@ -1,0 +1,88 @@
+Suppose a problem gives you a count N on the first line, then N numbers to add up. A loop that calls `input()` once for the count and once for each number reads them correctly, and on a short list it runs instantly. This lesson builds the habit you will use from here on: read everything once, walk the pieces by position, and write everything once.
+
+## How large input gets
+
+A problem's input specification might allow N up to a few hundred thousand values. PyPy, the interpreter the CCC grader runs, manages on the order of `10^7` to `10^8` simple operations a second, the same estimate M2.9 uses. One addition per value, for N up to a few hundred thousand, is a small fraction of that budget. The arithmetic was never going to be the problem. The cost that adds up sits in how the values arrive and leave.
+
+## One call per line, or one call for everything
+
+Every call to `input()` is a separate request to the input stream for the next line. A loop that reads N values that way makes N + 1 calls. With 5 values nobody notices the extra calls. With hundreds of thousands, they cost time the algorithm needs elsewhere.
+
+`sys.stdin.read()` asks for the whole input in one call, as one long string. Then `.split()` breaks that string into a list of tokens wherever there is whitespace. The same input costs one call, however long it is.
+
+<Figure caption="Calls made by an input() loop and by one read(), counted as the loop reads each line">
+  <StepThrough frames="visuals/call_count.frames.json" preset="main" />
+</Figure>
+
+The figure counts calls, not seconds. The loop's count climbs by one per line, while `read()` stays at 1. On the "N = 0" preset there is only the count line, so the two ways make one call each. Small inputs lose nothing by using the single read, which is why this course uses it from Stage 3 on, whatever the input size.
+
+Every example in this lesson follows the same shape, the house skeleton:
+
+```python
+import sys
+
+
+def main() -> None:
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    # Parse input_data by position, build a list of results, then write it once.
+
+
+if __name__ == "__main__":
+    main()
+```
+
+The `if not input_data: return` line guards a program that has nothing at all to read, before anything else runs.
+
+## Walking the token list with a pointer
+
+Splitting on whitespace is how you <Term id="tokenize">tokenize</Term> input, and a line break is just one more kind of whitespace. The input's line layout stops mattering: the same five numbers on one line or on five lines give the same list. A variable `pos` tracks the next unread token. Step through the pattern below. The "One line" and "Multi-line" presets produce identical steps. "N = 0" reads the count as 0, so the loop that would read values never runs.
+
+<Figure caption="Reading a token list from sys.stdin.read().split(), with a pos pointer that walks across it">
+  <StepThrough frames="visuals/token_pointer.frames.json" preset="main" />
+</Figure>
+
+Every token is still a string when it comes out of the list. `sum_many.py` converts each one with `int()` as it reads it. It reads the count, then reads that many values in a loop, moving `pos` forward by one after each read.
+
+<Code file="examples/sum_many.py" showOutput caption="Reading a count and that many numbers, then summing them" />
+
+## Records that carry their own length
+
+Some inputs repeat a record whose length is given inside the input: a count k, then k values, then the next record's count. The pointer handles this with no change in idea. Each time `pos` lands on a count, the loop reads exactly that many tokens, and `pos` is then already on the next count.
+
+<Code file="examples/sum_groups.py" showOutput caption="Reading groups that each start with their own count, and printing each sum" />
+
+<Figure caption="Reading a group count, then each group's own k and exactly k values">
+  <StepThrough frames="visuals/group_records.frames.json" preset="main" />
+</Figure>
+
+The marked range in the figure is one group's values, and the next token after it is always the next group's k. The "Empty group" preset has k = 0: the inner loop reads nothing, the sum is 0, and `pos` moves on to the next count. If the code ever read one token too many or too few, every later group would be misread, which is why `pos += 1` sits right beside each read.
+
+## Building output the same way
+
+Output has the same shape of cost. Calling `print()` once per result sends data out one small piece at a time. Collecting every result into a list as you compute it, then writing the whole list at once, pays the output cost once.
+
+<Figure caption="Squaring each input value, collecting the results, and writing them all in one call">
+  <StepThrough frames="visuals/build_output.frames.json" preset="main" />
+</Figure>
+
+`write_once.py` builds one `results` list, one entry per input value, then joins it with `"\n".join(...)` before writing. `sys.stdout.write()` does not add a newline the way `print()` does. The join supplies the newlines between results, and the code adds one more at the end for the last line, as the final step shows.
+
+<Code file="examples/write_once.py" showOutput caption="Collecting squared results and writing them in one call" />
+
+## Reading a grid from the same token list
+
+The token list works for a grid too. A grid given as several rows of numbers becomes one long list of tokens with no memory of where each row ended. The row and column counts the problem gives you are what let you find those boundaries again.
+
+<Figure caption="Filling a grid from the token list, row by row, using the row and column counts already read">
+  <StepThrough frames="visuals/read_grid.frames.json" preset="main" />
+</Figure>
+
+`read_grid.py` reads `rows` and `cols` first. Then an inner loop reads exactly `cols` tokens before the outer loop starts the next row, so `pos` always lands on the first token of the next row at the right moment. The "One line" preset fills the same grid from all six values on a single line. It is the same one-token-at-a-time reading as before, organized into two nested loops.
+
+<Code file="examples/read_grid.py" showOutput caption="Reading row and column counts, then a grid of that size, token by token" />
+
+## Getting the details right
+
+`input()` and `sys.stdin.read()` both draw from the same input stream, so mixing them in one program leaves the second reading whatever the first left behind. Pick one for the whole program. Convert each token with `int()` or `float()` as you read it, before you try to add it to anything. Because `write()` never adds its own newline, the join has to supply every line break the output needs, including the final one. On PyPy, this pattern keeps the per-call cost paid once, however many lines the input has.

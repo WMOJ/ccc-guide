@@ -1,0 +1,111 @@
+A small game board arrives as a block of text: a few rows, each the same length, each character either open ground or a mark. Almost any question about it, such as how many cells are marked or what sits beside a given cell, starts the same way. Read the board into a shape Python can index by row and by column, then visit its cells in a fixed order.
+
+That shape is a <Term id="grid">grid</Term>: rows stacked on top of each other, each row holding the same number of columns. In Python, a grid is a list of rows, and each row is itself a sequence, so `grid[row][col]` reaches one cell.
+
+## Reading and storing a grid
+
+Grid input gives the row and column counts first, then the rows, one per line:
+
+```
+3 4
+..##
+#...
+....
+```
+
+The first line says 3 rows and 4 columns. The house skeleton reads everything with `sys.stdin.read().split()`, which breaks the input into tokens at whitespace. A row like `..##` has no spaces in it, so it stays one token, just as a number does. The counts tell you where the rows end, so slicing `r` tokens off the front rebuilds the grid:
+
+<Code file="examples/count_marks.py" lines="5-8" highlight="8" caption="Reading a character grid: r and c first, then r rows sliced from the token list" />
+
+Step through the reading below. Try the three presets, including the board with a single row.
+
+<Figure caption="Reading a character grid: two counts, then one token per row">
+  <StepThrough frames="visuals/read_grid.frames.json" preset="board" />
+</Figure>
+
+The slice `data[2:2 + r]` lands on exactly the row tokens because the counts come first and no row contains a space. After it, `grid[0]` is the string `"..##"` and `grid[1][0]` is `'#'`. Module M3.10 looks at input reading in more depth.
+
+Sometimes the cells are numbers, and you need to change them later. A Python string cannot be modified in place, so build a list of lists, converting each row's tokens to `int` as you go:
+
+<Code file="examples/grid_sum.py" showOutput caption="A numeric grid as a list of lists: each row's sum, then each column's sum" />
+
+Here `grid[0]` is the list `[1, 2, 3, 4]`, and `grid[0][0]` can be reassigned because a list can change after it is built. Rows are numbered from 0, so a grid with 3 rows has rows 0, 1, and 2, never a row 3. The second half of this program, the column sums, is explained in its own section below.
+
+## Indexing rows and columns
+
+The first index of `grid[row][col]` is always the row, counting from the top. The second is the column, counting from the left. Writing `grid[col][row]` still runs, since both are integers, but it reads the wrong cell and gives a wrong answer with no error to point at the mistake.
+
+<Figure caption="Every cell of a 3-by-4 grid, labeled row,col" alt="A 3-row, 4-column grid where every cell shows its own row and column index, such as 0,0 in the top-left corner and 2,3 in the bottom-right.">
+  <Diagram
+    viz="GridViz"
+    data={{
+      cells: ["____", "____", "____"],
+      values: [["0,0", "0,1", "0,2", "0,3"], ["1,0", "1,1", "1,2", "1,3"], ["2,0", "2,1", "2,2", "2,3"]],
+      indices: false,
+    }}
+  />
+</Figure>
+
+Read each label as row first, column second. `grid[0][2]` is the cell labeled `0,2`: top row, third from the left. `grid[2][0]` is labeled `2,0`: bottom row, first column. When a bug looks like a wrong-cell read, check which index came from the row loop and which from the column loop.
+
+## Nested loops over a grid
+
+Visiting every cell needs two loops: the outer picks a row, the inner picks a column within it. Name the variables `row` and `col`, not `i` and `j`, so `grid[row][col]` reads at a glance.
+
+<Code file="examples/count_marks.py" showOutput caption="Counting how many cells hold '#'" />
+
+This visits cells in row-major order: row 0's columns left to right, then row 1's, and so on. A grid with R rows and C columns has R times C cells, and visiting each once costs R times C steps, so the scan is `O(R * C)`. With R and C at most 1000, that is one million steps, which M2.9's target-complexity table puts comfortably inside what a judge finishes in time. Nothing here can be skipped, since any cell might hold a mark, so this brute-force scan is also the whole solution.
+
+Step through the scan below on three boards: marks scattered, no marks, and every cell marked.
+
+<Figure caption="Scanning a grid in row-major order, counting marked cells as it goes">
+  <StepThrough frames="visuals/count_marks.frames.json" preset="scattered" />
+</Figure>
+
+Every cell becomes current exactly once, in the order the nested loop follows, and the count only goes up. On the empty board it never leaves 0. On the full board it ends at the number of cells.
+
+## Row and column totals
+
+The same two loops answer a different question once you change what happens inside. A row total fixes `row` and lets `col` run, which is just `sum(grid[row])`. A column total fixes `col` and lets `row` run, so the inner loop goes down the grid instead of across it. In `grid_sum.py` that is the loop over `range(r)` adding `grid[row][col]`.
+
+<Figure caption="Row totals first, then column totals, building up in an array beside the grid">
+  <StepThrough frames="visuals/grid_sum.frames.json" preset="board" />
+</Figure>
+
+Watch which index moves. For a row, the highlighted cells share a row index and the column index changes. For a column it is the other way around, and the array beside the grid gets one entry per column, 4 of them instead of 3. The `3 by 4` output above matches: three row sums, then four column sums.
+
+Finding a target works the same way. To locate the one cell holding `'S'`, put `if grid[row][col] == 'S':` inside the loops and save `row` and `col` when it matches. Stopping early saves a little work but leaves the bound at `O(R * C)`.
+
+## Checking a cell's neighbors
+
+A grid question often involves a cell's neighbors: the cells directly above, below, left, and right of it. Writing all four by hand is repetitive and easy to get wrong, so list the four moves as row and column offsets and loop over them.
+
+<Figure caption="The four moves as row and column offsets" alt="A four-row table pairing each direction, up, down, left and right, with its row offset dr and column offset dc.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      cells: [[-1, 0], [1, 0], [0, -1], [0, 1]],
+      rowHeads: ["up", "down", "left", "right"],
+      colHeads: ["dr", "dc"],
+      rowTitle: "move",
+    }}
+  />
+</Figure>
+
+Adding a pair's `dr` to the current row and `dc` to the current column gives that neighbor's position. A neighbor of a cell on the grid's edge can land outside it: a row below 0, at or past `R`, or the same for columns. Reading `grid[nr][nc]` before checking `0 <= nr < R and 0 <= nc < C` crashes the moment the current cell sits on the border.
+
+<Code file="examples/neighbor_check.py" showOutput caption="Counting how many of a cell's four neighbors are inside the grid" />
+
+Step through the check below for a cell in the middle of a board, one on its top edge, and one in its corner.
+
+<Figure caption="Checking a cell's four neighbors against the grid's bounds" alt="A grid with a ring of invalid positions drawn around it. The current cell is checked in each of the four directions; a neighbor landing inside the grid is marked as valid, one landing in the ring is rejected.">
+  <StepThrough frames="visuals/neighbor_check.frames.json" preset="middle" />
+</Figure>
+
+The ring around the grid is not part of it: it stands for every position the bounds check would reject. A middle cell has all four neighbors inside the grid, a cell on the top edge has three, and a corner cell has two. The same loop handles all three cases because the check decides, not the offsets.
+
+## Keeping it fast on PyPy
+
+`sys.stdin.read().split()` reads the whole grid in one call, instead of paying for a separate `input()` call per row. When you only read a character row, leave it as the string `.split()` gave you, the way `count_marks.py` does: converting it to a list costs time and memory for nothing. A problem that asks for several answers over one grid should collect them in a list and print once at the end.
+
+If an answer looks almost right, check three things first. The loop should read `grid[row][col]`, not `grid[col][row]`. Both loops should run over `range(r)` and `range(c)`. And every neighbor lookup should pass the bounds check above.

@@ -1,15 +1,10 @@
 id: M5.12
-title: O(N^2) DP on intervals and centre expansion
 status: accepted
 objectives:
   - Recognize interval DP patterns and implement centre-expansion recurrences.
   - Optimize space by keeping only the longest length found at each center instead of a full 2D table.
   - Handle both odd and even-length intervals in expansion.
   - Choose the right recurrence to stay in O(N^2) time on moderately sized inputs.
-prereqs:
-  - M4.11
-lessons:
-  - interval-dp-expansion
 practice:
   - id: ccc16j3
     note: Find the length of the longest palindrome hidden inside a word.

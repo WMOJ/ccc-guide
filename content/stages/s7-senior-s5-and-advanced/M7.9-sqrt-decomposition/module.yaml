@@ -1,16 +1,10 @@
 id: M7.9
-title: Sqrt decomposition
 status: accepted
 objectives:
   - Cut an array into blocks of about the square root of its length and store one summary per block.
   - Answer a range query from two partial blocks and the whole blocks between them.
   - Apply a point update by fixing one value and one block summary.
   - Choose the block size by balancing the two costs, and recompute the summary when it cannot be subtracted.
-prereqs:
-  - M6.10
-  - M2.9
-lessons:
-  - sqrt-blocks
 practice:
   - id: ccc17s5
     note: Answer passenger totals over ranges of stations while trains move along their lines.

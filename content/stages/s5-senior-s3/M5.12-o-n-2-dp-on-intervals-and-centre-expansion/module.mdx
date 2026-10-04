@@ -1,0 +1,150 @@
+An engraver checks a word before cutting it into a plate, since a palindrome reads the same
+engraved forwards or backward and looks deliberate rather than accidental. Given a word, what is
+the longest palindrome hidden inside it, and how many different palindromic substrings does the
+whole word contain? Both questions use <Term id="center-expansion">center expansion</Term>: grow
+outward from a candidate center, one character at a time, for as long as the characters on each
+side keep matching.
+
+## Checking every substring directly
+
+A substring runs from some start index to some end index, so there are O(N^2) substrings in a
+word of length N. Checking whether one substring is a palindrome, by comparing it to its own
+reverse, costs O(N) in the worst case. Checking all of them this way costs O(N^3): for a word of
+5,000 characters, that is on the order of 1.25 * 10^11 character comparisons, far past what a
+judge's time limit allows. The insight that brings this down to O(N^2) is the same one M4.11 used
+for staircases and coins. A palindrome check on a substring reuses the check already done on the
+substring one step smaller inside it, instead of starting over.
+
+<Figure caption="Comparing the brute-force check against center expansion or the is_pal table: both look at O(N^2) substrings, but the brute force re-verifies each one from scratch" alt="A two-row table: checking every substring visits O(N^2) substrings at O(N) cost each for O(N^3) total; center expansion or the table visits the same O(N^2) substrings at O(1) amortized cost each for O(N^2) total.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowTitle: "method",
+      rowHeads: ["Check each substring", "Expand or fill by length"],
+      colHeads: ["Substrings", "Total time"],
+      cells: [["O(N^2)", "O(N^3)"], ["O(N^2)", "O(N^2)"]],
+    }}
+  />
+</Figure>
+
+Both approaches look at essentially the same O(N^2) substrings or centers. The difference is the
+cost of handling each one. Re-verifying a substring from scratch costs O(N). Reusing a smaller
+answer already computed, either through the table or through an expansion that stops the instant
+it can, costs O(1) amortized instead.
+
+## Center expansion
+
+A palindrome has a center: a single character for an odd-length palindrome, or the point between
+two characters for an even-length one. Expanding outward from a center compares the characters on
+each side one pair at a time, and stops the moment they differ or the string runs out.
+
+<Code file="examples/palindrome_centres.py" showOutput caption="Expand outward from every center to find the longest palindrome" />
+
+Every index is an odd center, and every adjacent pair is an even center, so a word of length N has
+exactly `2N - 1` centers. Step through the search below on three words. One has a clear
+odd-length winner, one has a clear even-length winner, and one has no palindrome longer than a
+single character.
+
+<Figure caption="Expanding outward from every center of a word, tracking the best palindrome found so far">
+  <StepThrough frames="visuals/center-expansion.frames.json" preset="odd" />
+</Figure>
+
+Most centers stop after zero or one comparison, once their neighbors differ, and those are skipped
+above once their result is known. The winning center in `"kayaks"` is the `'y'` at index 2: `'a'`
+matches `'a'`, then `'k'` matches `'k'`, then the left side runs off the string's edge, so
+`"kayak"` is the answer. Every center is checked once, and each one's expansion stops as soon as
+it can. Expanding a single center costs at most O(N), and there are O(N) centers, so the whole
+scan costs O(N) times O(N): O(N^2), not O(N^3).
+
+## The interval DP recurrence
+
+The same problem also fits a table. Let `is_pal[l][r]` be true when the substring from index `l`
+to `r`, inclusive, is a palindrome. A length-1 substring is always a palindrome. A longer one is a
+palindrome exactly when its two ends match and the substring one step in from each end,
+`is_pal[l+1][r-1]`, is also a palindrome. That is the same subproblem structure M4.11's bottom-up
+table used for smaller stairs.
+
+<Code file="examples/interval_palindrome.py" showOutput caption="Fill the is_pal table by increasing interval length" />
+
+Filling `is_pal[l][r]` needs `is_pal[l+1][r-1]` to already be filled, and that inner interval is
+always two characters shorter. Filling the table in order of increasing length guarantees every
+cell's dependency is ready first. That is the same way M4.11's bottom-up table filled small stairs
+before the ones that depend on them. Filling by `l`, or by `r`, instead would reach some cells too
+early.
+
+<Figure caption="Filling is_pal by increasing length: length 1 first, then each later length using an arrow back to the interval two characters shorter">
+  <StepThrough frames="visuals/interval-fill.frames.json" preset="main" />
+</Figure>
+
+`"redder"` shows the dependency chain directly: `is_pal[2][3]` (`"dd"`) is true at length 2, which
+makes `is_pal[1][4]` (`"edde"`) true at length 4, which makes `is_pal[0][5]` (`"redder"`, the whole
+word) true at length 6. Every other cell above stops at false the moment its ends differ or its
+inner cell is false, without needing to look any further inward.
+
+The same length-first order applies to any interval DP, not only palindromes. A picture of the
+fill order for a general table makes the dependency direction clear on its own.
+
+<Figure caption="The fill order for an interval table: length 1 on the main diagonal, then each later length one diagonal further out" alt="A triangular table where each cell holds its interval's length: 1s on the main diagonal, 2s one diagonal out, up to 5 in the far corner, with the lower triangle blank since l is never greater than r.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowTitle: "l",
+      colTitle: "r",
+      rowHeads: [0, 1, 2, 3, 4],
+      colHeads: [0, 1, 2, 3, 4],
+      cells: [
+        [1, 2, 3, 4, 5],
+        [null, 1, 2, 3, 4],
+        [null, null, 1, 2, 3],
+        [null, null, null, 1, 2],
+        [null, null, null, null, 1],
+      ],
+    }}
+  />
+</Figure>
+
+Each diagonal only ever points to the diagonal directly inside it. Filling diagonal by diagonal,
+shortest first, is the one order that never asks for a cell that is not there yet.
+
+## Counting instead of just the longest
+
+Center expansion answers "what is the longest palindrome," one center at a time. The `is_pal`
+table answers a different question just as easily. Count every `True` cell, and the result is
+the total number of palindromic substrings, not just the longest one. `interval_palindrome.py`
+above does exactly that. It prints every palindromic substring of `"redder"` as it is found, and
+a running total, `9`, six single characters plus `"dd"`, `"edde"`, and `"redder"` itself.
+
+## Avoiding the full table
+
+An `is_pal` table costs O(N^2) memory, one boolean per interval, which is fine for N up to a few
+thousand. Some interval DP problems store a number instead of a boolean at each cell. An O(N^2)
+table of Python objects can then be too large to fit, even where the arithmetic itself would be
+fast enough.
+
+Center expansion never needed the table at all. Track only the longest palindrome length found at
+each center, and that answers "what is the longest palindrome in the whole word." A single array
+of size N holds it. That is exactly what center expansion already computes.
+
+<Code file="examples/palindrome_optimized.py" showOutput caption="Track only the longest length per center, without a full table" />
+
+This array holds the same information the table's diagonal cells would carry, one number per
+center, in O(N) space instead of O(N^2). It answers the longest-palindrome question directly, but
+not the counting question above. Knowing the longest palindrome at a center does not say how many
+shorter palindromic substrings it also contains.
+
+## Getting these right
+
+Handle even-length centers separately from odd ones. A loop that only checks single-character
+centers misses every palindrome of even length, such as `"deed"`, which has no single character in
+the middle. The `expand` function shown above takes the pair of starting indices as arguments, so
+the exact same code handles both: `(i, i)` for odd, `(i, i + 1)` for even.
+
+Keep the two ends of an interval matched to the direction the recurrence actually depends on.
+`is_pal[l][r]` depends on `is_pal[l+1][r-1]`, the interval one step in from both ends. It does not
+depend on `is_pal[l+1][r]` or `is_pal[l][r-1]`, which drop only one end and describe a different,
+shorter substring entirely.
+
+On PyPy, a flat list of length `N * N`, indexed as `row * N + col`, runs faster than a list of
+lists for a large `is_pal` table, since each lookup is one array index instead of two. Center
+expansion needs no such table at all. That is one more reason to reach for it first whenever the
+question is about the longest palindrome rather than every one of them.

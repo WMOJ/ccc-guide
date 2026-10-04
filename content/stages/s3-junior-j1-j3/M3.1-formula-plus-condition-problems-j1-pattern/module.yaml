@@ -1,15 +1,9 @@
 id: M3.1
-title: Formula-plus-condition problems (J1 pattern)
 status: accepted
 objectives:
   - Turn a problem's written rule into a single arithmetic formula.
   - Branch on the formula's result with if/elif/else, choosing the right comparison at each boundary.
   - Print exactly the text a problem asks for, with no extra words or punctuation.
-prereqs:
-  - M1.4
-  - M1.11
-lessons:
-  - formula-plus-condition-problems
 practice:
   - id: ccc22j1
     note: Work out how many cupcakes are left over after handing them out to a class.

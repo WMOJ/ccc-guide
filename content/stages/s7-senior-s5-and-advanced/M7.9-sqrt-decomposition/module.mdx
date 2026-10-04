@@ -1,0 +1,79 @@
+A warehouse has 8 shelves holding `3 1 4 1 5 9 2 6` items. Two kinds of messages arrive in any order: one asks for the total stock on shelves 1 up to, but not including, 7, and the other says that shelf 4 now holds 10. With 8 shelves you would add up the slice by hand. With 100,000 shelves and 100,000 messages you need a plan. <Term id="sqrt-decomposition">Sqrt decomposition</Term> cuts the shelves into blocks, stores one total per block, and answers each message in at most about a thousand steps.
+
+## Why the plain plans run out
+
+Adding up the slice for every question costs up to 100,000 steps, so 100,000 questions cost about 10^10 steps, far past the roughly 10^8 that M2.9 derived from a time limit. A prefix array makes each question one subtraction, but a correction rewrites every entry after the shelf. A Fenwick tree (M6.10) takes both messages in about 17 steps each, and M7.1 handles summaries that cannot be subtracted.
+
+Blocks sit between the plain plans and those trees. The code is short, and the summary kept per block can be anything you can rebuild from the block's values. The price is more steps per message, roughly the square root of the length, which is why the lesson ends with the size where that price is lowest.
+
+## Cut the array into blocks
+
+Choose a block size `b`, here the smallest number whose square reaches the length. For 8 shelves, `b` is 3. Shelves 0 to 2 form block 0, shelves 3 to 5 form block 1, and shelves 6 and 7 form a shorter block 2. Shelf `i` lives in block `i // b`. Store one total per block in a list `sums`. Step through the figure below, which folds the eight shelves into rows of three and fills in the totals. The second preset has six shelves, which divide evenly.
+
+<Figure caption="The values folded into blocks of 3: one row per block, with a stored sum for each" alt="A table with one row per block of three positions and a column for the block's sum. The sums are filled in one block at a time. With eight values the last block has two values. With six values there are two full blocks.">
+  <StepThrough frames="visuals/build.frames.json" preset="eight" />
+</Figure>
+
+The last row holds two values because 8 is not a multiple of 3. The query code below has to cope with that short block.
+
+## A query reads two ragged edges and the blocks between
+
+A query for shelves `lo` up to, but not including, `hi` has three parts. Add single values from `lo` until it lands on a block boundary. Add one stored total for every whole block that still fits before `hi`. Add the remaining single values. Step through the query below. The presets ask for shelves 1 to 7, for two shelves inside one block, and for the whole array.
+
+<Figure caption="Range-sum queries: single values up to a block boundary, whole blocks through their stored sums, then single values again" alt="A range-sum query over eight values in blocks of three. A pointer lo moves right. Single values are added until lo reaches a block start, then whole blocks are added through the stored sums, then the remaining single values. The presets ask for a middle range, two values inside one block, and the whole array.">
+  <StepThrough frames="visuals/query.frames.json" preset="middle" />
+</Figure>
+
+The first preset took 4 additions for a range of 6 shelves: two singles, one block total and one more single. The second shows the worst case for blocks, a range too short to contain one, which costs as much as adding the values directly. The third shows the short last block being added value by value, because a block of 3 starting at shelf 6 would run past the end.
+
+The same steps run as code below, in a short version that fixes `b` at 3. Step through the query from shelf 1 up to, but not including, shelf 7, then switch to the second preset, which asks for shelves 3 and 4.
+
+<Figure caption="The short version of the query code: block sums are built first, then the three loops run">
+  <CodeTrace trace="examples/sqrt_query_short.trace.json" preset="main" />
+</Figure>
+
+The three loops are each simple, and their count is bounded. The first loop runs fewer than `b` times, since `lo` stops at the next multiple of `b`. The second runs at most `n / b` times. The third runs fewer than `b` times, because a block that does not fit has fewer than `b` values left. So a query never costs more than `2 * (b - 1) + n / b` steps.
+
+## A point update fixes one value and one sum
+
+To set shelf `p` to a new value, add the difference to the sum of its block and write the value. Only `a[p]` and `sums[p // b]` change. The figure below sets shelf 4 to 10, then shelf 7 to 0, and each time runs a query that reads the result.
+
+<Figure caption="A point update: the value changes by some difference, and its block sum changes by the same difference" alt="A point update in eight values with blocks of three. One value is overwritten and its block sum changes by the same difference. A later query reads the new numbers. The presets raise a middle value and lower the last value.">
+  <StepThrough frames="visuals/update.frames.json" preset="raise" />
+</Figure>
+
+The update took two writes, however long the array is. This is the full program, which reads a mixed list of updates and queries and handles both.
+
+<Code file="examples/sqrt_sum.py" showOutput caption="Range sums and point updates on the eight shelves: 22, then 27 after shelf 4 becomes 10, then 11 and 36" />
+
+The output agrees with the figures: 22 for shelves 1 to 7, and 27 for the same range after shelf 4 goes from 5 to 10.
+
+## When the summary cannot be subtracted
+
+For sums, an update adds a difference. A block maximum has no such shortcut. If the largest value in a block is lowered, the old maximum is gone, and the new one could be any other value in the block. So the update rewrites the value and then recomputes the block's summary from its values, which costs `b` steps.
+
+<Code file="examples/block_max.py" lines="27-30" caption="The update recomputes its block's maximum from the block's values; the query has the same three loops" />
+
+The full program is below. After shelf 5 drops from 9 to 0, block 1 holds `1 5 0`, so its stored maximum must become 5, and the second query shows that.
+
+<Code file="examples/block_max.py" showOutput caption="Range maximum with updates: 9, then 5 after the 9 is replaced by 0, then 6" />
+
+Both operations now cost about `b` steps. A range query still scans at most `2 * (b - 1)` single values and `n / b` whole blocks.
+
+## Why the block size is about the square root
+
+Small blocks mean many whole blocks per query. Large blocks mean long ragged edges. The total is lowest in between. The figure below takes every possible range over 64 values, runs the three loops with each block size, and records the largest count of additions. The second preset repeats it for 100 values.
+
+<Figure caption="The worst-case number of additions in one query, for every block size from 1 to 64" alt="A chart of the worst-case number of additions in one range query, against block size. Single values on the edges rise with block size and whole blocks fall. The total forms a shallow valley. The presets use 64 and 100 values.">
+  <StepThrough frames="visuals/cost.frames.json" preset="n64" />
+</Figure>
+
+The lowest point is at b = 6, with 18 additions, against 64 at b = 1 and 63 at b = 64. Here `2 * (b - 1) + n / b` is smallest near `b = sqrt(n / 2)`, which is 5.7 for 64, and the valley is wide: any `b` from 4 to 10 stays between 18 and 22. The same program prints those numbers.
+
+<Code file="examples/block_cost.py" showOutput caption="The best block size for 64 values by exhaustive count" />
+
+So `sqrt(n)` is a good block size rather than the exact best, and any size of the same order works. For `n = 100,000`, the code's `b` is 317, and a query takes at most about `2 * 316 + 315 = 947` steps. A hundred thousand worst-case queries cost about `10^8` steps. That is at the edge of the budget from M2.9, and on PyPy it comes down to simple loops over two flat lists of ints. For longer arrays or more messages, a tree's log n steps per message leaves more room.
+
+## When to reach for it
+
+Use blocks when range questions and point changes arrive together and a block's summary is cheap to store and rebuild. Write the three-loop query first. If the length is near 10^5, count the steps before you commit.

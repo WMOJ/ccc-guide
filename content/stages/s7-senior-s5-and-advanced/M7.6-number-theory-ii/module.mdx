@@ -1,0 +1,69 @@
+A counter starts at 1. Every tick it is tripled, and only the remainder after dividing by 1,000,000,007 is kept. What does it show after 10^18 ticks? Ticking one at a time takes 10^18 steps, far past the 10^8 or so operations a solution can afford (M2.9). This lesson has four shortcuts for questions about enormous step counts. Each one swaps a long walk for a short calculation.
+
+## Squaring instead of repeating
+
+After `b` ticks the counter is `a^b mod m`, with `a = 3`. Write the exponent in binary: 13 is 1101, so `a^13 = a^8 * a^4 * a^1`. Squaring `a` over and over gives `a^1`, `a^2`, `a^4`, `a^8`, one power per binary digit of `b`, so an exponent near 10^18 needs about 60 rounds. Reducing after every multiplication is safe, because the remainder of a product depends only on the remainders of its factors, and it keeps every number below `m * m`. Step through the code below on 3^13 modulo 1000, then on a power of two, then on exponent 0.
+
+<Figure caption="Repeated squaring: a is squared and b is halved each round, and a joins r whenever the lowest binary digit of b is 1">
+  <CodeTrace trace="examples/power_mod.trace.json" preset="main" />
+</Figure>
+
+The loop runs once per binary digit of `b`. The trace ends with 323, and 3^13 = 1,594,323 leaves remainder 323 after dividing by 1000. Python's built-in `pow(a, b, m)` runs this same loop, so in a solution you call it directly.
+
+## Dividing under a modulus
+
+Suppose the answer to a problem is the fraction 23/8 (the expected turns of a four-square strip in M7.5) and the statement wants it modulo a prime. Division does not survive taking remainders, so you multiply by a <Term id="modular-inverse">modular inverse</Term> instead: the `x` for which `8 * x` leaves remainder 1. The figure finds one by trying every `x`. The presets are 3 modulo 7, 2 modulo 7, and 2 modulo 6.
+
+<Figure caption="Searching for x with a * x % m equal to 1, one candidate per column">
+  <StepThrough frames="visuals/inverse.frames.json" preset="main" />
+</Figure>
+
+An inverse exists exactly when `gcd(a, m) = 1`. In the last preset every multiple of 2 is even, and the modulus 6 is even too, so no remainder can be 1. Trying every `x` costs about `m` steps, which is up to 10^9 here. For a prime `m`, Fermat's little theorem says `b^(m - 1)` leaves remainder 1, so `b * b^(m - 2)` does too, and `b^(m - 2)` is the inverse. Squaring computes it in about 30 rounds. Python 3.8 also offers `pow(b, -1, m)`, which raises `ValueError` when no inverse exists.
+
+<Code file="examples/mod_divide.py" showOutput caption="Dividing 23 by 8 modulo a prime, through the inverse of 8" />
+
+The final check confirms that 875000009 times 8 leaves the remainder of 23.
+
+## Keeping fractions as integers
+
+The tent map sends `x` in `[0, 1]` to `2 * min(x, 1 - x)`, which stays in `[0, 1]`. Write `x = p / n` with a fixed `n`, and one step becomes `p = 2 * min(p, n - p)`: integers only, with no rounding. A float version looks the same, so the figure runs both from 1/11. Try the other two presets too.
+
+<Figure caption="The tent map run 60 times from a fraction, with an exact integer numerator against a float">
+  <StepThrough frames="visuals/drift.frames.json" preset="main" />
+</Figure>
+
+A float keeps about 16 decimal digits, so `1 - x` rounds away whatever lies beyond them. Each step then doubles that error, which moves the loss one binary place to the left. Around step 40 the float is visibly off, and by step 56 it has lost every bit and sits at 0 for good. The integer numerator never drifts.
+
+<Code file="examples/float_vs_int.py" showOutput caption="The float and the exact fraction, every ten steps" />
+
+Exact values also make equal fractions equal dictionary keys, which the next section needs.
+
+## Finding the cycle
+
+A numerator is one of `0` to `n`, so after at most `n + 1` steps some numerator must repeat. <Term id="cycle-detection">Cycle detection</Term> uses that: keep a dictionary `seen` from each numerator to the step where it first appeared. The first repeat shows where the cycle starts and how long it is. Step through it below, including a start that is already inside the cycle, and a small step count.
+
+<Figure caption="Numerators found one step at a time, until one repeats and closes the cycle" >
+  <StepThrough frames="visuals/cycle.frames.json" preset="main" />
+</Figure>
+
+<Code file="examples/tent_cycle.py" showOutput caption="Recording first-seen steps, finding the cycle, and answering a query of 10^18 steps" />
+
+After the tail, each step moves one place around the cycle, and a whole lap of `length` steps returns to the same numerator. So for a step count `steps` of at least `first`, only `(steps - first) % length` matters, and the answer is `order[first + (steps - first) % length]`. Finding the cycle takes at most `n + 1` steps, however large `steps` is.
+
+## Bounding a search with the lcm
+
+Two periodic conditions can be searched the same way. Find the smallest `t` with `t % 12 == 5` and `t % 18 == 11`. Every `t` of the first kind is `5 + 12k`, so test those. Euclid's `x, y = y, x % y` from M4.6 gives the gcd, 6, and the lcm is `12 * 18 // 6 = 36`. Stepping by 12 until the total reaches 36 is a whole number of laps of 18, so the remainders modulo 18 repeat after `b // g = 3` candidates. No later candidate can do better.
+
+<Figure caption="Candidates 5 + 12k against the remainder modulo 18, with the repeat that ends the search">
+  <StepThrough frames="visuals/match.frames.json" preset="main" />
+</Figure>
+
+<Code file="examples/first_match.py" showOutput caption="Trying only the b // g candidates that can differ" />
+
+In the no-match preset the conditions ask for a remainder of 5 modulo 6 and of 4 modulo 6 at once. They differ, so none exists, and three candidates are enough to see it. The loop runs at most `b // g` times, which suits periods up to a few million.
+
+## Keeping it fast on PyPy
+
+Each technique is plain integer work. Squaring costs one multiplication and one remainder per binary digit. That is about 60 rounds per query at 10^18. The built-in `pow(a, b, m)` does the same work in compiled code, so use it in a solution. The cycle search stores at most `n + 1` small integers in one dictionary and one list, so its memory follows `n` and never the step count. The examples keep every value in local variables inside `main()`, which PyPy handles well.
+
+Reach for these when a question names a step count or a modulus far beyond what you could loop over. Squaring covers powers, the inverse covers division, a dictionary of first-seen steps covers a walk that repeats, and the lcm covers two periods that run together.

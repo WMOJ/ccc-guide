@@ -1,0 +1,83 @@
+A <Term id="circular-array">circular array</Term> wraps around: go past the last element, and you land back on the first, as if the array were bent into a ring. A round-robin scheduler cycling through workers, and a buffer that holds the most recent readings from a sensor, both behave this way. So does a token passed around a circle of players: keep passing past the last player, and it lands back on the first.
+
+## Modulo wraparound
+
+The modulo operator, `%`, does the wrapping for you. For an array of N elements, valid indices run from 0 to N − 1, and `index % N` always lands somewhere in that range, no matter how large `index` is. As in the earlier lesson on clock arithmetic, Python's `%` is always non-negative for a positive divisor, so `-1 % 3` is 2, not -1. That is exactly the behavior a ring needs. Stepping one position backward from index 0 on a 3-element ring lands on index 2, the last slot, with no separate case for going below 0.
+
+Step through a token passed around a circle of players below. Each pass moves the token to `(current + 1) % n`, and the third preset shows the token completing an entire lap and landing back where it started.
+
+<Figure caption="A token passed one seat at a time around a circle of players, wrapping from the last seat back to seat 0">
+  <StepThrough frames="visuals/pass-token.frames.json" preset="main" />
+</Figure>
+
+<Code file="examples/pass_token.py" showOutput caption="Tracking who holds the token after a run of passes" />
+
+With 5 players, one pass from player 0 lands on player 1, and the program's 12 passes land on player 2, since `12 % 5` is 2. The loop above does one pass at a time, but the visual's last step shows a shortcut. The final holder only depends on the count of passes, not on watching each one, so `passes % n` names it directly, with no loop needed at all.
+
+## Rotation as an index map
+
+Rotating an array is another circular task. Rotating `[1, 2, 3, 4, 5]` right by 2 gives `[4, 5, 1, 2, 3]`. Building that by shifting elements one at a time works, but it takes a loop of its own and is easy to get off by one. It is simpler to see rotation as a map: the element that ends up at position `i` in the rotated array is the one that sat at position `(i - rotation) % N` in the original.
+
+<Figure caption="Rotating right by 2: original index 3 maps to rotated index 0, and index 4 maps to index 1, both crossing the wrap" alt="A two-row table. The top row is the original array 1 2 3 4 5. The bottom row is the array rotated right by 2, 4 5 1 2 3. Arrows connect original index 3 to rotated index 0, and original index 4 to rotated index 1.">
+  <Diagram
+    viz="TableViz"
+    data={{ cells: [[1, 2, 3, 4, 5], [4, 5, 1, 2, 3]], rowHeads: ["original", "rotated"], colHeads: [0, 1, 2, 3, 4], states: ["___cc", "cc___"], arrows: [{ from: [0, 3], to: [1, 0] }, { from: [0, 4], to: [1, 1] }] }}
+  />
+</Figure>
+
+```python
+original = [1, 2, 3, 4, 5]
+rotation = 2
+rotated = [original[(i - rotation) % len(original)] for i in range(len(original))]
+```
+
+Each rotated position is computed directly from the original array. The modulo does the wraparound work that a manual shift would otherwise need a loop, and an extra check for running off either end, to get right.
+
+## A window that wraps
+
+Now a bigger question, the kind a Stage 4 problem asks. Given a circular array of N integers and a window size K, find the largest sum of any K consecutive elements. A window is allowed to wrap past the last index back to the start. A senior-level bound might set N up to 2·10^5.
+
+The direct plan tries every one of the N starting positions and adds up K elements for each, reading each element with `arr[(start + offset) % n]`:
+
+```python
+n, k = 6, 3
+values = [4, -1, 5, 2, -3, 6]
+best = None
+for start in range(n):
+    total = sum(values[(start + offset) % n] for offset in range(k))
+    if best is None or total > best:
+        best = total
+```
+
+That is N windows of K elements each, so N·K additions in the worst case. When K can be as large as N, N·K reaches (2·10^5)² = 4·10^10. PyPy runs on the order of 10^7 to 10^8 simple operations a second, so this loop would take somewhere from several minutes to hours. No judge waits that long.
+
+The fix is to never recompute a window sum from its K elements at all. Moving the window by one position drops exactly one element, the one that just left, and picks up exactly one new element, the one that just entered. Keep a running sum, and update it by subtracting the element leaving and adding the element entering, both indices taken modulo N. Step through it below. Each caption folds in the running sum. The second and third presets are edge cases: a window the size of the whole array, and a window of a single element.
+
+<Figure caption="Sliding a fixed-size window one position at a time around a circular array, dropping and adding one element per slide">
+  <StepThrough frames="visuals/circular-window.frames.json" preset="main" />
+</Figure>
+
+<Code file="examples/circular_window.py" showOutput caption="Finding the largest sum of any K consecutive elements on a circular array" />
+
+Why is it safe to trust the running sum instead of adding K elements fresh each time? The window starting at position 0 is computed directly, so it is exact. Every later window differs from the one before it in exactly one element on each side. The element at the old start leaves, and the element one past the old end enters, both computed the same way whether that index wraps past N or not. So each update preserves the invariant that the running sum equals the sum of exactly the K elements the window currently covers. After N slides, every one of the N possible windows has been checked exactly once, wrapped ones included. The loop only ever did one addition and one subtraction per slide, which is why the whole scan costs O(N) instead of O(N·K).
+
+A second way to see the same window is to double the array: lay `values + values` end to end, length 2N. A window that wrapped in the original array becomes an ordinary, non-wrapping range in the doubled array. Build a prefix-sum table over the doubled array, exactly as in the earlier lesson on prefix sums. It answers any window sum with one subtraction, no running update at all.
+
+<Figure caption="Doubling a 3-element array to turn a wrapped window into a plain contiguous range" alt="A 6-element array, the original 3 values followed by a copy of the same 3 values. A window spanning indices 2 and 3, one value from each half, is highlighted, showing that a window which wraps in the original array becomes a plain contiguous range once the array is doubled.">
+  <Diagram
+    viz="ArrayViz"
+    data={{ values: [10, 20, 30, 10, 20, 30], indices: true, states: "___ddd", ranges: [{ from: 2, to: 3, label: "window" }] }}
+  />
+</Figure>
+
+Either approach costs O(N) once the array is doubled or the running sum is set up. Which one to reach for depends on the rest of the problem. Many different window sizes answered quickly favors prefix sums on the doubled array; one size slid across the whole ring favors the running sum.
+
+## Circular buffers
+
+A circular buffer applies the same idea to a stream instead of a fixed array. It fits whenever only the most recent readings matter, and shifting them on every new arrival would be too slow. Keep a fixed number of slots and one write position. A new reading overwrites the slot at that position and gets added to a running total. The value it just overwrote gets subtracted from that same total. The write position then advances with `next_write = (next_write + 1) % capacity`. The average of the most recent readings is always the running total divided by the capacity, updated in constant time per reading, with no shifting and no resizing. Operating systems use exactly this pattern for I/O buffers, and producer-consumer queues use it to avoid resizing on every push and pop.
+
+## Getting the modulo right
+
+The most common slip is leaving the modulo out and assuming an index stays in range. Adding 1 to the last valid index on an N-element array gives N, one past the end, unless it goes through `% N` first. Check, too, that the modulus matches the array's actual size. A 5-player circle needs `% 5`. Using `% 4` or `% 6` by mistake breaks the wrap at exactly one seat, an easy bug to miss until the one input that reaches it.
+
+Some languages, such as C++ or Java, let `%` return a negative result for a negative left side. If you port a circular pattern to one of those, `((index % n) + n) % n` restores the always-non-negative behavior Python gives by default.

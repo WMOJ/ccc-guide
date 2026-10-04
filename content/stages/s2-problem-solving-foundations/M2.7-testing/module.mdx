@@ -1,0 +1,35 @@
+A program that prints the right answer for the sample is not yet a program you should submit. The sample is one input, chosen to explain the problem. It does not exercise every path through your code. Testing means checking your program against more than that one input, before the grader ever sees it.
+
+## Comparing exactly, not by eye
+
+Reading two blocks of output side by side and deciding they "look the same" misses the differences that matter. A missing space, a trailing blank line, the wrong case on a word: all of these look fine at a glance. The module on exact output already covered why the grader compares this strictly. Testing on your own machine needs the same standard. Read both outputs back and compare them character by character, the same way the grader does. Do not skim for anything obviously wrong instead.
+
+## Three kinds of test beyond the sample
+
+A hand-made test is one you invent yourself. Pick small numbers, work out the correct answer on paper, and check your program agrees. This is the same habit as working a sample by hand, applied to an input the statement never gave you. An edge-case test targets one of the unusual situations the module on case analysis covers: the smallest input a bound allows, every value equal, or a tie. A maximum-size test uses the largest input a bound allows. It checks that your program still finishes, and finishes quickly enough, once the input is as big as the statement permits.
+
+## Generating a maximum-size test
+
+Typing out a test with a thousand numbers by hand is not realistic. A short script can build one instead.
+
+<Code file="examples/make_max_test.py" caption="Building a maximum-size test for the ticket-pairs problem from an earlier module" />
+
+`random.randint(1, 10000)` fills in `n` prices, each between `1` and `10000` with both ends included, at the largest size the bound allows. A loop builds one line holding every price, separated by spaces. The script prints the test in exactly the shape the problem expects: a first line with `n` and the target, a second line with the prices. Save those two printed lines as a test input, in place of the sample.
+
+Running your solution against a test like this tells you two things a small hand-made test cannot. First, whether your program still gives a plausible answer at full size. Second, roughly how long it takes to do so. A run that visibly takes more than a second or two on your own machine is a warning sign. It is not proof of anything exact, though. The module on complexity analysis explains why, and how to judge speed properly from a problem's bounds instead of a stopwatch.
+
+## Common mistakes
+
+A common mistake is testing only the case you were already confident about, and skipping the other two kinds because writing them feels like extra work. That is exactly backwards: the sample already proves the ordinary case works, so it teaches you the least of the three. An edge case or a maximum-size case is far more likely to catch a real mistake, precisely because you have not already convinced yourself the code handles it. Another common mistake is running a test once, seeing the right answer, and deleting it. A test that stays around can be rerun after every later change, catching a mistake the change introduced somewhere else.
+
+## Why local testing is the main safety net
+
+The grader gives you the result for each sample. For each subtask, it gives you a verdict and a test number for every test up to that subtask's first failure. Everything after that first failure in a subtask stays hidden, whatever its result would have been. What the grader never shows you, for any test, is the input itself, the output your program was supposed to produce, or the output your program actually printed. A test you never ran yourself can fail this way, silently, on an input the sample never covered. You are left with a test number and a verdict, nothing more. Testing locally, with inputs you built and outputs you worked out yourself, is different. It is the only place you get to see the input, the expected output, and your program's actual output side by side. That is what tells you exactly what went wrong and why.
+
+## Keeping your tests
+
+Save each test input and its correct output as you write them. Do not type them fresh every time you want to check something. Keep a hand-made test, an edge case, and a maximum-size test together. That lets you recheck your program in seconds after any change. Reasoning about the change from scratch, every time, takes far longer. The module on judging with official test data extends this same habit to test files someone else has already built for you.
+
+## Recap
+
+Compare your program's output against what you expect character by character. Do not compare it by how it looks at a glance. Test beyond the sample with three kinds of case. One is a hand-made case you worked out yourself. Another is an edge case from a problem's own bounds. The third is a maximum-size case, built to check that your program is still fast enough. Together, these cover far more ground than the sample alone. The grader only shows you results up to a subtask's first failure. Testing locally, on inputs you understand, is what tells you why something went wrong.

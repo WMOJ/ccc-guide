@@ -1,16 +1,10 @@
 id: M5.7
-title: Iterative DFS and recursion elimination
 status: accepted
 objectives:
   - Implement depth-first search using an explicit stack instead of recursion.
   - Use preorder and postorder (reverse-preorder) processing in iterative DFS.
   - Maintain per-node iterator indices for true DFS-tree properties.
   - Apply iterative DFS to avoid recursion depth limits on large graphs.
-prereqs:
-  - M4.13
-  - M1.14
-lessons:
-  - iterative-dfs-and-recursion-elimination
 practice:
   - id: ccc16s3
     note: Find the shortest route through a tree that visits every marked restaurant.

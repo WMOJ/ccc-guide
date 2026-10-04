@@ -1,17 +1,10 @@
 id: M5.4
-title: "Hashing: polynomial rolling hash"
 status: accepted
 objectives:
   - Implement polynomial rolling hash with `(h * B + c) % M`.
   - Remove the leading character using precomputed powers.
   - Detect hash collisions and use double hashing or a large modulus.
   - Use rolling hashes to count distinct substrings.
-prereqs:
-  - M5.3
-  - M4.1
-  - M4.6
-lessons:
-  - rolling-hash
 practice:
   - id: ccc20s3
     note: Count the distinct substrings of a longer text that are rearrangements of a shorter one.

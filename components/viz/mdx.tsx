@@ -15,7 +15,7 @@ export interface VizComponents {
 
 /**
  * The five MDX visual components bound to one module directory: file props (`frames`, `trace`)
- * are resolved against `baseDir` (the absolute path of the lesson's module folder).
+ * are resolved against `baseDir` (the absolute path of the module folder).
  */
 export function createVizComponents(baseDir: string): VizComponents {
   return {

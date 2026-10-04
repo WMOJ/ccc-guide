@@ -1,0 +1,83 @@
+Six sensors log the readings `3 1 3 2 3 1`. How many pairs of sensors logged the same reading? Sensors 0 and 2 did, since both read 3, and so did sensors 0 and 4, sensors 2 and 4, and sensors 1 and 5. With six sensors you can test all 15 pairs by hand.
+
+Now let the log hold 200,000 readings. The number of pairs is about $2 \cdot 10^{10}$, far more than the roughly $10^8$ steps a program can take in a time limit. A faster plan never lists the pairs at all. It counts how many there are, and that is the idea behind every technique in this lesson.
+
+## Count the groups, not the pairs
+
+Sort the readings into groups of equal values, using a dictionary from value to count, the same idea as a <Term id="frequency-array">frequency array</Term> for values too large to index a list. A value that appears `k` times forms `k * (k - 1) / 2` pairs. The first reading of a pair can be any of the `k`, the second any of the other `k - 1`, and that counts each pair twice.
+
+This is correct because two equal readings share one value, so every equal pair lies inside exactly one group, and readings from different groups are never equal. Add up the pair counts of the groups and nothing is missed or counted twice.
+
+<Code file="examples/equal_pairs.py" showOutput caption="Count equal pairs from the group sizes" />
+
+Step through the counting below, then watch each row turn its count into pairs. Try the other two presets too.
+
+<Figure caption="Counting readings into groups, then turning each group size into a pair count">
+  <StepThrough frames="visuals/equal.frames.json" preset="mixed" />
+</Figure>
+
+In the first preset, value 3 appears three times and forms 3 pairs, value 1 forms 1, and value 2 forms none. The answer 4 came from one pass over 6 readings instead of a test of 15 pairs, and the same pass handles 200,000 readings.
+
+## Choosing r from n: binomial coefficients
+
+The pair count `k * (k - 1) / 2` is one case of a <Term id="binomial-coefficient">binomial coefficient</Term>. $\binom{n}{r}$ is the number of ways to choose `r` items from `n` when the order does not matter. Pairs are the case `r = 2`.
+
+Coefficients build on each other. Fix one item and ask whether the choice includes it. If it does, the other `r - 1` come from the remaining `n - 1` items. If it does not, all `r` come from those `n - 1`. So $\binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r}$, and every case is covered exactly once. Laid out as rows, that rule is Pascal's triangle.
+
+<Code file="examples/pascal.py" showOutput caption="Build the rows of Pascal's triangle from the row above" />
+
+Step through the triangle below, one row at a time. The arrows point from the two cells above to the marked cell they add up to.
+
+<Figure caption="Each cell of Pascal's triangle is the sum of the two cells above it">
+  <StepThrough frames="visuals/pascal.frames.json" preset="five" />
+</Figure>
+
+Row 5 reads `1 5 10 10 5 1`: there are 10 ways to choose 2 items from 5, and 5 ways to choose 1. For one coefficient, `math.comb(n, r)` computes it directly. The table is better when you need many coefficients, or when the problem asks for the answer modulo `m`. Take `% m` after each addition and every cell stays below `m`, because Python's `%` with a positive `m` always lands in `0` to `m - 1`. A table of 2,000 rows is about two million additions. The exact value of $\binom{200000}{100000}$ has about 60,000 digits, which is why such problems ask for a remainder.
+
+## Products of counts: splitting into groups
+
+When choices are independent, the counts multiply. Split 10 labeled items into a group of 3, a group of 4 and a group of 3. Choose the first group: $\binom{10}{3} = 120$ ways. Whatever you picked, 7 items remain, so the second group has $\binom{7}{4} = 35$ ways. The last 3 items form the third group in $\binom{3}{3} = 1$ way. Each first choice pairs with each second choice, so the total is `120 * 35 * 1`.
+
+<Code file="examples/split_groups.py" showOutput caption="Multiply one binomial coefficient per group" />
+
+<Figure caption="One binomial coefficient per group, multiplied into a running product">
+  <StepThrough frames="visuals/split.frames.json" preset="three" />
+</Figure>
+
+This counts groups that are told apart, for example a red team, a blue team and a green team. The "Sizes 2, 2, 2" preset gives 90. If the three groups are interchangeable, each split was counted once for every order of its three groups, so divide by 3! = 6 to get 15.
+
+## Count the opposite: complementary counting
+
+A log has `n` days of readings, and a reading of 0 marks an outage. How many ranges of consecutive days contain at least one outage? There are $n(n+1)/2$ ranges, about $2 \cdot 10^{10}$ for `n` = 200,000, so listing them is out. Counting them directly is possible but fiddly, because a range with three outages must still count once.
+
+The opposite case is easy. A range with no outage lies inside one stretch of nonzero days. Every range is either clean or contains an outage, never both, so the answer is the total number of ranges minus the clean ones. This is <Term id="complementary-counting">complementary counting</Term>. Let `run` be the length of the nonzero stretch ending on the current day. Exactly `run` clean ranges end on that day, one for each possible start inside the stretch.
+
+<Code file="examples/outage_ranges.py" showOutput caption="Total ranges minus the ranges without an outage" />
+
+Step through the days below. The right panel shows `run` for each day, and a 0 resets it.
+
+<Figure caption="run counts the clean ranges ending on each day; the answer is the total minus their sum">
+  <StepThrough frames="visuals/outage.frames.json" preset="mixed" />
+</Figure>
+
+In the first preset the clean stretches have lengths 1, 2 and 2, contributing 1 + 3 + 3 = 7 clean ranges out of 36, so 29 contain an outage. The "No outages" preset ends at 0 and "All outages" at 15, the total.
+
+## Two pointers over a sorted array
+
+Take the heights of `n` plants and count the pairs that differ by at most `limit`. A pair is unordered, so sorting does not change the answer. After sorting, the partners of a plant at position `right` that sit before it form one unbroken stretch that ends just before `right`. It begins at the first position `left` whose height is within `limit` of the height at `right`.
+
+As `right` moves forward, its height never shrinks, so a height that is too far away now stays too far for every later `right`. That is why `left` only moves forward, the <Term id="two-pointers">two pointers</Term> idea from earlier. Each position is passed by `right` once and by `left` once, so after the sort the work is about `2n` steps. Every position from `left` to `right - 1` is a partner, so each `right` adds `right - left` to the count.
+
+<Code file="examples/close_pairs.py" showOutput caption="Sort, then slide left forward while the gap is too large" />
+
+Step through the sweep below. The "Limit zero" preset counts equal pairs, the quantity from the first section of this lesson.
+
+<Figure caption="The right pointer sweeps forward; left moves forward only while the gap is over the limit">
+  <StepThrough frames="visuals/close.frames.json" preset="spread" />
+</Figure>
+
+## Keeping it fast on PyPy
+
+Read all input with one `sys.stdin.read().split()`, as every example here does. Counts like $2 \cdot 10^{10}$ fit Python's integers without any special care. Sorting with `list.sort()` runs in the library, and a dictionary lookup costs about the same as a list index, so the counting loops above stay simple and flat. The one thing to avoid is building a list of pairs or ranges: the point of each technique is that the list never exists.
+
+Reach for counting when the answer is a number of pairs, ranges or selections, too many to list. Group equal things. Use binomial coefficients and products for independent choices. Count the opposite when the wanted case is tangled. Slide two pointers when a bounded difference keeps the partners together.

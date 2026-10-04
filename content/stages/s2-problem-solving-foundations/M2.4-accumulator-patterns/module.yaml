@@ -1,14 +1,9 @@
 id: M2.4
-title: Accumulator patterns
 status: accepted
 objectives:
   - Keep a running sum, count, minimum or maximum while looping over input.
   - Track the best-so-far value with an explicit tie-breaking rule.
   - Use a boolean flag to record whether something has happened yet.
-prereqs:
-  - M1.5
-lessons:
-  - accumulator-patterns
 practice:
   - id: ccc21j2
     note: Find the winning bid in a silent auction with several bidders.

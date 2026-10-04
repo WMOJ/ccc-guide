@@ -1,0 +1,94 @@
+You submit a program for a problem about the longest run of equal values in a list. The grader lists the tests: the first three pass, and the fourth says wrong answer. You cannot see that fourth test. What do you look at first?
+
+Each <Term id="verdict">verdict</Term> narrows where to look. The table below pairs every verdict from the judging module with its likely cause and a first check. The sections after it work through one failure of each kind, on small programs you can trace.
+
+<Figure
+  caption="Each verdict, the most likely cause behind it, and the first check to make"
+  alt="A five-row table. AC: all output right, move on. WA: logic or format, check edge cases. RTE: a crash, try tiny inputs. TLE: too many steps, count the loops. MLE: too much data, check the biggest list."
+>
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowTitle: "verdict",
+      rowHeads: ["AC", "WA", "RTE", "TLE", "MLE"],
+      colHeads: ["likely cause", "first check"],
+      cells: [
+        ["all output right", "move on"],
+        ["logic or format", "edge cases"],
+        ["a crash", "tiny inputs"],
+        ["too many steps", "count the loops"],
+        ["too much data", "biggest list"],
+      ],
+    }}
+  />
+</Figure>
+
+A verdict belongs to one test, so read the whole list before you touch the code. A subtask stops at its first failing test, so the first failure is the one to chase. DMOJ reports an uncaught Python error as `IR` rather than `RTE`, and the same steps apply.
+
+## A wrong answer on a test you cannot see
+
+Here is a first draft of the longest-run program. `run` is the length of the run you are in, and `best` is the longest run closed so far.
+
+<Code file="examples/longest_run.py" showOutput caption="A first draft of the longest run of equal values, on the sample input" />
+
+It prints `3` on the sample, which is right. Step through it below, then try the other two presets.
+
+<Figure caption="The first draft on three inputs: the current run, the best run, and the answer it prints">
+  <StepThrough frames="visuals/longest-run.frames.json" preset="sample" />
+</Figure>
+
+On the sample, the value `3` at the end closes the run of three 2s, so `best` is updated in time. On `3 1 1 1` the loop reaches the end while `run` is 3, and nothing copies it into `best`. All-equal input is the extreme case: the whole list is one run, so `best` never moves from 1.
+
+A wrong answer never says which case you missed, so imagine the tests the sample does not cover. Try the smallest input the statement allows, then the largest. Try every value equal, every value different, and an extreme value at the first or last position. These are <Term id="edge-case">edge cases</Term>, and the last-position one found this bug. One added line fixes it:
+
+<Code file="examples/longest_run_fixed.py" highlight="17" showOutput caption="The fix: close the final run after the loop. Input is the run-at-the-end case" />
+
+If the logic survives every edge case you can think of, the other common cause is the output format, which the next module covers.
+
+## A crash: shrink the input, then read the traceback
+
+The screen may show only `RTE` for a test and not Python's message. You can get the message yourself by running the program locally on a guess at the failing input. Start with the smallest input the statement allows, because a list with no items or one item is a common place for a crash.
+
+This program prints the largest jump between neighboring values. It handles several values, but see what a single value does.
+
+<Code file="examples/largest_gap.py" expectError="ValueError" caption="The largest jump between neighbors, run on a list of one value" />
+
+The last line of the <Term id="traceback">traceback</Term> names the error, and the line above it points at `print(max(gaps))`. That tells you where it stopped. The trace below shows why `gaps` was empty when it got there.
+
+<Figure caption="The same program on one value, where it crashes, and on three values, where it runs">
+  <CodeTrace trace="examples/largest_gap.trace.json" preset="one" />
+</Figure>
+
+With `n = 1` the loop over `range(1, n)` has no values, so nothing is appended and `gaps` is still empty at line 14. `max` has nothing to choose from. Switch to the second preset and `gaps` fills with two jumps before `max` runs. The fix depends on the statement: decide what a single value should print, and handle it before the loop.
+
+## A time limit: count the work
+
+A `TLE` says nothing about correctness. The program may print the right answer, just too late, so the first check is arithmetic. A loop inside a loop over `2 * 10^5` values is about `2 * 10^10` steps, far more than PyPy's `10^7` to `10^8` simple operations per second allows.
+
+The program below asks whether any value appears twice, and counts the work two ways. `slow_checks` compares each value with every value before it. `fast_checks` looks each value up in a set. The list has no repeated value, which is the worst case for both.
+
+<Code file="examples/count_checks.py" showOutput caption="Counting the checks each version makes on lists with no repeated value" />
+
+Step through the counts below, then switch presets to move the repeated value.
+
+<Figure caption="Checks made by the list scan and by the set, as n grows, and what changes when a repeat sits at the front">
+  <StepThrough frames="visuals/check-counts.frames.json" preset="distinct" />
+</Figure>
+
+Each tenfold step in n multiplies the list scan's count by about 100, and at n = 20,000 it passes `10^8`, while the set's count equals n. Now switch to the second preset. When two equal values sit at the front, the list scan stops after one check at every size. A judge test like that passes instantly, so the same program can earn `AC` on some tests and `TLE` on others. Time the worst case you can build: the largest n, with no early exit.
+
+If the counts look small and the run is still slow, check how the program reads input. Reading all of standard input once with `sys.stdin.read()` usually costs less than calling `input()` once per line.
+
+## A memory limit: count what you store
+
+An `MLE` means the program holds more than the limit allows, so count what it stores. A table of N rows with N values each holds `N^2` numbers. At N = 5,000 that is 25 million numbers, about 200 MB at the 8 bytes per integer the complexity module gives. Ask whether you need the whole table at once or only the row you are working on.
+
+## Submitting with discipline
+
+Before you resubmit, reproduce the failure locally. Run the small input you suspect and watch it fail for the reason you think. A fix you cannot test on your own machine is a guess.
+
+Then change one thing. If you change two and the verdict improves, you do not know which change helped. If it gets worse, you do not know which one hurt. A change of verdict is still information: a `WA` that becomes `TLE` means the wrong-answer tests now pass and a new problem has appeared.
+
+Keep a short log: what you changed and what the verdict was. After two submissions that taught you nothing new, stop submitting. Reread the statement and the sample, and build a test that none of your earlier tests covered.
+
+Reach for this routine on any verdict that is not `AC`: name the verdict's likely cause, reproduce it on a small input, change one thing, and submit again.

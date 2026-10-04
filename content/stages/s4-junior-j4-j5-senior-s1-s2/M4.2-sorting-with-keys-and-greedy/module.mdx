@@ -1,0 +1,85 @@
+Picture a truck with a fixed weight capacity and a warehouse of boxes, each with its own weight. You take a whole box or leave it, and you want to load as many boxes as possible without going over capacity. With three or four boxes you could try every combination by hand, but a warehouse holds thousands. A <Term id="greedy-algorithm">greedy algorithm</Term> skips the combinations. It makes the locally best choice at each step and never revises it. For the right kind of problem, that reaches the globally best answer.
+
+## Bounds and why a direct search does not scale
+
+A CCC-sized instance might hand you up to 100,000 boxes. Trying every combination means checking every subset, and there are 2 to the power of the box count of those. For 100,000 boxes that number has over 30,000 digits, far past anything a program can enumerate. Even 20 boxes give over a million subsets, next to the roughly 90 comparisons (20 x log 20) that one sort needs. The sort is O(N log N) and one pass over the sorted list is O(N). The whole solution is O(N log N): a few million operations for 100,000 boxes, well inside a judge's time limit on PyPy.
+
+## Sorting by attributes
+
+The `sorted()` function takes a `key` parameter: a function that pulls the comparison value out of each item. `sorted(boxes, key=lambda b: b[1])` orders by index 1 of each box instead of by the whole tuple.
+
+Step through a small case below: three tasks, each a name and a duration in minutes, sorted by duration. Each task's key is read off before the reordering happens. Then try the "Ties" preset, where two tasks share a duration.
+
+<Figure caption="Reading off each task's key (its duration), then sorting ascending. When two keys tie, sorted() keeps their original relative order.">
+  <StepThrough frames="visuals/sort-by-key.frames.json" preset="normal" />
+</Figure>
+
+<Code file="examples/sort_by_key.py" showOutput caption="Sorting tasks by duration with a key function" />
+
+The tie in the second preset is handled by stability: Python's sort is guaranteed to keep tied items in their input order. That matters whenever a second criterion should decide ties instead of an arbitrary shuffle.
+
+## The greedy choice, after sorting
+
+Back to the truck. Sort the boxes by weight, ascending, then walk the sorted list once, taking each box that still fits. The lightest boxes go in first, which leaves the most capacity for the boxes still to come.
+
+<Figure caption="Box weights ranked lightest first, then taken one at a time while capacity allows, or skipped once the truck is full." alt="An array of box weights, first in input order, then sorted ascending. Boxes are then marked done as they are taken while the running weight stays within capacity, or invalid once one would overflow it.">
+  <StepThrough frames="visuals/pack-boxes.frames.json" preset="default" />
+</Figure>
+
+<Code file="examples/pack_boxes.py" showOutput caption="Greedy box packing, lightest first, to fit as many boxes as possible" />
+
+The "Nothing fits" and "Everything fits" presets use the same sorted pass. The capacity check alone decides take or skip.
+
+## Why sorting makes the greedy choice safe
+
+Sorting alone does not prove a greedy pass correct. An exchange argument does: take two choices that are out of order, swap them, and check that the swap can only help or change nothing. If it can, no other arrangement beats the fully sorted one.
+
+For the boxes, suppose some best loading skips a lighter box but includes a heavier one. Swap them: remove the heavier box and add the lighter one. The total weight cannot go up, so everything that fit before still fits, and the count is unchanged. The lighter box may even leave room for one more. No loading beats taking boxes lightest first while they fit.
+
+The swap can also give a strict gain. Take a different problem: run jobs one after another on a single machine, and minimize the sum of every job's finish time. Suppose two adjacent jobs take `a` and then `b` minutes. Jobs outside the pair finish at the same moments either way, so only the pair's own finish times change. Counted from the moment the pair starts, they add up to `2 * a + b` in the given order and `2 * b + a` swapped. The swapped total is smaller exactly when `b` is less than `a`. So whenever a shorter job sits behind a longer one, swapping can only help. Repeat that at every out-of-order pair, and the list ends up shortest job first.
+
+<Figure caption="An out-of-order pair of jobs swapped shortest first, with the drop in their combined finish time computed from the two processing times, then the whole list settling into shortest-first order.">
+  <StepThrough frames="visuals/exchange-argument.frames.json" preset="default" />
+</Figure>
+
+The figure shows one swap on the pair 7 and 3: 2 x 7 + 3 = 17 becomes 2 x 3 + 7 = 13, four minutes saved. The code below applies the end result of all those swaps, one `sorted()` call, and then adds up the finish times.
+
+<Code file="examples/min_completion_time.py" showOutput caption="Scheduling jobs shortest-first to minimize total finish time" />
+
+Step through the program line by line, here on three jobs. Watch `finish` grow by one job at a time and `total` collect every `finish`. Try "Longest first", where the sort reverses the input order, then "One job".
+
+<Figure caption="Tracing the shortest-first scheduler: sort the times, then keep a running finish time and add each one to the total">
+  <CodeTrace trace="examples/min_completion_time.trace.json" preset="main" />
+</Figure>
+
+For the example's jobs 7, 3, 9, 2, the sorted order 2, 3, 7, 9 finishes at 2, 5, 12 and 21, and 2 + 5 + 12 + 21 = 40, the `total` the program prints.
+
+## Where ratio order is only a heuristic
+
+Change the goal from the most boxes to the most total value, so each box carries a value too. A tempting greedy sorts by value per unit of weight, highest first, and takes each box while it fits. That heuristic has no exchange argument behind it. Swapping a lower-ratio box for a higher-ratio one can change the total weight by any amount. The swap can cost you a box that would otherwise have fit.
+
+<Figure caption="Ratio-greedy's load highlighted first, then the best combination highlighted, showing the ratio order can miss it." alt="A table of three boxes' weight and value. Ratio-greedy's picks are marked, then the best possible combination is marked, showing the ratio order finds less total value.">
+  <StepThrough frames="visuals/ratio-counterexample.frames.json" preset="counterexample" />
+</Figure>
+
+<Code file="examples/ratio_counterexample.py" showOutput caption="Comparing ratio-greedy's value against the best possible value" />
+
+Box A has the best ratio, so ratio-greedy takes it and stops, since neither B nor C then fits. Boxes B and C together weigh exactly the capacity and are worth more than A alone. A box must be taken whole or left behind, so no swap only ever helps. The "Ratio matches" preset shows an input where the ratio order happens to find the best load, but it carries no proof. A later module on dynamic programming solves the whole-box version exactly. When a box can be split instead (fractional knapsack), taking a fraction of the next-best box never wastes capacity, and the ratio order is exactly correct.
+
+## Breaking ties with a tuple key
+
+`sorted()` accepts a tuple as a key. It compares tuples element by element: first by the first entry, and only when those are equal, by the second. That reads as one line instead of a chain of `if` statements. Suppose two runners finish a race at the same time, and the lower bib number wins the tie.
+
+<Figure caption="Runners keyed by (time, bib). A tied pair of times is highlighted, then broken by bib number once sorted() compares the tuples' second entries." alt="A three-row table of runner name, time and bib number. Two runners share a time; sorted() ranks them ascending by (time, bib), so the lower bib comes first among the tie.">
+  <StepThrough frames="visuals/tiebreak-sort.frames.json" preset="tied" />
+</Figure>
+
+<Code file="examples/tiebreak_sort.py" showOutput caption="Ranking runners by (time, bib), breaking ties by bib number" />
+
+Alice and Bob tie at 12.5, so their bibs decide, and Bob (bib 99) comes before Alice (bib 101). Two slips are easy to make with keys. Sorting numbers stored as text without a key, `sorted(["100", "20", "5"])`, compares character by character and puts `"100"` before `"20"`; adding `key=int` compares the numbers themselves. And leaving out `reverse=True` when the best value should come first puts the least valuable items at the front, the opposite of what a greedy pass needs.
+
+## When greedy is the right tool
+
+A greedy algorithm is optimal when the problem has the <Term id="greedy-choice-property">greedy choice property</Term>. Some globally optimal solution always includes the greedy choice made first, and what remains is the same kind of problem on a smaller input. The box-count problem has it, proven by the swap above. The box-value problem does not, once boxes cannot be split. Before trusting a greedy pass on a new problem, look for the argument yourself. Pick two choices out of order, swap them, and check that the result is never worse. If you cannot build a swap that helps, greedy is a guess, not a proof. A method that checks every option, or one built from smaller subproblems, is safer.
+
+On PyPy, `sorted()` and `list.sort()` are already fast. The cost to watch is the key function. Python computes each item's key exactly once, before any comparing starts, so the key function runs N times, not N log N times the way a raw comparison would. Reading all input with one `sys.stdin.read().split()` call keeps the rest of the program from adding overhead on top of the sort.

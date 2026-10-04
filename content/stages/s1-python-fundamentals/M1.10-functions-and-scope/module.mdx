@@ -1,0 +1,105 @@
+Every program so far ran as one block, top to bottom. To reuse a piece of logic, you had to write it out again. Many CCC problems repeat the same small calculation on several values. This lesson covers wrapping that logic in a function with `def`, and the rules for which variables a function can see and change.
+
+## Defining a function
+
+`def` starts a function definition: a name, parameters in parentheses, and an indented block that runs each time the function is called. A `return` statement sends a value back to wherever the function was called from.
+
+<Code file="examples/def_basics.py" showOutput caption="A function that squares a number, called twice" />
+
+`square(3)` runs the function's block with `x` set to `3`, and `return x * x` sends `9` back. `square(5)` runs the same block again with a different `x`, giving `25`. The body is written once and runs every time it is called.
+
+## Arguments in, a value out
+
+The values you pass in a call are **arguments**. Each one is matched to a parameter by position. The first argument fills the first parameter, the second fills the second, and inside the call they are ordinary local names.
+
+<Code file="examples/larger.py" showOutput caption="Two arguments in, one returned value out" />
+
+<Figure caption="larger.py stepped line by line, with its variables and call frame beside the code">
+  <CodeTrace trace="examples/larger.trace.json" />
+</Figure>
+
+Try the presets. `larger(x, y)` fills `a` with `x` and `b` with `y`. When `a` is bigger, the first `return` ends the call and the second line never runs. When the two are equal, `a > b` is false, so `b` comes back, which is the same value.
+
+## Tracing the call stack
+
+A function can call another function. Python keeps track of the calls in progress on a call stack.
+
+<Figure caption="One function calling another, and returning back through the calls">
+  <CodeTrace trace="examples/call_stack.trace.json" />
+</Figure>
+
+`add_one(3)` calls `double(3)` before it can finish its own `+ 1`. Calling `double` pushes a new frame onto the stack, above `add_one`'s frame, and `add_one` waits there. When `double` returns `6`, its frame is popped and `add_one` resumes, adding `1` to get `7`.
+
+## Local and global variables
+
+A variable assigned inside a function is <Term id="local">local</Term> to it by default. It exists only while that call runs, separate from any variable of the same name outside.
+
+Reading is different from assigning. A function may read a global name without any special line.
+
+<Code file="examples/read_global.py" showOutput caption="A function reading a global name it never assigns" />
+
+<Figure caption="How Python finds x and rate while scaled(n) runs">
+  <StepThrough frames="visuals/scope_lookup.frames.json" />
+</Figure>
+
+Python looks for a name in the local scope first. `x` is found there. `rate` is not, so Python falls back to the global scope. The local scope is thrown away when the call returns.
+
+Assigning is where trouble starts.
+
+<Code file="examples/unbound_local.py" expectError="UnboundLocalError" caption="Assigning to a name Python treats as local, before it has a value" />
+
+`add` assigns to `total`, so Python treats `total` as local to `add` for the whole body, even on the line that reads it. That local `total` has no value yet, so `total += x` raises `UnboundLocalError`, although a global `total` exists outside.
+
+The `global` keyword tells Python that a name inside a function means the global variable, not a new local one.
+
+<Code file="examples/global_keyword.py" showOutput caption="Declaring total global so the function can change it" />
+
+`global total` means `total += x` changes the `total` defined outside. `add(5)` then `add(3)` leaves it at `8`.
+
+<Figure caption="The global scope next to add's own local scope, across both calls">
+  <StepThrough frames="visuals/scope_frames.frames.json" />
+</Figure>
+
+Each call to `add` makes a fresh local scope holding only `x`. Because of `global total`, `total` is never local, so both calls write to the same global name. Each local scope disappears as its call returns.
+
+## A trap: mutable default arguments
+
+A parameter's default value is created once, when the function is defined, not on every call.
+
+<Code file="examples/mutable_default_bug.py" showOutput caption="A default list that keeps growing across calls" />
+
+`basket=[]` looks like a fresh empty list each time. It is one list object, reused by every call that does not pass its own `basket`. Both calls append to it, so the second result already holds `"apple"`.
+
+<Figure caption="The one default list, shared by two calls that each look like they start fresh">
+  <StepThrough frames="visuals/basket_share.frames.json" />
+</Figure>
+
+Follow the right-hand panel. The list is built when the `def` line runs, and the `pear` call finds `apple` already inside it.
+
+<Code file="examples/mutable_default_fixed.py" showOutput caption="Using None as the default, and building a fresh list inside the function" />
+
+With `basket=None`, the `if basket is None` check builds a new `[]` inside the body. Every call gets its own list, so `add_item("pear")` no longer carries `"apple"` along.
+
+## Default and keyword arguments
+
+A parameter with a default lets the caller leave it out. `def greet(name, greeting="Hello"):` lets `greet("Ana")` use `"Hello"`, while `greet("Ana", "Hi")` overrides it. Parameters with defaults must come after those without, so Python always knows which value belongs to which name.
+
+A keyword argument names the parameter: `greet(name="Ana", greeting="Hi")`. The order then does not matter. This helps when a function takes several parameters. `build_grid(5, 3, 0)` forces a reader to remember which number is which. `build_grid(rows=5, cols=3, fill=0)` says so.
+
+## A short function with `lambda`
+
+`lambda` writes a small, unnamed function in one line: `lambda parameters: expression`. It holds one expression, whose value it returns without a `return` keyword.
+
+<Code file="examples/lambda_basics.py" showOutput caption="A one-line function stored in a variable" />
+
+`lambda x: x * x` behaves like `square()` from earlier, without a name or a `return`. A function is a value, so another function can take it as an argument. `sorted(words, key=len)` passes `len` itself, with no parentheses. `sorted(words, key=lambda w: len(w))` builds the small function right where it is needed.
+
+## Getting these right
+
+Forgetting `global` fails in one of two ways. With `total += x`, Python raises the `UnboundLocalError` you saw. With a plain `total = x`, it quietly makes a new local and the global never changes, so the symptom shows up far from the cause. Reading a global needs no `global` line, as the lookup figure showed.
+
+Wrapping the main logic in `def main(): ...` followed by one call to `main()` is a common habit. Variables inside `main()` are local, which run a little faster than globals, and the top level of the file stays short.
+
+## Recap
+
+A function takes arguments into its parameters and sends a value back with `return`. Python looks up a name locally first, then globally. Assigning to a name inside a function makes it local unless `global` says otherwise. A default list is built once, so use `None` and build the list inside. The two problems below both need a helper function applied to each piece of the input in turn.

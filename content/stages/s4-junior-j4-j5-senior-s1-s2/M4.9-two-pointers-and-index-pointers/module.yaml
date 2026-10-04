@@ -1,15 +1,10 @@
 id: M4.9
-title: Two pointers and index pointers
 status: accepted
 objectives:
   - Use two pointers on a sorted array to find pairs or rearrange it in place.
   - Apply the two-pointer pattern to detect cycles and find meeting points.
   - Optimize searches by maintaining multiple indices into a single array.
   - Recognize when a two-pointer approach is faster than nested loops.
-prereqs:
-  - M3.9
-lessons:
-  - two-pointers
 practice:
   - id: ccc24s3
     note: Decide whether one array of values can be transformed into another using fills from the left or right end.

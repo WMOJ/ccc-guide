@@ -20,7 +20,7 @@ export function loadSearch(): Promise<SearchEngine> {
     const entries: SearchIndexEntry[] = await res.json();
 
     const mini = new MiniSearch<SearchIndexEntry>({
-      fields: ["title", "label", "snippet"],
+      fields: ["title", "label", "snippet", "keywords"],
       storeFields: ["kind", "id", "title", "label", "snippet", "href"],
       idField: "href", // href is unique across every entry kind
       searchOptions: { prefix: true, fuzzy: 0.2, boost: { title: 2 } },

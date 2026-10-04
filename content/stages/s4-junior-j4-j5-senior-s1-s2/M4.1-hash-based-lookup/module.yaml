@@ -1,16 +1,10 @@
 id: M4.1
-title: Hash-based lookup
 status: accepted
 objectives:
   - Use a dictionary to store and retrieve data in O(1) time.
   - Solve lookup problems where you count or collect items by key.
   - Recognize when a dictionary is faster than a list or multiple conditions.
   - Handle missing keys safely with get() or membership checks.
-prereqs:
-  - M1.9
-  - M2.9
-lessons:
-  - hash-based-lookup
 practice:
   - id: ccc22j4
     note: Check whether students were grouped the way certain pairs asked to be.

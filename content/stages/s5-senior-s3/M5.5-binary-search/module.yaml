@@ -1,15 +1,9 @@
 id: M5.5
-title: Binary search
 status: accepted
 objectives:
   - Use bisect_left and bisect_right to find insertion points in sorted arrays.
   - Implement binary search on the answer over a monotone predicate.
   - Maintain correct loop invariants and avoid off-by-one errors.
-prereqs:
-  - M4.2
-  - M2.9
-lessons:
-  - binary-search-fundamentals
 practice:
   - id: ccc26s4
     note: Find the smallest side-track capacity that still lets a train of minecarts sort itself.

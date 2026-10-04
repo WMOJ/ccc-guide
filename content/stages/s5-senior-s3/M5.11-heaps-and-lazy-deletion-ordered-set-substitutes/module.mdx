@@ -1,0 +1,89 @@
+Imagine a job queue where a waiting job can grow more urgent while it waits. You always want the most urgent job the queue knows about, even as priorities keep changing underneath it. A <Term id="heap">heap</Term> is built for exactly this: a list, kept in a special order, that returns the smallest (or largest) item in logarithmic time.
+
+Scanning the whole queue for the most urgent job costs $O(n)$ per query. A contest version can push both the job count and the query count to $2 \cdot 10^5$, so scanning every query costs $O(n^2)$ in the worst case, around $4 \cdot 10^{10}$ steps. M2.9's bound-to-complexity reasoning rules that out: a budget near $10^8$ steps needs a per-query cost that does not grow with $n$. A heap gives that, answering each query in $O(\log n)$ however many times a priority changes.
+
+## Heaps in Python
+
+Python's `heapq` module turns a plain list into a min-heap: index 0 always holds the smallest item. Push adds a new item at the end, then moves it up past any bigger parent. Pop removes index 0, moves the last item into its place, then sifts that item down past any smaller child. Both operations cost $O(\log n)$, the tree's height.
+
+<Code file="examples/heap_basics.py" showOutput caption="Pushing five values and popping them back out, smallest first" />
+
+The list `[1, 2, 8, 5, 9]` is not sorted, but it is a valid heap: every parent is no bigger than its children. Step through the same pushes and pops below; the tree panel is the same list, drawn as a tree.
+
+<Figure caption="A heap's list, drawn as the tree it represents, through five pushes and five pops">
+  <StepThrough frames="visuals/heap_tree.frames.json" preset="five" />
+</Figure>
+
+Watch index 0 in the array panel. It changes on a push whenever the new value beats the current root, and on a pop it takes whatever value sifts down from the bottom. The one-item preset is the base case: a push settles immediately, and a pop empties the heap.
+
+## Max-heaps by negation
+
+`heapq` only builds min-heaps. To get the largest item out first, push the negative of each value and negate again on the way out. The smallest negative is the largest positive, so a min-heap of negatives behaves like a max-heap of the real values.
+
+<Code file="examples/max_heap.py" showOutput caption="A max-heap built by pushing negated values" />
+
+Step through the same pushes and pops below, stored and represented side by side.
+
+<Figure caption="Stored (negated) values next to the values they represent, through three pushes and pops">
+  <StepThrough frames="visuals/max_heap.frames.json" preset="three" />
+</Figure>
+
+Follow one index across both panels. The stored panel always holds the exact negative of the represented panel at that position: pushing 10 stores -10, and popping it negates back to 10.
+
+## Lazy deletion: skip stale entries instead of updating them
+
+Suppose a job's priority improves while it is already in the heap. `heapq` has no fast way to update a buried entry, and even finding it means scanning the whole list. Push a new entry with the better priority instead and leave the old one where it sits, a trade called <Term id="lazy-deletion">lazy deletion</Term>.
+
+To tell the two apart later, keep a list of each item's current best priority, one slot per item. When an entry pops, compare its priority to that slot: a match means it is current, and a mismatch means a later push already replaced it, so skip it.
+
+<Code file="examples/lazy_deletion.py" showOutput caption="Discovering a stale entry from the current-priority list, not a hand-set flag" />
+
+Step through the heap next to the `best` table below. Watch what happens the moment a pop's priority stops matching its cell, then try the second preset, where the same job improves twice before either old entry pops.
+
+<Figure caption="A heap of (priority, job) entries next to a table of each job's current best priority">
+  <StepThrough frames="visuals/lazy_deletion.frames.json" preset="stream" />
+</Figure>
+
+Item `0` is pushed at priority 8, then again at priority 2. A heap returns entries in priority order, so the entry with priority 2 pops first, and `best[0]` is already 2 by the time either pops. The first pop matches the table and prints; the second no longer matches, so it is discarded, the `x`-marked step above. The skip is always safe: the table always names the most recent push for an item. A heap never returns a worse priority before a better one already inside it.
+
+## A multiset with pending removals
+
+A <Term id="multiset">multiset</Term> lets the same value appear more than once, and needs to answer "what is the current maximum" as items are added and removed. A heap gives fast access to the maximum, but removing "the value 9" is the out-of-date-entry problem again: you cannot search the list for it quickly.
+
+Marking a *value* as removed does not work if a duplicate is still present: a set of removed values would throw away every future 9, not just the one that left. A pending-count dict, keyed by value, fixes this instead. Removing a value increases its pending count by one. A query then pops entries off the top, discarding each one whose value still has a positive pending count, until it finds an entry with nothing pending against it.
+
+<Code file="examples/multiset.py" showOutput caption="Removing one 9 out of two, and still finding 9 as the maximum" />
+
+Step through the heap next to the pending-count table below. Try the duplicate preset, then the no-duplicates one.
+
+<Figure caption="A max-heap with a pending-count table, removing one of two equal values">
+  <StepThrough frames="visuals/multiset.frames.json" preset="duplicate" />
+</Figure>
+
+Two 9s go in, one is removed, and `pending[9]` becomes 1. The next query pops a 9, sees a positive pending count, and discards it, dropping the count back to 0. The heap still holds the second 9 underneath; nothing is pending against it now, so that is the maximum the query reports, still 9. Each removal consumes exactly one stale heap entry this way, however many equal values are mixed together.
+
+## Sliding-window minimum with a heap
+
+A sliding window of fixed size $k$ moves one step at a time: it gains the element on the right and loses the element on the left. Rescanning all $k$ elements for the minimum on every step costs $O(nk)$ over the whole array. A heap of `(value, index)` pairs answers each step in $O(\log n)$ instead. Push the new index, then before reading the minimum, pop any entries whose index has already left the window.
+
+<Code file="examples/sliding_min.py" showOutput caption="Sliding window minimum, expiring old indices lazily as they surface" />
+
+Step through the array and heap together below, watching the window range and the top of the heap. Try the second preset, where the window's own minimum is the one that expires.
+
+<Figure caption="A heap of (value, index) pairs tracking a sliding window's minimum, including one leaving the window">
+  <StepThrough frames="visuals/sliding_min.frames.json" preset="eight" />
+</Figure>
+
+Every index is pushed exactly once, so the heap never holds more than $n$ entries in total. Watch index 1 in the main preset: its value, 1, sits on top for two windows in a row, then the window slides past it. Only then does the check at the top of the loop notice it has expired, popping it away and uncovering the next-smallest valid entry underneath. The "minimum leaves" preset makes that moment easier to see, on a three-element array.
+
+## Why lazy deletion is worth the cost
+
+Lazy deletion trades a search for a skip. Updating an entry in place means an $O(n)$ scan of the heap's list to find it, then fixing the heap property around it. Pushing a replacement instead costs one comparison per skip, since a stale entry is only ever compared, never searched for.
+
+The total cost still stays bounded, because every entry pops at most once, used or skipped. If a program pushes $M$ entries in total and $K$ turn out stale, the total work is $O((M + K) \log M)$, with $K \le M$. In practice $K$ stays far smaller than $M$: a job's priority improves once or twice, not thousands of times.
+
+## Making it fast on PyPy
+
+Senior problems in this shape often push both the item count and the update count to around $2 \cdot 10^5$. Read the whole input once with `sys.stdin.read().split()` and take tokens by position, as every example above does; calling `input()` that many times costs far more. Number items as plain integers when you can, since PyPy hashes small integers faster than strings. Keep the heap itself a single flat list, never a list of custom objects, since `heapq` works directly on plain lists. Above all, resist the urge to search the heap to fix an entry in place: reintroducing that cost in a hot loop erases the whole benefit of using a heap.
+
+Reach for a heap with lazy deletion whenever a problem asks for a repeated minimum or maximum over a changing collection. Values improve, items are removed, or a window slides across an array; the pattern stays the same.

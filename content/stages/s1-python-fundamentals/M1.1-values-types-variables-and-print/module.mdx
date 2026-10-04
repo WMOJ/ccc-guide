@@ -1,0 +1,83 @@
+A program works with pieces of data: a number of plates, a price, a name, an answer. Python calls each piece of data a value. This lesson shows you the four kinds of value you will use most, how to give a value a name, and how to show it on the screen.
+
+## Four core types
+
+Every value in Python has a <Term id="type">type</Term>. The type decides what you can do with the value. You can multiply two numbers, but you cannot multiply two pieces of text.
+
+An integer, or `int`, is a whole number such as `0`, `42` or `-7`. Python integers can be as large as you need. A number with hundreds of digits works the same way as a small one.
+
+A float, or `float`, is a number with a decimal point, such as `3.5` or `-0.25`. Floats are stored with limited precision, so they can be off by a tiny amount. Contest problems usually stick to integers for that reason.
+
+A string, or `str`, is text inside quotes, such as `"sushi"` or `'red'`. Single and double quotes mean the same thing. Pick one style and keep using it.
+
+A boolean, or `bool`, is either `True` or `False`. Those are the only two boolean values. Both start with a capital letter.
+
+If you are not sure what type a value has, ask Python. The `type()` function tells you. The program below uses variables, which the next section explains. For now, read `count = 42` as "call this value `count`".
+
+<Code file="examples/value_types.py" showOutput caption="Asking Python for the type of four values" />
+
+Look at `label`. Its value `"42"` is a string, because it is inside quotes. It looks like a number, but Python treats it as text. The next program shows why that matters.
+
+<Code file="examples/quotes.py" showOutput caption="The same symbols as numbers and as text" />
+
+Adding two integers gives `12`. Adding two strings joins them, so you get `75`. The quotes changed the type, and the type changed the result.
+
+## Variables and assignment
+
+A <Term id="variable">variable</Term> is a name that refers to a value. You create one with <Term id="assignment">assignment</Term>, which uses the `=` sign.
+
+```python
+plates = 3
+player = "Jordan"
+is_open = True
+```
+
+Read `plates = 3` as "the name `plates` now refers to 3". In maths, `=` says two things are equal. In Python it does something else. It takes the value on the right and attaches the name on the left to it.
+
+Think of the name as a tag. Python creates the value first, then ties the tag to it. Whenever you write `plates` later, Python follows the tag to the value 3.
+
+A name can use letters, digits and the underscore character. It cannot start with a digit, and it cannot contain spaces. Python also reserves some words for itself, such as `if`, `for` and `def`, so you cannot use those as names.
+
+Names are case-sensitive. `count`, `Count` and `COUNT` are three different names. This causes a common mistake: you create one spelling and then use another.
+
+<Code file="examples/name_error.py" expectError="NameError" caption="Using a name that was never created" />
+
+The program created `count` but asked for `Count`. Python has no value tagged `Count`, so it stops with a `NameError`. When you see this error, check the spelling and the capital letters first.
+
+Choose names that say what the value means. `total_cost` tells you more than `t` or `x2`. Write names in lowercase, with an underscore between words.
+
+## Reassignment
+
+You can assign a new value to a name that already exists. This is called <Term id="reassignment">reassignment</Term>. Python moves the tag from the old value to the new one.
+
+<Code file="examples/reassignment.py" caption="Assigning and reassigning variables" />
+
+Line 4 is worth a slow read: `total = total + 5`. Python always works out the right side first. It follows `total` to 10, adds 5 and gets 15. Only then does it move the tag `total` to 15.
+
+Step through the program below. Watch the name `total` move from 10 to 15 while the printed lines build up underneath the code.
+
+<Figure caption="Tracking variable assignment and reassignment">
+  <CodeTrace trace="examples/reassignment.trace.json" />
+</Figure>
+
+## Printing output
+
+The `print()` function writes a line of text to the screen. In a contest, that text is your answer.
+
+You can give `print()` several values separated by commas. It prints them in order with one space between each pair. When it finishes, it moves to a new line, so the next `print()` starts on a line of its own. A `print()` with nothing inside prints an empty line. A string prints without its quotes: `print("Done")` shows `Done`. The quotes only tell Python where the text starts and ends.
+
+<Code file="examples/print_parts.py" showOutput caption="Several values on one line, then an empty line" />
+
+The judge compares your output with the expected output exactly. An extra word, a missing space or a label like `Total:` counts as a wrong answer, even when the number is right. Print only what the problem asks for.
+
+## Reading input into variables
+
+In a contest, your program gets its data from standard input. The `input()` function reads one line and gives it to you as a string. That is true even when the line holds a number.
+
+To use the line as a number, convert it with `int()`. The step-through below reads two lines. The first becomes an integer and the second stays a string.
+
+<Figure caption="How input values enter variables during execution">
+  <Scene name="stdin-flow" lines={["42", "Cupcake"]} reads={[{ name: "count", as: "int" }, { name: "item", as: "str" }]} />
+</Figure>
+
+The module on reading input covers this in more detail. For now, you have enough to read a few numbers, store them in variables and print a result. The problems below need exactly that.

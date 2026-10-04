@@ -1,0 +1,61 @@
+A delivery company wants to build one depot along a straight road to serve several job sites. Site $i$ sits at position $p_i$ and sends $w_i$ shipments a day. Putting the depot at location $c$ costs that site $w_i \cdot |p_i - c|$ a day, summed over every site for the daily total. Where should the depot go?
+
+Each site's own cost is a V shape: it falls as $c$ approaches $p_i$ and rises again past it, at a rate fixed by $w_i$. Summed together, the total cost is built from straight segments, and it is a <Term id="convex-function">convex function</Term> of $c$. It only ever decreases and then only ever increases, so it has one connected region of minimum cost and nowhere else can beat it. That single-basin shape is what lets you search for the minimum instead of computing it directly, and three different searches below all lean on it.
+
+## Bounds and a brute force
+
+With up to $N = 2 \times 10^5$ job sites and positions as large as $10^9$, checking every integer location on the road is out of reach. A single sweep of the road could mean $10^9$ candidate locations, each needing an $O(N)$ pass to add up the cost, for roughly $2 \times 10^{14}$ operations. Restricting the search to the $N$ site positions themselves, the only places the slope can change, still costs $O(N^2)$. That is about $4 \times 10^{10}$ operations at the bound, far past what a two-second judge finishes.
+
+<Code file="examples/brute_force.py" showOutput caption="Checking every integer location between lo and hi" />
+
+On four sites over a hundred-unit range this brute force still finishes instantly, landing on location 50 at cost 210. The trouble is the range, not this particular input: real bounds turn the same loop into billions of wasted comparisons.
+
+## Ternary search narrows the range
+
+Because the cost curve only falls and then only rises, <Term id="ternary-search">ternary search</Term> can throw away a third of the range every round without checking most of it. Pick two interior points, `m1` closer to `lo` and `m2` closer to `hi`. If `cost(m1)` is larger, the minimum cannot sit left of `m1`: the curve would have to fall and then rise again before reaching it, which convexity forbids. So `lo` moves past `m1`. If `cost(m2)` is at least as large, the same argument rules out everywhere right of `m2`, so `hi` moves back to it. Either way the interval shrinks to two-thirds of its size. An interval of size $10^9$ narrows to a handful of candidates in about $\log_{3/2}(10^9)$ rounds, around 50.
+
+<Code file="examples/ternary_search.py" showOutput caption="Ternary search for the depot location that minimizes total cost" />
+
+Step through the search below. The first preset narrows toward a single minimizer; the second gives two sites equal weight, so the cost curve is flat across the whole stretch between them.
+
+<Figure caption="Ternary search narrowing lo and hi toward the minimum of cost(c)">
+  <StepThrough frames="visuals/sv_ternary.frames.json" preset="four_points" />
+</Figure>
+
+That flat preset is worth pausing on, because it marks where ternary search on integers stops being safe. A flat stretch *at* the minimum is harmless: every point in it costs the same, and the search still lands inside it. What breaks the search is a flat stretch that is *not* the minimum, since comparing two equal costs there gives no reason to discard either side. Ternary search on integers only works when the function is strictly convex: falling and then rising, with no flat parts except at the minimum itself. A function that merely never increases and then never decreases can still hide a flat, non-minimal stretch that swallows the true answer.
+
+## Binary search on the slope
+
+There is a way to search integers that never depends on two probes agreeing or disagreeing: binary search on the sign of the slope. Because the cost only falls and then rises, the difference `cost(x + 1) - cost(x)` starts negative and becomes non-negative exactly once, at the minimum, and stays non-negative from there on. That is a monotone predicate over `x`, the same shape as <Term id="binary-search-on-the-answer">binary search on the answer</Term> from the previous module: find the smallest `x` where `past_min(x)` is true.
+
+<Code file="examples/slope_search.py" showOutput caption="Binary search on the slope, using cost(x + 1) - cost(x) as the predicate" />
+
+<Figure caption="Binary search over candidate locations, comparing cost at mid and mid + 1 instead of two interior thirds">
+  <StepThrough frames="visuals/sv_slope_search.frames.json" preset="four_points" />
+</Figure>
+
+This predicate never needs two points to disagree to make progress, so it stays correct even on a flat plateau. Every point on the flat stretch reads as "at or past the minimum," and the search still converges on the plateau's first point, a genuine minimizer. Watch the same search run as code below, following `lo`, `hi`, and `mid` the way `capacity_search.py` did in the previous module.
+
+<Figure caption="slope_search.py tracing lo, hi, and mid as the predicate narrows toward the minimum">
+  <CodeTrace trace="examples/slope_search.trace.json" />
+</Figure>
+
+Each candidate still costs an $O(N)$ evaluation to check. So both ternary search and binary search on the slope run in $O(N \log(\text{range}))$. That is fast against a huge range, but it still pays an $O(N)$ price on every probe.
+
+## Slope sweep processes every site once
+
+When the range is what makes the search slow, not the number of sites, there is a faster shape entirely: <Term id="slope-sweep">slope sweep</Term>. It sorts the sites by position and walks left to right, tracking how much weight now sits to the sweep's left. Before the sweep starts, moving right can only help, so the slope is $-(\text{total weight})$. Crossing a site's position flips its contribution from negative to positive, adding twice its weight to the running slope. That is because it moves from $-w_i$ to $+w_i$ rather than from $0$ to $w_i$. The first site where that running slope reaches zero or above is the minimum, the same weighted-median location the other two methods find.
+
+<Code file="examples/slope_sweep.py" showOutput caption="Slope sweep finds the minimum in a single pass over the sorted sites" />
+
+<Figure caption="Slope sweep's running left weight and slope, site by site in sorted order">
+  <StepThrough frames="visuals/sv_slope_sweep.frames.json" preset="four_sites" />
+</Figure>
+
+The second preset has a single site, where the very first weight added already tips the slope non-negative. The loop's stopping condition holds before there is anything left to sweep past. Sorting costs $O(N \log N)$ and the sweep itself is $O(N)$, so the whole algorithm runs in $O(N \log N)$ no matter how wide the road is. That is one pass over the input's own size, instead of one pass per round of a search.
+
+## Reading input fast and picking a tool
+
+All three programs read the road with a single `sys.stdin.read().split()`. They keep `positions`, `weights`, and every loop variable local, the same PyPy habits `capacity_search.py` used: no per-token calls into the input stream, no attribute lookups inside a hot loop. Watch the size of the numbers too. With $N$ up to $2 \times 10^5$ and positions and weights up to $10^9$, a total cost can reach roughly $2 \times 10^{14}$. That is well past a 32-bit range, but never a concern for Python's own arbitrary-precision integers.
+
+Reach for slope sweep whenever every site is already in hand and the minimum is only needed once. It is the fastest of the three and never touches a search loop. Reach for ternary search or binary search on the slope when the cost arrives as a function you can only call, not a list you can sort. Prefer the slope version whenever integers and flat stretches are a possibility, since it never needs two probes to disagree to keep going.

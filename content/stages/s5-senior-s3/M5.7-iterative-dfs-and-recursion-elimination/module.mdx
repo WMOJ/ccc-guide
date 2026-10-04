@@ -1,0 +1,63 @@
+Depth-first search dives down one branch of a graph before backtracking to try the next one. Written recursively, a function visits a vertex, then calls itself on each unvisited neighbor. That reads close to the definition, but a contest graph can hold up to $10^5$ vertices. Some of them are shaped like one long chain, a path with no branching at all. A recursive <Term id="depth-first-search">DFS</Term> rooted at one end of a chain that long calls itself once per vertex, tens of thousands of calls deep.
+
+Python's own recursion limit stops most of those calls well before 100,000. Raising it with `sys.setrecursionlimit()` only moves the ceiling: the actual call stack a program runs on is a fixed piece of memory. PyPy stopped a single-branch recursive flood fill after about 1,400 calls in M4.13, on a chain of exactly this shape. A chain fifty times that long, well within contest bounds, crashes the same way. The fix from M4.13 carries over directly: replace the call stack with a list you manage yourself, which lives on the heap and has no such ceiling.
+
+## The basic iterative stack
+
+Push the root onto a list. While the list is not empty, pop a vertex, mark it visited, and push its unvisited neighbors. Popping a vertex and immediately diving into one of its neighbors, before returning to the others, is what makes this depth-first rather than breadth-first. The neighbor just pushed is the next one popped.
+
+<Code file="examples/iterative_dfs_basic.py" showOutput caption="Preorder DFS on a tree with an explicit stack" />
+
+Step through it below on the same tree the code runs on.
+
+<Figure caption="Popping a vertex marks it visited and pushes its unvisited neighbors">
+  <StepThrough frames="visuals/stack-preorder.frames.json" preset="tree" />
+</Figure>
+
+Watch vertex 1: it is popped once, marked visited, and its neighbors 0, 3 and 4 are considered. Neighbor 0 is already visited, so only 3 and 4 join the stack, in that order reversed so that 3 is popped first. That reversal matters. `adj[1]` lists `[0, 3, 4]` in the order edges were read; pushing them as read would pop 4 before 3, and reverse the order a recursive version would try them in. Pushing `reversed(adj[node])` restores it: the first neighbor in the list is the last one pushed, so it comes off the stack first.
+
+This is <Term id="preorder-traversal">preorder</Term>: a vertex is recorded the moment it is popped, before any of its descendants are. That order is enough for plenty of tasks, such as printing every vertex once or checking whether a target is reachable.
+
+## Postorder with a marker
+
+Some tasks need the opposite order. To compute the maximum weight anywhere in each subtree, a vertex needs its children's answers before it can combine them with its own weight. Preorder cannot give you that, since a vertex is recorded before its children are even discovered.
+
+Push every vertex onto the stack twice: once to enter it, once as a marker to record it. When the entry pops, push the marker first, then the unvisited children on top of it, so the children are explored, and recorded, before the marker is ever reached again.
+
+<Code file="examples/iterative_dfs_postorder.py" showOutput caption="Postorder DFS: a marker records a vertex after its children" />
+
+<Figure caption="A vertex's marker only reaches the top of the stack after every child above it has been recorded">
+  <StepThrough frames="visuals/stack-postorder.frames.json" preset="tree" />
+</Figure>
+
+Follow vertex 1 again. Its entry pops, pushes its own marker, then pushes markers-to-be for 3 and 4 above that marker. Both of those finish and get recorded before vertex 1's marker is ever exposed at the top of the stack. So 1's postorder position always comes after both of its children's. The root's marker is the very last thing recorded, since every other vertex sits above it on the stack until the search is done. <Term id="postorder-traversal">Postorder</Term> is what a tree-DP merge step needs: every child's answer ready before the parent computes its own.
+
+## Why an explicit stack never runs out of room
+
+Nothing about the stack's maximum size depends on Python's recursion limit. Step through a straight chain below and watch how small the stack stays.
+
+<Figure caption="On a chain, the stack never holds more than one waiting vertex">
+  <StepThrough frames="visuals/chain-depth.frames.json" preset="chain" />
+</Figure>
+
+A recursive DFS on this chain would be exactly as deep as the chain is long, one stack frame per vertex. Each call waits for the next one to return before it can continue. The list-based stack here holds at most one entry at any point, because a chain vertex only ever has one unvisited neighbor to push. On a bushier tree the stack can grow larger, up to the number of vertices on the current path from the root. That number is bounded by the graph's depth, never by a language limit on function calls.
+
+## Iterator indices for a true DFS tree
+
+Preorder and postorder answer "what order are vertices visited in," but some problems need more: which edges were used to discover each vertex. Later code then needs to walk the resulting tree by parent and child rather than by a general adjacency list. The basic and marker techniques push every unvisited neighbor at once, which loses track of which neighbor led to which push.
+
+Keep a `[vertex, index]` pair on the stack instead of a plain vertex. The index says which of that vertex's neighbors has already been tried. Each time the top of the stack is examined, advance its index by one and look at only that one neighbor. Descend into it if it is unvisited, or skip past it otherwise. The vertex's own frame stays on the stack, paused at that index, until every neighbor has been tried and it can be popped.
+
+<Code file="examples/iterative_dfs_true_order.py" showOutput caption="Iterator indices: a resumable frame per vertex, giving parent pointers" />
+
+<Figure caption="Each vertex's index advances through its neighbor list one at a time, recording a parent the first time it descends">
+  <CodeTrace trace="examples/iterative_dfs_true_order.trace.json" preset="main" />
+</Figure>
+
+This is the same idea a recursive call frame keeps for free: which neighbor it is currently trying, resumed exactly where it left off. Each vertex is only ever pushed once, and its index only ever moves forward. So every edge is examined exactly once from each endpoint. `par` ends up holding a genuine DFS tree, one parent per vertex, matching what a recursive DFS would have produced. Later modules build directly on this, using the same iterator-index stack to classify edges and compute entry and exit times on a graph.
+
+## Choosing a variant and making it fast
+
+All three variants run in $O(V + E)$ time and $O(V)$ space, the same bounds as recursive DFS; the stack never holds more than the graph's depth in vertices. Reach for the basic stack when you only need to visit every vertex once. Reach for the marker technique when a parent needs its children's results first. Reach for iterator indices when the DFS tree's own structure, its parent pointers or edge order, is part of the answer.
+
+On PyPy, keep the graph as a flat list of lists, never a dictionary, since indexing a list by position is one of the cheapest operations available. Read the whole input once with `sys.stdin.read().split()`, as every example above does, rather than calling `input()` per line. None of the three variants recurses, so none of them risks Python's recursion limit, however deep the graph runs. A list-based stack has no comparable ceiling. Whichever version you write, keep the stack itself a plain list: `append` and `pop` from the end are both constant time.

@@ -1,533 +1,533 @@
 # content/glossary.yaml — Glossary of competitive programming and Python terms.
 #
-# term -> definition, introducedIn (<moduleId>/<lessonSlug>)
+# term -> definition, introducedIn (the id of the module that first uses the term)
 # Checked by G-SCHEMA and G-PREREQ.
 
 terms:
   - id: variable
     term: variable
     definition: A name that refers to a value stored while a program runs.
-    introducedIn: M1.1/variables-and-print
+    introducedIn: M1.1
   - id: assignment
     term: assignment
     definition: Storing a value under a variable name using the equals sign.
-    introducedIn: M1.1/variables-and-print
+    introducedIn: M1.1
   - id: type
     term: type
     definition: The classification of a value, such as an integer, string, or boolean, that determines what operations it supports.
-    introducedIn: M1.1/variables-and-print
+    introducedIn: M1.1
   - id: reassignment
     term: reassignment
     definition: Binding an existing variable name to a new value.
-    introducedIn: M1.1/variables-and-print
+    introducedIn: M1.1
   - id: interpreter
     term: interpreter
     definition: The program that reads Python source code and runs it, one instruction at a time.
-    introducedIn: M0.1/what-a-program-is
+    introducedIn: M0.1
   - id: algorithm
     term: algorithm
     definition: A precise, step-by-step method for solving a problem.
   - id: breadth-first-search
     term: breadth-first search
     definition: A graph traversal algorithm that explores vertices level by level in order of distance from the source.
-    introducedIn: M4.13/bfs-and-flood-fill
+    introducedIn: M4.13
   - id: flood-fill
     term: flood fill
     definition: An algorithm that identifies and visits all connected cells matching a condition in a 2D grid.
-    introducedIn: M4.13/bfs-and-flood-fill
+    introducedIn: M4.13
   - id: lookup-table
     term: lookup table
     definition: A precomputed mapping from a key or index to its answer, built once and read directly instead of recomputed.
-    introducedIn: M3.5/lookup-tables
+    introducedIn: M3.5
   - id: hash-based-lookup
     term: hash-based lookup
     definition: Storing and retrieving values by key through a hash function, so a lookup costs about the same regardless of how many keys are stored.
-    introducedIn: M4.1/hash-based-lookup
+    introducedIn: M4.1
   - id: frequency-array
     term: frequency array
     definition: An array where each index stands for a possible value and the stored number is how many times that value has appeared.
-    introducedIn: M3.6/frequency-arrays-and-counting
+    introducedIn: M3.6
   - id: stack
     term: stack
     definition: A last-in, first-out data structure where every addition and removal happens at the same end.
-    introducedIn: M4.8/stacks-and-queues
+    introducedIn: M4.8
   - id: queue
     term: queue
     definition: A first-in, first-out data structure where elements are added at the back and removed from the front.
-    introducedIn: M4.8/stacks-and-queues
+    introducedIn: M4.8
   - id: dijkstras-algorithm
     term: Dijkstra's algorithm
     definition: An algorithm that finds the shortest path from a start node to all other nodes in a graph with non-negative edge weights.
-    introducedIn: M6.1/dijkstras-algorithm
+    introducedIn: M6.1
   - id: priority-queue
     term: priority queue
     definition: A data structure that retrieves the item with the smallest (or largest) priority key first.
-    introducedIn: M6.1/dijkstras-algorithm
+    introducedIn: M6.1
   - id: operator
     term: operator
     definition: A symbol such as `+` or `//` that performs a computation on one or more values.
-    introducedIn: M1.2/integer-arithmetic-and-operators
+    introducedIn: M1.2
   - id: floor-division
     term: floor division
     definition: Division that rounds the exact answer down to a whole number, written `//`.
-    introducedIn: M1.2/integer-arithmetic-and-operators
+    introducedIn: M1.2
   - id: modulo
     term: modulo
     definition: The remainder left over after floor division, written `%`.
-    introducedIn: M1.2/integer-arithmetic-and-operators
+    introducedIn: M1.2
   - id: true-division
     term: true division
     definition: Division written with `/` that always produces a float, even when the numbers divide evenly.
-    introducedIn: M1.2/integer-arithmetic-and-operators
+    introducedIn: M1.2
   - id: augmented-assignment
     term: augmented assignment
     definition: A shorthand such as `+=` that updates a variable using its own current value in one step.
-    introducedIn: M1.2/integer-arithmetic-and-operators
+    introducedIn: M1.2
   - id: precedence
     term: precedence
     definition: The fixed order in which Python runs the operators in a line that has more than one. Parentheses change that order.
-    introducedIn: M1.2/integer-arithmetic-and-operators
+    introducedIn: M1.2
   - id: ceiling-division
     term: ceiling division
     definition: Division that rounds a result up to the next whole number when there is a remainder, computed as `-(-a // b)`.
-    introducedIn: M1.12/floats-precision-and-big-integers
+    introducedIn: M1.12
   - id: standard-library
     term: standard library
     definition: The collection of modules that ships with Python itself, without installing anything extra.
-    introducedIn: M1.13/imports-and-the-standard-library-tour
+    introducedIn: M1.13
   - id: recursion
     term: recursion
     definition: A function calling itself to solve a smaller version of the same problem.
-    introducedIn: M1.14/recursion-fundamentals
+    introducedIn: M1.14
   - id: call-stack
     term: call stack
     definition: The stack of frames for every function call currently in progress, most recent on top.
-    introducedIn: M1.14/recursion-fundamentals
+    introducedIn: M1.14
   - id: walrus-operator
     term: walrus operator
     definition: The `:=` operator, which assigns a value to a name inside a larger expression instead of on its own line.
-    introducedIn: M1.15/the-python-3-8-language-boundary
+    introducedIn: M1.15
   - id: source-code
     term: source code
     definition: The plain text you write that describes what you want a program to do, before anything runs it.
-    introducedIn: M0.1/what-a-program-is
+    introducedIn: M0.1
   - id: standard-input
     term: standard input
     definition: The stream of text a program reads its input from, normally whatever the judge feeds it.
-    introducedIn: M0.4/the-standard-input-output-model-and-exact-output
+    introducedIn: M0.4
   - id: standard-output
     term: standard output
     definition: The stream of text a program writes its output to, normally what the judge reads and compares.
-    introducedIn: M0.4/the-standard-input-output-model-and-exact-output
+    introducedIn: M0.4
   - id: accumulator
     term: accumulator
     definition: A variable that carries a running result forward through a loop, updated once per item.
-    introducedIn: M2.4/accumulator-patterns
+    introducedIn: M2.4
   - id: subtask
     term: subtask
     definition: A named group of hidden test cases within one problem, run and reported together as a batch.
-    introducedIn: M0.5/how-judging-works
+    introducedIn: M0.5
   - id: stress-test
     term: stress test
     definition: Running a fast solution and a slow, trusted one on many small random inputs and comparing their answers, to find an input where the fast one is wrong.
-    introducedIn: C.6/stress-testing-against-a-brute-force
+    introducedIn: C.6
   - id: verdict
     term: verdict
     definition: The judge's recorded result for one test case, such as accepted or wrong answer.
-    introducedIn: M0.5/how-judging-works
+    introducedIn: M0.5
   - id: simulation
     term: simulation
     definition: Solving a problem by running its described process step by step, with a variable for each piece of state.
-    introducedIn: M2.3/simulation
+    introducedIn: M2.3
   - id: traceback
     term: traceback
     definition: The message Python prints when a program stops with an error, naming the file, the line, and the error itself.
-    introducedIn: M0.6/reading-error-messages
+    introducedIn: M0.6
   - id: brute-force
     term: brute force
     definition: Solving a problem by checking every candidate answer directly, with no shortcut.
-    introducedIn: M2.5/brute-force-and-complete-search
+    introducedIn: M2.5
   - id: method
     term: method
     definition: A function called on a value using a dot, such as `.split()` called on a string.
-    introducedIn: M1.3/reading-input
+    introducedIn: M1.3
   - id: multiple-assignment
     term: multiple assignment
     definition: Assigning several values to several names in one line, matched left to right by position.
-    introducedIn: M1.3/reading-input
+    introducedIn: M1.3
   - id: comparison-operator
     term: comparison operator
     definition: "An operator that compares two values and gives back a boolean, such as `==`, `<`, or `in`."
-    introducedIn: M1.4/booleans-and-conditionals
+    introducedIn: M1.4
   - id: boolean-operator
     term: boolean operator
     definition: An operator that combines or inverts boolean values, such as `and`, `or`, and `not`.
-    introducedIn: M1.4/booleans-and-conditionals
+    introducedIn: M1.4
   - id: conditional-expression
     term: conditional expression
     definition: "A one-line either/or expression of the form `a if condition else b`, which evaluates to `a` or `b` depending on the condition."
-    introducedIn: M1.4/booleans-and-conditionals
+    introducedIn: M1.4
   - id: edge-case
     term: edge case
     definition: An input at the extreme or unusual end of what a problem's bounds allow, such as the smallest size, every value equal, or a tie.
-    introducedIn: M2.6/case-analysis-and-edge-cases
+    introducedIn: M2.6
   - id: aliasing
     term: aliasing
     definition: Two names that refer to the exact same list or other mutable value, so a change made through one name shows up when the other is read.
-    introducedIn: M2.8/debugging
+    introducedIn: M2.8
   - id: list-comprehension
     term: list comprehension
     definition: "A one-line way to build a list from an existing sequence, written `[expression for name in sequence]`, optionally filtered with `if`."
-    introducedIn: M1.8/lists-1d-and-2d
+    introducedIn: M1.8
   - id: generator-expression
     term: generator expression
     definition: "The same shape as a list comprehension without square brackets, producing values one at a time instead of building a whole list."
-    introducedIn: M1.8/lists-1d-and-2d
+    introducedIn: M1.8
   - id: local
     term: local
     definition: A variable that exists only inside the function call that created it, separate from any variable of the same name outside that function.
-    introducedIn: M1.10/functions-and-scope
+    introducedIn: M1.10
   - id: greedy-algorithm
     term: greedy algorithm
     definition: An algorithm that solves a problem by making locally optimal choices at each step without reconsidering earlier decisions.
-    introducedIn: M4.2/sorting-with-keys-and-greedy
+    introducedIn: M4.2
   - id: greedy-choice-property
     term: greedy choice property
     definition: A property of optimization problems where a globally optimal solution always includes a locally optimal (greedy) choice made at the first step.
-    introducedIn: M4.2/sorting-with-keys-and-greedy
+    introducedIn: M4.2
   - id: prefix-sum
     term: prefix sum
     definition: An array where each element stores the running total of all values up to, but not including, that index, so the sum of any range can be found with one subtraction.
-    introducedIn: M4.3/prefix-sums
+    introducedIn: M4.3
   - id: difference-array
     term: difference array
     definition: An array storing the differences between consecutive elements, used to apply multiple range updates in O(1) time per update.
-    introducedIn: M4.4/difference-arrays
+    introducedIn: M4.4
   - id: interval-clamping
     term: interval clamping
     definition: Clipping a range's endpoints to an array's valid indices, and skipping the update entirely if nothing of the clipped range remains, before applying it.
-    introducedIn: M4.4/difference-arrays
+    introducedIn: M4.4
   - id: invariant
     term: invariant
     definition: A quantity that stays the same no matter which allowed operation is applied, often used to show that a target state cannot be reached.
-    introducedIn: M4.5/mathematical-insight
+    introducedIn: M4.5
   - id: constructive-problem
     term: constructive problem
     definition: A problem solved by building one valid answer directly and checking it against every rule, rather than searching a space of candidates.
-    introducedIn: M5.1/constructive-building
+    introducedIn: M5.1
   - id: small-case-enumeration
     term: small-case enumeration
     definition: Finding a pattern by running a slow, obviously correct method on many small inputs, tabulating the results, and turning what repeats into a fast rule.
-    introducedIn: M5.2/enumeration-and-patterns
+    introducedIn: M5.2
   - id: backtracking
     term: backtracking
     definition: Building a solution one choice at a time, trying each candidate that is still available, and undoing a choice the moment it cannot lead to a valid solution.
-    introducedIn: M4.10/backtracking
+    introducedIn: M4.10
   - id: pruning
     term: pruning
     definition: Skipping a branch of a search once it is clear that no candidate built from it can pass, without changing which candidates would otherwise be found.
-    introducedIn: M4.10/backtracking
+    introducedIn: M4.10
   - id: memoization
     term: memoization
     definition: Storing the result of each distinct call to a recursive function the first time it runs, so a later call with the same arguments is looked up instead of recomputed.
-    introducedIn: M4.11/memoization-and-dynamic-programming
+    introducedIn: M4.11
   - id: dynamic-programming
     term: dynamic programming
     definition: Solving a problem by filling in the answers to its smaller subproblems in a fixed order, each one built from subproblems already filled in, instead of computing them on demand through recursion.
-    introducedIn: M4.11/memoization-and-dynamic-programming
+    introducedIn: M4.11
   - id: disjoint-set-union
     term: disjoint set union
     definition: A data structure that tracks which elements belong to the same group, supporting fast union and connectivity queries.
-    introducedIn: M5.10/union-find-connectivity
+    introducedIn: M5.10
   - id: union-find
     term: union-find
     definition: Another name for disjoint set union; commonly used when describing the find and union operations.
-    introducedIn: M5.10/union-find-connectivity
+    introducedIn: M5.10
   - id: path-halving
     term: path halving
     definition: An optimization in the find operation where each node points to its grandparent instead of its parent, flattening the tree over time.
-    introducedIn: M5.10/union-find-connectivity
+    introducedIn: M5.10
   - id: union-by-size
     term: union by size
     definition: An optimization where the smaller tree is always attached under the larger tree during union, keeping the forest shallow.
-    introducedIn: M5.10/union-find-connectivity
+    introducedIn: M5.10
   - id: heap
     term: heap
     definition: A complete binary tree stored in a list, where every parent is no bigger (min-heap) or no smaller (max-heap) than its children, giving fast access to the smallest or largest item.
-    introducedIn: M5.11/heaps-and-lazy-deletion
+    introducedIn: M5.11
   - id: lazy-deletion
     term: lazy deletion
     definition: An optimization technique where items are marked invalid instead of being removed immediately, with removal deferred until they are popped.
-    introducedIn: M5.11/heaps-and-lazy-deletion
+    introducedIn: M5.11
   - id: multiset
     term: multiset
     definition: A collection that allows the same value to appear more than once, while still supporting fast queries such as the current maximum.
-    introducedIn: M5.11/heaps-and-lazy-deletion
+    introducedIn: M5.11
   - id: center-expansion
     term: center expansion
     definition: Finding the longest palindrome around a center by comparing outward one step at a time, stopping at the first mismatch or the string's edge.
-    introducedIn: M5.12/interval-dp-expansion
+    introducedIn: M5.12
   - id: deque
     term: double-ended queue (deque)
     definition: A data structure that adds and removes elements at both ends in constant time, such as Python's collections.deque.
-    introducedIn: M4.8/stacks-and-queues
+    introducedIn: M4.8
   - id: sparsification
     term: Sparsification
     definition: Keeping only the part of a graph or state space that a search needs. The search builds just the states it can reach from the start, and a map can be shrunk to its key nodes joined by shortest distances, instead of building every possible state and edge.
-    introducedIn: M6.2/state-space-modelling
+    introducedIn: M6.2
   - id: minimum-spanning-tree
     term: Minimum spanning tree
     definition: A spanning tree of a graph with the smallest total edge weight. A spanning tree connects all n nodes with n - 1 edges and no cycle.
-    introducedIn: M6.3/kruskal-mst
+    introducedIn: M6.3
   - id: tree-edge
     term: Tree edge
     definition: An edge in a DFS that leads to a node being visited for the first time. Tree edges form the DFS tree.
-    introducedIn: M6.4/dfs-tree
+    introducedIn: M6.4
   - id: back-edge
     term: Back edge
     definition: An edge in a DFS that points to an ancestor still on the stack. In a directed graph, a back edge closes a cycle, and a graph with no back edge has no cycle.
-    introducedIn: M6.4/dfs-tree
+    introducedIn: M6.4
   - id: forward-edge
     term: Forward edge
     definition: A non-tree edge in a DFS of a directed graph that points to a finished descendant of the current node, one the search reached by another route.
-    introducedIn: M6.4/dfs-tree
+    introducedIn: M6.4
   - id: cross-edge
     term: Cross edge
     definition: A non-tree edge in a DFS of a directed graph that points to a finished node that is neither an ancestor nor a descendant, in a branch that closed earlier.
-    introducedIn: M6.4/dfs-tree
+    introducedIn: M6.4
   - id: rerooting
     term: rerooting
     definition: Computing a rooted answer for every node as the root in two passes, one bottom-up and one top-down, by correcting each parent's answer for the single edge that changes when the root moves to a child.
-    introducedIn: M6.5/tree-dp
+    introducedIn: M6.5
   - id: interval-dp
     term: Interval DP
     definition: A dynamic programming technique where subproblems are defined on contiguous intervals of a sequence, solved bottom-up by increasing interval length.
-    introducedIn: M6.6/interval-dp
+    introducedIn: M6.6
   - id: monotonic-stack
     term: monotonic stack
     definition: A stack whose entries stay in one sorted direction because larger or smaller entries are popped before each push, used to find the nearest greater or smaller neighbor in linear time.
-    introducedIn: M6.11/monotonic-structures
+    introducedIn: M6.11
   - id: monotonic-deque
     term: monotonic deque
     definition: A double-ended queue of indices whose values stay sorted from front to back, popping weaker entries from the back and expired ones from the front, so the front is always a sliding window's maximum or minimum.
-    introducedIn: M6.11/monotonic-structures
+    introducedIn: M6.11
   - id: coordinate-compression
     term: coordinate compression
     definition: Mapping large coordinate values to small ranks to enable dense array storage for sparse 2D problems.
-    introducedIn: M6.8/coordinate-compression
+    introducedIn: M6.8
   - id: sweep-line
     term: sweep line
     definition: A technique that walks the start and end events of intervals or shapes in sorted order, updating a running state such as how many intervals are open, so that each stretch between two events is handled at once.
-    introducedIn: M6.8/coordinate-compression
+    introducedIn: M6.8
   - id: binary-lifting
     term: binary lifting
     definition: A table that stores where you land after 1, 2, 4, 8, ... jumps from every node, so any number of jumps is answered by combining one table entry per set bit of the jump count.
-    introducedIn: M6.12/binary-lifting
+    introducedIn: M6.12
   - id: lowest-common-ancestor
     term: lowest common ancestor
     definition: In a rooted tree, the deepest node that is an ancestor of both of two given nodes, where a node counts as its own ancestor.
-    introducedIn: M7.13/binary-lifting
+    introducedIn: M7.13
   - id: fenwick-tree
     term: Fenwick tree
     definition: An array in which each position stores the sum of a block of elements whose length is the position's lowest set bit, so a point update and a prefix-sum query each take O(log n) steps.
-    introducedIn: M6.10/fenwick-tree
+    introducedIn: M6.10
   - id: segment-tree
     term: segment tree
     definition: A tree data structure that stores partial answers about ranges, enabling point updates and range queries in logarithmic time.
-    introducedIn: M7.1/segment-tree-structure
+    introducedIn: M7.1
   - id: monoid
     term: monoid
     definition: A way of combining two values that is associative (grouping never changes the result) and has an identity value that changes nothing when combined with anything, such as addition with 0 or minimum with a huge number.
-    introducedIn: M7.1/segment-tree-structure
+    introducedIn: M7.1
   - id: lazy-propagation
     term: lazy propagation
     definition: Recording a range update as a pending tag on the few segment tree nodes that cover the range, and pushing the tag down to their children only when a later operation needs to look inside.
-    introducedIn: M7.2/lazy-propagation-strategy
+    introducedIn: M7.2
   - id: sparse-table
     term: sparse table
     definition: A precomputed table for answering idempotent range queries (minimum, maximum, gcd) in constant time after O(N log N) preprocessing.
-    introducedIn: M7.3/sparse-table-queries
+    introducedIn: M7.3
   - id: sqrt-decomposition
     term: sqrt decomposition
     definition: Cutting an array into blocks of about the square root of its length and keeping one stored summary per block, so a range query reads two partial blocks plus whole-block summaries and a point update fixes one value and one summary.
-    introducedIn: M7.9/sqrt-blocks
+    introducedIn: M7.9
   - id: online-algorithm
     term: online algorithm
     definition: An algorithm that must answer each query before it can read the next, which happens when the next query is decoded from the previous answer, so the queries cannot be sorted or batched.
-    introducedIn: M7.11/online-with-encryption
+    introducedIn: M7.11
   - id: vertex
     term: vertex
     definition: A single node in a graph; the thing that edges connect.
-    introducedIn: M4.12/graphs-and-adjacency-lists
+    introducedIn: M4.12
   - id: edge
     term: edge
     definition: A connection between two vertices in a graph, sometimes carrying a weight.
-    introducedIn: M4.12/graphs-and-adjacency-lists
+    introducedIn: M4.12
   - id: adjacency-list
     term: adjacency list
     definition: A way to store a graph as a list or dictionary that maps each vertex to the list of its neighbors.
-    introducedIn: M4.12/graphs-and-adjacency-lists
+    introducedIn: M4.12
   - id: adjacency-matrix
     term: adjacency matrix
     definition: A way to store a graph as a 2D grid where entry [i][j] says whether an edge connects vertex i and vertex j.
-    introducedIn: M4.12/graphs-and-adjacency-lists
+    introducedIn: M4.12
   - id: circular-array
     term: circular array
     definition: An array whose index wraps from the last element back to the first, usually with the modulo operator.
-    introducedIn: M4.15/circular-arrays-and-wraparound
+    introducedIn: M4.15
   - id: rolling-hash
     term: rolling hash
     definition: A hash of a fixed-length window that updates in O(1) per slide, instead of being recomputed from scratch at every position.
-    introducedIn: M5.4/rolling-hash
+    introducedIn: M5.4
   - id: hash-collision
     term: hash collision
     definition: Two different inputs that produce the same hash value. Rare with a good hash and a large modulus, but never impossible.
-    introducedIn: M5.4/rolling-hash
+    introducedIn: M5.4
   - id: periodicity
     term: periodicity
     definition: The property of a sequence that repeats the same pattern of values after a fixed number of steps, called its period.
-    introducedIn: M3.8/clock-and-calendar-arithmetic
+    introducedIn: M3.8
   - id: expected-value
     term: expected value
     definition: The average result of a random process, found by adding each possible outcome's value times its chance.
-    introducedIn: M7.5/probability-expected-value
+    introducedIn: M7.5
   - id: linearity-of-expectation
     term: linearity of expectation
     definition: The rule that the expected value of a sum is the sum of the expected values, even when the pieces depend on each other.
-    introducedIn: M7.5/probability-expected-value
+    introducedIn: M7.5
   - id: modular-inverse
     term: modular inverse
     definition: For a and a modulus m, the number x with a * x leaving remainder 1 after division by m. It exists when gcd(a, m) is 1, and multiplying by it stands in for dividing by a.
-    introducedIn: M7.6/number-theory-advanced
+    introducedIn: M7.6
   - id: cycle-detection
     term: cycle detection
     definition: Recording the step at which each state first appears, so the first repeated state shows where a sequence starts looping and how long the loop is.
-    introducedIn: M7.6/number-theory-advanced
+    introducedIn: M7.6
   - id: run-length-encoding
     term: run-length encoding
     definition: A way to compress a string by replacing each run of identical characters with its length followed by the character.
-    introducedIn: M3.3/string-processing-counting-runs-and-building
+    introducedIn: M3.3
   - id: tokenize
     term: tokenize
     definition: Split a string into individual pieces, called tokens, using a delimiter or a rule.
-    introducedIn: M3.4/string-processing-tokenizing-with-state
+    introducedIn: M3.4
   - id: grid
     term: grid
     definition: A rectangular layout of rows and columns, stored in Python as a list of rows, so that grid[row][col] reaches one cell.
-    introducedIn: M3.7/grid-basics
+    introducedIn: M3.7
   - id: transpose
     term: transpose
     definition: Swap a grid's rows and columns, so the cell at row r, column c moves to row c, column r.
-    introducedIn: M4.7/grid-transformations
+    introducedIn: M4.7
   - id: gcd
     term: greatest common divisor
     definition: The largest number that divides two given numbers with no remainder, written gcd.
-    introducedIn: M4.6/number-theory-i
+    introducedIn: M4.6
   - id: lcm
     term: least common multiple
     definition: The smallest positive number that two given numbers both divide evenly, written lcm.
-    introducedIn: M4.6/number-theory-i
+    introducedIn: M4.6
   - id: prime-number
     term: prime number
     definition: A whole number greater than 1 with exactly two divisors, itself and 1.
-    introducedIn: M4.6/number-theory-i
+    introducedIn: M4.6
   - id: sieve-of-eratosthenes
     term: sieve of Eratosthenes
     definition: An algorithm that finds every prime up to a limit by marking off the multiples of each prime it finds, starting from that prime's square.
-    introducedIn: M4.6/number-theory-i
+    introducedIn: M4.6
   - id: two-pointers
     term: two pointers
     definition: A technique that tracks two positions into a sequence, each moving in a predictable direction, to solve a problem in one pass instead of checking every pair.
-    introducedIn: M4.9/two-pointers
+    introducedIn: M4.9
   - id: sliding-window
     term: sliding window
     definition: A two-pointer technique where the pointers mark the ends of a contiguous range that grows and shrinks as it scans, instead of jumping independently.
-    introducedIn: M5.3/window-counting
+    introducedIn: M5.3
   - id: matches-counter
     term: matches counter
     definition: A running count of how many tracked quantities currently equal their target, updated incrementally so a match can be checked in O(1) instead of comparing every quantity.
-    introducedIn: M5.3/window-counting
+    introducedIn: M5.3
   - id: multi-source-bfs
     term: multi-source BFS
     definition: Breadth-first search started from several nodes at once, all at distance 0, so it finds each node's distance to its nearest source in one pass.
-    introducedIn: M5.9/bfs-variants
+    introducedIn: M5.9
   - id: zero-one-bfs
     term: 0-1 BFS
     definition: Breadth-first search with a deque instead of a queue, for graphs whose edges weigh 0 or 1, pushing a weight-0 neighbor to the front and a weight-1 neighbor to the back.
-    introducedIn: M5.9/bfs-variants
+    introducedIn: M5.9
   - id: reverse-graph-bfs
     term: reverse-graph BFS
     definition: Breadth-first search run once from a target over every edge reversed, giving each node's distance to that target instead of from a source.
-    introducedIn: M5.9/bfs-variants
+    introducedIn: M5.9
   - id: binary-search
     term: binary search
     definition: An algorithm that repeatedly halves a search space, keeping only the half that could still hold the target, to find a position or a value in O(log N) steps.
-    introducedIn: M5.5/binary-search-fundamentals
+    introducedIn: M5.5
   - id: binary-search-on-the-answer
     term: binary search on the answer
     definition: Binary search applied to the value being sought itself, narrowing a range of candidate values with a feasibility check instead of comparing array entries.
-    introducedIn: M5.5/binary-search-fundamentals
+    introducedIn: M5.5
   - id: convex-function
     term: convex function
     definition: A function whose rate of change never decreases as its input grows, so any local minimum is also its single global minimum.
-    introducedIn: M5.6/convex-functions-and-ternary-search
+    introducedIn: M5.6
   - id: ternary-search
     term: ternary search
     definition: A search that narrows an interval known to contain the minimum (or maximum) of a unimodal function by comparing its value at two interior points each round.
-    introducedIn: M5.6/convex-functions-and-ternary-search
+    introducedIn: M5.6
   - id: slope-sweep
     term: slope sweep
     definition: An algorithm that finds the minimum of a sum of piecewise-linear terms by processing their breakpoints in sorted order, updating the total slope incrementally at each one.
-    introducedIn: M5.6/convex-functions-and-ternary-search
+    introducedIn: M5.6
   - id: depth-first-search
     term: depth-first search
     definition: A graph traversal that dives down one branch from a vertex before backtracking to try another, in contrast to breadth-first search's level-by-level order.
-    introducedIn: M5.7/iterative-dfs-and-recursion-elimination
+    introducedIn: M5.7
   - id: preorder-traversal
     term: preorder
     definition: A traversal order where a vertex is recorded before any of its descendants are visited.
-    introducedIn: M5.7/iterative-dfs-and-recursion-elimination
+    introducedIn: M5.7
   - id: postorder-traversal
     term: postorder
     definition: A traversal order where a vertex is recorded only after all of its descendants have been visited.
-    introducedIn: M5.7/iterative-dfs-and-recursion-elimination
+    introducedIn: M5.7
   - id: tree
     term: tree
     definition: A connected graph with no cycles. A tree on N nodes has exactly N-1 edges, and exactly one path connects any two of its nodes.
-    introducedIn: M5.8/trees-rooting-and-basic-properties
+    introducedIn: M5.8
   - id: degree
     term: degree
     definition: The number of edges touching a node.
-    introducedIn: M5.8/trees-rooting-and-basic-properties
+    introducedIn: M5.8
   - id: leaf
     term: leaf
     definition: A node of degree 1 in a tree with more than one node.
-    introducedIn: M5.8/trees-rooting-and-basic-properties
+    introducedIn: M5.8
   - id: subtree
     term: subtree
     definition: In a rooted tree, a node together with everything reachable from it without passing back through its parent.
-    introducedIn: M5.8/trees-rooting-and-basic-properties
+    introducedIn: M5.8
   - id: tree-diameter
     term: tree diameter
     definition: The longest path between any two nodes in a tree, found with two breadth-first searches, one to find either endpoint and a second from there to find the other.
-    introducedIn: M5.8/trees-rooting-and-basic-properties
+    introducedIn: M5.8
   - id: randomized-algorithm
     term: randomized algorithm
     definition: An algorithm that makes random choices, such as shuffling or picking a random pivot, so its running time or its chance of success depends on those choices.
-    introducedIn: M5.13/randomized-strategies
+    introducedIn: M5.13
   - id: quickselect
     term: quickselect
     definition: Finding the value at a given sorted position by splitting the list around a pivot and keeping only the group that must hold that position.
-    introducedIn: M5.13/randomized-strategies
+    introducedIn: M5.13
   - id: binomial-coefficient
     term: binomial coefficient
     definition: The number of ways to choose r items from n when the order of the choice does not matter, written C(n, r) and computed in Python by math.comb.
-    introducedIn: M6.9/counting-problems
+    introducedIn: M6.9
   - id: complementary-counting
     term: complementary counting
     definition: Counting the cases you want as the total number of cases minus the cases you do not want, when the unwanted cases are easier to count.
-    introducedIn: M6.9/counting-problems
+    introducedIn: M6.9
   - id: exchange-argument
     term: exchange argument
     definition: A proof that a greedy order is optimal, showing that swapping two neighbors that the greedy rule would place the other way never makes the cost higher.
-    introducedIn: M7.4/exchange-arguments
+    introducedIn: M7.4

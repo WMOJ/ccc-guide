@@ -8,14 +8,15 @@ const moduleStatusEnum = z.enum(["planned", "drafted", "gated", "reviewed", "acc
 
 // --- content/course.yaml ----------------------------------------------------------------------
 
-export const courseModuleSchema = z.object({
+// Strict: an unknown key (a stale `prereqs`, say) fails instead of being silently dropped.
+export const courseModuleSchema = z.strictObject({
   id: z.string().regex(moduleIdRe, "module id must look like M4.3 or C.3"),
+  /** The module's only title: page H1, course map, sidebar, breadcrumb, search. */
   title: z.string().min(1),
-  prereqs: z.array(z.string().regex(moduleIdRe)).default([]),
   status: moduleStatusEnum,
 });
 
-export const courseStageSchema = z.object({
+export const courseStageSchema = z.strictObject({
   id: z.string().regex(stageIdRe, "stage id must look like s0..s7, c or fx"),
   number: z.string().min(1),
   title: z.string().min(1),
@@ -23,7 +24,7 @@ export const courseStageSchema = z.object({
   modules: z.array(courseModuleSchema),
 });
 
-export const courseSchema = z.object({
+export const courseSchema = z.strictObject({
   stages: z.array(courseStageSchema),
 });
 export type CourseFile = z.infer<typeof courseSchema>;
@@ -32,52 +33,46 @@ export type CourseStageEntry = z.infer<typeof courseStageSchema>;
 
 // --- stages/<stage>/<Module-slug>/module.yaml -----------------------------------------------
 
-export const modulePracticeItemSchema = z.object({
+export const modulePracticeItemSchema = z.strictObject({
   id: z.string().min(1), // registry problem id
   note: z.string().optional(),
   why: z.string().optional(),
 });
 
-export const moduleFileSchema = z.object({
+// Strict: the title lives in course.yaml only, and the page body in module.mdx beside this file.
+export const moduleFileSchema = z.strictObject({
   id: z.string().regex(moduleIdRe),
-  title: z.string().min(1),
   objectives: z.array(z.string()).default([]),
-  prereqs: z.array(z.string().regex(moduleIdRe)).default([]),
-  lessons: z.array(z.string()).default([]), // lesson slugs, in order
   practice: z.array(modulePracticeItemSchema).default([]),
   status: moduleStatusEnum,
 });
 export type ModuleFile = z.infer<typeof moduleFileSchema>;
 
-// --- lesson frontmatter (MDX) ------------------------------------------------------------------
-
-export const lessonFrontmatterSchema = z.object({
-  title: z.string().min(1),
-  objectives: z.array(z.string()).default([]),
-});
-export type LessonFrontmatter = z.infer<typeof lessonFrontmatterSchema>;
-
 // --- content/glossary.yaml ---------------------------------------------------------------------
 
-export const glossaryTermSchema = z.object({
+export const glossaryTermSchema = z.strictObject({
   id: z.string().min(1),
   term: z.string().min(1),
   definition: z.string().min(1),
-  introducedIn: z.string().optional(), // <moduleId>/<slug>
+  /** The id of the module that introduces the term. */
+  introducedIn: z
+    .string()
+    .regex(moduleIdRe, "introducedIn must be a module id like M4.3")
+    .optional(),
 });
-export const glossarySchema = z.object({
+export const glossarySchema = z.strictObject({
   terms: z.array(glossaryTermSchema),
 });
 export type GlossaryFile = z.infer<typeof glossarySchema>;
 
 // --- content/concepts.yaml ---------------------------------------------------------------------
 
-export const conceptFeatureSchema = z.object({
+export const conceptFeatureSchema = z.strictObject({
   id: z.string().min(1),
   feature: z.string().min(1),
   introducedIn: z.string().regex(moduleIdRe),
 });
-export const conceptsSchema = z.object({
+export const conceptsSchema = z.strictObject({
   features: z.array(conceptFeatureSchema),
 });
 export type ConceptsFile = z.infer<typeof conceptsSchema>;
@@ -85,16 +80,18 @@ export type ConceptsFile = z.infer<typeof conceptsSchema>;
 // --- content/ui/strings.yaml (matches components/ui/ui-strings.ts's UiStrings) -----------------
 
 /** /start and /about: a title, a lede and short headed sections of plain paragraphs. */
-const prosePageSchema = z.object({
+const prosePageSchema = z.strictObject({
   title: z.string(),
   lede: z.string(),
-  sections: z.array(z.object({ heading: z.string(), paragraphs: z.array(z.string()).min(1) })),
+  sections: z.array(
+    z.strictObject({ heading: z.string(), paragraphs: z.array(z.string()).min(1) }),
+  ),
 });
 
-export const uiStringsSchema = z.object({
+export const uiStringsSchema = z.strictObject({
   siteName: z.string(),
   skipLink: z.string(),
-  nav: z.object({
+  nav: z.strictObject({
     label: z.string(),
     learn: z.string(),
     problems: z.string(),
@@ -105,8 +102,9 @@ export const uiStringsSchema = z.object({
     closeMenu: z.string(),
     courseMap: z.string(),
     stage: z.string(),
+    breadcrumb: z.string(),
   }),
-  search: z.object({
+  search: z.strictObject({
     trigger: z.string(),
     open: z.string(),
     placeholder: z.string(),
@@ -117,16 +115,14 @@ export const uiStringsSchema = z.object({
     noResults: z.string(),
     loadFailed: z.string(),
     retry: z.string(),
-    groupLessons: z.string(),
+    groupModules: z.string(),
     groupTerms: z.string(),
     groupProblems: z.string(),
     pageTitle: z.string(),
   }),
-  lesson: z.object({
-    breadcrumb: z.string(),
+  module: z.strictObject({
+    stage: z.string(),
     module: z.string(),
-    lesson: z.string(),
-    lessonOf: z.string(),
     readingTime: z.string(),
     minutes: z.string(),
     objectives: z.string(),
@@ -139,29 +135,18 @@ export const uiStringsSchema = z.object({
     markedOn: z.string(),
     undo: z.string(),
     readState: z.string(),
-    unreadState: z.string(),
   }),
-  module: z.object({
-    stage: z.string(),
-    lessons: z.string(),
-    lessonCount: z.string(),
-    /** Singular form of lessonCount ("{n} lesson", n === 1) — so "1 lessons" can never render. */
-    lessonCountOne: z.string(),
-    before: z.string(),
-    lessonsHeading: z.string(),
-    objectives: z.string(),
-  }),
-  status: z.object({
+  status: z.strictObject({
     draft: z.string(),
     comingSoon: z.string(),
     soon: z.string(),
   }),
-  callout: z.object({
+  callout: z.strictObject({
     note: z.string(),
     warning: z.string(),
     graderTip: z.string(),
   }),
-  code: z.object({
+  code: z.strictObject({
     python: z.string(),
     copy: z.string(),
     copied: z.string(),
@@ -174,10 +159,10 @@ export const uiStringsSchema = z.object({
     errorRegion: z.string(),
     region: z.string(),
   }),
-  term: z.object({
+  term: z.strictObject({
     inGlossary: z.string(),
   }),
-  practice: z.object({
+  practice: z.strictObject({
     heading: z.string(),
     /** One problem. {judge}: its judge. */
     introOne: z.string(),
@@ -191,7 +176,7 @@ export const uiStringsSchema = z.object({
     judgeHome: z.string(),
     judgeSignup: z.string(),
   }),
-  home: z.object({
+  home: z.strictObject({
     lede: z.array(z.string()),
     continueLabel: z.string(),
     startLabel: z.string(),
@@ -200,15 +185,15 @@ export const uiStringsSchema = z.object({
     /** Singular form of modules ("{n} module", n === 1) — so "1 modules" can never render. */
     modulesOne: z.string(),
     howHeading: z.string(),
-    how: z.array(z.object({ term: z.string(), text: z.string() })),
+    how: z.array(z.strictObject({ term: z.string(), text: z.string() })),
   }),
   startPage: prosePageSchema,
   aboutPage: prosePageSchema,
-  courseMap: z.object({
+  courseMap: z.strictObject({
     title: z.string(),
     intro: z.string(),
   }),
-  problems: z.object({
+  problems: z.strictObject({
     title: z.string(),
     intro: z.string(),
     problem: z.string(),
@@ -216,13 +201,13 @@ export const uiStringsSchema = z.object({
     taughtIn: z.string(),
     notYet: z.string(),
   }),
-  glossary: z.object({
+  glossary: z.strictObject({
     title: z.string(),
     intro: z.string(),
     introducedIn: z.string(),
     letters: z.string(),
   }),
-  notFound: z.object({
+  notFound: z.strictObject({
     title: z.string(),
     body: z.string(),
     courseMap: z.string(),

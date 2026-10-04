@@ -1,0 +1,122 @@
+A school attendance program needs the number of days in a report's month, for every report in a stack of thousands. A chain of `if`/`elif` statements works: compare the month to 1, then to 2, then to 3, until one matches. For a December report that is twelve comparisons, and the chain repeats them on every report, although each month's answer never changes.
+
+A <Term id="lookup-table">lookup table</Term> stores every answer once, ahead of time, in a list or a dictionary. A query then reaches straight for its entry by index or key, without testing the other possibilities.
+
+## Lists as lookup tables
+
+A list works as a lookup table when the keys are the numbers 0, 1, 2, and so on: the index is the key, and the value stored there is the answer.
+
+```python
+days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+```
+
+Index 0 holds a placeholder, since there is no month 0. Index 1 holds 31, for January, and index 2 holds 28, for February. All twelve entries are filled in before a single query arrives.
+
+<Code file="examples/month_days.py" showOutput caption="Looking up the days in a month by index" />
+
+Laid out as a picture, month against days, split into two rows of six months each:
+
+<Figure caption="The days-in-month lookup table, all twelve answers, filled in once, each one index away" alt="A two-row table titled month, with columns 1 through 6. The first row, labeled Jan-Jun, holds 31, 28, 31, 30, 31, 30. The second row, labeled Jul-Dec, holds 31, 31, 30, 31, 30, 31.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      colTitle: "month",
+      colHeads: [1, 2, 3, 4, 5, 6],
+      rowHeads: ["Jan-Jun", "Jul-Dec"],
+      cells: [
+        [31, 28, 31, 30, 31, 30],
+        [31, 31, 30, 31, 30, 31],
+      ],
+    }}
+  />
+</Figure>
+
+Step through the same query two ways below: the `if`/`elif` chain testing one month at a time, next to the table reading straight to the answer. Try Best case, where the chain matches at once, and Worst case, where it fails eleven times first.
+
+<Figure caption="An if/elif chain checking one month at a time, next to a table reaching its answer in one step">
+  <StepThrough frames="visuals/ladder-vs-table.frames.json" preset="december" />
+</Figure>
+
+The chain's cost grew with the month, from one comparison to twelve. The table's did not: every slot was already filled, so index 12 costs the same single step as index 1.
+
+A lookup table stores fixed data, but February is not always fixed: a leap year adds a 29th day. Look up the value first, then correct it for the one case that depends on something outside the table. A year is a leap year when it divides evenly by 4, unless it also divides evenly by 100, in which case it must divide evenly by 400 as well.
+
+<Code file="examples/month_days_leap.py" showOutput caption="Looking up the days in a month, then adjusting February for a leap year" />
+
+Only February in a leap year takes the extra step. The rule itself is easier to follow one test at a time. Try 2024, which passes the first test and stops. Then try 1900, a century year that 400 does not divide, and 2000, a century year that it does.
+
+<Figure caption="The leap-year rule evaluated for 2024, 1900 and 2000, one test at a time">
+  <CodeTrace trace="examples/leap_year.trace.json" preset="century" />
+</Figure>
+
+The three flags decide the outcome. In 1900 `div100` is `True` while `div400` is `False`, so the exception turns `leap` off and February keeps its 28 days.
+
+## Dictionaries as lookup tables
+
+When the keys are not sequential numbers, a dictionary maps any key, such as a string, to a value. The key is what you look up with, and the value is what comes back.
+
+<Code file="examples/grade_lookup.py" showOutput caption="Looking up a letter grade's numeric cutoff" />
+
+`grades["B"]` reads 80, the value stored under the key `"B"`.
+
+A table does not have to be typed into the code. It can be built from the input a program reads and queried the same way.
+
+<Code file="examples/phone_lookup.py" showOutput caption="Building a dictionary from input, then looking up one query" />
+
+This reads pairs of a name and a phone number, stores each pair, then looks up the one name given as the query. Looping over a finished dictionary directly, as in `for name in phone_numbers:`, walks its keys only. Use `.values()` or `.items()` when a loop needs more than the key.
+
+## Building a table safely with `.get()`
+
+Reading a key that was never stored, with `table[key]`, crashes with a `KeyError`. The `.get(key, default)` method returns the stored value if the key exists and the default you give it otherwise, so a query the table never saw does not stop the program.
+
+<Code file="examples/is_vowel.py" showOutput caption="Building a table of vowels, then checking one letter safely" />
+
+Step through the build and the two kinds of query below: a vowel the table stored, and a consonant it never saw.
+
+<Figure caption="Building a dictionary of vowels one character at a time, then querying it with .get()">
+  <CodeTrace trace="examples/is_vowel.trace.json" preset="hit" />
+</Figure>
+
+`vow.get(q, False)` gives `True` for a stored vowel and `False` for a consonant, with no error over a key that is missing on purpose.
+
+## Avoiding repeated computation
+
+The saving comes from paying for an answer once and reusing it, which matters most when the same kind of question arrives many times.
+
+Suppose a program needs the day of the year for up to 100,000 dates in one run, each given as a month and a day. Summing every earlier month per query costs up to 11 additions, since December needs January through November added up again. Across 100,000 queries that is up to 1,100,000 additions, and almost all of them repeat a sum an earlier query already worked out. (The sieve in M4.6 is a bigger version of the same idea: one table, built once, over a much larger range.)
+
+Build the table once instead. One pass over the 12 months computes `days_before[m]`, the days that come before month `m`, from `days_in_month`:
+
+<Code file="examples/day_of_year.py" lines="9-12" highlight="10,11,12" caption="Building days_before in one pass over days_in_month" />
+
+Step through the build below, then watch a query read one entry of `days_before` and add the day of the month, with no summing. The two arrays show a window of up to six entries ending at the current month.
+
+<Figure caption="Building days_before from days_in_month, then answering a day-of-year query with one lookup and one addition">
+  <StepThrough frames="visuals/day-of-year.frames.json" preset="december" />
+</Figure>
+
+<Code file="examples/day_of_year.py" showOutput caption="Answering day-of-year queries from the finished days_before table" />
+
+Once the table is built, each query costs one lookup plus one addition, not up to eleven. The saving depends on building the whole table before the first query arrives. Filling in entries one per query, as each arrives, brings back the repeated sums for any entry the table has not reached yet.
+
+## A table indexed by a computed key
+
+Some tables are indexed by a key computed from the input, not the input itself. A discount table has one entry per tier letter, A through E.
+
+<Code file="examples/discount_tier.py" showOutput caption="Looking up a discount rate from a tier letter, by computing its index" />
+
+Step through how the letter becomes an index, then reaches its discount. Try Tier E, the last column.
+
+<Figure caption="Turning a tier letter into an index with ord, then reading that index's discount">
+  <StepThrough frames="visuals/discount-tier.frames.json" preset="tier-c" />
+</Figure>
+
+`ord(tier) - ord("A")` turns the letter into the same small, sequential index the days-in-month table used. Any value with a small, known range can index a table this way, whether it is already a number or has to become one first.
+
+## Keeping it fast on PyPy
+
+Build the table once, outside any query loop, the way `days_before` and `vow` both do, so its cost is paid once and not once per query. A list indexed by a small integer is the cheapest lookup PyPy offers: one memory step, no hashing. A dictionary costs a little more because it hashes the key first, so prefer a list whenever the keys are already small whole numbers.
+
+The day-of-year program also collects its answers in a list and writes them once at the end, rather than printing after each query. Keep that habit whenever a table answers many queries in one run.
+
+Reach for a lookup table whenever the same small set of keys is asked about more than once. That covers a fixed rule that never changes, and a value worth precomputing because the program will need it again.

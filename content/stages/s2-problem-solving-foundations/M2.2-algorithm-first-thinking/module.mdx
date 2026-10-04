@@ -1,0 +1,57 @@
+Stage 2 uses a fixed set of steps for every problem: Read, Find the bounds, Work the sample by hand, Plan in words, Code, Test edge cases, Submit. This lesson focuses on the middle three. Working a sample by hand and writing a plan before touching code catches mistakes far earlier, and far more cheaply, than debugging a program that already looks finished.
+
+These three steps take a few minutes on a small problem, and considerably longer on a hard one. The time is never wasted. A plan built directly from a hand-worked sample tells you, before you write any code, whether your idea for solving the problem answers the question the statement asks.
+
+## Read
+
+Here is a problem invented for this lesson. A weather log records each of N days as `1` for sunny or `0` for not. Find the length of the longest run of consecutive sunny days.
+
+## Find the bounds
+
+An invented input specification: line 1 holds N (1 ≤ N ≤ 1000), line 2 holds N values, each `0` or `1`. Every value is one of exactly two options, so there is nothing to underline beyond N itself.
+
+## Work the sample by hand
+
+Take a small sample: `1 1 0 1 1 1 0`. Work through it exactly as your program will have to, one day at a time, before writing a single line of code.
+
+<Figure caption="Tracking the current sunny run and the best run seen so far, one day at a time">
+  <StepThrough frames="visuals/sunny-streak.frames.json" preset="sample" />
+</Figure>
+
+Day 1 is sunny, so the current run becomes 1, and the best run seen so far becomes 1 too. Day 2 is sunny again, extending the current run to 2, which also becomes the new best. Day 3 breaks the run, so the current run resets to 0, while the best run stays at 2. Days 4 through 6 are sunny, building a new run of 3, which passes the old best. Day 7 breaks it again, leaving the best run at 3.
+
+Working through this by hand, one day at a time, is exactly what makes the next step possible. You cannot plan an algorithm you have not first watched work on a real, small example.
+
+## Plan in words
+
+Write the plan as a short list of instructions, without any Python syntax:
+
+1. Keep two counters: how long the current sunny run is, and the best run seen so far. Start both at 0.
+2. For each day in order: if it is sunny, add 1 to the current run, then update the best run if the current run is now larger. If it is not sunny, reset the current run to 0.
+3. After the last day, the best run holds the answer.
+
+A plan written this way says nothing about lists, loops or variable names yet. It only says what has to happen, in an order a person could follow with a pencil and the sample data.
+
+## Code
+
+Only now does the plan become Python, line by line.
+
+<Code file="examples/sunny_streak.py" showOutput caption="Longest run of sunny days, following the plan step by step" />
+
+Every line traces back to one instruction from the plan, once the two input lines from the invented specification are read. The two counters from step 1 become `current_run` and `best_run`. The loop and its `if` from step 2 become the `for` loop and its branches. Printing `best_run` is step 3. Check each line of code against the written plan, not against a vague memory of what the plan said. That habit keeps a long solution from drifting away from the idea that was supposed to solve it.
+
+## Test edge cases
+
+Run the hand-worked sample through the finished code and check that `3` still comes out. Then check a day list of all zeros, where the best run should be `0`, and a day list of all ones, where the best run should equal `N`. A plan that only works on the single sample it was built from is not yet trustworthy, however confident it looked on paper.
+
+## Submit
+
+Once the sample and the edge cases agree with the plan, the algorithm is ready to submit. Submitting earlier, before the plan and the code have been checked against each other, risks spending a submission on a mistake the hand-worked sample would have caught for free.
+
+## Common mistakes
+
+Writing code directly from the problem statement, skipping the plan, tends to produce a solution that handles the sample by accident rather than by design. When that code fails on a different test, there is no plan to check it against, only the code itself, which makes finding the mistake far slower. Keeping the plan around, even as a comment or scratch note, gives you something firm to compare the code to.
+
+## Recap
+
+Work a small sample by hand before writing any code, tracking exactly what a correct answer needs at each step. Write that process as a plain-language plan, separate from Python syntax entirely. Only then translate the plan into code, checking each line against both the plan and the hand-worked sample. This order catches mistakes while they are still cheap to fix.

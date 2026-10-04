@@ -1,0 +1,115 @@
+Many problems are really about things connected to other things. People in a social network are connected by friendships. Cities are connected by roads. Pages are connected by links. All of these are graphs: a set of <Term id="vertex">vertices</Term> (the things) and <Term id="edge">edges</Term> (the connections between them).
+
+## Vertices and edges
+
+Number the vertices from 0 to N − 1. Each edge can also carry a weight, such as a distance on a map or a closeness score in a social network. This lesson sticks to unweighted graphs, where every edge counts the same.
+
+## Adjacency list representation
+
+An <Term id="adjacency-list">adjacency list</Term> stores a graph as one list of neighbors per vertex. With vertices numbered 0 to N − 1, that is a list of lists:
+
+```python
+adj = [
+    [1, 2],
+    [0, 2],
+    [0, 1, 3],
+    [2],
+]
+```
+
+Vertex 0 connects to 1 and 2, vertex 1 connects to 0 and 2, and so on. If you can travel both ways along an edge, the graph is undirected. Every edge then appears twice: reading an edge between A and B means appending B to A's list and A to B's list. If an edge only lets you travel one direction, the graph is directed, the way a one-way street does, and only one of those two appends happens. The next two sections build both kinds from the same style of input.
+
+An adjacency list uses space proportional to the number of vertices plus the number of edges. It stays small on a sparse graph, one where most vertices only connect to a few others. That covers most graphs you will meet in a contest.
+
+## Building an adjacency list from input
+
+Suppose the input gives the number of vertices and edges, followed by one edge per line:
+
+```
+4 3
+0 1
+1 2
+2 3
+```
+
+That is 4 vertices and 3 edges, connecting 0-1, 1-2 and 2-3 in a line. `build_graph.py` starts every vertex with an empty list. It then reads each edge and appends the neighbor to both lists, since the graph is undirected. Step through it below on a smaller run first, 3 vertices and one edge, to watch each line do its job.
+
+<Figure caption="Reading vertex and edge counts, then appending each neighbor to both lists">
+  <CodeTrace trace="examples/build_graph.trace.json" preset="main" />
+</Figure>
+
+`pos` walks through `data` two tokens at a time, one edge per pass through the loop. `a` and `b` never keep a value once the next edge overwrites them. Try the "One hub vertex" preset: with edges 0-1 and 0-2, vertex 0 collects two neighbors while 1 and 2 each collect one. That is exactly what a hub looks like in an adjacency list, a longer row where every other row involved stays short.
+
+The picture below runs the same program on three larger graphs: the 4-vertex line above, a 5-vertex graph with a hub, and a 3-vertex graph with no edges. Watch the table grow to match what `build_graph.py` prints.
+
+<Figure caption="Building an undirected adjacency list, one edge at a time, on three graphs">
+  <StepThrough frames="visuals/build-adjacency.frames.json" preset="given" />
+</Figure>
+
+The "No edges" preset matters as much as the other two: three vertices with nothing connecting them is still a valid graph. Its adjacency list is three empty lists, not an error. The "Given" preset confirms the 4-vertex line from the input above. Vertex 0 only lists `[1]`, since it has one edge, while vertex 1 sits in the middle of the line and lists both `[0, 2]`.
+
+## Directed graphs
+
+Dropping one of the two appends is the entire difference between an undirected and a directed adjacency list. `examples/directed_edges.py` reads the same style of input as `build_graph.py` and keeps only `adj[a].append(b)`.
+
+<Code file="examples/directed_edges.py" showOutput caption="Building a directed adjacency list: each edge appends only one way" />
+
+On the same 4-vertex line as before, vertex 3 now lists nothing. `2 3` makes 2 point at 3, but nothing points out of 3, so its list stays `[]` even though it is reachable. That would have been impossible in the undirected version, where every vertex with an edge has at least one neighbor.
+
+<Figure caption="Building a directed adjacency list, including a graph with a cycle">
+  <StepThrough frames="visuals/directed-edges.frames.json" preset="given" />
+</Figure>
+
+Try the "With a cycle" preset: edges 0-1, 1-2 and 2-0 point all the way around and back to where they started. A cycle is nothing special to an adjacency list. Vertex 2 simply has 0 in its list along with 3, the same as any other neighbor; nothing about the list itself marks a vertex as part of a loop.
+
+## Iterating over neighbors
+
+Once the graph is built, exploring it means looping over a vertex's list.
+
+```python
+adj = [[1, 2], [0, 2], [0, 1, 3], [2]]
+current = 0
+for neighbor in adj[current]:
+    print(f"Vertex {current} connects to {neighbor}")
+```
+
+This loop is the piece every graph search is built from. BFS and DFS both start at a vertex, look at every neighbor in its list, and repeat from each new vertex they discover. Everything past this lesson builds on being able to ask "what does this vertex connect to?" quickly, which is exactly what the adjacency list gives you.
+
+## Adjacency matrix versus adjacency list
+
+An <Term id="adjacency-matrix">adjacency matrix</Term> represents the same information as a 2D grid, where `matrix[i][j]` is true exactly when an edge connects `i` and `j`.
+
+```python
+matrix = [
+    [False, True, True, False],
+    [True, False, True, False],
+    [True, True, False, True],
+    [False, False, True, False],
+]
+```
+
+A matrix answers "does this edge exist?" instantly. But it always uses space proportional to the square of the vertex count, no matter how many edges actually exist. With 1,000 vertices and only 2,000 edges, the matrix has a million cells for 2,000 real connections. An adjacency list uses space proportional to the edges you actually have. That is why it is the default choice, unless a problem needs fast edge-existence checks on a small, dense graph.
+
+## Recognizing a graph in disguise
+
+The hard part of graph problems is rarely the code, it is noticing that a problem is a graph problem at all. A set of tasks where some depend on others is a graph: vertices are tasks, and an edge points from a dependency to the task waiting on it. Finding a valid order to do them is a search over that graph.
+
+A maze is the same idea with a different name. Each room is a vertex, each passage between rooms is an edge, and finding a way out is a graph search from your starting room.
+
+A flight timetable fits the same shape, but its vertices are not already numbered. `examples/flight_routes.py` reads airport codes instead of vertex numbers. It builds a dictionary from code to index first, then uses that dictionary to fill the same kind of adjacency list as before.
+
+<Code file="examples/flight_routes.py" showOutput caption="Modeling a flight timetable as a directed graph of airport codes" />
+
+<Figure caption="Mapping airport codes to indices, then building their directed adjacency list">
+  <StepThrough frames="visuals/flight-routes.frames.json" preset="given" />
+</Figure>
+
+Try the "Hub" preset: TO reaches both OT and MO directly, and both of those reach HA. CA sits with an empty route list, an airport that appears in the input but is never an origin. Asking whether you can fly from one city to another is asking whether a path exists between two vertices in this graph; departure times do not matter for that question. None of these problems mention the word "graph". Once you notice vertices and edges hiding underneath tasks, rooms or flights, building the adjacency list is the same routine every time. That holds whether the vertices arrive as numbers or as names.
+
+## Getting these details right
+
+Watch for a bug that shows up whenever an edge only gets stored one way. Reading an edge between 0 and 1 and appending just `1` to vertex 0's list loses the fact that 0 is also a neighbor of 1. For an undirected graph, every edge needs both directions stored; for a directed graph, only one.
+
+The input's numbering is another place to check carefully. Some problems number vertices 1 through N instead of 0 through N − 1. Read the first example before you write any code, and if the input starts at 1, subtract 1 from every vertex you read so your 0-indexed adjacency list lines up.
+
+Pick the container to match the vertices. A list of lists, as in every example here, is the right default for vertices numbered 0 to N − 1. When vertex numbers are large and sparse, such as ids in the millions with wide gaps, a dictionary keyed by vertex number skips the vertices that never appear. Vertices might not be numbers at all: names, as with `flight_routes.py`, or grid cells, as with a maze. Either way, map each one to a small index first, then use that index into the same list of lists.

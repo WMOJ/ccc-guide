@@ -1,0 +1,88 @@
+A café lists the shifts its staff work on one long day, measured in seconds, so a shift runs from a start to an end somewhere in the range 0 to 10^9. The owner wants two numbers: how many seconds at least one person is on duty, and the most people on duty at the same moment. Up to 100,000 shifts can overlap in any pattern.
+
+Checking every second against every shift would take 10^9 times 100,000 steps. Even writing one flag per second needs a billion-slot array. The way out is to notice that the picture only changes when a shift starts or ends. A <Term id="sweep-line">sweep line</Term> walks those change points in sorted order and keeps a running count of how many intervals are open. The second half of the lesson carries the same idea to rectangles, where <Term id="coordinate-compression">coordinate compression</Term> shrinks a plane with coordinates up to 10^9 to a small grid.
+
+## Sweeping along one line
+
+Turn each shift into two events: a `+1` at its start and a `-1` at its end. Sort the events by position. Between two neighboring events no shift starts or ends, so the set of open shifts, and therefore `active`, cannot change. That is why one pass is enough: each stretch between neighboring events is either covered the whole way (`active` above 0) or not at all.
+
+Step through the figure below. The line at the top shows the intervals, and the table lists the sorted events. Try all three presets: one with a gap, one with intervals inside another, and one where an interval ends exactly where the next begins.
+
+<Figure caption="The sweep visits sorted start and end events, adding a stretch to covered only when at least one interval was active across it.">
+  <StepThrough frames="visuals/sweep-events.frames.json" preset="gap" />
+</Figure>
+
+The stretch before an event is judged by the `active` count as it stood before that event changes it. Only then does the event update `active`. The code does those two things in that order.
+
+<Code file="examples/sweep_line_coverage.py" showOutput caption="Union length and busiest moment of a set of intervals, from sorted events" />
+
+Sorting tuples compares the position first and then the change. At the same position `(4, -1)` comes before `(4, 1)`, so an interval that ends where another begins is closed before the next one opens, and `best` does not count them as overlapping. The "Touching" preset shows this: its largest `active` is 1. A covered stretch adds its own length once, however large `active` is. Adding `active` times the length would give the sum of the interval lengths instead, which needs no sweep at all.
+
+Here is the same program line by line, on two intervals that overlap. Watch `active`, `covered` and `best` change as the loop moves from event to event.
+
+<Figure caption="Tracing the sweep: events sorted, then covered, active and best updated for each event in turn.">
+  <CodeTrace trace="examples/sweep_line_coverage.trace.json" preset="main" />
+</Figure>
+
+For the two intervals `[0, 5]` and `[3, 8]` the trace skips the repeated last event and finishes with `covered` at 8 and `best` at 2, the two lines the program prints. The work is one sort of 2n events plus one pass. That stays fast in PyPy because the events sit in a flat list of small tuples and the loop does only additions and comparisons.
+
+## Rectangles on a huge plane
+
+The same question in two dimensions asks how much area a set of axis-aligned rectangles covers, and how much of it lies under two or more. Coordinates run to 10^9 and there can be 1,000 rectangles, so a unit grid has 10^18 cells. M4.14 already showed the remedy. Replace each distinct coordinate by its rank in sorted order through a dictionary, and keep the sorted list so you can recover the original coordinate. The rectangles' corners contribute at most 2,000 distinct x values and 2,000 distinct y values, so the compressed grid has about 4 million cells instead of 10^18.
+
+Area survives compression only if you keep the gaps. The width of the column between rank `i` and rank `i + 1` is `xs[i + 1] - xs[i]`, and rows work the same way. Here are three rectangles with small numbers so the grid fits on a screen. The same program works unchanged if every coordinate is multiplied by 10^7, because only the order and the gaps matter.
+
+<Code file="examples/rect_ranks.py" showOutput caption="Distinct x and y values, rank dictionaries, cell widths and heights, and each rectangle's corner ranks" />
+
+The table below is what that program computed, as a picture: each coordinate, its rank, and the width or height of the cell that starts there.
+
+<Figure caption="Six x values and six y values, each with its rank and the gap to the next value." alt="A table with six rows and six columns. The rows are x, x rank, width, y, y rank and height. The x values are 0, 20, 40, 70, 80 and 100 with ranks 0 to 5 and widths 20, 20, 30, 10 and 20. The y values are 0, 20, 30, 60, 80 and 100 with ranks 0 to 5 and heights 20, 10, 30, 20 and 20.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      cells: [
+        [0, 20, 40, 70, 80, 100],
+        [0, 1, 2, 3, 4, 5],
+        [20, 20, 30, 10, 20, null],
+        [0, 20, 30, 60, 80, 100],
+        [0, 1, 2, 3, 4, 5],
+        [20, 10, 30, 20, 20, null],
+      ],
+      rowHeads: ["x", "x rank", "width", "y", "y rank", "height"],
+    }}
+  />
+</Figure>
+
+The last width and height are blank because the last coordinate has no neighbor after it. A rectangle whose corners have x ranks 0 and 3 covers the cells in columns 0, 1 and 2, three columns, because a rank names a boundary and a cell sits between two boundaries. That off-by-one is the easiest thing to get wrong here, so the next figure paints each rectangle onto the cells between its corners.
+
+<Figure caption="Painting each rectangle onto the compressed cells: corner ranks mark a block of cells, and each covered cell goes up by 1.">
+  <StepThrough frames="visuals/paint-rects.frames.json" preset="overlap" />
+</Figure>
+
+Why is one number per cell enough? No rectangle edge lies strictly inside a compressed cell, because every edge is one of the boundary coordinates. So every point inside a cell is covered by the same set of rectangles, and the cell's area times its depth gives its share of the answer exactly.
+
+Painting cell by cell is correct but costs one step per covered cell. With 1,000 rectangles, each spanning up to 2,000 by 2,000 cells, that is up to 4 billion steps. The remedy is the difference array from M4.4, in two dimensions.
+
+## Four marks per rectangle
+
+Instead of touching every cell, put four marks in a `diff` table that is one row and one column bigger than the cell grid. Add `+1` at the top-left corner, `-1` at the top-right, `-1` at the bottom-left and `+1` at the bottom-right. A running sum, the same two-dimensional prefix sum as M4.3, then spreads each rectangle's `+1` over exactly its cells. Watch the marks go in, then the running sum turn them into depths one row at a time.
+
+<Figure caption="Four corner marks per rectangle in the diff table, then a row-by-row running sum that turns the marks into depths.">
+  <StepThrough frames="visuals/corner-updates.frames.json" preset="overlap" />
+</Figure>
+
+The code below highlights those marks and the running sum. Each corner lookup is one dictionary read. A `.index()` call on the sorted list would rescan it, four times per rectangle, which is the cost compression is meant to avoid.
+
+<Code file="examples/rectangle_overlap.py" lines="28-56" highlight="34,35,36,37,43,44,45,46,47,48,49" showOutput caption="Four corner marks per rectangle, a running sum, then area weighted by each cell's width and height" />
+
+The running sum gives a count per cell, not an area, so each cell's count is paired with `(xs[i + 1] - xs[i]) * (ys[j + 1] - ys[j])` before it joins the totals. The next figure does that multiplication row by row. Skipping it would give the number of covered cells, which has no meaning in the original units.
+
+<Figure caption="Each cell's width times its row's height, added to two totals: area covered by at least one rectangle and by at least two.">
+  <StepThrough frames="visuals/area-sum.frames.json" preset="overlap" />
+</Figure>
+
+The output, 7000 and 1100, matches the last step of the figure. The compressed grid has at most 2n by 2n cells, so building the table and summing it costs about 4n² operations, roughly 4 million for n = 1,000. That is a few million passes of plain integer arithmetic over lists of lists, the kind of loop PyPy runs quickly.
+
+## When to reach for each
+
+Use a sweep line when the question is about one axis and the natural events are starts and ends: busiest moment, covered length, who is open when. Use compression with a difference array when the question is about area or overlap in a plane. It fits when n is about a thousand or two, so a 2n by 2n table is small. If a query asks about a coordinate the input never mentioned, add it to the sorted list first or look it up with `bisect` as M4.14 shows. Larger n needs a sweep over one axis with a segment tree over the other, which comes in M7.1.

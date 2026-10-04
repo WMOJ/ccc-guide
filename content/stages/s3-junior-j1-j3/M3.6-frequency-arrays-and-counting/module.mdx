@@ -1,0 +1,90 @@
+Imagine you are tracking book titles. You see a list of book IDs, each a number from 0 to 99, and you want to count how many times each ID appears. You could search the list once per ID you care about. There is a faster way: build one array, sized to the range of possible values, and let each value point straight at its own slot.
+
+That is a <Term id="frequency-array">frequency array</Term>. The IDs are 5, 2, 5, 7, 2, 5. Start with an array of 100 zeros, one slot per possible ID. Read each ID in order and add one to its slot: `freq[5]` becomes 1, then `freq[2]` becomes 1, then `freq[5]` becomes 2, and so on. After one pass through all six IDs, `freq[2]` is 2, `freq[5]` is 3, `freq[7]` is 1, and every other slot is still 0.
+
+## Why one pass beats 26 passes
+
+Now suppose you want the count of each of the 26 lowercase letters in a word of length n. The range is small and fixed: a through z. One way is to call `word.count(letter)` for each letter. Each call scans the whole word, so all 26 calls cost 26 times n comparisons, whether or not most letters appear at all. For a word of 200,000 letters that is 5,200,000 comparisons.
+
+Step through the counted comparisons below, one pass against 26 separate calls, as the word grows. The figure reports exactly what the code in `letter_lookup_cost.py` counts.
+
+<Figure caption="Character comparisons for a frequency array's one pass against 26 separate .count() calls, as the word grows">
+  <StepThrough frames="visuals/letter-lookup-cost.frames.json" preset="main" />
+</Figure>
+
+A frequency array does the same job with one increment per character: n operations, not 26n. At n = 1,000 that is 1,000 against 26,000. The gap is the number of possible values you would otherwise ask about one at a time. The trick is index arithmetic: the value becomes the position of its own counter, so there is no scanning or key lookup, only a direct index into the list.
+
+## Turning a letter into a slot
+
+For letters a through z, the array needs 26 slots, one per letter. `ord(char)` gives a character's numeric code, and subtracting `ord('a')` turns `'a'` into 0, `'b'` into 1, and so on up to `'z'` at 25. That subtraction converts a value that is not a small integer into one that is, so it can address a slot. The figure shows the first six letters.
+
+<Figure caption="The letter-to-index ruler: subtracting the code for 'a' turns each letter into a small array index" alt="A two-row table over six columns. The top row holds the letters a through f. The bottom row holds the matching index numbers 0 through 5, since each letter's character code minus the code for 'a' gives that index.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      cells: [
+        ["a", "b", "c", "d", "e", "f"],
+        [0, 1, 2, 3, 4, 5],
+      ],
+      rowHeads: ["letter", "index"],
+    }}
+  />
+</Figure>
+
+<Code file="examples/freq_count.py" showOutput caption="Counting letters in a word with a frequency array" />
+
+In "banana", `a` appears three times, `n` twice and `b` once. Every other slot stays at 0, so the second loop, which reads slots 0 through 25 in order and prints only the ones above zero, never mentions them.
+
+Step through the same idea below on three words. "cabbage" builds several counts at once. "Cabbage" has a capital first letter, which the filter `'a' <= char <= 'z'` skips because an uppercase letter's code falls outside that range. "d" is the smallest case, a single character. The array panel shows slots 0 through 7, the letters a through h, which is enough for all three words.
+
+<Figure caption="Building a frequency array one character at a time, then reading it back to print the counts">
+  <StepThrough frames="visuals/freq-array.frames.json" preset="cabbage" />
+</Figure>
+
+## Counting digits
+
+The same pattern works for any small, known range, not just letters. Digits are always 0 through 9, so a digit-counting array needs exactly 10 slots, and the index calculation is even simpler: `int(char)` already gives the slot number directly, no subtraction needed.
+
+<Code file="examples/digit_count.py" showOutput caption="Counting digits in a number with a 10-slot frequency array" />
+
+In "31241314", digit `1` appears three times, digits `3` and `4` twice each, and digit `2` once. Building the array costs one pass over the string, the same as the letter version, and each character updates its slot with no comparison to find it.
+
+## Using the counts once they exist
+
+A frequency array is rarely the end goal. You build it, then read it back, and the reading is often the actual problem. Two readings come up again and again: find the most frequent value, and compare two arrays.
+
+To find the most frequent value, keep a variable `best` holding the slot with the highest count so far, and scan the slots once. Take a list of die rolls, each a face from 1 to 6. The array gets 7 slots, so a face number is its own index and slot 0 goes unused. A slot only takes over when its count is strictly larger, so on a tie the smaller face stays.
+
+<Code file="examples/most_common_face.py" showOutput caption="Counting die rolls, then scanning faces 2 to 6 for the largest count" />
+
+Step through the count and the scan below. The "Tie" preset rolls 5, 5, 2, 2: faces 2 and 5 both come up twice, and `best` stays on 2.
+
+<Figure caption="Counting die rolls into a 7-slot array, then scanning faces 2 to 6 to find the most frequent one">
+  <StepThrough frames="visuals/most-common-face.frames.json" preset="main" />
+</Figure>
+
+The scan reads 5 slots however many rolls there are, so the read-back costs a fixed amount next to the one pass that built the counts.
+
+The other reading compares two arrays to check whether two words use the same letters the same number of times each. That equality is what makes them anagrams.
+
+<Code file="examples/anagram_check.py" showOutput caption="Comparing two words' frequency arrays to check for an anagram" />
+
+Step through the comparison below. "bad" and "dab" build identical counts, so every column matches. "bad" and "bag" differ in two columns: `d` is counted in the first word only, and `g` in the second only.
+
+<Figure caption="Building two rows of letter counts, one per word, then comparing them column by column">
+  <StepThrough frames="visuals/anagram-check.frames.json" preset="match" />
+</Figure>
+
+The figure shows only the letters that appear; the program compares all 26 slots. Comparing two 26-slot arrays costs 26 equality checks however long the words are. Without arrays, calling `.count()` on one word for every letter of the other costs up to 26n per word, the same gap the first figure measured, twice over.
+
+## Sizing the array correctly
+
+The array needs a slot for every possible value, indexed from 0: 10 slots for the digits 0 to 9, 26 for the letters, 7 for faces numbered 1 to 6. An array one slot short crashes on the largest value. If the input can include values you did not plan for, filter before indexing, the way `freq_count.py` checks `'a' <= char <= 'z'` first. Uppercase and lowercase letters have different codes, so a problem that mixes cases must decide up front whether they are distinct values or whether everything is converted to one case.
+
+## Keeping it fast on PyPy
+
+Every example builds its array once, as a flat `[0] * 26` or `[0] * 10` list, and updates it with plain index arithmetic, `ord(char) - ord('a')` or `int(char)`, with no dictionary lookup or hash. Each character is read once and writes to exactly one slot, so the build is a single pass with no nested work inside it. The read-back loop runs once over a fixed 26 or 10 slots. A flat list sized to a known range, filled in one pass and read in one pass, is the shape PyPy runs fastest.
+
+## When frequency arrays fit
+
+A frequency array earns its speed from one fact: the range of possible values is small and known ahead of time. Digits, letters, and IDs capped at a fixed maximum all qualify. If the range is enormous but the data is small, an array that size wastes memory. A dictionary, which stores only the values that appear, fits better there. If you do not know the range at all, you cannot size the array, so a frequency array is not yet an option.

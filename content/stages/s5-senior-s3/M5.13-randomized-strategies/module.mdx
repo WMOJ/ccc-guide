@@ -1,0 +1,83 @@
+Five friends, numbered 0 to 4, each buy one gift. Everyone receives exactly one gift, and nobody may buy for themselves. Write `gift[i]` for the friend that friend `i` buys for. You need a list in which no `gift[i]` equals `i`.
+
+One way to find such a list is to shuffle and look. Put the friends in a random order, check that nobody landed on their own number, and start over if someone did. An algorithm that makes random choices like this is a <Term id="randomized-algorithm">randomized algorithm</Term>.
+
+## Shuffle, check, repeat
+
+With 12 friends there are 479,001,600 lists, so trying them all in order is out of the question, and for 200,000 friends it is hopeless. Random shuffling works because a valid list is not rare. Of the 120 lists for five friends, 44 are valid, about 37 in 100, and that share stays near 37 in 100 however many friends there are.
+
+The shuffle is the standard one. Walk position `i` from the last position down to 1, pick a random position `j` from 0 through `i`, and swap `gift[i]` with `gift[j]`. There are `n` choices for the first swap, `n - 1` for the next, and so on down to 2, so `n!` equally likely sequences of choices, and each one produces a different list. Every list is equally likely.
+
+<Code file="examples/derangement.py" showOutput caption="Shuffle until no friend gives to themselves" />
+
+The program prints how many tries it took, then the list. Every list it prints has passed the check, so the answer is always right. Only the number of tries is left to chance. The guard for fewer than two friends is needed because one friend has no valid list, and the loop would never end.
+
+Step through the shuffle below. Try all three presets, including two people, where only one list is valid.
+
+<Figure caption="A shuffle that fails its check is thrown away and repeated">
+  <StepThrough frames="visuals/shuffle.frames.json" preset="three-tries" />
+</Figure>
+
+In the first preset, try 1 ends with friend 0 still giving to themselves, and try 2 leaves friends 2 and 4 stuck, so both are discarded. Try 3 passes.
+
+## How many tries are enough
+
+If each try succeeds with probability p, then k tries all fail with probability (1 - p) to the power k. Looping until success has no failure probability at all, only a running time: about 1 / p tries, here under three. The arithmetic matters when you run a fixed number of trials, because you cannot afford to loop forever or because the program cannot check a guess. Then you choose k so that (1 - p)^k falls below a target, for example one in a million.
+
+<Code file="examples/failure_probability.py" showOutput caption="Trials needed to push the failure probability below one in a million" />
+
+The loop multiplies by `1 - p` until the product drops under the target. Solving for k with logarithms gives the same counts. The plot shows why: take the base-10 logarithm of the failure probability and each success probability gives a straight line, since every trial multiplies the failure probability by the same `1 - p`. The dashed line is the target, and each crossing is an answer from the output above.
+
+<Figure caption="Each line is one success probability; it crosses the dashed target at the number of trials needed">
+  <StepThrough frames="visuals/failure.frames.json" preset="three" />
+</Figure>
+
+For small p the trials grow roughly like 1 / p. The "Rare success" preset shows it: one try in 20 needs 270 trials. The "Loose target" preset asks for one in a thousand and needs about half as many trials as one in a million.
+
+## Random pivots
+
+Take eight numbers and ask for the fourth smallest. Sorting answers it in `n log n` steps, and for one query `sorted(values)[3]` is usually the right choice. <Term id="quickselect">Quickselect</Term> answers it in about `n` steps on average and is the clearest place to see what a random choice buys.
+
+Pick a number from the list as the pivot. Split the list into the numbers smaller than the pivot, the numbers equal to it, and the larger ones. Counting tells you which group holds the answer. If the wanted position is below the size of the smaller group, the answer is in it. If it falls inside the equal group, the answer is the pivot itself. Otherwise it is in the larger group, at a position reduced by the two groups you passed. Keep that group and repeat.
+
+<Code file="examples/quickselect.py" showOutput caption="Quickselect with a random pivot each round" />
+
+Step through the search below. Try the three presets. The "All equal" preset ends in one round because every candidate falls in the equal group.
+
+<Figure caption="Each round keeps only the group that must contain the wanted position">
+  <StepThrough frames="visuals/pivot.frames.json" preset="typical" />
+</Figure>
+
+In the first preset the candidates shrink from eight to five to four, and the third pivot lands on the answer.
+
+Why bother with randomness? Suppose the pivot is always the first element. On sorted input that element is the smallest, so each round removes only the pivot, and finding the middle value compares about `n + (n - 1) + ...` times, roughly three eighths of `n` squared. For `n` = 200,000 that is about $1.5 \cdot 10^{10}$ comparisons, far past a budget of roughly $10^8$ steps. A random pivot has no bad input. It lands in the middle half of the sorted candidates with probability one half, and then at most three quarters remain. On average, two rounds shrink the list to three quarters. Adding up $2n(1 + 3/4 + (3/4)^2 + \dots)$ gives at most $8n$ comparisons on average, whatever the order of the input.
+
+<Code file="examples/pivot_cost.py" showOutput caption="Counting the comparisons of a fixed pivot against a random one" />
+
+Step through the counts as `n` doubles, and then try the other presets.
+
+<Figure caption="On sorted input the first-element pivot is quadratic; the random pivot stays near a few times n">
+  <StepThrough frames="visuals/cost.frames.json" preset="sorted" />
+</Figure>
+
+At `n` = 1,600 on sorted input the first-element pivot makes 961,200 comparisons against 5,646 for a random one, about 3.5 times `n`, well inside the bound. The "Shuffled input" preset shows the first-element pivot doing fine when the input happens to be in random order, so the pivot rule was the problem, not the algorithm. The three-way split also matters for duplicates: a split into only smaller and larger groups would keep nearly everything on the "All equal" input.
+
+## Seeds make a failure repeatable
+
+A randomized program that fails once is hard to debug if it never fails the same way twice. Calling `random.seed(value)` puts the generator in a known state, and everything drawn afterward repeats exactly. Step through the program below, which seeds, draws, seeds again with the same value, and draws again.
+
+<Figure caption="Seeding twice with the same value gives the same draws twice">
+  <CodeTrace trace="examples/seed_replay.trace.json" />
+</Figure>
+
+Whenever you seed again with the same number, the generator returns to the same state, so `first` and `second` match line for line. Try the other presets to see different numbers.
+
+This page fixes seeds so each example prints the output shown, and the examples read the seed from their input for that reason. In your own solution, print the seed while you test, and reuse it to replay a failing run. If you never call `random.seed`, Python seeds itself from the operating system, so each submission gets a fresh draw. With a fixed seed, every judge run repeats exactly. Either choice is sound when the failure probability per test is tiny, but a fixed seed that fails a test fails it every time.
+
+## Is it fast enough
+
+Size the plan the way you size any other: the number of trials times the cost of one trial must fit in about $10^8$ simple steps. A try over 200,000 friends is a shuffle plus a check, a small multiple of 200,000 steps, so 30 tries is on the order of $6 \cdot 10^6$ steps and fine. A success probability of 0.01 would need 1,375 tries for one in a million, about $2.75 \cdot 10^8$ steps, which is more than one run can afford. Either the trial must get cheaper or the odds better.
+
+On PyPy, every `random.randrange` or `random.randint` call is a function call, so a loop that draws ten million times spends much of its time there. Quickselect draws once per round, and `random.shuffle` runs its swap loop inside the library like any other loop. Quickselect's list comprehensions copy lists that shrink each round, so the copying adds up to about the comparison counts shown above. Flat lists of integers keep each trial cheap.
+
+Reach for randomness when a check is cheap and a good outcome is common enough to put a number on. Then pick the number of trials so the failure probability is negligible.

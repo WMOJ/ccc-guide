@@ -1,13 +1,7 @@
 id: C.10
-title: Local judging with official test data
 status: accepted
 objectives:
   - Explain what CEMC's official test data is, and where to find it for a past contest.
   - Run a solution against every official input for a problem, and compare each output exactly against the official expected output.
   - Recognize that a local timing on your own machine is only a hint, not the grader's real timing.
-prereqs:
-  - M0.1
-  - M2.7
-lessons:
-  - local-judging-with-official-test-data
 practice: []

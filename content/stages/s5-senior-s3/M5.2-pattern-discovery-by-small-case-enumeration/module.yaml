@@ -1,15 +1,9 @@
 id: M5.2
-title: Pattern discovery by small-case enumeration
 status: accepted
 objectives:
   - Write a brute force for small inputs and observe the pattern.
   - Form a hypothesis from small examples.
   - Verify and implement the pattern as the final solution.
-prereqs:
-  - M2.5
-  - M1.10
-lessons:
-  - enumeration-and-patterns
 practice:
   - id: ccc26s1
     note: Find the fewest hops, or the next-fewest, to reach a target using two sizes of hop.

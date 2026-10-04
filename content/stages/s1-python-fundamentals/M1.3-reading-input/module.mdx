@@ -1,0 +1,63 @@
+Earlier modules read one value from one line. Many CCC problems give you several values on a single line instead, such as two prices separated by a space. This lesson covers reading a line like that, and turning it into the values your program needs.
+
+## Splitting one line into several pieces
+
+`input()` still reads one whole line as text, the same as before. A `str` value has <Term id="method">methods</Term>, functions called on the value itself with a dot. `.split()` is one of them. Called with nothing inside its parentheses, it breaks a line into pieces wherever there is a run of spaces, and hands them back as a list of text.
+
+<Code file="examples/two_values_split.py" showOutput caption="Splitting one line into a list of text pieces" />
+
+The line `3 5` splits into a list of two pieces of text, `'3'` and `'5'`. Notice these are still text, not numbers, and notice they come back together inside one list named `parts`. `.split()` only cuts a line apart; it does not convert anything.
+
+`.split()` also handles more than one space between values. A line with extra spaces between its numbers splits the same way a line with a single space would. The pieces are what is between the runs of spaces, not the spaces themselves.
+
+## Converting every piece at once with `map`
+
+Each piece from `.split()` still needs `int()` to become a number, the way a single line did in the module on standard input. Converting several pieces one by one would need one `int()` call per piece, written out separately. The `map(int, ...)` call does all of them in a single step instead. It applies `int()` to every piece that `.split()` produced, and returns the converted results together.
+
+<Code file="examples/sum_two_values.py" showOutput caption="Splitting, converting and adding two values from one line" />
+
+`map(int, input().split())` reads the line, splits it into pieces, and converts every piece with `int()`, all in one call. The result feeds straight into the assignment below.
+
+## Assigning several names at once
+
+`a, b = map(int, input().split())` does two things on one line. It runs the split-and-convert step above, then assigns the two results to `a` and `b` at once. This is <Term id="multiple-assignment">multiple assignment</Term>: as many names on the left as there are values on the right, matched in order, left to right.
+
+<Code file="examples/unpack_mismatch.py" expectError="ValueError" caption="Two names for a line that holds three values" />
+
+The line `3 5 2` splits into three pieces of text, but only two names, `a` and `b`, wait on the left. Python cannot match three pieces to two names, so it raises a `ValueError` rather than quietly dropping one. The number of names on the left must match the number of pieces the line actually holds, every time.
+
+Too few names on the left raises the same kind of error, the other way around: a `ValueError` saying not enough values were given instead of too many. Either way, the fix is the same: count how many values the problem's input actually gives you on that line, and write exactly that many names.
+
+## Removing extra whitespace with `.strip()`
+
+`input()` already drops the newline at the end of a line for you. It leaves everything else untouched, including a space a person might type by accident before or after the text that matters. Note that `.split()` already ignores spaces at both ends of a line while breaking it apart. `.strip()` matters most for a line you read whole, with no `.split()` in between.
+
+<Code file="examples/raw_name.py" showOutput caption="A name read with input() alone, trailing space and all" />
+
+The input line has a space after the name. `input()` keeps that space, so `name` still carries it. Printing `name + "!"` next to it makes the extra space visible, as the gap that lands right before the `!`.
+
+<Code file="examples/stripped_name.py" showOutput caption="The same line, with .strip() removing the extra space" />
+
+`.strip()` removes whitespace from both ends of a string: spaces, tabs, and any newline still attached, though `input()` has already removed that part. Calling it here removes exactly the trailing space the first example kept, so the `!` now sits right against the name with no gap.
+
+Some judges overlook a trailing space, but others do not. The safest habit is to never rely on which kind you are facing, and `.strip()` removes the risk whenever a line you read might carry whitespace you did not ask for.
+
+## Reading two values, with a trace
+
+<Figure caption="Splitting, converting and assigning two prices, then printing their total">
+  <CodeTrace trace="examples/trace_values.trace.json" />
+</Figure>
+
+Both presets read a single line with two numbers on it, then add them the same way, whatever the two numbers are. Watch the three steps run in order: `parts` holds the split pieces, then `a` and `b` appear together once `map` and the assignment convert them.
+
+A common mistake is calling `.split()` on a value that has already gone through `int()`. The reverse mistake is calling `int()` on a whole unsplit line. Remember what each one accepts: `.split()` only works on text, and `int()` only works on one piece of text at a time, never on a whole list at once.
+
+## When one line holds a number of values that is not fixed
+
+Every example so far has read a line with exactly two values, so `a, b = ...` always had exactly two names waiting on the left. Some problems instead give you a line whose count of values changes from one test case to the next. That count is decided by the test data, not by how you wrote the code.
+
+`input().split()` still handles a line like that the same way, no matter how many pieces it holds. It returns a list with exactly as many pieces as the line has, whatever that count turns out to be. The trouble comes right after: multiple assignment needs to know in advance how many names to write, so it cannot handle a line whose value count changes between test cases. Reading every piece a line like that holds, one at a time, needs a loop instead of a fixed list of names. That waits for the module on `for` loops, which covers exactly this shape of problem.
+
+## Recap
+
+This lesson covered splitting a line into pieces with `.split()`, converting every piece at once with `map(int, ...)`, assigning matched values to several names at once, and removing extra whitespace with `.strip()`.

@@ -1,0 +1,53 @@
+Every CCC problem follows the same shape: your program reads some text, works something out, and prints an answer. This lesson covers how that reading and printing works, and why the judge is unforgiving about what you print. The interpreter runs your program exactly as the module on what a program is described. This lesson adds the two streams of text it reads from and writes to while it runs.
+
+## Standard input and standard output
+
+A judge does not open a file or ask you questions. It feeds your program a fixed block of text through <Term id="standard-input">standard input</Term>, the stream a program reads from while it runs. Your program reads that text a line at a time and writes its answer to <Term id="standard-output">standard output</Term>, the stream a program prints to. The judge then reads standard output back and compares it with the answer it expects.
+
+The whole block of standard input is ready before your program starts. Nothing you print changes what is waiting to be read. The problem statement describes what the input looks like, so you can plan your reads before you write a single line. A later module covers how the judge runs your program once for each test case and records a result for each one.
+
+<Figure caption="Two lines waiting on standard input, read one at a time">
+  <Scene name="stdin-flow" lines={["Maya", "5"]} reads={[{ name: "name", as: "str" }, { name: "count", as: "int" }]} />
+</Figure>
+
+`input()` reads the next line of standard input and gives it back as text, even when the line holds only digits. To use it as a number, convert it with `int()`. Nothing on standard input is used twice: once a line is read, the next call to `input()` moves on to the line after it.
+
+<Code file="examples/input_no_prompt.py" showOutput caption="Reading one line and converting it to a number" />
+
+`n = int(input())` keeps the converted number under the name `n`, the same way any other assignment keeps a value under a name; the module on variables explains names fully. The program reads `5` as text, converts it with `int()`, and prints the number `5`. Nothing else appears on standard output.
+
+## Exact output: no prompts, no extra text
+
+Treat the comparison as exact: the safest habit is to print nothing the problem did not ask for, not even a single extra character. Judges differ in exactly how forgiving they are about small mismatches, so do not rely on one being lenient.
+
+`input()` can take a prompt to show while it waits, something you may have seen in tutorials: `input("Enter N: ")`. That prompt is not free. Python writes it to standard output before it reads anything, so it becomes part of what the judge compares.
+
+<Code file="examples/input_prompt_trap.py" showOutput caption="A prompt inside input() leaks into standard output" />
+
+The printed output is more than the number `5`. It starts with `Enter N: `, because that text was printed before the number. A judge expecting only `5` marks this as a wrong answer, even though a person reading the screen would understand it fine. Always call `input()` with nothing inside the parentheses in a submitted program.
+
+Case matters the same way spacing does. If a problem expects the word `yes` in lowercase, printing `Yes` with a capital letter is a wrong answer, because the two pieces of text are not identical.
+
+<Code file="examples/two_values.py" showOutput caption="Printing two values with print(a, b)" />
+
+`print(name, score)` joins the two values with a single space and nothing else, no matter how many values you give it. That plain form is the wrong tool whenever a problem's expected output uses a different separator, such as a comma. The module on output formatting covers how to write those instead.
+
+Whitespace you cannot see is judged the same way as a letter you can see. A trailing space at the end of a line can be judged as a mismatch. So can an extra blank line at the end of your output, even though neither is visible on screen. Some judges' checkers overlook a trailing space; do not rely on that being true of every judge you submit to.
+
+Every call to `print()` ends with a newline, whether or not you asked for one. Three separate `print()` calls produce three separate lines, each ending the way the judge expects, including the last one. You never need to add anything yourself to finish the final line of your output.
+
+## Putting it together
+
+<Figure caption="Reading a name and a count, then printing them on one line">
+  <CodeTrace trace="examples/stdin_trace.trace.json" />
+</Figure>
+
+The program reads two lines from standard input, one with `input()` alone and one converted with `int()`, then prints both values on a single line with `print(name, count)`. Watch how the second `input()` call always reads the next unread line. It never rereads the first one.
+
+A common mistake is calling `input()` more times than there are lines waiting. When there is nothing left to read, Python stops with an `EOFError` instead of returning an empty line, since there was never an empty line to return. A later module covers reading several values from one line, and another covers reading until the input runs out on purpose.
+
+Try it: run the program yourself with your own name and a different count, and predict the printed line before you check it.
+
+Nothing here needed a loop or a comparison; those come later. Reading a line, converting it, and printing it back with nothing extra is already enough to answer some of the simplest CCC problems.
+
+This lesson covered the standard input and standard output model, and reading a line with `input()` and converting it with `int()`. It also covered why the judge needs your output to match its own: the right case, the right spacing, and nothing extra.

@@ -210,7 +210,7 @@ The product name above is a working title (see PRODUCT.md "Open facts"); the ren
 
 **Creative North Star: "The Drafting Set"**
 
-The course is a set of technical drawings, and each lesson is one sheet pinned to a drafting board. The board is the pale green vinyl cover every drafting table wears; the sheet is crisp white drafting film; the writing is technical-pen ink. Facts about a sheet sit in ruled title blocks. Ranges and spans are drawn as dimension lines. Anything not yet final is pencilled in, drawn with a dashed line; anything finished is inked solid. The checker's yellow highlighter marks "you are here", the redline marks what is wrong, and faint non-photo-blue construction lines and a fade-out grid sit under every diagram. Every one of these conventions exists in real drafting to make a drawing unambiguous, and that is the product's job too: a beginner must never wonder whether they read something right.
+The course is a set of technical drawings, and each module is one sheet pinned to a drafting board. The board is the pale green vinyl cover every drafting table wears; the sheet is crisp white drafting film; the writing is technical-pen ink. Facts about a sheet sit in ruled title blocks. Ranges and spans are drawn as dimension lines. Anything not yet final is pencilled in, drawn with a dashed line; anything finished is inked solid. The checker's yellow highlighter marks "you are here", the redline marks what is wrong, and faint non-photo-blue construction lines and a fade-out grid sit under every diagram. Every one of these conventions exists in real drafting to make a drawing unambiguous, and that is the product's job too: a beginner must never wonder whether they read something right.
 
 The system is quiet and dense in the right places. Prose runs in one generous column; the sidebar, header and metadata recede into the board. Colour is restrained (neutrals plus one interactive blue) on reading surfaces and becomes a precise, fixed vocabulary only inside code and visuals, where each hue means one state and nothing else. The typefaces, Atkinson Hyperlegible Next and Mono, were drawn to keep easily confused characters apart (0 and O, 1, l and I), which is exactly what ISO technical lettering is for and exactly what a new programmer needs when copying code.
 
@@ -252,7 +252,7 @@ All hex values are the canonical tokens. They were derived in OKLCH (noted per t
 - **Board Green** (#E7F2ED, oklch 95.2% 0.014 165): the page ground around the sheet, the sidebar, hover fills on paper. Board vs paper is 1.12:1, so the sheet always carries a 1 px `rule` edge.
 - **Board Green Deep** (#D7E7E0, oklch 91.5% 0.02 165): hover and pressed fills on the board. `ink-3` is not placed on it (4.89:1 passes, but it is kept for ink and ink-2 only to keep margin).
 - **Pen Ink** (#172127, oklch 24% 0.018 235): all body text and headings, primary buttons, filled read cells. 16.1:1 on paper, 14.3:1 on board.
-- **Ink 2** (#414C53, oklch 41% 0.018 235): secondary text: sidebar items, captions, notes in practice lists, read (tinted) lesson rows. 8.62:1 on paper, 7.68:1 on board.
+- **Ink 2** (#414C53, oklch 41% 0.018 235): secondary text: sidebar items, captions, notes in practice lists, read (tinted) rows. 8.62:1 on paper, 7.68:1 on board.
 - **Ink 3** (#586268, oklch 49% 0.016 235): tertiary text: IDs, line numbers, field labels in title blocks, "Coming soon". 6.12:1 on paper, 5.45:1 on board, 5.76:1 on sheet-sunk. Not placed on `done` (3.96:1).
 - **Rule** (#D7DEE0, oklch 89.5% 0.008 225): hairlines: sheet edge, table rules, row dividers, the code block border. Decorative separation only, never the only boundary of a control.
 - **Rule Strong** (#7E888D, oklch 62% 0.014 230): boundaries of interactive controls and of unvisited cells in visuals (3.56:1 on paper, 3.17:1 on board; meets the 3:1 non-text minimum).
@@ -280,11 +280,11 @@ Keyword #29519F, string #1F6538, number/constant #954717, builtin #156165, comme
 Fixed rem sizes (Read mode: predictable, no fluid type). Phone values apply below 640 px.
 
 - **Display** (700, 2.75rem / 1.1, -0.02em; phone 2.125rem): the home page title only.
-- **Title** (700, 2.25rem / 1.15, -0.015em; phone 1.875rem / 1.2): H1 of every other page (lesson, module, course map, problems, glossary).
-- **Headline** (700, 1.5rem / 1.3, -0.01em; phone 1.375rem): H2, lesson sections. Space above 3rem, below 0.75rem.
+- **Title** (700, 2.25rem / 1.15, -0.015em; phone 1.875rem / 1.2): H1 of every other page (module, course map, problems, glossary).
+- **Headline** (700, 1.5rem / 1.3, -0.01em; phone 1.375rem): H2, module sections. Space above 3rem, below 0.75rem.
 - **Subhead** (650, 1.25rem / 1.35): H3. Space above 2rem, below 0.5rem.
 - **Minor** (700, 1.0625rem / 1.45): H4, callout titles, the "Practice" and "On this page" headings.
-- **Body** (400, 1.125rem / 1.7; phone 1.0625rem / 1.65): lesson prose. Measure 42rem (about 70 characters). Paragraph spacing 1.25rem, no first-line indent. `strong` is 700; `em` uses the true italic.
+- **Body** (400, 1.125rem / 1.7; phone 1.0625rem / 1.65): module prose. Measure 42rem (about 70 characters). Paragraph spacing 1.25rem, no first-line indent. `strong` is 700; `em` uses the true italic.
 - **UI** (400, 1rem / 1.5): navigation, lists, table cells, buttons (buttons 600).
 - **Small** (400, 0.9375rem / 1.5): captions, practice notes, metadata, search result snippets, visual step captions on phones.
 - **Label** (600, 0.8125rem / 1.35, +0.01em, sentence case): badges, title-block field labels (400 for field labels), legend entries, kbd.
@@ -292,7 +292,7 @@ Fixed rem sizes (Read mode: predictable, no fluid type). Phone values apply belo
 - **Code** (Mono 400, 0.9375rem / 1.6; phone 0.875rem / 1.55): code blocks, input/output, tracebacks. Inline code is 0.9em Mono on sheet-sunk.
 
 ### Numerals
-- Tabular figures (`font-variant-numeric: tabular-nums`, the font's `tnum`) for every number that sits in a column or changes in place: module IDs, lesson counts, years and levels ("2023 S1"), step counters, table cells, title blocks. Utility class `tnum`.
+- Tabular figures (`font-variant-numeric: tabular-nums`, the font's `tnum`) for every number that sits in a column or changes in place: module IDs, module counts, years and levels ("2023 S1"), step counters, table cells, title blocks. Utility class `tnum`.
 - Prose keeps the default proportional figures.
 - Mono is tabular by construction. The Mono's `zero` feature stays off: its default zero is already slashed.
 - Atkinson Hyperlegible Next draws every zero slashed, at every size, and has no plain-zero alternate (checked: no `zero`, `ssNN` or `cvNN` feature; `aalt` alternates 1–3 leave `0` unchanged). The slashed zero stays in headings and body. It is part of the face's character-disambiguation design, the same reason the face was chosen.
@@ -300,7 +300,7 @@ Fixed rem sizes (Read mode: predictable, no fluid type). Phone values apply belo
 ### Named Rules
 **The One Lettering Rule.** One family, one standard. A second display face, italics for decoration, or monospace as a "technical" costume outside code, values and IDs is refused.
 
-**The No-Eyebrow Rule.** No kicker or label above any heading. Facts that would be an eyebrow (stage, module ID, lesson number) live in the ruled title-block strip below the H1.
+**The No-Eyebrow Rule.** No kicker or label above any heading. Facts that would be an eyebrow (stage, module ID, reading time) live in the ruled title-block strip below the H1.
 
 ## Layout
 
@@ -309,10 +309,10 @@ The page is a board with a sheet on it. Four widths are designed: 390, 768, 1440
 ### Page frame
 - **Header** (3.5rem tall, paper, 1 px `rule` bottom edge, sticky at `top: 0`). Left: menu button (below 1024 px), wordmark. Centre-left (1024 px and up): primary nav: Learn, Problems, Glossary, Start here, About. Right: search trigger.
 - **Board**: the `board` colour fills everything below the header.
-- **Sidebar** (1024 px and up; 18rem wide, board ground, sticky below the header, own scroll, 1.5rem padding): course navigation for lesson and module pages.
+- **Sidebar** (1024 px and up; 18rem wide, board ground, sticky below the header, own scroll, 1.5rem padding): course navigation for module pages.
 - **Sheet**: paper, 1 px `rule` edge, square corners, sitting on the board with a board margin: 1.5rem at 1024 px and up, 1rem at 640–1023 px, none below 640 px (the sheet becomes the full-bleed page with the rule edge removed). Sheet padding: 3rem top / 3.5rem sides / 4rem bottom at 1024 px and up; 2rem / 2rem / 3rem at 640–1023; 1.5rem / 1.25rem / 2.5rem below 640 (the 20 px side gutter satisfies the 16 px minimum).
 - **Content column**: max 42rem, left-aligned inside the sheet (not centred) so the eye returns to a fixed left edge. Wide elements may extend to 48rem when the sheet has room, never past the sheet padding (see Measure by block type).
-- **On this page** (1280 px and up, lesson pages with 3 or more H2s): a 13rem static list in the sheet's right margin, sticky at header height + 1.5rem; it lists H2s only. No scroll-spy (the §4.8 client budget excludes it).
+- **On this page** (1280 px and up, module pages with 3 or more H2s): a 13rem static list in the sheet's right margin, sticky at header height + 1.5rem; it lists H2s only. No scroll-spy (the §4.8 client budget excludes it).
 - **Maximum sheet width**: the sheet stops growing at 76rem (content + TOC + padding); beyond that the extra board shows on the right. At 1920 px the layout holds its left edge beside the sidebar.
 
 ### Measure by block type
@@ -328,28 +328,28 @@ The prose measure is `--measure` (42rem); the wide measure is `--measure-wide` (
 | Figures: diagrams, step-throughs, code traces (`figure`) | Wide (48rem) |
 | Tables, display math | Wide (48rem) |
 
-Index lists (module lessons, prerequisites, the course map) are page structure, not prose, and fill the content column.
+Index lists (the course map, the home sheet index) are page structure, not prose, and fill the content column.
 
-### Reading page (lesson) order
-1. Breadcrumb line (small, ink-3): Course map / Stage N title / Module title. Links in ink-2 with blueline hover underline.
-2. H1 lesson title.
-3. **Title-block strip**: one ruled row of cells directly under the H1 (1 px `rule` top and bottom and between cells; 0 radius). Cells: Module (ID + short title), Lesson (`2 of 3`), Reading time (`12 min`), and the Draft badge when applicable. Field label above value inside each cell (label 400 ink-3, value UI 600 ink, tabular). The cells always share one row in equal columns with a rule between them (checked at 390 px with the longest values: M4.15, 12 of 12, 25 min). On phones the Draft badge takes its own ruled row below; from 640 px it sits at the right end of the row. Values wrap, never truncate.
-4. Objectives (a short list introduced by a Minor heading, copy from `ui/strings.yaml`).
-5. Lesson body.
-6. Practice list (last lesson of a module only).
-7. **Closing title block**: a ruled two-row block that ends every lesson. Row 1: the mark-as-read control spanning the width. Row 2: Previous and Next as two equal cells (each: label "Previous"/"Next" in label style, then the target lesson title in UI 600). Previous hidden (its cell kept empty) on the first lesson; on the last lesson of a module "Next" points to the next module's first readable lesson or to the course map.
+### Reading page (module) order
+Every module is one reading page at `/learn/[stage]/[module]`: it is never split into smaller pages, and it has no prerequisite list.
+1. Breadcrumb line (small, ink-3): Course map / Stage N title. Links in ink-2 with blueline hover underline.
+2. H1 module title (from `course.yaml`).
+3. **Title-block strip**: one ruled row of cells directly under the H1 (1 px `rule` top and bottom and between cells; 0 radius). Cells: Stage (`4`), Module (ID), Reading time (`12 min`), and the Draft badge when applicable. Field label above value inside each cell (label 400 ink-3, value UI 600 ink, tabular). The cells always share one row in equal columns with a rule between them (checked at 390 px with the longest values: C, M4.15, 25 min). On phones the Draft badge takes its own ruled row below; from 640 px it sits at the right end of the row. Values wrap, never truncate.
+4. Objectives ("In this module": a short list introduced by a Minor heading, from `module.yaml`).
+5. Module body (`module.mdx`).
+6. Practice list, after the body, when the module has one. The page renders it; the body never places it.
+7. **Closing title block**: a ruled two-row block that ends every module page. Row 1: the mark-as-read control spanning the width. Row 2: Previous and Next as two equal cells (each: label "Previous"/"Next" in label style, then the target module's ID in small tabular ink-3 and its title in UI 600). Prev and next are the adjacent readable modules in course order, across stages. Previous is hidden (its cell kept empty) on the first module; on the last one "Next" reads "Back to the course map".
 
 ### Other surfaces
 - **Home `/`**: sheet without sidebar (content column 42rem, sheet max 64rem). Display title, a two-paragraph lede, the Continue block, then the **Sheet index**: every stage as one ruled row (stage number, name, one-line goal, module count), linking to `/learn#stage-n`. Then "How this course works" as a two-column definition list (term / explanation) that stacks on phones. No hero metrics, no feature cards.
 - **Course map `/learn`**: sheet without sidebar (the page is the map itself), content up to 56rem, one section per stage.
-- **Module `/learn/[stage]/[module]`**: sidebar + sheet, same frame as the lesson.
 - **Problems, Glossary, Search, About, Start, 404**: sheet without sidebar; content up to 56rem for tables (Problems), 42rem for prose.
 
 ### Breakpoints
 Tailwind defaults, kept: `sm` 40rem (640), `md` 48rem (768), `lg` 64rem (1024: sidebar and full nav appear), `xl` 80rem (1280: "On this page" appears), `2xl` 96rem.
 
 ### Spacing rhythm
-4 px base (Tailwind `--spacing: 0.25rem`). Steps in use: 4, 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 80, 96. Inside components use 4–16; between blocks in the lesson column 24–32 (paragraph 20, code/figure/callout 32 above and below); before an H2 48. More space above a heading than below it, always.
+4 px base (Tailwind `--spacing: 0.25rem`). Steps in use: 4, 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 80, 96. Inside components use 4–16; between blocks in the module column 24–32 (paragraph 20, code/figure/callout 32 above and below); before an H2 48. More space above a heading than below it, always.
 
 ### Named Rules
 **The Left Edge Rule.** Prose, headings, code and figures share one left edge inside the sheet. Nothing is centred in the reading column except figure artwork inside its frame.
@@ -411,31 +411,24 @@ Every interactive component has default, hover, focus-visible, active, and (wher
 - Top: "Course map" link (ghost row with a LayoutList icon).
 - Stage heading: label style ink-3 "Stage 4" then UI 700 ink stage title.
 - Modules of the current stage: rows of ID (tabular, ink-3, fixed 3.5rem column) + title (UI, ink-2), 8 px vertical padding, 4 px radius hover fill board-deep. Planned modules: ink-3 text, no link, a dashed-outline "Soon" tag in a trailing column (grid `3.5rem | 1fr | auto`, all cells on the first baseline), so a wrapped title never pushes the tag onto an orphan line.
-- The current module expands to its lessons: indented 3.5rem, each row a read cell + lesson title (small, ink-2). Read lessons keep their title in ink-2 (the "read drops to a tint" rule: read is quieter, never hidden or struck).
-- **Current lesson** (`aria-current="page"`): a white sheet tab: paper fill, 1 px `rule` border, 4 px radius, ink 600 title. This is the only paper on the board, so it reads as the sheet pulled from the set.
+- Readable modules carry their read cell in the same trailing column, centred on the title's first line. Read modules keep their title in ink-2 (the "read drops to a tint" rule: read is quieter, never hidden or struck).
+- **Current module** (`aria-current="page"`): a white sheet tab: paper fill, 1 px `rule` border, 4 px radius, ink 600 title. This is the only paper on the board, so it reads as the sheet pulled from the set.
 - Other stages: collapsed list of stage titles at the bottom (a 2rem number column), each linking to `/learn#stage-n`.
 - Every sidebar row carries a 1 px border (transparent unless it is the current tab), so the current row's paper tab never shifts its text.
 
 ### Read cell and mark-as-read
-- **Read cell**: 14 px square, 2 px radius. Unread (pencilled): paper fill, 1.5 px `rule-strong` border. Read (inked): ink fill, paper Check icon 10 px stroke 2.5. Appears in the sidebar, course map rows, module lesson lists, and the closing title block. Read cells are decorative in lists (`aria-hidden`), with the state in visible or visually hidden text ("Read").
+- **Read cell**: 14 px square, 2 px radius. Unread (pencilled): paper fill, 1.5 px `rule-strong` border. Read (inked): ink fill, paper Check icon 10 px stroke 2.5. Appears in the sidebar, course map rows, and the closing title block. Read cells are decorative in lists (`aria-hidden`), with the state in visible or visually hidden text ("Read").
 - **Mark-as-read control** (closing title block, row 1): a primary button "Mark as read" with a hollow 16 px read cell as its icon. After marking: the control becomes a secondary button "Read" with a filled cell, plus small ink-2 text "Marked on 23 Sep" and a ghost "Undo" button. Storage failure: the button still toggles for this page view and no error is shown (brief A9). Before hydration the button renders in its unread state with no layout difference.
 - **The ink-in moment** (the UI's one authored motion): on marking, the cell fills with ink by a left-to-right `clip-path: inset()` wipe, 200 ms `--ease-draft`, then the check icon fades in over 120 ms. Reduced motion: instant fill.
 
 ### Continue where you left off (home)
-- A ruled block (0 radius, 1 px rule, paper-sunk fill) with a **folded tape flag** icon (authored 20 px SVG: check yellow fill, ink 1.5 px outline) at the left, label "Continue where you left off", and the next unread lesson after the most recently read one as a link (UI 700) with its module ID in tabular ink-3. When nothing is read or storage is blocked: the same block reads "Start with Stage 0" linking to the first lesson. The server renders the "Start" state; the client swaps text in place inside a fixed-height block (no layout shift).
+- A ruled block (0 radius, 1 px rule, paper-sunk fill) with a **folded tape flag** icon (authored 20 px SVG: check yellow fill, ink 1.5 px outline) at the left, label "Continue where you left off", and the next unread module after the most recently read one as a link (UI 700) with its module ID in tabular ink-3. When nothing is read or storage is blocked: the same block reads "Start with Stage 0" linking to the first module. The server renders the "Start" state; the client swaps text in place inside a fixed-height block (no layout shift).
 
 ### Course map (`/learn`)
 - One section per stage: H2 "Stage 4 · Title" (the stage number in tabular figures), one-line goal from `course.yaml` (small, ink-2; no payoff or score wording).
-- **Index row (one label grid for every index in the app):** ID, title and meta share the first text baseline (`align-self: baseline`), so the smaller ID and meta text sit on the title's line. Columns: ID (4.5rem, tabular, ink-3) | title (UI 600, ink; module description below in small ink-2 when present) | meta (lesson count, small ink-3, right-aligned, tabular) | marks (one read cell per lesson, 4 px gaps, right-aligned). Rows separated by 1 px rule, 12 px vertical padding, the whole row is the link (hover: board fill; title underline).
+- **Index row (one label grid for every index in the app):** ID, title and meta share the first text baseline (`align-self: baseline`), so the smaller ID and meta text sit on the title's line. Columns: ID (4.5rem, tabular, ink-3) | title (UI 600, ink; a description below in small ink-2 when present, e.g. a stage goal on Home) | meta (small ink-3, right-aligned, tabular; e.g. Home's module count) | marks (the module's read cell, right-aligned). Rows separated by 1 px rule, 12 px vertical padding, the whole row is the link (hover: board fill; title underline).
 - Planned/drafted modules: ID and title in ink-3, no link, no hover, a dashed "Coming soon" tag in the meta column. Status tags (Coming soon, Draft) always sit in that trailing column from 640 px, and on phones on their own line under the title, aligned to the title’s left edge; never inline after the title text. Columns exist only for what a row shows, so an empty column adds no gap. Draft (gated/reviewed on previews): normal row plus a Draft badge in the status slot.
 - Phones: status and meta move to a second line under the title; marks stay at the right.
-
-### Module page
-- Breadcrumb, H1 module title, title-block strip (Stage, Module ID, Lessons, Draft badge).
-- "Before this module" (prerequisites): index rows for each prerequisite module with their read cells.
-- Objectives list.
-- Lessons: index rows (number 1, 2, 3 in the ID column, title, minutes, read cell).
-- Practice list, when the module has one.
 
 ### Callouts (×3)
 - **Frame:** 6 px radius, 16 px × 20 px padding, soft fill of the kind's colour, 1 px border in the kind's colour mixed 30% into paper (`color-mix(in oklab, var(--color-<kind>) 30%, var(--color-paper))`). No side stripe.
@@ -490,8 +483,8 @@ Every interactive component has default, hover, focus-visible, active, and (wher
 
 ### Search dialog and `/search`
 - Base UI Dialog, 40rem wide (100% minus 2rem on phones, full height below 640 px), anchored 12vh from the top, paper, 6 px radius, overlay shadow and backdrop; 200 ms fade + 0.98 → 1 scale on `--ease-draft` (reduced motion: fade only).
-- **Input**: 48 px tall, no border inside the dialog but a 1 px rule under it, Search icon 20 px ink-3 at the left, UI text 1.0625rem ink, placeholder ink-3 "Search lessons, terms and problems". Escape closes; a visible "Esc" kbd at the right on fine pointers.
-- **Results**: grouped under label-style group headings (Lessons, Glossary, Problems); each result an index row: ID column (module ID / "2023 S1" / first letter), title (UI 600, the matched part in 700 with check-soft background), a small ink-2 snippet (one line, ellipsis). Arrow keys move the active row (blueline-soft fill + ink text; `aria-activedescendant`), Enter opens, mouse hover sets the active row.
+- **Input**: 48 px tall, no border inside the dialog but a 1 px rule under it, Search icon 20 px ink-3 at the left, UI text 1.0625rem ink, placeholder ink-3 "Search modules, terms and problems". Escape closes; a visible "Esc" kbd at the right on fine pointers.
+- **Results**: grouped under label-style group headings (Modules, Glossary, Problems); each result an index row: ID column (module ID / "2023 S1" / first letter), title (UI 600, the matched part in 700 with check-soft background), a small ink-2 snippet (one line, ellipsis). Arrow keys move the active row (blueline-soft fill + ink text; `aria-activedescendant`), Enter opens, mouse hover sets the active row.
 - **States**: empty query: small ink-3 hint text and nothing else; loading the index (first open, lazy MiniSearch): a 3-row skeleton of rule-coloured bars (no spinner); no results: "No matches for “query”. Try a shorter word or check the spelling." (copy from strings); index failed to load: a line in redline with a "Try again" secondary button.
 - `/search` page uses the same input and results inside a sheet, reading `?q=` on the client.
 
@@ -505,13 +498,13 @@ Every interactive component has default, hover, focus-visible, active, and (wher
 - Full-width of the column, UI style, header row label style ink-3 on sheet-sunk, 1 px rule dividers, 10 px × 12 px cell padding, tabular numerals, horizontal scroll inside a wrapper below 640 px.
 
 ### KaTeX
-- KaTeX's stylesheet loads with the lesson page component only. Math inherits ink; display math centred inside the column with 24 px vertical space and scrolls horizontally inside itself when too wide.
+- KaTeX's stylesheet loads with the module page component only. Math inherits ink; display math centred inside the column with 24 px vertical space and scrolls horizontally inside itself when too wide.
 
 ### Implementation rules (as built)
 - **Fonts** (`app/layout.tsx`, `next/font/local`): Atkinson Hyperlegible Next roman and Mono are preloaded (Mono appears above the fold in every code block); the italic is a separate face, not preloaded, applied by one rule to `em, i, cite, var, dfn`. Next roman uses an Arial-adjusted fallback; Mono has no adjusted fallback.
 - **Prose scoping**: `.prose-sheet` styles only direct prose. Components that draw their own chrome carry `data-ui`, and prose element rules skip `[data-ui]` and everything inside it (links, lists, list items). Links that must not look like prose links carry `data-plain`. Wide exhibits (code assemblies, callouts, practice, tables, figures, display math) carry `data-exhibit` and take `--measure-wide` with 2rem above and below.
 - **Class merging**: `cn()` uses `extendTailwindMerge` with the custom `text-*` sizes, radii, shadow and ease declared, so a size class such as `text-label` never removes a colour class.
-- **Titles with code**: module and lesson titles may contain backtick spans; `RichTitle` renders them as inline `<code>` in the sidebar, index rows and continue block.
+- **Titles with code**: module titles may contain backtick spans; `RichTitle` renders them as inline `<code>` in the sidebar, index rows and continue block.
 - **Copy**: every UI string comes from `content/ui/strings.yaml` through `ui()` (server) or props (client). Client components never import copy.
 - **Client code** is limited to: copy button, mark-as-read, live read cells, continue block, search dialog and page, mobile drawer. Term uses a native popover and needs no script.
 - **`/dev/design`** (preview builds only, 404 in production) shows every component in every state, with sample problems resolved from the registry. It is the target for pixel review and visual baselines.
@@ -569,7 +562,7 @@ Plan §4.11.3. Tokens and the state grammar below are the design lead's [W2]. Th
 Shared by `StepThrough`, `CodeTrace` and `Scene`. The player is one focusable group (`role="group"`, `aria-roledescription="step-through"`, label from the figure caption) inside a Figure frame.
 
 Order inside the figure frame, top to bottom:
-1. **Preset switcher** (only when 2–3 presets exist): a segmented control flush left above the stage, 12 px from the frame edge: options in label style 600, 32 px tall (44 coarse), 4 px outer radius, 1 px `rule-strong` border; selected option ink fill with paper text; others paper with ink-2 text, hover board. Switching presets resets to step 1.
+1. **Preset switcher** (only when 2–3 presets exist): a segmented control flush left above the stage, 12 px from the frame edge: options in label style 600, 32 px tall (44 coarse), 4 px outer radius, 1 px `rule-strong` border; selected option ink fill with paper text; others paper with ink-2 text, hover board. Never wider than its column: on a phone, labels too long for one row wrap inside their options rather than push the page sideways. Switching presets resets to step 1.
 2. **Stage**: fade-out grid background, fixed aspect ratio box per visual (no layout shift), 16 px inner padding. First frame server-rendered.
 3. **Control strip**: sheet-sunk fill, 1 px rule top edge, 8 px × 12 px padding, one row at 640 px and up, two rows below (buttons row, then scrubber row):
    - Buttons (ghost icon buttons, 40 × 40, 44 coarse, ink-2, hover board, focus ring): Restart (RotateCcw), Previous step (StepBack), **Play/Pause** (primary: ink fill, paper Play/Pause icon, same size), Next step (StepForward). Disabled at the ends: ink-3 at 50% opacity, `aria-disabled`.
@@ -637,7 +630,7 @@ A dev-only page (404 in production) on the standard sheet, in five sections: Pri
 
 ### Do:
 - **Do** put every page on a sheet: paper (#FBFDFD) with a 1 px rule (#D7DEE0) edge on the board (#E7F2ED), square corners.
-- **Do** carry lesson and module facts in a ruled title-block strip under the H1 (module ID, lesson n of m, minutes), in tabular figures.
+- **Do** carry module facts in a ruled title-block strip under the H1 (stage, module ID, minutes), in tabular figures.
 - **Do** use dashed outlines for everything provisional (Draft, Coming soon, queued) and solid ink for everything done.
 - **Do** keep prose at 1.125rem / 1.7 in a 42rem column with one shared left edge.
 - **Do** pair every state colour with a shape, line style, icon or word.
@@ -653,7 +646,7 @@ A dev-only page (404 in production) on the standard sheet, in five sections: Pri
 - **Don't** use gradients, glass, blur, glow, hard offset shadows, or purple-blue "AI" palettes; the only shadow is the overlay shadow.
 - **Don't** use emoji or Unicode symbols as icons; icons are lucide at stroke 1.75, or authored SVG in the same weight.
 - **Don't** colour judges differently (WMOJ and DMOJ badges share one style) or style anything to look like a CEMC, WMOJ or DMOJ mark.
-- **Don't** show scores, progress percentages, rings, streaks or completion bars; the only progress mark is the per-lesson read cell.
+- **Don't** show scores, progress percentages, rings, streaks or completion bars; the only progress mark is the per-module read cell.
 - **Don't** set any text below 12 px, or put ink-3 on `done`, `check` or `board-deep`.
 - **Don't** animate anything on page load, on scroll, or without a user action.
 

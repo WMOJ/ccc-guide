@@ -1,4 +1,4 @@
-// remarkFigureNumbers: numbers every <Figure> in a lesson in document order (1, 2, 3, …) by
+// remarkFigureNumbers: numbers every <Figure> in a module in document order (1, 2, 3, …) by
 // adding a `number` attribute, so "Figure 3" never has to be typed or kept in sync by hand.
 // W1 adds it to the MDX compile's remarkPlugins. An author-set `number` is an error.
 

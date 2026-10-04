@@ -1,15 +1,9 @@
 id: M7.4
-title: Exchange arguments, scheduling and greedy proofs
 status: accepted
 objectives:
   - Use exchange arguments to prove a greedy algorithm is optimal.
   - Apply scheduling strategies to interval and deadline problems.
   - Recognize when greedy choices are locally optimal and globally sound.
-prereqs:
-  - M4.2
-  - M2.2
-lessons:
-  - exchange-arguments
 practice:
   - id: ccc15s2
     note: Hand out jerseys of different sizes to as many athletes as possible, given each athlete's size request.

@@ -20,7 +20,7 @@ export interface CodeBlockData {
 /**
  * Resolves `file` (an MDX author's `<Code file="…">`/`<Output file="…">` prop) against
  * `moduleDir` and rejects anything that escapes it — `../../../etc/passwd` or an absolute path
- * would otherwise let a lesson read any file the server process can ("OutputTag must reject any
+ * would otherwise let a module read any file the server process can ("OutputTag must reject any
  * file that resolves outside the module dir"; the same risk exists for `<Code file>`, fixed here
  * once for both call sites).
  */
@@ -56,7 +56,7 @@ function parseHighlight(highlight: string | undefined): number[] | undefined {
 
 /**
  * Resolves `<Code file="examples/x.py" lines="1-5" highlight="3,4" caption="…" showOutput
- * expectError="IndexError" />` against the lesson's module directory. `.out` is required when
+ * expectError="IndexError" />` against the module directory. `.out` is required when
  * `showOutput` is set; `.err` (committed traceback text, our own convention) is required when
  * `expectError` is set.
  */

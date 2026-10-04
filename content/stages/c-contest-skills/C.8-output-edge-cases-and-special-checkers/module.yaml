@@ -1,14 +1,8 @@
 id: C.8
-title: Output edge cases and special checkers
 status: accepted
 objectives:
   - Find a stray space or missing newline in your output with `repr()`, and say why an exact checker rejects it.
   - Explain how an exact checker and a token-based checker treat the same output differently.
   - Fix how many decimals a float prints, and say when an absolute or a relative tolerance accepts it.
   - Recognize a problem judged by a special checker, and say why matching the sample output is not required.
-prereqs:
-  - M1.11
-  - M5.1
-lessons:
-  - output-edge-cases-and-special-checkers
 practice: []

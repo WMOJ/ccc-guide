@@ -1,0 +1,102 @@
+A correct plan is not always a fast enough one. Every subtask has a time limit, and a large bound on N can punish a slow plan even when it gives the right answer on every test. Complexity analysis lets you judge, from the bound alone, whether a plan will finish in time, before you write or run a line of it.
+
+## Counting operations as N grows
+
+Big-O describes how the number of operations a plan performs grows as N grows, ignoring constant factors and smaller terms. A single loop over N items performs about N operations: this is `O(N)`. Two separate loops over N items add up to about `2N`, which is still `O(N)`, because doubling a constant does not change the shape of the growth. A loop nested inside another loop, each running N times, performs about `N * N` operations: this is `O(N^2)`.
+
+<Figure caption="How three growth rates compare as N grows from 1 to 1000">
+  <Scene name="growth-rates" curves={["n", "nlogn", "n2"]} points={[10, 100, 1000]} yMax={1000000} />
+</Figure>
+
+`N` and `N log N` stay close together and grow gently. `N^2` pulls far ahead of both once N passes a few hundred, and the gap widens as N grows. A plan that is `O(N^2)` can be fast enough for a small bound and still time out on a large one, although the code never changes.
+
+## Counting a nested loop
+
+Here is a nested loop whose operations are worth counting exactly. It counts every pair of positions `i` and `j`, with `j` always after `i`.
+
+<Code file="examples/count_pairs.py" showOutput caption="Counting every pair of positions, with j always after i" />
+
+Step through the trace below, where `n` is 4. Watch `j` restart each time `i` moves on, and how many times `count += 1` runs before `i` moves again.
+
+<Figure caption="Line by line: the inner loop restarts for each i and gets shorter">
+  <CodeTrace trace="examples/count_pairs.trace.json" preset="main" />
+</Figure>
+
+The inner loop ran 3 times, then 2, then 1, then 0, which is 6 passes in all. The next figure draws the same count on a grid. Each row is one value of `i`, each column one value of `j`, and a cell fills in when the inner loop visits it. Try the `n = 6` preset, then the `n = 1` edge case, where no pair exists.
+
+<Figure caption="Every pair the nested loop counts, row by row, for n = 6">
+  <StepThrough frames="visuals/pair-grid.frames.json" preset="main" />
+</Figure>
+
+The filled cells form a triangle with `n(n-1)/2` cells: 15 when `n` is 6. Because the inner loop shrinks from `n - 1` passes down to 0, the total is about half of `n * n`. Big-O drops that constant one half, so the plan is `O(n^2)`. A plan with one loop over the input and a fixed amount of work per item is `O(n)`. Sorting n items is `O(n log n)`, since a comparison-based sort makes roughly `n log n` comparisons, not the `n^2` a nested loop would make.
+
+## How the counts grow as n doubles
+
+The plot below puts a single loop's total beside the nested loop's as n grows. Try the three presets.
+
+<Figure caption="A single loop's total operations against the nested loop's, as n grows">
+  <StepThrough frames="visuals/op-growth.frames.json" preset="main" />
+</Figure>
+
+The single loop's line is straight: exactly `n` operations. The nested loop's line curves upward, since it does `n(n-1)/2`. At `n = 10` its final total is `45`, which is what `count_pairs.py` prints for that input.
+
+A curve is hard to read numerically, so the next figure doubles n instead and keeps the counts in a table.
+
+<Figure caption="Doubling n: the single loop doubles, the pairs loop roughly quadruples">
+  <StepThrough frames="visuals/doubling.frames.json" preset="main" />
+</Figure>
+
+Every doubling doubles the single loop and multiplies the pairs loop by about 4. The `n = 1` preset shows the ratio settling toward 4 as n grows. That factor is what `O(N)` versus `O(N^2)` means in practice: ask a judge for twice the input and the quadratic plan does four times the work.
+
+## Reading a bound as a target complexity
+
+A problem's bound on N tells you roughly which complexity a plan needs in order to finish in time. These figures are rules of thumb from how contest judges tend to be set up, not guarantees for any one problem:
+
+| Bound on N | Target complexity |
+|---|---|
+| N ≤ 10 | O(N!) or O(2^N · N) |
+| N ≤ 20 | O(2^N) |
+| N ≤ 400–500 | O(N^3) |
+| N ≤ 5000 | O(N^2) |
+| N ≤ 2·10^5 – 10^6 | O(N log N) or O(N) |
+| N ≥ 10^9 | O(log N), O(√N), or O(1) math |
+
+This table reads in the opposite direction from writing a plan. Given a bound, it tells you what complexity a working plan needs before you have designed one. A bound of `N ≤ 1000` allows an `O(N^2)` plan, since `1000^2` is one million operations, well within what a judge can run. The same plan on `N ≤ 10^6` would need about `10^12`, far beyond what any judge finishes.
+
+The same rows as a picture, each target shortened to its single fastest-growing form:
+
+<Figure
+  caption="Each bound on N next to the fastest-growing complexity that still finishes in time"
+  alt="A six-row table pairing a bound on N with the target complexity it allows, from N at most 10 needing O(N!) down to N at least 10^9 needing O(log N)."
+>
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowTitle: "N",
+      rowHeads: ["N ≤ 10", "N ≤ 20", "N ≤ 500", "N ≤ 5000", "N ≤ 10^6", "N ≥ 10^9"],
+      colHeads: ["largest complexity allowed"],
+      cells: [
+        ["O(N!)"],
+        ["O(2^N)"],
+        ["O(N^3)"],
+        ["O(N^2)"],
+        ["O(N log N)"],
+        ["O(log N)"],
+      ],
+    }}
+  />
+</Figure>
+
+PyPy, which the grader runs, does roughly `10^7` to `10^8` simple operations per second. Plain CPython does roughly 10 to 50 times fewer. Both are estimates, since the real cost depends on what each operation does. Treat the table and these rates as a first estimate, not proof. The module on testing covers building a maximum-size test and timing it. That test is still how you check that a plan finishes in time, on the machine you have.
+
+## The cost of common built-ins
+
+Some operations cost more than they look, and knowing their rough cost helps you count accurately. Reading a list by index, or a dictionary by key, costs `O(1)`: about the same small amount of work however large the container is. Adding an item to the end of a list is also `O(1)` on average. Checking whether a value appears anywhere in a list costs `O(n)`, since it may have to look at every item. The same check against a set or a dictionary's keys costs `O(1)` on average, since neither scans. Sorting a list costs `O(n log n)`.
+
+## Memory as a limit too
+
+A judge also limits memory, often to a few hundred megabytes. That rarely matters for small bounds, but it becomes real once N reaches the hundreds of millions. On PyPy, a list of integers costs roughly `8` bytes per integer, a rule of thumb rather than an exact figure. Ten million integers take roughly eighty megabytes, which fits. A billion would take roughly eight gigabytes, which does not. That is a sign a plan must avoid holding every value in memory at once, however fast its operations are.
+
+## Recap
+
+Big-O describes how a plan's operation count grows with N, ignoring constant factors: `O(N)` for one pass over the input, `O(N log N)` for a sort, `O(N^2)` for a loop inside a loop. The nested loop in `count_pairs.py` does `n(n-1)/2` operations, and doubling n quadruples that count. A bound on N points at which of these a working plan needs to reach, using the target table above. PyPy's rough operations-per-second budget and a rough memory-per-value figure turn a bound into an estimate, and both stay estimates. A maximum-size test, run and timed on your own machine, is what confirms it.

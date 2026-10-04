@@ -11,7 +11,7 @@ server-rendered and fully meaningful on its own, with no autoplay.
 
 ## Pipeline
 
-- A visual source lives next to its lesson (`content/stages/<stage>/<module>/visuals/*.viz.py` for
+- A visual source lives in its module folder (`content/stages/<stage>/<module>/visuals/*.viz.py` for
   the nine library visualizers, or a plain example `.py` for a `CodeTrace`).
 - `npm run gen:viz` runs the recorders under PyPy 3.8 (`tools/viz/lib.ts` resolves the interpreter
   via `lib/tools/resolve-tools.ts` — see `AGENTS.md`'s tool prerequisites) and writes the generated
@@ -63,7 +63,7 @@ visual.
   10 characters, and `legendLabels` keys are state names (`frontier`, not `queued`). A TableViz
   `row_title` longer than its column heads collides with them.
 - A `CodeTrace` records every executed line, so a whole program easily passes 40 steps a preset:
-  trace a slim dedicated file that the lesson names as the short version instead. Tracer quirk:
+  trace a slim dedicated file that the module names as the short version instead. Tracer quirk:
   when a `for` variable's next value equals its previous one, the step caption reads "no values
   left"; avoid that input or say so in the prose.
 - Width is measured over the union of all presets: one long cell (a placeholder like `(none)`)
@@ -95,7 +95,7 @@ visual.
 - Inline `<Diagram viz=… data={{…}}>` data is validated at render time, not by `check:viz`: use
   one-letter state codes (`"d"`, `"c"`, `"m"`), and give its `<Figure>` an `alt` (only the
   `frames=` form inherits the `.viz.yaml`'s `alt`). A mistake shows up as a page error, so load
-  the lesson after adding one.
+  the module page after adding one.
 - When a state's default legend word does not fit the picture (e.g. `wall` hatching used for a
   chessboard's shaded squares), rename it: `legendLabels: {wall: Shaded square}` in the
   `.viz.yaml` (a `frames=` Diagram inherits it), or `legendLabels={{ wall: "Shaded square" }}` on

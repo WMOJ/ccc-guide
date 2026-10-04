@@ -2,7 +2,7 @@ import { cn } from "./cn";
 
 export interface ReadCellProps {
   read: boolean;
-  /** Plays the ink-in wipe (only right after the learner marks the lesson read). */
+  /** Plays the ink-in wipe (only right after the learner marks the module read). */
   inkIn?: boolean;
   size?: "sm" | "md";
   className?: string;

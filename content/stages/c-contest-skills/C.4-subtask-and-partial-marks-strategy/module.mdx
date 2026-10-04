@@ -1,0 +1,77 @@
+A bakery logs its profit or loss for each of N days. Given those N numbers, find the largest total over any run of consecutive days, where a run has at least one day. The statement ends with a table of <Term id="subtask">subtasks</Term>, as statements do:
+
+> Subtask 1: N ≤ 300.
+> Subtask 2: N ≤ 4000.
+> Subtask 3: N ≤ 1,000,000.
+
+Each subtask is a batch of tests with its own bound on N. The bounds are facts about the tests, and each one tells you how much work a plan can afford. The complexity module pairs each bound with the growth a plan can afford: N up to about 500 allows `O(N^3)`, N up to 5000 allows `O(N^2)`, and a million needs `O(N)` or `O(N log N)`. This lesson builds one program per subtask for this problem and checks each against its bound. The judge keeps your best result across submissions, so a program for Subtask 1 is worth sending before you have anything faster.
+
+## Subtask 1: try every pair
+
+A run is fixed by its first day `i` and last day `j`. The simplest plan tries every pair, adds up the slice between them, and keeps the largest total.
+
+<Code file="examples/every_pair.py" lines="4-11" showOutput caption="Every start and end, summing each slice" />
+
+Here is that plan on six days. Step through it and try the other two presets.
+
+<Figure caption="Every pair of a start and an end, with the best sum so far">
+  <StepThrough frames="visuals/every-pair.frames.json" preset="main" />
+</Figure>
+
+Twenty-one pairs, and the best sum changed twice, first to 4 and then to 5, from `values[2:5]`. The all-losses preset shows why `best` starts at `values[0]` and not at 0: every run there is negative, and the answer is the least negative one. For N days there are `N(N + 1) / 2` pairs, and summing a slice adds up to N numbers, so the plan does about `N^3 / 6` additions. That is cubic, and the complexity table allows it at N ≤ 300.
+
+## Subtask 2: stop re-adding
+
+The slice `values[i:j + 1]` is summed again from scratch for every `j`, although it differs from the previous slice by one number. Keeping a running total for each start removes that repeated work:
+
+<Code file="examples/running_sum.py" lines="4-12" showOutput caption="The same pairs, with one addition per pair" />
+
+The output is the same, and each pair now costs one addition, so the plan does `N(N + 1) / 2` of them. That is quadratic, and the table allows it at N ≤ 5000.
+
+## Subtask 3: prefix sums with a running minimum
+
+A run from `i` to `j` sums to `prefix[j + 1] - prefix[i]`, where `prefix` is the <Term id="prefix-sum">prefix sum</Term> array. Fix the end `j`. Then `prefix[j + 1]` is fixed, and the run is largest when `prefix[i]` is smallest among `prefix[0]` through `prefix[j]`. So instead of trying every start, keep one number, `low`: the smallest prefix entry seen so far. The best run ending at `j` is `prefix[j + 1] - low`, and the answer is the largest of those over all `j`.
+
+<Code file="examples/prefix_min.py" lines="4-18" showOutput caption="One pass: the best run ending at each day, using the smallest earlier prefix" />
+
+Step through it on six days. The top array is `values` and the bottom is `prefix`, with `low` and the end being tried marked.
+
+<Figure caption="The best run ending at each day is prefix[j + 1] minus low, the smallest earlier prefix">
+  <StepThrough frames="visuals/running-min.frames.json" preset="main" />
+</Figure>
+
+At `j = 4`, `low` is `-1` from `prefix[2]`, so the candidate is `4 - (-1) = 5`, the run `values[2:5]` the brute force found. The gains preset shows why `low` starts at `prefix[0]`, which is 0: there the best run starts at `values[0]`, and only `prefix[0]` can be subtracted for it. The trace below runs the code itself on two or three numbers. Try the three presets.
+
+<Figure caption="The prefix method line by line: prefix is built first, then each end is tried against low">
+  <CodeTrace trace="examples/prefix_min.trace.json" preset="dip" />
+</Figure>
+
+In the dip preset, `low` drops from 0 to -1 at `j = 1`, and `best` rises from 2 to 4 at `j = 2`. In the losses preset `best` ends at -1. Each day costs one addition to build `prefix` and a few more operations in the loop, so the work grows in step with N. That is linear, and it fits a million days. `best` starts at `values[0]`, the run of one day, so a list of losses still reports its largest single value. The `prefix` list then holds a million and one integers, roughly eight megabytes on PyPy by the memory rule of thumb, which fits.
+
+## Checking each plan against its bound
+
+The counts so far are formulas. `count_adds.py` prints them for any bound, one line per subtask:
+
+<Code file="examples/count_adds.py" showOutput caption="Additions each plan does at each subtask's bound" />
+
+The next figure puts those numbers in a table, where `4.5e6` means 4.5 times 10^6. It marks each count as within or over a budget of `10^7` additions, the low end of what PyPy does in a second, and it counts additions only. Step through the three subtasks.
+
+<Figure caption="Additions at each bound for the three plans, against a budget of 10^7">
+  <StepThrough frames="visuals/subtask-table.frames.json" preset="main" />
+</Figure>
+
+At N ≤ 4000 the slice-sum plan is about a thousand times over the budget, while the running-sum plan is at 8 million, within it. At a million days only the prefix plan is within budget. By these counts the quadratic program clears Subtask 2 and Subtask 1 without any prefix idea, and the cubic one clears only Subtask 1.
+
+The plot shows the same counts as n grows. The dotted line is the budget, and the vertical mark is the subtask's bound. Try all three presets.
+
+<Figure caption="Additions as n grows for each plan, with the subtask's bound marked">
+  <StepThrough frames="visuals/op-growth.frames.json" preset="first" />
+</Figure>
+
+Each curve crosses the budget a little past its subtask's bound: near 390 days for slice sums, near 4,470 for running sums. The prefix line reaches it only around ten million days, so a million is a tenth of the way there.
+
+## Submitting along the way
+
+The three programs print the same answer here, and each covers more subtasks than the last. Submit the first one as soon as it passes the sample, then the second, then the third. The contest allows up to fifty submissions per problem, and a later program never takes away what an earlier one earned. The step from slice sums to running sums is one line, so take it at once. The step to prefix sums needs the running-minimum idea, so weigh the time it needs against the other problems, knowing the earlier programs still stand.
+
+Reach for this table of bounds and counts whenever a statement lists subtasks, before writing any code.

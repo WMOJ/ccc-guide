@@ -1,15 +1,9 @@
 id: M3.3
-title: String processing I (counting runs and building)
 status: accepted
 objectives:
   - Iterate through a string character by character to count runs of identical characters.
   - Build a new string by appending characters inside a loop.
   - Detect when a character changes and reset a counter.
-prereqs:
-  - M1.7
-  - M2.4
-lessons:
-  - string-processing-counting-runs-and-building
 practice:
   - id: ccc19j3
     note: Compress a message by writing each run as its length and its symbol.

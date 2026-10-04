@@ -1,0 +1,93 @@
+The last module's `for` loop always runs a fixed number of times, known before the loop starts. Some problems instead repeat a step until some condition becomes true, with no fixed count decided in advance. This lesson covers repeating a block with `while`, and reading input that ends with a special value instead of a count.
+
+## Repeating while a condition holds
+
+A `while` loop checks its condition before every pass, the same way `if` does, and keeps running the block below it for as long as that condition stays `True`.
+
+<Code file="examples/double_until_limit.py" showOutput caption="Doubling a value until it reaches a limit" />
+
+`value` starts at `1` and doubles on every pass: `2`, `4`, `8`, and onward. Python checks `value < limit` again before each pass. Unlike a `for` loop, nothing here says in advance how many passes that will take. Step through the checks below, with the limit read from the input.
+
+<Figure caption="Doubling value until the check value < limit fails">
+  <StepThrough frames="visuals/double-until-limit.frames.json" />
+</Figure>
+
+With a limit of `50`, the loop stops at `64`, the first power of two that is no longer less than `50`. The second preset shows the smallest case: with a limit of `1`, the very first check already fails, so the block never runs and `value` stays `1`.
+
+A `while` loop that never makes its condition `False` runs forever. Every `while` loop needs something in its block that moves the condition closer to `False`, the way `value *= 2` does here. A `for` loop cannot run forever, since `range()` hands it a fixed sequence of values. A `while` loop carries that risk in exchange for not needing the count in advance, so check by hand that each pass moves the condition toward `False`.
+
+## Reading values until a sentinel appears
+
+Some problems mark the end of their input with a special value, called a sentinel, instead of telling you a count in advance.
+
+<Code file="examples/sum_until_sentinel.py" showOutput caption="Adding numbers until a 0 sentinel appears" />
+
+The program reads one number before the loop starts, then checks whether it is the sentinel `0`. As long as it is not, the loop adds it to `total` and reads the next number, right at the bottom of the block. Reading a number both before the loop and again inside it feels repetitive, but it is what lets the condition see the newest number before deciding whether to keep going.
+
+Choosing a sentinel value only works when the problem's own numbers can never legitimately equal it. A count of players, for example, could safely use `0` as a sentinel, since a real count is always at least `1`. That same `0` would be a poor choice for a temperature reading, though, since a real reading might be zero. Always check what a sentinel rules out before relying on one.
+
+Step through the read-and-check pattern below. The running total sits above the numbers, and the pointer shows which one is being read. Try both presets.
+
+<Figure caption="Reading numbers one at a time, adding each to a running total, until the sentinel stops the loop">
+  <StepThrough frames="visuals/sentinel-read.frames.json" />
+</Figure>
+
+The sentinel itself is marked apart from the numbers added to the total: it is read, checked, and found to be the sentinel, all before it ever reaches `total += number`. The second preset shows the smallest case, where the very first number read is already the sentinel, leaving the total at `0`.
+
+## Exiting early with `break`
+
+`break` exits a loop the instant Python reaches it, no matter what its condition says. It gives you another way to write a sentinel loop, without reading the same line twice in the code.
+
+<Code file="examples/skip_and_sum.py" showOutput caption="Summing positive numbers until a 0 sentinel, skipping negatives" />
+
+`while True:` starts a loop whose own condition never turns `False`, so only the `break` inside it can end it. Each pass reads one number first, then decides what to do with it. A `0` reaches `break` and ends the loop right there, before `total += n` ever runs.
+
+## Skipping a pass with `continue`
+
+`continue` jumps straight back to the loop's condition, skipping the rest of the current pass. In `skip_and_sum.py`, a negative number reaches `continue` before `total += n`, so it never gets added.
+
+The two keywords differ in what happens next. After `break`, the loop is over and the program carries on below it. After `continue`, the loop is still running and simply starts its next pass. Step through the numbers below and watch which branch each one takes.
+
+<Figure caption="Each number read takes exactly one branch: add, continue or break">
+  <StepThrough frames="visuals/branch-table.frames.json" />
+</Figure>
+
+Every row is one pass of the loop. The `add` rows change the total, the `continue` rows leave it alone, and the single `break` row ends the table, because the loop ends with it. The last preset starts with the sentinel, so the loop ends on its first pass with a total of `0`.
+
+## A loop that runs past the end of input
+
+A `while True:` loop with no sentinel at all, and no count to stop it, keeps calling `input()` even after every line has already been read.
+
+<Code file="examples/eof_pitfall.py" expectError="EOFError" caption="Reading input() one time too many" />
+
+The input only has two lines, `3` and `5`. The loop reads both, adds them, and loops back for a third line that does not exist, so `input()` raises `EOFError` instead of returning anything. Whenever a loop reads input with no sentinel and no count, check that something inside it actually stops the loop before the input runs out.
+
+## Reading every remaining line safely
+
+Python's standard library has a module named `sys`, brought in with `import`, that includes `sys.stdin`: every line still left to read, handed over one at a time. Unlike `input()`, each line from `sys.stdin` still has its newline attached, so a line read this way often needs `.strip()` before you convert or compare it.
+
+<Code file="examples/read_to_end.py" showOutput caption="Summing every remaining line with import sys" />
+
+`for line in sys.stdin:` visits each remaining line in turn, stopping cleanly when there are none left, with no `EOFError` and no sentinel to watch for. This lesson only needs this one idiom for reading to the end of input; the module on imports tours what else `import` can bring into a program.
+
+Step through each program's own input below: `eof_pitfall.py`'s two lines, then `read_to_end.py`'s three.
+
+<Figure caption="eof_pitfall.py's while True loop crashing past its last line, next to read_to_end.py stopping cleanly past its own">
+  <StepThrough frames="visuals/eof-read.frames.json" />
+</Figure>
+
+Both presets read every real line the same way, one at a time, adding each to a running total. They part ways only once the real lines run out: `while True:` tries to read one more anyway and Python raises `EOFError`, marked invalid, while `for line in sys.stdin:` checks first, finds nothing, and simply ends.
+
+## Tracing break and continue in one loop
+
+The table showed the decisions. The trace below shows the lines of `skip_and_sum.py` that run to make them. Step forward and back, and switch presets to compare a run with and without a negative number.
+
+<Figure caption="Summing positive numbers, skipping a negative, until a sentinel">
+  <CodeTrace trace="examples/skip_and_sum.trace.json" />
+</Figure>
+
+Both presets read numbers until a `0` ends the loop. The preset with a `-1` still reaches the same total as the one without, since `continue` skips that pass without changing `total`, and the next pass starts with the next `input()`.
+
+## Recap
+
+This lesson covered repeating a block with `while` for as long as a condition holds, and reading input that ends with a sentinel value instead of a count. It also covered exiting a loop early with `break`, and skipping a single pass with `continue`. Last, it covered the `EOFError` an unstoppable input loop eventually raises, and reading every remaining line safely with `import sys`. The three problems below all process values one at a time until something tells the loop to stop.

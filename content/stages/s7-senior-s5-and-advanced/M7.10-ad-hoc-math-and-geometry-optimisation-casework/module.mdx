@@ -1,0 +1,69 @@
+A village has up to 200,000 houses along a straight road, at positions up to 10^9. You dig one well at a whole-number spot, and the cost is the total walking distance from every house to the well. Trying every spot means up to 10^9 spots times 200,000 houses, far past the 10^8 or so operations a solution can afford (M2.9). Nothing standard applies here, no graph and no table to fill. Instead you argue that the best spot must come from a short list, then check only that list. That is casework: name the cases that could win, evaluate each one quickly, and keep the best.
+
+## Why only the houses need checking
+
+Take a spot strictly between two neighboring houses. Move the well one step right. Every house to the left gets one step farther, and every house to the right gets one step closer. The cost changes by the same amount on every step until the well reaches the next house. Between two houses the cost runs along a straight line, and a straight line is lowest at one of its ends. So the best spot is always at a house. That cuts 10^9 cases to N.
+
+Step through the road below. The presets cover five houses, an even number of houses, where two spots tie, and a single house.
+
+<Figure caption="A well tried at each house in turn, each house labeled with its walking distance, then a spot between two houses compared with its neighbors">
+  <StepThrough frames="visuals/well-line.frames.json" preset="five" />
+</Figure>
+
+The between-houses step puts the straight-line argument in numbers: the cost at 4 is 22, between its neighbors' 23 and 19. Each case still costs a pass over all the houses unless you are careful. Sort the houses and build prefix sums of the positions, as in <Term id="prefix-sum">prefix sums</Term>. For the house at index `i`, the `i` houses to its left each walk `h - position`, which adds up to `h * i` minus the sum of those positions. The houses to its right mirror that. Each case then costs a few operations, the captions in the figure show the arithmetic, and the whole search is one sort plus one pass.
+
+<Code file="examples/well.py" showOutput caption="The well's best house and its total cost, from sorted houses and prefix sums" />
+
+The output `7 19` matches the figure's last step. On PyPy, the sort and two passes over 200,000 numbers are a fraction of a second.
+
+## Every position as a case
+
+Sometimes the list of cases is simply every position, and the work is making each one cheap. Take a square grid of numbers, some negative, and find the `k` by `k` window with the largest sum. A grid with N = 1,000 has about 10^6 windows, and adding up `k * k` cells for each costs up to 10^6 times `k * k`. One prefix table, built once as in M4.3, turns each window into four reads. Take the far corner, subtract the strip above and the strip to the left, then add back the corner removed twice.
+
+<Figure caption="A 2 by 2 window visiting every position, each sum read from four prefix entries, with the best window so far kept marked">
+  <StepThrough frames="visuals/window-slide.frames.json" preset="five" />
+</Figure>
+
+The best sum rose through 6, 8, 11, 15 and 16, and the last window to beat it was at row 2, column 1. The "All negative" preset is the edge case. Starting the best at 0 would report 0 for a window that does not exist, so the code starts from the first window's sum instead.
+
+<Code file="examples/rect_sum_max.py" showOutput caption="The best k by k window sum and its top-left corner, using a 2D prefix table" />
+
+Building the table is one pass over N * N cells, and the window loop is another, so the whole program is O(N^2) however large `k` is.
+
+## A formula instead of a scan
+
+Some problems give you a quantity you can write as a formula. A pen against a long wall has two sides of length `x` and one side of length `w - 2x`, using `w` meters of wire. Its area is `x * (w - 2x)`. If `w` is up to 10^18, you cannot try every `x`, but you do not need to. The area is `-2x^2 + wx`, a parabola that opens downward, so it has one peak, at `x = w / 4`, and falls on both sides.
+
+If `x` had to be whole, the best choice is one of the two whole numbers beside the peak: the floor of `w / 4` and the next one up. If a rule limits `x` to some largest value, a peak beyond that limit means the best `x` is the limit itself. Clamping each candidate into the allowed range handles both cases at once.
+
+<Figure caption="The area of the pen for every whole side length x, with the peak at w / 4 marked, then the two whole numbers beside it compared">
+  <StepThrough frames="visuals/fence-peak.frames.json" preset="odd" />
+</Figure>
+
+For `w = 21` the peak is at 5.25, and 5 beats 6, 55 to 54. The "Wire 22" preset shows a tie at 5.5, and "With a limit" shows the peak at 10 lying outside an allowed range of 1 to 6, so the clamp moves the answer to 6.
+
+<Code file="examples/fence_area.py" showOutput caption="The pen's best side length from two candidates, clamped into the allowed range" />
+
+Trace the same program below. Watch the loop visit `pick = 5`, then `pick = 6`, and keep the larger area. The "With a limit" preset makes the `min(hi, pick)` line change a pick, and "Tiny wire" shows a range with a single valid `x`.
+
+<Figure caption="Tracing the fence program: the largest allowed x, two candidates pulled into range, and the larger area kept">
+  <CodeTrace trace="examples/fence_area.trace.json" preset="main" />
+</Figure>
+
+## Check the shortcut against brute force
+
+A shortcut like "try the floor of `w / 4`" feels right and is easy to get wrong. The remedy is a brute force that is obviously correct on small inputs, run beside the shortcut on every small value. Step through the comparison below. The row `floor` tries only `w // 4`. The row `floor+1` tries the next whole number as well.
+
+<Figure caption="Brute force against two shortcuts for wire lengths up to 8. A cell that differs from the brute-force row is marked.">
+  <StepThrough frames="visuals/fence-check.frames.json" preset="eight" />
+</Figure>
+
+At `w = 7` the peak is 1.75, closer to 2 than to 1, and the floor alone picks 1 while the best is 2. The values 3 through 6 all pass, so a short hand test can miss it. The program runs every value from 3 up to a limit.
+
+<Code file="examples/check_fence.py" showOutput caption="Comparing both shortcuts with brute force for every wire length up to 12" />
+
+The floor alone first fails at 7, and the floor with the next whole number never fails. That habit carries over to every problem in this module: write the slow version first, compare on everything small, and only then trust the fast one.
+
+## When to reach for casework
+
+Reach for it when a problem asks for the best position or value and the statement has no obvious algorithm. Look for a reason the best case sits at a special place, such as a house, a corner or the peak of a formula. List those places, find a cheap way to evaluate each, and compare against brute force on small inputs.

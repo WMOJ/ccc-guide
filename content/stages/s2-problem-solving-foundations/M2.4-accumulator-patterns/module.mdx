@@ -1,0 +1,47 @@
+Many problems ask a single question about a whole list of values: the total, the count, the best one, or whether some condition ever held. This lesson names the small set of patterns that answer questions like these, one value at a time, in a single pass.
+
+Each pattern below shares the same shape. A variable starts at some value before the loop begins. Every iteration updates that variable using the current item and whatever it already holds. By the time the loop ends, that one variable holds the whole answer, without needing to look back at the list again.
+
+## Running sum and count
+
+An <Term id="accumulator">accumulator</Term> is a variable that carries a running result forward through a loop, updated once per item. A running sum starts at 0 and adds each value in turn. A running count starts at 0 and adds 1 each time a condition holds. A running minimum or maximum works the same way, replacing its current value whenever a new item beats it.
+
+<Code file="examples/trivia_totals.py" showOutput caption="A running sum and a running count over trivia scores" />
+
+Four players score `7`, `9`, `9` and `4` points. The running sum adds each score in turn and reaches `29`. The running count adds 1 only for a score of `9` or higher, reaching `2`. Both accumulators start at 0 before the loop and only ever change inside it. Neither one needs to look back at an earlier score once it has already been added in.
+
+## Best-so-far, with a tie rule
+
+Finding the largest or smallest value works the same way: keep the best value seen, and replace it whenever a new value beats it. Seed the accumulator with the first value in the list, since comparing against nothing does not make sense.
+
+<Figure caption="Tracking the best score so far, with a tie kept for the earlier player">
+  <CodeTrace trace="examples/best_score.trace.json" />
+</Figure>
+
+`best_score` starts at player A's score, `7`, and `leader` starts at `'A'`. Player B's `9` beats it, so both accumulators update. Player C also scores `9`, tying B. `cur > best_score` is `False` for a tie, so C does not replace B. The loop finishes with B still in the lead.
+
+The comparison operator decides the tie rule. `>` keeps whichever player reached the best score first, since a later, equal score never counts as strictly better. Writing `>=` instead would keep the last player to tie, not the first. Read a problem's statement for which one it wants. Both are common, and they give different answers whenever a tie happens, so guessing between them is not safe.
+
+A common mistake is seeding the accumulator with a value that cannot appear in the data, instead of the first real value. For a list that might contain negative numbers, `0` is one such value. That guessed value can accidentally survive as the final answer when every real value is smaller than it.
+
+When a list can never be empty, seeding from `scores[0]` and looping from index 1 is enough, exactly as `best_score.py` does. When the problem allows an empty list, check its length before seeding anything, and decide separately what your program should print for that case.
+
+<Code file="examples/empty_scores.py" expectError="IndexError" caption="Seeding an accumulator from a list with nothing in it" />
+
+`scores` is empty here, so `scores[0]` has no element to return. Python stops with `IndexError` before the loop even starts. A list an accumulator seeds itself from needs at least one item, so check for an empty list first whenever a problem allows one.
+
+## A flag for "has this happened yet"
+
+Some questions only need a yes or no answer: did any value cross a line, did every value meet a condition. A boolean flag, starting `False` or `True`, tracks this across the loop without needing the values themselves afterward.
+
+<Code file="examples/any_bulb_out.py" showOutput caption="A flag recording whether any bulb in a string of lights is out" />
+
+Five bulbs are checked in order: on, on, off, on, on. `found_broken` starts `False`. The third bulb, `0`, flips it to `True`, and it stays `True` for the rest of the loop, since nothing in the pattern ever sets a flag back once its answer is settled. The final `print` reports `True`, matching that at least one bulb was out.
+
+This is the same idea as the first-occurrence pattern from the best-so-far section, reduced to a single true-or-false bit, instead of a name. Once the flag is set, later items cannot change the eventual answer, only confirm it further.
+
+The opposite question, whether every value meets a condition, uses the same flag pattern with the comparison and the starting value both flipped. It also needs a name that matches the new meaning: `all_on` starts `True`, and is set `False` the moment one bulb fails to meet the condition every bulb needs to meet. Whichever direction the question asks, decide the flag's starting value from what an empty or all-passing list should answer, and name it for what `True` means this time.
+
+## Recap
+
+An accumulator carries a running sum, count, minimum or maximum through a loop, updated once per item, starting from a value that makes sense for the data. A best-so-far accumulator needs an explicit tie rule, decided by whether the comparison is strict or not. Seed an accumulator from the data itself, not a guessed constant, and check for an empty list first whenever seeding from the first element. A boolean flag answers a yes-or-no question about a whole list with a single running value.

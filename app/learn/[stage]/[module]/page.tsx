@@ -1,17 +1,10 @@
-// app/learn/[stage]/[module]/page.tsx — module overview (brief §7 thin wiring).
+// app/learn/[stage]/[module]/page.tsx — the module page: one module, read top to bottom, with its
+// practice list at the end (brief §7 thin wiring).
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ModulePage } from "@/components/layout";
-import type { CourseNav } from "@/components/layout/props";
-import {
-  getAllModuleRouteParams,
-  getCourse,
-  getModule,
-  getModuleAuthoredData,
-  getModulePrerequisites,
-  getStage,
-} from "@/lib/content/course";
-import { resolvePracticeItem } from "@/lib/content/registry";
+import { getAllModuleRouteParams, getModule } from "@/lib/content/course";
+import { getModulePageData } from "@/lib/content/module-page";
 import { plainTitle } from "@/lib/content/title";
 
 export const dynamicParams = false;
@@ -27,7 +20,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { stage, module } = await params;
   const m = getModule(stage, module);
-  return m ? { title: `${m.id} ${plainTitle(m.title)}` } : {};
+  return m ? { title: `${plainTitle(m.title)} · ${m.id}` } : {};
 }
 
 export default async function Page({
@@ -35,24 +28,8 @@ export default async function Page({
 }: {
   params: Promise<{ stage: string; module: string }>;
 }) {
-  const { stage: stageId, module: moduleId } = await params;
-  const stage = getStage(stageId);
-  const module = getModule(stageId, moduleId);
-  if (!stage || !module?.href) notFound();
-
-  const { objectives, practice: rawPractice } = getModuleAuthoredData(stageId, moduleId);
-  const practice = rawPractice.map((p) => resolvePracticeItem(p.id, { note: p.note, why: p.why }));
-  const prerequisites = getModulePrerequisites(moduleId);
-  const { stages } = getCourse();
-  const courseNav: CourseNav = { stages, currentStageId: stageId, currentModuleId: moduleId };
-
-  return (
-    <ModulePage
-      module={{ ...module, objectives }}
-      stage={stage}
-      prerequisites={prerequisites}
-      practice={practice}
-      courseNav={courseNav}
-    />
-  );
+  const { stage, module } = await params;
+  const data = await getModulePageData(stage, module);
+  if (!data) notFound();
+  return <ModulePage {...data} />;
 }

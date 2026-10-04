@@ -6,7 +6,7 @@ export interface FigureProps {
   caption: string;
   /** Text alternative summary; defaults to the visual's own `alt` from its `.viz.yaml` / `.trace.yaml`. */
   alt?: string;
-  /** Figure number within the lesson; injected by remarkFigureNumbers (lib/viz). */
+  /** Figure number within the module; injected by remarkFigureNumbers (lib/viz). */
   number?: number | string;
   children: ReactNode;
 }

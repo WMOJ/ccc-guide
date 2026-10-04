@@ -1,17 +1,10 @@
 id: M6.7
-title: Advanced DP design
 status: accepted
 objectives:
   - Combine a second dimension, such as a resource limit, with a DP state that is sorted by position.
   - Optimize DP transitions that need a window maximum with a monotonic deque.
   - Recognize when the best predecessor for a DP transition only moves forward, so a single pointer sweeps the whole array once.
   - Apply rolling arrays and tuple sorting for fast Python performance on hard S4/S5 problems.
-prereqs:
-  - M4.11
-  - M4.3
-  - M6.11
-lessons:
-  - multi-dimensional-dp
 practice:
   - id: ccc19s4
     note: Split a row of attractions into days and score each day by its best attraction.

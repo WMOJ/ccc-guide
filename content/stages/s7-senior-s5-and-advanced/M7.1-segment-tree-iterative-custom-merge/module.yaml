@@ -1,17 +1,10 @@
 id: M7.1
-title: Segment tree (iterative, custom merge)
 status: accepted
 objectives:
   - Explain how a segment tree builds a tree of summaries bottom-up from an array.
   - Implement an iterative segment tree with point updates and range queries.
   - Design a custom monoid for combining values in a specific way.
   - Keep a Python segment tree fast on PyPy with flat lists and an inlined merge.
-prereqs:
-  - M6.10
-  - M4.3
-  - M7.4
-lessons:
-  - segment-tree-structure
 practice:
   - id: ccc25s5
     note: Report the earliest finishing time of a homework list as assignments are added and removed.

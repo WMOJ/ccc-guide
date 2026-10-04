@@ -1,0 +1,110 @@
+A small company has six people. Person 0 is the boss, persons 1 and 2 report to 0, persons 3 and 4 report to 1, and person 5 reports to 2. You are planning a party and nobody wants to sit next to their direct manager, so you may invite a person or their manager, never both. What is the largest party you can invite?
+
+Try to solve it by eye and you will find yourself asking, for each person, "is their manager coming?" That question is the whole technique. The reporting lines form a <Term id="tree">tree</Term>, and the answer for any <Term id="subtree">subtree</Term> depends on one fact about its top person: invited or not. Tree dynamic programming keeps one answer per fact, for every subtree, and builds larger subtrees from smaller ones. It is <Term id="dynamic-programming">dynamic programming</Term> whose table is indexed by the nodes of a tree.
+
+## Why not try every party
+
+Every person is in or out, so there are `2^n` parties to check. For the six people above that is 64, and a computer does it instantly. A contest tree can hold `n = 2 * 10^5` nodes. Even `n = 40` gives `2^40`, about `10^12` parties, far beyond the roughly `10^8` simple steps a second that PyPy manages (M2.9). The approach needs to touch each node a constant number of times, so `O(n)`.
+
+## Two answers per subtree
+
+Root the tree at node 0, as M5.8 did. A subtree is a node together with everything below it. Give every node `u` two numbers: `dp0[u]` is the largest party inside `u`'s subtree when `u` is not invited, and `dp1[u]` is the largest when `u` is invited.
+
+If `u` is not invited, each child is free, so each child's subtree contributes its better answer: `dp0[u]` is the sum of `max(dp0[c], dp1[c])` over the children `c`. If `u` is invited, no child can be, so `dp1[u]` is 1 (for `u`) plus the sum of `dp0[c]`.
+
+Why is adding separate answers correct? Once you decide what happens at `u`, the children's subtrees have no edge between them. A choice inside one cannot break a rule inside another, so each can be solved on its own and the results added. A child's only link to the rest of the tree is the edge up to `u`, and `dp0` and `dp1` are the two ways that edge can matter.
+
+## An order that finishes children first
+
+Computing `dp0[u]` needs every child's numbers first. M5.8's rooting gives that for free: a BFS from the root records `parent` and an `order` list in which every node comes after its parent. Read `order` backward and every child comes before its parent. No recursion is needed, which matters because a chain has depth `n`. A recursive walk over one would crash long before a loop over `order` slowed down.
+
+The picture below shows the six-person company with each node's position in that order.
+
+<Figure caption="The six-person company rooted at 0, each node marked with its position in the BFS order. Reading the order backward visits 5, 4, 3, 2, 1, 0, so every child is visited before its parent." alt="A rooted tree: node 0 at the top with children 1 and 2; node 1 has children 3 and 4; node 2 has child 5. The notes under the nodes give positions in the BFS order: 0 at position 0, 1 at 1, 2 at 2, 3 at 3, 4 at 4, 5 at 5.">
+  <Diagram
+    viz="TreeViz"
+    data={{
+      root: {
+        id: "0", label: "0", note: "pos 0",
+        children: [
+          { id: "1", label: "1", note: "pos 1", children: [
+            { id: "3", label: "3", note: "pos 3" },
+            { id: "4", label: "4", note: "pos 4" },
+          ] },
+          { id: "2", label: "2", note: "pos 2", children: [
+            { id: "5", label: "5", note: "pos 5" },
+          ] },
+        ],
+      },
+    }}
+  />
+</Figure>
+
+Node 5 sits last in the order, so it is folded first, and the boss sits first, so it is folded last. The code below builds `order` with a shortcut: `order` starts as `[0]`, and a `for` loop over a list also visits items appended during the loop. The list is its own queue and comes out in the same order as M5.8's `deque` version.
+
+## Folding each node into its parent
+
+Start every node at `dp0 = 0` and `dp1 = 1`, then walk `order` backward. When you reach `u`, all of its children have already been folded in, so its two numbers are final. Add them into the parent: `dp0[p]` gains `max(dp0[u], dp1[u])` and `dp1[p]` gains `dp0[u]`. A parent with many children simply receives many folds, one per child, so there is no inner loop over children.
+
+<Code file="examples/tree_mis.py" showOutput caption="Largest party on a tree: dp0 and dp1 folded into each parent in reverse BFS order" />
+
+Step through the fold below. Each node shows `dp0/dp1` and the table repeats them. Try the chain, where every choice depends on the one before, and the star, where the boss alone is worth one seat and the four staff are worth four.
+
+<Figure caption="Folding dp0 and dp1 into each parent, walking the BFS order backward.">
+  <StepThrough frames="visuals/mis-postorder.frames.json" preset="main" />
+</Figure>
+
+On the six-person company, person 1 ends at `2/1`: leaving 1 out and inviting 3 and 4 gives 2, while inviting 1 gives only 1. Person 2 ends at `1/1`, a tie. The boss then gets `dp0 = 2 + 1 = 3` and `dp1 = 1 + 2 + 1 = 4`, and the answer is `max(3, 4) = 4`: invite 0, 3, 4 and 5. The loop runs once per node and does constant work each time, so it is `O(n)`, and the flat lists `dp0` and `dp1` are the cheapest layout PyPy has.
+
+Some problems need a count in the state, such as "exactly `k` nodes chosen", giving `dp[u][k]`. Merging two children's tables costs the product of their sizes. That still adds up to `O(n^2)` for the whole tree, provided each table is sized by its subtree and not by `n`.
+
+## Rerooting: the answer for every node as the root
+
+Now a different question on the same tree. The office wants a shared printer, and the distance from a desk to it is the number of reporting lines on the path. Where should it go? For each node `r`, compute the sum of distances from `r` to every node. Starting a BFS from every node costs `O(n)` each, `O(n^2)` overall: `4 * 10^10` steps at `n = 2 * 10^5`. The two-pass technique called <Term id="rerooting">rerooting</Term> computes all `n` answers in `O(n)`.
+
+Pass 1 works bottom-up, like the party. Let `size[u]` be the number of nodes in `u`'s subtree and `down[u]` the sum of distances from `u` to its descendants. When child `u` folds into parent `p`, every node of `u`'s subtree is one edge farther from `p` than from `u`, so `down[p]` gains `down[u] + size[u]`. After the pass, `down[0]` is the answer for the root.
+
+Pass 2 goes top-down. Suppose you know the answer at `p` and want it at its child `c`. Moving the root from `p` to `c` brings the `size[c]` nodes in `c`'s subtree one edge closer, and pushes the other `n - size[c]` nodes one edge farther. The picture shows this for the move from 0 to 1.
+
+<Figure caption="Moving the root from 0 to 1. The three nodes in 1's subtree each get one edge closer, and the three others each get one edge farther, so ans[1] = ans[0] - 3 + 3." alt="The six-node tree with node 1 marked as the new root. Nodes 1, 3 and 4 are labeled minus one, meaning one edge closer. Nodes 0, 2 and 5 are labeled plus one, meaning one edge farther." >
+  <Diagram
+    viz="TreeViz"
+    legendLabels={{ current: "New root", done: "One edge closer", frontier: "One edge farther" }}
+    data={{
+      root: {
+        id: "0", label: "0", note: "+1", s: "q",
+        children: [
+          { id: "1", label: "1", note: "-1", s: "c", e: "c", children: [
+            { id: "3", label: "3", note: "-1", s: "d" },
+            { id: "4", label: "4", note: "-1", s: "d" },
+          ] },
+          { id: "2", label: "2", note: "+1", s: "q", children: [
+            { id: "5", label: "5", note: "+1", s: "q" },
+          ] },
+        ],
+      },
+    }}
+  />
+</Figure>
+
+So `ans[c] = ans[p] - size[c] + (n - size[c])`. It works because both sets are exactly known from pass 1's `size`, and `p`'s answer already counts every distance from `p`. Walking `order` forward guarantees `ans[p]` is ready before `ans[c]`.
+
+<Code file="examples/tree_reroot.py" showOutput caption="Sum of distances from every node: size and down bottom-up, then ans top-down" />
+
+Watch both passes on the tree. The tree shows `size|down` during pass 1 and then switches to `a=` answers as pass 2 fills them in. The chain is the extreme case, where the answer is smallest in the middle.
+
+<Figure caption="Rerooting in two passes: size and down from the leaves up, then ans from the root down.">
+  <StepThrough frames="visuals/reroot-passes.frames.json" preset="main" />
+</Figure>
+
+The table confirms `ans[5] = 14`: person 5 is 1 from person 2, 2 from the boss, 3 from person 1, and 4 from each of persons 3 and 4. Now watch the code's own lines on a four-node tree. The trace skips ahead over the parsing and the BFS, which are the code from M5.8, and slows down where `size` and `down` are built.
+
+<Figure caption="The same program, line by line, on a four-node tree. Try the one-node preset to see both loops do nothing.">
+  <CodeTrace trace="examples/tree_reroot.trace.json" preset="main" />
+</Figure>
+
+Each pass touches every node once, so the whole computation is `O(n)` after the BFS. The best place for the printer is the node with the smallest entry in `ans`, and here that is 0 or 1, tied at 8.
+
+## Reaching for it
+
+Reach for tree DP when the input is a tree and each node's best choice depends on one small fact about its neighbor, such as chosen or not. If the question asks about every node as the root, compute the rooted answer first and then pass it down with a correction for the one edge that changed. In both cases, let `order` do the traversal and keep the state small.

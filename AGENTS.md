@@ -38,12 +38,6 @@ examples, read-only code, and recorded animated step-throughs; practice happens 
 on WMOJ/DMOJ. No accounts, no scores, no code execution in the app. See `PRODUCT.md` and
 `DESIGN.md` for the full product and design spec.
 
-⚠️ **About 80 lessons (Tiers B and C) were rushed** under a reduced process late in the build.
-Load the `rushed-content` skill before any content review, audit or QA. **That skill, and this
-warning line, are temporary**: delete both together once the owner has fixed or is satisfied with
-the rushed lessons. Do not treat `rushed-content` as permanent, and do not grow it into general
-content guidance.
-
 ## Commands
 
 ```bash
@@ -53,7 +47,7 @@ npm run lint             # biome check .
 npm run typecheck        # tsc --noEmit
 npm run test:unit        # vitest
 npm run verify:fast      # the fast gates (lint, types, unit, schema, style, R14, links, ...)
-npm run verify:full      # verify:fast + build + Playwright (e2e, visual, a11y) + link checks
+npm run verify:full      # verify:fast + build + prod-mode check + Playwright + links + viz:shots
 ```
 
 `verify:full` must be green before any change is considered done. See the `verifying-changes`
@@ -91,12 +85,19 @@ pinned versions, install steps, and a one-line check for each.
 
 ## Content model
 
-- `content/course.yaml`: stages → modules, in order, each with a status.
-- `content/stages/<stage>/<module>/`: `module.yaml`, `lessons/*.mdx`, example `.py`/`.out`/`.err`
-  files, and a `visuals/` folder of recorder scripts (`.viz.py`) plus their generated output.
+A module and its page are one thing: each module is one reading page at `/learn/<stage>/<module>`
+(body, then its practice list). A module is never split into sub-pages and has no prerequisite
+list.
+
+- `content/course.yaml`: stages → modules, in order, each with a `status` and a `title` — its only
+  title (page H1, course map, sidebar, search).
+- `content/stages/<stage>/<id>-<slug>/`: `module.yaml` (`id`, `status`, `objectives`, `practice`),
+  `module.mdx` (the page body: plain MDX, no frontmatter, no `<Practice />` — the page renders
+  practice), example `.py`/`.out`/`.err` files, and a `visuals/` folder of recorder scripts
+  (`.viz.py`) plus their generated output. The folder is found by its `<id>-` prefix alone.
 - `content/registry/ccc-problems.yaml`: the 119 CCC 2014–2026 problems (WMOJ/DMOJ links, aliases).
 - `content/glossary.yaml`, `content/concepts.yaml`: terms and Python features, each with an
-  `introducedIn` module id that prerequisite and glossary checks enforce.
+  `introducedIn` module id; content:check fails a module that uses one before that module.
 - `content/ui/strings.yaml`: all learner-facing UI copy.
 - `content/style/STYLE-GUIDE.md` and `house-skeleton.py`: the voice, format and code conventions —
-  read before writing or editing any lesson (see the `writing-lessons` skill).
+  read before writing or editing any module (see the `writing-modules` skill).

@@ -697,6 +697,7 @@
   margin: 0;
   padding: 0;
   min-width: 0;
+  max-width: 100%;
 }
 
 .vz-seg legend {
@@ -708,12 +709,19 @@
   white-space: nowrap;
 }
 
+/* A label that fits is one 30 px line, exactly as before; when a control is wider than its column
+   (long preset labels on a 390 px phone), labels shrink and wrap inside the control instead of
+   pushing the page sideways. */
 .vz-seg label {
   position: relative;
   display: inline-flex;
+  flex: 0 1 auto;
+  min-width: 0;
   align-items: center;
-  height: 30px;
-  padding: 0 10px;
+  justify-content: center;
+  min-height: 30px;
+  padding: 4px 10px;
+  text-align: center;
   font-size: var(--text-label);
   line-height: 1;
   font-weight: 600;
@@ -721,7 +729,6 @@
   color: var(--color-ink-2);
   font-variant-numeric: tabular-nums;
   cursor: pointer;
-  white-space: nowrap;
 }
 
 .vz-seg label + label {

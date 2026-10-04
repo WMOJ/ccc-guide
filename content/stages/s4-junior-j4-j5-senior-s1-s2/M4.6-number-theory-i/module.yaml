@@ -1,16 +1,10 @@
 id: M4.6
-title: Number theory I
 status: accepted
 objectives:
   - Determine whether a number is prime and find the smallest prime factor.
   - Calculate GCD and LCM using Euclid's algorithm and explain why it works.
   - Recognize when a problem needs modular arithmetic and apply it correctly.
   - Use trial division to factor a number and count divisors efficiently.
-prereqs:
-  - M1.2
-  - M2.5
-lessons:
-  - number-theory-i
 practice:
   - id: ccc19s2
     note: Find two primes that add up to twice a given number.

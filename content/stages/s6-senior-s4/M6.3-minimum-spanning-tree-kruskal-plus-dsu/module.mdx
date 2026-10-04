@@ -1,0 +1,69 @@
+A country has six cities and eight possible highways, each with a building cost. Every city must be able to reach every other city, directly or through other cities, and the country wants to spend as little as possible. Building all eight highways works, but it is not the cheapest way. A set of highways that connects every city with nothing to spare is a <Term id="minimum-spanning-tree">minimum spanning tree</Term>.
+
+Take the pieces one at a time. A spanning tree of a graph with $n$ nodes is a set of $n - 1$ edges that connects all the nodes and contains no cycle. A minimum spanning tree is the spanning tree with the smallest total weight. Fewer edges would leave some node cut off, and more would close a cycle, so the edge count is always exactly $n - 1$ when a spanning tree exists. Look at two spanning trees of the same six cities below, one chosen by taking the highways in the order they were listed and one chosen cheapest first.
+
+<Figure caption="The same six cities connected two ways: listed order costs 35, cheapest first costs 23" alt="Two copies of a six-city graph with cost-labeled highways. The left copy highlights a spanning tree built from the edges in listed order, costing 35. The right copy highlights the spanning tree built cheapest first, costing 23.">
+  <Diagram frames="visuals/compare.frames.json" preset="main" step={0} />
+</Figure>
+
+Both trees connect every city and neither has a cycle, yet they differ by 12. The rest of the lesson is about finding the cheaper one on a graph far too large to check by eye.
+
+## Why trying every tree does not work
+
+Contests give graphs with $n$ up to $10^5$ and $m$ up to $2 \cdot 10^5$ edges. With about $10^8$ simple steps available, the method has to be close to linear in $m$, up to a logarithm.
+
+The direct method is to try every set of $n - 1$ edges, discard the ones with a cycle, and keep the cheapest. For the six cities that is $\binom{8}{5} = 56$ sets, which is nothing. For 30 cities and 60 highways it is $\binom{60}{29}$, about $1.1 \cdot 10^{17}$ sets, and each one still needs a cycle check. Nothing here gets near $10^5$ nodes.
+
+## Take the cheapest edge that closes no cycle
+
+<Term id="greedy-algorithm">Greedy</Term> works here. Kruskal's algorithm sorts the edges by cost and looks at them cheapest first. An edge whose ends are already connected through earlier choices would close a cycle, so it is skipped. Any other edge is accepted. Each accepted edge joins two separate groups of cities into one, so after $n - 1$ acceptances everything is one group.
+
+Two questions need an answer: why is a cheap edge never a mistake, and how does the program know whether two cities are already connected?
+
+## Why the cheapest edge is safe
+
+A cut is a split of the nodes into two sides. An edge crosses the cut when its ends are on different sides. The cut property says: for any cut, the cheapest edge crossing it belongs to some minimum spanning tree.
+
+The argument is an exchange. Let $e$ be the cheapest edge across a cut. Suppose some minimum spanning tree $T$ does not contain it. $T$ connects the two ends of $e$ by a path. That path must cross the cut at some edge $f$. Remove $f$ from $T$ and add $e$ instead. The result is still connected and still has $n - 1$ edges, so it is a spanning tree, and it costs no more than $T$ because $e$ is no dearer than $f$. A minimum spanning tree that contains $e$ therefore exists.
+
+Kruskal's accepted edge $u$-$v$ is always the cheapest across one particular cut: the group containing $u$ on one side, every other city on the other. Any cheaper edge across that cut was examined earlier. Its ends were in different groups then too, because groups only grow, so it would have been accepted and merged. Step through the cuts below.
+
+<Figure caption="Each accepted edge is the cheapest edge across the cut around one group" alt="The six-city graph once per accepted edge. One group of cities is marked as a side of a cut, the edges crossing the cut are highlighted, and the cheapest of them is marked as the accepted edge. A second preset has equal costs.">
+  <StepThrough frames="visuals/cut.frames.json" preset="main" />
+</Figure>
+
+On the fourth cut the group is `{0}` and the crossing edges cost 5, 6 and 8, so 5 wins. The second preset has four edges that all cost 4. Whichever of them sorts first is the cheapest across its cut, and either choice leads to a tree of the same total cost.
+
+## Checking for a cycle with a DSU
+
+An edge closes a cycle exactly when its ends are already in the same group, which is the question a <Term id="disjoint-set-union">disjoint set union</Term> answers. M5.10 built it: a flat `parent` list, a `find` that halves paths as it climbs (<Term id="path-halving">path halving</Term>), and a `union` that attaches the smaller tree under the larger (<Term id="union-by-size">union by size</Term>). Here `union` returns `True` when it merged two groups and `False` when the ends already shared a root, so it is the cycle check and the merge in one call. The functions below are M5.10's, unchanged.
+
+<Code file="examples/kruskal_mst.py" showOutput caption="Kruskal's algorithm on the six-city graph, using the DSU from M5.10" />
+
+The program stores each edge as `(w, u, v)` with the cost first, so `edges.sort()` orders by cost, and ties fall back on the city numbers. It stops as soon as `n - 1` edges are chosen. The output is the total, 23, then the accepted edges in the order they were taken. If the loop ends with fewer than `n - 1` edges, the cities are not all connected, and the program prints `-1`.
+
+## Kruskal step by step
+
+Step through the algorithm on the same graph. The number under each city is its group's root, and the array on the right is `parent`. Try all three presets.
+
+<Figure caption="Kruskal's algorithm: accepted edges are thick, skipped edges close a cycle" alt="A six-city weighted graph beside its DSU parent array. Edges are examined cheapest first. An edge joining two groups is accepted and updates parent and the group roots. An edge inside one group is skipped. Two more presets show equal costs and a graph that splits into two groups.">
+  <StepThrough frames="visuals/kruskal.frames.json" preset="main" />
+</Figure>
+
+Edges 0-3, 1-4 and 0-2 are skipped: by then every city except 5 is in the group rooted at 1, so their ends share a root. Edge 3-5 is the only way to reach city 5, so it is accepted whatever it costs, and it is the fifth acceptance that ends the loop.
+
+Skipping is safe for the same exchange reason, seen from the other side. A skipped edge's ends are joined by a path of accepted edges, and each of them was examined earlier, so each costs no more than the skipped edge. Step through the skips below and compare each path's costs with the edge it beats.
+
+<Figure caption="A skipped edge loses to a path of accepted edges that cost no more" alt="The partly built tree with one skipped edge at a time. The skipped edge is marked, the path of accepted edges joining its two ends is highlighted, and the caption lists that path's edge costs. A second preset shows a graph that splits into two groups.">
+  <StepThrough frames="visuals/cycle.frames.json" preset="main" />
+</Figure>
+
+Edge 0-2 costs 8, but the tree already reaches city 2 from city 0 through edges costing 5 and 3. Adding 0-2 would make a loop, and the loop's most expensive edge is 0-2 itself, so dropping it is the right repair.
+
+In the second preset, the tie between edges of cost 4 leaves the last one unexamined. In the third, the highways form two separate triangles. The edges run out after four acceptances, and the two groups never merge, so the program prints `-1`. A graph that is not connected has a minimum spanning forest, one tree per group, but no spanning tree.
+
+## Speed on PyPy
+
+Sorting dominates: $m$ tuples cost about $m \log_2 m$ comparisons, roughly $3.5 \cdot 10^6$ for $m = 2 \cdot 10^5$. The DSU work is close to constant per edge, so the loop adds only a few $10^5$ operations. The program does three things that keep PyPy fast. It reads all tokens once with `sys.stdin.read().split()` and builds the edge list by index. It sorts one list of `(w, u, v)` tuples with a single call to `sort`. And its `find` is a `while` loop, never recursion, so a long chain of parents cannot overflow the stack. The early `break` also saves the tail of the sorted list once the tree is complete.
+
+Reach for a minimum spanning tree when a problem asks to connect everything at the lowest total cost, or to keep only as many links as connectivity needs. Sort the edges, run the DSU, and watch for the disconnected case.

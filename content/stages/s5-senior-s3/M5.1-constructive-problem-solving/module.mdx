@@ -1,0 +1,88 @@
+Given N and M, build an N-by-M grid of letters where every row has the same number of vowels as every other row. Every column must also share one vowel count, and each row must split exactly in half between vowels and consonants. Report "Impossible" if no such grid exists.
+
+Hold that problem in mind. Nothing here asks for a maximum, a minimum, or a count. It asks you to produce one grid that works, or to prove that none can. A problem phrased this way, "output any valid arrangement," "construct a grid," "find any sequence," is a <Term id="constructive-problem">constructive problem</Term>. You solve it by building an answer directly and checking it against every rule, not by searching a space of candidates for the best one.
+
+## Why a search does not fit
+
+The most direct alternative is <Term id="brute-force">brute force</Term>: try every way to fill the grid with vowels and consonants, and keep the first one that satisfies all three rules. Each of the grid's N times M cells has 2 choices, so the candidate count is 2 raised to N times M, not N times M itself. A 6-by-6 grid already has 2^36, about 6.9 x 10^10, candidates; an 8-by-8 grid has 2^64, about 1.8 x 10^19. PyPy checks on the order of 10^7 to 10^8 simple operations a second, so even the 6-by-6 count alone takes minutes, before a single grid is checked against the rules.
+
+<Figure caption="Every cell doubles the candidate count, while a direct construction only ever costs one step per cell" alt="A table comparing grid sizes to the number of brute-force candidates (2 to the power of the cell count) against the number of steps a direct construction takes, one per cell. 16 cells give 65,536 candidates; 100 cells give about 1.3 times 10 to the 30th.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      cells: [["65,536"], ["~6.9 x 10^10"], ["~1.8 x 10^19"], ["~1.3 x 10^30"]],
+      rowHeads: ["4x4, 16 cells", "6x6, 36 cells", "8x8, 64 cells", "10x10, 100 cells"],
+      colHeads: ["brute-force candidates"],
+    }}
+  />
+</Figure>
+
+Building the grid directly costs one step per cell, N times M, not 2 to the power of it. That gap only grows as the grid gets bigger, so a construction that reasons out the answer beats a search that tries every answer, however the grid is sized.
+
+## Start from the simplest pattern
+
+The way in is to try the simplest pattern that could possibly work, and complicate it only once that pattern actually fails.
+
+Fill the whole grid with `a`. Every row now has exactly M vowels, a constant across all rows; every column has exactly N vowels, a constant across all columns. Both of the first two rules hold immediately, for any N and M, with nothing to search for.
+
+## Extending the pattern for the third rule
+
+The third rule, that each row splits exactly in half, breaks the all-`a` grid at once: a row of all vowels has zero consonants. Complicate the pattern only as far as the new rule demands.
+
+Splitting a row in half needs M to be even; an odd M cannot divide into two equal integer halves no matter how the letters are arranged. So try a checkerboard: make cell (row, col) a vowel when row plus col is even, a consonant otherwise. Since M is even, exactly half of any row's column indices are even and half are odd. Every row lands at exactly M / 2 vowels and M / 2 consonants, satisfying the third rule directly by construction.
+
+<Code file="examples/grid_vowels.py" showOutput caption="Build the checkerboard row by row, or detect immediately that it cannot be done" />
+
+Step through the construction below. The first preset builds a 4-by-4 grid one row at a time. The second shows a size where the count cannot split evenly, and the third is the smallest grid the rules allow.
+
+<Figure caption="Filling a grid row by row with a checkerboard pattern, or detecting up front that no grid of this size can satisfy every rule">
+  <StepThrough frames="visuals/grid_vowels.frames.json" preset="valid" />
+</Figure>
+
+The checkerboard's own vowel count, M / 2 per row, is fixed the moment M is fixed, before a single row is filled in. That is what lets the impossible preset above rule out N = 3, M = 4 without ever finishing the grid: the total vowel count is already forced.
+
+## Why this construction is correct
+
+Two questions decide whether a grid of size N by M can satisfy all three rules, and both have short answers.
+
+First, M must be even, for the reason above: a row of odd length cannot split into two equal halves.
+
+Second, given M is even, N must also be even. Every row holds exactly M / 2 vowels once the third rule holds, so the whole grid holds N times M / 2 vowels in total. If the second rule holds too, that same total splits evenly across the M columns, so each column holds exactly (N times M / 2) / M vowels, which reduces to N / 2. That is only a whole number when N is even. So whenever N is odd, no arrangement of any kind, checkerboard or otherwise, can satisfy the second and third rules together: the total forces a fractional column count.
+
+Both conditions are also enough. When N and M are both even, the checkerboard already gives every row exactly M / 2 vowels. Running the same counting argument forward shows every column lands at exactly N / 2 vowels too. N even and M even is therefore not just necessary, it is sufficient, and the checkerboard is the witness that proves it.
+
+## Symmetry cuts the choices in half
+
+Some constraints get easier the moment symmetry is built in from the start. A row that has to read the same forwards and backwards only needs its first half chosen; mirroring the rest satisfies that rule automatically, with nothing left to check.
+
+<Code file="examples/mirror_half.py" showOutput caption="Choose the first half of a row, then mirror it to build a palindrome" />
+
+Choosing only half the positions also halves the chances of a mistake. It can rule out a size outright too. A row of length 1 or 2 has no position free of another, so it can never hold two different letters, whatever is chosen.
+
+<Figure caption="Choosing only the first half of a row and mirroring each choice into place; a row too short has no free position left over">
+  <StepThrough frames="visuals/mirror_half.frames.json" preset="six" />
+</Figure>
+
+The innermost chosen position becomes the row's one consonant. Mirroring carries it to its matching position automatically, so the row reads the same in both directions by construction. It is the same idea behind the grid above, applied to a single row.
+
+## Verify before you submit
+
+A construction is only as good as the check you run on it afterward. Before submitting, re-derive each rule from the finished grid independently of how it was built, the way a grader would.
+
+<Code file="examples/verify_grid.py" showOutput caption="Tally every row and every column and compare, without assuming the construction was right" />
+
+Step through the checker below on the finished 4-by-4 grid, then on a grid with one row deliberately broken.
+
+<Figure caption="Tallying each row's vowel count, then each column's, and comparing every tally against the others">
+  <StepThrough frames="visuals/verify_grid.frames.json" preset="valid" />
+</Figure>
+
+The broken preset changes only the last row to all vowels: its row count jumps to 4 while every other row stays at 2, and every column count shifts too. The checker reports invalid the moment it tallies that row. Running this same check by hand on the smallest grid the rules allow, the 2-by-2 case from the construction figure above, takes seconds. It catches an off-by-one a sample test might miss.
+
+## Keeping it fast on PyPy
+
+Every example above reads its input once with `sys.stdin.read().split()`. `grid_vowels.py` builds each row as a list of characters and joins it once with `"".join()`. PyPy has no in-place string append, so joining once beats concatenating one character at a time. The whole grid is collected into a list and printed with a single `"\n".join()` call instead of one `print()` per row. That keeps output cost proportional to the grid's size, not to the print-call count. None of the three examples searches, recurses, or keeps more state than the grid itself.
+
+## Putting it together
+
+A constructive solution almost always follows the same shape: try the simplest pattern that could satisfy every rule, and check it. When a rule breaks the simple pattern, look for the smallest change that repairs it, the way the checkerboard grew out of the all-vowel grid. If no repair works, look for a counting or parity argument, like the one above, that rules out every possible arrangement at once. Build in symmetry wherever a rule allows it, since it removes half the decisions before you make them. Then check the result independently, the way a grader would, before it ever reaches the judge.

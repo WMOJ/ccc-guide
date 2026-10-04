@@ -1,14 +1,9 @@
 id: M3.5
-title: Lookup tables
 status: accepted
 objectives:
   - Use a list or dictionary to map inputs to outputs.
   - Build a lookup table from problem data and query it quickly.
   - Avoid repeated computation by storing results in a lookup table.
-prereqs:
-  - M1.9
-lessons:
-  - lookup-tables
 practice:
   - id: ccc16j4
     note: Look up an arrival time using a rule that changes across the day.

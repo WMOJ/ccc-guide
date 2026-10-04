@@ -1,0 +1,119 @@
+Every string so far has been read, printed, or compared as one whole piece of text. Many CCC problems need to look inside a string instead: one character at a time, a range of characters, or a count of how many it holds. This lesson covers reading a string's length, picking out characters and ranges of characters, and moving between a character and the number that represents it.
+
+## Finding a string's length with `len()`
+
+`len()` takes a string and returns how many characters it holds.
+
+<Code file="examples/string_length.py" showOutput caption="Counting the characters in a word" />
+
+`"pumpkin"` holds seven characters, so `len(word)` is `7`. `len()` works on other kinds of values too, covered as they come up; here it counts characters.
+
+A blank line, read with `input()`, still has a length: `0`, since it holds no characters at all. Checking `len(word) == 0` is a common way to notice that a line was empty, rather than comparing it against the literal text `""` directly.
+
+## Reading one character with indexing
+
+Indexing reads a single character out of a string by its position, written `word[i]`. Positions start at `0`, the same way `range()` does, so the first character is `word[0]`, not `word[1]`.
+
+<Code file="examples/first_and_last.py" showOutput caption="The first and last characters of a word" />
+
+`word[0]` is `"p"`, the first character. `word[-1]` is `"n"`, the last one: a negative index counts backward from the end, so `-1` always means the last character, however long the string is, without needing `len(word) - 1`.
+
+Step through the lookups below on one word. The pointer marks the character each index picks out, and the numbers under the cells are the positive indices.
+
+<Figure caption="Reading word[0], word[-1] and word[-len(word)], then an index past the end">
+  <StepThrough frames="visuals/indexing.frames.json" />
+</Figure>
+
+The third lookup lands on the same cell as the first, because counting back the full length returns you to the start. The last step shows one index too far, which the next example does for real.
+
+<Code file="examples/index_error.py" expectError="IndexError" caption="Indexing past the end of a three-letter word" />
+
+`"cat"` only has characters at indices `0`, `1` and `2`. Asking for `word[10]` reaches past the end, so Python raises an `IndexError` instead of returning something meaningless. Whenever you index with a value you computed, check that it can never reach past the last valid index, `len(word) - 1`. The same holds going backward: `word[-100]` on a three-letter word raises the same error, since the index has to land on a character the string holds.
+
+## Taking out a range with slicing
+
+Slicing reads out a whole range of characters at once, written `word[a:b]`. Like `range(a, b)`, it starts at `a` and stops just before `b`, never including the character at `b` itself.
+
+<Code file="examples/slice_basics.py" showOutput caption="Slicing three different ranges from one word" />
+
+`"elephant"` sliced `[1:4]` gives `"lep"`: characters at indices `1`, `2` and `3`. Leaving out the start, `[:3]`, begins from `0`, giving `"ele"`. Leaving out the stop, `[3:]`, runs to the end of the string, giving `"phant"`.
+
+<Code file="examples/slice_out_of_range.py" showOutput caption="A slice past the end of a string, with no error" />
+
+`"cat"` sliced `[2:100]` gives `"t"`, just the characters that actually exist from index `2` onward. Unlike indexing, a slice never raises an error for a range that reaches past the end. It simply stops at whatever characters the string actually has.
+
+`word[:]`, with both sides left out, copies the whole string. It rarely does anything useful on its own. The same pattern with only one side left out, `word[a:]` or `word[:b]`, comes up far more often: everything from a chosen point onward, or everything up to it.
+
+A slice's bounds can be negative too, counting backward the same way a single index does. On `"pumpkin"`, index `3` and index `-4` name the same character, so `word[-4:]` reads the same range as `word[3:]`.
+
+The ruler below shows both numberings on `pumpkin`.
+
+<Figure caption="Index ruler for a seven-letter word: positive indices below the cells, negative indices for the same three positions" alt="The word pumpkin, one character per cell, with positive indices 0 through 6 shown under each cell and the negative indices -7, -4 and -1 marked below those at the same three positions. One range above the cells marks word[1:4]; one range below marks the equivalent word[-4:].">
+  <Diagram
+    viz="ArrayViz"
+    data={{
+      values: ["p", "u", "m", "p", "k", "i", "n"],
+      indices: true,
+      pointers: [
+        { name: "-7", at: 0 },
+        { name: "-4", at: 3, strong: true },
+        { name: "-1", at: 6 },
+      ],
+      ranges: [
+        { from: 1, to: 3, label: "word[1:4]" },
+        { from: 3, to: 6, label: "word[-4:]", side: "below" },
+      ],
+    }}
+    title="pumpkin, indexed both ways"
+  />
+</Figure>
+
+Index `3` carries both labels here, `3` counting from the front and `-4` counting from the back, which is why `word[3:]` and `word[-4:]` read out the same four letters.
+
+Step through the same three slices below, on two different words. Try both presets.
+
+<Figure caption="Slicing word[1:4], word[:3] and word[3:] on a full-length word, then on a single character">
+  <StepThrough frames="visuals/slicing.frames.json" />
+</Figure>
+
+The single-character preset shows that slicing never raises an error. Both `word[1:4]` and `word[3:]` come out empty, `""`, instead of crashing the way an out-of-range index would.
+
+## Converting between a character and its code point
+
+Every character Python can store has a whole number behind it, called its code point. `ord()` gives the code point of a single character. It only accepts one character at a time, never a whole word. `chr()` goes the other way, turning a code point back into its character.
+
+<Code file="examples/ord_chr_basics.py" showOutput caption="Moving between a letter and its code point" />
+
+For the letter `a`, `code` is `97`. `chr(code)` reverses that and gives back `"a"`, and `chr(code + 1)` gives `"b"`, the next letter of the alphabet. Together, `ord()` and `chr()` let you step through letters by position instead of typing each one out. Step through the three calls below, and try the other presets.
+
+<Figure caption="ord() and chr() on one letter: its code point, the letter back, and the next character">
+  <StepThrough frames="visuals/ord-chr.frames.json" />
+</Figure>
+
+Uppercase letters have their own codes: `ord("A")` is `65`, a different number from `ord("a")`. The third preset shows where stepping runs out. One step past `"z"` lands on a punctuation character, not a letter. A problem that shifts letters by some number of positions, wrapping from `"z"` back to `"a"`, needs `%` alongside `ord()` and `chr()` to stay inside the alphabet's range of codes.
+
+## A pattern to avoid: building a string with `+=`
+
+<Code file="examples/slow_concat.py" showOutput caption="Building a string one character at a time with +=" />
+
+This copies `word` into `result` one character at a time, and the output is correct. A string cannot be edited in place, so each `+=` builds a whole new string. Step through what that costs.
+
+<Figure caption="Each += builds a new, longer string, copying every character already in result">
+  <StepThrough frames="visuals/concat-build.frames.json" />
+</Figure>
+
+The caption counts the old characters copied on every pass, and the total grows with each one. For a string of 1,000 characters, the copies add up to about 500,000. On PyPy that makes this pattern slow once a string gets long. Collecting the pieces in a list and joining them once avoids the repeated copying, and the module on output formatting shows `join`.
+
+## Tracing a character loop
+
+Indexing and loops combine in the most common string pattern: visit every position in turn. Step through the loop below line by line, and switch presets to change the word.
+
+<Figure caption="Looping over every index of a word, pairing each one with its character">
+  <CodeTrace trace="examples/char_loop.trace.json" />
+</Figure>
+
+`range(len(word))` visits every valid index of `word`, whatever its length, and `word[i]` reads the character at each one in turn. The three-letter preset loops three times; the four-letter preset loops four, since `len(word)` itself decides how many indices there are to visit.
+
+## Recap
+
+This lesson covered finding a string's length with `len()`, and reading one character with indexing and a negative index from the end. It also covered taking out a range with slicing, and converting between a character and its code point with `ord()` and `chr()`. Last, it covered the `IndexError` an out-of-range index raises, and a pattern to avoid when building up a string in a loop. The three problems below all work with a line of text one character at a time.

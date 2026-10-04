@@ -2,7 +2,6 @@
 export { CourseMapPage } from "./CourseMapPage";
 export { GlossaryPage } from "./GlossaryPage";
 export { HomePage } from "./HomePage";
-export { LessonPage } from "./LessonPage";
 export { ModulePage } from "./ModulePage";
 export { NotFoundPage } from "./NotFoundPage";
 export { ProblemsPage } from "./ProblemsPage";

@@ -1,15 +1,9 @@
 id: M6.12
-title: Doubling and binary lifting on sequences
 status: accepted
 objectives:
   - Build a doubling table where each entry is the jump before it, applied twice.
   - Answer a "where do I land after K jumps" query by combining one table entry per set bit of K.
   - Explain why the table costs O(n log K) to build, each query O(log K), and why the order of the hops does not matter.
-prereqs:
-  - M4.15
-  - M4.5
-lessons:
-  - binary-lifting
 practice:
   - id: ccc16s5
     note: Find the state of a ring of cells after an enormous number of generations.

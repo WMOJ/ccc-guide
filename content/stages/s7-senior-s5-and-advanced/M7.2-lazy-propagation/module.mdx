@@ -1,0 +1,73 @@
+A warehouse holds six shelves with `2 4 1 3 5 2` items on them. Events arrive in any order. One says "add 5 items to every shelf from 1 up to, but not including, 5." Another asks for the total on a range of shelves. M7.1's segment tree handles a change to one shelf in $O(\log n)$ steps, but this event changes a whole range.
+
+## Why a range update needs a new idea
+
+Suppose $n$ and the number of events are both up to $2 \cdot 10^5$. Doing a range add as one point update per shelf costs up to $n$ point updates, each $O(\log n)$. Writing each position of a plain array is no better, at $n$ steps per event. So $q$ events cost about $4 \cdot 10^{10}$ steps, far past the budget of roughly $10^8$ simple steps from M2.9.
+
+The insight behind <Term id="lazy-propagation">lazy propagation</Term> is that a range add does not need to reach the leaves right away. The range splits into a few nodes that cover it exactly. These are the same nodes that M7.1's query loop takes. Fix each covering node's own sum now. Then leave a note on it, called a tag: "every leaf below you still owes +5." Compare how few nodes that is with the number of leaves.
+
+<Code file="examples/cover_count.py" showOutput caption="Counting the covering nodes for a range from 1 up to size - 1, using the query loop from M7.1" />
+
+<Figure caption="Leaf writes against covering nodes: the nodes grow by 8 while the array grows sixteenfold" alt="A table comparing leaf writes and covering nodes for a range that nearly fills the array, for array sizes 8, 128, 2,048 and 32,768. Leaf writes grow with the array. Covering nodes grow by 8 each time the size is multiplied by 16.">
+  <Diagram frames="visuals/dg_count.frames.json" preset="sizes" step={0} />
+</Figure>
+
+The table is the whole argument for the technique. At size 32,768 a range add touches 28 nodes instead of 32,766 leaves. For $n = 2 \cdot 10^5$ the padded size is $2^{18}$, and the count is at most 2 nodes per level, 36 in all.
+
+## A tag is a debt on a node
+
+Keep a second list, `lazy`, next to `tree`, with the same indexing as in M7.1: leaves at `size + i`, children of `i` at `2 * i` and `2 * i + 1`. The rule has two halves. Every `tree[i]` is the correct sum for its range, counting every update applied at `i` or below, but not tags still waiting at `i`'s ancestors. And `lazy[i]` is an amount each leaf under `i` still owes, which `i`'s children have not received. For a range add, covering a node of length `length` by `v` changes its sum by `v * length`, not by `v`, because every position under it grows.
+
+Two tags on one node combine by adding: a node owing +5 that then receives +3 owes +8. Adds can be applied in any order and still give the same sum, which is why a tag can wait as long as it needs to.
+
+## Pushing before descending
+
+A tag must never be skipped. If a query looked inside a node whose children still owe something, it would read stale numbers. So the code uses the classic push-on-descent rule. Whenever an update or a query is about to visit a node's children, it first pushes that node's tag down. Each child's sum grows by `tag * half` and each child's own tag grows by `tag`. Then the node's tag is cleared.
+
+Why is this enough? Every trip down the tree passes through the ancestors of the node it ends at, and pushes at each one. By the time the walk stands on a node, every ancestor has emptied its tag into the next level, so `tree[i]` and its children are correct. A node that lies entirely inside the range never pushes, because nothing needs to look below it. A node entirely outside is left alone.
+
+<Code file="examples/lazy_tree.py" showOutput caption="A lazy segment tree for range add and range sum, with push on every partial visit" />
+
+The recursion goes one level per call, so it is at most `log2(size) + 1` calls deep, 19 for $n = 2 \cdot 10^5$. That is provably tiny, unlike a recursion that follows a chain of input nodes, so no `sys.setrecursionlimit` is needed.
+
+## Watching an update place tags
+
+Step through the update below, which adds 5 to positions 1 up to, but not including, 5. Watch which nodes return immediately, which get a tag, and which only recompute their sum. Try the other two presets too: one has a tag already waiting on a node the update must pass through, and one covers a block exactly.
+
+<Figure caption="One range add: outside nodes return, covered nodes take a tag, and partly covered nodes push and recompute" alt="A range add on a six-value lazy tree. The update walks down from the root. Nodes outside the range return at once, nodes partly inside recurse into both children, and nodes fully inside receive a tag and a corrected sum. Sums of partly covered nodes are recomputed on the way back up.">
+  <StepThrough frames="visuals/sv_update.frames.json" preset="middle" />
+</Figure>
+
+In the first preset, only three nodes changed: a tag on node 5, and direct changes to two leaves. Leaves have no children, so a leaf's tag is never read. In the second preset the update meets node 2's waiting +2, and pushes it to nodes 4 and 5 before going on. That is the rule above at work, and it is why the update never overwrites a tag: each tag lands on top of whatever the child already owed.
+
+## Following a whole session
+
+The program's input applies two overlapping updates and then asks three sums. Follow each operation in turn below, one step each.
+
+<Figure caption="Five operations on one tree: tags accumulate on covering nodes, and only a query that must look inside one pushes it" alt="A lazy segment tree over six values followed through a list of operations, one step per operation. An update leaves tags on a few covering nodes and recomputes the sums above. A query reads the covering nodes and pushes a tag down at each partly covered node on its path.">
+  <StepThrough frames="visuals/sv_timeline.frames.json" preset="example" />
+</Figure>
+
+The second update lands on node 5 again, and its tag becomes +8. The whole-array sum reads nodes 2 and 6 without pushing anything, because both lie inside the range and hold correct sums. Only the single-shelf question in operation 4 forces the +8 down, since it has to look beneath node 5.
+
+## Reading a value beneath a tag
+
+Queries follow the same rule. Step through the next figure, which asks for one position after two updates stacked on node 5. The other presets show a query that never touches a waiting tag, and one that pushes a tag through two levels.
+
+<Figure caption="A range sum pushes each tag it walks past; tags off its path stay pending" alt="A range-sum query after some updates on a six-value lazy tree. A node partly inside the range first pushes its tag to its two children, then the query visits them. Nodes outside return zero and nodes inside return their sum. The presets show stacked tags, a pending tag the query never touches, and a tag pushed through two levels.">
+  <StepThrough frames="visuals/sv_query.frames.json" preset="nested" />
+</Figure>
+
+Node 5's +8 lands on its children as `8 * 1` each. The answer, 11, is shelf 3's real value: 3 plus 5 plus 3. The query left every other tag where it was.
+
+## Other updates and the cost
+
+The sum tree scales a tag by the node's length because a sum grows with every position. For range add with range maximum, a tag of +v raises the node's maximum by exactly `v`, so no length appears. Range assignment needs a tag value that means "no tag", such as `None`, because 0 is a legitimate assignment. The composing rule changes as well: a later assignment replaces an earlier one. Choose the tag and its composition first, then the summary's update, and the same recursion applies.
+
+Every update or query visits at most 4 nodes per level and pushes at most once at each partial node, so each costs $O(\log n)$. With $2 \cdot 10^5$ operations that is about $2 \cdot 10^5 \cdot 72 \approx 1.4 \cdot 10^7$ small calls in the worst case, inside the budget. The `lazy` list doubles the memory, which is 524,288 extra entries at $n = 2 \cdot 10^5$.
+
+## Making it fast on PyPy
+
+Keep a tag as one int, so pushing is two additions and a multiply. The `if tag != 0` guard in `push` skips most pushes, since most nodes carry no tag. The nested functions read `tree` and `lazy` from the enclosing scope, which PyPy compiles without extra cost, so there is no need to pass the lists on every call. Read all input once and write all answers in a single call, as the example does.
+
+Reach for lazy propagation when updates and queries both work on ranges. The update must be a tag that composes with another tag and applies to a node's summary in constant time. For point updates only, M7.1's tree is enough.

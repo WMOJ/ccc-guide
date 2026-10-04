@@ -1,17 +1,10 @@
 id: M6.8
-title: Coordinate compression and sweep line
 status: accepted
 objectives:
   - Compress large coordinates into a dense rank map.
   - Build a 2D difference array on a compressed grid weighted by real dimensions.
   - Sweep over sorted events to compute coverage, not just a count.
   - Solve rectangle and interval problems that span large coordinate ranges.
-prereqs:
-  - M4.3
-  - M4.4
-  - M5.5
-lessons:
-  - coordinate-compression
 practice:
   - id: ccc14s4
     note: Find the area of a window where overlapping tinted panes add up to at least a given tint.

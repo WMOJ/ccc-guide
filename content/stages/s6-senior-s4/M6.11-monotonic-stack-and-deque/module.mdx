@@ -1,0 +1,63 @@
+A weather log lists each day's temperature. For every day you want to know how many days pass before a warmer one arrives. Day 0 might be 68 degrees and the next warmer day is four days later, so day 0's answer is 4. A day with no warmer day after it gets 0.
+
+The plain way scans forward from each day until it finds a warmer one. On a long cooling trend that scan never succeeds, so it reads every later day. With $n = 2 \cdot 10^5$ days that is about $n^2 / 2 = 2 \cdot 10^{10}$ reads, far past the roughly $10^8$ steps M2.9 says a solution can afford. A <Term id="monotonic-stack">monotonic stack</Term> answers every day in about $2n$ steps. The structure keeps its entries in one direction, never rising here, by removing entries before adding a new one.
+
+## Days waiting for a warmer one
+
+Keep a stack of days that have not yet met a warmer day. When day `i` arrives, every day on top of the stack that is cooler than day `i` has just found its answer, so pop it and record `i - day`. Then push day `i`, since it is now waiting itself.
+
+<Code file="examples/next_greater.py" showOutput caption="How many days until a warmer one, for every day" />
+
+The stack stores day numbers, not temperatures, because the answer is a difference of positions, and the temperature is one lookup away. Step through the six days below. Try the falling preset, where no day ever finds a warmer one, and the rising preset, where every new day pops the one before it.
+
+<Figure caption="Days waiting for a warmer one sit on the stack; each warmer day pops and answers every cooler day on top" alt="A row of daily temperatures and a row of waits beneath it, next to a stack of day numbers still waiting for a warmer day. Each new day pops every cooler day on top of the stack, filling in how long each waited, then is pushed itself. Days left at the end keep a wait of 0.">
+  <StepThrough frames="visuals/next_greater.frames.json" preset="mixed" />
+</Figure>
+
+Why is it safe to pop a day the moment something warmer arrives? That day's question is answered at once. Day `i` is the first warmer day after it, because any day in between that was warmer would already have popped it. The days below it on the stack are each at least as warm as it, or they would have been popped, so the stack never rises from bottom to top. That is the invariant. A day that stays on the stack is exactly one whose question is still open.
+
+## Each day is pushed once and popped once
+
+The inner `while` loop makes the code look quadratic, and in the mixed preset day 4 pops three days at once. Count across the whole scan instead. Every day is pushed exactly once, and a popped day is never pushed again, so pops cannot exceed pushes. The total is at most $2n$ operations, which is what amortized $O(n)$ means. A single day can be expensive, but the many cheap days pay for it.
+
+<Figure caption="Pops and pushes per day, with running totals, for three shapes of input" alt="A table with one row per day showing the temperature, how many days it popped, how many it pushed, and running totals of both. One day can pop several days at once, but the total pops never exceed the total pushes.">
+  <StepThrough frames="visuals/push_pop.frames.json" preset="mixed" />
+</Figure>
+
+Follow the running totals in each preset. Falling temperatures never pop and rising ones pop once per day, yet both stay under $2 \cdot 8 = 16$. In the mixed preset the pops arrive in bursts of 1, 3 and 2, and the total is still 14.
+
+## The same idea for a window maximum
+
+M5.11 tracked a sliding-window minimum with a heap of `(value, index)` pairs. Every index goes in, and old ones come out only when they reach the top, at a cost of $O(\log n)$ per step. The maximum version is the mirror image. A <Term id="monotonic-deque">monotonic deque</Term> does it in constant time per step, using the same rule as the stack.
+
+Keep a deque of indices whose values fall from front to back. When index `i` arrives, pop from the back every index whose value is at most `values[i]`. It is older and no larger, so it can never be a window's maximum again. Whenever it sits in a window, `i` sits in that window too, and `i` is at least as big. Then push `i`. Separately, pop from the front any index that has left the window. The front is now the maximum.
+
+<Code file="examples/sliding_max.py" showOutput caption="The maximum of every window of 3, from the front of a deque" />
+
+Step through the deque below. The main preset ends with an old front leaving the window. Try the falling preset, where nothing leaves the back and only the window's edge removes indices. Then try the rising preset, where the deque never holds more than one index.
+
+<Figure caption="A deque of indices whose values fall from front to back: the front is always the window's maximum" alt="A row of values with a window of the last k indices marked, next to a deque of indices whose values fall from front to back. A new index removes smaller or equal entries from the back before joining, an index older than the window leaves the front, and the front is always the window's maximum.">
+  <StepThrough frames="visuals/sliding_deque.frames.json" preset="main" />
+</Figure>
+
+The deque holds only candidates for some future maximum, so it stays small. Nothing stale hides behind the front, because the entries behind it are newer, so only the front can expire. Each index is pushed once and removed at most once, the same $2n$ bound as the stack.
+
+## How far a bar can stretch
+
+The stack can also measure distance on both sides. Given bar heights in a histogram, find the largest rectangle that fits inside the bars. A rectangle of height `h` is limited by the nearest shorter bar on each side.
+
+Keep a stack of bar indices with heights rising from bottom to top. When bar `i` is not taller than the bar on top, the top bar can stretch no further right. Its right limit is `i`. Its left limit is the bar just below it on the stack, because everything between them was at least as tall and was popped earlier. So the width is `i - left - 1`, and the area is the top bar's height times that width. A bar of height 0 appended at the end pops everything.
+
+<Code file="examples/largest_rectangle.py" showOutput caption="Largest rectangle in a histogram, measured when each bar is popped" />
+
+Popping with `>=` means an equal bar pops its twin. The earlier bar is measured too narrowly, but the later one is measured with the full width, so the answer is right. Step through the bars below. Try the equal-bars preset to see that, and the rising preset, where nothing pops until the sentinel arrives.
+
+<Figure caption="Each popped bar is measured from the bar below it on the stack to the bar that popped it" alt="A row of histogram bar heights with a final bar of height 0, next to a stack of bar numbers with heights rising from bottom to top. When a bar is not taller than the top of the stack, the top bar is popped and its widest rectangle is measured from the bar below it to the current bar. The largest rectangle seen is the answer.">
+  <StepThrough frames="visuals/histogram.frames.json" preset="main" />
+</Figure>
+
+## Making it fast on PyPy
+
+Every program here reads its input once with `sys.stdin.read().split()` and works on flat lists of integers. A Python list is a fine stack, since `append` and `pop` at the end are constant time. Use `collections.deque` for the window: `popleft` on a deque is constant time, while `pop(0)` on a list shifts every remaining element. Store indices rather than values, so you can tell whether an entry is still inside the window, and look values up through the array. Build the output in a list and print it once.
+
+Reach for a monotonic stack when each element asks about its nearest smaller or larger neighbor. Reach for a deque when a window slides and you need its maximum or minimum.

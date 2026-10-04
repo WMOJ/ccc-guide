@@ -1,0 +1,75 @@
+Two files sit somewhere in a folder tree, and you want the deepest folder that holds both. That folder is the <Term id="lowest-common-ancestor">lowest common ancestor</Term> of the two nodes, the LCA for short: the deepest node that is an ancestor of both. A node counts as its own ancestor, so if one file's folder contains the other file's folder, that folder is the answer. A problem may ask for this for 2·10^5 pairs of nodes on a tree of 2·10^5 nodes. This lesson answers each pair with the doubling table from M6.12, on a tree rooted the way M5.8 rooted one.
+
+## Parent and depth from a BFS
+
+Root the tree at node 0 with the iterative BFS from M5.8, filling `parent` and `depth`. The one new choice is the root's parent: set `parent[0] = 0`. A jump that would pass the root then lands on the root and stays there, the same way M6.12's dead-end station points to itself. No lookup ever leaves the table, and the query code needs no special case for the top.
+
+## Walk up until they meet
+
+The direct method uses only `parent` and `depth`. While one node is deeper, move it to its parent. When the depths match and the nodes still differ, move both up together until they are the same node. Step through it below on a tree of nine nodes, each labeled with its depth. Try the three presets.
+
+<Figure caption="Walking two nodes up by parent moves until they land on the same node" alt="A tree of nine nodes with each node's depth under it. Node a and node b climb one parent at a time: the deeper one alone until the depths match, then both together until they are the same node. A table counts the parent moves.">
+  <StepThrough frames="visuals/walk.frames.json" preset="main" />
+</Figure>
+
+<Code file="examples/lca_walk.py" showOutput caption="Answering three queries by walking up, with a count of the parent moves" />
+
+The first preset needs six parent moves and the ancestor preset two. The code counts 13 for its three queries. The cost of one query is the depth of the nodes, and the chain preset shows the worst case: a tree that is one path. With 2·10^5 nodes in a chain and 2·10^5 queries between the two ends, the walks make about 4·10^10 moves, far past the 10^8 or so operations a solution can afford (M2.9).
+
+## The ancestor table is M6.12's table
+
+M6.12 built `up[k][v]`, the node reached after `2^k` jumps from `v`, with `up[k][v] = up[k-1][up[k-1][v]]`. Here `up[0]` is the `parent` list, and `up[k][v]` is the ancestor `2^k` levels above `v`, or the root if the tree is not that tall. The table needs `LOG` levels, and `LOG = max(depth).bit_length()` is enough, because every depth difference is below `2^LOG`.
+
+<Code file="examples/lca_table.py" lines="17-34" showOutput caption="Parent and depth from a BFS, then the table built one level from the last" />
+
+Step through the filling below. Each cell reads two cells of the level to its left, which is the halfway node, and the tree marks where each jump lands. The second preset is a five-node tree with only two levels.
+
+<Figure caption="Filling up[k][v] on the tree: jump halfway, then jump the same distance again" alt="A tree of nine nodes beside a table with one row per node and one column per level. Level 0 holds each node's parent. Every later cell is filled one at a time from two cells of the column to its left, while the tree marks the node being filled, the halfway node and the landing node.">
+  <StepThrough frames="visuals/table.frames.json" preset="main" />
+</Figure>
+
+The last level shows why the top is safe. Only nodes 7 and 8 are deep enough that four levels up is not the root, so every other entry of `up[2]` is 0.
+
+## Equalize the depths
+
+Let `a` be the deeper node and `diff = depth[a] - depth[b]`. Climb `a` by `diff` levels with M6.12's bit walk: for each bit `k` that is set in `diff`, replace `a` with `up[k][a]`. Climbing 1 level is one lookup, and climbing 6 levels (binary 110) is two. If `a` and `b` are now the same node, `b` was an ancestor of `a` and that node is the answer.
+
+## Jump together from the highest level
+
+Otherwise the two nodes sit at the same depth, in different branches below their LCA. Try the levels from the highest `k` down to 0. At each level, compare `up[k][a]` and `up[k][b]`. If they differ, both jumps stay below the LCA, so take them both. If they are the same node, the jump reaches the LCA or passes it, so leave `a` and `b` where they are. After level 0, `a` and `b` are different children of the LCA, and the answer is `up[0][a]`.
+
+Step through this on the same tree. The uneven preset starts with the shallower node first, and the ancestor preset ends right after the climb.
+
+<Figure caption="Equalizing the depths with set bits, then trying each level from the highest down and jumping only when the two targets differ" alt="A tree of nine nodes with depths, and a table holding the query nodes a and b. The deeper node climbs by the depth difference using the table. The two nodes then try each level from highest to lowest, jumping together when their targets differ and skipping when the targets match, and the answer is the parent of where they stop.">
+  <StepThrough frames="visuals/query.frames.json" preset="main" />
+</Figure>
+
+Why is the high-to-low order right? Say both nodes are `t` levels below their LCA, with `t` at least 1. A jump of `2^k` levels lands on different nodes exactly when `2^k` is less than `t`, because only then does it stop below the LCA. So the test asks whether `t - 1` still contains `2^k`, and taking the levels from the top writes `t - 1` in binary one digit at a time. The nodes end `t - 1` levels up, which is one level below the LCA.
+
+## The whole query
+
+<Code file="examples/lca_query.py" lines="39-59" showOutput caption="Each query prints the LCA and the number of edges between the two nodes" />
+
+The lines above the query loop are the BFS and the table from before. Each output line holds the LCA, then the distance between the nodes. For `7 3` the answer is node 3 and the distance is 2, because 3 is an ancestor of 7. The trace below runs a short version, `lca_lift.py`, that starts from the depths and the finished table, so the query itself is the only thing that moves.
+
+<Figure caption="Tracing the short query: read the table, climb by the depth difference, then try the levels from highest to lowest">
+  <CodeTrace trace="examples/lca_lift.trace.json" preset="main" />
+</Figure>
+
+Switch to the uneven preset, where the depth climb happens, and the ancestor preset, which prints before the level loop begins.
+
+## Distance between two nodes
+
+The last column of the output comes from one line: `depth[a] + depth[b] - 2 * depth[lca]`. The path from `a` to `b` goes up to the LCA and down again. Both depths count the edges from the root down to the LCA, which are not on that path, so the formula subtracts them twice.
+
+<Figure caption="The path between two nodes as two climbs to their LCA" alt="A tree of nine nodes with depths. Two nodes are chosen, their LCA is marked, and the path is highlighted in two parts, from the first node up to the LCA and from the LCA down to the second node. The caption adds the two parts and matches depth of a plus depth of b minus twice the depth of the LCA.">
+  <StepThrough frames="visuals/distance.frames.json" preset="main" />
+</Figure>
+
+## Making it fast on PyPy
+
+With 2·10^5 nodes and `LOG` = 18, the table has 3.6·10^6 entries. Building each level with one list comprehension over the previous level keeps the work at that many lookups. A query makes under 100 lookups, so 2·10^5 queries cost under 2·10^7. Read all input at once, collect the answer lines, and write them once. The BFS is iterative, so a path-shaped tree of 2·10^5 nodes is no problem.
+
+## When to reach for it
+
+Use it when a tree is fixed and many pairs of nodes are asked about: who is their common ancestor, or how far apart are they. The same table answers "the ancestor `d` levels up" directly, which is M6.12's jump query on the parent list.

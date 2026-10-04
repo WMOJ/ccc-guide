@@ -1,5 +1,4 @@
 id: M7.12
-title: Python constant-factor engineering at scale
 status: accepted
 objectives:
   - Estimate whether a plan's operation count fits the budget before trimming constant factors.
@@ -7,12 +6,6 @@ objectives:
   - Replace pairs with parallel lists or a single packed integer key.
   - Bind repeated lookups to local names and avoid slices and copies inside loops.
   - Recognize when a constant-factor change cannot rescue a plan that does too much work.
-prereqs:
-  - M2.9
-  - M3.10
-  - M5.7
-lessons:
-  - constant-factor-engineering
 practice:
   - id: ccc19s4
     note: Split a row of attractions into days and score each day by its best attraction.

@@ -1,14 +1,9 @@
 id: M2.9
-title: Complexity analysis and deriving the target from N
 status: accepted
 objectives:
   - Estimate how many operations a plan performs as N grows, and name that growth using Big-O.
   - Read a bound on N and judge, roughly, which complexity classes will finish in time and which will not.
   - Recognize that operation-per-second budgets and memory estimates are rules of thumb, not guarantees, and that a maximum-size test is still how you check.
-prereqs:
-  - M2.5
-lessons:
-  - complexity-analysis-and-deriving-the-target-from-n
 practice:
   - id: ccc25j4
     note: Given N days of weather with exactly one day allowed to be corrected, find the longest run of sunny days that correction can produce, for N as large as 500,000.

@@ -1,15 +1,10 @@
 id: M1.4
-title: Booleans and conditionals
 status: accepted
 objectives:
   - "Compare values with `==`, `!=`, `<`, `<=`, `>`, `>=`, and test membership with `in`."
   - Branch a program's logic with `if`, `elif` and `else`.
   - Combine conditions with `and`, `or` and `not`, and chain comparisons like `0 <= x <= 10`.
   - Write a short either/or value in one line with a conditional expression.
-prereqs:
-  - M1.2
-lessons:
-  - booleans-and-conditionals
 practice:
   - id: ccc21j1
     note: Turn a boiling point into an atmospheric pressure and a three-way elevation reading.

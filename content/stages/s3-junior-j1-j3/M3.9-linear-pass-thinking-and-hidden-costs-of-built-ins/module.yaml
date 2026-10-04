@@ -1,15 +1,10 @@
 id: M3.9
-title: Linear pass thinking and hidden costs of built-ins
 status: accepted
 objectives:
   - Solve problems by scanning data once instead of searching repeatedly.
   - Recognize when calling a built-in function does extra work.
   - Apply the two-pointer technique to solve problems in one pass.
   - Reason about time complexity to avoid slow solutions.
-prereqs:
-  - M2.9
-lessons:
-  - linear-pass-thinking
 practice:
   - id: ccc18s1
     note: Find the smallest neighborhood among villages along a road.

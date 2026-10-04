@@ -1,0 +1,47 @@
+Every program so far ran each line once, from top to bottom. Many CCC problems give you a count first, then ask you to repeat the same steps that many times. You might need to read that many scores, check that many test results, or add up that many prices. Writing the same lines out by hand would only work for a count fixed at write time, which a test case rarely gives you. This lesson covers repeating a block of code with a `for` loop, however many times a problem asks for.
+
+## Repeating an action with `range`
+
+`range(5)` produces the whole numbers `0`, `1`, `2`, `3` and `4`, one after another. A `for` loop visits each one in turn, running its indented block once per value.
+
+<Code file="examples/print_stars.py" showOutput caption="Printing a line five times with a for loop" />
+
+`for i in range(5):` runs the block below it five times, once for each of `0` through `4`. The loop variable `i` takes each of those values in turn, though this program never looks at it: it only cares that the block runs five times. Every line indented under the `for` line is part of the loop body, the same way indentation marked a block under `if` and `else` in the last module. A block with more than one indented line still runs the whole block once per pass, in order, top to bottom.
+
+## Counting from a chosen start
+
+`range()` also accepts two numbers: `range(start, stop)` counts from `start` up to, but never including, `stop`. To print the numbers `1` through `n`, the stop value has to be `n + 1`, since `range()` always leaves its stop value out.
+
+<Code file="examples/count_from_one.py" showOutput caption="Counting from 1 through n with range(1, n + 1)" />
+
+With `n` set to `5`, `range(1, n + 1)` is `range(1, 6)`, which visits `1`, `2`, `3`, `4` and `5`. Writing `range(1, n)` here instead is a common off-by-one mistake: it would stop one short and never print `5` at all. Whenever a loop should count through every value from `1` to `n`, check that the stop value is `n + 1`, not `n`.
+
+`range()` can start from any number, not only `0` or `1`. A problem numbering rounds from `3` onward, for example, could loop with `range(3, 3 + rounds)`, and every rule about the stop value being left out still applies. Choose the start and stop values from what the problem actually numbers its items from, rather than assuming every count in front of you begins at `0`.
+
+## Counting how many values satisfy a condition
+
+A loop can also check a condition on each pass and keep count of how many times it held, combining last module's `if` statement with this module's counted loop.
+
+<Code file="examples/count_positive.py" showOutput caption="Counting how many of n numbers are positive" />
+
+The loop runs once per number, reading a fresh value into `x` each pass. `count` starts at `0` and only grows on a pass where `x > 0` is `True`. Out of the four numbers `3`, `-1`, `0` and `7`, only `3` and `7` are positive, so `count` ends at `2`.
+
+## Reading a count, then that many more values, with a trace
+
+The module on reading input covered a line with a fixed number of values. It pointed forward to this module for a count that changes from one test case to the next. A `for` loop reads exactly that shape: read the count first, then loop that many times, reading one more value on every pass.
+
+<Figure caption="Reading a count, then that many numbers, building a running total">
+  <CodeTrace trace="examples/running_total.trace.json" />
+</Figure>
+
+Both presets start by reading `n`. It counts how many numbers, one per line, still wait to be read. Then the loop reads exactly that many. `total` starts at `0`, then grows by one more number each time the loop runs. After the loop reads all `n` numbers, `total` holds their sum, whatever `n` and the numbers themselves turned out to be, and the program prints it.
+
+An accumulator only works if it starts before the loop and is updated inside it. Setting `total = 0` inside the loop body, instead of before it, would reset it back to `0` on every single pass, and it would never hold more than the last number read.
+
+The same running-total shape works for more than addition. Keeping the largest number seen so far, instead of a sum, only changes what happens inside the loop body. Compare the new value against what the accumulator already holds, and replace it when the new one is bigger. A later module covers that comparison-based pattern in full, though the accumulator itself works the same way either time.
+
+Once the loop finishes, the loop variable itself still holds whatever value it had on the last pass. Reading it after the loop ends is legal, but it rarely means anything useful on its own. The values built up along the way, such as `total`, are usually what a problem actually wants printed.
+
+## Recap
+
+This lesson covered producing a sequence of numbers with `range()`, and running a block once per value with a `for` loop. It also covered counting from a chosen start instead of `0`, and counting how many values satisfy a condition. Last, it covered building a running total with an accumulator, across a loop whose length is itself a count read from the input. The three problems below all loop over several values, whether the count of them comes from the input or is fixed by the problem itself.

@@ -1,16 +1,10 @@
 id: M4.11
-title: Memoization and introductory dynamic programming
 status: accepted
 objectives:
   - Recognize when a recursive function recomputes the same subproblems.
   - Use memoization to cache results and avoid redundant work.
   - Reframe a memoized recursion as dynamic programming building up from smaller subproblems.
   - Understand why this transforms exponential time into polynomial time.
-prereqs:
-  - M1.14
-  - M2.5
-lessons:
-  - memoization-and-dynamic-programming
 practice:
   - id: ccc15j5
     note: Give out pieces of pie to a line of people so each person's share never decreases.

@@ -1,0 +1,83 @@
+A weather map is a grid of temperature readings. People keep asking for the hottest reading inside a square patch, such as the 3 by 3 patch whose top-left corner is row 1, column 1. On a 1000 by 1000 map with 100,000 such questions and patches up to 500 cells wide, scanning each patch costs up to 250,000 reads. That is about 2.5 * 10^10 reads in total, far beyond the 10^8 or so simple operations a program can afford (M2.9).
+
+The fix is the doubling idea from M6.12 and the sparse table from M7.3, moved from a line to a grid. The second half of the lesson moves it to triangles, where the same idea needs one new rule.
+
+## A table of blocks, one level per size
+
+Let `table[k][i][j]` be the maximum of the block of `2^k` rows and `2^k` columns whose top-left cell is `(i, j)`. Level 0 is the grid itself. A block of side `2^k` is four blocks of side `2^(k-1)`: the one at `(i, j)` and the three shifted by half the side right, down, or both. A level only has starts where the whole block fits, so level `k` is `n - 2^k + 1` cells on a side.
+
+Step through the build below. The left grid is the level below, the right grid is the level being filled, and the four cells read for each new cell are marked. The presets are a 4 by 4 grid, a 5 by 5 grid, and a 3 by 3 grid that needs only one level.
+
+<Figure caption="Filling each level of the block table from the four blocks of half the side" alt="Two grids side by side. The right one is filled cell by cell with the maximum of four marked cells of the left one, offset by half the block side. After level 1 is complete, level 2 is built from level 1 the same way, and a last step answers a query of the whole grid.">
+  <StepThrough frames="visuals/build2d.frames.json" preset="main" />
+</Figure>
+
+The last step of each preset answers a query of the whole grid, which the next section explains. The full program builds every level the same way, then answers queries.
+
+<Code file="examples/range_max_2d.py" showOutput caption="The block table for a 6 by 6 grid, then four square queries (row, column, side)" />
+
+## Four blocks cover a square
+
+The table holds squares only, so it answers questions about squares: a patch of side `s` whose top-left corner is `(r, c)`. A rectangle that is not a square would need a separate power of two for its height and for its width, which this table does not have.
+
+For a square of side `s`, take `k = s.bit_length() - 1`, the largest `k` with `2^k` at most `s`, as in M7.3. Blocks of side `2^k` fit inside the square. Put one at each corner of the square: the top-left block starts at `(r, c)`, and the others start `s - 2^k` cells to the right, down, or both. The answer is the maximum of those four lookups.
+
+Why four are enough: look at one side first. Two blocks, one starting at the left end and one ending at the right end, cover every column, by the same argument as the one-dimensional sparse table. The same holds for the rows. So any cell has a column that one of the left or right blocks reaches, and a row that one of the top or bottom blocks reaches. The block that combines those two choices contains the cell.
+
+The figure below lays the blocks over a 6 by 6 grid one at a time. Try the three sizes: side 5 shows heavy overlap, side 3 uses blocks of side 2, and side 4 is a power of two, where all four blocks are the same block.
+
+<Figure caption="Four power-of-two blocks laid over a square query, with the overlap marked" alt="A 6 by 6 grid with a square marked. The four blocks at its corners are added one at a time; cells in one block are marked, and cells in two or more are marked differently. The answer is the largest of the four block maxima.">
+  <StepThrough frames="visuals/cover2d.frames.json" preset="side5" />
+</Figure>
+
+For side 5 the four blocks have maxima 35, 36, 34 and 36, and the answer 36 is the maximum of them. Cells in the middle are read by all four blocks. That is harmless for a maximum: reading a value twice does not make it larger. A sum would add those cells twice, which is why M7.3 restricts the two-block trick to maximum, minimum and gcd.
+
+To see the same steps as code, trace a short version. It builds the table of 2 by 2 blocks for a 3 by 3 grid with nested loops, then takes the maximum of its four entries.
+
+<Figure caption="Tracing a short version: fill the table of 2 by 2 block maximums, then take the maximum of four">
+  <CodeTrace trace="examples/square_blocks.trace.json" preset="main" />
+</Figure>
+
+The trace builds `t`, then `max(t[0] + t[1])` reads all four entries, which together cover the whole 3 by 3 square. The second preset puts the maximum in the center, where every block shares it.
+
+## What the table costs
+
+Each level is a pass over at most `n * n` cells, and there are `n.bit_length()` levels. For a 1000 by 1000 grid that is about 8.3 million entries. A query then costs one `bit_length()` call and four reads, however large the patch is. If every query has the same side, only level `k` is needed, so each level can be dropped once the next is built, which keeps memory near `n * n`.
+
+## Triangles and a rule that changes
+
+Now take a triangle of numbers where row `i` has `i + 1` cells. A triangle of size `m` with its apex at row `i`, column `j` spans `m` rows. Its `r`-th row has `r + 1` cells, starting at column `j`. Suppose you want the maximum of every triangle of one size `K` in a triangle of `N` rows. There are about `(N - K + 1)^2 / 2` of them, and each has about `K^2 / 2` cells. For `N = 3000` and `K = 1500`, scanning them costs about 1.3 * 10^12 reads.
+
+The square trick suggests covering a size-`K` triangle with three triangles at its corners: one at the apex and one at each bottom corner. With squares, blocks of size `2^k` were enough. With triangles, half the size is not.
+
+<Figure caption="A size-4 triangle with three size-2 triangles at its corners leaves one cell uncovered" alt="A triangle of four rows of numbers. The apex triangle and two bottom triangles of size 2 are marked as covered. The one cell in the middle of the third row is marked as not covered." >
+  <Diagram
+    viz="GridViz"
+    data={{
+      cells: ["d###", "dd##", "dxd#", "dddd"],
+      values: [[17, null, null, null], [8, 21, null, null], [15, 6, 30, null], [9, 25, 2, 18]],
+      indices: false,
+    }}
+    legendLabels={{ invalid: "Not covered", done: "Covered", wall: "Outside the triangle" }}
+  />
+</Figure>
+
+The middle cell of row 2 belongs to none of the three, so a maximum over the three would miss it. The triangles must overlap. Three triangles of size `m` at the corners of a triangle of size `K` cover it when `K` is at most `2m - 1`, and the bottom triangles then start `K - m` rows down. The exception is `m = 1`, where size 2 is three cells and three single cells cover it with no overlap.
+
+<Figure caption="Three size-m triangles laid over a size-K triangle, with the overlap marked" alt="A triangle of six rows of numbers with one triangle of the wanted size marked at the apex. Three smaller triangles, at the apex and the two bottom corners, are added one at a time. Cells in one are marked, cells in two or more are marked differently, and the last step gives the maximum of the three maxima.">
+  <StepThrough frames="visuals/tricover.frames.json" preset="size5" />
+</Figure>
+
+So doubling on triangles builds sizes 1, 2, 3, 5, 9, 17 and so on, each at most `2m - 1` of the one before, and the last step lands exactly on `K` by taking `min(K, 2m - 1)`. For `K = 1500` that is 12 steps. Each step computes a table with one entry per apex, and each entry is one maximum of three lookups in the level below. Across all 12 steps that is about 4.5 * 10^7 entries, instead of 1.3 * 10^12 reads. The figure below builds every level for the 6-row triangle and ends with the maxima of all size-5 triangles.
+
+<Figure caption="Building the sizes 2, 3 and 5 from the level below, then listing the size-5 maxima" alt="A triangle of numbers beside the next size of triangle maxima. Each new cell is the maximum of three cells of the level below, one at the apex and two at the bottom corners. The sizes grow 1, 2, 3, 5 until the wanted size is reached.">
+  <StepThrough frames="visuals/trilevels.frames.json" preset="size5" />
+</Figure>
+
+<Code file="examples/triangle_doubling.py" showOutput caption="The maximum of every size-5 triangle, apex row by apex row" />
+
+The program keeps only `cur`, the level below, and replaces it each round, so memory stays at one triangle of numbers. The output lists one line per apex row: `30`, then `26 30`, the maxima in the figure above. On PyPy the inner loops are plain list reads and one `max` call each, which it handles well, and row lists of ints are compact.
+
+## When to reach for it
+
+Use this when many queries ask for a maximum, minimum or gcd over one shape, and smaller copies of the shape can cover it with overlap. On a grid of squares that means four blocks of side `2^k`. On a triangle it means three triangles of at least half the size, built by doubling.

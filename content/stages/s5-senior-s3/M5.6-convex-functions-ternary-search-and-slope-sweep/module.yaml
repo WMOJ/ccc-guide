@@ -1,16 +1,10 @@
 id: M5.6
-title: Convex functions, ternary search and slope sweep
 status: accepted
 objectives:
   - Recognize when a cost function is piecewise-linear and convex.
   - Find the minimum of a convex function using ternary search.
   - Find the minimum by binary search on the slope.
   - Implement the slope-sweep algorithm to find the minimum in O(N log N).
-prereqs:
-  - M5.5
-  - M4.2
-lessons:
-  - convex-functions-and-ternary-search
 practice:
   - id: ccc21s3
     note: Pick a concert spot that keeps the total walking time of every friend as low as possible.

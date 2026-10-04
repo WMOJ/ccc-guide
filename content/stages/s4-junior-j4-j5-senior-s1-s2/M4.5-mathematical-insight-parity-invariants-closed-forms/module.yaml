@@ -1,16 +1,10 @@
 id: M4.5
-title: Mathematical insight (parity, invariants, closed forms)
 status: accepted
 objectives:
   - Recognize invariants that remain unchanged through a process.
   - Determine whether a state is reachable by analyzing parity and conservation laws.
   - Derive closed-form solutions instead of simulating step by step.
   - Use mathematical reasoning to prune impossible branches early.
-prereqs:
-  - M2.3
-  - M2.6
-lessons:
-  - mathematical-insight
 practice:
   - id: ccc21s2
     note: Decide how many cells end up one color after a series of row and column flips.

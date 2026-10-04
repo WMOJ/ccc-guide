@@ -4,17 +4,22 @@
 // normally (see README.md) and they just work, the same as any other repo.
 
 import { execFileSync } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
 
+/** The first executable file called `name` on PATH (what `command -v` finds, without a shell). */
 function which(name: string): string | null {
-  try {
-    const found = execFileSync("command", ["-v", name], {
-      shell: "/bin/sh",
-      encoding: "utf8",
-    }).trim();
-    return found || null;
-  } catch {
-    return null;
+  for (const dir of (process.env.PATH ?? "").split(path.delimiter)) {
+    if (!dir) continue;
+    const candidate = path.join(dir, name);
+    try {
+      fs.accessSync(candidate, fs.constants.X_OK);
+      if (fs.statSync(candidate).isFile()) return candidate;
+    } catch {
+      // not here, or not executable: keep looking
+    }
   }
+  return null;
 }
 
 function firstOnPath(names: string[]): string | null {

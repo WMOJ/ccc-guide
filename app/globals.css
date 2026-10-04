@@ -245,7 +245,7 @@
   }
 }
 
-/* ---------- Prose rhythm (the lesson column: MDX output) ---------- */
+/* ---------- Prose rhythm (the module column: MDX output) ---------- */
 @layer components {
   .prose-sheet {
     font-size: var(--text-body);

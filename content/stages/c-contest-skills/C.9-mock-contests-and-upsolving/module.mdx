@@ -1,0 +1,61 @@
+It is minute 180 of a mock contest. Problem 1 is accepted, problem 2 took three submissions, problem 3 still says wrong answer, and problem 4 was never submitted. What you do next decides how much this session teaches you. A mock contest is a past contest sat under the real conditions. Upsolving is finishing the problems you left unfinished, on your own, once the clock has stopped.
+
+## Sitting a mock
+
+Choose a past contest and set one three-hour timer. Sit it in one go, with only the resources the rules module lists. The value of a mock is the log, so keep one while you work. For every stretch on a problem, write the problem, the start minute, the end minute and the <Term id="verdict">verdict</Term> of the submission that closed the stretch. Local judging with official data, as the local-judging module describes, gives you those verdicts. Add one more line per problem while you are still in the contest: what you believed it needed, and where you stopped. You will check your upsolve against that line.
+
+Step through the session below. Each row is a problem, and each bar is one stretch of work that ended in a submission. Try the second preset, where everything is accepted early.
+
+<Figure caption="One logged mock session: a row per problem, one bar per stretch, each bar labeled with its verdict">
+  <StepThrough frames="visuals/mock-session.frames.json" preset="mixed" />
+</Figure>
+
+The last step shows where the time went. Problem 2 has three bars, two of them wrong answers, and problem 3 has one long bar that never turned accepted. Problem 4 got 28 minutes at the very end and no submission at all. Those three rows hold everything the session can teach you. The program below reads the same log and prints the per-problem summary, and its last line is the total the figure's last step reports.
+
+<Code file="examples/mock_log.py" lines="23-38" showOutput caption="Summarizing the log: submissions per problem and the minute of the first accepted one" />
+
+## From the log to a first step
+
+Upsolving starts from the log, not from a general feeling that problem 3 was hard. Each row of the log points at a different first step, and every step is something you do on your own. Step through the table below.
+
+<Figure caption="The log reduced to a row per problem, each row given one first upsolving step">
+  <StepThrough frames="visuals/upsolve-plan.frames.json" preset="mixed" />
+</Figure>
+
+A problem accepted on its first submission needs nothing. A problem accepted after wrong answers has two attempts you can compare. Run both on small inputs and find the smallest one where they disagree. That input names the mistake you fixed under pressure. A problem never accepted has a last attempt and no working program, so you stress test that attempt against a <Term id="brute-force">brute force</Term>, as the stress-testing module teaches. A problem with no submission needs a program to begin with, so you write a brute force for its first <Term id="subtask">subtask</Term>, as the subtask strategy module describes. The same rules, in code:
+
+<Code file="examples/upsolve_plan.py" lines="15-27" showOutput caption="The first step for each problem, read off its verdicts" />
+
+## Finding the smallest failing input
+
+To see the second step work, take a small problem of our own. Given a list, find the length of its longest strictly increasing run of neighbors. Your contest attempt got wrong answer, and you write a brute force that tries every slice. The search below tries inputs shortest first, in a fixed order, and stops at the first one where the two programs disagree. Step through it, and try the "Length 2" preset, where the limit is too low to find anything.
+
+<Figure caption="Searching for the smallest input on which the attempt and the brute force disagree, shortest inputs first">
+  <StepThrough frames="visuals/first-failure.frames.json" preset="three" />
+</Figure>
+
+The search tried 14 inputs and found `[0, 0, 1]`: the brute force finds the run 0, 1 of length 2, and the attempt says 1. That input is three values long, which is why "Length 2" finds nothing. A search that finds nothing has not shown the attempt is right, only that the bug needs a bigger input. Shortest first matters. A three-value input can be traced by hand, while a failing input from a real judge may hold thousands of values, and you could not read it. The trace below runs the attempt on the small one. Watch `run` at the repeated 0.
+
+<Figure caption="The wrong attempt traced on its smallest failing input">
+  <CodeTrace trace="examples/longest_run.trace.json" preset="fails" />
+</Figure>
+
+At the repeated 0 the attempt sets `run` to 0 instead of 1, because a new run already holds the current value. On `[0, 1]` the bug never shows, since no value repeats, and on `[5]` the loop body never runs. The repaired version resets `run` to 1, and the last step of the search confirms that it matches the brute force on all 39 inputs tried.
+
+<Code file="examples/upsolve_find.py" lines="42-63" showOutput caption="The search loop, then the same check on the repaired attempt" />
+
+## Retrying on a schedule
+
+An upsolved problem feels solved, because you have just seen it done. The test is whether you can rebuild it later. A few days after the upsolve, retry the stalled problems from a blank file, using only the statement and your own notes. Whatever you can rebuild then is what you learned, and whatever you cannot is the next thing to upsolve.
+
+The figure below lays out one cycle. The gaps are choices you can change. The preset "Retry too late" shows the one constraint worth keeping. The retry has to land before the next mock, so that the next log can show whether it helped.
+
+<Figure caption="One practice cycle on a day line: a mock, an upsolving stretch, a retry, and the next mock">
+  <StepThrough frames="visuals/cadence.frames.json" preset="two-weeks" />
+</Figure>
+
+<Code file="examples/cadence.py" showOutput caption="Placing the retry: the day it lands is the end of the upsolve plus the wait" />
+
+## When to reach for this
+
+Sit a mock when you want evidence about your pacing, and keep the log from the first minute. Upsolve straight afterward, while the contest is fresh, starting from the log's first step for each problem. Retry the stalled problems from a blank file a few days later, before the next mock.

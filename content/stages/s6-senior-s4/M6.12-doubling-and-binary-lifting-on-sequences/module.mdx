@@ -1,0 +1,94 @@
+A city has `n` teleporter stations, numbered from 0. Every station has exactly one teleporter, and it sends you to one other station (possibly the same one). A rider starts at station 0 and uses teleporters 13 times in a row. Which station do they end on? With the teleporters written as a list `nxt`, where `nxt[v]` is the station that station `v` sends you to, you can just follow the list: 0, 1, 2, 3, and so on.
+
+Step through that walk on a small city of eight stations. Try all three presets: 13 jumps, 0 jumps, and 22 jumps.
+
+<Figure caption="Following the teleporters one jump at a time, with the jump number shown under each station reached" alt="Eight stations on a ring, each with one arrow to the station its teleporter sends you to. A rider follows the arrows one jump at a time, and each visited station shows the number of the latest jump that reached it.">
+  <StepThrough frames="visuals/walk.frames.json" preset="main" />
+</Figure>
+
+<Code file="examples/teleport_naive.py" showOutput caption="Answering each query by making every jump, with a count of the hops made" />
+
+## Bounds, and why walking does not scale
+
+Suppose a problem allows `n` and the number of queries `q` up to 200,000, with `K` up to 10^9 jumps per query. Walking makes up to `q * K` = 2·10^5 × 10^9 = 2·10^14 hops. The program above made 35 hops for three small queries, which is fine, but at this size it is far past the 10^8 or so simple operations a solution can afford (M2.9). Notice that the walk in the figure visits station 3 again on jump 8 and on jump 13, because the stations 3 to 7 form a loop. You could detect the loop and skip whole laps, but that trick depends on the shape of one graph. A table of jumps works for any `K` and, in M7.13, for climbing a tree toward its root.
+
+## Jump in powers of two
+
+<Term id="binary-lifting">Binary lifting</Term> answers any number of jumps by combining a few big jumps whose sizes are powers of two. Every `K` is a sum of distinct powers of two, its binary digits: 13 is `1101` in binary, so 13 = 8 + 4 + 1. If you already know where 1 jump, 4 jumps and 8 jumps from any station land, a 13-jump query is three lookups instead of thirteen hops.
+
+The table is named `up`. Entry `up[k][v]` is the station you reach after `2^k` jumps from station `v`. Level 0 is the teleporter list itself, `up[0] = nxt`. Mind the meaning of `k` here: row `k` holds jumps of size `2^k`, not size `k`.
+
+Here are the same eight stations redrawn once for each level. Step through the levels and watch each arrow get longer. The presets also show a city made of two loops, where a jump of 4 brings every station back to itself. The third is a dead end: a city whose last station teleports to itself.
+
+<Figure caption="The doubling table drawn as arrows: level k points each station at the station 2^k jumps away" alt="The same eight stations, redrawn once per level of the doubling table. Level 0 shows every station's own teleporter; level 1 draws an arrow for each station's jump of 2, level 2 for 4, level 3 for 8. A station whose jump lands back on itself shows a mark instead of an arrow.">
+  <StepThrough frames="visuals/levels.frames.json" preset="main" />
+</Figure>
+
+A station with no real teleporter needs no special case: set `nxt[v] = v`. Every level then keeps it in place, which is the correct answer for a rider who cannot leave.
+
+## Build each level from the one before
+
+Level `k` needs no walking. To jump `2^k` from `v`, jump `2^(k-1)` to some station `m = up[k-1][v]`, then jump `2^(k-1)` again from `m`. Two halves of length `2^(k-1)` make a jump of `2^k`:
+
+`up[k][v] = up[k-1][up[k-1][v]]`
+
+<Code file="examples/build_table.py" showOutput caption="Building the table one level at a time, printing every level" />
+
+In the code, `prev[x] for x in prev` visits each `x = prev[v]` in station order, so the new row is `prev[prev[v]]` for every `v`. Step through the filling below. Each new cell reads two cells of the column to its left, marked as compared: the one for station `v`, and the one for the station that cell names. The table is turned on its side, one row per station, so each column is one list `up[k]`.
+
+<Figure caption="Filling up[k][v] from two cells of the previous level, one cell at a time" alt="A table with one row per station and one column per level k. Column up[0] starts filled with each station's teleporter. Each later column is filled one cell at a time, from two cells of the column to its left.">
+  <StepThrough frames="visuals/table.frames.json" preset="main" />
+</Figure>
+
+The last printed level checks out against the walk: `up[3][0]` is 3, and the walk in the first figure was at station 3 after 8 jumps too. Each level has `n` entries and each entry costs one lookup, so the table takes `n` times `LOG` steps, where `LOG` is the number of bits in the largest `K`.
+
+## Answer a query from the set bits of K
+
+To answer a query, start at the station and walk the bits of `K` from bit 0 upward. When bit `k` is set, replace the current station with `up[k][here]`. When it is clear, do nothing. For `K = 13` from station 0, the set bits are 0, 2 and 3. The three cells that matter are marked below.
+
+<Figure caption="The finished table for K = 13 from station 0: the three marked cells are the only ones the query reads" alt="The finished doubling table, one row per station, with columns up[0] to up[3]. The cell in row 0 of up[0], the cell in row 1 of up[2] and the cell in row 5 of up[3] are marked.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowTitle: "v",
+      rowHeads: [0, 1, 2, 3, 4, 5, 6, 7],
+      colHeads: ["up[0]", "up[1]", "up[2]", "up[3]"],
+      cells: [[1, 2, 4, 3], [2, 3, 5, 4], [3, 4, 6, 5], [4, 5, 7, 6], [5, 6, 3, 7], [6, 7, 4, 3], [7, 3, 5, 4], [3, 4, 6, 5]],
+      states: ["m___", "__m_", "____", "____", "____", "___m", "____", "____"],
+    }}
+  />
+</Figure>
+
+Now watch the hops on the graph. Each hop is drawn as a labeled arrow, such as +4 for a jump of four. The presets cover `K = 13`, `K = 0` (no bit set, so no hop), and `K = 22`, where two of the bits are clear.
+
+<Figure caption="Answering one query: a hop for each set bit of K, read from bit 0 upward" alt="A graph of the eight stations with a table of the bits of K beside it. The rider starts at a station and, for each set bit of K from bit 0 up, takes one labeled hop read from the doubling table. Clear bits are skipped. The table shows the station after each bit.">
+  <StepThrough frames="visuals/query.frames.json" preset="main" />
+</Figure>
+
+The rider used three lookups, at stations 0, 1 and 5, instead of thirteen hops. The order of the bits does not matter here. Every hop applies the same teleporter rule. A hop of 8 followed by a hop of 4 lands on the same station as 4 followed by 8, because both add up to 12 jumps. Going from the high bit down gives the same answers as going from the low bit up.
+
+## The whole program
+
+The code below reads every query first, because `LOG` comes from the largest `K`. A `K` of 0 needs no bits, and `max(1, ...)` keeps at least level 0 so that `up` is never empty. The last query uses `K` = 10^9, which would take a billion hops to walk.
+
+<Code file="examples/binary_lifting.py" showOutput caption="Answering four queries with the doubling table" />
+
+The trace below runs a short version of the same program, `lift_query.py`, on five stations and one query, so that every line and variable stays visible. Switch presets to compare the bit lookups: `K = 5` uses bits 0 and 2, `K = 0` builds no levels, and `K = 6` skips bit 0.
+
+<Figure caption="Tracing a short version of the program: build the table by levels, then hop once per set bit">
+  <CodeTrace trace="examples/lift_query.trace.json" preset="main" />
+</Figure>
+
+## Why it is correct, and what it costs
+
+The table is right by induction. Level 0 is the teleporters. If `up[k-1][v]` is correct for every station, then `up[k][v]` jumps `2^(k-1)` to `m` and `2^(k-1)` more, and `2^(k-1) + 2^(k-1) = 2^k` jumps in total. A query is right because the binary form of `K` is unique and its powers add up to `K` exactly, so the hops total `K` jumps and nothing is skipped or counted twice.
+
+With `n` = 2·10^5 and `K` up to 10^9, `LOG` = 30, so the table has 6·10^6 entries and building it takes about 6·10^6 lookups. The queries add `q * LOG` = 6·10^6 more. That is about 1.2·10^7 operations in total, against 2·10^14 for walking. If `K` could reach 10^18, `LOG` would be 60 and the work doubles, which is still small.
+
+## Making it fast on PyPy
+
+The table is a list of lists of plain integers, which PyPy stores compactly: 6·10^6 entries is on the order of 50 MB. Build each level with one list comprehension over the level before it, not a loop that rebuilds it entry by entry. Read all the input at once with `sys.stdin.read().split()` and write the answers with one `sys.stdout.write`.
+
+## When to reach for it
+
+Reach for a doubling table when every node has one next node and the structure does not change between queries. The signal is a query that asks where you are after a huge number of steps. The same table is the core of tree ancestor queries in M7.13, and a sparse table in M7.3 uses the same doubling idea on ranges of an array.

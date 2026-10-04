@@ -1,0 +1,95 @@
+Take a chessboard and cut off two opposite corners, leaving 62 squares. You have a box of dominoes, each covering exactly two adjacent squares. Can 31 dominoes cover all 62 squares, with no gaps and no overlaps?
+
+Trying every arrangement would settle it eventually, but a full 8-by-8 board alone has 12,988,816 domino tilings, and a bigger board has far more. There is a faster way in: find something the dominoes cannot change, however they are placed.
+
+## Parity as an invariant
+
+Color the board like a real chessboard. Square `(row, col)` is light if `(row + col) % 2` is 0 and shaded otherwise. Two squares that share an edge differ by one step, which changes `row + col` by exactly 1, so they always have different colors. Every domino therefore covers one light square and one shaded square, wherever it lands.
+
+That single fact decides the whole question. The two opposite corners of a chessboard are the same color, so cutting them off leaves the board unbalanced: 32 squares of one color and 30 of the other. Any 31 dominoes cover 31 of each color. The cut board cannot supply that split, so no arrangement tiles it, and nothing had to be searched.
+
+This <Term id="invariant">invariant</Term> is a quantity that stays the same no matter which allowed operation is applied. Look for one before simulating: if a quantity differs between the start and the goal and no allowed move can change it, the goal is unreachable.
+
+Step through the idea below on a 4-by-4 board, where each square shows its `(row + col) % 2`. Try the full board and a 3-by-3 board as well.
+
+<Figure caption="Dominoes placed one at a time: each covers one square showing 0 and one showing 1, so a board with unequal counts always has squares left over">
+  <StepThrough frames="visuals/domino_cover.frames.json" preset="cut" />
+</Figure>
+
+On the cut board, 6 squares show 0 and 8 show 1. Six dominoes cover six of each and strand the last two squares showing 1, and the count alone shows that no placement could do better. The full board ends balanced, 8 and 8, and the 3-by-3 board has 5 zeros against 4 ones, so one square is always stranded.
+
+A program can apply the same test without placing anything: count the squares of each color and compare.
+
+<Code file="examples/domino_balance.py" showOutput caption="Counting squares by (row + col) % 2 on the cut board: 6 against 8, so no tiling exists" />
+
+## Parity and walks
+
+The same coloring answers a question about walking: can a token reach a target in exactly `k` moves, one step up, down, left, or right at a time? Two conditions must hold. First, `k` must be at least the distance, the rows apart plus the columns apart, since one move covers at most one of those. Second, every move flips the color, so any moves beyond the distance must come in matching pairs, stepping out to a neighbor and back. The surplus, `k` minus the distance, must be even.
+
+Those conditions are also enough. Walk the shortest path, then spend each remaining pair stepping out and back. That works on any board large enough to hold the walk.
+
+Take a token walking from (0, 0) to (2, 3). The distance is 2 + 3 = 5 moves at the least. With 7 moves the surplus is 2, one spare pair. With 6 moves the surplus is 1: the spare move can only step out, leaving the token one square short. With 3 moves the answer is no before a step is tried.
+
+Step through the three cases below: an even surplus, an odd surplus, and too few moves.
+
+<Figure caption="Walking a shortest path, then spending spare moves in pairs: an even surplus lands back on the target, an odd surplus strands the token beside it, and too few moves rules it out immediately">
+  <StepThrough frames="visuals/checkerboard_walk.frames.json" preset="even-surplus" />
+</Figure>
+
+<Code file="examples/checkerboard_parity.py" showOutput caption="Deciding reachability from the distance and the surplus's parity alone, with no path ever explored" />
+
+## A quantity that only moves one way
+
+Some useful quantities move in only one direction, which answers "does this process ever finish?" just as well.
+
+Take a sequence of numbers and an operation that swaps two adjacent numbers whenever the left one is bigger. Checking every order of swaps could mean exploring `n!` arrangements, which passes three million at `n = 10`. Instead count the inversions: pairs where a bigger number sits before a smaller one. A swap of an adjacent out-of-order pair fixes exactly that pair and leaves every other pair in the same order, so each swap lowers the count by exactly 1. The count is a non-negative whole number that can only fall, so it must reach 0. At 0 no adjacent pair is out of order, and the sequence is sorted.
+
+Step through a sequence being sorted below and watch the inversion count fall by 1 on every swap. The second preset is already sorted, so it starts at 0 and stops without a swap.
+
+<Figure caption="Sorting by repeated adjacent swaps: the inversion count drops by exactly 1 on every swap, so it reaches 0 after exactly as many swaps as it started with">
+  <StepThrough frames="visuals/inversion_invariant.frames.json" preset="scrambled" />
+</Figure>
+
+<Code file="examples/inversion_count.py" showOutput caption="Counting inversions once, then swapping until none remain" />
+
+The count also predicts the work: 4 inversions means exactly 4 swaps, which the output above confirms.
+
+## Invariants modulo k
+
+Parity is one case of a broader idea: a quantity taken modulo a fixed number can stay constant while the quantity itself changes. Suppose a token starts somewhere and every move adds 4 or subtracts 6. Both are even, so the position's parity never changes, in any order of moves. A target whose difference from the start is odd is unreachable, and one remainder shows it.
+
+An even difference is always reachable, and this time the reason is a construction. The moves `+4, -6, +4` net `+2`, and `+4, -6` nets `-2`. Repeating the block that matches the sign of the difference closes any even gap exactly.
+
+The same check prunes a wider search. A target with the wrong parity is rejected before any move is spent, which is how an early invariant check cuts off a doomed branch.
+
+Step through a move sequence below, then compare it with a target that one remainder rejects. The third preset closes a gap downward.
+
+<Figure caption="A token that only moves by +4 or -6: a difference of 2 is closed by the block +4, -6, +4, while a difference of 5 is ruled out by one remainder" alt="A table tracking a token's position and its remainder modulo 2 as moves of +4 and -6 are applied. A target 5 away from the start is rejected immediately since the difference is odd. A target 2 away is reached by the moves +4, -6, +4, with the remainder staying 0 throughout. A target 8 below the start is reached by four repeats of +4, -6.">
+  <StepThrough frames="visuals/token_mod_k.frames.json" preset="reachable" />
+</Figure>
+
+<Code file="examples/token_reachability.py" showOutput caption="Answering several reachability queries, each with one remainder or one short move sequence" />
+
+## Closed-form solutions
+
+Some problems ask for a quantity that a formula gives directly, with no loop.
+
+Suppose a contest gives a bonus in round `i`: 1 point in round 1, 2 in round 2, up to round `N`. Adding one round at a time costs `N` additions, and once `N` reaches the billions even PyPy's loop runs too long.
+
+Write the sum twice, forwards and backwards, and add the copies column by column: `1 + 2 + ... + N` over `N + (N - 1) + ... + 1`. Every column adds to `N + 1` and there are `N` columns, so the two copies total `N * (N + 1)`, twice the sum. The sum itself is `N * (N + 1) / 2`: one multiplication and one division, however large `N` is.
+
+Step through the pairing below on six terms. The other presets use five terms, where the middle column pairs a term with itself, and a single term.
+
+<Figure caption="Pairing term i with term N + 1 - i: every column adds to N + 1, so the two rows total N times N + 1, and one row is half of that">
+  <StepThrough frames="visuals/triangular_pairs.frames.json" preset="six" />
+</Figure>
+
+<Code file="examples/triangular_number.py" showOutput caption="A closed form replacing a loop of up to a billion additions with one computation" />
+
+## Keeping it fast on PyPy
+
+The closed form uses integer division, `//`, not `/`. Python's `/` returns a float, which loses exactness past `2 ** 53`, while an int stays exact at any size, so `n * (n + 1) // 2` is exact even for `n = 10 ** 18`. Every example reads its whole input once with `sys.stdin.read().split()` and collects its answers into a list to write once, instead of calling `print()` in a loop. None recurses or keeps a table of visited states.
+
+## Looking for the shortcut
+
+Before simulating a process, ask what stays the same and what only moves one way. Parity, a sum, a remainder, and the relative order of elements are the usual places an invariant hides. If one differs between the start and the goal and no allowed move can change it, the goal is unreachable. If the problem asks for a count or a total instead, work out a few small cases by hand and look for a pattern. A familiar sequence such as the triangular numbers usually points to a formula that replaces the whole loop.

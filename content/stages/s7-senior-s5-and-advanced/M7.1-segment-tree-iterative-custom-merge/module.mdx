@@ -1,0 +1,91 @@
+A shop records its sales for six days: `5 3 8 1 4 7`, numbered from 0. Two kinds of events arrive, mixed together. One asks for the total sales from day 1 up to, but not including, day 5. The other corrects a day: day 3 was really 10, not 1. A <Term id="segment-tree">segment tree</Term> answers both kinds of event in a number of steps that grows with the logarithm of the array's length.
+
+## Why the simple plans run out
+
+Suppose the array length and the number of events are both up to $2 \cdot 10^5$. Adding up a slice for every question costs up to $n$ steps. So $q$ questions cost about $4 \cdot 10^{10}$ steps, far past the budget of roughly $10^8$ simple steps that M2.9 derived from a time limit.
+
+Prefix sums from M4.3 make each question constant time. But a correction to one day changes every prefix sum after it, so each correction costs up to $n$ steps and the total is the same $4 \cdot 10^{10}$. A Fenwick tree (M6.10) handles sums with corrections in $O(\log n)$, but its trick leans on subtraction. Ask for the smallest value in a range, the gcd of a range, or the best run inside a range, and nothing can be subtracted. A segment tree needs only a <Term id="monoid">monoid</Term>: a `merge` of two values that is associative, so `merge(merge(a, b), c)` equals `merge(a, merge(b, c))`, plus an identity value that changes nothing when merged with anything. Sum with identity 0, minimum with a huge number, and gcd with 0 all qualify.
+
+## The tree lives in one list
+
+The idea is a tree of summaries. Each leaf holds one array value, and each node above holds the merge of its two children. The node above leaves 0 and 1 covers positions 0 to 1, its parent covers 0 to 3, and the root covers everything.
+
+Pad the array's length up to a power of two, called `size`, so that every level of the tree is full. The six days become `size = 8`, and the two padding leaves hold the identity, 0 for sums, so they change no answer. Store the tree in a flat list of `2 * size` entries. The leaf for position `i` goes at index `size + i`, the parent of node `i` is `i // 2`, and its children are `2 * i` and `2 * i + 1`. Index 0 is never used. Step through the picture below, which draws one small tree both ways. One preset climbs by halving, the other descends by doubling.
+
+<Figure caption="The same four-leaf tree as a tree and as the flat list that stores it: halve an index to go up, double it to go down" alt="A four-leaf sum tree drawn as a tree and as a list of eight entries. One preset climbs from the leaf for position 1 to the root by halving the index. The other starts at the root and doubles the index to find children until it reaches leaves.">
+  <StepThrough frames="visuals/sv_layout.frames.json" preset="up" />
+</Figure>
+
+Every leaf sits log2(size) halvings below the root, so every walk here is short. Indexing a leaf with the plain position instead of `size + i` is an easy slip: the program runs without error and answers about the wrong elements.
+
+## Building from the leaves up
+
+Copy the values into the leaves, then fill the internal nodes from index `size - 1` down to 1. Going backward guarantees both children are ready before their parent is computed. Each internal node is merged once, so the build is $O(n)$.
+
+<Code file="examples/tree_build.py" showOutput caption="Building the sum tree for six values padded to eight leaves, which sit at indices 8 to 15" />
+
+Step through the build below. The first preset pads six values to eight leaves, and the padding is not drawn. The second preset has four values, so nothing is padded.
+
+<Figure caption="Building the tree: each internal node is the sum of its two children, from the last node back to the root" alt="A sum tree is filled in from the bottom up. Each internal node, from the last to the root, becomes the sum of its two children. The first preset has six values padded to eight leaves, and the second has four values.">
+  <StepThrough frames="visuals/sv_build.frames.json" preset="six" />
+</Figure>
+
+The root, `tree[1]`, is 28, the sum of the whole array. Node 7 sits above two padding leaves, so it holds 0.
+
+## Querying a range in two sweeps up the tree
+
+A query for positions `l` up to, but not including, `r` does not need the top of the tree first. Start with `lo = l + size` and `hi = r + size`, the two boundaries of the range in the leaf row. The nodes from `lo` up to, but not including, `hi` cover the range at this level. Repeat while `lo < hi`:
+
+<Code file="examples/tree_query.py" lines="29-46" highlight="38,39,41,42,43" caption="The query loop: take an odd lo, take the node before an odd hi, then move both up a level" />
+
+Step through the query below, trying all three presets.
+
+<Figure caption="Range-sum queries: lo and hi move up together, and each odd one hands over one node" alt="A range-sum query on a six-leaf tree. The indices lo and hi start at the ends of the range in the leaf row. When lo is odd or hi is odd, one covering node is taken into left_part or right_part, and then both indices halve. The presets query a middle range, the whole array, and one element.">
+  <StepThrough frames="visuals/sv_query.frames.json" preset="middle" />
+</Figure>
+
+The reason this is correct is an invariant. At every level, the nodes from `lo` up to, but not including, `hi` cover exactly the part of the range not yet taken. If `lo` is even, it and its right neighbor are both inside the range and share one parent, so moving up loses nothing. If `lo` is odd, it is a right child, and its parent would reach one leaf to the left of the range. So `lo` is taken alone and skipped over, which makes it even. The same argument holds mirrored for `hi`. Each level takes at most two nodes, and there are log2(size) levels.
+
+For $n = 2 \cdot 10^5$ the size is 262,144, or $2^{18}$, so a query takes at most 36 nodes. All the queries together cost about $7 \cdot 10^6$ merges, well inside the budget. The second preset asks for the whole array and takes two nodes, 6 and 2, rather than the root, because the root also covers the padding. The third asks for one day and takes a single leaf.
+
+The loop keeps `left_part` and `right_part` apart, and merges the right side as `merge(tree[hi], right_part)`, with the new node on the left. Nodes taken from the left edge arrive left to right, but nodes taken from the right edge arrive right to left. Two accumulators keep the final order correct. For sums the order does not matter, but for the merge later in this lesson it does.
+
+## Point updates walk to the root
+
+Changing one value means writing the new leaf and recomputing its ancestors, one per level, each from its two children. Step through it below.
+
+<Figure caption="A point update rewrites one leaf and recomputes one ancestor per level" alt="A point update in a six-leaf sum tree. The new value is written into one leaf, then each ancestor up to the root is recomputed from its two children, so one node per level changes. The presets update a middle leaf and the last leaf, and a final query reads the root.">
+  <StepThrough frames="visuals/sv_update.frames.json" preset="middle" />
+</Figure>
+
+Only four nodes changed, one per level. The program below handles both kinds of shop event.
+
+<Code file="examples/tree_update.py" showOutput caption="Queries and point updates on the same tree" />
+
+The output shows total sales of 28, then 37 after day 3 changes to 10, then 22 for positions 2 up to, but not including, 5. Each update costs `log2(size)` merges, so $2 \cdot 10^5$ updates cost under $4 \cdot 10^6$.
+
+## A custom merge: the best run inside a range
+
+Because the tree only needs an associative `merge`, a node can hold more than one number. Take the question "what is the largest sum of a contiguous run inside this range?" One number per node is not enough. The best run inside a parent might cross the boundary between its children. So each node stores four numbers: the `total` of its range, its best `prefix` (a run starting at its left end), its best `suffix`, and the best run `inside`.
+
+Merging a left node `a` and a right node `b` gives `total = a.total + b.total`, `prefix = max(a.prefix, a.total + b.prefix)`, the mirror for `suffix`, and `inside = max(a.inside, b.inside, a.suffix + b.prefix)`. The last term is the run that crosses the boundary. Try the merge step by step below, using queries on the sample array.
+
+<Figure caption="Four numbers per node: each merge picks the best run from the left side, the right side, or across the boundary" alt="A maximum-subarray query where each node stores total, prefix, suffix and inside. Each step merges the next covering node into left_part or right_part and shows which of three candidates gave the new best run. The presets query a range with nodes on both sides and a range of mostly negative values.">
+  <StepThrough frames="visuals/sv_merge.frames.json" preset="both" />
+</Figure>
+
+The identity is a node with total 0 and minus infinity for the rest, so merging it with any node returns that node. Only `merge` and the identity differ from the sum tree.
+
+<Code file="examples/max_subarray.py" showOutput caption="The same tree with four numbers per node; only merge and the identity are new" />
+
+On `-2 1 -3 4 -1 2 1 -5 4` the best run is `4 -1 2 1`, which sums to 6. After position 7 changes from `-5` to `0`, the run extends to `4 -1 2 1 0 4` and the answer is 10. Swapping the arguments of either merge call in the query loop would quietly break this result, because prefix and suffix depend on which side a node sits on. Rounding can break associativity for floating-point values, so prefer integers.
+
+## Keeping it fast on PyPy
+
+Keep the tree in one flat list of ints. The `merge` function costs little, because PyPy compiles a small call in a hot loop down to the operation inside it. The tuple version allocates one small tuple per merge, which is fine for a few million merges. When the merge is a single comparison, as with minimum, drop the wrapper function, call the built-in `min` directly, and keep the running answer in one local variable:
+
+<Code file="examples/range_min.py" showOutput caption="A minimum tree with no merge wrapper: the built-in min is called directly in the loops" />
+
+Read all input once and write the answers in one call, as every example here does.
+
+Reach for a segment tree when updates and range questions arrive mixed and the question cannot be undone by subtraction, such as minimum, maximum, gcd, or a bundle of numbers. For sums alone a Fenwick tree is shorter. For updates that change a whole range at once, the next lesson adds one idea to this same layout.

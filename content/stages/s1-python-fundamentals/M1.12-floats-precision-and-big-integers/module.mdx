@@ -1,0 +1,59 @@
+You have printed floats since the module on values and types, and divided with `/` since the module on operators. This lesson looks at what a float stores, where that costs you exact output, and how Python's integers avoid the same problem entirely.
+
+## Floats can be slightly off
+
+A float stores a number in a fixed amount of space, the same way a ruler only marks certain points along its length. Most decimal fractions, including ones as ordinary as `0.1`, do not land on one of those points exactly. Python stores the closest one it can and keeps that tiny gap.
+
+<Code file="examples/ticket_totals.py" showOutput caption="Adding two ticket prices as floats" />
+
+Two tickets priced at `0.10` and `0.20` should add up to `0.30`. The printed total is `0.30000000000000004`, off by less than a trillionth. The `== 0.30` comparison then reports `False`, because Python compares the stored value, gap and all, not the number you meant.
+
+This is why you never compare two floats with `==`. A calculation that looks finished can still miss the exact value by a sliver, and `==` cares about every last digit. Some contest problems accept an answer that is merely close, stating something like "answers within `0.000001` of the correct value are accepted". For those, check the gap directly instead: `abs(total - 0.3) < 1e-9` asks whether `total` and `0.3` are closer together than a tiny allowed distance, which is true even when `==` would say `False`. When a problem demands an exact value instead, prefer the integer approach in the next section.
+
+Try changing the two prices in `ticket_totals.py` to `0.25` and `0.75` and predict the total before you run it. Some pairs land on the mark exactly, and some do not, because the gap depends on which specific fractions you added.
+
+## Scale to integers
+
+The gap in `ticket_totals.py` came from working in dollars, where a cent is a fraction. Whenever a problem's numbers are naturally in fixed steps, such as cents, millimetres or minutes, count in that smaller unit instead. Integers have no gaps, so the same addition becomes exact. A price of `0.10` dollars becomes `10` cents by multiplying by `100` and rounding to the nearest whole number, once, right after reading it.
+
+<Code file="examples/ticket_totals_cents.py" showOutput caption="The same two prices, counted in cents" />
+
+Working in cents, `10 + 20` gives exactly `30`, and `30 == 30` is `True`. Printing it back as a dollar amount uses `//` and `%` on the cent total, the same two operators from the module on integer arithmetic. Dividing gives the whole dollars and the remainder gives the cents: `30 // 100` is `0`, and `30 % 100` is `30`, padded to two digits by the f-string's `:02d`. Both pieces stay integers all the way to the screen, so no float ever enters the computation.
+
+This trick, count in the smallest unit the problem uses, turns a rounding risk into an exact integer computation. Reach for it whenever a problem's input mixes a whole part and a fixed number of decimal places.
+
+## Big integers do not overflow, but big floats can
+
+Python integers grow as large as the computation needs. A number with a hundred digits is stored and printed exactly, with nothing dropped.
+
+<Code file="examples/big_power.py" showOutput caption="A password scheme with 40 digit positions" />
+
+Ten possible digits in each of 40 positions gives `10 ** 40` codes, a number with 41 digits. Python prints every digit correctly, because an integer never rounds.
+
+Floats do not get the same treatment. A float still has that same fixed amount of space, so a large enough integer no longer fits inside it exactly.
+
+<Code file="examples/float_precision_loss.py" showOutput caption="An exact integer, and the same value rounded to fit a float" />
+
+`2 ** 53 + 1` is an exact integer, one more than a power of two. Converting it to a float rounds it to the nearest value a float can hold, which is `9007199254740992.0`, the power of two itself: the `+ 1` is gone. Nothing printed an error. The float is simply a different number from the integer it came from.
+
+This is exactly the trap waiting inside `math.sqrt`, since it works by converting its argument to a float before it can compute anything.
+
+<Code file="examples/isqrt_vs_sqrt.py" showOutput caption="`math.sqrt` losing precision at a size well within contest bounds" />
+
+`n` here is `10 ** 16 - 1`, comfortably inside the bounds contest problems use. `int(math.sqrt(n))` gives `100000000`, but the true integer square root is one less, `99999999`, the value `math.isqrt(n)` gives instead. The reason is rounding. Converting `n` to a float, `math.sqrt` first rounds it to the nearest value a float can represent. That rounding is already enough to throw the answer off. `math.isqrt` never builds a float at all, so it never loses anything. Whenever you need an integer square root, especially of a value anywhere near or above `10 ** 15`, reach for `math.isqrt` instead of rounding the result of `math.sqrt`. For truly enormous integers, `math.sqrt` can fail outright with `OverflowError`, since some integers do not fit in a float at all; `math.isqrt` has no such limit, because it never leaves integer arithmetic.
+
+## Rounding a division up
+
+Floor division rounds a division down, which is correct when leftover units are lost. Some problems need the opposite: <Term id="ceiling-division">ceiling division</Term>, rounding up, because a leftover of any size still needs a whole extra unit.
+
+<Code file="examples/ceiling_division.py" showOutput caption="Packing books into boxes, with any leftover needing an extra box" />
+
+Forty-seven books packed twelve to a box need four boxes: three full ones, plus a fourth for the last eleven. Floor division alone gives `3`, undercounting by exactly the box holding the leftover. `-(-books // capacity)` gives `4`. Negating the number being divided flips which direction floor division rounds, and negating the whole result flips it back, so the division rounds up instead of down.
+
+This pattern, `-(-a // b)`, computes a ceiling division using only integers. It works for any positive `a` and `b`, however large, because it never touches a float. `math.ceil(a / b)` looks tempting instead, but `a / b` first builds a float. That brings back the rounding gap from the first section, and for a very large `a` or `b`, the overflow risk from the third. Keeping the whole computation in integers avoids all of it.
+
+A common mistake is reaching for plain `//` where the problem needs a ceiling, undercounting by one whenever there is a leftover. Check each division against its story: if a leftover still needs its own extra unit, use the ceiling pattern instead of floor division.
+
+## Recap
+
+Floats carry a small, fixed rounding error, so never test one for exact equality. Counting in the smallest whole unit a problem uses turns that risk into exact integer arithmetic. Python's integers grow without limit and print exactly, while floats built from very large integers can lose precision or overflow outright, which is why `math.isqrt` beats `math.sqrt` on large values. The pattern `-(-a // b)` rounds a division up while staying in integers the whole way through.

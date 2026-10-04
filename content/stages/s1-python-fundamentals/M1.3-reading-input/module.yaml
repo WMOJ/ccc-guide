@@ -1,13 +1,8 @@
 id: M1.3
-title: Reading input
 status: accepted
 objectives:
   - Read several values from one line with `input().split()` and `map(int, ...)`.
   - "Assign matching values to several names at once: `a, b = ...`."
   - Remove extra whitespace a line might carry with `.strip()`.
   - Recognize when a problem's line holds a number of values that is not fixed in advance.
-prereqs:
-  - M1.1
-lessons:
-  - reading-input
 practice: []

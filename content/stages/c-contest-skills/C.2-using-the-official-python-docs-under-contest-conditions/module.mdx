@@ -1,0 +1,81 @@
+The module on contest rules already covers what a CCC submission may draw on. The [official Python documentation](https://docs.python.org/3/) is the one outside reference the rules allow you to open during the contest. No search engine, forum post, AI tool or copied notes are permitted, so everything you look up has to come from that one site. Practice finding a page fast, and reading it correctly once you are there, well before the contest. Then the contest is not the first time you do either.
+
+## Finding a signature fast
+
+Every module page on docs.python.org lists its functions in the same shape. A heading gives the function's name and its signature in parentheses, and a paragraph on what it does follows. `heapq.heappush(heap, item)` is one such heading. Its parentheses show it takes a heap and the item to add, in that order. Searching the page for the function's name lands you on the right heading far faster than reading top to bottom.
+
+Five module pages cover most of the standard-library tools a CCC solution reaches for, and each has its own shape. The `heapq` page lists functions that treat a plain list as a heap, such as `heappush` and `heappop`. The `bisect` page lists functions that find a position in a sorted list, such as `bisect_left`. The `collections` page mostly describes container types, such as `deque` and `Counter`. The `itertools` page lists functions that build or combine iterators, such as `product` and `combinations`. The `math` page lists numeric functions, such as `gcd` and `isqrt`. Knowing which page holds a function narrows the search before it starts.
+
+## Reading a signature once you have found it
+
+A signature lists every parameter a function takes, in the order it expects them. Take `bisect.insort(a, x, lo=0, hi=len(a))`. Its first two parameters are the list and the value to insert. `lo` and `hi` come after, with default values shown after the `=` sign. A parameter with a default can be left out of a call, and a parameter without one cannot.
+
+Here is that signature taken apart, one row per parameter, in call order:
+
+<Figure
+  caption="bisect.insort(a, x, lo=0, hi=len(a)) taken apart, one row per parameter"
+  alt="A four-row table naming each parameter of bisect.insort, in call order, paired with its default and what it means: a (required, the list), x (required, the value), lo (default 0, search start), hi (default len(a), search end)."
+>
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowTitle: "param",
+      rowHeads: ["a", "x", "lo", "hi"],
+      colHeads: ["default", "means"],
+      cells: [
+        ["required", "the list"],
+        ["required", "the value"],
+        ["0", "search start"],
+        ["len(a)", "search end"],
+      ],
+    }}
+  />
+</Figure>
+
+`itertools.product(*iterables, repeat=1)` has a `*` before its first parameter name. That mark means the function accepts any number of arguments in that position. Reading a signature this closely, before calling the function, catches a wrong argument count before it becomes an error at submission time.
+
+## Two entries that sound alike
+
+A signature tells you how to call a function, and the paragraph under it tells you what it does. Two `heapq` entries show why you read both. The docs describe `heapq.heappushpop(heap, item)` as pushing the item and then popping the smallest. They describe `heapq.heapreplace(heap, item)` as popping the smallest and also pushing the item. The signatures are identical. The order of the two steps is the only difference, and the example below runs both on the same heap so you can see whether the order matters.
+
+<Code file="examples/heap_docs.py" showOutput caption="Running heappushpop and heapreplace on the same heap with the same item, 1" />
+
+The item, `1`, is smaller than everything in the heap, `2 4 6`. `heappushpop` returned `1` and left the heap alone. The pushed item was already the smallest when the pop ran. `heapreplace` returned `2` and kept `1` in the heap. Step through both below, then try the other two presets.
+
+<Figure caption="The same heap and item given to heappushpop and heapreplace, step by step">
+  <StepThrough frames="visuals/heap-docs.frames.json" preset="below" />
+</Figure>
+
+With the item above the smallest, the two calls give the same result, and only the order of the steps inside them changed. The difference appears only when the new item is smaller than the heap's smallest. A short run like this is a good way to confirm a docs paragraph you have half understood, and it costs seconds.
+
+## Added in version, and changed in version
+
+A docs page also states when a function, or one of its parameters, was introduced or changed. "Added in version 3.9" under a function means it does not exist at all on an older Python. "Changed in version 3.9" on one parameter means something narrower. The function existed earlier, but that parameter or behavior is newer than the rest of it.
+
+The module on the Python 3.8 language boundary covers `math.gcd` as an example of this pattern. The newer docs page shows `math.gcd` accepting any number of arguments, marked "Changed in version 3.9". The CCC grader's PyPy runs 3.8, which accepts only the older two-argument form.
+
+<Figure
+  caption="math.gcd on the 3.8 docs page against the newer default page"
+  alt="A two-row table: the 3.8 docs page shows gcd taking exactly two arguments, a and b; the newer default page shows gcd taking any number of integer arguments."
+>
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowHeads: ["3.8 page", "newer page"],
+      colHeads: ["signature"],
+      cells: [["gcd(a, b)"], ["gcd(*ints)"]],
+    }}
+  />
+</Figure>
+
+The default docs page describes the newest Python, not the 3.8 the grader runs. Reading `docs.python.org/3.8/` instead of `docs.python.org/3/` shows every signature as it stood at 3.8, with none of the later additions mixed in. Checking a signature there confirms a feature is safe to use, which is more reliable than reading the version notes on the default page and hoping they are complete.
+
+## Practicing the lookup itself
+
+Reading this lesson once does not build the speed a contest rewards. A short, timed drill does. Pick a function you half-remember, such as `heapq.heappushpop`, and time how long it takes to reach its exact signature from a blank page. Repeat with a few functions from each of the five pages every so often. You never need to memorize a signature. Knowing which page a function lives on, and roughly where on that page, matters more, because the page is always there to check during the contest.
+
+## The docs are the only reference allowed
+
+Outside the contest, looking up how a function works usually means a search engine, a forum thread, or an AI assistant. None of those are available during a CCC submission window. Reaching for docs.python.org first, before wanting a shortcut, means the contest is not the first time you have worked this way.
+
+This lesson covered how to find a function's exact signature on docs.python.org, and which of the five pages to search first. It covered reading a function's paragraph as well as its signature, reading "Added in version" and "Changed in version" notes, and why the 3.8-specific page is the most reliable check. Last, it covered why the official docs are the only outside reference the rules allow.

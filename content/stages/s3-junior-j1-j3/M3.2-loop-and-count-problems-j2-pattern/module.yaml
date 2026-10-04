@@ -1,15 +1,9 @@
 id: M3.2
-title: Loop-and-count problems (J2 pattern)
 status: accepted
 objectives:
   - Read multiple items in a loop and accumulate a count or total.
   - Initialize a counter before the loop and update it inside.
   - Use the final count to make a decision or produce output.
-prereqs:
-  - M1.6
-  - M2.4
-lessons:
-  - loop-and-count-problems
 practice:
   - id: ccc22j2
     note: Rate soccer players from their goals and fouls.

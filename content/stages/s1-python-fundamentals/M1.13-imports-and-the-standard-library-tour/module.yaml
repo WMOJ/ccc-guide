@@ -1,15 +1,10 @@
 id: M1.13
-title: Imports and the standard library tour
 status: accepted
 objectives:
   - Bring in a module, or one name from it, with `import` and `from ... import`.
   - Use `math.gcd`, `math.comb`, `collections.Counter` and `itertools.combinations` to replace hand-written loops.
   - Read a function's entry in the Python docs before using it.
   - Recognize a mistyped import as a `ModuleNotFoundError`.
-prereqs:
-  - M1.10
-lessons:
-  - imports-and-the-standard-library-tour
 practice:
   - id: ccc24j3
     note: Find the third-highest distinct score from a list of contest scores.

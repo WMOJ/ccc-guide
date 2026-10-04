@@ -1,0 +1,132 @@
+Picture a single floor of an office building. A security desk sits at the front and hallways run
+out from it. Every room is reachable from the desk by exactly one route: there are no loops that
+let you walk back to a room you already passed. That floor plan is a <Term id="tree">tree</Term>,
+a connected graph with no cycles. Its $N$ rooms are joined by exactly $N-1$ hallways, and any two
+rooms have exactly one path between them.
+
+A general graph, the kind M4.12's adjacency lists were built for, does not promise any of this. It
+can hold a cycle, so two rooms might connect by more than one route, and it can hold several
+disconnected pieces at once. A tree is what is left once you rule both of those out. That missing
+freedom is what makes trees fast to reason about: no route ever needs comparing against another,
+because there is only ever one.
+
+## Rooting a tree with an iterative BFS
+
+An unrooted tree has no up or down, only rooms and hallways. Rooting it at one room, the security
+desk, turns it into a hierarchy. Every other room gets a parent, the neighbor closer to the desk,
+and a depth, its distance from the desk in hallways.
+
+Find both with the same breadth-first search M4.13 used on a grid, now walking an adjacency list
+instead. Fill three arrays as the search runs: `parent`, `depth`, and an `order` list recording the
+sequence rooms are discovered in. That order is not just bookkeeping. The next section walks it
+backward to combine values room by room. It plays the same role a `stack` and `seen` list would in
+M5.7's iterative DFS, if you rooted the tree that way instead.
+
+<Code file="examples/tree_rooting.py" showOutput caption="Root a floor plan with an iterative BFS, filling parent, depth and order" />
+
+The queue starts with just the desk. Popping a room makes it current, and every neighbor without a
+depth yet becomes its child, one hallway farther out, and joins the queue. Step through it below.
+The second preset roots the same six rooms plus one more, showing that adding a room deeper in one
+wing never changes any other room's parent.
+
+<Figure caption="Rooting a floor plan with BFS: parent, depth and order fill in as each room is discovered.">
+  <StepThrough frames="visuals/tree-rooting.frames.json" preset="office" />
+</Figure>
+
+Rooting never recurses. A recursive version would call itself once per hallway on the way down, and
+a floor plan built as one long corridor gives it a call depth equal to $N$. That is the same crash
+M4.13 and M5.7 already ruled out for grids and general graphs.
+
+## Subtree aggregates from the order array
+
+Once a tree is rooted, many questions reduce to combining a value from every room in a
+<Term id="subtree">subtree</Term>. How many rooms sit behind a given door? How much equipment do
+they hold in total? Walking `order` backward answers both. That walk visits every child before
+its parent.
+
+Start every room's size at 1 (itself) and its total at its own item count. Then, for each room in
+`order`, from last to first, add its size and total into its parent's. By the time a parent is
+reached, every child already folded its numbers in, since children were discovered after their
+parent and so sit later in `order`.
+
+<Code file="examples/tree_aggregates.py" showOutput caption="Fold subtree size and item totals into each parent, walking the BFS order in reverse" />
+
+Step through the fold below. The second preset hangs one more room two hallways past room 4, so its
+count has to pass through room 4 before it reaches room 1, and then room 0.
+
+<Figure caption="Folding subtree size and item totals into each parent by walking the rooting order backward.">
+  <StepThrough frames="visuals/subtree-aggregates.frames.json" preset="office" />
+</Figure>
+
+Any value that combines cleanly from children to parent, a count, a sum, a maximum, works the same
+way. This single backward pass over `order` is the pattern Stage 6's tree DP builds directly on.
+
+## Tree diameter: the longest walk between any two rooms
+
+The <Term id="tree-diameter">diameter</Term> of a tree is the greatest number of hallways between
+any two of its rooms, the worst case for someone walking between the farthest pair.
+
+Checking every pair directly means starting a BFS from each of the $N$ rooms and reading off the
+largest distance it finds, $O(N)$ work per room, $O(N^2)$ overall. At $N=2 \cdot 10^5$, a bound this
+module's problems can reach, that is $4 \cdot 10^{10}$ steps, far past the roughly $10^8$ a second
+buys on PyPy. Two BFS passes solve it in $O(N)$ instead. BFS from any room finds the room farthest
+from it; BFS from that room finds the room farthest from it in turn, and the distance between them
+is the diameter.
+
+Why does the starting room not matter? However far the first search reaches, the room it lands on is
+always one end of some diameter. If it were not, the true diameter would have to pass near that room
+without touching it. A tree has only one path between any two rooms, so no such detour exists.
+Walking from the first search's start toward the true diameter can only get at least as far as
+that room did. The second search then only has to look for the other end, and it always finds it,
+because that is exactly the room farthest from the first.
+
+<Code file="examples/tree_diameter.py" showOutput caption="Tree diameter with two BFS passes: any room to one end, then that end to the other" />
+
+Step through both passes below. The straight-hallway preset makes every room part of the diameter.
+The one-junction preset shows several rooms tied for farthest, any of which the search could have
+landed on.
+
+<Figure caption="Two BFS passes finding the diameter: the first search's farthest room becomes the second search's start.">
+  <StepThrough frames="visuals/tree-diameter.frames.json" preset="branch" />
+</Figure>
+
+## Pruning leaves that do not matter
+
+Some problems mark certain rooms as important and ask for the smallest hallway network still
+connecting all of them. Reach it by pruning: repeatedly close any <Term id="leaf">leaf</Term>, a
+room whose only hallway leads to one other room, unless that room is marked important. Closing a
+room can drop its one neighbor down to a single hallway of its own, so that neighbor becomes a leaf
+in turn. Closures move inward one layer at a time until nothing removable is left.
+
+Track each room's <Term id="degree">degree</Term>, its number of live hallways, and start a queue
+with every unimportant room of degree 1. Popping a room closes it and lowers its one neighbor's
+degree; if that neighbor is now degree 1 and unimportant, it joins the queue. An important room is
+never queued, no matter how low its degree falls, so the hallways leading to it always survive.
+
+<Code file="examples/tree_pruning.py" showOutput caption="Prune unimportant leaves with a queue, layer by layer, until only important rooms and their connectors remain" />
+
+Step through the closures below. The all-meeting-rooms preset marks every leaf important, so the
+queue starts empty and nothing closes. The one-hub preset marks only the center, and pruning
+strips every room down to it.
+
+<Figure caption="Leaf pruning with a queue: closing a dead-end room can queue its neighbor next, one layer at a time.">
+  <StepThrough frames="visuals/leaf-pruning.frames.json" preset="office" />
+</Figure>
+
+Scanning the whole tree over and over for closable rooms costs $O(N)$ work per round, and a long
+chain can take $O(N)$ rounds, $O(N^2)$ altogether. The queue removes that repeated scanning: every
+room is added at most once and popped at most once, so the whole prune runs in $O(N)$.
+
+## Making it fast on PyPy
+
+Every technique here is linear once the adjacency list is built, so the input format decides most of
+the running time. Read the whole input at once with `sys.stdin.read().split()`, as every example
+above does, rather than calling `input()` per line. Keep `parent`, `depth`, `degree` and the rest as
+flat lists indexed by room number, never a dictionary keyed by room; a plain list lookup is one of
+the cheapest operations PyPy has. Use a `deque` for every queue, since popping from the front of a
+list shifts every remaining entry over. None of these examples recurse, and none should: a tree can
+be one long corridor $N$ rooms deep. A recursive walk of it crashes with a `RecursionError` long
+before an iterative one would even notice the depth.
+
+Reach for these patterns whenever a problem's input already forms a tree, whether it says so outright
+or just guarantees $N-1$ connecting lines with everything reachable from everything else.

@@ -1,0 +1,87 @@
+Four piles of stones sit in a row, with sizes 2, 3, 5 and 7. One move merges two neighboring piles into one, and the move costs the sum of the two sizes. You keep merging until one pile is left. What is the cheapest total?
+
+Merge 2 and 3 for 5, merge that pile with the 5 for 10, then merge it with the 7 for 17. The total is 5 + 10 + 17 = 32. Other orders cost more, and the table below shows why: the final merge always joins everything and costs 17, so the orders differ only in what they pay before it.
+
+<Figure caption="Four merge orders for the piles 2, 3, 5 and 7. The last merge always costs 17, so the earlier merges decide the total." alt="A table with four rows, one per merge order, and two columns. Order ((2 3) 5) 7 costs 5 plus 10 plus 17, total 32. Order (2 3) (5 7) costs 5 plus 12 plus 17, total 34. Order 2 ((3 5) 7) costs 8 plus 15 plus 17, total 40. Order 2 (3 (5 7)) costs 12 plus 15 plus 17, total 44.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowTitle: "order",
+      rowHeads: ["((2 3) 5) 7", "(2 3) (5 7)", "2 ((3 5) 7)", "2 (3 (5 7))"],
+      colHeads: ["Merge costs", "Total"],
+      cells: [["5 + 10 + 17", 32], ["5 + 12 + 17", 34], ["8 + 15 + 17", 40], ["12 + 15 + 17", 44]],
+    }}
+  />
+</Figure>
+
+The 32 in the first row is the answer we are after. Finding it without listing every order is a job for <Term id="interval-dp">interval DP</Term>: a <Term id="dynamic-programming">dynamic programming</Term> table whose entries describe contiguous intervals of the row.
+
+## Why not try every order
+
+The number of merge orders for `n` piles is the Catalan number for `n - 1`. That is 14 for five piles and about `1.8 * 10^9` for twenty. Contest inputs can have `n = 400`, which is more than `10^200` orders. Trying them all is out of the question, so we need a table with only polynomially many entries.
+
+## The last merge splits the row
+
+Look at the final merge of any order. It joins a left block, piles `i` through `k`, and a right block, piles `k + 1` through `j`. Let `dp[i][j]` be the cheapest way to merge piles `i` through `j` into one pile. Then:
+
+`dp[i][j] = min over k of (dp[i][k] + dp[k + 1][j]) + (piles[i] + ... + piles[j])`
+
+Why is this correct? Only neighbors merge, so once the last merge is fixed, the left block had to become one pile using only its own piles, and likewise the right block. Nothing in one block can affect the other. Each block should therefore use its own cheapest order, which is what `dp[i][k]` and `dp[k + 1][j]` hold. The last merge costs the whole range sum, whatever `k` is. Prefix sums from M4.3 give that sum in constant time.
+
+Step through the choice of `k` for the whole row. The piles panel marks the left block and the right block, and the table lists each split's total.
+
+<Figure caption="Trying every split k for the whole row: the last merge adds the same range sum each time, so the blocks' own costs decide.">
+  <StepThrough frames="visuals/split-choice.frames.json" preset="four" />
+</Figure>
+
+For 2, 3, 5, 7 the best split is `k = 2`: merge 2, 3, 5 cheaply for 15, leave the 7 alone, and pay 17 at the end, for 32. The equal-piles preset shows ties, where several splits cost the same.
+
+## Fill the table from short intervals to long
+
+`dp[i][j]` needs `dp[i][k]` and `dp[k + 1][j]`, and both are shorter intervals. So fill by length: every single pile first (`dp[i][i] = 0`, since nothing is merged), then every interval of length 2, then 3, and so on up to the whole row. This order guarantees every cell's two inputs are ready. A table filled row by row would ask for cells that are still empty.
+
+<Code file="examples/merge_cost.py" showOutput caption="Minimum cost of merging all piles, filled by interval length" />
+
+The function `cut` tries every split of one interval. Its starting value `pre[-1] * len(dp)`, the total of all piles times the number of piles, only needs to beat any real cost. A merge order has `n - 1` merges and each costs at most the total of all piles, so no order can cost more than that. Watch the table fill; each cell draws arrows to the two shorter cells it used.
+
+<Figure caption="Filling dp by interval length. Each arrow points from a cell used by the current cell's best split.">
+  <StepThrough frames="visuals/merge-fill.frames.json" preset="four" />
+</Figure>
+
+Follow `dp[1][3]`, the piles 3, 5, 7. Split at `k = 1` and you pay 0 + 12 + 15 = 27; split at `k = 2` and you pay 8 + 0 + 15 = 23, so `dp[1][3] = 23`. The last cell, `dp[0][3]`, reuses `dp[0][2] = 15` and gets 32. Try the five-pile preset to see a bigger table.
+
+## Counting the work
+
+There are about `n^2 / 2` intervals, and each tries up to `n - 1` splits. Counting exactly, the innermost line runs `(n^3 - n) / 6` times: 84 for eight piles and 10,666,600 for `n = 400`. PyPy manages roughly `10^8` simple steps a second (M2.9), so that is comfortable. At `n = 5000` the same count is about `2 * 10^10` and no longer is.
+
+The prefix sums matter here. Adding up the range inside the `k` loop would cost another factor of `n`, but with `pre` the range sum is two lookups, computed once per interval outside the `k` loop. Now watch the actual lines run on three piles. The trace skips over most of the prefix-sum loop.
+
+<Figure caption="The same code on three piles: two length-2 intervals, then the whole row with two splits.">
+  <CodeTrace trace="examples/merge_cost.trace.json" preset="main" />
+</Figure>
+
+In the trace, `cut` is called three times, once per interval of length 2 or more, and each call's `best` plus `span` lands in `dp[i][j]`. It also covers other problems where neighbors combine. Matrix chain multiplication uses it with a cost built from the matrices' dimensions instead of a range sum. Only the expression added after the `min` changes.
+
+## Knuth's optimization
+
+When `n` grows past a few thousand, the `n^3` loop is too much, and some costs allow a faster table. Write `opt[i][j]` for the best split `k` of interval `i..j`. Knuth's optimization says: if the added cost `w(i, j)` satisfies the quadrangle inequality, `w(a, c) + w(b, d) <= w(a, d) + w(b, c)` for `a <= b <= c <= d`, and is monotone (an interval inside another never costs more), then
+
+`opt[i][j-1] <= opt[i][j] <= opt[i+1][j]`.
+
+Range sums of non-negative piles meet both conditions, so this problem qualifies. The proof of the statement is longer than this lesson, but you can test it: the example below gives the same answers as the plain loop. It tries only `k` from `opt[i][j-1]` to `opt[i+1][j]`, never past `j - 1`.
+
+<Code file="examples/merge_knuth.py" showOutput caption="The same table with Knuth's window: only splits between opt[i][j-1] and opt[i+1][j] are tried" />
+
+Step through the windows. Most cells try one or two splits.
+
+<Figure caption="Each cell tries only the splits between its two neighbors' best splits, opt[i][j-1] and opt[i+1][j].">
+  <StepThrough frames="visuals/knuth-window.frames.json" preset="eight" />
+</Figure>
+
+The output shows 49 splits tried against 84. On eight piles that is a small saving, but the window costs add up differently. For one interval length, the windows of neighboring intervals share endpoints, so their sizes telescope: the total over all intervals of that length is at most about `2n`. Over all `n` lengths that is `O(n^2)`, about 320,000 for `n = 400` against 10,666,600.
+
+The conditions are the catch. If the cost does not satisfy them, the window can skip the true best split and the program prints a wrong answer with no warning. Check the conditions for your cost, and compare against the plain loop on small random inputs before trusting it.
+
+## When to reach for it
+
+Reach for interval DP when a row shrinks or combines from the inside out and the cost of a step depends on the interval it covers. Define `dp[i][j]` on intervals, try the last step's split `k`, and fill by length. Start with the plain `O(n^3)` form and count its work against the limit. Add Knuth's window only when that count is too large and the cost meets the conditions.

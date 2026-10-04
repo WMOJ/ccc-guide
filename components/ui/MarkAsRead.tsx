@@ -6,7 +6,7 @@ import { buttonClass } from "./button-styles";
 import { ReadCell } from "./ReadCell";
 
 export interface MarkAsReadProps {
-  lessonId: string;
+  moduleId: string;
   labels: { markRead: string; read: string; markedOn: string; undo: string };
 }
 
@@ -24,13 +24,13 @@ function formatDate(iso: string): string {
  * Mark-as-read control (DESIGN.md → Read cell and mark-as-read). Renders the unread state on the
  * server; marking plays the ink-in wipe once.
  */
-export function MarkAsRead({ lessonId, labels }: MarkAsReadProps) {
+export function MarkAsRead({ moduleId, labels }: MarkAsReadProps) {
   const rs = useReadState();
   const [justMarked, setJustMarked] = useState(false);
   const [moved, setMoved] = useState<"marked" | "undone" | null>(null);
   const undoRef = useRef<HTMLButtonElement>(null);
   const markRef = useRef<HTMLButtonElement>(null);
-  const at = rs.ready ? rs.readAt(lessonId) : null;
+  const at = rs.ready ? rs.readAt(moduleId) : null;
 
   // Keep keyboard focus on the control that replaced the one just pressed.
   useEffect(() => {
@@ -56,7 +56,7 @@ export function MarkAsRead({ lessonId, labels }: MarkAsReadProps) {
           onClick={() => {
             setJustMarked(false);
             setMoved("undone");
-            rs.markUnread(lessonId);
+            rs.markUnread(moduleId);
           }}
         >
           {labels.undo}
@@ -73,7 +73,7 @@ export function MarkAsRead({ lessonId, labels }: MarkAsReadProps) {
         onClick={() => {
           setJustMarked(true);
           setMoved("marked");
-          rs.markRead(lessonId);
+          rs.markRead(moduleId);
         }}
       >
         <ReadCell read={false} size="md" className="border-paper bg-transparent" />

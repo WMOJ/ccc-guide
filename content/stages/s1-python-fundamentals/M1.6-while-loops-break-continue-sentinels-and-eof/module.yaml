@@ -1,15 +1,10 @@
 id: M1.6
-title: "`while` loops, `break`/`continue`, sentinels and EOF"
 status: accepted
 objectives:
   - Repeat a block for as long as a condition holds, with `while`.
   - Read values until a sentinel value appears, ending the loop when it does.
   - Exit a loop early with `break`, and skip straight to the next pass with `continue`.
   - Recognize the `EOFError` a loop can raise reading past the end of input, and read every remaining line safely with `import sys`.
-prereqs:
-  - M1.5
-lessons:
-  - while-loops-break-continue-sentinels-and-eof
 practice:
   - id: ccc24j2
     note: Grow a creature by feeding it smaller creatures, one at a time, until it meets one it cannot eat.

@@ -1,15 +1,10 @@
 id: M0.7
-title: "Online judges: WMOJ and DMOJ"
 status: accepted
 objectives:
   - "Say which judge holds which CCC problems: WMOJ for 2021 to 2026, DMOJ for 2014 to 2020."
   - "Submit a solution on WMOJ or DMOJ: find the problem, choose the language, and read the verdict it returns."
   - Choose PyPy 3 on both judges, matching the language the CCC grader itself runs.
   - Say that both judges run newer Python than the CCC grader, so passing there does not guarantee passing the contest.
-prereqs:
-  - M0.5
-lessons:
-  - online-judges-wmoj-and-dmoj
 practice:
   - id: ccc24j1
     note: Turn a count of sushi plates in three colours into one total price.

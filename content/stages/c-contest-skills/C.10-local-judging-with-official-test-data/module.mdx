@@ -1,0 +1,77 @@
+Suppose your solution passes the samples in the problem statement and your own edge cases. You still do not know how it does on the data the grader actually used. For a past CCC problem you can find out: CEMC publishes the exact input and output files it judged with, once the contest is over. The module on testing covers building your own tests. This lesson covers running a solution against those official ones.
+
+## What the official test data is
+
+[CEMC's past-contests page](https://cemc.uwaterloo.ca/resources/past-contests) makes the official inputs and expected outputs available alongside the problem statements. Every input the grader used is there, and next to it the exact output the grader expected, grouped by problem. It is the real data, for a problem whose contest window has closed.
+
+Keep one problem's files together in a folder named after the problem, with each input file next to its matching output file. The script later in this lesson relies on that pairing. Sorting the files once, when they arrive, saves you from working out which output belongs to which input on every rerun.
+
+<Figure
+  caption="One problem's official files, paired: each input file has an output file with the same base name"
+  alt="A three-row table pairing each test's input file with its expected output file: 1.in with 1.out, 2.in with 2.out, and 3.in with 3.out."
+>
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowTitle: "test",
+      rowHeads: ["1", "2", "3"],
+      colHeads: ["input file", "output file"],
+      cells: [
+        ["1.in", "1.out"],
+        ["2.in", "2.out"],
+        ["3.in", "3.out"],
+      ],
+    }}
+  />
+</Figure>
+
+## What this data checks that a sample cannot
+
+A hand-made test and an edge-case test both rely on you noticing which cases matter, then working out the correct answer yourself. The official data removes both steps. It covers the cases the problem's author intended, and its expected outputs are correct by definition, since they are what the grader used. Running every file mirrors what the grader does when it checks each subtask, and it is the closest offline equivalent for a problem you can no longer submit.
+
+A mismatch also tells you which case fails. If every small file matches but a large one does not, suspect a bound your solution handles only up to a point. If one file fails while larger ones pass, suspect a specific case your plan overlooked.
+
+## Judging one test at a time
+
+Judging a file means three moves: run the solution on the input, read the official output, and compare the two as text. The program below does exactly that for a tiny suite read from standard input. Its "solution" just doubles a number, so you can focus on the loop. The suite arrives as a count, then an input and its official output for each test.
+
+<Code file="examples/judge_loop.py" showOutput caption="Judging a small suite: run, compare, report a verdict for each test" />
+
+Step through the trace below. The first preset passes test 1 and fails test 2. Watch `want` and `got` line up at the `==` comparison, and notice that both are text, not numbers.
+
+<Figure caption="One pass through the judging loop per test: compare got with want, then report">
+  <CodeTrace trace="examples/judge_loop.trace.json" preset="main" />
+</Figure>
+
+The `if` line decided each verdict. In test 2, `got` was `'6'` and `want` was `'5'`, so the comparison was false and the loop printed `2 differs`. It then carried on instead of stopping. Comparing text, not numbers, is what the real script does too: it judges what the program printed, character for character.
+
+## Judging a whole suite
+
+The script for real files does the same thing with files in place of lines. It loops over every `.in` file in a folder, runs your solution on it, and compares the result with the matching `.out` file:
+
+<Code file="examples/check_all_tests.py" caption="Checking a solution against every official test file for one problem" />
+
+For each input file, it reads the matching official output, runs the solution as a separate program, and checks whether what it printed equals that output exactly. It reports a verdict for every file instead of stopping at the first failure. The next figure replays that idea on five tests. Try the three presets.
+
+<Figure caption="Judging a suite test by test: one verdict per row, all failures visible at the end">
+  <StepThrough frames="visuals/judge-suite.frames.json" preset="one" />
+</Figure>
+
+Because the loop never stops early, the last step lists every failure together. A problem can fail on several files at once, and seeing them side by side shows whether the failures cluster around one case or are scattered. When several files fail, start with the smallest one. You can often work its answer out by hand, which makes the bug far easier to see than on a file with thousands of lines.
+
+## Comparing exactly, line by line
+
+The comparison is character for character. Step through how it plays out on a file with four output lines. The first preset matches; the second differs only by a trailing space, shown as a dot; the third shows a missing final line.
+
+<Figure
+  caption="Comparing a solution's actual output to the official expected output, line by line"
+  alt="A table comparing actual output to official output line by line. A matching line is marked done; a mismatching line, including one that differs only by trailing whitespace, is marked invalid, and the first mismatch decides the overall verdict."
+>
+  <StepThrough frames="visuals/line-diff.frames.json" preset="match" />
+</Figure>
+
+The first mismatching line is enough to fail the file: once one line differs, the file's verdict is "differs", whether the rest agrees or not. Some real judges ignore trailing whitespace, so a file that fails this strict local check may still be accepted. An exact check is still what you want when hunting for a difference, because it never hides one.
+
+## Timing is only a hint here too
+
+The module on complexity analysis explains why a run on your own machine is not proof a plan is fast enough. Running against official data changes nothing about that. Your machine is not the grader's machine, and plain CPython is often ten to fifty times slower than PyPy, the same estimate that module gives. A local timing on the larger files gives a rough sense of whether the solution is in the right range. Matching every official output exactly is a strong check of correctness. Treat any timing you notice along the way as a hint, never as the grader's own answer.

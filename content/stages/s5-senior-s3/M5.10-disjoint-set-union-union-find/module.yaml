@@ -1,16 +1,10 @@
 id: M5.10
-title: Disjoint Set Union (union-find)
 status: accepted
 objectives:
   - Implement find with path halving to track connectivity across components.
   - Apply union by size to keep the tree shallow and fast.
   - Use the "next free slot" DSU trick to solve resource allocation problems.
   - Recognize when DSU contracts components for efficient solutions.
-prereqs:
-  - M1.8
-  - M1.10
-lessons:
-  - union-find-connectivity
 practice:
   - id: ccc15s3
     note: Dock as many arriving planes as possible at an airport's numbered gates.

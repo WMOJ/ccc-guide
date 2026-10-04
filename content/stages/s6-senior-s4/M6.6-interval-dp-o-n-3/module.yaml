@@ -1,17 +1,10 @@
 id: M6.6
-title: Interval DP and O(n³) algorithms
 status: accepted
 objectives:
   - Define a subproblem as a contiguous interval in a sequence.
   - Compute solutions bottom-up by increasing interval length.
   - Speed up a split-point interval DP with Knuth's optimization when its conditions hold.
   - Recognize problems solvable by splitting an interval at each possible position.
-prereqs:
-  - M4.11
-  - M4.3
-  - M4.9
-lessons:
-  - interval-dp
 practice:
   - id: ccc16s4
     note: Merge neighboring rice balls in a row to end with the largest single ball.

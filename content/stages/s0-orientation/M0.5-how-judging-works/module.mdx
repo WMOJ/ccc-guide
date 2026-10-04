@@ -1,0 +1,55 @@
+You never see the judge run your program. This lesson opens up what happens between your submission and the result that comes back, so the words on the results screen mean something the first time you see them.
+
+## One program, many hidden tests
+
+A problem is never checked with a single example. The judge holds a set of hidden test cases. Each one is a full pair: some input, and the exact output your program should produce for it.
+
+Your program runs once per test case. Each run starts fresh, with that test's input on <Term id="standard-input">standard input</Term> and nothing carried over from the test before it.
+
+Each run ends the way the module on exact output described. The judge reads whatever your program wrote to <Term id="standard-output">standard output</Term>. It compares that against the expected output, line by line. A run that matches earns credit for that test. A run that does not match, whatever the reason, does not.
+
+## Subtasks: tests grouped into batches
+
+A problem's tests are grouped into <Term id="subtask">subtasks</Term>. Each subtask is a named batch, often built around a bound stated in the problem. One subtask might promise a small input; another, a much larger one that needs a faster program to finish in time. Passing a subtask usually means passing every test inside it.
+
+That grouping matters for how a subtask fails. The judge checks a subtask's tests in order. Once one test in the batch fails, the rest of that batch is skipped rather than run. A wrong answer on the first test of a subtask can look the same as failing the whole subtask, because the tests after it never ran at all.
+
+Picture a subtask built around three tests, from smallest to largest. If your program passes the first but runs out of time on the second, that subtask's result shows a pass, a time limit failure, and one skipped test. The third test never runs at all, even though it might have passed on its own. Reading which test a subtask stopped on tells you more than the subtask's overall result alone.
+
+The four tests in the figure below are not one subtask's batch. Picture each one as the first test of a different subtask, or from a problem with no subtasks at all. Every one of them still runs, regardless of how the others turned out.
+
+<Figure caption="The judge running four hidden tests, one after another">
+  <Scene name="how-judging-works" verdicts={["AC", "WA", "TLE", "RTE"]} />
+</Figure>
+
+Four tests here, four separate runs. The second one prints a different answer than expected. The third one is still running when the time limit arrives. The fourth stops with an error partway through. None of these three failures are the same problem, even though all three mean the test does not pass.
+
+## Verdicts: what each result means
+
+A <Term id="verdict">verdict</Term> is the judge's recorded result for one test case. Four verdicts cover most of what you will see.
+
+`AC` is short for accepted. Your output matched the expected output exactly for that test.
+
+`WA` is wrong answer. Your program ran to completion and printed something, but it was not the expected output. The mismatch could be the wrong number, the wrong case, an extra space, or a blank line that should not be there.
+
+`TLE` is time limit exceeded. Your program was still running when its time ran out, usually because it does too much work for how large that test's input is.
+
+`RTE` is runtime error. Your program stopped on its own before finishing, most often because of one of the errors the next module covers.
+
+The grader's own results screen spells these out in words rather than short codes: "correct" for `AC`, "wrong answer" for `WA`, "time-limit exceeded" for `TLE`, and "run-time error" for `RTE`. The words and the codes name the same four outcomes.
+
+The judge can also report a compilation error, when your submission cannot even start, and a skipped test, for one of the tests after a subtask's first failure. Neither of those is a verdict about how your program behaves on that test's input. Both mean the test was never really tried.
+
+## Your best submission counts
+
+Submitting is not a single attempt. You may submit again after fixing a mistake. The judge keeps the best result you got across every submission to a problem, not the most recent one.
+
+A submission that fails outright costs you little. The 2026 CCC rules allow up to fifty submissions per problem, at most one per minute to any single problem.
+
+That changes how you should treat an early attempt. Submitting a simple version of your solution first, before you have handled every case, still helps. It can pass some subtasks and lock in that result. A later, better submission can only improve on it; it never takes those results away.
+
+A common mistake is stopping the moment you see the first `WA` and assuming the whole problem is wrong. Read which test failed before you change anything. A wrong answer on a large test tells you something different from a wrong answer on the very first one.
+
+Try it: next time you read about a contest problem with several subtasks, notice which subtask a small, simple input belongs to. That is usually the one a first, unfinished attempt can already pass.
+
+This lesson covered how the judge runs your program once per hidden test. It also covered how tests group into subtasks that stop at the first failure, the verdicts `AC`, `WA`, `TLE` and `RTE`, and why your best submission is the one that counts.

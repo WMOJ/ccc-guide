@@ -83,15 +83,15 @@ export function inScope(file: string, scope: string | undefined): boolean {
 }
 
 /**
- * Does a lesson path (/learn/<stage>/<module>/<lesson>) belong to the scope: a module id (exact,
- * so M1.1 does not pick up M1.10), a stage id or a lesson slug? P6: the old test lower-cased the
- * scope and swapped its dot for a dash, so no module id ever matched a real lesson URL.
+ * Does a module page path (/learn/<stage>/<module>) belong to the scope: a module id (exact, so
+ * M1.1 does not pick up M1.10), a module folder name, or a stage id? P6: the old test lower-cased
+ * the scope and swapped its dot for a dash, so no module id ever matched a real page URL.
  */
-export function lessonInScope(lessonPath: string, scopeId: string | undefined): boolean {
+export function moduleInScope(modulePath: string, scopeId: string | undefined): boolean {
   if (!scopeId) return true;
-  const [, , stage, moduleId, lesson] = decodeURIComponent(lessonPath).split("/");
+  const [, , stage, moduleId] = decodeURIComponent(modulePath).split("/");
   const folderId = scopeId.replace(/-.*$/, ""); // "M1.2-integer-..." -> "M1.2"
-  return moduleId === folderId || stage === scopeId || lesson === scopeId;
+  return moduleId === folderId || stage === scopeId;
 }
 
 export function findVisuals(roots: string[], scope?: string): VisualSource[] {

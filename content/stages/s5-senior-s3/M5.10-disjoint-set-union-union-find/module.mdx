@@ -1,0 +1,97 @@
+Take five friends, labeled 0 through 4, who start out as strangers. Someone tells you 0 and 1 know each other. Later you hear that 2 and 3 know each other too. Now a question comes in: are 0 and 3 in the same friend group? Not yet, but if 1 and 2 turn out to know each other, all four merge into one group. Answering this kind of question over and over, as new facts arrive, is what a <Term id="disjoint-set-union">disjoint set union</Term> does. It is also called <Term id="union-find">union-find</Term>, after its two operations.
+
+A contest version pushes $n$ and the number of merges or queries, $m$, up to $2 \cdot 10^5$ each. The obvious plan keeps a group label per element and relabels every member of a group on each merge, or answers each query with a search outward from one element. Either way, one operation can touch every other element, so $m$ of them cost $O(n \cdot m)$ in the worst case, about $4 \cdot 10^{10}$ steps. A budget of roughly $10^8$ steps rules that out, so `find` and `union` need to run close to constant time.
+
+## Find and union with trees
+
+Give every element a parent. An element that is its own parent is a root, and every element that shares a root is in the same group. That single flat `parent` list is the whole data structure: no linked nodes, just one list of integers.
+
+To check whether two elements are in the same group, follow parents from each one up to its root. This is `find`. If the two roots match, the elements are connected. To merge two groups, find both roots and make one the parent of the other. This is `union`.
+
+<Code file="examples/dsu_start.py" showOutput caption="A parent array where each element starts as its own root" />
+
+Union 0 and 1, then 2 and 3: the parent array now resolves 0 and 1 to root 1, and 2 and 3 to root 3, no matter what order any of this arrived in.
+
+## Path halving keeps trees shallow
+
+Written this plainly, `union` always attaches the same side. Merge 0 into 1, then 1 into 2, then 2 into 3, and you get a straight chain four elements deep, where `find` on the far end walks every hop. On a million such unions, that is a million wasted hops.
+
+<Term id="path-halving">Path halving</Term> fixes this while you search. Every time `find` follows a pointer from `x` to `parent[x]`, it also points `x` at its grandparent, `parent[parent[x]]`, before moving on. Each visit to a node cuts its distance to the root by about half, so the paths get shorter every time anyone walks them. The loop stays a loop. A recursive `find` would grow one stack frame per hop, and on a long chain that hits Python's recursion limit before path halving ever gets a chance to flatten anything.
+
+<Code file="examples/dsu_halving.py" showOutput caption="Path halving: point at the grandparent while climbing" />
+
+Four naive unions build the chain `1, 2, 3, 4, 4`. Calling `find(0)` on it jumps from 0 to 2, then from 2 to 4, so `parent` records a shorter path than the one it climbed.
+
+Step through `find` climbing that chain below. Try both presets.
+
+<Figure caption="Path halving flattens a chain as find climbs it">
+  <StepThrough frames="visuals/sv_halving.frames.json" preset="chain" />
+</Figure>
+
+The second preset starts `find` one hop from the root, where there is no second link to skip, so halving leaves the array untouched.
+
+## Union by size prevents imbalance
+
+Path halving flattens paths as you search them, but a smarter `union` avoids building deep paths in the first place. Keep a `size` for every root, the number of elements in its tree. When two groups merge, attach the smaller tree under the larger one's root, and add the smaller tree's size to the larger. This is <Term id="union-by-size">union by size</Term>.
+
+<Code file="examples/dsu_union.py" showOutput caption="Union by size: the smaller root always becomes the child" />
+
+Run the same four unions, `0-1`, `1-2`, `2-3`, `3-4`, under the naive rule and under union by size. The program below keeps both forests and reports each one's height, the most hops any element needs to reach its root. It uses a plain `find` with no halving, so the shape of each tree stays visible.
+
+<Code file="examples/union_order.py" showOutput caption="The same unions under both rules: the naive forest becomes a chain, the by-size forest stays flat" />
+
+Step through the two forests growing side by side below. The second preset unions in a different order, and the third lengthens the chain to eight elements.
+
+<Figure caption="The same unions applied two ways: the naive forest grows a chain, union by size keeps every element within one hop of the root" alt="Two forests receiving the same unions. The naive forest always puts the first root under the second and grows a chain as tall as the number of unions. The by-size forest puts the smaller tree under the larger and stays one level deep, with sizes shown on its root.">
+  <StepThrough frames="visuals/sv_compare.frames.json" preset="chain" />
+</Figure>
+
+The star order shows that naive union is only as good as the order the unions arrive in, and contest input picks the order. Union by size has no such weakness.
+
+The reason is a fact about doubling. An element's distance to its root only grows when its whole tree gets attached under another one. Union by size always attaches the smaller tree under the larger, so that other tree already has at least as many elements. Each time an element's depth grows by one hop, the tree holding it has at least doubled in size. A size can only double about $\log_2 n$ times before it reaches $n$. So depth is at most $\log_2 n$: 2 hops for five elements, at most 19 for a million, in any order.
+
+Step through unions below, watching which root wins and how its size grows. Try the second preset too.
+
+<Figure caption="Union by size: the smaller root attaches under the larger, and a repeat union is a no-op">
+  <StepThrough frames="visuals/sv_union.frames.json" preset="sizes" />
+</Figure>
+
+The second preset's last step unions two elements that already share a root: `find` still runs on both sides, but since the roots match, nothing is attached and no size changes.
+
+## Connectivity in a network
+
+Combine both optimizations and `find` and `union` run in close to constant time each, however the unions arrive. That makes union-find the right tool whenever a problem gives you a stream of "these two are connected" facts and later asks about connectivity, not about an actual path.
+
+<Code file="examples/connectivity.py" showOutput caption="Answering connectivity queries after processing every cable" />
+
+The input lists computers, then cables connecting pairs of them, then queries asking whether two computers are connected. Each cable is a `union`. Each query calls `find` on both computers and compares the roots it gets back.
+
+Step through the cables merging computers below, then watch each query compare two roots. Try the second preset too.
+
+<Figure caption="Cables merge computers into components; a query compares the roots it finds">
+  <StepThrough frames="visuals/sv_connectivity.frames.json" preset="network" />
+</Figure>
+
+The second preset asks about two computers that never appear in any cable: each is its own root from the start, so the roots differ and the answer is no.
+
+## The next free slot trick
+
+Some problems have nothing to do with grouping and still fit union-find. They reduce to the same repeated question: find the lowest-numbered slot that is still free, and mark it taken. Number the slots 1 through $n$, plus one sentinel slot at $n + 1$ that is never handed out. When slot `x` is taken, set `parent[x] = x + 1`. Now `find(1)`, using the same iterative halving as before, jumps straight past every taken slot to the lowest one still free, or to the sentinel if none remain.
+
+<Code file="examples/next_slot.py" showOutput caption="The next free slot, found by union-find on the slots themselves" />
+
+Five slots and six requests fill every slot and then run out. The sixth request's `find(1)` climbs all the way to the sentinel at slot 6, so the program reports `-1` instead of a slot number.
+
+Step through six requests taking slots below, and watch `parent` skip over each one already taken.
+
+<Figure caption="Requests take the lowest free slot; find skips over every slot already taken">
+  <StepThrough frames="visuals/sv_next_slot.frames.json" preset="five" />
+</Figure>
+
+The second preset has a single slot and two requests, so the sentinel is reached on the very next call. It is the same `find` as before, applied to a resource instead of a friend group.
+
+## Making it fast on PyPy
+
+At $n$ and $m$ near $2 \cdot 10^5$, the operations themselves are cheap; input and storage decide the rest. Read the whole input once with `sys.stdin.read().split()` and take tokens by position, as every example above does, because calling `input()` hundreds of thousands of times costs far more. Keep `parent` and `size` as flat lists of plain integers, never a dictionary: indexing a list is one of the cheapest operations PyPy has. Keep `find` iterative, since a recursive version adds a call per hop and can hit Python's recursion limit. Collect each query's answer in a list and print them all at once.
+
+Reach for union-find whenever a problem gives you a stream of merges or claims and asks about grouping or the lowest available resource.

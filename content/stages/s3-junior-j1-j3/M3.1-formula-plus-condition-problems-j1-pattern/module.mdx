@@ -1,0 +1,67 @@
+Imagine you run a shipping company that charges by weight and distance. The base cost is the weight in kilograms times 2, plus the distance in kilometers divided by 10, rounded down, since a partial 10 km does not count yet. Then you look that cost up in a table of three tiers: 20 or less ships Standard, more than 20 up to 50 ships Priority, and anything over 50 ships Express.
+
+Read a few numbers, combine them into one arithmetic formula, then decide which of a short list of outputs to print based on where that result falls. This is the formula-plus-condition pattern.
+
+## The shape: a formula, then a lookup
+
+A J1 program like this reads a fixed, small number of values, usually two or three, and never loops over a list. There is no bound on N to worry about and no timing to plan for. The program does the same handful of arithmetic operations and one comparison chain, whatever the numbers are.
+
+Compute the formula once, store it in a variable, and check that variable in every branch. Step through the real program below on three inputs, one for each side of a boundary. Try all three presets.
+
+<Figure caption="Shipping cost classified into three tiers, tested on the boundary between each pair">
+  <CodeTrace trace="examples/shipping_cost.trace.json" preset="exactly-20" />
+</Figure>
+
+Lines 9 and 10 pull `kg` and `km` out of the `data` list, and lines 12 and 13 build `cost` once. From there, every preset runs the same three-way check on that one stored value: a cost of `20` takes the `if`, `21` takes the `elif`, and `51` falls through to the `else`. Writing `if kg * 2 + km // 10 <= 20:` and the same expression again in the `elif` invites a typo, and one mistyped copy makes two branches disagree about what "cost" means. A stored result also leaves one place to fix if the formula turns out to be wrong.
+
+## Two parts, then a band
+
+The same lookup is easier to see on a number line. The three tiers are bands on it, and the cost is a point that lands in exactly one band. Step through the next figure and watch the two parts of the formula add up to that point.
+
+<Figure caption="The cost built from its two parts, then placed in one of the three tier bands">
+  <StepThrough frames="visuals/tier_line.frames.json" preset="typical" />
+</Figure>
+
+For 4 kg over 70 km, the weight part is 8 and the distance part is 7, so the cost is 15 and lands in the Standard band. The second preset lands exactly on 50, and the third shows `5 // 10` rounding down to 0 so only the weight counts.
+
+## Picking the right comparison at each boundary
+
+The problem statement uses words like "at most", "more than", "at least", or "up to". Turning each phrase into `<`, `<=`, `>`, or `>=` is the part of this pattern most worth slowing down for. The rule says "20 or less", so the first check needs `<=`, not `<`. With `if cost < 20`, a cost of exactly 20 falls through to the `elif` and lands in Priority when the problem asked for Standard.
+
+Step through two versions of the same chain below, one with `<=` and one with `<`. The third preset uses a cost away from any boundary.
+
+<Figure caption="The same chain written with at-most and with strictly-less-than comparisons, tested on boundary costs and on a cost away from them">
+  <StepThrough frames="visuals/wrong_comparison.frames.json" preset="on-20" />
+</Figure>
+
+On a cost of 20 or 50 the two versions disagree, and on 18 they print the same tier. An ordinary input does not reveal the mistake, only a value sitting on the boundary does. Every comparison in the correct chain uses `<=`, so the bands share their edges with no gap and no overlap. If one comparison used `<` and its neighbor `<=`, a boundary value could match nothing or match two branches.
+
+## Checking branches in order
+
+`if` checks first. If that is `False`, `elif` checks next. If that is also `False`, `else` runs. The conditions do not overlap, so exactly one branch runs, and Python stops checking as soon as one condition is `True`. The order the branches are written in decides which condition is tried first.
+
+Step through the chain below on three costs, one for each branch. Watch which condition is checked, and how the chain stops the moment one comes back `True`.
+
+<Figure caption="The if/elif/else chain checked from the top, stopping at the first true condition">
+  <StepThrough frames="visuals/branch_order.frames.json" preset="if-wins" />
+</Figure>
+
+For a cost of 10, the `if` is `True` immediately and the other two conditions are never looked at. For a cost of 30, the `if` fails, so the `elif` gets a turn, and it wins. For a cost of 60, both fail, and the `else` runs because it is what is left once every condition above it has failed, not because it checked anything. Writing the boundaries in the wrong order changes which branch a value like 30 lands in without changing anything else about the code.
+
+## Testing your boundaries
+
+A mistake here hides at exactly one input value, so test the boundaries themselves. Pick an input just below a boundary, one exactly on it, and one just above it. Work out what each should print by hand, then run the program and compare.
+
+<Figure caption="Three runs of shipping_cost.py chosen to land just below, at, and just above a boundary">
+  <StepThrough frames="visuals/boundary_runs.frames.json" preset="at-20" />
+</Figure>
+
+Each trio brackets one boundary. The costs 19, 20 and 21 cover the first, and 49, 50 and 51 cover the second. The third preset tests the rounding instead: a distance of 9 km adds nothing, and 10 km adds 1, which is enough to tip a cost of 20 into Priority.
+
+## Printing exactly what is asked
+
+The problem tells you exactly what to print. For the shipping example, the output is one of three words: `Standard`, `Priority`, or `Express`. The grader compares your output character by character, so `"Your tier is Standard"` is a wrong answer, even though a person would understand it. When a problem says "output exactly", copy the text from the statement into your `print()` call, with its capitalization and spacing, and print nothing else on that line.
+
+## A note on speed
+
+This program does the same small, fixed amount of arithmetic and comparison work whatever the numbers are, so there is no loop to make faster. It reads its input the way every Stage 3 example does: `sys.stdin.read().split()` once, then values by position. Two or three numbers never need that for speed. Later problems repeat this formula-then-branch shape once per line of input. There, one read of everything keeps the total cost proportional to how much the problem asks. A fresh read on every line would add setup cost each time.

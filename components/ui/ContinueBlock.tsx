@@ -3,16 +3,15 @@
 import { useReadState } from "@/lib/read-state";
 import { RichTitle } from "./RichTitle";
 
-export interface ContinueLesson {
+export interface ContinueModule {
   id: string;
   title: string;
   href: string;
-  moduleId: string;
 }
 
 export interface ContinueBlockProps {
-  /** Every readable lesson in course order. */
-  lessons: ContinueLesson[];
+  /** Every readable module in course order. */
+  modules: ContinueModule[];
   labels: { continueLabel: string; startLabel: string };
 }
 
@@ -33,19 +32,19 @@ function Flag() {
 }
 
 /**
- * "Continue where you left off": the next unread lesson after the most recently read one. The
+ * "Continue where you left off": the next unread module after the most recently read one. The
  * server renders the start state; the client swaps text inside a fixed-height block.
  */
-export function ContinueBlock({ lessons, labels }: ContinueBlockProps) {
+export function ContinueBlock({ modules, labels }: ContinueBlockProps) {
   const rs = useReadState();
-  let target: ContinueLesson | undefined = lessons[0];
+  let target: ContinueModule | undefined = modules[0];
   let resumed = false;
   if (rs.ready) {
     const map = rs.all();
     let latest = -1;
     let latestAt = "";
-    lessons.forEach((l, i) => {
-      const at = map[l.id];
+    modules.forEach((m, i) => {
+      const at = Object.hasOwn(map, m.id) ? map[m.id] : undefined;
       if (at && at >= latestAt) {
         latestAt = at;
         latest = i;
@@ -54,9 +53,9 @@ export function ContinueBlock({ lessons, labels }: ContinueBlockProps) {
     if (latest >= 0) {
       resumed = true;
       target =
-        lessons.slice(latest + 1).find((l) => !(l.id in map)) ??
-        lessons.find((l) => !(l.id in map)) ??
-        lessons[latest];
+        modules.slice(latest + 1).find((m) => !Object.hasOwn(map, m.id)) ??
+        modules.find((m) => !Object.hasOwn(map, m.id)) ??
+        modules[latest];
     }
   }
   if (!target) return null;
@@ -71,7 +70,7 @@ export function ContinueBlock({ lessons, labels }: ContinueBlockProps) {
           href={target.href}
           className="group mt-0.5 flex flex-wrap items-baseline gap-x-2 text-ui"
         >
-          <span className="text-ink-3 text-small tnum">{target.moduleId}</span>
+          <span className="text-ink-3 text-small tnum">{target.id}</span>
           <span className="font-bold text-blueline underline decoration-1 underline-offset-[0.2em] group-hover:text-blueline-deep group-hover:decoration-2">
             <RichTitle text={target.title} />
           </span>

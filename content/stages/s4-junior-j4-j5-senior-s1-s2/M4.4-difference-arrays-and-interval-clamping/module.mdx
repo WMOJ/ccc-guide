@@ -1,0 +1,71 @@
+Suppose a booking system tracks how many rooms are reserved on each of 100,000 nights, starting from zero. A batch of up to 100,000 bookings arrives, and each one reserves a room for every night in some range. Afterward you need the reservation count on every night. Marking each night of each booking directly can cost a lot. One booking spanning all 100,000 nights, repeated 100,000 times, is ten billion updates, the same wall M4.3's rainfall queries hit before prefix sums. A <Term id="difference-array">difference array</Term> clears that wall the same way. Instead of touching every night in a range, it touches only the two nights where the range starts and stops.
+
+## Recording changes instead of totals
+
+Where a prefix sum array stores a running total, a difference array `diff` stores the change from one position to the next. To add `val` to every index from `l` to `r`, inclusive, write `diff[l] += val` to start the increase and `diff[r + 1] -= val` to cancel it the moment the range ends. When the array is rebuilt later, every index from `l` to `r` has `val` added, and nothing past `r` does, because the `-val` has already undone it.
+
+`diff` needs `n + 1` entries for an array of length `n`, the same convention as M4.3's prefix sum array. The extra slot past the end holds `diff[r + 1]` safely even when `r` is the last index.
+
+Step through a batch of range updates below, one at a time, then watch the array rebuilt from `diff`. Try the "Touches the end" preset, where a range reaches the last index and writes into that extra slot.
+
+<Figure caption="Three range updates recorded into diff (only two entries change per update), then diff rebuilt into the final array by a running total, the same running total M4.3's prefix sum keeps.">
+  <StepThrough frames="visuals/diff-rebuild.frames.json" preset="overlapping" />
+</Figure>
+
+<Code file="examples/range_updates.py" showOutput caption="Applying three range updates with a difference array" />
+
+Rebuilding is not a new idea: it is M4.3's prefix sum run directly over `diff`. `arr[i]` is the sum of `diff[0]` through `diff[i]`, a running total exactly like the one that built `prefix`. Only what gets summed differs. M4.3 sums the original values to answer range queries. Here, summing `diff` reconstructs the array itself, with every update already folded in.
+
+## Why two writes beat a loop
+
+Each update costs two array writes, O(1), so M updates cost O(M) whatever their ranges. A direct loop that marks every index of every range costs O(M times N) in the worst case. With M and N both at 100,000, that is ten billion operations. The difference array costs O(M) to record the updates plus O(N) for one rebuild pass, O(M + N) altogether: 200,000 operations, which PyPy clears easily.
+
+The figure below counts the writes. The left array is updated by a direct loop and the right one by `diff`, and each step marks the cells written.
+
+<Figure caption="The same updates applied two ways. The direct loop writes every cell in each range, while diff writes two entries per update, however wide the range is.">
+  <StepThrough frames="visuals/cost-compare.frames.json" preset="wide" />
+</Figure>
+
+On the "Wide ranges" preset the direct loop makes 19 writes against `diff`'s 6, and even with the 7-step rebuild `diff` finishes in 13. Wider ranges widen the gap. On "Single cells" the direct loop wins, 2 writes to 4, because a range of one index gains nothing from the trick. Difference arrays pay off when ranges are wide or updates are many.
+
+## Going the other direction
+
+Any array can be turned into a difference array, not only one built from range updates. `diff[0]` copies `arr[0]`, and every later `diff[i]` is `arr[i] - arr[i - 1]`, the gap between neighbors. Running the prefix sum back over that `diff` reproduces `arr` exactly. Subtracting neighbors and prefix-summing undo each other, and `diff[i]` alone is only ever a gap, never a value from the original array.
+
+<Figure caption="An array turned into its difference array by subtracting neighbors, then the difference array turned back into the original array by a prefix sum." alt="Two arrays side by side, array and diff. Reading left to right, each diff entry is filled in as the gap between two neighboring array entries. Reading the panels again, each array entry is filled in as a running total of diff, ending back where it started.">
+  <StepThrough frames="visuals/to-diff.frames.json" preset="typical" />
+</Figure>
+
+<Code file="examples/to_diff.py" showOutput caption="Converting an array to its difference array, then back again" />
+
+The "Constant" preset shows the other extreme. When every entry of `arr` is the same, `diff` is one leading value followed by zeros, because nothing changes from one neighbor to the next. That is what the range-update `diff` relies on: it records where a value changes, never the value at a point. Only the running total through `i` tells you `arr[i]`.
+
+## Seeing the ranges at once
+
+The same three updates can be drawn as bars over the array's index line, one row per range so overlapping ranges stay visible side by side.
+
+<Figure caption="The three updates as bars over the index line. Wherever two bars cover the same index, that index gets both additions when diff is rebuilt." alt="A number line from 0 to 5, with three range bars drawn on separate rows: [0, 2], [1, 4] and [3, 3]. Indices 1 and 2 lie under two bars, index 3 lies under two bars, and indices 0 and 4 lie under one bar each.">
+  <StepThrough frames="visuals/intervals.frames.json" preset="overlapping" />
+</Figure>
+
+Index 3 sits under two of the ranges, `[1, 4]` and `[3, 3]`, so its final value carries both additions, 2 + 1 = 3, matching the output above. Index 0 sits under only the first range. Each update still writes to only two positions, `l` and `r + 1`, no matter how wide the bar is.
+
+## Clamping a range to the array
+
+A problem does not always guarantee that a range fits inside the array. A request might ask to reserve nights `-2` to `2`, or `3` to `1000`, when the array only holds indices `0` through `n - 1`. <Term id="interval-clamping">Interval clamping</Term> fixes that before the range reaches `diff`: clip `l` up and `r` down with `l = max(l, 0)` and `r = min(r, n - 1)`. If the clipped `l` is greater than the clipped `r`, the whole range fell outside the array, so skip that update. Writing `diff[r + 1] -= val` with the raw `r` could also write past the end of the list you allocated.
+
+<Figure caption="Each requested range drawn as invalid where it reaches past the array, then clipped to the valid indices and applied, or, when nothing of it survives clipping, skipped." alt="Requested ranges drawn on the index line, first spanning past the array's bounds in an invalid state, then redrawn clipped to [0, n - 1] in a valid state, or omitted where clipping leaves nothing inside the array.">
+  <StepThrough frames="visuals/clamp-updates.frames.json" preset="clamped" />
+</Figure>
+
+<Code file="examples/clamp_updates.py" showOutput caption="Clamping each range to the array before recording it in diff" />
+
+In the figure, `[-2, 2]` clips to `[0, 2]`, `[3, 10]` clips to `[3, 4]`, and `[6, 8]` has `l = 6` past `r = 4`, so it is skipped. The printed array `5 5 5 2 2` comes from the first two.
+
+## Getting the boundary right
+
+The `+ 1` on the stop index is the easiest detail to get wrong. `diff[r] -= val` instead of `diff[r + 1] -= val` cancels the increase one index too early, so index `r` never gets counted. M4.3's "One day" case catches the same kind of off-by-one, and a range where `l` equals `r` is the quickest test for a difference array too. A `diff` sized `n` instead of `n + 1` fails the moment an update's `r` is the last index, since `diff[r + 1]` then falls outside the list.
+
+## When to reach for this pattern
+
+Recognize a difference array when a problem hands you many updates to ranges of an array and then asks for the values after every update has been applied. Events that start and end at given points reduce to the same two writes. So do resources reserved and released over an interval, and a count of how many intervals cover each position. The technique inverts prefix sums. A prefix array turns values into fast range sums. A difference array turns range updates into fast reconstruction, and the same running-total pass moves between the two. On PyPy, a flat list for `diff`, one `sys.stdin.read().split()` call for input, and one join for output keep the O(M + N) work free of extra I/O cost.

@@ -1,0 +1,117 @@
+Earlier modules stored one value at a time, or read one value at a time from a fixed-length line. Many CCC problems instead need to hold many values together, in the order they arrived, so a program can look back at any of them later. This lesson covers Python's list, and the built-in functions that summarize and rearrange one.
+
+## Building a list
+
+A list literal holds several values together, written between square brackets and separated by commas, such as `[10, 20, 30]`. The `.append()` method grows a list one value at a time, adding a new value onto the end.
+
+<Code file="examples/build_with_append.py" showOutput caption="Building a list by appending one value per pass of a loop" />
+
+`scores` starts as an empty list, `[]`, then each pass through the loop appends one more number read from input. After the loop, `scores` holds every number in the order it was read, ready to use as a whole.
+
+A <Term id="list-comprehension">list comprehension</Term> builds a list in one line instead, written `[expression for name in sequence]`.
+
+<Code file="examples/list_comprehension.py" showOutput caption="Building a list from a split line, then filtering it" />
+
+`[int(x) for x in input().split()]` converts every piece from `.split()` into a number, all in one line, the same result `build_with_append.py` took a whole loop to reach. Adding `if x % 2 == 0` at the end of a comprehension keeps only the values that pass that condition, building `evens` from just the even numbers in `nums`. Step through the test below, one value at a time.
+
+<Figure caption="A comprehension with a condition: each value of nums is tested, and only the passing ones join evens">
+  <StepThrough frames="visuals/comprehension-filter.frames.json" />
+</Figure>
+
+Each value is tested against the condition before anything is added, which is why `3` and `7` never reach `evens`. The second preset has no even values, so `evens` stays an empty list.
+
+## Summarizing a list
+
+`sum()` adds up every value in a list. A <Term id="generator-expression">generator expression</Term> has the same shape as a list comprehension, without the square brackets. It can be passed directly to a function like `sum()`, `any()` or `all()`, without building a separate list first.
+
+<Code file="examples/sum_any_all_gen.py" showOutput caption="Summing, filtering, and checking conditions across a list" />
+
+`sum(nums)` adds every value. `sum(x for x in nums if x > 0)` adds only the positive ones, using a generator expression right inside the call. `any(x < 0 for x in nums)` is `True` if at least one value matches, and `all(x > 0 for x in nums)` is `True` only if every value does.
+
+`sorted()` returns a new list with the same values in order, without changing the original. The `reversed()` function visits a list back to front, and `list()` turns what it produces back into an actual list. Then `enumerate()` pairs each value with its position.
+
+<Code file="examples/sorted_reversed_enumerate.py" showOutput caption="Sorting, reversing, and pairing values with their positions" />
+
+`sorted(nums)` gives `[1, 2, 3]` from `[3, 1, 2]`, smallest first. `list(reversed(nums))` gives `[2, 1, 3]`, the original order backward. `enumerate(nums)` hands the loop both an index and a value on every pass, without a separate counter.
+
+`zip()` pairs up values from two lists by position, stopping as soon as the shorter one runs out.
+
+<Code file="examples/zip_two_lists.py" showOutput caption="Pairing two lists together by position" />
+
+The first line splits into two names, the second into two scores, and `zip(names, scores)` pairs `"Ana"` with `10` and `"Bo"` with `20`, matching each name to the score at the same position. Step through the pairing below, and try the uneven preset.
+
+<Figure caption="zip pairs the values at the same index and stops when the shorter list runs out">
+  <StepThrough frames="visuals/zip-pairs.frames.json" />
+</Figure>
+
+When both lists have the same length, `zip` pairs every value. In the uneven preset, `names` has a third value and `scores` does not, so `zip` stops after two passes and `"Cy"` is never visited. No error is raised, so check that two lists line up before you rely on `zip`.
+
+## Building a 2D grid
+
+A 2D grid is a list of lists: an outer list of rows, where each row is itself a list of columns. `grid[r][c]` reads the cell at row `r`, column `c`.
+
+<Code file="examples/grid_basics.py" showOutput caption="Building a 2-row, 3-column grid, and changing one cell" />
+
+`[[0] * cols for _ in range(rows)]` builds `rows` separate row lists, each with `cols` zeros. Changing `grid[0][1]` only changes that one cell, since every row is its own independent list.
+
+<Code file="examples/grid_visit_sum.py" showOutput caption="Visiting every cell of a grid with a nested loop, row by row" />
+
+A nested loop reaches every cell in a grid the same way. The outer loop picks a row `r`, the inner loop picks a column `c` within that row, and `grid[r][c]` together visits every cell once, row by row. Step through the visit below.
+
+<Figure caption="Visiting grid[r][c] row by row, adding each cell to a running total">
+  <StepThrough frames="visuals/grid-visit-sum.frames.json" />
+</Figure>
+
+The numbers along the edges are the row and column indices, so each caption's `grid[r][c]` names a cell you can find: the row first, then the column. The inner loop finishes a whole row before the outer loop moves on. The visit order is left to right within a row, then top to bottom across rows. The one-column preset shows that same order on a grid with only one cell per row, where the outer loop alone does almost all the work.
+
+## A bug to avoid: sharing one row by accident
+
+The shorter way to build a grid is to repeat one row with `*`. The next program reads the number of rows and columns, builds the grid that way, then changes one cell. Step through it line by line.
+
+<Figure caption="Building a grid the wrong way: one row, repeated by reference">
+  <CodeTrace trace="examples/aliasing_bug.trace.json" />
+</Figure>
+
+`[[0] * cols] * rows` looks like it builds `rows` separate rows, but `* rows` only copies the reference to the same row list, not the row itself. Changing `grid[0][1]` changes what every entry of `grid` points at, since they are the exact same list in memory. The one-row preset hides the bug, because there is no second entry to share it with.
+
+<Code file="examples/grid_fixed.py" showOutput caption="The list-comprehension form builds an independent row each time" />
+
+`[[0] * cols for _ in range(rows)]` runs `[0] * cols` once per row, building a fresh list each time, so changing one row leaves the others alone. Compare the two builds side by side below. The table holds the row lists, and the row of boxes above it shows which one each entry of `grid` points at.
+
+<Figure caption="Both grid builds: the repeated entry points at one row list, the comprehension gives each entry its own">
+  <StepThrough frames="visuals/grid-build.frames.json" />
+</Figure>
+
+With the shared build, the table has one row list however many entries `grid` has. With the comprehension, the table has one row list per entry. Whenever you build a 2D grid, use a comprehension with `range()` for the outer list, never `*` on a list that already holds a mutable row.
+
+## Slicing a list
+
+A slice, written `a_list[start:stop]`, pulls out a new list holding the elements from index `start` up to, but not including, index `stop`. Leaving `start` out means "from the beginning". Leaving `stop` out means "to the end", so `a_list[:3]` is the first three elements and `a_list[2:]` is everything from index 2 onward. `a_list[:]` with both sides left out copies the whole list.
+
+A slice always builds a new list, even when it copies the whole thing; changing the slice afterward never touches the original. That makes slicing the safe way to hand off "a copy of these values" to another part of a program. Compare that to just writing `other = a_list`, which makes `other` a second name for the exact same list, so a change through either name shows up in both.
+
+## What lists cost as they grow
+
+Some list operations get slower as a list grows longer: `pop(0)`, `insert(0, x)`, `remove()`, `.index()`, and checking `x in a_list` all have to shift or scan through the list's other elements. Calling `pop()` with no index removes the last element instead, and that never needs to shift anything else.
+
+<Code file="examples/pop_front_cost.py" showOutput caption="Removing the first element, then the last, from the same kind of list" />
+
+Step through what each removal does to the rest of the list below.
+
+<Figure caption="pop(0) moves every remaining value one slot left; pop() leaves every index alone">
+  <StepThrough frames="visuals/pop-front-cost.frames.json" />
+</Figure>
+
+`front.pop(0)` does not just delete index `0`. A list has no gaps, so every later value moves one slot left to close the hole. What was at index `1` becomes index `0`, what was at index `2` becomes index `1`, and so on. A list of four values costs three moves, and a list of a thousand would cost 999. `back.pop()` removes the last index directly, with nothing left to move. For most CCC input sizes this cost is not a concern, but a later module on list costs goes deeper into when it starts to matter.
+
+## Allocating slots for a 1-indexed problem
+
+Some problems number their items starting from `1`, not `0`. Allocating `n + 1` slots, instead of `n`, lets you use a problem's own numbering directly as an index.
+
+<Code file="examples/one_indexed_alloc.py" showOutput caption="Allocating one extra slot so index 1 through n line up with the problem's own numbering" />
+
+`[0] * (n + 1)` gives indices `0` through `n`, one more than `n` items actually need. `scores[3]` stores team `3`'s score directly, at index `3`, with no need to subtract `1` first or shift every other index to compensate.
+
+## Recap
+
+This lesson covered building a list with a literal, `.append()`, and a list comprehension. It also covered summarizing a list with `sum()`, `sorted()`, `reversed()`, `any()` and `all()`, and pairing values with `enumerate()` and `zip()`. Last, it covered building a 2D grid safely and avoiding the shared-row bug. It also covered what a list's operations can cost as it grows, and allocating an extra slot for a 1-indexed problem. The three problems below all process several values held together in one list or grid.

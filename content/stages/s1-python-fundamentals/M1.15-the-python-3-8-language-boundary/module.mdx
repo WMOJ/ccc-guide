@@ -1,0 +1,92 @@
+The module on online judges mentioned that WMOJ and DMOJ run a newer Python than the contest grader. This lesson makes that boundary concrete: which pieces of syntax the newer Python adds, and what to write instead so your code runs the same way everywhere.
+
+## Why the boundary matters
+
+The contest grader runs PyPy 3, matching the language rules of Python 3.8. WMOJ and DMOJ run newer Python versions, so code using a feature added after 3.8 can pass there and still fail on the grader. The two judges are for practice. The grader is what decides your result, so 3.8 is the version that matters.
+
+A feature the grader does not recognize fails in one of two ways. `match`/`case` is new syntax. The grader's parser rejects the keyword before your program runs a single line, with a `SyntaxError`. Everything else in this lesson already parses as ordinary 3.8 syntax, such as a function call or an operator between two values. The program starts running normally, and only fails once it reaches that line, with an `AttributeError` or `TypeError`, possibly after printing some output already.
+
+## Checking a feature's version
+
+Code written for a newer Python does not warn you about any of this. It simply runs, on whatever Python its author had installed. The Python docs mark each function and each piece of syntax that arrived after Python's first release with a note in its own entry, such as "New in version 3.9". A change to a function that already existed carries a similar note instead, such as "Changed in version 3.9" for `math.gcd` gaining the ability to take more than two arguments. Before using something you read about outside these docs, such as in a forum post or a tutorial, check the 3.8 version of that function's docs entry yourself. If it names a version above 3.8, use the 3.8 substitute instead. The module on searching the docs quickly under contest conditions covers finding that note fast.
+
+## Not available on the grader
+
+The table below lists the additions that show up most often in code written for a newer Python, with the 3.8 way to write the same thing.
+
+| Not available (added in) | Use instead |
+|---|---|
+| `match`/`case` (3.10) | an `if`/`elif` chain |
+| `math.lcm` (3.9) | `a // math.gcd(a, b) * b` |
+| `math.gcd` with three or more arguments (3.9) | combine pairs one at a time |
+| `functools.cache` (3.9) | `functools.lru_cache(maxsize=None)` |
+| `dict1 \| dict2` (3.9) | `{**dict1, **dict2}` |
+| `str.removeprefix` (3.9) | slicing |
+| `int.bit_count` (3.10) | `bin(x).count("1")` |
+| `itertools.pairwise` (3.10) | `zip(a, a[1:])` |
+| runtime `list[int]` type annotations (3.9) | drop the annotation |
+| `bisect.bisect(..., key=...)` (3.10) | build a plain list of keys first, and bisect that instead |
+| `zip(..., strict=True)` (3.10) | compare the lengths yourself before zipping |
+
+Every row follows the same shape: the newer version adds a shortcut, and the 3.8 substitute reaches the same result with one more explicit step. Not everything that sounds like a recent addition is one, though: `math.comb`, `math.perm`, `math.isqrt`, `math.prod`, `pow(a, -1, m)` for a modular inverse, and the `initial` argument to `itertools.accumulate` are all already available in 3.8. When you copy code written outside this course, scan it against this table before you submit it.
+
+Two of these are worth seeing fail. A `match` statement reads naturally if you have seen it elsewhere, but the grader's parser does not recognize the keyword at all.
+
+```python bad38
+grade = "B"
+match grade:
+    case "A":
+        result = "excellent"
+    case "B":
+        result = "good"
+```
+
+The 3.8 substitute is a plain `if`/`elif` chain, which every version of Python has always understood.
+
+```python
+grade = "B"
+if grade == "A":
+    result = "excellent"
+elif grade == "B":
+    result = "good"
+```
+
+`math.lcm` fails differently. It parses as an ordinary function call, so PyPy 3.8 starts the program and only stops once it reaches that line.
+
+<Code file="examples/lcm_attribute_error.py" expectError="AttributeError" caption="A function call that only exists on a newer Python" />
+
+The `math` module on 3.8 has no attribute named `lcm`, so Python raises `AttributeError` the moment the call runs, not before. `a // math.gcd(a, b) * b` reaches the same result with a function 3.8 does have.
+
+```python
+import math
+
+a = 4
+b = 6
+lcm = a // math.gcd(a, b) * b
+```
+
+Combining two dictionaries with `|` fails the same way, at run time rather than before the program starts. Python only gave `|` this meaning between two dictionaries in Python 3.9, a version older than the one that added `match`.
+
+```python bad38
+defaults = {"lives": 3}
+overrides = {"lives": 5}
+settings = defaults | overrides
+```
+
+`{**defaults, **overrides}` builds the same combined dictionary. Python's dictionary literals have understood this `**` merge syntax since long before 3.8.
+
+```python
+defaults = {"lives": 3}
+overrides = {"lives": 5}
+settings = {**defaults, **overrides}
+```
+
+## A feature that is available, but kept out of this course
+
+The <Term id="walrus-operator">walrus operator</Term>, written `:=`, lets you assign a value to a name in the middle of a larger expression, rather than on a line of its own. It was added in Python 3.8, so the grader does support it. This course still keeps it out of every example you have seen. Reading it well takes practice this early stage does not need, and every result you have seen so far reads just as clearly with a separate assignment line first. You may see it in other people's code. Recognize it as a normal assignment folded into a larger expression, not as anything the grader would reject.
+
+Code written for a newer Python was very likely tested on whatever Python its author had installed, not against the grader's exact version. That code can use any of the additions in the table above without a second thought, and it will run perfectly well there. Check every unfamiliar piece of syntax against the docs before you adapt it for a submission.
+
+## Recap
+
+The contest grader runs Python 3.8, an older language version than WMOJ or DMOJ, so a feature added after 3.8 can pass on either judge and still fail on the grader. New syntax such as `match`/`case` fails before the program runs, with a `SyntaxError`; everything else in this lesson fails at run time instead, once the program reaches that line, with an `AttributeError` or `TypeError`. The docs mark each addition with a "New in version" note. A change to an existing function carries a "Changed in version" note instead. `math.lcm`, three-argument `math.gcd`, `functools.cache`, the `dict | dict` union, `str.removeprefix`, `int.bit_count` and `itertools.pairwise` all need a 3.8 substitute, each shown above. The walrus operator is the opposite case: available on the grader, just kept out of this course's own examples.

@@ -1,0 +1,71 @@
+Suppose you are handed a list of game scores and asked for the lowest and the highest. The obvious plan is two separate scans: one pass to find the minimum, a second pass to find the maximum. That plan reads every score twice. The real danger in this lesson is not that second read by itself. It is a pass that hides inside what looks like a single line of code, buried in a loop that runs once per input.
+
+## Tracking two answers in one pass
+
+A single scan can still produce both answers, by keeping them both as running state while it reads. Start `min_val` and `max_val` at the first score. Read every other score once, comparing it against both running values, and update whichever one it beats.
+
+<Code file="examples/min_max_pass.py" showOutput caption="Tracking a running minimum and maximum in a single pass" />
+
+Both plans compare each score against a running value twice, so the comparison count is the same either way. What changes is how many times the data itself gets read: once, instead of once per answer. That matters because reading is not free, and because the same shape, keeping several running answers alive across one read, is what makes the rest of this lesson's tricks work. Step through the pass below. An ascending list only ever updates `max_val`; a descending list only ever updates `min_val`; a single score needs no updates at all, since both running values already equal it.
+
+<Figure caption="Scanning once while keeping a running minimum and a running maximum">
+  <StepThrough frames="visuals/min-max-pass.frames.json" preset="ascending" />
+</Figure>
+
+The same shape applies beyond min and max: a running sum, a running count, a count of values matching some condition. Anything you can update from the current value and what you have tracked so far belongs in the same single loop, not a separate one.
+
+## Where a built-in hides a second pass
+
+Not every extra pass looks like a second `for` loop. Some hide inside a single call. `numbers.index(value)` walks the list from the start until it finds `value`, so one call costs up to `len(numbers)` comparisons. The loop below does what `index()` does internally, with a counter added so you can see the cost.
+
+<Code file="examples/index_scan.py" showOutput caption="A front-to-back scan for a value, counting comparisons like list.index does" />
+
+Step through the scan below. The table beside the list counts the comparisons, next to the single lookup a set would need. Try all three presets, including the one where the value is missing.
+
+<Figure caption="A list scan checks cells one by one until it matches; a missing value costs a full pass">
+  <StepThrough frames="visuals/index-scan.frames.json" preset="end" />
+</Figure>
+
+The output `7 8` says the same thing the first preset shows: the `6` sat at position 7, the last of 8 numbers, so the scan paid 8 comparisons. A value near the front costs little, and a missing value costs the full 8. Only the worst case matters when you count operations, because the judge's tests will include it. Calling `index()` inside a loop, once per number you are looking for, turns an innocent-looking line into a nested scan.
+
+The same is true of `value in numbers` when `numbers` is a list: Python scans from the front, the same work `index()` does. A set behaves differently. `value in a_set` costs close to one lookup however large the set has grown, since Python locates the value by its hash instead of by scanning.
+
+<Code file="examples/first_duplicate.py" showOutput caption="Finding the first repeated number by checking each one against a growing set" />
+
+Step through the scan below. Each number is checked against `seen` before it is added; the first number already in `seen` is reported as the duplicate, and the scan stops there. If nothing repeats, `seen` grows to hold every value and the answer stays -1.
+
+<Figure caption="Scanning once while a set records every value seen so far">
+  <StepThrough frames="visuals/seen-set.frames.json" preset="dup" />
+</Figure>
+
+The gap between the two containers is real, not just a rule of thumb. Checking each new number against a list you are still building costs more with every number added, since the list is longer each time. Checking against a set costs about the same no matter how large it has grown.
+
+<Figure caption="Real membership-check counts: a growing list against a set, as more numbers are read">
+  <StepThrough frames="visuals/membership-cost.frames.json" preset="main" />
+</Figure>
+
+At 10 numbers the list has already done 45 comparisons to the set's 10; at 1,000 numbers that gap grows to 499,500 against 1,000. That is the same n(n-1)/2 total M2.9's nested-loop count reaches. Checking against an ever-growing list, once per number, is a nested loop wearing a single call as a disguise.
+
+## Two pointers on sorted data
+
+Some problems narrow their own search space if the data is sorted first. Given a sorted list and a target sum, one way to find a pair that adds up to it checks, for every number, whether its complement is present. That is an `in` check inside a loop, exactly the hidden cost described above. Sorted order offers a better plan: start one pointer at the first number and another at the last, and let their sum guide which one moves.
+
+<Code file="examples/two_sum_sorted.py" showOutput caption="Finding a pair that sums to a target with two pointers on sorted data" />
+
+Why is it safe to throw a number away forever? Suppose `numbers[left] + numbers[right]` is too small. Every other number still in play is at most `numbers[right]`, `numbers[left]`'s largest possible partner. Pairing `numbers[left]` with anything else only makes the sum smaller still, so `numbers[left]` cannot be part of any answer. Discarding it by moving `left` inward loses no answer. The same argument holds in reverse when the sum is too big: `numbers[right]` cannot pair with anything smaller than its current partner and reach the target, so moving `right` inward is safe. Each move rules out one number for good, so the pointers move toward each other at most `len(numbers)` times before they meet, one pass over the data. (M4.9 covers the two-pointer technique in more depth; this is one example of the shape.)
+
+<Figure caption="Two pointers converging on a sorted list, moving in based on the current sum">
+  <StepThrough frames="visuals/two-sum-sorted.frames.json" preset="match" />
+</Figure>
+
+The "no match" preset above shows the pointers meeting without ever finding a pair; the smallest-case preset shows a two-element list matched on the very first comparison.
+
+## Keeping it fast on PyPy
+
+Every example above reads its input with one call, `sys.stdin.read().split()`, rather than calling `input()` once per value. Each one prints its answer once at the end, not inside the loop. The duplicate finder checks membership against a set, not a list. `num in seen` stays fast no matter how large `seen` has grown. A list would make that same check slower with every value added. None of the solving programs above calls `index()`, `count()`, or `pop(0)` inside a loop, each of which rescans or reshuffles the whole list every time it runs. A flat pass with a few running local variables, `min_val`, `max_val`, `left`, `right`, is what PyPy resolves fastest.
+
+## Recognizing the shape
+
+Across all three examples, the pattern repeats. Can the next piece of state come entirely from the current value and what has already been tracked? If yes, one pass suffices, whether the state is a running min and max, a seen set, or a pair of converging pointers. If answering it needs a look back through data already scanned, that look back is where a nested cost hides. It might be a second explicit loop, or a single call that scans internally.
+
+M2.9's table allows an `O(n^2)` plan only up to about `n = 5000`. At `n = 100000`, a list `in` inside a loop does about `n(n-1)/2`, close to `5 * 10^9` comparisons, far more than PyPy finishes in a typical time limit. An `O(n)` plan that keeps the state it needs as it scans does about `10^5` operations on the same input.

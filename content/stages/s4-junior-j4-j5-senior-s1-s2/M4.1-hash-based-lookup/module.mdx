@@ -1,0 +1,83 @@
+A gate scanner reads ticket codes as guests arrive, one at a time, and has to flag any code that comes through twice. Checking a new code against the six already scanned is easy by eye. A festival that scans 100,000 codes over a day asks the same question, "have I seen this code before?", 100,000 times.
+
+Keeping every scanned code in a list and testing membership with `in` gets slower with every arrival, because the list only grows. A <Term id="hash-based-lookup">hash-based lookup</Term>, a dictionary or a set, answers the same question in about the same small amount of time whether it holds ten codes or a million.
+
+## What a list scan really costs
+
+Testing a new code against the list means comparing it with each code already stored, until a match turns up or the list runs out. A code that never repeats forces a full scan of everything before it. The k-th arrival costs up to k - 1 comparisons, so 100,000 arrivals add up to about `100,000 * 100,000 / 2`, roughly five billion comparisons, far more than a contest time limit allows. M3.9 charted that list-scan cost beside a set's flat cost per lookup. This lesson shows why a set or dictionary stays flat.
+
+## Why a hash-based lookup stays flat
+
+Python computes a hash of the key, a large number derived from its value, and uses part of that number to jump straight to the slot that might hold it. The hash, not a scan, decides where to look first, so reaching the slot costs about the same whether the dictionary holds ten keys or a million. Only a value that cannot change can be hashed this way: numbers, strings, and tuples of such values, never a list.
+
+Here is a deliberately simplified picture, not how Python actually stores a dictionary: 8 slots, and an integer code lands in slot `code % 8`. A real dictionary has many more slots, grows as it fills, and hashes keys in its own way, which spreads codes out more evenly. The shape carries over: one step to a slot, and a short probe when two codes land on the same one.
+
+<Code file="examples/slot_model.py" showOutput caption="Placing codes into 8 slots by code % 8, probing forward on a collision" />
+
+Step through the placements and lookups below. In the Collision preset, 11 and 19 both belong in slot 3 and probe forward, then a lookup of 5 lands on a slot holding another code and probes on to an empty one. Direct shows codes that never collide, and Wraparound shows a probe that runs off the last slot.
+
+<Figure caption="Placing codes into slots by code mod 8, then looking codes up, including one found by probing past a collision and one that was never stored">
+  <StepThrough frames="visuals/slot-model.frames.json" preset="collision" />
+</Figure>
+
+An empty slot ends a lookup with "never stored", so a missing code costs a short probe, not a scan of everything stored. A collision costs an extra step or two for the same reason. That is why a hash-based lookup stays close to flat as the table grows, although an unlucky run of collisions can cost more than one step.
+
+The gate scanner from the opening, with a set in place of the list scan:
+
+<Code file="examples/seen_before.py" showOutput caption="Flagging a repeat with a set instead of a growing list scan" />
+
+Step through the scan below, next to the set it checks against. Try a list with repeats, one with none, and one where every code is the same.
+
+<Figure caption="Scanning a list of codes, checking each one against a growing set of codes seen so far">
+  <StepThrough frames="visuals/seen-before-scan.frames.json" preset="has-repeat" />
+</Figure>
+
+In the first preset, the repeated 7 and 3 are each found already inside `seen`. Every check costs one lookup, whether `seen` holds one code or five.
+
+Now watch the same program line by line, once for a list with a repeat and once for a list with none.
+
+<Figure caption="Tracing the gate-scanner program: reading input, then checking and updating the set one value at a time">
+  <CodeTrace trace="examples/seen_before.trace.json" preset="repeat" />
+</Figure>
+
+## Counting by key
+
+Membership is a yes-or-no question. Many problems ask a numeric one instead: how many times does each key appear? A farm plants one crop per field. Given the crop of each field, find how many crop types appear in more than one field.
+
+<Code file="examples/count_crops.py" showOutput caption="Counting crops and finding which types appear more than once" />
+
+`crop_count.get(crop, 0) + 1` reads the count so far for a crop, falling back to 0 the first time it appears, then stores the result back under the same key. Step through the scan below and watch `crop_count` gain a new key or grow an existing one at every field. The last step counts the keys whose count is above 1.
+
+<Figure caption="Scanning a list of crops, updating a dictionary of counts one field at a time">
+  <StepThrough frames="visuals/count-crops.frames.json" preset="mixed" />
+</Figure>
+
+In the Mixed preset, corn reaches 2 and oat and pea stay at 1, so one crop type repeats. Every count came from a single lookup and a single store, never a search through the fields already seen.
+
+## Collecting by key
+
+Sometimes the answer for a key is not a count but everything filed under it. Given a list of entries, each a team and a score, find each team's best score.
+
+<Code file="examples/group_by_team.py" showOutput caption="Collecting scores into a list under each team's key, then finding the best in each" />
+
+`by_team.setdefault(team, []).append(score)` reads the list stored under `team`, creating an empty one the first time that team appears, then appends the new score to it. Step through the scan below and watch each team's list grow. The final step takes the maximum of each list.
+
+<Figure caption="Scanning a list of team-and-score entries, collecting each score under its team's key">
+  <StepThrough frames="visuals/group-by-team.frames.json" preset="mixed" />
+</Figure>
+
+## Handling a missing key safely
+
+Reading a key that was never stored crashes the program immediately.
+
+<Code file="examples/key_error_demo.py" expectError="KeyError" caption="Reading a key that was never stored" />
+
+Three tools avoid the crash, and each fits a different shape of problem. A plain `key in table` check comes first: read `table[key]` only once you know it is there, as the gate scanner does with `seen`. The call `table.get(key, default)` reads a value with a fallback, as the crop counter does for a count that may not exist yet. The call `table.setdefault(key, default)` stores a default the first time a key appears. You keep building on it afterward, as the team grouper does with each team's list.
+
+## Keeping it fast on PyPy
+
+Every program above reads its whole input in one call, `sys.stdin.read().split()`, then walks the list by position instead of calling `input()` once per line. Counting and grouping each update the dictionary with one lookup: `crop_count.get(crop, 0) + 1` and `by_team.setdefault(team, []).append(score)` read and write in a single step. Checking `if key in table` and then indexing `table` again to update it costs a second lookup, which is one more hash computed and one more slot reached on every item. The difference shows once the input runs into the millions.
+
+## When a dictionary beats a list or a chain of conditions
+
+Reach for a hash-based lookup when a program needs to answer "have I seen this?", "how many?", or "which ones?" for a key. It fits when the key's range is too large or too irregular to index directly with a list, unlike the frequency arrays of M3.6. It also replaces a long chain of conditions that recognizes one value among many. A dictionary jumps straight to the answer instead of testing the key against every possibility in turn, at the same cost for one key or a million.

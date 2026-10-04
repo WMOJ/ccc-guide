@@ -2,17 +2,17 @@
 //
 // Reads content/course.yaml (real course) and, in non-production builds, also
 // tests/fixtures/content/course.yaml (the "fx" fixture stage) and merges them. For
-// every module, checks whether it has been authored on disk (a module directory with
-// module.yaml under stages/<stageDir>/<moduleDir>/) — real content has none yet (P5 writes
-// them); the fixture course does. Unauthored modules render as "Coming soon" with no link,
-// regardless of the status.yaml says (which is always "planned" for them in course.yaml).
+// every module, checks whether it has been authored on disk: a directory named `<id>-…` under
+// stages/<stageDir>/ holding module.yaml (status, objectives, practice) and module.mdx (the page
+// body). A module is readable only when its status is visible in this build and module.mdx
+// exists; anything else renders as "Coming soon" with no link.
 import fs from "node:fs";
 import path from "node:path";
 import { parse } from "yaml";
-import { getBuildEnv, isDraftStatus, visibleStatuses } from "./env";
+import { getBuildEnv, visibleStatuses } from "./env";
 import { type CourseStageEntry, courseSchema, moduleFileSchema } from "./schemas";
-import { moduleDirName, stageDirName } from "./slug";
-import type { LessonLink, ModuleLink, ModuleStatus, StageLink } from "./types";
+import { MODULE_BODY_FILE, stageDirName } from "./slug";
+import type { ModuleLink, ModuleNavLink, ModuleStatus, StageLink } from "./types";
 
 const REAL_ROOT = path.join(process.cwd(), "content");
 const FIXTURE_ROOT = path.join(process.cwd(), "tests", "fixtures", "content");
@@ -37,19 +37,17 @@ function collectStageSources(): StageSource[] {
   return [...real, ...fixture];
 }
 
+/** The module's directory: the folder under its stage whose name starts with `<id>-` and holds a
+ * module.yaml. Only the id prefix matters, so a course.yaml title can change without renaming the
+ * folder. */
 function findModuleDir(
   root: string,
   stageId: string,
   stageTitle: string,
   moduleId: string,
-  moduleTitle: string,
 ): string | null {
   const stageDir = path.join(root, "stages", stageDirName(stageId, stageTitle));
   if (!fs.existsSync(stageDir)) return null;
-  const exact = path.join(stageDir, moduleDirName(moduleId, moduleTitle));
-  if (fs.existsSync(path.join(exact, "module.yaml"))) return exact;
-  // Fall back to scanning for a directory that starts with the module id (title text may drift
-  // slightly between course.yaml and module.yaml during authoring).
   for (const entry of fs.readdirSync(stageDir, { withFileTypes: true })) {
     if (entry.isDirectory() && entry.name.startsWith(`${moduleId}-`)) {
       const dir = path.join(stageDir, entry.name);
@@ -59,56 +57,28 @@ function findModuleDir(
   return null;
 }
 
-function readLessonTitle(lessonFile: string): string {
-  const raw = fs.readFileSync(lessonFile, "utf8");
-  const m = raw.match(/^---\n([\s\S]*?)\n---/);
-  if (m?.[1]) {
-    const fm = parse(m[1]) as { title?: string };
-    if (fm?.title) return fm.title;
-  }
-  const h1 = raw.match(/^#\s+(.+)$/m);
-  return h1?.[1] ? h1[1].trim() : path.basename(lessonFile, ".mdx");
-}
-
 function buildModuleLink(
   stageId: string,
   stageTitle: string,
   root: string,
-  entry: { id: string; title: string; status: ModuleStatus; prereqs: string[] },
+  entry: { id: string; title: string; status: ModuleStatus },
 ): ModuleLink {
-  const dir = findModuleDir(root, stageId, stageTitle, entry.id, entry.title);
+  const dir = findModuleDir(root, stageId, stageTitle, entry.id);
   // An authored module's own module.yaml status is the working status (authors move it through
   // drafted -> gated -> reviewed); course.yaml's copy only matters for unauthored modules.
   // content:check (G-SCHEMA) keeps the two in agreement wherever "accepted" is involved.
   let status: ModuleStatus = entry.status;
-
-  let lessons: LessonLink[] = [];
+  let hasBody = false;
   if (dir) {
     const moduleYamlPath = path.join(dir, "module.yaml");
-    const moduleData = moduleFileSchema.parse(parse(fs.readFileSync(moduleYamlPath, "utf8")));
-    status = moduleData.status;
-    lessons = moduleData.lessons.map((slug) => {
-      const lessonFile = path.join(dir, "lessons", `${slug}.mdx`);
-      const title = fs.existsSync(lessonFile) ? readLessonTitle(lessonFile) : slug;
-      return {
-        id: `${entry.id}/${slug}`,
-        title,
-        href: `/learn/${stageId}/${encodeURIComponent(entry.id)}/${slug}`,
-      };
-    });
+    status = moduleFileSchema.parse(parse(fs.readFileSync(moduleYamlPath, "utf8"))).status;
+    hasBody = fs.existsSync(path.join(dir, MODULE_BODY_FILE));
   }
 
   const visible = visibleStatuses().includes(status);
-  const hasLessons = lessons.length > 0;
-  const href = visible && hasLessons ? `/learn/${stageId}/${encodeURIComponent(entry.id)}` : null;
+  const href = visible && hasBody ? `/learn/${stageId}/${encodeURIComponent(entry.id)}` : null;
 
-  return {
-    id: entry.id,
-    title: entry.title,
-    href,
-    status,
-    lessons,
-  };
+  return { id: entry.id, title: entry.title, href, status };
 }
 
 export function getCourse(): { stages: StageLink[] } {
@@ -133,26 +103,6 @@ export function getModule(stageId: string, moduleId: string): ModuleLink | null 
   return stage?.modules.find((m) => m.id === moduleId) ?? null;
 }
 
-function findModuleLinkAnywhere(moduleId: string): ModuleLink | null {
-  for (const stage of getCourse().stages) {
-    const m = stage.modules.find((mm) => mm.id === moduleId);
-    if (m) return m;
-  }
-  return null;
-}
-
-/** A module's prerequisite modules, resolved across every stage (course.yaml prereqs). */
-export function getModulePrerequisites(moduleId: string): ModuleLink[] {
-  for (const { entry } of collectStageSources()) {
-    const moduleEntry = entry.modules.find((m) => m.id === moduleId);
-    if (!moduleEntry) continue;
-    return moduleEntry.prereqs
-      .map((id) => findModuleLinkAnywhere(id))
-      .filter((m): m is ModuleLink => m !== null);
-  }
-  return [];
-}
-
 /** A module's objectives and raw practice-list ids, read from its module.yaml (empty when unauthored). */
 export function getModuleAuthoredData(
   stageId: string,
@@ -160,31 +110,27 @@ export function getModuleAuthoredData(
 ): {
   objectives: string[];
   practice: { id: string; note?: string; why?: string }[];
-  lessons: string[];
   dir: string | null;
 } {
   for (const { entry, root } of collectStageSources()) {
     if (entry.id !== stageId) continue;
     const moduleEntry = entry.modules.find((m) => m.id === moduleId);
     if (!moduleEntry) continue;
-    const dir = findModuleDir(root, stageId, entry.title, moduleId, moduleEntry.title);
-    if (!dir) return { objectives: [], practice: [], lessons: [], dir: null };
+    const dir = findModuleDir(root, stageId, entry.title, moduleId);
+    if (!dir) return { objectives: [], practice: [], dir: null };
     const moduleData = moduleFileSchema.parse(
       parse(fs.readFileSync(path.join(dir, "module.yaml"), "utf8")),
     );
     return {
       objectives: moduleData.objectives,
       practice: moduleData.practice,
-      lessons: moduleData.lessons,
       dir,
     };
   }
-  return { objectives: [], practice: [], lessons: [], dir: null };
+  return { objectives: [], practice: [], dir: null };
 }
 
-export { isDraftStatus };
-
-/** Every `[stage]/[module]` pair that has at least one authored lesson (for generateStaticParams). */
+/** Every readable `[stage]/[module]` pair (for generateStaticParams). */
 export function getAllModuleRouteParams(): { stage: string; module: string }[] {
   const out: { stage: string; module: string }[] = [];
   for (const stage of getCourse().stages) {
@@ -195,36 +141,14 @@ export function getAllModuleRouteParams(): { stage: string; module: string }[] {
   return out;
 }
 
-/** Every `[stage]/[module]/[lesson]` triple with an authored lesson (for generateStaticParams). */
-export function getAllLessonRouteParams(): { stage: string; module: string; lesson: string }[] {
-  const out: { stage: string; module: string; lesson: string }[] = [];
+/** Every readable module, in course order across stages (prev/next and the home page's
+ * "Continue where you left off"). */
+export function getModuleOrder(): ModuleNavLink[] {
+  const out: ModuleNavLink[] = [];
   for (const stage of getCourse().stages) {
     for (const m of stage.modules) {
-      if (!m.href) continue;
-      for (const lesson of m.lessons) {
-        const slug = lesson.id.split("/")[1] ?? lesson.id;
-        out.push({ stage: stage.id, module: m.id, lesson: slug });
-      }
+      if (m.href) out.push({ id: m.id, title: m.title, href: m.href });
     }
   }
   return out;
-}
-
-/** Every readable lesson, in course order (home page's "Continue where you left off"). */
-export function getLessonOrder(): (LessonLink & { moduleId: string })[] {
-  const out: (LessonLink & { moduleId: string })[] = [];
-  for (const stage of getCourse().stages) {
-    for (const m of stage.modules) {
-      if (!m.href) continue;
-      for (const lesson of m.lessons) {
-        out.push({ ...lesson, moduleId: m.id });
-      }
-    }
-  }
-  return out;
-}
-
-/** The first readable lesson of the course, if any (home page's continue-block fallback). */
-export function getFirstLesson(): LessonLink | null {
-  return getLessonOrder()[0] ?? null;
 }

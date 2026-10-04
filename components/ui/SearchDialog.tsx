@@ -18,7 +18,7 @@ export interface SearchLabels {
   noResults: string;
   loadFailed: string;
   retry: string;
-  groupLessons: string;
+  groupModules: string;
   groupTerms: string;
   groupProblems: string;
 }
@@ -84,12 +84,12 @@ export function SearchPanel({
     [engine, q],
   );
 
-  const groups = (["lesson", "term", "problem"] as const)
+  const groups = (["module", "term", "problem"] as const)
     .map((kind) => ({
       kind,
       title:
-        kind === "lesson"
-          ? labels.groupLessons
+        kind === "module"
+          ? labels.groupModules
           : kind === "term"
             ? labels.groupTerms
             : labels.groupProblems,

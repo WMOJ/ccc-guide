@@ -101,8 +101,8 @@ export function DesignGallery({
       </p>
       <TitleBlockStrip
         cells={[
+          { label: "Stage", value: "4" },
           { label: "Module", value: "M4.3" },
-          { label: "Lesson", value: "2 of 3" },
           { label: "Reading time", value: "12 min" },
         ]}
         extra={<DraftBadge />}
@@ -258,8 +258,8 @@ export function DesignGallery({
         <div className="max-w-(--measure)">
           <TitleBlockStrip
             cells={[
+              { label: "Stage", value: "C" },
               { label: "Module", value: "M4.15" },
-              { label: "Lesson", value: "12 of 12" },
               { label: "Reading time", value: "25 min" },
             ]}
             extra={<DraftBadge />}
@@ -288,32 +288,13 @@ export function DesignGallery({
 
       <Block title="Index rows">
         <div className="border-rule border-t">
-          <IndexRow
-            id="M4.3"
-            title="Prefix sums"
-            description="Add up ranges in one step."
-            href="/learn"
-            meta="3 lessons"
-            marks={
-              <>
-                <ReadCell read />
-                <ReadCell read />
-                <ReadCell read={false} />
-              </>
-            }
-          />
+          <IndexRow id="M4.3" title="Prefix sums" href="/learn" marks={<ReadCell read />} />
           <IndexRow
             id="M4.4"
             title="Difference arrays"
             href="/learn"
-            meta="2 lessons"
             after={<DraftBadge />}
-            marks={
-              <>
-                <ReadCell read={false} />
-                <ReadCell read={false} />
-              </>
-            }
+            marks={<ReadCell read={false} />}
           />
           <IndexRow id="M4.5" title="Parity and invariants" muted after={<ComingSoon />} />
         </div>

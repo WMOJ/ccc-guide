@@ -1,0 +1,73 @@
+Breadth-first search finds shortest paths when every edge costs the same. Many graphs are not like that. Roads have lengths, tunnels have travel times, and a route with more edges can still be the cheaper one.
+
+Take three nodes. The edge from A to B costs 4. The edge from A to C costs 1, and the edge from C to B costs 2. BFS would say B is one edge away from A, which is true. But the cheapest route to B goes through C, for a total of 3. These three nodes are the start of the graph in the step-through later in this lesson.
+
+<Term id="dijkstras-algorithm">Dijkstra's algorithm</Term> finds the cheapest distance from one start node to every other node, as long as no edge has a negative weight.
+
+## Settle the closest node first
+
+The algorithm keeps a best-known distance for each node. At the start, the start node has distance 0 and every other node has no distance at all.
+
+Then it repeats one step. Among the nodes that are not done, pick the one with the smallest best-known distance. Mark it done: its distance will never change again. Then look at each of its edges and see whether the edge gives a neighbour a shorter route.
+
+Why is it safe to call that node done? Suppose the closest node that is not done has distance 5. Any other route to it must first pass through some other node that is not done, and that node is already at least 5 away. Every edge weight is zero or more, so continuing from there can only add. No other route can come in under 5.
+
+## Relaxing an edge
+
+Checking an edge for a shorter route is called relaxing the edge. Say node `u` has just become done with distance `d`, and an edge of weight `w` leads to node `v`. The route through `u` reaches `v` with a total of `d + w`.
+
+If `v` has no distance yet, or `d + w` is smaller than its current best, record `d + w` as the new best for `v`. Otherwise leave `v` alone.
+
+In the first example, A is done at 0. Relaxing its edges gives B a best of 4 and C a best of 1. C is now the closest node that is not done, so it is done next. Relaxing the edge from C to B gives 1 + 2 = 3, which beats 4, so B's best drops to 3.
+
+## A heap finds the closest node
+
+Scanning every node to find the closest one that is not done is slow on a large graph. A <Term id="priority-queue">priority queue</Term> hands you the smallest item quickly instead. Python's `heapq` module turns a plain list into a min-heap, where the smallest item always sits at index 0.
+
+<Code file="examples/heap_order.py" showOutput caption="The smallest pair always comes out first" />
+
+The pairs go in as 4, 1 and 3 but come out smallest first. The heap stores `(distance, node)` pairs. Python compares pairs by their first item, so the pair with the smallest distance comes out first. Both `heappush` and `heappop` take time proportional to the logarithm of the heap's size.
+
+## Out-of-date entries
+
+Look at that heap again. Node B is in it twice, once with 4 and once with 3. That happens every time a node's best distance improves: the new, smaller pair is pushed, and the old pair stays behind.
+
+Many textbooks update the old entry in place instead. `heapq` has no way to do that quickly, because finding an entry inside the heap means searching the whole list.
+
+So Python programs leave the old entries alone. The smaller pair always comes out first, and that node is marked done. When the older pair comes out later, the program sees that its node is already done and skips it. The skip costs one comparison.
+
+<Code file="examples/stale_entries.py" showOutput caption="The older pair for B is skipped" />
+
+Here B was pushed twice. The pair with 3 comes out first and marks B done. The pair with 4 comes out next and is skipped.
+
+## The whole program
+
+The input gives the number of nodes and edges, then the node names, then one line per edge: two names and a weight. The first name is the start. The program prints the distance to every node, or `-1` for a node it cannot reach.
+
+<Code file="examples/dijkstra.py" showOutput caption="Dijkstra's algorithm with a min-heap" />
+
+The graph is stored as an adjacency list. Each node's entry holds `(neighbour, weight)` pairs. Each edge is added in both directions, because these roads are two-way. `best` holds the best-known distances and `done` marks the nodes whose distance is final.
+
+Step through the same graph below. Watch the heap in the right panel. Each time the smallest entry leaves it, one node becomes done. When the smallest entry belongs to a node that is already done, it is out of date and gets thrown away. Both presets have two of those steps.
+
+<Figure caption="Shortest path search on a weighted graph using a min-heap">
+  <StepThrough frames="visuals/dijkstra.frames.json" preset="square" />
+</Figure>
+
+## Why negative edges break it
+
+The safety argument above relied on every edge weight being zero or more. Take that away and the argument fails.
+
+Suppose A has an edge to B of weight 2 and an edge to C of weight 5, and a one-way edge from C to B has weight -4. Dijkstra's algorithm marks B done at distance 2, because 2 is less than 5. But the route A to C to B costs 5 - 4 = 1. By the time the algorithm looks at C, B is already done and its distance is wrong.
+
+If a problem allows negative weights, it needs a different algorithm. Check the constraints for the smallest possible weight before you choose Dijkstra.
+
+## Making it fast on PyPy
+
+Senior problems often have around $10^5$ nodes and $2 \cdot 10^5$ edges. The algorithm itself is quick enough. Say the graph has $V$ nodes and $E$ edges. Each edge can push at most one entry from each of its two ends. So the heap never holds more than about $2E$ entries, and the total work grows like $(V + E) \log E$. How you read the input and store the graph decides the rest.
+
+Read the whole input in one call with `sys.stdin.read().split()`. Then take tokens from that list by position. Calling `input()` hundreds of thousands of times is much slower.
+
+Number the nodes from 0 and keep per-node data in plain lists, as the program does with `adj`, `best` and `done`. Indexing a list by an integer is faster than looking up a key in a dictionary, and PyPy's compiler makes those list reads very cheap. If node names are not numbers, convert them to numbers once while reading, as the program does with `index`.
+
+Keep the loop body small. The program computes `d + w` once per edge and does all its checks with plain comparisons.

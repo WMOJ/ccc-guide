@@ -1,0 +1,161 @@
+A photo is 2 rows tall and 3 columns wide, and a photo editor needs to turn it a quarter turn clockwise. Every pixel has to land in a new cell. The pixel in the top-left corner belongs in the top-right corner of the turned photo, and every other pixel moves by one rule. Working out each landing cell by hand invites off-by-one errors. Building the turn from a couple of simple moves is faster and much harder to get wrong.
+
+The simplest of those moves is the <Term id="transpose">transpose</Term>: swap rows and columns, so the cell at row `i`, column `j` moves to row `j`, column `i`. A grid with 3 rows and 5 columns becomes a grid with 5 rows and 3 columns.
+
+## Transpose
+
+Take a 2-by-3 grid:
+
+```
+A B C
+D E F
+```
+
+To transpose it, build a new grid with the dimensions swapped and read column `j` of the original as row `j` of the result:
+
+```
+A D
+B E
+C F
+```
+
+<Code file="examples/transpose.py" showOutput caption="Transposing a grid by swapping rows and columns" />
+
+Step through the transpose below, where each source cell moves into the target as it is read. Try the one-column preset: a column becomes a row.
+
+<Figure caption="Filling the target grid one cell at a time while transposing the source">
+  <StepThrough frames="visuals/transpose.frames.json" preset="main" />
+</Figure>
+
+Every source cell moves exactly once, and the target's shape, 3 rows by 2 columns, is the source's shape with its two numbers swapped.
+
+## Rotate 90 degrees clockwise
+
+A clockwise quarter turn sends the top row to the rightmost column and the leftmost column to the top row. You can build it from two steps you already have: transpose the grid, then reverse each row. Starting from
+
+```
+1 2 3
+4 5 6
+```
+
+the transpose gives `1 4 / 2 5 / 3 6` (one row per line), and reversing each row gives:
+
+```
+4 1
+5 2
+6 3
+```
+
+<Code file="examples/rotate_clockwise.py" showOutput caption="Rotating a grid 90 degrees clockwise" />
+
+Step through the two stages below. The left grid is the transposed source and the right grid is built from it, one reversed row at a time. The one-row preset is an edge case: each transposed row holds a single value, so reversing changes nothing.
+
+<Figure caption="Rotating clockwise in two stages: transpose, then reverse each row">
+  <StepThrough frames="visuals/two_step.frames.json" preset="rectangle" />
+</Figure>
+
+Check the answer against a corner: the source's top-left value, `1`, ended in the top-right corner, at row 0, column 1. That is where a clockwise turn sends that corner.
+
+The two stages combine into one rule for a single cell. Step through it below on the 2-by-3 grid and on a 3-by-3 square.
+
+<Figure caption="Rotating a grid 90 degrees clockwise, one source cell at a time">
+  <StepThrough frames="visuals/rotate_clockwise.frames.json" preset="rectangle" />
+</Figure>
+
+Every step moves the value at row `r`, column `c` of the source to row `c`, column `n - 1 - r` of the target, where `n` is the source's row count. On the rectangle the target ends up 3 rows by 2 columns. On the square the shape looks unchanged because both numbers are 3, but the same rule moves every cell.
+
+## Rotate 90 degrees counterclockwise
+
+Counterclockwise changes only the second stage: transpose, then reverse the order of the rows instead of reversing within each row. The same transpose, `1 4 / 2 5 / 3 6`, now becomes:
+
+```
+3 6
+2 5
+1 4
+```
+
+<Code file="examples/rotate_counterclockwise.py" showOutput caption="Rotating a grid 90 degrees counterclockwise" />
+
+The two rotations share a transpose and differ only in what gets reversed, which is the easiest way to keep them apart when writing the code from memory. Step through the counterclockwise rotation on the same grid, then on a single column.
+
+<Figure caption="Rotating a grid 90 degrees counterclockwise, one source cell at a time">
+  <StepThrough frames="visuals/rotate_counterclockwise.frames.json" preset="main" />
+</Figure>
+
+Here row `r`, column `c` of the source moves to row `n - 1 - c`, column `r` of the target, and `n` is the source's column count, not its row count. That swapped role for `n` is the detail that separates the two rotations.
+
+## Horizontal and vertical reflection
+
+Reflecting horizontally mirrors left to right, so reverse each row. Reflecting vertically mirrors top to bottom, so reverse the order of the rows:
+
+```
+A B C       C B A       D E F
+D E F  -->  F E D       A B C
+  horizontal            vertical
+```
+
+<Code file="examples/reflect.py" showOutput caption="Reflecting grids horizontally and vertically" />
+
+Step through both reflections below, first on the letters, then on a single-row grid where the vertical reflection changes nothing at all.
+
+<Figure caption="Building a horizontal reflection, then a vertical reflection, of the same source grid">
+  <StepThrough frames="visuals/reflect.frames.json" preset="letters" />
+</Figure>
+
+The horizontal phase moves row `r`, column `c` to row `r`, column `C - 1 - c`. The vertical phase moves it to row `R - 1 - r`, column `c`. Neither phase changes the grid's shape, only which row or column each value sits in.
+
+## Why these transformations work
+
+Each transformation is a permutation of positions, and each has an inverse. Transposing moves `(i, j)` to `(j, i)`, and doing it twice puts every cell back. Two horizontal reflections, or two vertical ones, also cancel. A quarter turn needs four repeats to return to the start, since it is a quarter of a full circle.
+
+All of them run in `O(R * C)`, since each visits every cell once to build a new grid. Reversing in place would save memory, but a fresh grid is simpler to get right, and at contest sizes the extra memory rarely matters.
+
+## Keeping it fast on PyPy
+
+A 1,000-by-1,000 grid has one million cells, and every transformation here does one pass over them: about one million cell moves, comfortably inside what PyPy finishes in time. The list comprehensions in `transpose.py` and the slice `row[::-1]` in `reflect.py` build a whole row in one expression rather than one statement per cell. Read the grid once with `sys.stdin.read().split()`, and when printing, join each row into one string instead of printing one value at a time.
+
+## Combining transformations
+
+Problems often chain these moves. A 180-degree rotation is two clockwise rotations, calling the same function on its own output:
+
+```python
+def rotate_clockwise(grid):
+    rows, cols = len(grid), len(grid[0])
+    transposed = [[grid[i][j] for i in range(rows)] for j in range(cols)]
+    return [row[::-1] for row in transposed]
+
+
+grid = [[1, 2], [3, 4]]
+rotated_180 = rotate_clockwise(rotate_clockwise(grid))
+```
+
+Order matters: a reflection followed by a rotation is not the same as that rotation followed by the reflection.
+
+To test whether two grids match under rotation and reflection, generate all eight versions of one grid. These are the four rotations plus the same four after a reflection. Check whether any equals the other grid. Track the dimensions as you chain: every quarter turn swaps the row and column counts, so R by C becomes C by R, then R by C again.
+
+Every transformation here reduces to one of two moves: swap rows and columns, or reverse an axis. The table below collects the mappings.
+
+<Figure caption="Where row r, column c of the source ends up under each transformation" alt="A five-row table pairing each transformation, transpose, rotate clockwise, rotate counterclockwise, reflect horizontal and reflect vertical, with the new position of source cell row r, column c.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      cells: [["(c, r)"], ["(c, R - 1 - r)"], ["(C - 1 - c, r)"], ["(r, C - 1 - c)"], ["(R - 1 - r, c)"]],
+      rowHeads: ["Transpose", "Rotate CW", "Rotate CCW", "Reflect H", "Reflect V"],
+      colHeads: ["new position of (r, c)"],
+    }}
+  />
+</Figure>
+
+Read the table against the earlier figures. Transpose and the two rotations swap `r` and `c`, while the two reflections keep them in place and reverse one against its own bound.
+
+## Getting the details right
+
+The dimension swap is the easiest detail to miss. A rotated R-by-C grid becomes C by R, so allocating the result with the original dimensions raises an index error the moment you write past its shorter side.
+
+Clockwise and counterclockwise are also easy to swap, since both start with the same transpose. Track one corner to check: clockwise puts the 2-by-3 example's top-left value in the new top-right corner, and counterclockwise puts it in the new bottom-left corner.
+
+In-place reversal needs care too. Swap position `i` with position `R - 1 - i` and stop at the midpoint, or you undo every swap you already made. Building a new grid avoids this bug.
+
+## Diagonal reflections
+
+Two more reflections appear less often: across the main diagonal and across the anti-diagonal (top-right to bottom-left). The main-diagonal reflection sends `(i, j)` to `(j, i)`, which is the transpose under another name. The anti-diagonal reflection sends `(i, j)` to `(C - 1 - j, R - 1 - i)`, and you can build it by transposing, then reflecting the result both horizontally and vertically.

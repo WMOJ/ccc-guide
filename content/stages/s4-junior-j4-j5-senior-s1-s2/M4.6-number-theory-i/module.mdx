@@ -1,0 +1,95 @@
+A community kitchen has baked 48 muffins and 18 loaves of bread for a fundraiser. Every gift box needs the same number of muffins and the same number of loaves, with nothing left over, and the kitchen wants as many boxes as it can pack. The answer is the largest number dividing both 48 and 18: their <Term id="gcd">greatest common divisor</Term>, or gcd. Every pair shares the divisor 1, so a gcd always exists. The question is finding the largest one without listing every divisor of each.
+
+## Finding the gcd with Euclid's algorithm
+
+Checking every candidate down to 1 works for 48 and 18, but a contest bound might let each number pass a billion. That is one check per candidate, about 10^9 operations, more than a judge allows. Euclid's algorithm needs far fewer steps. Its step count grows with the number of digits, not with the numbers themselves, so a pair near 10^9 finishes in well under a hundred steps.
+
+Divide 48 by 18: quotient 2, remainder 12, since 48 = 18 × 2 + 12. Any number dividing both 48 and 18 also divides 48 − 18 × 2 = 12, and any number dividing both 18 and 12 also divides 48 = 18 × 2 + 12. So (48, 18) and (18, 12) have exactly the same common divisors, and the same gcd. Repeat: (18, 12), then (12, 6), then (6, 0). Once the second number is 0, the first is the answer: gcd(48, 18) = 6.
+
+Step through that shrinking below. The `shared` column lists every number that divides both entries of the pair, so you can watch it stay the same. The presets are the pair above, a pair where one number divides the other, and a pair sharing only 1.
+
+<Figure caption="Euclid's algorithm replaces a pair with a smaller pair that has the same shared divisors, until the second number is 0" alt="A table of (a, b) pairs, one row per step, with the list of numbers dividing both entries. Each row's remainder becomes the next row's second number while the shared list never changes, until the second number reaches 0.">
+  <StepThrough frames="visuals/gcd_pairs.frames.json" preset="main" />
+</Figure>
+
+Each remainder is smaller than the divisor that produced it, so the pair shrinks fast. Next, step through the code that does this on the same pairs.
+
+<Figure caption="Tracing Euclid's algorithm and the lcm formula it feeds">
+  <CodeTrace trace="examples/gcd.trace.json" preset="main" />
+</Figure>
+
+`x, y = y, x % y` is the whole algorithm in one line: replace the pair with a smaller pair holding the same gcd, and stop once `y` is 0. The lcm comes free once the gcd is known, with no loop of its own.
+
+## Primes and the smallest factor
+
+A <Term id="prime-number">prime number</Term> has exactly two divisors: 1 and itself. Testing by dividing with every candidate from 2 to n − 1 costs about n operations, roughly 10^12 near n = 10^12. That is too slow, but the search can stop at the square root of n without missing anything. Divisors pair up: if d divides n and d is bigger than √n, then n / d is a smaller divisor, below √n. Checking every candidate up to √n catches both halves of every pair. At n = 10^12, √n is only 10^6.
+
+The first candidate that divides n is also its smallest prime factor, since every smaller candidate besides 1 was already ruled out. That search also answers whether n is prime: n is prime exactly when its smallest factor is n itself.
+
+<Code file="examples/smallest_factor.py" showOutput caption="Finding a number's smallest factor, and using it to test primality" />
+
+Step through the search below on a prime, a perfect square, and a composite number.
+
+<Figure caption="Testing divisors of n up to its square root, stopping the moment one divides evenly" alt="A number line of candidate divisors from 2 to the square root of n, tested one at a time, with a marker at the square-root limit.">
+  <StepThrough frames="visuals/trial_division.frames.json" preset="prime" />
+</Figure>
+
+49 stops exactly at its square root, since 7 × 7 = 49, so the search must include the limit and not stop just short of it. In the composite preset, 35 is caught at 5, the smaller half of the pair 5 × 7.
+
+## Finding many primes at once
+
+Some problems ask for every prime up to N, or the smallest factor of many numbers up to N. Testing each alone costs about N times √N operations, near 10^9 at N = 10^6, which is too slow once the sweep repeats.
+
+The <Term id="sieve-of-eratosthenes">sieve of Eratosthenes</Term> finds every prime up to N together, in close to N operations. Starting from 2, a number that is still unmarked has not been ruled out by anything smaller, so it is prime. Mark every multiple of it, starting at its own square and stepping by that prime. A smaller multiple like 2p or 3p has a smaller prime factor and was marked in an earlier pass. What stays unmarked once every candidate up to √N has had its turn is exactly the set of primes.
+
+<Code file="examples/sieve.py" showOutput caption="Sieving every prime up to N by marking multiples of each unmarked number" />
+
+Step through the sieve on the numbers 2 to 31, laid out six to a row.
+
+<Figure caption="Marking multiples of 2, then 3, then 5, leaving only primes unmarked" alt="A grid of the numbers 2 to 31, six per row, swept from the smallest: each still-unmarked number is prime and crosses off its own multiples starting at its square.">
+  <StepThrough frames="visuals/sieve.frames.json" preset="main" />
+</Figure>
+
+Nothing past 5 gets a turn, since 7 × 7 = 49 already exceeds 31. The second preset stops after 3 for the same reason: 5 × 5 is past 13.
+
+## Factoring and counting divisors
+
+Suppose 36 people stand in equal-sized rows with none left over. Every valid row size is a divisor of 36, so counting row sizes means counting divisors. Trial division up to √n finds every prime factor, the same bound used for testing primality. Divide out the smallest remaining prime as many times as it fits, then move on.
+
+<Code file="examples/factor_and_count.py" showOutput caption="Factoring a number by trial division, then counting its divisors from the factorization" />
+
+Once a number is a product of primes, 36 = 2² × 3², each exponent says how many copies of that prime a divisor may hold, from 0 up to the exponent. That is 3 choices for the 2s and 3 for the 3s, and every combination is a different divisor. Multiplying the choices gives 3 × 3 = 9 divisors without listing any.
+
+Step through the factoring below. The table gains one row per prime, and the last column multiplies the choices as you go. The second preset leaves a prime over after the loop, and the third is a prime itself.
+
+<Figure caption="Factoring by trial division, one prime per row, with the divisor count as the product of each prime's choices" alt="A table that gains one row per prime factor, showing its exponent, its exponent-plus-one choices, and the running divisor count, which multiplies in each new prime's choices. A prime left over after the loop gets a row with exponent 1.">
+  <StepThrough frames="visuals/factor_count.frames.json" preset="square" />
+</Figure>
+
+The count in the last row matches the program's output. The prime left over at the end is why the program adds a final step when `remaining` is above 1.
+
+## Least common multiple
+
+The <Term id="lcm">least common multiple</Term>, or lcm, of two numbers is the smallest positive number both divide evenly, and `gcd.py` above already prints it: `a * b // g`. This works because a × b contains every prime factor of a and of b, counted twice wherever a prime appears in both. Dividing by the gcd removes one copy of the shared part, leaving the smallest number that holds everything both need. For 48 and 18 the gcd is 6, so the lcm is 48 × 18 / 6 = 144, the 144 the trace printed.
+
+## Modular arithmetic and cycles
+
+The mechanics of `%`, including why `a % m` always lands between 0 and m − 1 for a positive m, are covered in M3.8 and do not change here. What number theory adds is a way to answer questions about two independent cycles at once.
+
+Two warning lights blink on their own schedules, one every `a` seconds and the other every `b`, both starting at second 0. A query names a time `t`: when is the first second at or after `t` that both blink together? Their shared period is lcm(a, b), and `t % period` says how far past the last shared blink `t` falls. The answer is `t` itself when that remainder is 0, or `t` plus what is left of the period.
+
+<Code file="examples/blink_sync.py" showOutput caption="Finding the next second two periodic events line up, using lcm and a single modulo check" />
+
+Step through the query below on a typical time, a time already shared, and coprime periods.
+
+<Figure caption="A query time landing on the next shared blink of two periodic lights" alt="A timeline showing light A's blinks, light B's blinks, and their shared blinks, with a query time and the next shared blink it lands on marked.">
+  <StepThrough frames="visuals/blink_sync.frames.json" preset="main" />
+</Figure>
+
+No second-by-second simulation runs: one gcd, one lcm, and one `%` place the query inside its cycle.
+
+## Keeping it fast on PyPy
+
+Euclid's algorithm and trial division need no speeding up, since both finish in few steps. The sieve touches close to N cells, so two habits matter. It reads input once with `sys.stdin.read().split()`, and it stores the markings in a flat list of booleans, not a dictionary, so each mark is a fast write. One sieve up to N answers a primality question about any number up to N with one lookup, not the √N cost again each time.
+
+A shared factor, a limit on primes, or a cycling count points at gcd, primality testing, the sieve, or modulo.

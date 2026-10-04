@@ -1,17 +1,10 @@
 id: M6.9
-title: Counting and combinatorics
 status: accepted
 objectives:
   - Count groups of equal items with a frequency table instead of listing every pair.
   - Use binomial coefficients and products of counts to count selections and splits.
   - Apply complementary counting to count the opposite case and subtract it from the total.
   - Maintain a count with two pointers over a sorted array as a range constraint slides forward.
-prereqs:
-  - M4.3
-  - M4.15
-  - M3.6
-lessons:
-  - counting-problems
 practice:
   - id: ccc22s4
     note: Count the triples of points on a circle whose triangle contains the center.

@@ -1,16 +1,10 @@
 id: M7.8
-title: 2D range-max DP and doubling on shapes
 status: accepted
 objectives:
   - Build a table of block maximums by doubling the block side, and answer a square query with four overlapping blocks.
   - Explain why this table answers square queries and why the overlap is safe for a maximum.
   - Cover a triangle of size K with three overlapping smaller triangles, and build the sizes by repeated doubling.
   - Compute the maximum of every triangle of one size from three lookups per triangle.
-prereqs:
-  - M6.12
-  - M7.3
-lessons:
-  - range-max-doubling
 practice:
   - id: ccc19s5
     note: Find the largest value in every same-size triangle of a triangular array of numbers.

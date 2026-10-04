@@ -1,6 +1,6 @@
 # Teaching Style Guide
 
-This style guide establishes the authoring standards, voice, conventions, and constraints for all educational content in `et-ccc`. Every lesson author and reviewer follows this guide.
+This style guide establishes the authoring standards, voice, conventions, and constraints for all educational content in `et-ccc`. Every module author and reviewer follows this guide.
 
 ---
 
@@ -76,7 +76,7 @@ All content is drafted using the `avoid-ai-writing` skill with the `warm` voice 
 
 ## 7. Teaching-Voice Sample (Approved Reference)
 
-The following 414-word sample passage establishes the target voice for all lessons:
+The following 414-word sample passage establishes the target voice for all modules:
 
 ### How Variables Work in Python
 

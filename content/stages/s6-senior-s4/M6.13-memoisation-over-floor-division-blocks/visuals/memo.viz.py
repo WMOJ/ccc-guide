@@ -57,7 +57,7 @@ for v in values:
     )
 rec.step(
     f"The table is full. cost({n}) = {cost[n]} came from {len(values)} "
-    f"entr{'ies' if len(values) != 1 else 'y'}, not from a table with {n} slots.",
+    f"{'entries' if len(values) != 1 else 'entry'}, not from a table with {n} slots.",
     t=table()
 )
 rec.output(f"{len(values)}\n{cost[n]}\n")

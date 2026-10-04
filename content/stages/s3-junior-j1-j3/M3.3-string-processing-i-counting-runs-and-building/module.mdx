@@ -1,0 +1,97 @@
+Picture a sensor that logs one status letter every second: `a` for normal, `b` for warning, `c` for alert. Over an hour that is 3,600 letters, but most seconds repeat the letter before them, so the log looks like `"aaabbbbccaa..."`, long stretches of the same character. A stretch like that is called a run, and counting runs, then building a new string from what you find, is the core of this lesson.
+
+## Iterating through a string
+
+A string is a sequence, so you can loop through it by index or by character directly:
+
+```python
+s = "hello"
+for i in range(len(s)):
+    print(s[i])
+```
+
+The variable `i` walks from 0 to `len(s) - 1`, and `s[i]` reads the character at position `i`. A plain `for char in s:` loop reaches every character too, without an index. Use indices whenever you need to compare a character to a neighbor, since only an index lets you write `s[i + 1]`. Run counting needs them: it keeps asking "does the next character match this one?"
+
+## Counting runs
+
+A run is a maximal stretch of one repeated character: in `"aabbcc"` there are three runs, `"aa"`, `"bb"`, and `"cc"`, each of length 2. To measure a run, fix `current_char` at the run's first index, then look ahead one position at a time while the next character still matches:
+
+<Code file="examples/run_length.py" showOutput caption="Counting each run's character and length" />
+
+The outer `while` starts a new run at `current_char = s[i]`. The inner `while` raises `count` for every following character that still equals `current_char`. It stops at the first one that does not, or at the end of the string. `i + count < len(s)` has to be checked before `s[i + count]`, in that order. Once a run reaches the last character there is no index past it to read, and checking the length first keeps that comparison from raising an `IndexError`.
+
+Step through the scan below. The `start` pointer marks where the current run began, and the `look` pointer checks the next character, extending the marked stretch each time it matches.
+
+<Figure caption="Scanning a string for runs, one comparison at a time">
+  <StepThrough frames="visuals/run_detect.frames.json" preset="main" />
+</Figure>
+
+Try the other two presets. "One long run" shows `count` climbing on every step before the string ends. "All different" shows the opposite: every run ends after one character, because the very next character never matches. Both are the same loop. Only what the `look` pointer finds changes.
+
+## How many comparisons does a scan make?
+
+A CCC input string can run past 200,000 characters, so count the work. Suppose the outer loop advanced `i` by 1 each time instead of jumping it forward by `count`, the mistake of forgetting `i += count`. Inside one giant run of length n, that restarts the inner scan from almost the same place at every one of the run's n positions. Each restart checks the rest of the run, so the total is about n²/2 comparisons. At n = 200,000 that is roughly 2 × 10^10, which is a few minutes to half an hour at PyPy's 10^7 to 10^8 simple operations a second, far past any judge's limit. The comparison count below shows the gap on a string of only eight characters.
+
+<Figure caption="Comparisons made by a scan that restarts at every index, then by a scan that jumps past each run">
+  <StepThrough frames="visuals/rescan_cost.frames.json" preset="main" />
+</Figure>
+
+The restarting plan adds 7, then 6, then 5, and so on down to 28 comparisons in total. The jumping plan finishes the same string in 7, one comparison per character. The "Two runs" preset shows a smaller gap, because each run of 4 is rescanned only within itself. On "All different" the two plans tie at 7, since there is nothing to rescan. `rescan_cost.py` counts both totals with the real loops:
+
+<Code file="examples/rescan_cost.py" showOutput caption="Counting the comparisons of both plans on the same string" />
+
+Jumping `i` to `i + count` is also correct for any string. Every character is compared at most once, either as a character that matches its run or as the one that ends it. Summed over every run, that is at most one comparison per character, so the total stays under n however the runs are distributed. The run's length is exact because its boundary, the first index where the character changes, is exactly what the inner loop's stopping condition detects.
+
+## Building strings
+
+Strings are immutable: there is no way to change one character of an existing string in place. A natural first idea is to grow a new string with `+=`, one piece at a time, and the speed section below shows why that can be costly. This lesson collects the pieces in a list and joins them once, at the end. Here, every vowel becomes `*` and every other character is copied unchanged:
+
+<Code file="examples/build_transform.py" showOutput caption="Building a new string by replacing each vowel" />
+
+`parts.append(...)` adds one piece without touching anything already collected. Nothing is recopied until `"".join(parts)` runs, once, after the loop.
+
+<Figure caption="Building a list of parts one character at a time">
+  <StepThrough frames="visuals/build_transform.frames.json" preset="main" />
+</Figure>
+
+The source panel marks the character being read, and the parts panel is one entry longer at every step. Try "No vowels", where every character takes the copy branch, and "Single vowel", where the whole input is one vowel and the list ends with the single entry `*`.
+
+## Encoding runs and decoding them back
+
+<Term id="run-length-encoding">Run-length encoding</Term> replaces each run with its length and its character: `"aabbcc"` becomes `"2a2b2c"`. It is counting runs and building a string in the same pass, once per run instead of once per character:
+
+<Code file="examples/compress_runs.py" showOutput caption="Encoding a string by its runs" />
+
+Trace the code below on `"aabbcc"` and on `"abc"`, a string whose runs all have length 1.
+
+<Figure caption="Encoding runs into a compressed string, one run per step">
+  <CodeTrace trace="examples/compress_runs.trace.json" preset="main" />
+</Figure>
+
+`out` collects a length and a character for every run, in order, and `"".join(out)` builds the final string once. An empty input never enters the outer loop, so `out` stays empty and the result is `""`. A single `"z"` is one run of length 1, giving `"1z"`.
+
+Decoding runs the other way. Each run is a pair of characters, a length digit and its symbol, so the loop reads two characters at a time and repeats the symbol with `c * count`. This version handles lengths up to 9, one digit each:
+
+<Code file="examples/decode_runs.py" showOutput caption="Decoding a run-length string back into the original" />
+
+Step through it below. "Round trip" decodes the exact string the encoder produced above and lands back on `"aabbcc"`.
+
+<Figure caption="Decoding a run-length string two characters at a time">
+  <StepThrough frames="visuals/decode_runs.frames.json" preset="main" />
+</Figure>
+
+The loop moves `i` by 2 because a pair is always two characters wide. That is the same jump idea as `i += count` in the scan: move past everything you just consumed.
+
+## Making it fast on PyPy
+
+Building `result` by writing `result += str(count) + current_char` inside the loop has a cost worth knowing. In the worst case each `+=` copies every character already in `result` plus the new piece, because strings are immutable and a longer string is a new object. Built that way, a string of length n can cost on the order of n² character copies in total. Appending to a list costs one step per piece, and `"".join` copies the final result once, for about 2n steps altogether. This is a cost model, not a stopwatch, the same kind of counting M2.9 uses for Big-O:
+
+<Code file="examples/join_cost.py" showOutput caption="Counting the two totals directly, for a given word" />
+
+Step through the two running totals below, on a short word and a longer one.
+
+<Figure caption="Characters copied building a string with += against a list and one join">
+  <StepThrough frames="visuals/join_cost.frames.json" preset="main" />
+</Figure>
+
+The `+=` line curves upward, the same shape as the `O(n^2)` gap M2.9 shows for a nested loop, and the `join` line stays straight. CPython sometimes optimizes a lone `+=` into an in-place resize. PyPy, the grader's interpreter, has no such guarantee, so rebuilding `result` this way can cost the full n² copies pictured above. Collecting parts in a list and joining once is `O(n)` on every interpreter, which is why `build_transform.py`, `compress_runs.py` and `decode_runs.py` all build their output this way.

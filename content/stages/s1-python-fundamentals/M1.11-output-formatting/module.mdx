@@ -1,0 +1,105 @@
+Earlier modules built output with `print()` and commas, which puts a single space between values and nothing else. Many CCC problems ask for an exact shape instead: a fixed number of digits, a fixed number of decimal places, or a line of values with no trailing separator. This lesson covers Python's tools for that shape.
+
+## Building a string with an f-string
+
+An f-string is a string literal written `f"..."`, where anything inside `{}` is evaluated and inserted into the text.
+
+<Code file="examples/fstring_basics.py" showOutput caption="Inserting two values directly into a string" />
+
+`f"{name} scored {score}"` inserts `name` and `score` into the text, with no separate `print()` arguments and no `+` to join pieces.
+
+## Zero-padding a number
+
+A format spec goes after a colon inside `{}` and controls exactly how the value prints. `:02d` pads a whole number with leading zeros to at least two digits.
+
+<Code file="examples/zero_padding.py" showOutput caption="Padding hours and minutes to two digits each" />
+
+<Figure caption="Building the clock text one field at a time, with padding zeros marked">
+  <StepThrough frames="visuals/zero_pad.frames.json" />
+</Figure>
+
+`f"{hours:02d}"` prints `07` for a 7 because `02d` asks for at least two digits. Try the second preset: `12` already has two digits, so nothing is added. The colon between the fields is plain text.
+
+## Fixed decimals
+
+`:.1f` and `:.2f` fix a float to exactly that many digits after the point.
+
+<Code file="examples/fixed_decimals.py" showOutput caption="Fixing a float to one and then two decimal places" />
+
+`f"{distance:.1f}"` prints `18.5`, and `f"{distance:.2f}"` prints `18.50`. The value is the same. Only the digits shown differ. A problem that wants an answer "to one decimal place" wants this format, not however many digits Python prints on its own.
+
+## Rounding with `round()`
+
+`round()` rounds the number itself. With one argument it gives the nearest whole number. With a second argument it rounds to that many decimal places.
+
+<Code file="examples/round_builtin.py" showOutput caption="Rounding to the nearest whole number, and to two decimal places" />
+
+`round(3.14159, 2)` gives `3.14`. `round(18.5)` gives `18`, because Python sends an exact half to the nearest even whole number: `round(19.5)` is `20`. Keep that in mind whenever a value ends in exactly `.5`.
+
+Rounding and formatting solve different problems, and the difference decides whether a line matches the judge's output.
+
+<Code file="examples/round_or_format.py" showOutput caption="The same float rounded, and then formatted" />
+
+<Figure caption="One float through round and through a format spec: a number on one row, text on the other">
+  <StepThrough frames="visuals/round_or_format.frames.json" />
+</Figure>
+
+With `3.1`, `round(x, 2)` is still the float `3.1`, which prints with one decimal. The format spec builds text, so it keeps the trailing zero: `3.10`. The second preset shows a value where both lines agree. A problem that says "exactly two decimal places" needs the format spec.
+
+## Joining a list with no trailing separator
+
+Printing values in a loop often leaves an unwanted separator at the end of the line. `" ".join(map(str, xs))` puts one separator between each pair of values and nothing at either end.
+
+<Code file="examples/join_no_trailing.py" showOutput caption="Joining a list with a space, then with a comma, and no trailing separator either way" />
+
+`map(str, nums)` converts every number to text first, because `.join()` only works on strings. Then `" ".join(...)` places one space between each pair. Step through how the line takes shape.
+
+<Figure caption="From a list of numbers to one line of text, and the trailing space a loop would leave">
+  <StepThrough frames="visuals/join_line.frames.json" />
+</Figure>
+
+Three values have two gaps, and `.join()` fills exactly those. Changing the separator to `","` changes nothing else. The last step is the mistake to avoid: a separator written after every value also follows the last one.
+
+## Aligning text in columns
+
+For text, `:<10` pads on the right to at least 10 characters, `:>10` pads on the left, and `:^10` centers. Use this when output must line up in columns, such as a name and a score.
+
+A numeric spec combines with a width in a fixed order: alignment and width first, then the numeric format. So `:>7.2f` reads as right-align, 7 wide, 2 decimals.
+
+<Code file="examples/field_width.py" showOutput caption="One float in a field 7 characters wide, with two decimals" />
+
+<Figure caption="The spec greater-than 7 point 2 f applied one part at a time, padding spaces drawn as dots">
+  <StepThrough frames="visuals/field_width.frames.json" />
+</Figure>
+
+The dots stand for padding spaces. The spec always works the same way: decimals first, then width, then alignment. The second preset shows a number wider than the field. A width is a minimum, so Python prints the whole number and adds no padding.
+
+<Code file="examples/column_table.py" showOutput caption="Printing a small table with a name column and a score column" />
+
+`f"{name:<10}{score:>5}"` left-aligns `name` in 10 characters and right-aligns `score` in 5. Every row lines up under the last one. The name column starts at position 0 and the score column ends at position 14.
+
+<Figure caption="Filling the table one row at a time, then a name that runs past its own field">
+  <StepThrough frames="visuals/column_table.frames.json" />
+</Figure>
+
+The second preset uses `"Christopher"`, 11 characters, one more than `:<10` asks for. The whole name prints, and the score follows it without a gap to spare. Right-align numbers, since that lines up the ones digit of every row. Left-align text, since that lines up where each word starts.
+
+## Older ways to format
+
+Python has two older ways to build a formatted string: the `%` operator, as in `"%d items" % count`, and `.format()`, as in `"{} items".format(count)`. Both still work, and you will see them in other people's code. An f-string does the same job with less to type, and the value sits right where it is used. Write f-strings yourself.
+
+## A trap: a whole number printed as a float
+
+`/` always gives a float, even when the exact answer is a whole number, and printing it shows a trailing `.0`.
+
+<Code file="examples/int_vs_float_output.py" showOutput caption="The same value printed as a float, then as an int" />
+
+`8 / 2` is `4.0`, and printing it directly shows `4.0`. `int(total)` converts it first, so it prints `4`. When a problem expects a whole number, check whether your answer is still a float before you print it.
+
+## Matching the exact format
+
+Read the sample output character by character before you write any formatting code. A judge compares your output to the expected output byte for byte. An extra trailing space, a missing newline, or a comma where a space was wanted is a wrong answer, even when every number is right. When in doubt, copy the sample's exact spacing.
+
+## Recap
+
+An f-string inserts values. A format spec after a colon controls zero-padding, decimals, width and alignment. `round()` changes the number, while `:.2f` fixes the text. `" ".join(map(str, xs))` builds a line with no trailing separator. The two problems below both need output shaped exactly to what the problem asks for.

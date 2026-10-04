@@ -1,15 +1,9 @@
 id: M6.13
-title: Memoization over floor-division blocks
 status: accepted
 objectives:
   - Recognize when a sum over floor division takes only O(sqrt(n)) distinct values.
   - Jump between block boundaries instead of scanning every divisor.
   - Apply floor-division blocks to divisor-counting sums.
-prereqs:
-  - M4.11
-  - M4.6
-lessons:
-  - floor-division-blocks
 practice:
   - id: ccc18s4
     note: Count the tree shapes that can be built for a given weight.

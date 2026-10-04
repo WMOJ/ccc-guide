@@ -1,17 +1,10 @@
 id: M7.10
-title: Ad hoc math and geometry optimization casework
 status: accepted
 objectives:
   - Shrink an optimization search to a short list of candidate positions.
   - Evaluate each candidate in constant time with sorting and prefix sums.
   - Maximize a quadratic over whole numbers by checking the integers beside its peak.
   - Check a shortcut against brute force on small inputs before trusting it.
-prereqs:
-  - M5.2
-  - M4.5
-  - M2.6
-lessons:
-  - ad-hoc-casework
 practice:
   - id: ccc26s5
     note: Build a connected fence from a limited number of grid cells so that it encloses as many cells as possible.

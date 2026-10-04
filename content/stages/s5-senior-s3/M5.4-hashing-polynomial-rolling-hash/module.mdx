@@ -1,0 +1,96 @@
+M5.3 slides a window across a string and keeps its letter counts up to date in O(1) per step, instead of recounting the whole window every time it moves. A <Term id="rolling-hash">rolling hash</Term> applies that same idea to a single number: a hash of the window's characters that updates in O(1) per slide. Two windows can then be compared for equality with one number comparison instead of a character-by-character check. Like the hash-based lookups from M4.1, it turns an expensive comparison into a cheap one. Unlike a dictionary key, though, this hash has to be built incrementally as the window moves.
+
+## The polynomial rolling hash formula
+
+Pick a base B, such as 31, and a modulus M, such as the prime `(1 << 61) - 1`. For a string `s` of length `n`, the hash is `s[0] * B^(n-1) + s[1] * B^(n-2) + ... + s[n-1]`, taken modulo M, where each `s[i]` is a numeric value for that character, usually its ASCII code. The leftmost character carries the highest power of B. That is what makes the formula updatable one slide at a time, instead of needing a full recomputation.
+
+Building the hash of a window of length K costs K multiply-and-add steps, one per character: start at 0, and on each character do `h = (h * B + ord(c)) % M`. Step through building the text's first window below, on a pattern that matches and one that does not.
+
+<Figure caption="Building the hash of the first window one character at a time, using the same formula that hashed the pattern">
+  <StepThrough frames="visuals/first-window-hash.frames.json" preset="match" />
+</Figure>
+
+Two characters, two multiply-and-add steps, and `window_hash` lands on 3105, the same value `pattern_hash` reaches for `"ab"`. When the pattern is `"cat"` inside the text `"banana"` instead, `pattern_hash` comes out to 98262, and the first window's hash, `"ban"` at 97295, plainly does not match it. This is the accumulator the rest of the lesson slides forward.
+
+## Sliding the window
+
+Moving the window one position right removes the old leftmost character and appends a new rightmost one: `new_hash = ((old_hash - s[left] * B^(K-1)) * B + s[right]) % M`. Subtracting `s[left] * B^(K-1)` strips out the leftmost character's contribution, at the power it was weighted by. Multiplying by B shifts every remaining character's weight up by one power, since each is now one position closer to the left edge. Adding `s[right]` places the new character at weight `B^0`.
+
+<Figure caption="Sliding the window one character right at a time: dropping the outgoing character, shifting by one power, adding the incoming character">
+  <StepThrough frames="visuals/window-slide.frames.json" preset="match" />
+</Figure>
+
+The window starts at `"ab"` with `window_hash = 3105`, already equal to `pattern_hash`, so position 0 is a match. Sliding to `"ba"`, then `"ac"`, then `"ca"`, each old_hash turns into a new_hash by the same three-step formula. None of them equal 3105 again until the window reaches `"ab"` a second time, at position 4. The "No match" preset slides the same formula across `"banana"` against the pattern `"cat"`, and none of its four windows ever equal `pattern_hash`. Every slide costs one subtraction, one multiplication, and one addition, all O(1), no matter how long the window is.
+
+Precomputing every power of B from `B^0` up to `B^(K-1)` before the loop starts, `powers[i] = (powers[i-1] * B) % M`, means a slide never recomputes a power on the fly. For B = 31 and a window of up to length 4, those powers are:
+
+<Figure caption="The powers of the base 31 needed to remove a leading character from a window of up to length 4" alt="An array of four values, B to the 0th through 3rd power: 1, 31, 961, 29791, each the previous value times 31.">
+  <Diagram
+    viz="ArrayViz"
+    data={{
+      name: "powers",
+      values: [1, 31, 961, 29791],
+      indices: true,
+    }}
+  />
+</Figure>
+
+`powers[K-1]` is exactly the weight `s[left]` carries in a window of length K, the same number the slide formula subtracts off.
+
+## A worked example
+
+Find every position where a pattern P occurs in a text T, using a rolling hash instead of comparing substrings directly.
+
+<Code file="examples/substring_hash.py" showOutput caption="Find pattern occurrences using rolling hash" />
+
+The program precomputes the powers of the base up to the pattern's length, then hashes the pattern once and the text's first window the same way. It then slides that window one character at a time, comparing its hash to the pattern's hash at every position. For `text = "abacabad"` and `pattern = "ab"`, the two matching windows are at positions 0 and 4, both spelling `"ab"`, exactly what the program prints and what the figures above trace step by step.
+
+Checking every window this way costs O(N) total: O(K) to build the first window, then O(1) per slide across the remaining N - K positions. Comparing every window to the pattern character by character, without hashing, costs up to O(K) per position and O(N * K) overall. For a text and pattern both near 200,000 characters, that is on the order of 4 * 10^10 character comparisons, far past what a judge's time limit allows. The rolling version needs roughly 200,000 O(1) hash updates instead.
+
+## Comparing two substrings directly
+
+Sliding one window is not the only way to use a rolling hash. Precompute a prefix hash array once, `prefix_hash[k]` holding the hash of `text[0:k]`, built the same way `pattern_hash` was above. Any window's hash then comes out in O(1), with no sliding: `window_hash(start, length) = prefix_hash[start + length] - prefix_hash[start] * powers[length]`, taken modulo M. That strips off everything before `start` in one step, instead of the sliding formula's incremental version.
+
+<Code file="examples/hash_compare.py" showOutput caption="Compare two arbitrary substrings of the same text by hash, then verify a match directly" />
+
+<Figure caption="Reading hash_a and hash_b from the prefix hash array, then comparing them">
+  <StepThrough frames="visuals/hash-compare.frames.json" preset="equal" />
+</Figure>
+
+For `text = "abcabc"`, the windows at index 0 and index 3 both hash to 96354 and both spell `"abc"`, so the program reports them equal after checking. The "Different" preset compares index 0 and index 1: hashes 96354 and 97344, reported different without looking at a character.
+
+## Handling collisions
+
+Matching hashes are a strong signal, not a proof by itself: two different windows could in principle land on the same hash, a <Term id="hash-collision">collision</Term>, even though their characters differ. With `B = 31` and `M = (1 << 61) - 1`, about 2.3 * 10^18, the number of possible hash values is so far past the number of windows any contest input can hold. An accidental collision on typical test data is negligible, but it is never mathematically impossible, and an adversarial test setter can sometimes construct inputs to break one specific modulus.
+
+The example programs above trust a single hash match. Three ways make that trust safer, from lightest to strongest. Lightest is the large modulus already in use, `10**9 + 7`, common and fast but common enough that crafted test data can be built to collide it on purpose. The prime `(1 << 61) - 1` is large enough that a targeted collision stops being practical. That costs slightly more arithmetic, but Python's arbitrary-precision integers handle it no differently from a small modulus. Stronger is double hashing: run two independent hash functions with different bases or moduli, such as `(31, (1 << 61) - 1)` and `(37, 10**9 + 7)`, and only report a match when both agree. That drops the collision probability to roughly the product of the two. Strongest is to verify directly, the way `hash_compare.py` already does: compare the matched substrings character by character, but only when their hashes already agree. That keeps the O(N) running time in the ordinary case, paying the character comparison only on an already-rare hash match.
+
+## Counting distinct substrings
+
+To count distinct substrings of a fixed length K, hash every window of that length and store the hashes in a set. The set's size is the count of distinct substrings. Building each substring explicitly, then hashing or comparing it directly, costs O(N * K) instead, since each of the roughly N windows takes O(K) to build. The rolling version replaces that with O(1) per window after the first, so the whole scan runs in O(N).
+
+<Figure caption="Comparing two ways to check N windows of length K against each other: rebuilding each window's hash from scratch, or sliding it" alt="A two-row table comparing hash comparison and character-by-character comparison, each giving the cost per window and the cost for all N windows.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowTitle: "method",
+      rowHeads: ["Rolling hash", "Rebuild each"],
+      colHeads: ["Per window", "Total"],
+      cells: [["O(1)", "O(N)"], ["O(K)", "O(N * K)"]],
+    }}
+  />
+</Figure>
+
+A collision here quietly undercounts, since two different substrings that happen to share a hash occupy only one slot in the set. The same large modulus, or double hashing when the risk needs to be smaller still, keeps that risk low, the same way it does for pattern matching above.
+
+## Getting these right
+
+Apply the modulus after every addition and multiplication, not just at the end. Python will not raise an error if you skip one. But the running value grows unbounded, later steps slow down, and a value that should have wrapped stops matching one that did.
+
+Precompute the power array carefully: an error there corrupts every hash the sliding formula produces afterward, not just one. Check it against a small hand-computed example, then check the first window's hash the same way, before trusting the sliding part on a larger input.
+
+On PyPy, read the whole input once with `sys.stdin.read().split()`. Keep `powers`, `pattern_hash`, and `window_hash` as local integers, and never rebuild the powers array inside the sliding loop. That keeps the per-text cost close to N single-integer operations: about 200,000 for a text and pattern that long, not the tens of billions a character scan needs.
+
+## When rolling hash fits
+
+Rolling hash is the right tool for finding every occurrence of a fixed pattern in a text, and for counting distinct substrings of a fixed length, both in O(N). It fits less well when comparing substrings of different, arbitrary lengths against each other, since a hash computed for one length says nothing about a hash computed for another. Hash each substring once with its own length instead, and store the results in a dictionary, the way M4.1 already collects values by key.

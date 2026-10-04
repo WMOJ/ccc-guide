@@ -1,16 +1,10 @@
 id: M5.11
-title: Heaps and lazy deletion; ordered-set substitutes
 status: accepted
 objectives:
   - Implement min-heaps and max-heaps using heapq and negation.
   - Detect out-of-date heap entries and skip them by checking a table of current values.
   - Simulate multiset operations with a pending-count dict that removes safely under duplicates.
   - Maintain a sliding-window minimum with a heap, discarding expired entries lazily.
-prereqs:
-  - M4.2
-  - M4.1
-lessons:
-  - heaps-and-lazy-deletion
 practice:
   - id: ccc21s4
     note: Rerun a fastest-trip search on a subway line whose stop order changes before every trip, with walkways as another way between stations.

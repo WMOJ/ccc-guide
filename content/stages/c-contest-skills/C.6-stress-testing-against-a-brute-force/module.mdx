@@ -1,0 +1,73 @@
+Suppose you have written the running-minimum method from the subtask lesson: the largest sum over any run of consecutive numbers, in one pass. It passes the sample. You cannot see the judge's tests, so you cannot tell whether it fails on some input you never thought of. What you can do is write the slow method you would trust on sight, feed both methods the same small random inputs, and wait for them to disagree. That loop is a <Term id="stress-test">stress test</Term>. It needs a trusted <Term id="brute-force">brute force</Term>, the fast function under test, a generator of small random inputs, and a comparison that stops at the first difference.
+
+## The parts in one file
+
+Everything lives in one file, so there is no second program to launch.
+
+<Code file="examples/stress_test.py" showOutput caption="A stress test with a planted bug: brute force, fast function, generator, loop" />
+
+`brute` tries every start `i` and every end `j`, sums the slice, and keeps the largest. It reads straight from the problem, so you can check it by eye. `fast` is the prefix-sum method from the subtask lesson, with a running minimum in `low`. It has one planted slip: `low` starts at `prefix[1]`. That is an easy mistake to make when `prefix[0]` looks like a formality.
+
+`new_case` makes one input: a length from 1 to 3 and values from -3 to 3. Both ranges are small on purpose. Short arrays keep a failing input readable, and the brute force finishes instantly. A narrow value range makes zeros, ties and negative numbers turn up within a few trials, where values up to a billion would almost never hit them. The seed comes from standard input and goes to `random.seed`, so the same seed always produces the same trials and a failure can be rerun exactly.
+
+## Watching the loop
+
+Step through the trace below. It skips the insides of the two functions so the loop stays in view. Try both presets.
+
+<Figure caption="The stress loop: make an input, run both functions, stop at the first difference">
+  <CodeTrace trace="examples/stress_test.trace.json" preset="main" />
+</Figure>
+
+Trial 1 passed without a pause. On trial 2, `want` was 6 and `got` was 3, so the `if` was true, `failed` took the value 2, and `break` left the loop with `values` still holding `[3, 3, -2]`. The report after the loop prints exactly that, which is the output above. Those four lines are the whole bug report: the trial, the input, and the two answers to compare. The second preset fails on a single negative number instead.
+
+## Many trials before the first failure
+
+The next figure runs the same loop across more trials. Each row is one trial, and the first row marked `DIFF` ends the run. Try the three seeds.
+
+<Figure caption="Trials until the first mismatch: most rows agree before one does">
+  <StepThrough frames="visuals/trials.frames.json" preset="mid" />
+</Figure>
+
+Notice how many rows agree. A single number such as `[0]` passes, and so does `[3, -2]`, because `best` starts at `values[0]` and the planted mistake only bites some shapes. One agreeing trial proves nothing, which is why the loop runs up to 1000.
+
+## Shrinking the failing input
+
+With longer arrays, a failing input is hard to trace by hand. Suppose a run with lengths up to 8 had reported `[3, -1, 4, -2, 1]`. Shrinking makes it smaller: drop one element, run both functions on what is left, and keep the drop if they still disagree.
+
+<Code file="examples/shrink.py" lines="30-44" showOutput caption="Shrinking: keep any drop that still makes the two functions disagree" />
+
+Watch it work below. The top array is the input that still fails, with the element about to go marked. The bottom array is that input without the element.
+
+<Figure caption="Shrinking a failing input one element at a time">
+  <StepThrough frames="visuals/shrink.frames.json" preset="long" />
+</Figure>
+
+Every drop that made the two functions agree was undone. Every drop that kept the mismatch was kept, and the scan restarted from the front. It ended on `[4, 1]`: two positive numbers, small enough to trace by hand.
+
+## Finding the mistake
+
+Now trace the buggy function on that small input. `prefix` is the running-total array from the prefix sums lesson. The marker `low` sits on the smallest entry so far, and `end` is the entry being tried. Try all three presets.
+
+<Figure caption="The buggy function on the shrunk input: low never offers prefix[0]">
+  <StepThrough frames="visuals/diverge.frames.json" preset="positive" />
+</Figure>
+
+On `[4, 1]`, `low` starts at `prefix[1]`, which is 4. The first candidate is `prefix[1] - prefix[1]`, which is 0, an empty range. The second is `5 - 4 = 1`. The whole array, `prefix[2] - prefix[0]`, is never tried, so the function returns 4 while the brute force finds 5. The negative preset shows the other symptom, which has the same cause: for `[-4]` the empty range counts as 0, and 0 beats the true answer. The fix is one line, `low = prefix[0]`.
+
+## Checking the fix
+
+<Code file="examples/stress_fixed.py" lines="22-36" highlight="29" showOutput caption="The fixed fast function, run through the same 1000 trials" />
+
+The fixed file differs from the first by that one line. The figure shows it on the same seeds, so you can compare rows with the earlier table.
+
+<Figure caption="The fixed function on the same trials: every row agrees">
+  <StepThrough frames="visuals/fixed-trials.frames.json" preset="mid" />
+</Figure>
+
+The first four rows repeat the earlier table, and trial 4, the `[3, 1]` that failed before, now agrees. The loop then skips ahead to trial 1000 and prints `no mismatch`.
+
+## What a pass does and does not show
+
+A pass means the fast function matched the brute force on every trial you generated. It does not prove the function correct. If the brute force is wrong, both can share the mistake, which is why the brute force should be the plainest code you can write. If the generator never produces some shape, such as a huge value or a long array, that shape goes untested. Change the seed, widen the ranges, and rerun. Each seed is a different run of 1000 trials, and a thousand trials on arrays this small take a fraction of a second. Keep the stress file out of your contest submission: it is a tool for your own machine.
+
+Reach for a stress test when you have a fast method you cannot verify and a slow method you can, and the problem's inputs can be made small.

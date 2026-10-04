@@ -10,7 +10,7 @@ import { displayClass, h2Class } from "./type-styles";
  * Home (DESIGN.md → Other surfaces → Home): title, lede, continue block, the sheet index of
  * stages, how the course works. The lede and "how it works" copy come from strings (P5).
  */
-export function HomePage({ stages, lessonOrder }: HomePageProps) {
+export function HomePage({ stages, moduleOrder }: HomePageProps) {
   const s = ui();
   const h = s.home;
   return (
@@ -23,18 +23,13 @@ export function HomePage({ stages, lessonOrder }: HomePageProps) {
           ))}
         </div>
       </header>
-      {lessonOrder.length > 0 ? (
+      {moduleOrder.length > 0 ? (
         <div className="mt-8 max-w-(--measure)">
           <ContinueBlock
-            lessons={lessonOrder.map((l) => ({
-              id: l.id,
-              title: l.title,
-              href: l.href,
-              moduleId: l.moduleId,
-            }))}
+            modules={moduleOrder}
             labels={{
               continueLabel: h.continueLabel,
-              startLabel: fmt(h.startLabel, { n: startStage(stages, lessonOrder[0]?.moduleId) }),
+              startLabel: fmt(h.startLabel, { n: startStage(stages, moduleOrder[0]?.id) }),
             }}
           />
         </div>
@@ -80,7 +75,7 @@ export function HomePage({ stages, lessonOrder }: HomePageProps) {
   );
 }
 
-/** Display number of the stage holding `moduleId` (the first readable lesson's stage). */
+/** Display number of the stage holding `moduleId` (the first readable module's stage). */
 function startStage(stages: HomePageProps["stages"], moduleId: string | undefined): string {
   return stages.find((st) => st.modules.some((m) => m.id === moduleId))?.number ?? "";
 }

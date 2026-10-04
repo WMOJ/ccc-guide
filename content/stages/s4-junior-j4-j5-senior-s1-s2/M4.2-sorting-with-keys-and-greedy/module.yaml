@@ -1,16 +1,10 @@
 id: M4.2
-title: Sorting with keys and greedy
 status: accepted
 objectives:
   - Use sorted() with a key function to arrange data for greedy algorithms.
   - Solve ordering and selection problems where a greedy choice is optimal.
   - Recognize when sorting by one criterion then selecting solves the problem.
   - Handle ties and edge cases when the greedy choice is not unique.
-prereqs:
-  - M1.8
-  - M2.4
-lessons:
-  - sorting-with-keys-and-greedy
 practice:
   - id: ccc16s2
     note: Pair up cyclists from two teams, one from each, to get the fastest or the slowest combined ride.

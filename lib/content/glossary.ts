@@ -43,18 +43,13 @@ export function getGlossaryTerm(id: string): GlossaryTermView | null {
 }
 
 /**
- * `<moduleId>/<lessonSlug>` → the lesson that introduces a term. Links to the lesson when it is
- * readable in this build; otherwise names the module without a link.
+ * A module id → the module that introduces a term. Links to the module when it is readable in
+ * this build; otherwise names it without a link.
  */
-function resolveIntroducedIn(lessonId: string): GlossaryTermView["introducedIn"] {
-  const moduleId = lessonId.split("/")[0] ?? "";
+function resolveIntroducedIn(moduleId: string): GlossaryTermView["introducedIn"] {
   for (const stage of getCourse().stages) {
     const m = stage.modules.find((mm) => mm.id === moduleId);
-    if (!m) continue;
-    const lesson = m.href ? m.lessons.find((l) => l.id === lessonId) : undefined;
-    return lesson
-      ? { lessonId, moduleId, title: lesson.title, href: lesson.href }
-      : { lessonId, moduleId, title: m.title, href: null };
+    if (m) return { moduleId, title: m.title, href: m.href };
   }
   return undefined;
 }

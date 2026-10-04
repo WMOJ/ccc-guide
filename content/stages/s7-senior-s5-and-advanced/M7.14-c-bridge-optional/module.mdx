@@ -1,0 +1,105 @@
+Suppose you open a textbook or a reference page and its solution is in C++. It starts with `vector<int> a(n);`, reads the values in a `for (int i = 0; i < n; i++)` loop, and ends with `cout << total << "\n";`. You know the algorithm, and the notation is what stands in the way. This lesson maps what you see in C++ to the Python you already write, so you can read that code. It does not run or compile anything, and it says nothing about which language to write in. Each C++ snippet below is short and not run. Each Python side is a file you can read with its output.
+
+## The same program in two notations
+
+Here is a program that reads N and then N integers and prints their sum.
+
+<Code file="examples/cpp_vs_python.py" showOutput caption="Read N integers and print their sum" />
+
+The C++ version reads with `cin` and declares a type for every variable.
+
+```cpp
+int n;
+cin >> n;
+int total = 0;
+for (int i = 0; i < n; i++) {
+    int x;
+    cin >> x;
+    total += x;
+}
+cout << total << "\n";
+```
+
+`for (int i = 0; i < n; i++)` has three parts: a start, a condition checked before each pass, and a step after each pass. It is `for i in range(n)`, with indexes from 0 to `n - 1` as in Python. `cin >> x` reads the next whitespace-separated token and converts it to `x`'s type, which is the job of `int(tokens[pos])` in the Python file.
+
+## Containers and their Python partners
+
+C++ names each container by the type it holds, written in angle brackets. Read the table below as a dictionary from what you see to what you know.
+
+<Figure caption="The C++ containers you meet most, their Python partners, and the order C++ iterates them in" alt="A table of seven C++ containers. Each row gives the C++ type, the closest Python structure, and the iteration order in C++: vector is list, in insertion order; pair is tuple; set is set, sorted; map is dict, sorted by key; unordered_map is dict, unspecified order; priority_queue is heapq, largest first; deque is collections.deque.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowTitle: "C++ type",
+      rowHeads: ["vector<int>", "pair<int,int>", "set<int>", "map<int,int>", "unordered_map", "priority_queue", "deque<int>"],
+      colHeads: ["Python", "C++ order"],
+      cells: [
+        ["list", "as added"],
+        ["tuple", "none"],
+        ["set", "sorted"],
+        ["dict", "sorted by key"],
+        ["dict", "unspecified"],
+        ["heapq", "largest first"],
+        ["deque", "as added"],
+      ],
+    }}
+  />
+</Figure>
+
+Two rows hide a surprise. A C++ `map` keeps its keys sorted, where a Python `dict` keeps them in the order they first appeared. Step through the same word counting in both below. The "Sorted input" preset gives keys already in order, and "One key" repeats a single key.
+
+<Figure caption="One word count in a Python dict and in a C++ map: the dict keeps first-seen order, the map keeps key order">
+  <StepThrough frames="visuals/map_order.frames.json" preset="main" />
+</Figure>
+
+The program `map_order.py` prints both orders, and the `sorted(counts)` loop is how Python imitates a `map`.
+
+<Code file="examples/map_order.py" showOutput caption="Counting words, then listing the counts in dict order and in map order" />
+
+An `unordered_map` makes no promise about order at all, so code that loops over one and depends on the order is reading an accident. The other surprise is `priority_queue<int>`. It hands back the largest value first, while `heapq` hands back the smallest. To get a C++ max-heap from `heapq`, push negated values and negate again when you pop.
+
+<Code file="examples/heap_order.py" showOutput caption="heapq pops smallest first; pushing negatives gives the largest-first order of priority_queue" />
+
+## Integers have a width in C++
+
+A Python `int` grows as large as it needs to. A C++ `int` has a fixed width, usually 32 bits, so it holds only the values from -2147483648 to 2147483647. `long long` has 64 bits and reaches about `9.2 * 10^18`. Going past the top of the range is called overflow. For signed types the C++ language leaves the result undefined. On ordinary hardware the value usually wraps around to the other end of the range. `unsigned` types are defined to wrap. The Python file below models the usual 32-bit wrap with arithmetic, and it says so in a comment.
+
+<Code file="examples/int32_wrap.py" showOutput caption="Adding 700000000 four times: Python's int beside a model of a 32-bit int" />
+
+Step through the running total below. The "Fits" preset never leaves the range.
+
+<Figure caption="A running total in Python's int and in a 32-bit int: the two agree until the total leaves the 32-bit range">
+  <StepThrough frames="visuals/int_wrap.frames.json" preset="up" />
+</Figure>
+
+When the third add reaches 2100000000 the two columns still agree. The fourth add would make 2800000000, and the 32-bit column shows `-1494967296` instead. A textbook that declares `long long` for sums or products is protecting against exactly this.
+
+## Division and remainder on negative numbers
+
+C++ integer division drops the fraction, which rounds toward zero. Python's `//` rounds down, toward negative infinity. The two agree when the exact quotient is positive and differ when it is negative. The remainder follows its quotient: in C++ `a % b` takes the sign of `a`, and in Python it takes the sign of `b`. The Python file rebuilds the C++ behavior from `abs` and a sign fix and prints both results.
+
+<Code file="examples/trunc_div.py" showOutput caption="Floor division and modulo beside C++'s truncating division and remainder, for -7 and 2" />
+
+The figure marks the exact quotient on a number line and then the whole number each language picks. The "Both positive" preset shows them agreeing, and "b negative" shows a positive `a` still disagreeing.
+
+<Figure caption="The exact quotient of a by b, where Python rounds it down and C++ cuts it toward zero">
+  <StepThrough frames="visuals/trunc_div.frames.json" preset="negdiv" />
+</Figure>
+
+Both languages keep `q * b + r` equal to `a`; they choose a different `q`. This is why C++ code that needs a non-negative remainder writes `((a % m) + m) % m`, and why the same wrap in Python is just `a % m`.
+
+## References and copies
+
+A C++ function parameter written `vector<int> v` receives a copy of the argument. One written `vector<int>& v` receives the caller's own vector, so changes inside the function are visible outside, and `const vector<int>& v` promises not to change it. Python passes every argument as a name for the same object. Changing a list inside a function changes the caller's list, like the `&` form, and a copy has to be made on purpose.
+
+<Code file="examples/pass_by.py" showOutput caption="A function that edits the caller's list, and one that works on a copy" />
+
+Integers behave like the copying form: `x += 1` inside a Python function rebinds the local name and leaves the caller's number alone.
+
+## Everyday calls
+
+Most of what is left is vocabulary. `v.size()` is `len(v)`, and `v.push_back(x)` is `v.append(x)`. `sort(v.begin(), v.end())` sorts the whole vector in place, like `v.sort()`, and `v.begin()` and `v.end()` are the two ends of the range to sort. A range loop, `for (int x : v)`, is `for x in v`, and `auto` asks the compiler to fill in the type, so `for (auto x : v)` reads the same way. `pair` members are `.first` and `.second`, which are `[0]` and `[1]` on a tuple. A C++ `string` can be changed in place, and `s[i]` is one character that you can do arithmetic on, where a Python `str` is immutable.
+
+## Reading unfamiliar code
+
+Read a C++ type from the outside in. `vector<vector<int>>` is a list of lists, and `map<string, vector<int>>` is a dictionary from strings to lists of integers. Then check the three places where the two languages disagree: how wide the integers are, which way division rounds, and which order a container iterates in. Everything else in a typical contest solution translates line by line.

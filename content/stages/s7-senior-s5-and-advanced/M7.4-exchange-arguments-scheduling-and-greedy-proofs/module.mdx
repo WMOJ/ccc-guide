@@ -1,0 +1,77 @@
+A print shop has four jobs queued on one machine. Each job takes some minutes, and each has a weight: how much it costs per minute while the customer waits. A job's cost is its weight times the minute it finishes, and you want the order with the smallest total cost. Four jobs have only 24 orders, but 20 jobs have about 2.4 * 10^18, far past the 10^8 or so operations a solution can afford (M2.9).
+
+M4.2 already gave a rule for one case: with every weight equal, run the shortest job first. That rule ignores weights, so it needs a new key. Finding the key and proving it correct takes an <Term id="exchange-argument">exchange argument</Term>. Take any schedule and swap two neighbors that the <Term id="greedy-algorithm">greedy algorithm</Term> would have placed the other way. Then show the cost does not rise.
+
+## Swapping one adjacent pair
+
+Suppose job `x` runs right before job `y`, and some job `P` ran before both. Step through the swap below. The presets cover a swap that helps, a tie and a swap that would hurt.
+
+<Figure caption="Swapping two adjacent jobs, x then y, after a fixed job P: the cost of the pair before and after, and where the difference comes from.">
+  <StepThrough frames="visuals/pair-swap.frames.json" preset="helps" />
+</Figure>
+
+Jobs outside the pair finish at the same minute either way, so only `x` and `y` change. The start offset `s`, the minutes `P` takes, delays both orders by `s` and cancels. What is left: with `x` first, `y` waits `t_x` minutes, costing `w_y * t_x`. With `y` first, `x` waits `t_y` minutes, costing `w_x * t_y`. In the figure that is 4 x 3 = 12 against 1 x 2 = 2.
+
+So `x` belongs first exactly when `t_x * w_y <= t_y * w_x`. Dividing both sides by `w_x * w_y` turns this into `t_x / w_x <= t_y / w_y`: the job with the smaller time per unit of weight goes first. Comparing by cross-multiplication keeps everything in integers, so nothing rounds.
+
+## A key that looks right and is wrong
+
+Shortest job first is the tempting key. The figure below runs both keys on four jobs, and the presets add equal weights and a two-job case.
+
+<Figure caption="The same four jobs scheduled by shortest time first (top row) and by smallest t/w first (bottom row), with each job's weight times finish time.">
+  <StepThrough frames="visuals/wrong-key.frames.json" preset="heavy" />
+</Figure>
+
+Job B takes 2 minutes but weighs 4, so every minute it waits is costly. Shortest first puts D ahead of it and pays 39. Ordering by `t / w` gives 35. With equal weights the two keys agree, which is why M4.2 never needed the weight.
+
+## From one swap to the whole schedule
+
+The pair argument proves more than it seems to. Start from any order. If some neighboring pair is out of `t / w` order, swap it: the cost does not rise. Each swap removes one out-of-order pair and creates none. After at most N(N - 1) / 2 swaps no neighboring pair is out of order, and the list is sorted by `t / w`. Tied jobs can sit in either order, because swapping them changes nothing. Every schedule can be carried to the sorted one without ever paying more, so the sorted schedule costs at most as much as any other. That is the exchange argument. The step-through below runs it.
+
+<Figure caption="Adjacent swaps carrying an arbitrary order to the t/w order. Each cell is a job: letter, then time:weight. The total only falls or stays.">
+  <StepThrough frames="visuals/swap-to-greedy.frames.json" preset="mixed" />
+</Figure>
+
+The running cost in the captions went 51, 41, 39, 37, 35 and never up. The program does what the figure ended with: one sort, then one pass.
+
+<Code file="examples/weighted_jobs.py" showOutput caption="Weighted jobs sorted by t / w, then costed in one pass" />
+
+Sorting tuples whose first entry is `t / w` runs in O(N log N), and each tuple is built once. A float quotient is safe here because two different fractions whose times and weights stay under about 10^6 differ by far more than a float's rounding. For larger values, `functools.cmp_to_key` with the cross-multiplied comparison is exact.
+
+## Deadlines and the worst lateness
+
+Change the goal. Each job has a time `t` and a deadline `d`. A job's lateness is its finish minute minus its deadline, negative when it finishes early, and the goal is to minimize the largest lateness. Take `x` right before `y` with `d_x > d_y`, out of deadline order. Before the swap, `y` finishes at minute `f` and its lateness is `f - d_y`. After it, `y` finishes earlier, so it is less late, and `x` finishes at `f`, with a lateness of `f - d_x`, which is smaller than `f - d_y` because `d_x` is larger. The pair's worst lateness does not rise, so earliest deadline first is optimal. The figure swaps pairs until that order appears.
+
+<Figure caption="Swapping neighbors whose deadlines are out of order. Each step reports the pair's worst lateness before and after, and the whole schedule's worst lateness.">
+  <StepThrough frames="visuals/swap-deadlines.frames.json" preset="mixed" />
+</Figure>
+
+In the first preset the whole schedule's worst lateness stayed 4 after the first swap, because another job limited it, then fell to 2. It never went up. The program sorts by deadline and tracks the maximum.
+
+<Code file="examples/lateness.py" showOutput caption="Earliest deadline first, reporting the order and the worst lateness" />
+
+The program prints the order B, C, A and a worst lateness of 2: A runs last, finishes at minute 9 and misses its deadline of 7 by two. To watch the bookkeeping, trace `lateness_short.py`, which takes bare time and deadline numbers and drops the names. On two jobs, `4 5` and `2 4`, the sort puts the deadline-4 job first. Watch `clock` grow and `peak` keep the larger lateness. Try the other two presets: every job early, where `peak` stays negative, and every job late.
+
+<Figure caption="Tracing earliest deadline first on two jobs: sort by deadline, then a running clock and the largest lateness so far">
+  <CodeTrace trace="examples/lateness_short.trace.json" preset="main" />
+</Figure>
+
+The first job finishes at minute 2 against a deadline of 4, so `late` is -2. The second finishes at minute 6 against 5, so `late` is 1 and `peak` becomes 1, the number the program prints.
+
+## Choosing meetings that do not overlap
+
+Now pick as many meetings as possible, no two overlapping. Sorting by end time and taking each meeting that starts at or after the last chosen end is optimal. The exchange: if an optimal choice starts with some other meeting, swap that one for the earliest-ending meeting. The new meeting ends no later, so it overlaps nothing the rest of the choice contains, and the count stays. Repeat from the next meeting on.
+
+<Figure caption="Meetings taken in order of end time. A marker shows the last chosen end; a meeting starting before it is skipped.">
+  <StepThrough frames="visuals/interval-greedy.frames.json" preset="long" />
+</Figure>
+
+Meeting A is the long one. Sorting by start time would take it first and block everything else, for a count of 1 instead of 3. The exchange shows why end time is the right key: the earliest end leaves the most room. The "Touching" preset shows a meeting that starts exactly when the last one ends, which is allowed.
+
+<Code file="examples/intervals.py" showOutput caption="Greedy selection of meetings by end time" />
+
+## When the swap fails
+
+An exchange argument either works or shows you where it breaks. Give each meeting a value and ask for the most total value, and the swap above fails. Replacing one meeting with the earliest-ending one can throw away a valuable meeting. That version needs dynamic programming. When you cannot build a swap that leaves the cost no higher, the greedy rule is a guess. Test it against brute force on small inputs before trusting it.
+
+Reach for an exchange argument when a problem asks for a best order or a best selection and a sorting key suggests itself. Write the cost of two neighbors in both orders, subtract, and see whether the difference depends only on the pair. If it does, the key falls out of the algebra.

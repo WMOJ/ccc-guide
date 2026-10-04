@@ -1,0 +1,91 @@
+The module on variables covered `+`, `-` and `*`. Contest problems also need a way to split a total into groups and find what is left over, or to raise a number to a power. Sometimes you need an answer with a decimal part too. Python gives you an <Term id="operator">operator</Term> for each of these, and a fixed order for which one runs first in a longer line.
+
+## Operators and precedence
+
+This lesson uses seven arithmetic operators: `+`, `-`, `*`, `/`, `//`, `%` and `**`. The rest of this lesson covers what each one computes. First, a line with more than one operator needs an order to run them in, called <Term id="precedence">precedence</Term>.
+
+`**` runs first, even before a leading minus sign, so `-2 ** 2` is `-4`, not `4`. Next come `*`, `/`, `//` and `%`, run left to right. Last come `+` and `-`, also left to right. Parentheses override this order: whatever sits inside them runs first. When you are not sure what a line computes, add parentheses. They cost nothing and remove the guesswork.
+
+<Code file="examples/operator_precedence.py" showOutput caption="The order Python runs operators in, in a longer line" />
+
+`2 + 3 * 4` runs the multiplication first and gives `14`. Parentheses around `2 + 3` change that order and give `20`. `-2 ** 2` computes the power before the minus sign, giving `-4`. `20 - 5 - 3` runs left to right, giving `12`, the same as `(20 - 5) - 3`.
+
+## Floor division and modulo
+
+The `//` operator is <Term id="floor-division">floor division</Term>. It divides two numbers, then rounds the exact answer down to the whole number at or below it. `17 // 5` is `3`, because the exact answer `3.4` rounds down to `3`.
+
+The `%` operator is <Term id="modulo">modulo</Term>: it gives what floor division leaves over. `17 % 5` is `2`, the amount left after three full groups of five. Floor division and modulo always fit together: `(17 // 5) * 5 + 17 % 5` equals `17` again.
+
+<Code file="examples/box_division.py" showOutput caption="Splitting seventeen cupcakes into full boxes of five" />
+
+Seventeen cupcakes fill three full boxes of five, with two left over. `17 // 5` gives the `3` full boxes, and `17 % 5` gives the `2` left over.
+
+Floor division still rounds down when the exact answer is negative. Down means down on the number line, away from zero. `-7 // 2` is `-4`, because the exact answer `-3.5` rounds down to `-4`, not up to `-3`.
+
+<Code file="examples/pair_rule.py" showOutput caption="Floor division and modulo still fit together with a negative number" />
+
+`-7 // 2` gives `-4`, and `-7 % 2` gives `1`. The pair still fits together: `-4 * 2 + 1` equals `-7`. When the number after `%` is positive, the result is always from `0` up to one less than that number, whatever sign the first number has.
+
+A board game shows the same idea. Picture a piece on space `1` of a `5`-space board, numbered `0` to `4`, moving back `3` spaces.
+
+<Code file="examples/board_wraparound.py" showOutput caption="Modulo keeps a backward move on the board" />
+
+`(1 - 3) % 5` gives `3`: the piece leaves space `1`, moves back past space `0`, and wraps around to land on space `3`.
+
+A step-through makes the pairing between `//` and `%` easier to see. The program below turns a number of minutes into whole hours and the minutes left over, the same idea behind the box example, applied to time instead of cupcakes.
+
+<Figure caption="Tracking floor division and modulo as they split 150 minutes">
+  <CodeTrace trace="examples/minutes_to_hours.trace.json" />
+</Figure>
+
+`150 // 60` is `2`, the whole hours, and `150 % 60` is `30`, the minutes left over. A common mistake is writing `total_minutes / 60` here, which answers a different question: how many hours as a fraction, not how many whole hours and how many minutes remain.
+
+## Division by zero
+
+Dividing by `0` is not something Python can compute, whether you use `/`, `//` or `%`. Each one stops the program with a `ZeroDivisionError`.
+
+<Code file="examples/zero_division.py" expectError="ZeroDivisionError" caption="Dividing by a variable that holds zero" />
+
+Line 2 tries `17 // boxes` while `boxes` is `0`, so Python stops there instead of printing anything. The same error appears with `/` and `%` by zero. When you see `ZeroDivisionError`, check whether a value you are dividing by can be `0` before you divide.
+
+## True division and the `.0` trap
+
+The `/` operator is <Term id="true-division">true division</Term>: it always gives a `float`, a number with a decimal part, even when the two numbers divide evenly.
+
+<Code file="examples/ticket_counters.py" showOutput caption="Nine tickets split across two counters" />
+
+Nine tickets across two counters give `4.5` with `/`. Floor division gives `4`, how many tickets each counter gets, with one ticket left over.
+
+<Code file="examples/exact_boxes.py" showOutput caption="True division gives a float even when the numbers divide evenly" />
+
+Twenty apples across five baskets divide evenly, yet `/` still gives `4.0`, not `4`. The judge compares your output as text, and `4.0` does not match `4`, even though the two numbers are mathematically equal. Reach for `//` whenever a problem expects a whole number.
+
+## Powers
+
+The `**` operator raises a number to a power. `2 ** 10` is `2` multiplied by itself ten times.
+
+<Code file="examples/powers_of_two.py" showOutput caption="A power that stays small, and one that grows far past what some other languages can hold" />
+
+`2 ** 10` gives `1024`. `2 ** 100` gives a number with thirty-one digits, and Python prints every digit of it. The module on values, types and variables showed that Python integers can be as large as you need. There is no fixed limit the way some other languages have, so a big result never breaks your program.
+
+## Augmented assignment
+
+Contest code often updates the same variable more than once, such as adding to a running total. Writing `total = total + 5` works, but Python has a shorter form called <Term id="augmented-assignment">augmented assignment</Term>, which combines an operator with assignment in one step.
+
+<Code file="examples/score_growth.py" showOutput caption="Building a total step by step with `+=`" />
+
+`total` starts at `0`, then `total += 3` moves it to `3`, and `total += 10` moves it to `13`. For numbers, `total += 5` does the same thing as `total = total + 5`. Every arithmetic operator has an augmented form: `+=`, `-=`, `*=`, `/=`, `//=`, `%=` and `**=`, each updating a variable using its own current value. A common mistake is forgetting that the variable must already exist. `count += 1` raises a `NameError` if `count` was never assigned first, for the same reason a plain reference to an unassigned name does.
+
+## Shortcuts: `abs`, `min`, `max`, `divmod` and `pow`
+
+Python also gives you built-in functions that save you from writing common arithmetic by hand.
+
+`abs()` returns a number with its sign removed, useful for a difference when you do not know which value is larger. Next, `min()` and `max()` each take two or more values and return the smallest or largest. After that, `divmod()` returns the floor division and the modulo of two numbers in one call, and `pow()` computes a power the same way `**` does.
+
+<Code file="examples/useful_functions.py" showOutput caption="Built-in functions for common arithmetic" />
+
+Two bus stops sit at positions `4` and `11`. `abs(4 - 11)` and `abs(11 - 4)` both give `7`, the distance between them, however you order the subtraction. Comparing three quiz scores, `7`, `10` and `3`, gives `3` as the minimum and `10` as the maximum. `divmod(150, 60)` packages the same hours-and-minutes split from the step-through above into a single call. Python prints the two results together inside parentheses. The module on tuples explains that packaging in full. `pow(3, 4)` gives `81`, the same answer as `3 ** 4`.
+
+This lesson covered seven operators and the order they run in, floor division and modulo with negative numbers, augmented assignment, and five built-in functions that shortcut common arithmetic. Watch for `/` where a problem expects a whole number, and check whether a value can be `0` before you divide by it.
+
+The problem below combines judges' scores into one final score.

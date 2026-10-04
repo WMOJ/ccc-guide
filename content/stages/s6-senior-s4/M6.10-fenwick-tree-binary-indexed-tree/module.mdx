@@ -1,0 +1,73 @@
+Back to the rain gauge from M4.3. A station logs the rainfall for each of up to 100,000 days. Two kinds of messages arrive in any order: a correction ("day 3 was 5 mm too low, add 5") and a question ("how much rain fell from day 3 to day 7?"). A <Term id="prefix-sum">prefix sum</Term> array answers the question with one subtraction, but it has no cheap way to take a correction. A <Term id="fenwick-tree">Fenwick tree</Term>, also called a binary indexed tree, takes both in about 17 steps each.
+
+## Why a prefix array fails under corrections
+
+The prefix array stores the total of the first `i` days at `prefix[i]`. A correction to day `p` changes every entry from `prefix[p]` on, because each of them includes that day. With 100,000 days and a correction on day 1, that is 100,000 entries to rewrite. Answering 100,000 mixed messages this way costs on the order of 100,000 times 100,000, ten billion operations. Summing the range directly for every question costs the same.
+
+Step through the figure below. The prefix array is on top and a Fenwick tree for the same elements is underneath. The first preset corrects a day in the middle, the second one near the end, and the third the first day, which is the worst case for the prefix array.
+
+<Figure caption="One element goes up by 5: the prefix array rewrites every entry from that position on, while the Fenwick tree rewrites only a few entries.">
+  <StepThrough frames="visuals/rebuild-cost.frames.json" preset="three" />
+</Figure>
+
+The tree gets by with few rewrites because no entry stores a full prefix. Each entry stores a short block of days, and a correction only has to reach the blocks that contain that day.
+
+## One block ending at each position
+
+Number the days from 1. In a Fenwick tree, `tree[i]` holds the sum of the block of days that ends at `i` and is as long as the lowest set bit of `i`. The lowest set bit of 6 (binary `110`) is 2, so `tree[6]` covers days 5 and 6. The lowest set bit of 8 (binary `1000`) is 8, so `tree[8]` covers all eight days. Every odd position has lowest set bit 1 and covers just itself.
+
+In Python the lowest set bit of `i` is `i & -i`. For `i = 6`, the negative `-6` is stored as the bits of 6 flipped, plus one, which ends in `...1010`. Its AND with `0110` leaves only the shared lowest bit, `0010`, which is 2.
+
+<Code file="examples/tree_ranges.py" showOutput caption="For each position: its bits, lowest set bit, block of days and the block's sum" />
+
+Step through the next figure to watch the tree fill in. The presets use eight elements, six elements (a size that is not a power of two), and all ones, where every `tree[i]` equals its block length.
+
+<Figure caption="Each tree position holds the sum of the block that ends at it, as long as the position's lowest set bit.">
+  <StepThrough frames="visuals/coverage.frames.json" preset="eight" />
+</Figure>
+
+The output above and the last step of the figure agree: `tree[4]` is 10, the sum of days 1 to 4, and `tree[8]` is 21, the sum of all eight.
+
+## Walking with the lowest set bit
+
+Two short loops use `i & -i` to move between blocks. A query subtracts the lowest set bit to jump to the block that ends just before the current one. An update adds it to jump to the next larger block that contains the day. The program below records both walks.
+
+<Code file="examples/lowbit_walk.py" showOutput caption="The positions an update from 3 visits and the positions a query from 7 visits, with n = 8" />
+
+Trace it line by line. Try all three presets: update 3 with query 7, update 1 with query 8, and update 8 with query 1.
+
+<Figure caption="The two loops that move through the tree: add the lowest set bit going up, subtract it going down.">
+  <CodeTrace trace="examples/lowbit_walk.trace.json" preset="main" />
+</Figure>
+
+The update from 3 visits 3, 4 and 8, and the query from 7 visits 7, 6 and 4, as in the output. Each query step clears one set bit of `i`, so a query takes at most as many steps as `i` has set bits, which is at most 17 when `i` is below 131,072. Each update step moves to a position with a higher lowest set bit, so the walk leaves the array after at most about 17 steps as well.
+
+## Answering a range sum
+
+To total days `l` to `r`, compute `query(r) - query(l - 1)`, the same subtraction as M4.3's `prefix[j + 1] - prefix[i]`. `query(i)` adds `tree[i]`, then moves to `i - (i & -i)`, and stops at 0. Watch it for days 3 to 7: one walk from 7 and one from 2.
+
+<Figure caption="A range sum as two walks down the tree: query(7) adds three blocks, query(2) adds one, and their difference is the answer.">
+  <StepThrough frames="visuals/query-walk.frames.json" preset="middle" />
+</Figure>
+
+Why do the blocks add up to exactly the first `i` days? The block of `i` is the days just after `i - (i & -i)`, up to `i`. The next block on the walk ends at `i - (i & -i)`, where the previous one began. So the blocks sit end to end with no overlap, from `i` down to 0, and their sum is the prefix total. The "Whole array" preset shows the shortest case, one block, and its `query(0)` is an empty walk.
+
+## Updating one element
+
+A correction to day `p` goes to every block that contains `p`. Starting at `p`, add the change to `tree[i]`, then move to `i + (i & -i)`. Each step goes to the next larger block that contains the previous one, so the walk visits exactly the blocks that contain `p` and stops once `i` passes `n`.
+
+<Figure caption="Adding 5 to one element: the update visits each block that contains it, from the smallest to the largest.">
+  <StepThrough frames="visuals/update-walk.frames.json" preset="three" />
+</Figure>
+
+Now the complete program. The tree starts as zeros and is built by `n` updates, one per element, which costs about `n` times 17, under two million steps for 100,000 days. Each message afterward costs at most two walks. The input lists the days, then a count of messages, each `U p d` (add `d` to day `p`) or `Q l r` (report the sum of days `l` to `r`).
+
+<Code file="examples/fenwick_basic.py" highlight="6,7,8,13,14,15" showOutput caption="A Fenwick tree with point updates and range-sum queries" />
+
+The first two answers, 15 and 13, are the sums of days 1 to 5 and days 3 to 7. The update adds 5 to day 3, which lies inside both ranges, so the same two questions now give 20 and 18. The update takes the change to add, not the new value. To set day 3 to 6 from 1 you call `update(tree, 3, 5)`. Keep days 1-based as well. Position 0 would never move, because `0 & -0` is 0, and the update loop would run forever.
+
+The two loops use only integer additions and comparisons on a flat list, which PyPy runs quickly. With 100,000 messages at roughly 34 loop steps each, that is about 3.4 million iterations. The program reads all its input at once and writes its answers once at the end, instead of calling `input()` and `print()` per message.
+
+## When to reach for it
+
+Reach for a Fenwick tree when values change one at a time and you keep asking for range sums. Counts work too, since a count is a sum of ones. It cuts a prefix down to a range by subtraction. That fits sums, counts and xor, but not a maximum: M4.3 showed that a maximum has no inverse. Range maximum with updates, or updates that touch a whole range at once, belong to the segment tree in M7.1.

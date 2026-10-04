@@ -1,6 +1,8 @@
 "use client";
 
-// lib/read-state — one localStorage key `etccc:read:v1` -> { lessonId: ISODate }.
+// lib/read-state — one localStorage key `etccc:read:v1` -> { moduleId: ISODate }.
+// Older builds keyed the same map by `<moduleId>/<lessonSlug>`; parseReadMap folds those keys
+// into module ids on read, and the folded map is saved on the next mark/undo (never on read).
 // Every access in try/catch; when storage is blocked or cleared the app works the same, minus
 // the check marks (no other state, no export/import).
 import { useCallback, useSyncExternalStore } from "react";
@@ -13,8 +15,8 @@ type ReadMap = Record<string, string>;
  * array, not null) whose every own-enumerable value is a string that parses as a real date.
  * Anything else — an array, a number, `null`, non-string values — is treated as empty rather
  * than trusted, so a corrupted or hand-edited localStorage entry can't desync the read state or
- * (via `id in map`, fixed below to `Object.hasOwn`) leak prototype properties as "read" lessons.
- * Pure and DOM-free so it's directly unit-testable.
+ * (via `id in map`, fixed below to `Object.hasOwn`) leak prototype properties as "read" modules.
+ * Legacy keys are migrated with migrateReadMap. Pure and DOM-free so it's directly unit-testable.
  */
 export function parseReadMap(raw: string | null): ReadMap {
   if (!raw) return {};
@@ -31,6 +33,22 @@ export function parseReadMap(raw: string | null): ReadMap {
     if (typeof value === "string" && !Number.isNaN(Date.parse(value))) {
       out[key] = value;
     }
+  }
+  return migrateReadMap(out);
+}
+
+/**
+ * Folds legacy `<moduleId>/<lessonSlug>` keys into plain module ids: the key becomes everything
+ * before its first `/`. Empty ids are dropped; when two keys fold into one id, the later date
+ * wins. Idempotent, and ids that no longer exist in the course are kept (never pruned).
+ */
+export function migrateReadMap(map: ReadMap): ReadMap {
+  const out: ReadMap = {};
+  for (const [key, value] of Object.entries(map)) {
+    const id = key.split("/")[0] ?? "";
+    if (!id) continue;
+    const existing = Object.hasOwn(out, id) ? out[id] : undefined;
+    if (existing === undefined || Date.parse(value) > Date.parse(existing)) out[id] = value;
   }
   return out;
 }

@@ -7,8 +7,9 @@ import { RichTitle } from "@/components/ui/RichTitle";
 import { fmt, ui } from "@/components/ui/ui-strings";
 
 /**
- * Course navigation (DESIGN.md → Sidebar): the current stage's modules, the current module
- * expanded to its lessons (a planned module shows "Soon" in a trailing column), the current lesson as a white sheet tab, other stages collapsed.
+ * Course navigation (DESIGN.md → Sidebar): the current stage's modules, each readable one with
+ * its read cell in a trailing column (a planned module shows "Soon" there instead), the current
+ * module as a white sheet tab, other stages collapsed.
  */
 export function CourseSidebar({ nav, idPrefix = "side" }: { nav: CourseNav; idPrefix?: string }) {
   const s = ui();
@@ -40,16 +41,22 @@ export function CourseSidebar({ nav, idPrefix = "side" }: { nav: CourseNav; idPr
                   {m.href ? (
                     <a
                       href={m.href}
-                      aria-current={current && !nav.currentLessonId ? "page" : undefined}
+                      aria-current={current ? "page" : undefined}
                       className={cn(
-                        "grid grid-cols-[3.5rem_minmax(0,1fr)] items-baseline rounded-control border border-transparent px-2 py-2 hover:bg-board-deep",
-                        current ? "font-semibold text-ink" : "text-ink-2",
-                        current && !nav.currentLessonId && "border-rule bg-paper hover:bg-paper",
+                        "grid grid-cols-[3.5rem_minmax(0,1fr)_auto] items-baseline rounded-control border px-2 py-2",
+                        current
+                          ? "border-rule bg-paper font-semibold text-ink"
+                          : "border-transparent text-ink-2 hover:bg-board-deep",
                       )}
                     >
                       <span className="text-ink-3 text-small tnum">{m.id}</span>
                       <span>
                         <RichTitle text={m.title} />
+                      </span>
+                      {/* Same trailing column as a planned row's "Soon" tag. The cell is centred
+                          on the title's first line, not baseline-aligned (it has no text). */}
+                      <span className="ml-2 flex h-[1.5em] items-center self-start">
+                        <LiveReadCell moduleId={m.id} readLabel={s.module.readState} />
                       </span>
                     </a>
                   ) : (
@@ -64,34 +71,6 @@ export function CourseSidebar({ nav, idPrefix = "side" }: { nav: CourseNav; idPr
                       </span>
                     </div>
                   )}
-                  {current && m.lessons.length > 0 ? (
-                    <ul className="mt-0.5 mb-2 ml-[3.5rem]">
-                      {m.lessons.map((l) => {
-                        const on = l.id === nav.currentLessonId;
-                        return (
-                          <li key={l.id}>
-                            <a
-                              href={l.href}
-                              aria-current={on ? "page" : undefined}
-                              className={cn(
-                                "flex items-start gap-2 rounded-control border px-2 py-1.5 text-small",
-                                on
-                                  ? "border-rule bg-paper font-semibold text-ink"
-                                  : "border-transparent text-ink-2 hover:bg-board-deep hover:text-ink",
-                              )}
-                            >
-                              <span className="flex h-[1.5em] items-center">
-                                <LiveReadCell lessonId={l.id} readLabel={s.lesson.readState} />
-                              </span>
-                              <span>
-                                <RichTitle text={l.title} />
-                              </span>
-                            </a>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  ) : null}
                 </li>
               );
             })}

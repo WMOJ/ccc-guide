@@ -1,0 +1,67 @@
+A line of input often packs several values into one string: `"apple,banana,cherry"` holds three items separated by commas. Splitting a string into its individual pieces is called <Term id="tokenize">tokenizing</Term>, and the pieces between delimiters are the tokens. The scan that does it carries one small piece of memory, the token built so far, and this lesson shows how far that one idea stretches.
+
+## Building tokens with state
+
+Start with two empty lists: `buf`, the characters of the token being built, and `out`, the finished tokens. On every character, append it to `buf`, unless it is the delimiter. A delimiter means the token is complete, so `buf` itself moves into `out` and `buf` resets to an empty list. Each finished token is joined into text only once, right when it is printed:
+
+<Code file="examples/split_tokens.py" showOutput caption="Splitting a line on commas" />
+
+Step through the scan below. A pointer marks the character being read, and the queue on the right holds the finished tokens, with the token still being built at the back.
+
+<Figure caption="Scanning a line and finishing a token every time a comma appears">
+  <StepThrough frames="visuals/split_state.frames.json" preset="main" />
+</Figure>
+
+Try "Empty token". Two commas in a row finish a token, leave `buf` empty, and start a new empty one, so an empty token joins `out`. Try "No delimiter" too: with no comma, the loop never finishes anything, and the whole line becomes one token only once the loop ends.
+
+## Why a list, and why one pass is enough
+
+A line can run past 200,000 characters, so count the cost of the obvious plan: `buf = ""`, then `buf += ch`. Because strings are immutable, each `+=` can copy everything already in `buf`, as the previous lesson's cost figure showed. A token of length k can then cost on the order of k² character copies. A line that is one giant token of length n costs about n², roughly 2 × 10^10 at n = 200,000. That is a few minutes to half an hour at PyPy's 10^7 to 10^8 simple operations a second, far past any judge's limit.
+
+A list avoids it. `buf.append(ch)` adds the one new character and never rebuilds what came before. Moving `buf` into `out` on a delimiter stores a single reference, not a copy, and the character-by-character join happens once per token.
+
+The scan is also correct in one pass. Every character is read exactly once, in order, and is either part of the token in progress or the delimiter that closes it. That decision never needs to look back, so a left-to-right pass finds every boundary however the delimiters are spread through the line.
+
+<Figure caption="The same scan, watching buf and out as the code itself runs">
+  <CodeTrace trace="examples/split_tokens.trace.json" preset="main" />
+</Figure>
+
+Try "Trailing comma" on `"a,"`. The comma finishes `"a"` and resets `buf`, so the `if buf:` check after the loop finds nothing left to add. That guard keeps a trailing delimiter from producing an empty token at the end. A delimiter in the middle of a line has no such guard, which is why `"ab,,cd"` still gets its empty token.
+
+## Delimiters of more than one character
+
+A line can allow several delimiter characters, such as a space, a comma, and a semicolon. Checking membership, `char in ", ;"`, instead of equality covers all of them with the same scan: any character in the set closes the token, and any other joins it.
+
+A delimiter can also be longer than one character, such as `"::"` in `"name::score::rank"`. One character at a time is not enough here, because a lone `:` is not a delimiter by itself:
+
+<Code file="examples/multi_delim.py" showOutput caption="Splitting a line on a two-character delimiter" />
+
+`line[i:i + 2]` is the two-character slice starting at `i`. When it equals `"::"`, the token closes and `i` jumps by 2, past both colons. Otherwise the one character `line[i]` joins `buf` and `i` moves by 1. Only the test for "is this a delimiter" grew, from one character to a short slice. The state, the token being built, is unchanged.
+
+<Figure caption="Looking at a two-character slice at each index, and jumping past a match">
+  <StepThrough frames="visuals/multi_delim.frames.json" preset="main" />
+</Figure>
+
+The state table shows the slice the scan is testing. Try "Lone colon": `"a:b::c"` keeps its first colon inside the token `"a:b"`, because the slice `":b"` never equals `"::"`. "Empty token" shows `"a::::b"` giving an empty middle token, since the two delimiters sit side by side.
+
+## Tokens defined by a rule
+
+Some problems tokenize by a rule instead of a delimiter. A letter starts or continues a word, and a digit starts or continues a number, with no separator between them at all. A sign, `+` or `-`, always starts a fresh number, even right after another number. The state to track is which kind of token is being built, its mode.
+
+<Code file="examples/classify_tokens.py" showOutput caption="Splitting a line into letter and number tokens by their kind" />
+
+Think of the rule as a small table. The row is the mode before the character and the column is the kind of the next character. Each cell says either extend the current token or start a new one. Only two cells extend: a letter after letters, and a digit after a number. A sign always starts a new token, and a change of kind does too.
+
+<Figure caption="Reading the rule table for each character of AB+1C-2E">
+  <StepThrough frames="visuals/classify_rules.frames.json" preset="main" />
+</Figure>
+
+The marked cell is the one the scan reads at each step. On "Signs", notice that `+1` and `-2` are both the number kind and the mode never changes, yet the sign column always reads "new". On "Digit run", three digits in a row pass through the same extend cell.
+
+The second view keeps the same scan but tracks what the code holds: the mode, the token being built, and the tokens found so far.
+
+<Figure caption="Tracking the mode, the current token, and the tokens found so far">
+  <StepThrough frames="visuals/classify_state.frames.json" preset="main" />
+</Figure>
+
+The token closes the instant the kind changes or a sign appears, before the new character joins a fresh token. So `"AB"`, `"+1"`, `"C"`, `"-2"`, and `"E"` come out as five tokens from one unbroken line. The scan is correct because a sign can never continue a number already in `buf`: it always begins one. Closing `buf` on a sign, and again on any change of kind, keeps every token made of one kind. In "Starts with a number", the first sign has no earlier token to close, so `buf` is still empty and nothing is appended.

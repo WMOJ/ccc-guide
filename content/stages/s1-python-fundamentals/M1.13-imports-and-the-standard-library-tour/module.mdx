@@ -1,0 +1,72 @@
+The module on ending a loop at the end of input used `import sys` to read every line. Python ships with many more modules like `sys`, each a ready-made toolbox for one kind of task. This lesson tours four you will reach for often, and shows how to bring in and read about any of them.
+
+## Bringing in a module
+
+`import math` makes every name inside the `math` module available as `math.something`. `from math import gcd` instead brings just `gcd` into your program, so you write `gcd(a, b)` without the `math.` in front. Both forms load the same code. Pick whichever reads more clearly for the names you use.
+
+An import runs where it appears in the file, the same as any other line. Put every import at the top of the file anyway, so it runs before the code that needs it. Anyone reading the file can then see every tool it uses in one place.
+
+Import only what you plan to use. An unused import does no harm to your program's output. It clutters the file, though, and makes it harder to tell, at a glance, which tools the program relies on.
+
+You will meet many more standard-library modules over the rest of this course, each one introduced in its own module when the topic it supports comes up. This lesson is only a first look at four of them. Each solves a task you already recognize well: reducing a ratio, counting a group, tallying values, and listing every possible pair from a small set.
+
+## `math`: gcd and comb
+
+`math.gcd(a, b)` returns the largest number that divides both `a` and `b` with no remainder. On this course's Python, `math.gcd` always takes exactly two numbers. A newer Python accepts more, which the module on the language boundary covers. `math.comb(n, k)` returns the number of ways to choose `k` items from `n`, with order not mattering. Both `n` and `k` must be given by position, not by name: `math.comb(n=6, k=2)` fails, but `math.comb(6, 2)` works.
+
+<Code file="examples/ratio_and_committees.py" showOutput caption="Reducing a ratio and counting committees with math" />
+
+Eighteen red plates to twenty-four blue plates reduces to three to four, because `math.gcd(18, 24)` is `6`, and dividing both counts by `6` gives the smallest whole-number ratio with the same proportion. Separately, choosing two people for a committee out of six candidates has `math.comb(6, 2)`, which is `15`, possible pairs. Writing either of these by hand takes a loop or nested loops. The module functions replace both with one call.
+
+## `collections.Counter`: tallying values
+
+`Counter` builds a count of how often each value appears in a collection you can loop over, such as a list or a string. Once `tally` has been built this way, `tally["red"]` gives the count for one value. Asking it for a value it never saw gives `0`, not an error. `.most_common(k)` gives the `k` most frequent values, paired with their counts.
+
+<Code file="examples/plate_tally.py" showOutput caption="Tallying plate colours with Counter" />
+
+Six plates come off the shelf in the order red, blue, red, green, red, blue. `tally["red"]` reports `3`. `tally.most_common(1)` reports `[('red', 3)]`, the single most common colour with its count. Writing this by hand means a dictionary and a manual loop that checks and updates a count for each item. `Counter` does the same job in one line.
+
+## `itertools.combinations`: every pair or group
+
+`combinations(items, r)` produces every way of choosing `r` items from `items`, keeping their original order and never repeating a choice. It works on any small collection you already have, not only numbers.
+
+<Code file="examples/doubles_pairs.py" showOutput caption="Every possible doubles pairing from three players" />
+
+Three players, Amir, Bo and Chen, give exactly three possible pairs for a doubles team. `combinations` produces each one once, in the order the players were listed. A hand-written version needs two nested loops with an index check to avoid pairing a player with themselves or repeating a pair in reverse. `combinations` handles that bookkeeping for you.
+
+Reach for `combinations` whenever a problem asks for every group of a fixed size from a small list, rather than writing the nested loops and the index check yourself.
+
+## Reading a function before you use it
+
+The official Python documentation lists every module's functions with their exact signature. Reading it before you call a function tells you what to pass and what comes back, without guessing or testing it first. Always read the signature on the **3.8** page of the docs, `docs.python.org/3.8/`, since a newer page can describe a newer, different signature for the same name. This is exactly what happened above: a newer docs page shows `math.gcd(*integers)`, accepting any number of arguments, but that page also marks the change with a note reading "Changed in version 3.9". The 3.8 page shows the two-argument form this lesson teaches, with no such note, because two arguments is how `math.gcd` has always worked up to and including 3.8. The module on the language boundary covers reading these version notes in full, and the module on searching the docs under contest conditions covers finding the right page quickly.
+
+Not every package you might have seen elsewhere is available. The <Term id="standard-library">standard library</Term> ships with Python itself, but third-party packages installed separately, such as `numpy`, are not available on the contest grader. Stick to modules from the standard library.
+
+## The rest of the toolbox
+
+This lesson worked through four names closely. The standard library has many more worth knowing by name now, even before you meet each one in full:
+
+| Module | What it is for | Covered |
+|---|---|---|
+| `sys` | reading all of standard input at once | the module on ending a loop at end of input |
+| `math` | number functions such as `gcd`, `isqrt`, `comb`, and the constant `inf` | this module, more as it comes up |
+| `collections` | extra container types such as `deque`, `Counter`, `defaultdict` | this module (`Counter`), more later |
+| `itertools` | generating combinations, permutations and running totals | this module (`combinations`), more later |
+| `heapq` | always retrieving the smallest item from a changing collection | a later module |
+| `bisect` | searching a sorted list quickly | a later module |
+| `functools` | tools for functions themselves, such as caching a result | a later module |
+| `re` | matching patterns inside strings | a later module |
+| `random` | generating random values, mainly for building your own test data | a later module |
+| `operator` | ready-made functions for operators, useful when sorting by one field | a later module |
+
+Knowing a module's name and rough purpose is enough for now. Each one gets its own full treatment when the topic it supports comes up.
+
+## Misspelling a module name
+
+<Code file="examples/typo_import.py" expectError="ModuleNotFoundError" caption="Importing a module name that does not exist" />
+
+`maths` is not a Python module. There is nothing by that name to import, so Python stops immediately with `ModuleNotFoundError`, before your program does anything else. When you see this error, check the module name against the docs and check your spelling.
+
+## Recap
+
+`import` and `from ... import` bring a module's names into your program. Do this once, near the top of the file. `math`, `collections.Counter` and `itertools.combinations` each replace a hand-written loop with a single call. The official docs tell you exactly what each one takes and returns. A misspelled module name fails immediately with `ModuleNotFoundError`, and a package outside the standard library is not available at all.

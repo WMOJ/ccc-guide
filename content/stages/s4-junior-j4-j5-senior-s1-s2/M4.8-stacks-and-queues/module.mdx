@@ -1,0 +1,100 @@
+Given a string of brackets, decide whether every bracket is matched and properly nested.
+
+```
+(())  - valid
+()()  - valid
+([)]  - invalid, the brackets cross
+(()   - invalid, one bracket is never closed
+```
+
+A <Term id="stack">stack</Term> solves this. It stores items in last-in, first-out (LIFO) order: the last item pushed is the first one popped. Reach for a stack whenever the most recent unfinished thing has to be dealt with before anything older.
+
+## How large the string gets
+
+A bracket string in a contest problem can run past 100,000 characters. PyPy manages on the order of `10^7` to `10^8` simple operations a second, the estimate this course uses throughout. An algorithm that looks at each character once, with a small fixed amount of work per character, uses a small fraction of that budget.
+
+## Checking pairs by deleting them
+
+One way to check a string by hand: repeatedly find an adjacent pair, an opener directly followed by its closer, like the `()` inside `(())`, and delete it. When no pair is left, the string is valid exactly when nothing remains. Deleting a matched, adjacent pair never changes whether the rest of the string is valid, since nothing outside that pair depends on it.
+
+Step through this brute force below. The look-up counter adds up every character a pass examines before it finds a pair.
+
+<Figure caption="Deleting adjacent pairs one pass at a time, counting the characters each pass looks at">
+  <StepThrough frames="visuals/bracket_delete.frames.json" preset="nested" />
+</Figure>
+
+The nested string `(((())))` needs four passes for four pairs, because only the innermost pair is ever adjacent. Each pass rescans from the left, so 8 characters cost 14 look-ups. The crossing string `([)]` never exposes a pair, so the scan ends with characters left over.
+
+A nested string of n characters needs about n/2 passes, and each looks at up to about n/2 characters, so the total is on the order of `n * n / 8` look-ups. At n = 100,000 that is over `10^9`, ten or more seconds at PyPy's estimated pace. It would time out on exactly the long, deeply nested inputs where the answer matters most.
+
+## One pass with a stack
+
+A stack gets the same answer without rescanning. Walk the string once, left to right. Push every opener. On a closer, pop the stack and check that it holds the matching opener. If the stack is empty, or the popped opener does not match, the string is invalid right away. If openers are left on the stack once the string ends, something was never closed.
+
+Why is this correct? The stack always holds the most recent still-unmatched opener on top. That is exactly the opener a closer would delete first in the hand method, because nothing has been pushed since. Popping it costs one step instead of a new pass, so the whole string costs one pass. It also explains `([)]`: the `]` arrives while `(` sits on top, and `(` does not close with `]`.
+
+<Code file="examples/match_brackets.py" showOutput caption="Matching bracket pairs of three kinds with a stack" />
+
+The `pairs` dictionary maps each opener to the closer it needs, so the stack tracks which bracket is open, not just how many. A stack that only counted open brackets would accept `([)]` by mistake. Step through the check below. Try the three presets: a valid nested string, one where the brackets cross, and one with an opener that never closes.
+
+<Figure caption="Pushing openers and popping matched closers, character by character, with three presets">
+  <StepThrough frames="visuals/bracket_stack.frames.json" preset="valid" />
+</Figure>
+
+Each preset ends the way the code does. It prints `True` when the stack empties exactly as the string ends, and `False` the moment a closer has nothing to match or when openers are still waiting at the end. Compare the step count with the brute force above: one step per character, never a rescan.
+
+## Queues hold arrival order
+
+A <Term id="queue">queue</Term> stores items in first-in, first-out (FIFO) order: the first item added is the first one removed. Reach for a queue whenever items need to come out in the order they arrived, such as orders served at a counter.
+
+<Code file="examples/queue_example.py" showOutput caption="Serving orders in the order they arrived, using a deque as a queue" />
+
+Step through the line below. It serves one order per step, always from the front, so pizza leaves first and pasta leaves last.
+
+<Figure caption="Serving orders one at a time from the front of a line, in arrival order">
+  <StepThrough frames="visuals/queue_serve.frames.json" preset="main" />
+</Figure>
+
+The "Served" panel fills in the same order the line drains, matching the code's output line by line.
+
+A plain Python list appends to its end quickly. Its `pop(0)` removes from the front by shifting every remaining item one slot left, the cost M1.8's figure on list costs already showed. `collections.deque` removes that cost. Its `append()` adds to the back and `popleft()` removes from the front, both in one step however long the queue is. That is why `queue_example.py` builds its line with a `deque` instead of a list.
+
+## Why list.pop(0) is the wrong choice for a queue
+
+Step through the same kind of line served two ways, with short one-letter orders so both panels fit a phone.
+
+<Figure caption="Serving the same line with list pop(0) and with deque popleft(), counting item moves">
+  <StepThrough frames="visuals/list_vs_deque.frames.json" preset="four" />
+</Figure>
+
+Serving 4 orders cost the list 3 + 2 + 1 = 6 moves and the deque none. The gap grows with length. `pop(0)` on a list of 10,000 items shifts about 10,000 elements, and draining it costs about 10,000 + 9,999 + ... + 1 moves, roughly 5 * 10^7. Draining a `deque` costs about 10,000 steps in total. Use `list.append()` and `list.pop()` for a stack, where every operation happens at one end. Use `collections.deque` for a queue, where `append()` and `popleft()` work at opposite ends and both stay one step.
+
+## Choosing between them
+
+A stack and a queue answer the same question, which item comes out next, with opposite rules. Push the same three values onto a stack and add them to a queue in the same order, then drain each completely.
+
+<Code file="examples/lifo_vs_fifo.py" showOutput caption="Draining a stack and a queue built from the same values" />
+
+Step through the two side by side below. Try both presets: three values, and a single value where the two structures cannot disagree.
+
+<Figure caption="The same three pushes, drained from a stack and a queue: reversed order against arrival order">
+  <StepThrough frames="visuals/lifo_vs_fifo.frames.json" preset="main" />
+</Figure>
+
+By the last step the two panels have given back the same three values in opposite orders, matching the two output lines above. The stack returns them reversed, last pushed first. The queue returns them unchanged, first added first. Matching and nesting problems, like bracket checking, need the most recent unfinished item handled first, so they need a stack. Problems about arrival order, scheduling, or serving requests as they came in need a queue.
+
+## A deque is both
+
+`collections.deque` is short for "<Term id="deque">double-ended queue</Term>", and it adds and removes in one step at either end: `append()` and `pop()` at the back, `appendleft()` and `popleft()` at the front. A `deque` can act as a stack too, using `append()` and `pop()` on the same end, so importing it once covers both jobs.
+
+<Code file="examples/deque_basic.py" showOutput caption="Growing a deque from both ends with append() and appendleft()" />
+
+Step through the growth below and watch which side each value joins.
+
+<Figure caption="Adding values alternately to the back and the front of a deque">
+  <StepThrough frames="visuals/deque_ends.frames.json" preset="main" />
+</Figure>
+
+The final step matches the code's printed line: five values, each placed by whichever end its turn called for. A plain list is fine as a stack, since both operations use its last index, and wrong as a queue, since removing at index 0 is the slow one.
+
+Whichever structure a problem needs, the deciding question stays the same: which end does the story add to and remove from? Answer that first, and the choice between a plain list and a `deque` follows.

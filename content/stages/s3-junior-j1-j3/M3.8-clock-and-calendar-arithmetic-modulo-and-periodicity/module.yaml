@@ -1,16 +1,10 @@
 id: M3.8
-title: Clock and calendar arithmetic (modulo and periodicity)
 status: accepted
 objectives:
   - Use modulo to work with periodic data like hours, days, and weeks.
   - Solve time-addition problems by adding and using modulo.
   - Recognize periodicity in data and apply modulo to reduce it.
   - Use modulo to handle wrap-around (circular) sequences.
-prereqs:
-  - M1.2
-  - M2.3
-lessons:
-  - clock-and-calendar-arithmetic
 practice:
   - id: ccc24s1
     note: People seated around a circular table, each looking at the seat directly opposite.

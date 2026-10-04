@@ -1,16 +1,10 @@
 id: M2.5
-title: Brute force and complete search
 status: accepted
 objectives:
   - Try every candidate answer with nested loops when the input is small enough.
   - Enumerate every pair, triple or subset systematically, without missing or repeating one.
   - Recognize when a candidate can be ruled out before it is fully built, without changing which candidates count.
   - Recognize when the number of candidates is small enough for this to finish in time.
-prereqs:
-  - M1.8
-  - M1.13
-lessons:
-  - brute-force-and-complete-search
 practice:
   - id: ccc22s1
     note: Find how many ways a number can be written as a sum of 4s and 5s.

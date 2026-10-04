@@ -1,0 +1,75 @@
+Imagine a problem that reads the marks of several students and counts how many pass, meaning a mark of 50 or higher. The number of students, `n`, is read first, and then the marks follow, one per line.
+
+Reading a list of items, counting how many meet a condition, and then outputting the result is the loop-and-count pattern. It builds on the loops of M1.6 and the accumulators of M2.4.
+
+## The pattern: counter before, update inside
+
+A J2 problem keeps `n` modest, and the loop does one comparison and at most one addition per item. The work grows in step with `n`: 5 marks take 5 comparisons, and 100,000 marks take 100,000, far below the 10^7 to 10^8 simple operations PyPy does in a second.
+
+The counter is a running total. It starts at zero before the loop runs, and each time a mark passes, the loop adds one to it. After the loop ends, that variable holds the answer, and the program prints it.
+
+Trace this on two students with marks 45 and 68. The mark 45 is under 50, so the counter stays 0. The mark 68 is 50 or higher, so the counter becomes 1. The output is 1. Step through the real program below. Try both presets, the mixed marks above and a run where nobody passes.
+
+<Figure caption="Counting marks 50 or higher, initializing the counter before the loop and updating it inside">
+  <CodeTrace trace="examples/pass_count.trace.json" preset="main" />
+</Figure>
+
+Line 9 reads `n` once. Line 12 sets `count` to `0` before the loop starts: if that line ran inside the loop, every pass would reset the count to zero instead of adding to it. Line 14 pulls each mark out of `data` by position, and line 18's `+=` adds `1` to whatever the count already was. Writing `count = 1` there would overwrite the running total.
+
+Now watch the same scan one array position at a time, with the two variables `i` and `count` in a table beside the array. This run adds a mark of exactly 50, to check that the boundary counts as a pass.
+
+<Figure caption="Scanning the marks left to right: i moves on every mark, and count grows only when a mark is 50 or more" alt="An array of marks scanned from left to right with the current position marked, beside a table of the loop variable i and the counter count. The position changes on every mark, while count grows only on marks that pass.">
+  <StepThrough frames="visuals/mark_scan.frames.json" preset="typical" />
+</Figure>
+
+The table shows why `i` and `count` are different things. The variable `i` tracks which iteration you are on, whether that mark passed or failed. The variable `count` tracks only the marks that met the condition. Keeping only `i` would tell you how many marks you looked at, never how many of them passed.
+
+## Choosing between at least and more than
+
+The word in the problem statement decides the comparison. "50 or higher" needs `mark >= 50`. "Higher than 50" needs `mark > 50`. The two tests differ on one value only, 50 itself, so a wrong choice passes every test that has no mark of exactly 50.
+
+Step through both tests side by side on the same marks. The first preset has 49, 50 and 51, and the last has three marks of exactly 50.
+
+<Figure caption="The tests mark >= 50 and mark > 50 run on the same marks, differing only at 50">
+  <StepThrough frames="visuals/boundary_compare.frames.json" preset="near-50" />
+</Figure>
+
+Marks away from 50 get the same answer in both columns. The mark 50 alone passes one test and fails the other, so the final counts differ by exactly the number of 50s. Trying your counter on a mark equal to the boundary is the quickest way to catch this.
+
+## The condition can test anything
+
+The condition that decides whether to count an item is not limited to a number comparison. It can test a category, a range, or, as below, the first letter of a word.
+
+<Code file="examples/vowel_count.py" showOutput caption="Counting words that start with a vowel" />
+
+The shape is the same as the marks example: a counter starts at zero, the loop reads one word per iteration, and `word[0] in "aeiouAEIOU"` decides whether the counter grows. Only the condition changed, from a numeric comparison to a membership check. The table below fills in one row per word, so you can see the first letter that each test sees.
+
+<Figure caption="Reading the first letter of each word and testing it against the vowels">
+  <StepThrough frames="visuals/vowel_scan.frames.json" preset="typical" />
+</Figure>
+
+The third preset has capital letters, and `E` counts because the string of vowels lists both cases.
+
+## Counting and flagging together
+
+Some problems ask for more than one running total from the same pass. Suppose you read a list of scores and need two things: how many are above 75, and whether every one is. The second question needs an accumulator too, a boolean flag that starts `True` and can only ever turn `False`, whenever it meets a score that fails.
+
+<Code file="examples/flag_and_count.py" showOutput caption="Counting scores above 75 while tracking whether every score clears it" />
+
+`high` and `low` are two separate counters, each updated in one branch of the same `if`. `all_high` starts `True` before the loop and is set to `False` the moment any score fails. Nothing in the loop sets it back to `True`, so one failure anywhere is enough to decide the final answer. Step through the scan below and watch the three accumulators change together. The second and third presets cover both outcomes the flag can reach: every score clears 75, and none of them do.
+
+<Figure caption="Two counters and a flag updating together on the same pass over the scores" alt="An array of scores scanned left to right with the current position marked, beside a table of two counters, high and low, and a boolean flag all_high. One counter grows per score, and the flag turns False on the first score that fails.">
+  <StepThrough frames="visuals/flag_scan.frames.json" preset="typical" />
+</Figure>
+
+In the mixed run, the score 70 flips `all_high` to `False`, and the final score 85 raises `high` to 3 without touching the flag. Because each score lands in exactly one branch, `high + low` always equals the number of scores read.
+
+## Using the count after the loop
+
+Once the loop exits, the counter or flag holds the final answer. The rest of the program treats it like any other value: printed directly, combined with other output, or tested in a final `if` to choose between two messages. A loop-and-count program usually ends with a line or two that run once, after the loop, never inside it. Printing on every iteration tangles two jobs together.
+
+Indentation is where this pattern most often breaks. The line that increments a counter belongs inside the `if` that names the condition, not at the same indentation as `for`. If `count += 1` lines up with `for`, it runs on every iteration regardless of the condition, and the count comes out too high with no error to point at the mistake.
+
+## A note on speed
+
+The loop does one comparison and at most one addition per item, so the total work grows in direct proportion to how many items there are. The house skeleton keeps that cost real in practice: `sys.stdin.read().split()` reads every token in one call. The loop then pulls values out of that list by position, `pos += 1` at a time, instead of paying a fresh read cost on every line.

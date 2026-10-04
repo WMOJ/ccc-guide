@@ -1,0 +1,59 @@
+A highway company owns candidate sites for roadside signs. Each site has a position along the road and a profit. The company may build at most `K` signs, and any two signs must be at least `gap` apart. Which sites give the most profit? A one-line state such as "best profit up to site `i`" is not enough here, because the answer also depends on how many signs are already used. The state needs two parts: the last site used, and the count so far. That is a second dimension, a resource limit, sitting beside the position.
+
+Take the bounds of a contest version: `n` up to $2 \cdot 10^5$ sites and `K` up to 20. The table has $n \cdot K = 4 \cdot 10^6$ cells, which is fine. The trouble is the transition. Filling one cell by scanning every earlier site costs up to $2 \cdot 10^5$ steps, so the whole table costs about $8 \cdot 10^{11}$. M2.9's rule of thumb is a budget near $10^8$ steps, so each cell has to cost close to one step. This lesson shows two ways to get there, for two different kinds of "best predecessor".
+
+## The state: how many signs, and where the last one sits
+
+Let `dp[s][i]` be the best profit using exactly `s` signs when the last one stands on site `i`, with sites sorted by position. A cell in row `s` comes from a cell in row `s - 1`: take a site `p` that sits at least `gap` to the left of site `i`, and add site `i`'s profit. The figure shows the table halfway through filling, with the arrow pointing from the row 1 cell that feeds a row 2 cell.
+
+<Figure caption="Rows count signs, columns are sites sorted by position. A dash marks a cell with no legal way to end there." alt="A table with three rows for one, two and three signs and six columns for sites. Row 1 holds each site's profit. Row 2 is complete, with dashes in its first two cells and an arrow from the best row 1 cell to the current row 2 cell.">
+  <Diagram frames="visuals/sign_table.frames.json" preset="main" step={6} />
+</Figure>
+
+Sorting comes first. The input lists sites in any order, and the code stores each site as an `(x, profit)` tuple. Python compares tuples one item at a time, so `sites.sort()` orders by position and breaks ties by profit, with no key function needed.
+
+## A boundary that only moves forward
+
+For site `i`, the legal predecessors are the sites at or left of `x - gap`. The best of them is a maximum over a prefix of the sorted sites. As `i` moves right, `x - gap` never decreases, so sites only ever join the prefix and never leave it. A pointer `p` can walk along beside `i` and keep a running maximum, `best_before`, of the previous row's cells it has passed.
+
+<Code file="examples/sign_sites.py" showOutput caption="Filling the table one row at a time, with a pointer that only moves right" />
+
+The program keeps only two rows, `prev` and `cur`, because row `s` reads nothing older than row `s - 1`. That is a rolling array: memory drops from $n \cdot K$ cells to $2n$. A `0` in a cell means no legal way, which is safe here because every profit is positive.
+
+Step through the fill below. Watch the pointer `p` and the folded sites. Try the wide-gap preset, where no pair of sites is far enough apart, and the one-sign preset, where only row 1 exists.
+
+<Figure caption="Filling the sign table: pointer p folds sites into the best row cell as x minus the gap moves right" alt="Step through a table of the best profit by number of signs and last site, next to the sorted site positions with two pointers. For each cell, the pointer p folds in the previous row's cells at or left of x minus the gap, and the cell adds the current site's profit to the best of them.">
+  <StepThrough frames="visuals/sign_table.frames.json" preset="main" />
+</Figure>
+
+The running maximum is correct because a site that is far enough left for `i` is also far enough left for every later site. Nothing the pointer has folded in ever becomes illegal, so `best_before` never has to shrink. Each row costs one pass over the sites plus one pass of the pointer, about $2n$ steps. For 20 rows that is $8 \cdot 10^6$ steps, far inside the budget.
+
+## A window that moves at both ends
+
+The forward pointer works because the legal set only grows. A different kind of transition has a legal set that also loses members. Picture stepping stones, each with a score that may be negative. You start on stone 0, end on the last stone, and each jump covers at most `k` stones. The total is the sum of the stones you land on. Here `dp[i]` is the best total for a route ending on stone `i`, and the predecessor is the best `dp[j]` for `j` from `i - k` to `i - 1`. That window slides: stone `i + 1` gains a new member on the right and loses the oldest on the left.
+
+Scanning the window for every stone costs up to `k` reads each. With $n = 2 \cdot 10^5$ and `k` around $10^5$, that is on the order of $10^{10}$ reads. A running maximum no longer works, since the oldest member can be the maximum and then leave. The answer is the <Term id="monotonic-deque">monotonic deque</Term> from M6.11. M5.11 answered a sliding-window minimum with a heap, paying a logarithm per step. The deque pays a constant.
+
+<Code file="examples/dp_with_deque_max.py" showOutput caption="Jumping along stones: the deque holds candidate predecessors, best at the front" />
+
+The deque holds stone indices with their `dp` values falling from front to back. Two loops maintain that. Stones older than `i - k` leave the front. After `dp[i]` is computed, any back entry with a `dp` at most `dp[i]` leaves, and then `i` joins. This needs `k` at least 1, which keeps stone `i - 1` in the deque, so the front is never missing.
+
+Step through both the deque and the `dp` array below. Try the falling-scores preset, where nothing ever leaves the back and only the window pushes stones out, and the preset with a jump of one.
+
+<Figure caption="The deque of candidate predecessors beside the dp array, for jumps of at most k stones" alt="Step through an array of dp values for stones along a route, next to a deque of stone indices with their dp values. Each step shows the front of the deque giving the best predecessor, stones older than the window leaving the front, and weaker stones leaving the back before the new stone joins.">
+  <StepThrough frames="visuals/deque_dp.frames.json" preset="main" />
+</Figure>
+
+Why is dropping from the back safe? Suppose stone `j` is behind stone `i` in the deque and `dp[j]` is at most `dp[i]`. Any later stone that can jump from `j` can also jump from `i`, because `i` is newer and stays in the window longer, and `dp[i]` is at least as good. So `j` can never be the unique best again. Because the survivors are decreasing, the front is the window's maximum once expired stones are gone.
+
+Each stone is appended once and removed at most once, so the loop does at most $2n$ deque steps in total, even though the inner loops sometimes run several times. The next figure counts both sides for the same scores. Try the window-1 preset: a scan is already one read per stone there, and the deque does not beat it. The gap opens as the window grows.
+
+<Figure caption="Reads for a plain window scan against deque steps, stone by stone, with running totals" alt="A table with one row per stone. Columns count the earlier stones a scan would read, the appends and pops the deque does, and a running total of each. The deque total stays under twice the number of stones while the scan total grows with the window size.">
+  <StepThrough frames="visuals/cost_compare.frames.json" preset="wide" />
+</Figure>
+
+## Making it fast on PyPy
+
+Both programs read the whole input with one `sys.stdin.read().split()` and index tokens by position. The tables are flat lists of integers: `prev`, `cur` and `dp` are lists, which PyPy stores compactly and indexes quickly. A new `cur` list per row costs one pass of $n$ cells. That is small beside the row's own work. `deque` appends and pops are constant time, and a list with `pop(0)` would shift every element instead. Sorting tuples runs in compiled code, so it needs no hand-written comparator.
+
+Reach for this lesson's ideas when a DP needs a second count beside the position, and ask of each transition how its legal set of predecessors moves. A set that only grows needs a pointer and a running maximum. A window that slides needs a deque.

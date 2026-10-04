@@ -15,7 +15,7 @@ const atkinsonNext = localFont({
   preload: true,
 });
 
-// Italic: a separate face so it is not preloaded (italic is rare in lessons; roman and mono are).
+// Italic: a separate face so it is not preloaded (italic is rare in module prose; roman and mono are).
 const atkinsonNextItalic = localFont({
   src: "./fonts/AtkinsonHyperlegibleNext-Italic-Variable.woff2",
   weight: "200 800",

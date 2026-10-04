@@ -1,0 +1,79 @@
+Picture a grid of open cells and walls. You start at `S` and want to reach `E`, moving one cell up, down, left or right at a time. What is the fewest number of moves?
+
+Every move costs the same, one step. In that situation, <Term id="breadth-first-search">breadth-first search</Term> (BFS) finds the answer. It explores the grid in rings. First it finds every cell one move away, then every cell two moves away, and so on. The first time a ring touches `E`, the ring number is the answer.
+
+## Rings of distance
+
+Take the start cell and give it distance 0. Its open neighbours get distance 1. Their open neighbours that have no distance yet get distance 2. Keep going until you reach `E` or run out of cells.
+
+Each cell gets a distance once, the first time the search reaches it. That first time is always the shortest, because every cell in an earlier ring was found before any cell in a later ring.
+
+Doing this by hand is easy on paper. The program needs a way to remember which cells are waiting to be explored, in the right order. That is the job of a <Term id="queue">queue</Term>.
+
+## The queue keeps the rings in order
+
+A queue works like a line at a counter. New items join at the back. The next item to be served leaves from the front. First in, first out.
+
+BFS starts with only the start cell in the queue. Then it repeats one step: take the cell at the front, look at its four neighbours, and add each new open neighbour to the back with a distance one higher.
+
+This keeps a useful promise. At every moment, the distances in the queue never go down from front to back, and they differ by at most one. All the distance-3 cells leave the queue before the first distance-4 cell does. That is why the rings come out in order.
+
+Step through the search below. Try the three presets. The "No path" grid shows what happens when the walls cut `E` off completely.
+
+<Figure caption="Breadth-first search expanding level by level across a grid">
+  <StepThrough frames="visuals/grid-bfs.frames.json" preset="walls" />
+</Figure>
+
+## Use a deque, not a list
+
+A Python list can act as a queue, but removing from its front is slow. `pop(0)` shifts every remaining item one place to the left. The longer the queue, the more each removal costs, and a big search pays that cost once for every cell.
+
+The `deque` type from the `collections` module is built for this. Adding to the back with `append()` and removing from the front with `popleft()` both take constant time, no matter how long the queue is.
+
+```python
+from collections import deque
+
+queue = deque()
+queue.append((0, 0))
+queue.append((0, 1))
+r, c = queue.popleft()
+print(r, c)
+```
+
+This prints `0 0`, the first cell added. Each item here is a `(row, column)` pair.
+
+## A BFS program for the grid
+
+Here is the whole search. The first input line gives the number of rows and columns, and the grid follows. The program prints the fewest moves from `S` to `E`, or `-1` if `E` cannot be reached.
+
+<Code file="examples/bfs_grid.py" showOutput caption="Iterative BFS on an unweighted grid" />
+
+The `dist` grid does two jobs. A value of `-1` means the search has not reached that cell yet. Any other value is the cell's distance from `S`.
+
+Look at where a cell gets its distance. The program sets `dist[nr][nc]` at the moment the cell joins the queue, not when it leaves. If it waited until the cell left, two different neighbours could each find the cell unmarked and add it. The queue would fill up with copies.
+
+The `if` checks four things before a neighbour joins the queue. The row and column must be inside the grid, the cell must not be a wall, and it must not have a distance yet. The order matters: the bounds checks come first, so the program never reads a cell outside the grid.
+
+## Flood fill
+
+<Term id="flood-fill">Flood fill</Term> uses the same queue to answer a different question. Which cells are connected to this one?
+
+Picture a map where `L` marks land and `.` marks water. Two land cells belong to the same island if you can walk from one to the other over land. To count the islands, scan the grid cell by cell. Each time you find land that no earlier search has reached, start a new search there. That search marks its whole island as seen, so the scan will not count it again.
+
+<Code file="examples/regions.py" showOutput caption="Counting regions of land and measuring each one" />
+
+The search here has no target cell. It runs until the queue is empty, which means it has reached every land cell in the region. Counting how many cells leave the queue gives the region's size. You can collect other facts the same way, such as a total or a largest value, by updating them each time a cell leaves the queue.
+
+The output says there are three islands, with sizes 3, 3 and 4.
+
+## Why not a recursive fill?
+
+You may have seen flood fill written as a function that calls itself on each neighbour. It is short and it works on small grids. On large ones it crashes.
+
+Each call waits on the call stack until the calls it made finish. A long, snaking region makes the chain of waiting calls very long. Python limits how deep that chain can go, and PyPy stopped this program after about 1,400 calls.
+
+<Code file="examples/deep_recursion.py" expectError="RecursionError" caption="A recursive fill on a single row of 3,000 cells" />
+
+A contest grid can hold hundreds of thousands of cells, so a recursive fill can fail on a valid input. The queue version keeps its waiting cells in a `deque` instead of on the call stack. A `deque` can hold millions of items, so the same search finishes without trouble.
+
+When every move in a grid or graph costs the same, reach for this pattern. Use a queue and a `dist` or `seen` grid, and mark each neighbour when it joins the queue.

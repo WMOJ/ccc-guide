@@ -1,0 +1,114 @@
+A delivery robot starts in room 0 of the small building below. Corridors join the rooms, and each one takes a few minutes to walk. The robot must pass through room 2 and room 3, in either order, and then it is finished. What is the least total time?
+
+<Figure
+  caption="The building: five rooms, five corridors labeled with their walking times, the start in room 0 and checkpoints in rooms 2 and 3"
+  alt="A map of five rooms, three in a top row and two in a bottom row, joined by five corridors, each labeled with its walking time. Room 0 is marked as the start, and rooms 2 and 3 are marked as checkpoints."
+>
+  <Diagram
+    viz="GraphViz"
+    legendLabels={{ current: "Start", compare: "Checkpoint" }}
+    data={{
+      nodes: [
+        { id: "0", x: 0, y: 0, s: "c" },
+        { id: "1", x: 2, y: 0 },
+        { id: "2", x: 4, y: 0, s: "m" },
+        { id: "3", x: 0, y: 2, s: "m" },
+        { id: "4", x: 4, y: 2 },
+      ],
+      edges: [
+        { a: "0", b: "1", w: 2 },
+        { a: "1", b: "2", w: 3 },
+        { a: "0", b: "3", w: 1 },
+        { a: "3", b: "4", w: 6 },
+        { a: "2", b: "4", w: 2 },
+      ],
+    }}
+  />
+</Figure>
+
+An ordinary shortest path from room 0 to some room does not answer this, because the robot has to remember which checkpoints it has already collected. Make that memory part of its position and the puzzle becomes a shortest-path search over a bigger graph. Keeping that bigger graph small is called <Term id="sparsification">sparsification</Term>.
+
+## A state is what the future depends on
+
+Two robots standing in room 1, one that has already been through room 2 and one that has not, face different problems. So a **state** is the smallest description that still decides what can happen next. Here it is a pair: the room, and the set of checkpoints collected so far. The state graph has one node per state, and an edge for each legal move from one state to another. The start is (room 0, nothing collected). A goal is any state with every checkpoint collected, in any room. Walking a corridor from room `u` to room `v` moves you from (`u`, collected) to (`v`, collected plus `v`, if `v` is a checkpoint), and costs the corridor's time.
+
+Store the collected set as one integer, a mask. Checkpoint number `i` owns bit `i`, the value `1 << i`, and `mask | bit` switches a bit on while keeping every bit already on. Step through the short program below. It walks the route 0, 3, 0, 1, 2 through a five-room building and prints the mask after each room. Try the second preset too.
+
+<Figure caption="A mask collects checkpoints: entering a checkpoint room switches on its bit, and other rooms leave the mask alone">
+  <CodeTrace trace="examples/mask_walk.trace.json" preset="main" />
+</Figure>
+
+Room 0 appears twice on that route: first with mask 0, then with mask 2. Those are two different states, which is how the model lets the robot walk back through a room it has already left.
+
+## How big is the full graph?
+
+With `n` rooms and `k` checkpoints there are $n \cdot 2^k$ states. A contest map could have $n = 10^5$ rooms, $2 \cdot 10^5$ corridors and $k = 10$ checkpoints. That is $10^5 \cdot 1024 \approx 10^8$ states, and each corridor is an edge once per mask, about $4 \cdot 10^5 \cdot 1024 \approx 4 \cdot 10^8$ moves. Running Dijkstra over every state is the brute-force plan. PyPy does roughly $10^7$ to $10^8$ simple operations per second, and each move here can be a heap push, so that plan is out of reach.
+
+## Search only what the start can reach
+
+The first saving is not to build the graph at all. Dijkstra's algorithm from M6.1 needs only the edges leaving the state it just settled, and a way to know which states are done. Both can be computed on demand.
+
+<Code file="examples/checkpoint_search.py" showOutput caption="Dijkstra over (room, mask) states, built on demand" />
+
+The loop is M6.1's with one extra field. A heap entry is `(distance, room, mask)`. Checkpoint rooms have a nonzero `bit`, and every other room has 0, so `mask | bit[v]` only changes the mask when the robot enters a checkpoint. The `best` and `done` lists are flat: the state (room `u`, `mask`) lives at index `u * size + mask`, which is row `u` and column `mask` of a table with one row per room and one column per set. A stale entry is skipped exactly as in M6.1. The search stops at the first settled state whose mask holds every checkpoint. As in M6.1, a settled distance is final, so the first goal state out is the nearest.
+
+Step through the search below. Try all three presets. "Start stop" puts a checkpoint in the start room, so the search begins with a nonzero mask. In "Cut off" no corridor reaches one checkpoint, so the heap empties, the answer is -1, and one out-of-date entry gets thrown away on the way.
+
+<Figure caption="The search fills in only the cells of the state table that it reaches">
+  <StepThrough frames="visuals/state-search.frames.json" preset="two-stops" />
+</Figure>
+
+On the first preset the search settles 7 of the 20 states, queues 3 more and never builds the other 10. Building only the states and edges a search needs is the first half of sparsification. It helps less than you might hope on a large map. When every room is reachable, nearly every (room, mask) pair is reachable too, and the goal can be among the last states out of the heap.
+
+## Keep only the edges that matter
+
+The second saving comes from asking which rooms the answer can depend on. Only the start and the checkpoints, the key rooms, are ever decision points. Every other room is somewhere the robot merely passes through on the way between two key rooms. So instead of moving one corridor at a time, move from one key room straight to another along its shortest route.
+
+To build that smaller graph, run Dijkstra from each key room on the plain map, with no masks, and keep only the shortest distances between key rooms. Step through it below. The last step swaps the map for the graph you keep.
+
+<Figure caption="Shortest routes between key rooms go into a table, and the kept graph has only the key rooms and those distances">
+  <StepThrough frames="visuals/key-distances.frames.json" preset="two-stops" />
+</Figure>
+
+Try "Through a stop", where the shortest route from the start to room 2 passes through checkpoint room 1, and "Cut off", where no route reaches room 4.
+
+Why is the smaller graph enough? Take any route that collects every checkpoint and cut it at the moments it first enters each checkpoint. Each piece runs between two key rooms, so it is at least as long as the shortest distance between them. Replacing every piece by that shortest route cannot make the total longer, and every order of pieces is a genuine walk on the map. So the best order in the kept graph costs exactly what the best route on the full map costs.
+
+The table counts the states each way.
+
+<Figure
+  caption="States in the full graph, n times 2^k, against states over key rooms only, (k + 1) times 2^k"
+  alt="A table with three rows, the five-room map with 2 checkpoints, a map of 10,000 rooms with 6 checkpoints and a map of 100,000 rooms with 10 checkpoints. The full graph has 20, 640,000 and 102,400,000 states. Keeping only key rooms leaves 12, 448 and 11,264."
+>
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowTitle: "map",
+      rowHeads: ["n = 5, k = 2", "n = 10^4, k = 6", "n = 10^5, k = 10"],
+      colHeads: ["n × 2^k", "(k+1) × 2^k"],
+      cells: [
+        ["20", "12"],
+        ["640,000", "448"],
+        ["102,400,000", "11,264"],
+      ],
+    }}
+  />
+</Figure>
+
+On the largest row the full graph has about $10^8$ states and the kept graph has 11,264, roughly 9,000 times fewer.
+
+<Code file="examples/key_points.py" showOutput caption="Sparsify to the key rooms, then search the small state graph" />
+
+`dijkstra` is M6.1's loop, run once per key room: `dist[i][room]` is the distance from key room `i`. A state is now (key room `i`, `mask`), and a move goes to checkpoint `j` at cost `dist[i][keys[j]]`. A move to a checkpoint already in the mask is never generated, because returning to a collected checkpoint can only add time. Write that test as `not (mask & bit)`: `&` ranks below `==` in Python, so `mask & bit == 0` would compare `bit` with 0 first.
+
+## Confirm the smaller graph solves the problem
+
+A shrunken graph is only useful if it gives the same answer. Both programs read the same map and print a distance of 7. The sizes differ: 4 of 12 states settled here, against 7 of 20 in the full search. Make that check on any sparsified graph. Keep the simple, obviously correct search, run both on small maps, and compare the answers before you trust the fast one.
+
+On the large map the cost moves into the ordinary searches. Eleven runs of Dijkstra cost about $11 \cdot 3 \cdot 10^5 \cdot 17 \approx 6 \cdot 10^7$ steps, and the search over $11 \cdot 1024$ states adds only about $10^5$ moves, against about $4 \cdot 10^8$ for the full graph.
+
+## Making it fast on PyPy
+
+Both programs keep every per-state value in a flat list, one row per room and one column per mask. A dictionary keyed by a tuple, or a `frozenset` of collected checkpoints, would allocate and hash a new object for every state. An integer mask costs nothing to build, compares by value inside the heap, and needs no hashing. Read the whole input once with `sys.stdin.read().split()`, and never store the state graph's edges: build them from the map as the search settles each state.
+
+Reach for state-space modeling whenever the answer depends on more than where you are: what you carry, which doors you have opened, how much fuel is left. Put that into the state and count the states. If the count is too large, ask which rooms and moves the answer cannot depend on, and keep only those.

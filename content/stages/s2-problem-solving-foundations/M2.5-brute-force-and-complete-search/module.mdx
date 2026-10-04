@@ -1,0 +1,67 @@
+Some problems have no shortcut and do not need one. When there are few enough candidate answers, checking every single one is a complete, correct algorithm on its own. This is <Term id="brute-force">brute force</Term>, also called complete search.
+
+## Read
+
+Here is an invented mini-problem: given N ticket prices, count how many pairs of tickets add up to exactly a target amount. A pair means two different tickets, and order does not matter, so counting `(3, 5)` and `(5, 3)` separately would be wrong.
+
+## Find the bounds
+
+An invented input specification: line 1 holds N and the target (1 ≤ N ≤ 1000, 1 ≤ target ≤ 10000), line 2 holds N ticket prices (1 ≤ price ≤ 10000).
+
+## Work the sample by hand
+
+<Figure caption="Checking every pair of tickets against the target, one pair at a time">
+  <StepThrough frames="visuals/ticket-pairs.frames.json" preset="sample" />
+</Figure>
+
+With four prices, `3, 5, 2, 8`, every pair with the first ticket earlier than the second gives exactly six candidates: `(3, 5)`, `(3, 2)`, `(3, 8)`, `(5, 2)`, `(5, 8)`, and `(2, 8)`. The figure checks each in turn against the target, `10`. Only `2 + 8` reaches it, so the count is `1`. No pair is skipped, and none is checked twice.
+
+## Plan in words
+
+1. For every ticket, paired with every later ticket, add the two prices.
+2. If a pair's sum equals the target, count it.
+3. After every pair has been checked, the count holds the answer.
+
+## Code
+
+<Code file="examples/ticket_pairs.py" showOutput caption="Counting pairs of tickets that sum to the target" />
+
+The outer loop picks a first ticket by index, once the input lines are read. The inner loop only considers indices after it, `range(i + 1, n)`, which is exactly what keeps each pair from being counted twice, once as `(i, j)` and again as `(j, i)`. Every pair the problem cares about is tried exactly once.
+
+## Test edge cases
+
+Run the hand-worked sample through the finished code and check that `1` still comes out. Then check a target no pair can reach, where the count should be `0`. Also check a list where every price is identical and every pair reaches the target, where the count should equal the number of pairs there are.
+
+## Submit
+
+Once the sample and the edge cases agree with the plan, the search is ready to submit.
+
+## Enumerating without gaps or repeats
+
+The hardest part of brute force is rarely the checking itself. It is generating every candidate, and only every candidate, with nothing missed and nothing repeated. Two nested loops with `j` starting after `i` enumerate every unordered pair. Three nested loops, each starting after the one before it, enumerate every unordered triple the same way.
+
+Choosing the wrong loop bounds is the most common mistake here. Starting the inner loop at `0` instead of `i + 1` checks every pair twice, once in each order, so the final count comes out double what it should be. Starting it at `i` instead of `i + 1` pairs a ticket with itself, which is not a pair of two different tickets at all.
+
+A list's every subset is a different shape again, since a subset can hold any number of items, not a fixed count like a pair or a triple. One function produces every possible pattern of `n` zeros and ones, once each: `itertools.product([0, 1], repeat=n)`. Each pattern names one subset: a `1` in position `k` means item `k` is included, and a `0` means it is left out.
+
+<Code file="examples/subset_bits.py" showOutput caption="Every zero-or-one pattern for three items, one per subset" />
+
+Three items give eight patterns, matching every way to include or leave out each of the three: none of them, each one alone, each pair, and all three together.
+
+## Pruning obvious waste
+
+A candidate can sometimes be ruled out before it is fully built, which saves checking every candidate that would have been built from it. Suppose the ticket-pairs search also required the pair's smaller price to be at least `4`. Once `tickets[i]` is below `4`, no `j` can rescue that candidate, so the inner loop can be skipped entirely for that `i`, without changing which pairs would have passed the original check.
+
+Pruning only removes candidates that were always going to fail, checked earlier instead of later. A prune that accidentally also removes a candidate that would have passed changes the answer, not just the running time. Check a prune's logic as carefully as the search itself before trusting it with a real submission.
+
+## Recognizing when brute force fits
+
+Brute force fits when the count of candidates, not the size of the input, stays small. Checking every pair from N tickets tries roughly N squared over two candidates. A thousand tickets give around half a million pairs, which a computer checks in well under a second. A million tickets give around half a trillion, which does not. The subtask table of a problem is often the clearest signal. A subtask with a small bound is frequently there specifically so a brute-force solution can pass it, even when the full problem needs something smarter to pass every subtask.
+
+Brute force is also the simplest way to check a faster solution's answer while you build it. Running both on the same small, hand-picked inputs and comparing their outputs catches a mistake in the faster approach long before it reaches the judge.
+
+This habit is worth keeping even once a faster approach exists. Write the brute-force version first, since it usually takes only a few lines and follows directly from the problem statement. Only then attempt anything cleverer, checking every new version's output against the brute-force one on small inputs as you go. A faster solution that quietly disagrees with brute force on even one small case has a bug worth finding immediately, not after a submission.
+
+## Recap
+
+Brute force tries every candidate answer directly, which is a complete and correct algorithm whenever the number of candidates is small enough to check them all in time. Enumerate candidates systematically, with loop bounds chosen so nothing is missed and nothing is counted twice. Read a problem's bounds to judge whether brute force fits the full problem, a smaller subtask, or only a way of checking a faster solution's answers.

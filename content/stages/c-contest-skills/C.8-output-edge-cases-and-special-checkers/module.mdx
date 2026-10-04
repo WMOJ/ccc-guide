@@ -1,0 +1,69 @@
+Your program prints `3 1 4 ` with a space after the 4. Every number is right, and the grader says wrong answer. A grader compares your output with the expected output using a checker, and checkers differ in how strictly they compare. This lesson covers four kinds: exact, token-based, tolerance and special. The problem statement and its sample output tell you which one you face, so read them before you read your code.
+
+## Whitespace you cannot see
+
+The program below builds the same three numbers as a line of text two ways. The loop writes a space after every token. The `join` writes a space only between tokens. It prints the `repr()` of each line, which shows the string inside quotes.
+
+<Code file="examples/format_demo.py" showOutput caption="Two ways to build one line, each printed with repr so the spaces show" />
+
+Step through the trace below and watch `built` pick up its last space. The third preset is the empty case.
+
+<Figure caption="Building the line with a loop and with join: a trailing space shows up inside the quotes of built">
+  <CodeTrace trace="examples/format_demo.trace.json" preset="three" />
+</Figure>
+
+The loop adds a space after the 4 as well, so `built` ends with one. `joined` does not. On a screen the two lines look the same, and `repr()` is how you tell them apart. With no values, the loop never runs and both lines are `''`, so there is nothing stray to print.
+
+Line breaks work the same way. `print` ends every call with a newline, so a statement that wants all the values on one line needs one `print` of the joined text. Calling `print` once per value would put each value on its own line, and a checker that compares lines would reject it.
+
+## One output, two checkers
+
+A checker decides whether your text counts as the expected text. An exact checker compares character by character, including the newline at the end. A token-based checker splits both outputs on whitespace and compares the two lists of tokens. Step through the same pair of outputs under each checker below.
+
+<Figure caption="The expected output and a line with a trailing space, compared character by character, then token by token">
+  <StepThrough frames="visuals/compare-output.frames.json" preset="three" />
+</Figure>
+
+The exact checker fails at character 5, where it expected the newline and found a space. The token checker never sees the space, because splitting discards it, so both sides are the same three tokens. Whitespace between tokens still counts under both: `314` is one token, and `3 1 4` is three.
+
+You usually cannot tell which checker a grader uses. Print what the statement's sample shows: one space between values, no space at the end of a line, and a newline after each line. That passes either kind. `print(*numbers)` and `" ".join(map(str, numbers))` both put separators only between values.
+
+## Decimals: how many digits, and how much error
+
+Two separate things can go wrong with a float. The first is how many digits print. The program below prints one quotient three ways.
+
+<Code file="examples/float_demo.py" showOutput caption="The quotient 1 / 10000000 printed directly, with six decimals, and with two" />
+
+`print(q)` switched to scientific notation, `1e-07`. The format `f"{q:.6f}"` always writes six decimals, here `0.000000`. When a statement says "exactly two decimal places", it is a formatting rule and the checker compares text, so use `.2f`.
+
+The second is an allowed error. A statement that says "within 10^-6" lets the checker read your number and compare it with the true value. Absolute error is `|yours - true|`. Relative error is that difference divided by `|true|`. Statements word this differently, so check whether it asks for absolute, relative, or either.
+
+Step through the three lines below, then try the other two presets.
+
+<Figure caption="Three ways to print one quotient, with the absolute and relative error of each line">
+  <StepThrough frames="visuals/float-error.frames.json" preset="small" />
+</Figure>
+
+For 1 / 10000000, the six-decimal line is off by only `1e-07`, which an absolute checker accepts. Against the true value it is wrong by 100 percent, which a relative checker rejects. Switch to the huge answer and it reverses: two decimals are off by 0.0033 in absolute terms and by about 10^-11 relatively. So when a tolerance is allowed, print more digits than it needs, in plain decimals rather than `1e-07`.
+
+## Any valid answer: a special checker
+
+Some problems have many correct outputs. Take this one: print any two numbers from a list that add up to `k`. No single output is the expected one. The grader runs a checker program that reads the input and your output and tests the rules. The statement signals this with phrases like "print any" or "if there are several answers, print one". Constructive problems, like the ones in the constructive module, often work this way.
+
+The checker below takes the list, `k` and an answer, and prints a verdict.
+
+<Code file="examples/check_pair.py" showOutput caption="A checker for print any two numbers from the list that sum to k, run on the answer 5 7" />
+
+Step through it on three answers, all for the list `3 9 7 5 6` and `k = 12`.
+
+<Figure caption="A checker running three checks on an answer: two numbers, both available, and the sum">
+  <StepThrough frames="visuals/checker.frames.json" preset="other" />
+</Figure>
+
+The reference solution might print `3 9`. The answer `5 7` is a different pair and is accepted, because the checker tests the rules and never compares against `3 9`. The answer `6 6` fails because the list has one 6, and `9 7` fails because it adds to 16. A special checker still reads your output strictly. The answer `5, 7` fails this one, because `5,` is not a number in the list. So you cannot match a sample output here, and you do not need to. When a statement says an order, such as increasing, sort. When it says any order, any order works.
+
+## Before you submit
+
+Run your program on the sample and print each output line with `repr()`, next to the statement's sample output. The local-judging module shows a line-by-line comparison that does this over every official file. If the output matches character for character and the verdict is still wrong answer, the logic is at fault, not the format.
+
+Reach for this check whenever a wrong answer surprises you: look for the statement's format rule, then the checker kind it implies, before you doubt the algorithm.

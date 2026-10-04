@@ -1,0 +1,94 @@
+Forty minutes into the contest, a problem gives you a grid with an `S` and an `E` and asks for the fewest moves between them. You know the tool: a breadth-first search, from M4.13. What is left is about twenty lines to type correctly, with no file to copy from. C.1 explains why. Code written before the contest cannot come with you, whether it sits in a file, in notes or on a printout. Any template you use is typed fresh inside the three hours. A template you remember cleanly is typed in a minute or two. One you half remember gets rebuilt line by line, and that is where the slips happen.
+
+## Which templates are worth knowing cold
+
+A template earns the effort when it is long enough to slip on and identical from one problem to the next, with one small part you edit. The table lists six such templates, each the course's own version from the module that teaches it. Read the last column as the part of the code a new problem changes.
+
+<Figure caption="The six templates, where each is taught, and the part you edit for a new problem" alt="A table with six rows: fast input and output from M3.10, grid BFS from M4.13, union-find from M5.10, Dijkstra from M6.1, binary search on the answer from M5.5 and prefix sums from M4.3. A second column names the one part of each template that changes from problem to problem.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowHeads: ["Fast I/O", "Grid BFS", "DSU", "Dijkstra", "Bin. search", "Prefix sums"],
+      colHeads: ["Module", "You edit"],
+      cells: [["M3.10", "loop body"], ["M4.13", "wall, goal"], ["M5.10", "the query"], ["M6.1", "edge cost"], ["M5.5", "the check"], ["M4.3", "the queries"]],
+    }}
+  />
+</Figure>
+
+Every file below reads a small input from standard input and prints its answer, and each has been run on that input. The origin modules explain why each one works. Here the question is only what you must be able to reproduce.
+
+## Fast input and one write
+
+Read all the input once with `sys.stdin.read().split()` and collect the output lines into a list, then write them with one `sys.stdout.write`. This is the skeleton M3.10 built, and every other template sits inside it.
+
+<Code file="examples/template_io.py" showOutput caption="Read every token once, then write every answer line once" />
+
+The loop body is the only part that changes. The lines around it, `idx`, the empty-input check and the final write, stay put.
+
+## Grid BFS
+
+The <Term id="breadth-first-search">breadth-first search</Term> template is the one most worth typing without thinking. A `dist` grid starts at -1, which also serves as the visited marker, and a `deque` holds the cells waiting.
+
+<Code file="examples/template_grid_bfs.py" showOutput caption="Shortest distance from S to E on a grid, or -1 when E cannot be reached" />
+
+Step through it on a grid of three by three. Each step names what the four neighbors did, in the order the tuple lists them. Two conditions are easy to mistype: the bounds test must come before the `grid[nr][nc]` lookup, and a neighbor joins the queue only while its `dist` is still -1.
+
+<Figure caption="The grid template on a three by three grid, one cell at a time, with what each of the four neighbors did" alt="A three by three grid with a wall or two. The start cell has distance 0. Each cell taken from the queue checks its four neighbors in the template's order, and a neighbor that is on the grid, not a wall and still at distance -1 gets one more than the current cell. The search stops when E comes off the queue, or ends with -1.">
+  <StepThrough frames="visuals/grid-bfs.frames.json" preset="main" />
+</Figure>
+
+The second preset walls E off. The queue runs empty, the loop ends, and the `answer = -1` set before the loop is what prints.
+
+## Union-find
+
+The <Term id="union-find">union-find</Term> template is two flat lists and two small functions. `find` uses <Term id="path-halving">path halving</Term>, and `union` uses <Term id="union-by-size">union by size</Term>, exactly as M5.10 has them.
+
+<Code file="examples/template_dsu.py" showOutput caption="Union-find with path halving and union by size, answering same-set queries" />
+
+The line to get right is `parent[x] = parent[parent[x]]`, placed before `x = parent[x]`. Step through six nodes below. The parent array and the forest show the same thing two ways. Watch the query in the first preset, where `find(3)` rewrites a parent cell.
+
+<Figure caption="Union-find on six nodes: the parent array, and the same sets drawn as a forest of arrows to parents" alt="The parent array of six nodes beside a forest in which each node has an arrow to its parent and each root shows its size. Each union finds two roots and hangs the root of the smaller set under the other. A query compares two roots, and any parent cell rewritten by path halving is marked.">
+  <StepThrough frames="visuals/dsu.frames.json" preset="main" />
+</Figure>
+
+## Dijkstra
+
+The shortest-path template keeps `(distance, node)` pairs in a `heapq` heap, with a `done` list to skip stale entries. M6.1 labels its nodes with names. This copy uses numbers, so the input is shorter to type and check.
+
+<Code file="examples/template_dijkstra.py" showOutput caption="Shortest distances from node 0 with a heap, skipping entries that are out of date" />
+
+A node can enter the heap several times, each time with a smaller distance, and the older entries still come out later. The line `if done[u]: continue` drops them, and leaving it out makes the loop redo work it has already finished. Only `nd = d + w` changes if a problem charges something other than the edge weight.
+
+## Binary search on the answer
+
+The <Term id="binary-search-on-the-answer">binary-search-on-the-answer</Term> template from M5.5 searches the possible answers rather than a list. A function answers "does capacity `cap` work?", and the loop narrows `lo` and `hi`.
+
+<Code file="examples/template_binary_search.py" showOutput caption="The smallest capacity that carries every item in at most the allowed number of trips" />
+
+Everything depends on two lines: `hi = mid` when `mid` works, and `lo = mid + 1` when it fails. Step through the candidates below.
+
+<Figure caption="The smallest working capacity, found by testing the middle candidate and discarding half the range" alt="A row of candidate capacities from the heaviest weight to the total weight, with pointers lo, hi and mid. Each step tests the middle capacity by counting trips. If it fits the allowed number of trips, hi moves down to it; otherwise lo moves just above it. The range shrinks to one capacity.">
+  <StepThrough frames="visuals/bsearch.frames.json" preset="main" />
+</Figure>
+
+## Prefix sums
+
+The <Term id="prefix-sum">prefix sum</Term> template from M4.3 builds a list one longer than the input, starting with 0. The sum of days `i` to `j` is then `prefix[j + 1] - prefix[i]`.
+
+<Code file="examples/template_prefix_sums.py" showOutput caption="Range sums from a prefix list, one subtraction per query" />
+
+Trace it on four days and one query. The skipped passes repeat the ones shown.
+
+<Figure caption="Building the prefix list, then answering one range-sum query with one subtraction">
+  <CodeTrace trace="examples/template_prefix_sums.trace.json" preset="main" />
+</Figure>
+
+Try the other two presets too. Days 0 to 3 subtract `prefix[0]`, which is the leading 0 doing its job, and a single day subtracts two neighbors.
+
+## How to practice a template
+
+Open a blank file and type one template without looking at the course version. Run it on the small input from its example and compare with the output shown. If they differ, compare your file to the course version line by line, find the first line that differs, and retype that template from the top. Retyping the whole file matters more than patching one line, because the contest asks for the whole file.
+
+Then change the input to an edge case and check the answer by hand. A blocked grid, a graph with no edges to walk and a single day of rainfall are good ones. Do one template per sitting, and come back to each after a few days.
+
+A template only starts the solution. A problem may number its nodes from 1, use other symbols in its grid or ask for a different total. After typing the shape, reread the statement and edit the marked part. Your time then goes to that part.

@@ -1,0 +1,45 @@
+A computer does not guess what you want. It carries out the exact instructions you give it, one after another, in the order you wrote them. A program is a set of such instructions. In a contest, whatever your program prints is what the judge reads, so understanding how it runs matters from the very first line you write.
+
+## What runs your program
+
+The words you type are <Term id="source-code">source code</Term>: plain text that describes what you want the computer to do. On its own, source code does nothing. It only takes effect once something runs it.
+
+A program called an <Term id="interpreter">interpreter</Term> reads your source code and carries out its instructions. The interpreter that runs Python code first checks the whole file for grammar mistakes; if there are none, it runs the lines one at a time from the top. The CCC grader already has an interpreter ready, so you never install anything yourself. You write source code, submit it, and the grader runs it.
+
+The grader calls this choice "Python 3", but the interpreter behind it is PyPy, a version of Python built to run faster than the standard one. The module on online judges covers two other places you can practice, where this same choice is labelled "PyPy 3" instead: the same kind of interpreter, in a newer version. You do not need to know how PyPy works inside. Choosing the right option when you submit is enough.
+
+This split matters because the same source code always means the same instructions, wherever it runs. The grader runs its own version of Python, though, so a file that relies on a feature outside that version can behave differently there than it does elsewhere. A later module covers exactly where that line sits.
+
+Some programs also read input while they run, information you give them, and turn it into output, whatever they print. The programs in this lesson only produce output. A later module covers how a program reads input.
+
+## Running from top to bottom
+
+When the interpreter runs your program, it starts at the first line and works down, one line at a time. Each line finishes before the next one starts.
+
+<Code file="examples/print_lines.py" showOutput caption="Three print calls, each writing one line" />
+
+Each `print()` call writes one line of text. The three lines appear in the same order as the three `print()` calls in the source code, because that is the order Python runs them.
+
+A step-through shows this more precisely. The program below announces three steps of answering a contest problem, one `print()` at a time.
+
+<Figure caption="Running a checklist program from the first line to the last">
+  <CodeTrace trace="examples/checklist.trace.json" />
+</Figure>
+
+Line 1 runs, then line 2, then line 3. In a program like this one, with no repeats, nothing skips ahead and nothing runs twice. If you swap two lines in the source code, the printed order swaps too, because the order of the source code is the order of the run.
+
+Checking the file's grammar first is not the same as running it. Once the interpreter is sure the whole file is free of grammar mistakes, it carries out the instructions one at a time from the top. That is closer to a person following a recipe step by step than to skimming the whole page first. In a program like this one, a line near the end of the file cannot affect a line that already ran. Only a line that comes before a given line can change what happens when that line runs.
+
+## Source code, running it, and the result
+
+These are three different things, easy to blur together when you are new to programming. The source code is the file you write, the text sitting on disk before anything happens. Running it is the act of asking the interpreter to carry out that text, line by line. The result is whatever the run produces, here the three lines on the screen.
+
+A recipe makes the same split easier to see outside of programming. The written recipe is the source code: steps on a page, doing nothing by themselves. Cooking it is running it: someone follows the steps, in order, one at a time. The finished dish is the result. You can change the written recipe without touching the dish already on the table. Cooking the same recipe twice gives you two separate dishes, not one dish that updates itself.
+
+A common mistake is expecting the result to change the moment you edit the source code. Nothing happens until you run the file again. Editing the words does not rerun them by itself; the interpreter only reads the file when you tell it to.
+
+Try it: take the checklist program, swap the first two lines, and predict which line prints first before you run it.
+
+Not every run finishes the way you expect. Sometimes the interpreter reaches a line it cannot carry out, and it stops there instead of reaching the last line. When that happens, Python prints an error describing what went wrong rather than the result you wanted. The module on reading error messages covers what that looks like and how to respond.
+
+This lesson covered what a program is and how an interpreter runs it, from the first line to the last. It also covered how source code differs from running it and from the result it produces. Every later lesson builds on this order: one line finishes before the next begins.

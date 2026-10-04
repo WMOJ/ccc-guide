@@ -1,15 +1,9 @@
 id: M2.3
-title: Simulation
 status: accepted
 objectives:
   - Model a process literally, one step at a time, with a variable for each piece of state.
   - Recognize when a problem's story is the algorithm, needing no extra insight beyond following it exactly.
   - Check a simulation's result against a hand-worked run of the same steps.
-prereqs:
-  - M1.6
-  - M1.8
-lessons:
-  - simulation
 practice:
   - id: ccc26j3
     note: Two lines of candies face off by fixed rules until one line empties; find how many each side ate.

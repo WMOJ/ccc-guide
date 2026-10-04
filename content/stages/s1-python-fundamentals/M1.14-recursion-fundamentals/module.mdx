@@ -1,0 +1,43 @@
+Every function you have written so far calls other functions, but not itself. A function that calls itself is a <Term id="recursion">recursive</Term> function. This lesson covers how to write one safely and how Python keeps track of all the calls in progress at once.
+
+Some problems are naturally described in terms of a smaller version of themselves, such as a count that depends on a smaller count. Recursion lets you write the solution in almost the same words as that description.
+
+## Base case and recursive case
+
+A recursive function needs two parts. The base case is the smallest input the function can answer directly, with no further calls. The recursive case handles every other input by calling the function again on a smaller piece of the same problem, then using that result.
+
+<Code file="examples/shelf_arrangements.py" showOutput caption="Counting arrangements of books on a shelf" />
+
+`books_on_shelf(4)` needs the number of arrangements of 4 books. Any of the 4 books can go first, and the other 3 then fill the rest of the shelf in `books_on_shelf(3)` ways, which is why the answer is 4 times that. That calls `books_on_shelf(3)`, which calls `books_on_shelf(2)`, down to `books_on_shelf(0)`. Zero books arrange only one way, empty, so `books_on_shelf(0)` returns `1` directly instead of calling itself again. That is the base case. Every other call is the recursive case, and `4 * 3 * 2 * 1` gives `24`.
+
+Every recursive function needs a base case that some input eventually reaches. Without one, the function keeps calling itself with no way to stop.
+
+A common mistake is writing a recursive call that does not move toward the base case, such as calling `books_on_shelf(n)` again with the same `n` instead of `n - 1`. The base case still exists in that version, but no call ever gets closer to it, so the function never stops on its own. Check that every recursive call passes a value strictly closer to the base case than the one it received.
+
+## The call stack
+
+Each call to a function gets its own frame, a private space holding that call's arguments and local variables. Python keeps every frame that has not finished yet on the <Term id="call-stack">call stack</Term>, one on top of the last. When a call finishes, Python removes its frame and hands the result to the frame underneath, the one that made the call.
+
+<Figure caption="The call stack: newer calls stack on top, and unwind first">
+  <CodeTrace trace="examples/ticket_countdown.trace.json" />
+</Figure>
+
+`countdown(3)` calls `countdown(2)`, which calls `countdown(1)`, which calls `countdown(0)`. Three frames stack up before any of them can return, because each one is waiting on the call above it. `countdown(0)` hits the base case and returns `[]` immediately. Deeper calls sit on top of the stack, and they finish first: `countdown(1)` finishes next, building `[1]`, then `countdown(2)` builds `[2, 1]`, then `countdown(3)` builds `[3, 2, 1]`. The stack shrinks by one frame each time a call finishes.
+
+Watch the direction of each part. Calls stack up first, all the way to the base case, and only then do results come back, top frame first, in the opposite order from how they were made.
+
+Try tracing `countdown(3)` on paper before checking it against the figure. Write down each call as it stacks up, mark which one hits the base case, then write down each result as it hands back to the call that made it.
+
+## The recursion limit
+
+Every frame on the stack takes some memory. Python limits how many frames can stack up at once, to catch a function that never reaches its base case before memory runs out. `sys.getrecursionlimit()` reports the default, `1000`.
+
+<Code file="examples/recursion_limit_trap.py" expectError="RecursionError" caption="A correct base case, reached too late for the default limit" />
+
+`count_up(0, 2000)` has a base case at `n == target` and would reach it normally, in 2001 calls, one for every value of `n` from `0` to `2000`. That is more than the default limit allows, so Python stops the program with `RecursionError` first, part way there. The traceback prints the same two lines once per waiting call, until it stops repeating them and prints a line reporting how many more times they repeated instead. That repeat count adds up to around 1,400 frames here, noticeably more than the stated limit of `1000`. The CCC grader runs PyPy, which checks stack depth its own way and lets calls go somewhat past `1000` before it raises. Treat `1000` as the point where trouble starts, not an exact count. The logic here is correct. Only the limit was too small for how deep the calls needed to go.
+
+This is not only a demonstration limit. A recursive solution whose depth grows with the size of its input can hit the real default limit once that input is large. This can happen with entirely correct logic. `sys.setrecursionlimit` can raise the limit itself. A deeper stack still uses more memory, though, so a large enough input can still crash the program even after raising it. The risk grows when the number of nested calls scales with N, the same N a problem's bounds describe. A function whose depth stays small and fixed, regardless of the input, rarely runs into this at all. A later module covers rewriting a recursive solution as a loop, which sidesteps the limit entirely.
+
+## Recap
+
+A recursive function needs a base case that stops the calls and a recursive case that calls itself on a smaller version of the problem. Python stacks up one frame per call in progress, and unwinds them in reverse order as each one finishes and returns its result. The recursion limit caps how many frames can stack up at once, and a `RecursionError` means the stack passed that cap before a base case was reached.

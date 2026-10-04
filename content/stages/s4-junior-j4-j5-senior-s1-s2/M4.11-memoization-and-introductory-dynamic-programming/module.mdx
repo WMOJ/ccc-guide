@@ -1,0 +1,61 @@
+You are on stair 0 of a staircase, and each step forward moves you up 1 or 2 stairs. How many different sequences of steps reach stair 5 or beyond? The count from any stair is the count from one step ahead, plus the count from two steps ahead. A stair at or past the top has exactly one way to already be there. That is a correct recursive function, and it is also a function that solves the same handful of subproblems over and over. <Term id="memoization">Memoization</Term> fixes that: remember each subproblem's answer the first time it is worked out, and look it up every other time it is needed.
+
+A CCC-scale version of this question would not stop at 5 stairs. It might ask for the count up to a staircase of N = 10^5 stairs, the kind of bound M2.9's target-complexity table pairs with an O(N) plan. Raw recursion does not grow linearly in N; each call branches into two more, so the work roughly doubles with every extra stair. That is fine to watch happen on a small staircase, which is exactly what this lesson does. It rules the plain recursive function out at any bound worth calling a bound.
+
+## The cost of forgetting
+
+<Code file="examples/count_stairs_naive.py" showOutput caption="Counting paths to the top, recomputing every subproblem" />
+
+`count_ways(0, 5)` needs `count_ways(1, 5)` and `count_ways(2, 5)`, and `count_ways(1, 5)` needs a `count_ways(2, 5)` of its own. Both are the same call, but the function has no memory of the first one, so it does the work twice. Step through the recursion tree below to see this directly on a smaller staircase, small enough that the whole tree fits on the screen.
+
+<Figure caption="The unmemoized recursion tree for counting staircase paths, with a repeated call marked">
+  <StepThrough frames="visuals/stairs-tree.frames.json" preset="two" />
+</Figure>
+
+Notice a stair number that gets called from two different places in the tree. Neither call knows about the other, so each one re-explores everything below it from scratch. On a 5-stair staircase this costs only a handful of extra calls. The doubling compounds fast: a 30-stair staircase only ever asks about 32 distinct stair numbers, yet raw recursion makes over 4.3 million calls to work them out.
+
+## Memoization: remembering subproblem answers
+
+Keep a cache, check it before doing any work, and store each result the first time it is computed.
+
+<Code file="examples/count_stairs_memo.py" showOutput caption="Counting paths to the top with memoization" />
+
+<Figure caption="The memo array filling in as the recursion returns, and being reused on a repeat call">
+  <StepThrough frames="visuals/stairs-memo.frames.json" preset="five" />
+</Figure>
+
+Follow a single cell. `memo[2]` is empty the first time `ways(2)` is needed, from inside `ways(1)`'s own recursion, so it gets computed and stored there. The next time anything asks for `ways(2)`, the caption says so directly: it is a lookup, not a recursive call. The cache changes nothing about what a call returns, only how many times it does the work to get there. So the memoized function returns the exact same answer as the naive one on every input. Every stair from 0 up to 4 is solved exactly once, no matter how many different calls end up needing it.
+
+Check the cache before doing any recursive work, not after, or the first call still pays the full cost and only a second, separate call benefits. Keep the cache outside the function, too. Defined inside, it gets rebuilt empty on every call, throwing away everything memoization exists to save.
+
+## From memoized recursion to dynamic programming
+
+Memoization solves the problem top-down: start at the original question and work outward to smaller pieces, caching along the way. Flip that around and it becomes <Term id="dynamic-programming">dynamic programming</Term>: start from the subproblems already known, in a fixed order, and build outward toward the one you want.
+
+<Code file="examples/count_stairs_table.py" showOutput caption="The same count, built bottom-up into a table" />
+
+<Figure caption="The ways table filling in from the top of the staircase down to the bottom">
+  <StepThrough frames="visuals/stairs-table.frames.json" preset="five" />
+</Figure>
+
+`ways[i]` holds the number of ways to finish from stair `i`. The two cells at and past the top are the base cases, filled in directly as 1 before the loop starts. Every earlier cell reads the two cells one and two steps ahead of it, both already filled by the time they are needed, because the loop counts down. This is the exact same arithmetic as the memoized version, just computed in a fixed order instead of on demand.
+
+Watch the code itself run through one of these cells:
+
+<Figure caption="The bottom-up table build traced line by line on a small staircase">
+  <CodeTrace trace="examples/count_stairs_table.trace.json" />
+</Figure>
+
+A recursive call's depth in this problem is the distance from its stair to the target, so depth grows with the size of the staircase itself. That is exactly why this lesson only shows the recursive form on a small staircase. The bottom-up table is the version to reach for once the idea is clear. Its loop needs no call stack at all, so memory use does not grow with the staircase. It cannot hit a recursion limit no matter how far the top is.
+
+## Keeping it fast on PyPy
+
+The memoized version pays for two things the table avoids: a function call for every subproblem, and a dictionary lookup to check whether that subproblem is cached. PyPy optimizes a tight loop over a flat list aggressively, but a chain of function calls carries real overhead per call, on top of the work each call does. The bottom-up table replaces every one of those calls with a single list index, `ways[stair + 1]`, inside one loop. That is why the loop version is both simpler and the faster of the two once N grows past a small staircase. The subproblems here are small consecutive integers, so a plain list indexed by the subproblem number also beats a `dict` cache. List indexing skips the hashing a dictionary lookup does on every access.
+
+## Why this matters
+
+Memoization trades space for time. K distinct subproblems need O(K) memory for the cache. In exchange, the time drops from however many times the naive recursion revisits the same work down to O(K) total calls, since each subproblem is now solved exactly once. For the 30-stair staircase, that is the difference between over 4.3 million calls and about 30 memoized subproblems.
+
+Get the base case exactly right before adding a cache on top of it. A base case written as `stair > 5` instead of `stair >= 5` changes which stair counts as already finished, and the wrong count can look plausible enough to pass a quick glance. Test the base case on a tiny version of the problem by hand first, the way the 2-step and 1-step presets above do.
+
+Whenever a correct recursive solution is too slow, check whether it solves the same subproblem more than once. If it does, memoization gets it running in polynomial time with the smallest change to the code. The bottom-up table is worth reaching for next, once the recursive shape is clear. It needs no cache, no dictionary lookups, and no risk of a recursion limit, at any staircase size.

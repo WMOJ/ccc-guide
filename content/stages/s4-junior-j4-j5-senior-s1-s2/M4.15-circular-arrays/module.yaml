@@ -1,16 +1,10 @@
 id: M4.15
-title: Circular arrays
 status: accepted
 objectives:
   - Understand how circular arrays wrap around at the end back to the start.
   - Use modulo arithmetic to compute circular indices.
   - Implement a circular buffer or sliding window that wraps.
   - Apply circular thinking to solve rotation and cyclic problems.
-prereqs:
-  - M1.8
-  - M1.2
-lessons:
-  - circular-arrays-and-wraparound
 practice:
   - id: ccc20j4
     note: Check whether one string is a circular shift of another.

@@ -16,29 +16,28 @@ nav:
   closeMenu: Close menu
   courseMap: Course map
   stage: Stage {n}
+  breadcrumb: Breadcrumb
 search:
   trigger: Search
   open: Open search
-  placeholder: Search lessons, terms and problems
+  placeholder: Search modules, terms and problems
   label: Search the course
   close: Close search
-  hintEmpty: Type a word to search lessons, glossary terms and problems.
+  hintEmpty: Type a word to search modules, glossary terms and problems.
   loading: Loading the search index
   noResults: No matches for “{q}”. Try a shorter word or check the spelling.
   loadFailed: Search could not load.
   retry: Try again
-  groupLessons: Lessons
+  groupModules: Modules
   groupTerms: Glossary
   groupProblems: Problems
   pageTitle: Search
-lesson:
-  breadcrumb: Breadcrumb
+module:
+  stage: Stage
   module: Module
-  lesson: Lesson
-  lessonOf: "{i} of {n}"
   readingTime: Reading time
   minutes: "{n} min"
-  objectives: In this lesson
+  objectives: In this module
   onThisPage: On this page
   previous: Previous
   next: Next
@@ -48,15 +47,6 @@ lesson:
   markedOn: Marked on {date}
   undo: Undo
   readState: Read
-  unreadState: Not read yet
-module:
-  stage: Stage
-  lessons: Lessons
-  lessonCount: "{n} lessons"
-  lessonCountOne: "{n} lesson"
-  before: Before this module
-  lessonsHeading: Lessons
-  objectives: In this module
 status:
   draft: Draft
   comingSoon: Coming soon
@@ -93,7 +83,7 @@ home:
   lede:
     - A free course that starts at your very first line of code and goes all the way to the
       algorithms behind CCC Senior problems, in Python 3.8.
-    - Read a lesson, watch the code run step by step, then practise on real CCC problems on WMOJ and
+    - Read a module, watch the code run step by step, then practise on real CCC problems on WMOJ and
       DMOJ.
   continueLabel: Continue where you left off
   startLabel: Start with Stage {n}
@@ -103,18 +93,17 @@ home:
   howHeading: How this course works
   how:
     - term: Read
-      text: Each lesson explains one idea at a time, with example programs you can copy into your own
-        editor.
+      text: Each module explains one idea, with example programs you can copy into your own editor.
     - term: Watch it run
       text: Step-throughs show programs and algorithms running one step at a time. You control the pace.
     - term: Practise on the judges
       text: Modules end with a short list of CCC problems. You solve them on WMOJ or DMOJ, which check
         your answers.
     - term: Keep your place
-      text: Mark a lesson as read when you finish it. The marks are saved in this browser only.
+      text: Mark a module as read when you finish it. The marks are saved in this browser only.
 startPage:
   title: Start here
-  lede: What this course covers, how to read a lesson, and where you practise.
+  lede: What this course covers, how to read a module, and where you practise.
   sections:
     - heading: What the CCC is
       paragraphs:
@@ -123,13 +112,13 @@ startPage:
           in each.
         - This course teaches the Python and the problem-solving ideas those problems use. It
           starts at your first line of code, so you do not need to know any programming yet.
-    - heading: How to read a lesson
+    - heading: How to read a module
       paragraphs:
-        - Read the lessons in order. Each one explains one idea and shows it working on a small
+        - Read the modules in order. Each one explains one idea and shows it working on a small
           program.
-        - Many lessons include a step-through. It runs a program or an algorithm one step at a time,
+        - Many modules include a step-through. It runs a program or an algorithm one step at a time,
           and you choose when to take the next step.
-        - When you finish a lesson, mark it as read. The mark is saved in this browser, and the home
+        - When you finish a module, mark it as read. The mark is saved in this browser, and the home
           page uses it to send you back to where you stopped.
     - heading: How practice works
       paragraphs:
@@ -171,7 +160,7 @@ problems:
   notYet: Not in a module yet
 glossary:
   title: Glossary
-  intro: Every term the course defines, with the lesson that introduces it.
+  intro: Every term the course defines, with the module that introduces it.
   introducedIn: Introduced in
   letters: Jump to letter
 notFound:

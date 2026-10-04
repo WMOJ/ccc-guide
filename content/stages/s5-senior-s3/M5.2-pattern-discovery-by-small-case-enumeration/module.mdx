@@ -1,0 +1,81 @@
+Given N, in how many ways can N be written as a sum of distinct powers of 2? Nothing in that sentence suggests a formula. Hold the question in mind anyway. The way in is not to derive an answer from the statement. Compute a slow, obviously correct answer for many small values of N, read the results as a table, and turn whatever repeats into a fast rule. That is <Term id="small-case-enumeration">small-case enumeration</Term>, and senior contests lean on it whenever a problem has no formula waiting to be spotted on sight.
+
+## Write a brute force first
+
+Do not think about efficiency yet. A brute force only has to be correct on small inputs, checking every possibility with nothing skipped.
+
+For the powers-of-2 question, list every power of 2 at or below N, then check every subset of that list for one that sums to N.
+
+<Code file="examples/subset_powers.py" showOutput caption="Check every subset of the powers of 2 at or below N" />
+
+Step through the check below for N = 5, where the powers are 1, 2, and 4. Try the other two presets: N = 1, where only two subsets exist at all, and N = 11, where a fourth power doubles the subset count.
+
+<Figure caption="Every subset of the powers of 2 up to N is checked in turn; exactly one of them ever sums to N">
+  <StepThrough frames="visuals/subset_powers.frames.json" preset="five" />
+</Figure>
+
+This brute force does not scale. With k powers below N, there are 2^k subsets to check, and k grows with the number of bits in N: about 30 for N near 10^9, about 60 for N near 10^18. PyPy checks on the order of 10^7 to 10^8 simple operations a second (the same bound M2.5's complete search runs into), so 2^30, already over 10^9, is too slow, and 2^60 is not close.
+
+## Enumerate and tabulate
+
+Every subset check above landed on exactly one match, for N = 1, N = 5, and N = 11 alike. That already is the pattern: whatever N is, there is exactly one way to write it as a sum of distinct powers of 2. Enumeration did more than suggest a formula here. It exposed that this "hard" counting question is really asking for something already known: every number has exactly one binary representation, so it has exactly one such sum. A pattern this immediate is rare; most take a less obvious shape.
+
+## Spot the pattern
+
+A discovered pattern usually takes one of a few shapes: a closed formula, a recurrence such as Fibonacci's `F(N) = F(N - 1) + F(N - 2)`, or a rule tied to a property of N. Write the hypothesis down precisely before trusting it, whichever shape it takes. "It looks roughly linear" is an observation, not a hypothesis.
+
+## Verify on more cases
+
+Test the hypothesis on more inputs than the ones that suggested it, and include edge cases in that test, not as an afterthought. A hypothesis that fails on even one case is wrong, not the input: look for what sets the failing case apart, and revise. Generate the extra cases by hand, or by letting the slow brute force run a little further. It only needs to reach past the smallest examples to catch a rule that was true by coincidence for tiny N.
+
+## A worked example
+
+Here the pattern is less obvious on sight: given N, find the single digit reached by repeatedly replacing N with the sum of its digits, until one digit is left.
+
+<Code file="examples/digital_root.py" showOutput caption="Brute force: repeatedly sum the digits down to one" />
+
+For N = 9875, one round gives 9 + 8 + 7 + 5 = 29, then 2 + 9 = 11, then 1 + 1 = 2. Watch the rounds happen below on a shorter number, 489, then on 7, which is already one digit and skips the outer loop entirely.
+
+<Figure caption="Repeatedly summing digits until one is left: an inner loop peels off each digit, and an outer loop repeats until the total is under 10">
+  <CodeTrace trace="examples/digital_root_trace.trace.json" preset="main" />
+</Figure>
+
+## Enumerate and tabulate, again
+
+Tabulating the digital root over a range of N makes a second pattern visible: every block of 9 consecutive values repeats the one before it.
+
+<Code file="examples/root_cycle.py" showOutput caption="Six digital roots in a row, straight from the brute force" />
+
+For N = 7 through 12, the roots are 7, 8, 9, 1, 2, 3: the count climbs to 9, then resets to 1. Step through two such blocks below, nine numbers apart, and watch each position land on the same value as its partner nine higher. Try starting at 19 and at 91 too.
+
+<Figure caption="Two blocks of six consecutive digital roots, nine numbers apart: every position matches its partner">
+  <StepThrough frames="visuals/root_table.frames.json" preset="from-1" />
+</Figure>
+
+## Why this pattern holds
+
+A tabulated pattern is only a hypothesis until something explains it. Here, the explanation is a fact about 10 itself: since 10 leaves remainder 1 when divided by 9, so does 100, 1000, and every power of 10. A number's value modulo 9 is therefore always equal to the sum of its digits modulo 9, since each digit's place value contributes the same remainder as the digit alone. Summing digits repeatedly never changes N modulo 9, only its size. So the process must land on the one digit from 1 to 9 that shares N's remainder, never 0, since a positive N's digit sum is always positive. That digit is exactly `1 + (N - 1) % 9`, matching the brute force on every N without a single loop.
+
+## Implement and verify the pattern
+
+Once a hypothesis has an explanation, code it directly instead of running the brute force on the real test cases.
+
+<Code file="examples/formula_check.py" showOutput caption="Compare the formula against the brute force on every N up to a limit" />
+
+<Figure caption="The formula and the brute force are compared side by side for every small N; every position matches">
+  <Diagram frames="visuals/formula_check.frames.json" preset="six" step={0} />
+</Figure>
+
+Before trusting a fast implementation, run it against the brute force on the same small inputs that led to the hypothesis, and a few beyond them. If the two disagree anywhere, the hypothesis missed a case, and the fix is more brute-force cases, not a rewrite of a formula that has not been re-checked.
+
+A closed form derived this way, rather than read off a table, is what M4.5 already covers for the sum of the first N integers. Pairing terms proves that formula instead of merely tabulating it. The two techniques are companions: tabulate to find the shape of a pattern, and derive, when possible, to trust why it holds.
+
+## Getting pattern discovery right
+
+The most common failure is trusting a pattern before it is stress-tested. A handful of small cases can look linear and turn out to be something else once N grows past what was checked by hand. Test at least a dozen cases, including 0, 1, and a few large values. A close second is coding a pattern straight from memory without checking it against the brute-force output one more time. Only the version verified against real data belongs in a submission. Not every pattern is a single tidy formula, either. Some are piecewise, with a different rule for even and odd N; some involve a modulus, the way the digital root does; some are a known sequence in disguise. If the first formula tried does not fit every case, look for a rule tied to a property of N instead of forcing a near-fit.
+
+## Making it fast on PyPy
+
+Every example above reads its whole input at once with `sys.stdin.read().split()`. The brute force itself, repeatedly summing digits, is already cheap for a single N. Its advantage shows up once a problem asks the same question for many values of N. The formula answers each one in a fixed number of operations, `1 + (N - 1) % 9`, instead of a variable number of summing rounds. Collecting every answer into a list and writing it once, rather than calling `print` inside a loop, keeps that advantage from being spent on output instead.
+
+Reach for small-case enumeration whenever a problem's answer has no obvious formula or algorithm on first read. A slow, correct brute force on small N, tabulated and explained, is often the fastest way to find one.

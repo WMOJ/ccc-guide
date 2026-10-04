@@ -1,0 +1,69 @@
+A build system has five tasks, and some tasks cannot start until others finish. If task 2 needs 1 and task 1 needs 3, but task 3 also needs 2, the build can never start. Two questions follow. Is there a circular dependency anywhere, and if not, in what order can the tasks run?
+
+Both come from one depth-first search, as long as you record when it enters and leaves each node. Checking for a cycle by starting a separate search from every node costs about $n(n + m)$ steps. With $n = m = 2 \cdot 10^5$ that is $8 \cdot 10^{10}$. A single search costs $n + m$, about $4 \cdot 10^5$, and its entry and exit times answer both questions.
+
+## Discovery and finish times
+
+Keep a clock that starts at 0 and ticks each time the search enters a node and each time it leaves one. A node's discovery time is the clock when it is entered. Its finish time is the clock when every edge out of it has been tried and the search leaves it. Each node then has an interval from discovery to finish.
+
+The program below is the iterative DFS from M5.7: one `[node, idx]` frame per node on a list used as a stack, where `idx` is the next edge to try. Each directed edge is stored once. `disc[v]` is -1 until `v` is entered, and `fin[v]` is -1 until `v` is left. A node with a discovery time and no finish time is still on the stack.
+
+<Code file="examples/dfs_times.py" showOutput caption="Discovery and finish times with an explicit stack" />
+
+The outer loop over `root` starts a new tree at every node that no earlier tree reached. A search that starts from one node need not reach all of them, so the result is a DFS forest, and `trees` counts its trees. Here node 0 reaches everything, so there is one. The times run from 0 to 9, two ticks for each of the 5 nodes, and each node's interval sits inside its parent's.
+
+## Four kinds of edge
+
+The search follows edges, and each edge, the first time it is tried, leads to a node in one of four situations. A <Term id="tree-edge">tree edge</Term> leads to a node with no discovery time, so the search enters it. A <Term id="back-edge">back edge</Term> leads to a node that is discovered but not finished: it is on the stack, an ancestor of the current node. A <Term id="forward-edge">forward edge</Term> leads to a finished node that was discovered after the current one, a descendant reached by another route. A <Term id="cross-edge">cross edge</Term> leads to a finished node that was discovered before the current one, in a branch that closed earlier.
+
+Step through the search below and watch each edge get its kind. Try "A cycle", where the only non-tree edge is a back edge, and "Two trees", where the second tree ends with a cross edge into the first.
+
+<Figure caption="A depth-first search on a directed graph: nodes are entered and left, and every edge gets a kind when it is first tried">
+  <StepThrough frames="visuals/dfs-edges.frames.json" preset="four-kinds" />
+</Figure>
+
+The search already checks whether `nb` has a discovery time. Classifying the edge adds only two more tests on `disc` and `fin`.
+
+<Code file="examples/edge_kinds.py" showOutput caption="Classify each edge when the search first tries it" />
+
+The tests are easier to see without the search around them. The short program below takes four checks, each giving the times of an edge's two ends at the moment the search tries it, with -1 for "no time yet". They are the four edges of the step-through that are not all tree edges, one of each kind. Step through it, then try the second preset.
+
+<Figure caption="The tests in edge_kinds.py on their own: no discovery time, discovered but not finished, finished and later, finished and earlier">
+  <CodeTrace trace="examples/edge_test.trace.json" preset="four" />
+</Figure>
+
+The same four tests sit in `edge_kinds.py`, in the same order. The order matters, because a finished node is compared by discovery time only after the first two tests rule out the other cases. The near end's finish time is never needed, since that node is still on the stack.
+
+## Why the times give the kinds
+
+The stack makes every pair of intervals either nested or disjoint, never partly overlapping. If node `v` is entered while `u` is still on the stack, `v` leaves first, so `v`'s interval is inside `u`'s. Otherwise `v` is entered after `u` has left, and the intervals do not touch. So an edge from `u` to `v` has a kind you can read off the two intervals.
+
+<Figure caption="Each node shows discovery and finish times. Comparing the intervals at the two ends of an edge gives its kind.">
+  <Diagram frames="visuals/dfs-tree.frames.json" preset="four-kinds" step={0} />
+</Figure>
+
+In the table, tree and forward edges end inside the interval they start in. A back edge ends at an interval that contains the start. A cross edge ends at an interval that closed before the start opened. The same reading also tests ancestry: `a` is an ancestor of `b` exactly when `b`'s interval lies inside `a`'s.
+
+## Cycles
+
+A directed graph has a cycle exactly when its search finds a back edge. A back edge from `u` to an ancestor `v` closes a loop with the tree path from `v` down to `u`. In the other direction, take a cycle and its first-discovered node `c`. Every other node on the cycle is reached from `c` before `c` finishes, so the edge that comes back into `c` meets a node still on the stack, which is a back edge.
+
+## Topological order
+
+If the graph has no cycle, a valid task order is the nodes listed by decreasing finish time. Take any edge `u → v`. It cannot be a back edge, so it is a tree, forward or cross edge. In each case `v` finishes before `u`: inside `u`'s interval for tree and forward edges, and entirely before it for a cross edge. So `u` comes first when the finish order is reversed.
+
+The program below records nodes as they finish, flags a back edge, and reverses the list. Step through it on a six-task graph. The third preset shows a cycle stopping the search.
+
+<Code file="examples/topo_order.py" showOutput caption="Finish order, reversed, is a topological order" />
+
+<Figure caption="Each node joins the row when it finishes; reversed, the row is an order in which every task precedes the tasks that need it">
+  <StepThrough frames="visuals/topo-order.frames.json" preset="dag" />
+</Figure>
+
+## Undirected graphs and PyPy
+
+An undirected graph stores each edge in both directions. Only tree and back edges can appear, and the edge back to the parent you just came from is not a cycle, so skip it once. The number of trees is then the number of connected components.
+
+Keep `disc` and `fin` as flat lists and the stack as a list of two-item lists, and build the output lines first and print them once. Nothing recurses, so a chain of $2 \cdot 10^5$ nodes cannot hit the recursion limit, and each edge is handled once.
+
+Reach for these times when a problem asks for a cycle in a directed graph, or an order that respects dependencies. They also tell you whether one node sits under another in a search tree.

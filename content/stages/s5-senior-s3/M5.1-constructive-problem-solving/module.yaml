@@ -1,17 +1,10 @@
 id: M5.1
-title: Constructive problem solving
 status: accepted
 objectives:
   - Build any valid witness instead of testing all possibilities.
   - Start from simple patterns and handle extreme cases.
   - Use symmetry and invariants to constrain the search.
   - Verify output before submitting a solution.
-prereqs:
-  - M2.5
-  - M2.6
-  - M4.5
-lessons:
-  - constructive-building
 practice:
   - id: ccc23s3
     note: Fill a grid with letters so an exact number of its rows and columns read the same forwards and backwards.

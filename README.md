@@ -7,9 +7,6 @@ for the full product and design spec, and `AGENTS.md` for the rules every change
 
 **Live site:** _(URL to be filled in)_
 
-⚠️ About 80 lessons were written under a rushed process late in the build and have not had a full
-review. See `AGENTS.md` and the `rushed-content` skill before any content review or QA pass.
-
 ## Prerequisites
 
 - **Node**, version pinned in `package.json`'s `engines` field.
@@ -35,12 +32,12 @@ checks and how to debug a failure.
 
 ```
 content/
-  course.yaml               stages -> modules, in order, each with a status
-  stages/<stage>/<module>/   module.yaml, lessons/*.mdx, example .py/.out/.err, visuals/
+  course.yaml               stages -> modules, in order, each with its title and status
+  stages/<stage>/<module>/   module.yaml, module.mdx, example .py/.out/.err, visuals/
   registry/ccc-problems.yaml  the 119 CCC 2014-2026 problems, WMOJ/DMOJ links
   glossary.yaml, concepts.yaml  terms and Python features, each tied to an introducing module
   ui/strings.yaml            all learner-facing UI copy
-  style/STYLE-GUIDE.md, house-skeleton.py   voice and code conventions for lessons
+  style/STYLE-GUIDE.md, house-skeleton.py   voice and code conventions for modules
 ```
 
 Only `accepted` modules render in production; `gated`/`reviewed` show with a Draft badge in

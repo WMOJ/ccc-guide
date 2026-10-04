@@ -1,0 +1,66 @@
+Testing tells you a program is wrong. Debugging is the separate skill of finding out why, and where. A failing test on its own only narrows things down to one input. The rest of the work is locating the exact line whose behaviour does not match what you planned, then fixing that line without breaking anything else.
+
+## Reproduce the smallest failing input
+
+The first step is not reading the code line by line, guessing where the mistake might be. It is finding the smallest input that still triggers the failure. A test with a thousand numbers that fails is much harder to reason about than a test with three numbers that fails the same way. Cut the failing input down, a piece at a time, checking after each cut that the wrong answer still comes out. Once no smaller input still fails, that is the case to study.
+
+Work the smallest failing case by hand, the same way you would work a sample. Compare what the correct answer should be, step by step, against what your code actually does at each step. The point where those two stop agreeing is where the bug lives.
+
+## Bisecting with printed state and assert
+
+Once you have a small failing case, add prints between the parts of your code most likely to be correct and the parts most likely to be wrong. Print the values of the variables you are tracking, at each point. Compare each printed value against what you worked out by hand. This narrows the search the same way a smaller input did: each print either confirms that section of code is fine, or shows exactly where a value goes wrong.
+
+This whole process is called bisecting. Check one point roughly in the middle of the suspect code, decide from that check which half still holds the bug, then repeat inside that smaller half. Each round of checking cuts the amount of code left to search by about half, the same way cutting the input down did.
+
+An `assert` statement checks a condition, and stops the program immediately with an error if that condition is false. Placing `assert total >= 0` after a loop that should only ever add non-negative numbers turns a silent wrong answer into an immediate, precise crash. It points straight at the line where the assumption broke. A print shows you a value, but you still have to notice it looks wrong. An assert notices for you, the moment its condition stops holding.
+
+## Common bug families
+
+Some mistakes come up again and again, in a similar shape each time. Knowing the shape of each one makes it much faster to recognize when you have made it yourself.
+
+An off-by-one bug uses a range or an index that is one step short, or one step too far. Consider a loop meant to add up five values, indexed `0` through `4`:
+
+<Code file="examples/off_by_one_sum.py" showOutput caption="Adding up five values, with a range that stops one short" />
+
+The correct total, `3 + 1 + 4 + 1 + 5`, is `14`, but the program prints `9`. `range(n - 1)` only produces `0, 1, 2, 3`, skipping index `4`, so the last value, `5`, never gets added. The fix is `range(n)`, not `range(n - 1)`. A closely related mistake is mixing up a 0-indexed position with a 1-indexed one a problem statement uses. The code then reads or prints one position off from the one intended.
+
+<Term id="aliasing">Aliasing</Term> is two names that refer to the exact same list, rather than two separate lists holding the same values.
+
+<Figure caption="Two names, one list: changing scores changes what backup shows">
+  <CodeTrace trace="examples/backup_scores.trace.json" />
+</Figure>
+
+`backup = scores` does not copy the list. It gives the same list a second name. Changing an item through `scores` changes the very same list `backup` names, so `backup` shows the change too, even on a line that never mentions `backup` at all. A real copy needs `list(scores)` or `scores[:]`, either of which builds a second, independent list.
+
+Mutating a list while a `for` loop iterates over it skips elements, because a `for` loop tracks its position by index, not by value:
+
+<Code file="examples/mutate_while_iterating.py" showOutput caption="Removing even values while looping over the same list" />
+
+`4` is even, so it should be removed along with `2`, leaving `[1, 5]`. Instead the result is `[1, 4, 5]`: `4` survives. Removing `2` shifts `4` and `5` one position earlier, but the loop moves on to the next index anyway, which now holds `5` instead of `4`. `4` is skipped, and never gets checked. Building a new list instead of removing from the one being iterated over avoids this.
+
+Integer division and float division give different answers. Using the wrong one is easy to miss, because both run without error. Written as `total / count`, division always gives a float, even when the true answer is a whole number. Written as `total // count`, it always gives an integer, rounded down, even when the true answer had a fractional part that mattered. Check which one the problem asks for, rather than assuming.
+
+A forgotten `.strip()` reads back as a value that looks right when printed. It still compares as unequal to what you expect, because of a stray character the print does not make visible. The module on reading input already covers why an unstripped line can carry an unexpected space or a leftover character. The same mismatch shows up here as a bug: a comparison that should be `True` comes out `False`, for a reason nothing in the visible output explains.
+
+Wrong variable reuse means reusing one variable for two different jobs without resetting it in between, so the second job silently starts from the first job's leftover value:
+
+<Code file="examples/reused_total.py" showOutput caption="Summing two groups, sharing one accumulator between them" />
+
+The sum of `second_group` alone is `1 + 3 + 5`, which is `9`, but the second line printed is `21`. The second `print(total)` is meant to show the sum of `second_group` alone, but `total` was never reset to `0` after the first loop, so it prints the sum of both groups combined, `12 + 9`. Giving each job its own variable, or resetting the shared one, fixes it.
+
+## Removing debug output before you submit
+
+Printing to `sys.stderr` instead of the usual `print` keeps debug output separate from your program's real output, on your own machine, while you are working:
+
+```python
+import sys
+
+total = 0
+print("total so far:", total, file=sys.stderr)
+```
+
+Even so, remove every debug print, on either stream, before you submit. The only way to be sure your submission's output matches the expected output exactly is to submit a program that prints nothing except that expected output.
+
+## Recap
+
+Debugging starts with reproducing a bug on the smallest input that still shows it. Work that small case by hand to see where your program's behaviour and your own reasoning stop agreeing. Printed state and `assert` statements narrow the search further, checking each piece of the program in turn. A short list of bug families keeps recurring: off-by-one and indexing mistakes, aliasing, mutating while iterating, integer versus float division, a forgotten `.strip()`, and wrong variable reuse. Recognizing the shape of one of these speeds up finding it a great deal. Before submitting, remove every debug print, since none of them belong in the output the grader compares.

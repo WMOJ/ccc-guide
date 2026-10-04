@@ -1,0 +1,73 @@
+A row of tiles has heights `4 7 1 3 5 2`. You want to know how many stretches of neighboring tiles have an average height of exactly 3. The tile `3` alone counts. So do the three tiles `1 3 5`, because 1 + 3 + 5 = 9 and 9 / 3 = 3.
+
+The question gets hard when the row has 200,000 tiles. A stretch is fixed by its two ends, and the heights can be large, so the sums cannot index an array. This lesson combines <Term id="prefix-sum">prefix sums</Term> from M4.3 with the dictionary from M4.1. The dictionary is keyed by a prefix sum and remembers what happened at earlier positions with that same sum.
+
+## Checking every stretch
+
+The direct way tries every pair of ends and keeps a running total for each start. To avoid fractions, it compares the total with `target * length`.
+
+<Code file="examples/brute_force.py" showOutput caption="Trying every stretch: a start, then every end from there" />
+
+A row of n tiles has n * (n + 1) / 2 stretches. For n = 200,000 that is about 2 * 10^10, far more than the 10^8 or so simple operations a program can afford (M2.9). The loop repeats work, because neighboring stretches share most of their tiles.
+
+## Turning an average into a sum of zero
+
+Subtract the target from every height. A stretch of length `len` has original sum `s`. After the subtraction its sum is `s - target * len`, which is 0 exactly when `s / len` equals the target. So "average equals the target" becomes "sum equals zero", and every number stays an integer, so nothing is rounded.
+
+Now use prefix sums on the shifted values. The sum of the stretch from element `i` to element `j - 1` is `prefix[j] - prefix[i]`, and it is zero exactly when the two prefix values are equal. Counting the stretches means counting pairs of equal prefix values.
+
+Step through the figure below. It shifts the row, builds the prefix array, and then marks each group of equal values. The presets are the row above, a row where every tile equals the target, and a row with no match.
+
+<Figure caption="Shifting by the target, building the prefix sums, then pairing up equal prefix values">
+  <StepThrough frames="visuals/pairs.frames.json" preset="main" />
+</Figure>
+
+In the first preset, `prefix[3]` and `prefix[4]` are both 3, which is the single tile `3`. The values at positions 2 and 5 are both 5, which is the stretch `1 3 5`. When every tile equals the target, all five prefixes are 0, and any two of them bound a stretch: 10 pairs for 4 tiles.
+
+## Counting in one pass
+
+Finding equal pairs does not need a second loop. Keep a dictionary `seen` from each prefix value to how many times it has appeared so far. At each element, look up the new prefix value. Each earlier prefix with the same value ends one matching stretch at this element, so its count is added to the answer. Then the count for this value goes up by one.
+
+The dictionary starts as `{0: 1}`. That entry stands for the empty prefix before any element. Without it, a stretch that begins at the first tile has nothing to pair with, and every such stretch is missed.
+
+<Code file="examples/average_subarrays.py" showOutput caption="One pass with a dictionary of prefix counts" />
+
+The figure below runs this loop on the first preset, with the prefix array above and the dictionary `seen` beside it. A match lights up the dictionary entry that was found.
+
+<Figure caption="The prefix array and the dictionary of counts, updated one element at a time">
+  <StepThrough frames="visuals/counts.frames.json" preset="main" />
+</Figure>
+
+In the figure, the dictionary gains keys 0, 1, 5 and 3 without a match. At prefix 3 the lookup finds a count of 1, which gives the first stretch. At prefix 5 it finds 1 again, which gives the second, and the answer is 2. The all-equal preset shows the count for key 0 growing by one each step, so the answer grows by 1, then 2, then 3, then 4, then 5: 15 stretches.
+
+To see the same loop as code, the trace below runs `average_subarrays.py` line by line on four tiles.
+
+<Figure caption="Tracing the counting loop: prefix, the lookup c, the answer and the dictionary seen">
+  <CodeTrace trace="examples/average_subarrays.trace.json" preset="main" />
+</Figure>
+
+## Why a dictionary and not an array
+
+With heights up to 10^9 and 200,000 tiles, a prefix value can reach about 2 * 10^14 in size, so an array indexed by sum is out of the question. The dictionary holds only the values that actually appear, at most n + 1 of them. Each element costs one lookup and one store, about 4 * 10^5 dictionary operations for 200,000 tiles, and on average each is constant time. On PyPy a dictionary with integer keys is compact, and the loop above has no other work to slow it down.
+
+The `seen.get(prefix, 0)` call returns 0 for a missing key, so the same lines handle a first visit and a tenth.
+
+## Keeping a best value per key
+
+A count is one thing to store under a prefix value. A DP value is another. Suppose you want the most non-overlapping stretches with average exactly 3. Let `dp[j]` be that number for the first `j` tiles. Either tile `j` ends no stretch, and `dp[j]` equals `dp[j - 1]`, or a stretch ends there. A stretch ending at `j` starts after some earlier position `i` with `prefix[i] == prefix[j]`, and then `dp[j]` is `dp[i] + 1`.
+
+Because `dp` never decreases as `j` grows, the latest earlier position with a given prefix value has the largest `dp`. The dictionary `best` therefore stores, for each prefix value, the `dp` value at its latest position, and the transition is one lookup.
+
+<Code file="examples/max_disjoint.py" showOutput caption="dp keyed by prefix sum: the most non-overlapping stretches with the target average" />
+
+Step through it below. The left table holds the prefix sums and the `dp` value of each position, and the right table is the dictionary. The second preset uses `1 2 3 4 5`, where the stretches `3`, `2 3 4` and the whole row all overlap, so the answer is 1.
+
+<Figure caption="dp[j] from the dictionary best: a hit offers best plus one, a miss copies the previous dp">
+  <StepThrough frames="visuals/best.frames.json" preset="main" />
+</Figure>
+
+In the first preset, prefix 0 comes back at `j = 2` and again at `j = 4`. The first hit gives `dp[2] = 1`, and the second finds `best[0] = 1` and gives 2. Both times the state is indexed by a prefix value that could be huge, which is why `best` is a dictionary.
+
+## When to reach for it
+
+Use this pattern when a question is about stretches that hit a target sum, or a target average after shifting, and the sums are too large for an array. Each position asks the dictionary about earlier positions with the same prefix value, then stores what later positions will want to know.

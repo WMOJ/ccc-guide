@@ -1,6 +1,6 @@
 // lib/content/types.ts — canonical view-model types for the presentational page components
 // (brief §7 seam: W1 owns this file; W2's components/layout/props.ts re-exports from here).
-// These are the shapes the content loader (lib/content/loader.ts) produces and every
+// These are the shapes the content loaders in lib/content/ produce and every
 // `app/**/page.tsx` passes straight through to its presentational component.
 import type { ReactNode } from "react";
 import type { Judge } from "../registry/judge-url";
@@ -10,23 +10,22 @@ export type ModuleStatus = "planned" | "drafted" | "gated" | "reviewed" | "accep
 
 export type { Judge };
 
-export interface LessonLink {
-  /** `<moduleId>/<slug>`, the read-state key. */
+export interface ModuleLink {
+  /** Map ID, e.g. `M4.3`, `C.3`; also the read-state key. */
+  id: string;
+  /** From course.yaml — the module's only title (page H1, course map, sidebar, search). */
+  title: string;
+  /** null when the module is not readable (planned/drafted, not visible in this build, or no
+   * module.mdx on disk). */
+  href: string | null;
+  status: ModuleStatus;
+}
+
+/** A readable module as a plain link (prev/next, the home page's continue block). */
+export interface ModuleNavLink {
   id: string;
   title: string;
   href: string;
-}
-
-export interface ModuleLink {
-  /** Map ID, e.g. `M4.3`, `C.3`. */
-  id: string;
-  title: string;
-  /** null when the module is not readable (planned/drafted, or not visible in this build). */
-  href: string | null;
-  status: ModuleStatus;
-  /** One line, optional (course map). */
-  description?: string;
-  lessons: LessonLink[];
 }
 
 export interface StageLink {
@@ -76,43 +75,28 @@ export interface TocItem {
 
 export interface CourseNav {
   stages: StageLink[];
-  /** Stage and module the page belongs to (sidebar expansion). */
+  /** Stage and module the page belongs to (sidebar expansion and current row). */
   currentStageId: string;
   currentModuleId: string;
-  /** Current lesson id, when on a lesson page. */
-  currentLessonId?: string;
-}
-
-export interface LessonPageProps {
-  lesson: {
-    id: string;
-    title: string;
-    /** 1-based position in the module. */
-    index: number;
-    count: number;
-    readingMinutes: number;
-    objectives: string[];
-    toc: TocItem[];
-    /** The compiled MDX body (W1's pipeline). */
-    body: ReactNode;
-  };
-  module: ModuleLink;
-  stage: StageLink;
-  /** Practice list, only on the module's last lesson. */
-  practice?: PracticeItemView[];
-  nav: {
-    prev: (LessonLink & { moduleTitle?: string }) | null;
-    /** Next lesson, or the next module's first lesson; null → course map. */
-    next: (LessonLink & { moduleTitle?: string }) | null;
-  };
-  courseNav: CourseNav;
 }
 
 export interface ModulePageProps {
-  module: ModuleLink & { objectives: string[] };
+  module: ModuleLink & {
+    objectives: string[];
+    readingMinutes: number;
+    toc: TocItem[];
+    /** The compiled module.mdx body. */
+    body: ReactNode;
+  };
   stage: StageLink;
-  prerequisites: ModuleLink[];
+  /** The module's practice list, rendered after the body (empty → no section). */
   practice: PracticeItemView[];
+  nav: {
+    /** Previous readable module in course order (crossing stages); null at the start. */
+    prev: ModuleNavLink | null;
+    /** Next readable module in course order; null → the closing block links the course map. */
+    next: ModuleNavLink | null;
+  };
   courseNav: CourseNav;
 }
 
@@ -122,10 +106,8 @@ export interface CourseMapPageProps {
 
 export interface HomePageProps {
   stages: StageLink[];
-  /** First readable lesson of the course (continue block fallback). */
-  firstLesson: LessonLink | null;
-  /** Every readable lesson in course order, so the continue block can find "next unread". */
-  lessonOrder: (LessonLink & { moduleId: string })[];
+  /** Every readable module in course order, so the continue block can find "next unread". */
+  moduleOrder: ModuleNavLink[];
 }
 
 export interface ProblemsPageProps {
@@ -138,7 +120,8 @@ export interface GlossaryTermView {
   term: string;
   /** Plain text or small rendered MDX. */
   definition: ReactNode;
-  introducedIn?: { lessonId: string; title: string; moduleId: string; href: string | null };
+  /** The module that introduces the term; href is null when it is not readable in this build. */
+  introducedIn?: { moduleId: string; title: string; href: string | null };
 }
 
 export interface GlossaryPageProps {

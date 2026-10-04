@@ -1,5 +1,5 @@
 // lib/content/mdx-components.tsx — the fixed MDX component map. Authors
-// never import: every name below is all that is available inside a lesson .mdx file. Anything
+// never import: every name below is all that is available inside a module.mdx file. Anything
 // else fails the build (unresolved MDX component references throw at render time, which SSG hits
 // during `next build` since every route is static) — and, before that, fails
 // content:check's static G-SCHEMA check, which reads the same key list
@@ -11,7 +11,6 @@ import {
   Callout,
   JudgeLink as JudgeLinkImpl,
   OutputPanel,
-  Practice as PracticeImpl,
   ProblemLink as ProblemLinkImpl,
   Term as TermImpl,
 } from "../../components/content";
@@ -23,13 +22,10 @@ import type { Judge } from "../registry/judge-url";
 import { fencedCodeBlock, resolveFileCodeBlock, resolveModulePath } from "./code-block-data";
 import { getGlossaryTerm } from "./glossary";
 import { getExternalLink, resolvePracticeItem } from "./registry";
-import type { PracticeItemView } from "./types";
 
 export interface MdxComponentsOptions {
-  /** Absolute path to the lesson's module directory (examples/, visuals/ live under it). */
+  /** Absolute path to the module directory (examples/, visuals/ live under it). */
   moduleDir: string;
-  /** Resolved practice list for this module, rendered by a bare `<Practice />`. */
-  practiceItems?: PracticeItemView[];
 }
 
 function childrenToText(children: ReactNode): string {
@@ -38,10 +34,11 @@ function childrenToText(children: ReactNode): string {
   return "";
 }
 
-/** Builds the fixed component map for one lesson's compile (brief §4). Each call is bound to
- * that lesson's module directory and resolved practice list via closures — safe under
- * concurrent compiles in the same process (no shared mutable state). */
-export function createMdxComponents({ moduleDir, practiceItems = [] }: MdxComponentsOptions) {
+/** Builds the fixed component map for one module's compile (brief §4). Each call is bound to
+ * that module's directory via closures — safe under concurrent compiles in the same process
+ * (no shared mutable state). The practice list is not here: the module page renders it after
+ * the body, so an author can never place or repeat it. */
+export function createMdxComponents({ moduleDir }: MdxComponentsOptions) {
   const viz = createVizComponents(moduleDir);
 
   function CodeTag(props: {
@@ -107,10 +104,6 @@ export function createMdxComponents({ moduleDir, practiceItems = [] }: MdxCompon
     return <ProblemLinkImpl problem={problem} />;
   }
 
-  function PracticeTag() {
-    return <PracticeImpl items={practiceItems} />;
-  }
-
   function JudgeLinkTag({
     judge,
     kind,
@@ -157,11 +150,10 @@ export function createMdxComponents({ moduleDir, practiceItems = [] }: MdxCompon
     Code: CodeTag,
     Output: OutputTag,
     ProblemLink: ProblemLinkTag,
-    Practice: PracticeTag,
     JudgeLink: JudgeLinkTag,
     // DraftBadge/ComingSoon deliberately NOT exposed to authors: they aren't in the MDX
     // component contract, and an author must never be able to place a Draft badge — that's
-    // derived from a module's status, not something a lesson decides.
+    // derived from a module's status, not something its prose decides.
     ...viz,
   };
 }

@@ -1,0 +1,76 @@
+A sensor network logs an alert as a `(day, sensor type)` pair, and days are numbered across a billion-day range. Only a few hundred distinct days ever show up in a year of logs, but the day numbers themselves run into the billions. An array with one slot per day cannot be built at that size. Coordinate compression is the fix: renumber the handful of days that actually appear, from 0 upward, and run the rest of the program on those small numbers instead of the originals.
+
+## When expansion is not possible
+
+A list with one slot per day, for a billion-day range, needs a billion slots. Even a bare Python list of pointers costs roughly 8 bytes per slot, so a billion of them is about 8 gigabytes before a single event is recorded. That is well past what a judge grants a program, typically a few hundred megabytes. Filling that list would also take on the order of a billion operations just to initialize, before the input is even read. Neither the memory nor the time is available, and none of it is needed: a season with a billion possible days might only mention a few hundred of them.
+
+## The compression process
+
+Collect every value that appears in the input, sort the unique ones, and give each its position in that sorted order as its new coordinate. Storing that mapping in a dictionary, built once, answers "what is this value's compressed index?" in O(1). Looking a value up with `list.index()` inside a loop instead costs O(n) per lookup, O(n^2) for the whole pass.
+
+<Code file="examples/compress_ranks.py" showOutput caption="Sorting the distinct values and mapping each one to its rank" />
+
+`unique_values` holds the distinct entries of `values`, sorted; `rank` maps each one to its position in that sorted list. Building `compressed` then means looking every original value up in `rank`, never comparing it against the sorted list directly.
+
+Step through the build below. Try duplicates, a run where every value is identical, and one where the values arrive out of sorted order.
+
+<Figure caption="Sorting distinct values, assigning each a rank, then compressing the full array by lookup">
+  <StepThrough frames="visuals/coordinate-compression.frames.json" preset="main" />
+</Figure>
+
+The algorithm only ever needs to know which entries are equal and how they compare to each other, and numbering by sorted order preserves both facts exactly. Keep the sorted list of unique values around afterward. The compressed index doubles as a position in that list, so an original value is one lookup away whenever a result needs to be reported in the input's own terms.
+
+## Querying compressed data without expanding it
+
+<Term id="run-length-encoding">Run-length encoding</Term>, from an earlier lesson, already compresses a long stretch into a few `(length, value)` runs. The same idea answers "what value sits at position p?" for a sequence built from huge runs, without ever writing out the full sequence. Build a cumulative-length array the same way M4.3's <Term id="prefix-sum">prefix sum</Term> array is built, one more entry than there are runs. Then walk it to find which run covers position p.
+
+<Code file="examples/query_position.py" showOutput caption="Finding the run that covers a position, from cumulative run lengths" />
+
+Step through the scan below on runs whose lengths run into the billions. Try the sequence's first position, its last, and one that lands exactly on a run boundary.
+
+<Figure caption="Walking a cumulative-length array to find which run covers a query position">
+  <StepThrough frames="visuals/segment-query.frames.json" preset="main" />
+</Figure>
+
+The scan never touches a position between the runs; it only compares the query against `cumulative`, an array no bigger than the number of runs.
+
+<Figure caption="Four huge, unevenly spaced day numbers on a number line, each labeled with the small rank it compresses to" alt="A number line from 0 to 1000 with four widely spaced points, at roughly 7, 42, 500 and 999. Each point is labeled with its original value, an arrow, and the rank it compresses to: 7 to 0, 42 to 1, 500 to 2, 999 to 3.">
+  <Diagram
+    viz="LineViz"
+    data={{ kind: "line", min: 0, max: 1000, tick: 200, points: [{ x: 7, label: "7→0", s: "d" }, { x: 42, label: "42→1", s: "d" }, { x: 500, label: "500→2", s: "d" }, { x: 999, label: "999→3", s: "d" }] }}
+  />
+</Figure>
+
+Whatever the gaps between the original values on the line above, ranks 0 through 3 sit right next to each other. Every array and every loop from here on works on that short row of ranks, not on the spread-out values above it.
+
+## A full worked example
+
+<Code file="examples/compress_events.py" showOutput caption="Counting distinct event types per day using coordinate compression" />
+
+`days` and `types` collect the raw readings; `uniq` and `rank` compress the days exactly as above; `seen` holds one set per compressed day, and `counts` is each set's size. Trace it on three days with repeats, then on three readings that all land on a single day.
+
+<Figure caption="Compressing a day range down to the days actually seen, then counting event types">
+  <CodeTrace trace="examples/compress_events.trace.json" preset="main" />
+</Figure>
+
+Day 100 has event types 1 and 3, so its count is 2. Days 150 and 200 each see only one distinct type, so both print 1. That matches the array-shrinking work traced above: `seen` only ever has as many entries as there are distinct days, never one per possible day.
+
+## Looking up a value that was never recorded
+
+A query can ask about a value the input never mentioned. "How many recorded days are on or before day 175?" is one such question, when 175 was never logged. `rank` has nothing for a value it never saw. `bisect.bisect_right` answers this instead. Given the sorted list of distinct values, it finds where a query value would sit among them, present or not. That position is exactly the count of values at or before it.
+
+<Code file="examples/bisect_lookup.py" showOutput caption="Counting recorded days on or before a query day that may not be one of them" />
+
+<Figure caption="bisect_right finding how many recorded days are on or before a query day">
+  <StepThrough frames="visuals/bisect-lookup.frames.json" preset="main" />
+</Figure>
+
+Reach for `rank`, a plain dictionary, when every value a query asks about is one already compressed. Reach for `bisect_right` when a query can name a value the input never included.
+
+## When you do not need it
+
+A 1,000-by-1,000 grid has a million cells, and a plain array of a million elements is a completely reasonable size on its own; there is no huge range to shrink. Compression also does nothing when a huge range is genuinely used in full. Handed every value from 1 to 1,000,000 with every one of them touched, there is no gap between "distinct values used" and "the full range" for compression to exploit. It earns its keep specifically when the possible range is enormous but the values that actually show up are few. A constraint like "coordinates up to 10^9, but at most 2,000 of them appear" is written that way on purpose, to signal exactly this.
+
+## Getting these details right
+
+Collect every value a later step will need, not just some of them. In an interval problem, that means both the start and the end of every interval; compressing only the starts leaves the ends unmapped. Sort before assigning ranks. Numbering values in the order they first appear, rather than in sorted order, throws away the one property compression exists to preserve. A smaller original value must get a smaller rank. Once the mapping is built, use it consistently. A compressed index and an original value are different things, and treating one as the other undoes the whole point of replacing it.

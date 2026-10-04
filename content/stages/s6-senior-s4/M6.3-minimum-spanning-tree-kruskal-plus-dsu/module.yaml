@@ -1,16 +1,10 @@
 id: M6.3
-title: Minimum spanning tree and Kruskal with DSU
 status: accepted
 objectives:
   - Recognize when a minimum spanning tree solves a connectivity or infrastructure problem.
   - Implement Kruskal's algorithm sorting edges by weight.
   - Use a disjoint-set union (DSU) data structure to check connectivity and union components.
   - Use path halving and union by size to keep the disjoint-set union fast.
-prereqs:
-  - M5.10
-  - M4.2
-lessons:
-  - kruskal-mst
 practice:
   - id: ccc17s4
     note: Keep a city's buildings connected at the lowest maintenance cost, with one pipe that can be upgraded.

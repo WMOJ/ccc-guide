@@ -1,0 +1,87 @@
+A weather station keeps a log of `n` daily temperatures. The log never changes, but people keep asking the same kind of question: what was the coldest day from day `l` to day `r`? With a dozen questions you would just scan the range each time. With 200,000 days and 200,000 questions, scanning costs up to 2·10^5 × 2·10^5 = 4·10^10 comparisons, far more than the 10^8 or so simple operations a solution can afford (M2.9).
+
+A segment tree from M7.1 answers each question in about 18 steps (log₂ of 200,000) and also handles changes to the log. When nothing changes, a <Term id="sparse-table">sparse table</Term> does better: it spends `n log n` steps once, then answers every question with two lookups. It is the doubling idea from M6.12 applied to ranges instead of jumps.
+
+## Blocks whose length is a power of two
+
+Write `sp[k][i]` for the minimum of the block of `2^k` elements starting at position `i`. Level 0 is the array itself: blocks of length 1. A block of length `2^k` is two blocks of length `2^(k-1)` placed side by side. In M6.12, `up[k][v]` was two jumps of half the size, one after the other. Here `sp[k][i]` is two blocks of half the length, one after the other:
+
+`sp[k][i] = min(sp[k-1][i], sp[k-1][i + 2^(k-1)])`
+
+A block must fit inside the array, so level `k` only has starts `i` from 0 to `n - 2^k`. The table is built level by level, and each level is one pass over the level before it.
+
+<Code file="examples/sparse_build.py" showOutput caption="Building the levels of a sparse table of minimums for eight values" />
+
+Step through the build below. Each new cell reads two cells of the column to its left, marked as compared. The table is turned on its side, with one row per position `i` and one column per level. A dash means no block of that length starts in that row. The presets use eight values, seven values and two values.
+
+<Figure caption="Filling sp[k][i] from the two blocks of half the length that make it up" alt="A table with one row per array position i and one column per level k. Column sp[0] starts as the array. Each cell of a later column is filled from two cells of the column to its left and holds their minimum. A dash marks a start where a block that long would run past the end.">
+  <StepThrough frames="visuals/build.frames.json" preset="main" />
+</Figure>
+
+The last level holds one entry, `sp[3][0] = 2`, the minimum of all eight values. The number of levels is `LOG = n.bit_length()`, because the largest `k` with `2^k` at most `n` is `n.bit_length() - 1`. The table has about `n * LOG` entries: for 2·10^5 values that is about 3.6·10^6 to fill.
+
+## Answer a query with two blocks
+
+A query range `[left, last]`, inclusive on both ends, has length `last - left + 1`. Pick the largest `k` with `2^k` at most that length. Two blocks of length `2^k` then cover the range: one starts at `left`, the other ends at `last`. Together they leave no gap, and they may overlap in the middle.
+
+To find `k` without a loop, use `length.bit_length() - 1`. A number's bit length is the number of binary digits it takes, and the largest power of two at most `length` has one fewer digit than that.
+
+<Figure caption="The largest block that fits inside a range of length L, for lengths 1 to 8" alt="A table of range lengths 1 to 8 with each length in binary, its bit length, the value k equal to bit length minus one, and the block length 2 to the power k.">
+  <Diagram
+    viz="TableViz"
+    data={{
+      rowTitle: "L",
+      rowHeads: [1, 2, 3, 4, 5, 6, 7, 8],
+      colHeads: ["binary", "bits", "k", "2^k"],
+      cells: [["1", 1, 0, 1], ["10", 2, 1, 2], ["11", 2, 1, 2], ["100", 3, 2, 4], ["101", 3, 2, 4], ["110", 3, 2, 4], ["111", 3, 2, 4], ["1000", 4, 3, 8]],
+    }}
+  />
+</Figure>
+
+Now step through a query. The presets are a range of length 5, where the blocks overlap, a range of length 4, where the two blocks are the same block, and a single element.
+
+<Figure caption="Covering a query range with the block that starts at its left end and the block that ends at its right end" alt="An array with a query range marked. The range is covered by two blocks whose length is the largest power of two that fits: one starting at the left end and one ending at the right end. Cells in both blocks are marked as shared, and the answer is the smaller of the two block minimums.">
+  <StepThrough frames="visuals/query.frames.json" preset="main" />
+</Figure>
+
+The second block starts at `last - 2^k + 1`, so that it ends exactly at `last`. For the range 1 to 5, that is position 2, and the blocks share positions 2, 3 and 4. The code answers a batch of queries the same way.
+
+<Code file="examples/sparse_table.py" showOutput caption="Answering range-minimum queries with two lookups each" />
+
+Trace a short version of the program, `sparse_min.py`, on four values and one query to see the table built first and the two lookups last. It builds each level with `map(min, a, b)`, where `b` is the level below shifted by half a block, which pairs the same two blocks as the loop above.
+
+<Figure caption="Tracing a short version of the sparse table: build by levels, then two lookups and one min">
+  <CodeTrace trace="examples/sparse_min.trace.json" preset="main" />
+</Figure>
+
+## Why overlap is safe only for some operations
+
+The two blocks cover every cell of the range at least once and no cell outside it. A cell in the overlap is counted twice. For a minimum that changes nothing: `min(x, x)` is `x`, so the smallest value in the range is still the smallest. Maximum and gcd behave the same way. An operation with that property is called idempotent. It also needs to be associative and commutative, as min, max and gcd are.
+
+A sum is different. The overlap would be added twice. The figure shows the same range three ways, and the sum is the only one that goes wrong.
+
+<Figure caption="The same range covered by two overlapping blocks, combined with a sum, a minimum and a gcd" alt="An array with a query range covered by two overlapping blocks, with the shared cells marked. Combining the two block results with minimum or gcd gives the true answer; combining them with a sum gives too large an answer because the shared cells are counted twice.">
+  <StepThrough frames="visuals/overlap.frames.json" preset="sum" />
+</Figure>
+
+<Code file="examples/overlap.py" showOutput caption="Two overlapping blocks combined with a sum: 39 instead of 22" />
+
+A sum is better served by prefix sums (M4.3), or by a Fenwick tree (M6.10) if values change. Later, M7.8 uses the same two-block trick on squares in a grid, which again works only for idempotent operations.
+
+To use gcd instead of min, change the combining function in both places. The table and the query code are otherwise the same.
+
+<Code file="examples/sparse_gcd.py" showOutput caption="The same table and query code with gcd as the combining function" />
+
+## Why it covers the range, and what it costs
+
+Let the length be `L`, with `2^k <= L < 2^(k+1)`. The first block ends at `left + 2^k - 1`, which is at most `last`, so it fits. The second block starts at `last - 2^k + 1`. Because `L` is less than `2 * 2^k`, that start is at most `left + 2^k`, the cell right after the first block, so there is no gap between them.
+
+The build costs `n * LOG` operations and as many table entries. A query costs two lookups and one combine. That is worse to build than a segment tree, which builds in `n` steps, but it answers in constant time instead of logarithmic time. The price is that a changed element means rebuilding the levels above it, so a sparse table is for data that stays fixed.
+
+## Making it fast on PyPy
+
+The table is a list of lists of plain integers, which PyPy stores compactly. Build each level in one pass over the level before it, reading input once with `sys.stdin.read().split()` and writing all answers with one `sys.stdout.write`. For 2·10^5 queries, the two lookups and one combine per query are a few operations each.
+
+## When to reach for it
+
+Use a sparse table when a problem asks many minimum, maximum or gcd queries over ranges of an array that never changes. If the array is updated between queries, use a segment tree instead.

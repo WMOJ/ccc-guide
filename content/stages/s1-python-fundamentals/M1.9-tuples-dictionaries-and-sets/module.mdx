@@ -1,0 +1,97 @@
+Lists hold values in order and find them again by position. Many CCC problems need something else. You might pair two values together, look a value up by name, or ignore every repeat. This lesson covers three more ways Python groups values: the tuple, the dict, and the set.
+
+## Pairing values with a tuple
+
+A tuple groups values with parentheses, such as `(3, 4)`. You have already used the shape: `a, b = ...` unpacks a tuple's values into separate names.
+
+<Code file="examples/tuple_basics.py" showOutput caption="A tuple holding two values together, then unpacked" />
+
+`point` holds `(3, 4)` as one value. `x, y = point` unpacks it into two names, the same way multiple assignment unpacked a split line. `tuple()` converts another sequence, such as a list, into a tuple.
+
+<Code file="examples/tuple_call.py" showOutput caption="Converting a list of text pieces into a tuple" />
+
+`tuple(parts)` takes the list that `.split()` produced and returns a tuple with the same values in the same order. Notice the quotes in the output: the pieces are still text, not numbers.
+
+## Looking up values by key with a dict
+
+A dict pairs each key with a value, written `{key: value, ...}`. Reading `d[key]` looks up the value stored under that key. Assigning `d[key] = value` stores one, whether or not the key already existed.
+
+<Code file="examples/dict_basics.py" showOutput caption="Storing, looking up, and testing keys in a dict" />
+
+Step through the same program below, one statement at a time. Watch the `ages` panel grow when `"Cy"` arrives.
+
+<Figure caption="The dict ages, changing as dict_basics.py runs, with what each print shows">
+  <StepThrough frames="visuals/dict_lookup.frames.json" />
+</Figure>
+
+Reading `ages["Bo"]` gives the `13` stored beside that key. The assignment to `"Cy"` added a third pair. `"Cy" in ages` is `True` from then on, and `"Dee" in ages` is `False`, because asking never stores anything.
+
+A dict comprehension builds a dict in one line, written `{key: value for name in sequence}`.
+
+<Code file="examples/dict_comprehension.py" showOutput caption="Building a dict of word lengths in one line" />
+
+`{w: len(w) for w in words}` pairs every word with its own length.
+
+## Counting with a dict
+
+Counting is the most useful thing a dict does. Keep one key per name and let its value be the count so far. The trace below shows the whole program and the dict `c` as it grows.
+
+<Figure caption="Counting the votes line by line, with the dict c shown beside the code">
+  <CodeTrace trace="examples/count_votes.trace.json" />
+</Figure>
+
+`c.get(v, 0)` reads the count so far for `v`. The first time a name appears, it falls back to `0` instead of raising a `KeyError`. Adding `1` and storing the result back grows that one name's count and leaves the others alone. Try the presets: with a single vote, `c` ends with one key.
+
+## Testing membership and removing duplicates with a set
+
+A set holds values with no duplicates and no order. Build one with `set()` or a literal like `{1, 2, 3}`. An empty set needs `set()`, since `{}` alone means an empty dict.
+
+<Code file="examples/set_basics.py" showOutput caption="Adding to a set, testing membership, and building one from a comprehension" />
+
+Adding `3` a second time changes nothing, so `len(seen)` stays at two. `3 in seen` is `True`, the same way `in` checks a dict's keys. `{int(x) for x in input().split()}` is a set comprehension. It keeps one copy of each number on the line, and `sorted` gives a predictable order to print.
+
+<Figure caption="A set rejecting a duplicate, traced alongside a comprehension doing the same thing with input">
+  <StepThrough frames="visuals/set_duplicate.frames.json" />
+</Figure>
+
+Try the second preset, where every token is equal. In the first panel, `seen` fills with `3` and `5`, and the second `add(3)` leaves it unchanged. `unique` builds the same way from a line of numbers. It rejects each repeat before `sorted(unique)` prints the answer.
+
+## Why a set checks membership quickly
+
+Checking whether a value is in a list means comparing it with one element after another. A list of a million numbers may take a million comparisons to say no. A set answers in about one step however many values it holds.
+
+<Code file="examples/membership_scan.py" showOutput caption="The same question asked of a list and of a set built from it" />
+
+Both lines print the same answer. The difference is the work behind them. Try all three presets below: found late, not present, and found first.
+
+<Figure caption="Asking whether a number is in the list nums, then in the set seen built from it">
+  <StepThrough frames="visuals/membership_scan.frames.json" />
+</Figure>
+
+The list scan got longer the further the target sat from the front, and longest when it was missing. The set took one step every time. That is why a loop that must skip values it has seen before should keep them in a set, not a list.
+
+## Using a tuple as a dict key
+
+A dict key has to be a value Python can hash, which roughly means it cannot change after it is stored. A list can change, so it cannot be a key. A tuple never changes once built, so it can. That is why a pair such as `(row, col)` works as one value in a set or as a dict key.
+
+<Code file="examples/visited_cells.py" showOutput caption="Remembering which grid cells have been seen, one (row, col) tuple each" />
+
+`visited.add((row, col))` stores the whole pair. The test `(row, col) in visited` checks the row and column together, which is the only way to identify a cell. A dict works the same way: `distances[(row, col)] = 3` pairs a whole coordinate with a value.
+
+<Figure caption="Each line names a cell. A new pair goes into visited, a repeat is reported and ignored">
+  <StepThrough frames="visuals/visited_cells.frames.json" />
+</Figure>
+
+The third line named `(1, 2)` a second time and was rejected. That is why `len(visited)` counts three cells from four lines. The second preset names one cell three times and ends with one.
+
+## Common mistakes with dicts and sets
+
+Reading `d[key]` for a key that was never stored raises a `KeyError` and stops the program. Use `.get(key, default)` whenever a key might be missing, as the vote counter does. Use plain `d[key]` only when you are sure the key is there.
+
+Looping with `for k in d:` walks the keys, not the values and not the pairs. Use `d.values()` for the values. Use `d.items()` for each key and value together, which saves writing `d[k]` inside the loop.
+
+A set or a set comprehension silently throws away repeats. If the order or the count of repeats matters, keep a list. Use a set only when repeats are noise.
+
+## Recap
+
+A tuple pairs values and can be a key. A dict looks values up by key, and `.get()` with a default counts without a `KeyError`. A set removes duplicates and answers membership in one step. The three problems below all look values up by key or check them against a small set of rules.

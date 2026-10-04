@@ -4,7 +4,7 @@ import { ui } from "@/components/ui/ui-strings";
 /** Static "On this page" (DESIGN.md: ≥1280 px, 3+ H2s, no scroll-spy). */
 export function OnThisPage({ items }: { items: TocItem[] }) {
   if (items.length < 3) return null;
-  const s = ui().lesson;
+  const s = ui().module;
   return (
     <nav
       aria-labelledby="toc-heading"

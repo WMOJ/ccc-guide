@@ -1,0 +1,81 @@
+Recall the flood-fill search: one queue, one starting cell, and every move costing the same step. Four situations bend that idea without breaking what makes it correct. Several cells can share the role of start. Some moves can cost nothing while others cost one step. A move can be forced on you instead of chosen. And sometimes the node you know is the target, not the source. Each variant still explores in order of distance; only how the queue fills, or what counts as a "move," changes.
+
+## Multi-source BFS
+
+A warehouse floor has several depots (`D`) and some aisles blocked by shelving (`#`). Every open cell needs the distance to its *nearest* depot, not to one depot in particular.
+
+<Term id="multi-source-bfs">Multi-source BFS</Term> answers this with one change to the search you already know. Instead of pushing a single start cell at distance 0, it pushes every source at distance 0, before the search takes its first step.
+
+<Code file="examples/multisource_bfs.py" showOutput caption="Distance from the nearest depot, for every open cell" />
+
+Nothing else about the queue changes. A cell still gets its distance the moment it joins the queue, and it keeps that distance forever. The first search to reach any cell is always the closest one. With two sources both starting at distance 0, the rings racing out from each one meet exactly where the true nearest-source boundary lies. A cell claimed by one ring could not have been closer to the other, or that ring would have reached it first.
+
+The alternative runs a single-source search per depot and keeps the smallest result, repeating the same work on a shared grid. With $k$ depots, $V$ cells and $E$ open connections, that costs $O(k(V + E))$. Multi-source BFS finds the same answer in one $O(V + E)$ pass, one sweep of the grid instead of a few hundred.
+
+Step through the search below. Try the "Cut off" preset, where a depot sits sealed off by shelving and a pocket cell no depot's search can reach stays unassigned.
+
+<Figure caption="Multi-source BFS finding the distance to the nearest depot from every open cell">
+  <StepThrough frames="visuals/multisource.frames.json" preset="sources" />
+</Figure>
+
+With only one source, this is the same search from before: multi-source BFS is not a new algorithm, only a different way to seed the queue.
+
+## 0-1 BFS
+
+Now give moves a cost. In a building, a free doorway between two rooms on the same floor costs nothing to cross; a stairwell between two rooms costs one minute. A route through more doorways can still beat a route through fewer, costlier stairwells.
+
+Plain BFS cannot see that: it counts edges, not cost. It would call a one-edge stairwell route "closer" than a three-edge, all-free one, even when the free route is faster. A weighted graph like this calls for shortest-path search, and the standard tool is a heap, at a cost of $O((V + E) \log V)$. But when every edge weighs exactly 0 or 1, a <Term id="deque">deque</Term> does the heap's job for less.
+
+The table below shows the gap on this doors-and-stairwell graph. Plain BFS calls node 1 one stairwell hop away and node 4 two hops away. 0-1 BFS finds their real cost, 0 and 1, through three free doors.
+
+<Figure caption="Plain BFS counts edges and gets nodes 1 and 4 wrong; 0-1 BFS respects the 0/1 weights and finds their true cost.">
+  <Diagram frames="visuals/plain_vs_01.frames.json" preset="doors" step={0} />
+</Figure>
+
+<Code file="examples/zero_one_bfs.py" showOutput caption="0-1 BFS: weight-0 edges join the front of the deque, weight-1 edges join the back" />
+
+<Term id="zero-one-bfs">0-1 BFS</Term> keeps the deque's contents sorted by distance without ever sorting. A weight-1 edge can only push a neighbor to a distance one more than the current node's. Appending it to the back keeps it behind everything already known to be at least that close. A weight-0 edge pushes a neighbor to the *same* distance as the current node, so it belongs at the front, ahead of every node one step farther out. The deque's contents are always within one of each other, front to back. That is exactly the invariant that makes plain BFS correct, re-derived for a graph with two edge costs instead of one.
+
+In the step-through, node 1 is relaxed twice: once early, through the direct stairwell, and again later, through three free doorways, at a strictly smaller distance. Both entries stay in the deque; the second relaxation just makes the first one stale, the same way Dijkstra's heap collects stale entries when a shorter route is found later.
+
+<Figure caption="0-1 BFS from node 0: free doors move to the front of the deque, stairwells to the back">
+  <StepThrough frames="visuals/zero_one.frames.json" preset="doors" />
+</Figure>
+
+## Zero-cost moves and conveyors
+
+Some zero-cost edges are not offered, they are forced. Landing on a conveyor belt sweeps you straight to wherever it points, with no choice and no cost. A naive way to handle this calls a function on the belt's destination, which calls the next belt, and so on. If two belts point at each other, that call chain never returns.
+
+The fix does not need recursion at all. Before the search starts, resolve every node's *landing spot*, the real node you end up standing on after riding every conveyor from it. Follow each chain with a loop, remembering the nodes visited so far. Reaching a node already in the current chain means the conveyors loop back on themselves, so nothing in that loop is ever a place the search can rest.
+
+<Code file="examples/conveyor_bfs.py" showOutput caption="Resolving conveyor chains with a loop, then a BFS that never stands on a conveyor" />
+
+Every ordinary edge in the search now redirects its destination through `landing` before deciding whether to enqueue it, so the queue only ever holds real resting places. A node whose conveyors loop forever keeps its distance at $-1$: not because the search never touched it, but because there is no move that leaves it standing there.
+
+<Figure caption="BFS past forced conveyors, with a loop that traps two nodes at -1">
+  <StepThrough frames="visuals/conveyors.frames.json" preset="trap" />
+</Figure>
+
+## Reverse-graph BFS
+
+The last shape flips the question. An evacuation plan gives you a known exit, not a known start, and asks for the distance from *every* room to it, over one-way doors that only open outward.
+
+Running a fresh search from every room to check whether it reaches the exit costs $O(V(V + E))$. That is as bad as the naive multi-source approach, and for the same reason: it repeats work a shared structure does not need. Reversing the graph once, so every one-way door points the other way, and searching once from the exit finds every distance in a single $O(V + E)$ pass instead.
+
+<Code file="examples/reverse_bfs.py" showOutput caption="Building the reverse graph once, then BFS from the target" />
+
+This works because a path is reversible step for step. A one-way door from room $u$ to room $v$ means a walk from $u$ to $v$ crosses it forward. The same door, reversed, lets a walk from $v$ back to $u$ cross it too. So the distance from any room to the target in the original graph is exactly its distance from the target in the reversed one. <Term id="reverse-graph-bfs">Reverse-graph BFS</Term> computes every one of them at once, instead of one search per room.
+
+<Figure caption="BFS on the reversed one-way doors, from the target outward to every room">
+  <StepThrough frames="visuals/reverse.frames.json" preset="one-way" />
+</Figure>
+
+A room with no one-way door leading toward the exit, directly or through others, never gets a distance at all. The reversed search simply never reaches it, the same way an unreachable cell in a grid search never does.
+
+## Making it fast on PyPy
+
+Every search above is still $O(V + E)$: the variant changes what fills the queue, not how much work each node costs once it is in it. Senior problems keep $V$ and $E$ near $2 \cdot 10^5$, so that bound alone rules out little; how the program reads and stores the graph decides the rest.
+
+Read the whole input once with `sys.stdin.read().split()` and take tokens from that list by position, as every example above does. Keep the graph as a plain list of lists, indexed by number, never a dictionary keyed by name; PyPy makes integer-indexed list reads especially cheap. Building a reverse adjacency list or a conveyor's `landing` table is also a single $O(V + E)$ pass done once, before the search runs, not something to redo per query. Keep every search iterative: a chain of calls following conveyors, or a deep flood fill, risks Python's recursion limit where a loop has none.
+
+Reach for multi-source BFS when several starting points share one search, and 0-1 BFS when edge weights are only 0 or 1. Resolve a landing table when moves can be forced, and reverse the graph when the node you know is the target, not the source.

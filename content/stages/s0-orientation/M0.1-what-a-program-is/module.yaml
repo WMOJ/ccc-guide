@@ -1,11 +1,7 @@
 id: M0.1
-title: What a program is
 status: accepted
 objectives:
   - Explain what a program is and what an interpreter does when it runs one.
   - Follow a program's instructions in the order they run, from the first line to the last.
   - Tell apart the source code you write, running it, and the result it produces.
-prereqs: []
-lessons:
-  - what-a-program-is
 practice: []

@@ -1,0 +1,41 @@
+The module on how judging works described what happens when your program runs against hidden tests. Past CCC problems are not locked away once the contest ends: two websites host them for anyone to practice on, running the same kind of judge, with real verdicts.
+
+## Which judge holds which years
+
+<JudgeLink judge="wmoj" kind="home" /> hosts CCC problems from 2021 through 2026. <JudgeLink judge="dmoj" kind="home" /> hosts the older set, 2014 through 2020. Between the two, every CCC problem this course points you to has a home. When a problem sits on both, use WMOJ.
+
+The practice problems in this course name which judge holds each one, so you never have to guess. A problem from a recent year is on WMOJ; a problem from 2020 or earlier is on DMOJ. The two sites look different and are run by different people. Both exist for the same reason: to let anyone replay a past CCC problem outside the contest, against the same kind of hidden tests a real submission would face.
+
+The story, the sample input and output, and the bounds match the ones the CCC itself published for that year. The time and memory limits do not always match, though: each judge sets its own, which can be stricter or looser than the CCC grader's own default. Neither judge promises the exact limit the contest used.
+
+## Submitting a solution
+
+Both judges follow the same shape, close to how the CCC grader itself works. You create a free account, then find the problem by searching its year and number, the way the practice list here names it. Each problem page shows its statement, its sample input and output, and a box for your code.
+
+Before you submit, you choose a language from a menu. Selecting the right one matters: the judge runs your code with whichever language you picked, and picking the wrong one can turn working code into an immediate error. Once you submit, the judge runs your program against its test cases and returns a verdict for each one. WMOJ shows the same `AC`, `WA`, `TLE` and `RTE` the module on judging covered, plus `MLE` for using too much memory. DMOJ shows those too, but reports an uncaught Python error differently: as `IR`, invalid return, together with the exception's name. Reading the verdict on an unfamiliar problem is the same skill either judge asks for.
+
+<JudgeLink judge="wmoj" kind="signup" /> and <JudgeLink judge="dmoj" kind="signup" /> are both free, and neither needs anything beyond an account to start submitting.
+
+A submission on either judge is not a single try-or-fail moment. You can submit again after a wrong answer, read which test failed, and try once more, the same way the module on judging described. Practicing this way, wrong attempts and all, builds the habit of reading a verdict and adjusting before you ever sit down for the real contest.
+
+## Choosing PyPy 3
+
+Both judges offer more than one Python option in their language menu, usually a plain Python 3 alongside a PyPy 3. Always choose PyPy 3. The CCC grader itself runs your contest submission on PyPy 3, a faster Python built to run ordinary Python code more quickly. Practicing on the same one keeps how fast your program runs closer to what the real contest will see.
+
+Picking plain Python 3 by mistake will not usually break a correct program. A program that is close to a time limit on PyPy 3 can run meaningfully slower under plain Python 3, though. A wrong choice there can make an easy problem look harder than it really is. It can even turn a program that would pass in the contest into one that times out in practice.
+
+The two judges do not always label the option the same way. Look for the word PyPy in the language list rather than assuming it sits in the same spot both times.
+
+## A newer Python than the contest
+
+Here is the trap worth knowing before you rely on either judge to check your work. WMOJ and DMOJ both run a newer version of Python than the CCC grader does. The contest grader runs Python 3.8. Both practice judges run a newer version, closer to the Python most tutorials and documentation describe today.
+
+That gap matters because Python keeps adding features between versions. A line of code that uses one of those newer features can run perfectly on WMOJ or DMOJ, earning `AC` on every test. That same line can then fail outright on the CCC grader itself: either a `SyntaxError` before the program even starts, or a different error partway through, depending on what changed. Passing on a practice judge is not the same guarantee as passing in the contest.
+
+A later module lists exactly which newer features to watch for and what to write instead, once you have met enough of Python to recognize them. Until then, the safest habit is to write only what this course has already shown you, since every example here already runs on the CCC grader's own Python.
+
+A common mistake is copying a habit from an online tutorial without checking whether it works on Python 3.8, since most tutorials and both practice judges are already past that version.
+
+This lesson covered where CCC problems live online, and the shape of submitting a solution and reading its verdict. It also covered always choosing PyPy 3 to match the contest, and the gap between what a practice judge accepts and what the CCC grader accepts.
+
+The two problems below need more than this course has covered so far. Come back to them once you have read the modules on arithmetic and on conditionals, and they are ready to solve.

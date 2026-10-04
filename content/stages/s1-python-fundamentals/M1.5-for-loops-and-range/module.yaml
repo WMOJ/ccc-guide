@@ -1,15 +1,10 @@
 id: M1.5
-title: "`for` loops and `range`"
 status: accepted
 objectives:
   - Repeat a block of code a fixed number of times with `for` and `range()`.
   - Choose the right form of `range()` to start counting from a value other than `0`.
   - Build a running total across the passes of a loop with an accumulator variable.
   - Read a count, then that many more values, entirely inside a loop.
-prereqs:
-  - M1.4
-lessons:
-  - for-loops-and-range
 practice:
   - id: ccc22j2
     note: Rate each of several players from their points and fouls, and count how many earn a top rating.

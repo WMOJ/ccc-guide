@@ -1,4 +1,4 @@
-// lib/content/toc.ts — a lesson's on-page table of contents: every level-2 heading (the lesson
+// lib/content/toc.ts — a module page's table of contents: every level-2 heading (the module
 // title itself is level-1; objectives, then sections that each introduce one idea).
 // Ids come from github-slugger, the same slugger rehype-slug uses for the rendered heading ids, so
 // TOC links always match (apostrophes, "I/O" and `bisect_left` in headings broke anchors before).

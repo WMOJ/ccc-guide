@@ -1,16 +1,10 @@
 id: M4.13
-title: BFS and flood fill (iterative)
 status: accepted
 objectives:
   - Explain why a queue makes breadth-first search find shortest paths.
   - Write an iterative BFS that finds the fewest moves across a grid.
   - Use flood fill to count connected regions and measure their sizes.
   - Replace deep recursion with a deque so large grids do not crash.
-prereqs:
-  - M4.8
-  - M4.12
-lessons:
-  - bfs-and-flood-fill
 practice:
   - id: ccc24j5
     note: Add up what a farmer can harvest from one patch of a field.

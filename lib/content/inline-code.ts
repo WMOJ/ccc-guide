@@ -1,4 +1,4 @@
-// lib/content/inline-code.ts — one rule for every inline code span (lesson prose, RichText strings,
+// lib/content/inline-code.ts — one rule for every inline code span (module prose, RichText strings,
 // visual captions). A short span never wraps, so "-3" or "% 5" never splits into two pills.
 // A long span (a whole error line such as "NameError: name 'shiping' is not defined")
 // may wrap at its spaces, or it pushes a 390 px page sideways.
@@ -27,7 +27,7 @@ function walk(node: MdNode): void {
   for (const child of node.children ?? []) walk(child);
 }
 
-/** Marks long inline code in lesson prose with `class="code-long"` (see globals.css). */
+/** Marks long inline code in module prose with `class="code-long"` (see globals.css). */
 export function remarkLongInlineCode() {
   return (tree: MdNode) => {
     walk(tree);

@@ -1,0 +1,71 @@
+Picture placing chess queens on a board, one row at a time, so that no two ever share a row, column or diagonal. Place a queen in row 0, then try row 1. If every column in row 1 is already under attack, there is nothing left to try there: undo the queen in row 0 and try its next column instead. <Term id="backtracking">Backtracking</Term> is this pattern in general. Build a solution one choice at a time, and the moment a choice cannot possibly lead anywhere, undo it and try the next one.
+
+## Choosing, exploring, unchoosing
+
+Every step of a backtracking search does the same three things. Choose one of the candidates still available, explore what that choice leads to, and unchoose it before trying the next candidate. Recursion is a natural fit, since each call represents one partial solution, and returning from a call is exactly the undo.
+
+The clearest version of this has no rule to check at all: generate every permutation of a small list. At each level, pick an element that has not been used yet, append it to the arrangement being built, and recurse. Once the arrangement holds every element, record it. Then remove that last element, so the next candidate starts from the same list the previous one did.
+
+<Code file="examples/permutations.py" showOutput caption="Generating every permutation using backtracking" />
+
+That removal step is not optional. The list being built is shared and mutated in place across every call. Skipping the pop leaves a stale value sitting there for the next branch to build on top of.
+
+Step through the same search below. The tree on the left shows every choice tried, in the order the recursion tries it. The stack on the right is the arrangement being built at that moment, exactly what the recursion's call stack is holding.
+
+<Figure caption="The choose, explore, unchoose recursion tree for building every permutation of a small list">
+  <StepThrough frames="visuals/permute-tree.frames.json" preset="three" />
+</Figure>
+
+Watch how the stack grows by one value on every choose and shrinks by one on every unchoose. Its height at any moment is exactly how many choices are currently in progress, which is also how deep the recursion is sitting at that instant.
+
+## When checking everything is too much
+
+Three elements give 3! = 6 permutations, and there is nothing to prune there since every arrangement is valid. Placing `n` queens is different: trying all `n` columns for each of `n` rows gives `n^n` raw possibilities before any rule is applied. For 8 queens that is 8^8, about 16.8 million placements, most of which put two queens on the same column or diagonal before the board is even half full.
+
+## Pruning as you build
+
+Placing the queens row by row makes it possible to catch that early. Once a queen sits in a row, track which columns and which diagonals it now attacks. Trying the next row's queen, skip any column already marked instead of placing it and discovering the conflict afterward.
+
+<Code file="examples/n_queens.py" showOutput caption="Solving n-queens with backtracking and pruning" />
+
+Step through it below. The "4x4 board" preset finds both of the board's two solutions. The "3x3 board" preset never finds one, since no arrangement of 3 queens avoids every conflict. Every branch still gets tried and backed out of before the search can be sure of that.
+
+<Figure caption="Placing queens row by row, skipping any column or diagonal an earlier queen already attacks">
+  <StepThrough frames="visuals/queens-grid.frames.json" preset="solved" />
+</Figure>
+
+Watch which columns a row's caption calls out as already attacked. Those are exactly the placements the search never builds, because building them and then checking would waste the same work pruning is meant to save.
+
+A prune only has to remove candidates that were always going to fail. A queen's column, and its two diagonals, cover every way two queens can attack each other on this board. Checking all three, for every earlier queen, means nothing that would have passed the full check is ever skipped.
+
+## A different kind of pruning
+
+Column and diagonal conflicts are not the only thing worth pruning. Suppose you are choosing a subset of numbers, in order, that sums to exactly some target. At each number, choose to include it or skip it. The moment the running sum already exceeds the target, no further number can bring a nonnegative sum back down. That whole branch can stop right away, instead of finishing its remaining choices only to fail at the end.
+
+<Code file="examples/subset_sum.py" showOutput caption="Counting subsets that sum to a target, pruning once the running sum is too big" />
+
+<Figure caption="The skip-or-take recursion tree for choosing a subset, with sums that already pass the target pruned">
+  <StepThrough frames="visuals/subset-prune.frames.json" preset="reachable" />
+</Figure>
+
+Look at where a branch stops growing. A node marked pruned in the tree never gets children. The code returns the instant it notices the sum is too big, before it ever asks what the next number is. For these three numbers and a target of 3, pruning cuts the tree from 15 calls down to 9. The saving compounds with every extra number on a longer list, since a pruned branch near the top removes every branch that would have grown underneath it.
+
+## Recursion depth
+
+Backtracking's recursion depth equals how many choices are currently on the stack. That is at most the number of positions being decided: a board's rows, a list's length, or a sequence's remaining picks. That number stays small in every problem backtracking is meant for. The search visits roughly that number raised to a power of candidates, and only a small count keeps that manageable at all. An 8-row board never asks for more than 8 frames of depth, nowhere near the few thousand PyPy tolerates before a `RecursionError`.
+
+<Figure caption="A minimal choose, recurse, unchoose search traced line by line, with the stack of choices made so far">
+  <CodeTrace trace="examples/choose_or_skip.trace.json" />
+</Figure>
+
+Follow `path` through the trace. It gains one entry on every call that goes deeper, and loses that entry the moment the call is about to return. Its length always matches the recursion's current depth exactly. A search whose depth instead grows with the size of the input, the way a chain of recursive calls over a long list can, is a different problem. That kind needs the iterative, explicit-stack form this course uses for those searches instead. Backtracking rarely does, since the choices it makes are the structure being searched, not the input being scanned.
+
+## Getting these right
+
+A prune has to be exactly right, not just fast. It must rule out only branches that truly cannot succeed. Checking a queen's row and column but forgetting a diagonal lets attacking placements through, and the count comes out wrong without ever raising an error.
+
+Check constraints as you build, not after. Building a complete candidate and validating it at the end spends all the work on a branch that was doomed several choices earlier. Checking at each step, as both examples above do, prunes that branch the moment it stops being possible.
+
+And every search still needs a clear base case. Permutations stop once the arrangement is full; n-queens stops once every row holds a queen; the subset search stops once every number has been decided. Without one, the recursion has no way to know it is finished.
+
+Reach for backtracking when a problem asks for every arrangement, or any one arrangement, that satisfies a set of rules. It fits best when a partial arrangement can be checked, and often ruled out, before it is complete.

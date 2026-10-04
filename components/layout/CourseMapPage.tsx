@@ -1,10 +1,10 @@
 import type { CourseMapPageProps } from "@/components/layout/props";
 import { ComingSoon, DraftBadge } from "@/components/ui/Badge";
+import { LiveReadCell } from "@/components/ui/LiveReadCell";
 import { RichTitle } from "@/components/ui/RichTitle";
 import { fmt, ui } from "@/components/ui/ui-strings";
+import { isDraftStatus } from "@/lib/content/env";
 import { IndexRow } from "./IndexRow";
-import { isDraft } from "./LessonPage";
-import { LessonMarks } from "./ModulePage";
 import { SiteFrame } from "./SiteFrame";
 import { h1Class, h2Class } from "./type-styles";
 
@@ -45,27 +45,20 @@ export function CourseMapPage({ stages }: CourseMapPageProps) {
                   key={m.id}
                   id={m.id}
                   title={<RichTitle text={m.title} />}
-                  description={m.description}
                   href={m.href}
                   muted={!readable}
                   after={
                     !readable ? (
                       <ComingSoon label={s.status.comingSoon} />
-                    ) : isDraft(m.status) ? (
+                    ) : isDraftStatus(m.status) ? (
                       <DraftBadge label={s.status.draft} />
                     ) : undefined
                   }
-                  meta={
-                    readable
-                      ? fmt(
-                          m.lessons.length === 1 ? s.module.lessonCountOne : s.module.lessonCount,
-                          {
-                            n: m.lessons.length,
-                          },
-                        )
-                      : undefined
+                  marks={
+                    readable ? (
+                      <LiveReadCell moduleId={m.id} readLabel={s.module.readState} />
+                    ) : undefined
                   }
-                  marks={readable ? <LessonMarks module={m} /> : undefined}
                 />
               );
             })}
