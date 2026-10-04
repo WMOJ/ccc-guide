@@ -415,7 +415,7 @@ export function layoutTree(frames: TreeFrame[]): VizScene[] {
   let hasNotes = false;
   const visit = (n: TreeNodeData, parent: UnionNode | null) => {
     let u = byId.get(n.id);
-    // Pill ends are round: text + 16 keeps at least 6 units clear (G-VIZ collision).
+    // Pill ends are round: text + 16 keeps at least 6 units clear.
     const w = Math.max(36, textWidth(n.label, "value") + 16);
     if (!u) {
       u = { id: n.id, w, children: [] };

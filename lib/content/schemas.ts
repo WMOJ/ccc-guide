@@ -1,5 +1,5 @@
-// lib/content/schemas.ts — Zod schemas for every YAML file the loader reads (G-SCHEMA).
-// A build/content:check failure here always names the file and field.
+// lib/content/schemas.ts — Zod schemas for every YAML file the loader reads.
+// A build failure here always names the file and field.
 import { z } from "zod";
 
 const moduleIdRe = /^(M\d+\.\d+|C\.\d+)$/;
@@ -64,18 +64,6 @@ export const glossarySchema = z.strictObject({
   terms: z.array(glossaryTermSchema),
 });
 export type GlossaryFile = z.infer<typeof glossarySchema>;
-
-// --- content/concepts.yaml ---------------------------------------------------------------------
-
-export const conceptFeatureSchema = z.strictObject({
-  id: z.string().min(1),
-  feature: z.string().min(1),
-  introducedIn: z.string().regex(moduleIdRe),
-});
-export const conceptsSchema = z.strictObject({
-  features: z.array(conceptFeatureSchema),
-});
-export type ConceptsFile = z.infer<typeof conceptsSchema>;
 
 // --- content/ui/strings.yaml (matches components/ui/ui-strings.ts's UiStrings) -----------------
 
@@ -258,19 +246,3 @@ export const registrySchema = z.object({
 });
 export type RegistryFile = z.infer<typeof registrySchema>;
 export type RegistryProblemEntry = z.infer<typeof registryProblemSchema>;
-
-// --- content/registry/verified.json (written only by the verifier, never hand-edited) ----------
-
-export const verifiedEntrySchema = z.object({
-  id: z.string(),
-  status: z.enum(["ok", "missing", "mismatch", "unverified"]),
-  checkedAt: z.string(),
-  method: z.enum(["automated", "manual"]),
-  titleOnJudge: z.string().optional(),
-  /** Who confirmed a `method: "manual"` entry by hand (recorded by `verify-judges --record-manual`). */
-  confirmedBy: z.string().optional(),
-});
-export const verifiedFileSchema = z.object({
-  entries: z.array(verifiedEntrySchema),
-});
-export type VerifiedFile = z.infer<typeof verifiedFileSchema>;

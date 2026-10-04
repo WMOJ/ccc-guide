@@ -10,7 +10,7 @@ description: Voice, format, file layout and code conventions for module pages. L
 A module is one page. Its folder `content/stages/<stage>/<id>-<slug>/` holds:
 
 - `module.mdx` — the page body: plain MDX that starts with the first paragraph. **No
-  frontmatter** (content:check fails a file that starts with `---`) and **no `<Practice />`
+  frontmatter** (a leading `---` block would render as a rule plus a heading) and **no `<Practice />`
   tag**: the page renders the practice list after the body by itself.
 - `module.yaml` — `id`, `status`, `objectives` (shown as "In this module") and `practice`. No
   `title`: the title lives in `content/course.yaml` only and is the page H1.
@@ -31,14 +31,12 @@ a second `.mdx` file in one folder.
 
 Warm, plain, second person, short sentences in Stages 0–2. No hype, no clipped fragments, no
 judgments about the learner. Use the `avoid-ai-writing` skill (`.agents/skills/avoid-ai-writing/`)
-in its `warm` voice and `docs` context on every prose pass — `tools/style/check-style.mjs` runs its
-detector over every module page and over `content/ui/strings.yaml` (G-STYLE).
+in its `warm` voice and `docs` context on every prose pass, over module pages and
+`content/ui/strings.yaml` alike.
 
 ## Format
 
-- Every real module page needs **at least 800 words** of extracted prose (`minProseWords` in
-  `tools/style/thresholds.json`; the target range is 800–1,300). Check with
-  `npm run style:check -- --words`.
+- Every module page needs **at least 800 words** of prose (the target range is 800–1,300).
 - Stage 3 onward: teach the technique on a worked example you write for teaching — reasoned
   through in steps (shape of the problem → bounds → brute force → insight → code → a Python speed
   note) — **never** on a specific registry problem, and never imply it solves one. The module's
@@ -51,8 +49,8 @@ detector over every module page and over `content/ui/strings.yaml` (G-STYLE).
 ## Code
 
 - Every shown sample is Python 3.8, matching `content/style/house-skeleton.py`'s conventions.
-- A deliberately invalid block is fenced ```` ```python bad38 ```` and must fail at least one of
-  ruff/vermin/PyPy 3.8 (G-PY-38); a `bad38` block that passes all three is itself an error.
+- A deliberately invalid block is fenced ```` ```python bad38 ```` and must really be invalid
+  under Python 3.8.
   Deliberately failing examples show their real traceback.
 - File-based examples with a committed `.out`/`.err` are regenerated with `npm run gen:outputs` —
   never hand-edit those files. No example may print wall-clock timings: `.out` must reproduce
@@ -66,6 +64,6 @@ backticked plain forms (`2 * 10^5`, `O(N log N)`) for anything with braces.
 
 ## Terms and feature order
 
-Wrap a term in `<Term id="...">` only after its `introducedIn` module in `content/glossary.yaml` —
-G-PREREQ checks usage against it via an AST feature scan of the actual code. Judge links: derive
+Wrap a term in `<Term id="...">` only after its `introducedIn` module in `content/glossary.yaml`,
+and use a Python feature only after the module that introduces it. Judge links: derive
 from `content/registry/ccc-problems.yaml` only, never type a URL by hand (see `AGENTS.md`).

@@ -1,6 +1,5 @@
 // lib/registry/judge-url.ts — the ONLY place in the app that builds a judge URL.
-// No other file may embed a wmoj.ca or dmoj.ca URL (G-LINK-FMT, and a grep lint for
-// raw judge domains outside this file, tools/lint/no-raw-judge-urls.mjs).
+// No other file may embed a wmoj.ca or dmoj.ca URL.
 //
 // - 2021-2026 -> WMOJ: https://wmoj.ca/problems/<slug> (plural, no trailing slash)
 // - 2014-2020 -> DMOJ: https://dmoj.ca/problem/<slug>/ (singular, trailing slash)

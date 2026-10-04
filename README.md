@@ -10,9 +10,9 @@ for the full product and design spec, and `AGENTS.md` for the rules every change
 ## Prerequisites
 
 - **Node**, version pinned in `package.json`'s `engines` field.
-- **PyPy 3.8**, **ruff**, **vermin**, and **Playwright's browsers** — all normal, system-wide
-  installs, nothing confined to this repo. See `.agents/skills/tool-setup/SKILL.md` for exact
-  pinned versions, install steps, and a one-line check for each.
+- **PyPy 3.8** (for `gen:outputs` and `gen:viz`) — a normal, system-wide install, nothing
+  confined to this repo. See `.agents/skills/tool-setup/SKILL.md` for the pinned version, install
+  steps, and a one-line check.
 - **git** and **gh**, already logged in as usual — nothing here needs a special configuration.
 
 ## Commands
@@ -21,12 +21,11 @@ for the full product and design spec, and `AGENTS.md` for the rules every change
 npm ci                   # install dependencies
 npm run dev               # next dev
 npm run build             # production build
-npm run verify:fast       # lint, typecheck, and every content gate
-npm run verify:full       # verify:fast + production build + internal links + viz:shots
+npm run lint              # biome check .
+npm run typecheck         # tsc --noEmit
+npm run gen:outputs       # regenerate example .out/.err files under PyPy 3.8
+npm run gen:viz           # regenerate step-through visual data under PyPy 3.8
 ```
-
-See the `verifying-changes` and `content-gates` skills (`.agents/skills/`) for what each gate
-checks and how to debug a failure.
 
 ## Content layout
 
@@ -35,7 +34,7 @@ content/
   course.yaml               stages -> modules, in order, each with its title and status
   stages/<stage>/<module>/   module.yaml, module.mdx, example .py/.out/.err, visuals/
   registry/ccc-problems.yaml  the 119 CCC 2014-2026 problems, WMOJ/DMOJ links
-  glossary.yaml, concepts.yaml  terms and Python features, each tied to an introducing module
+  glossary.yaml              terms, each tied to an introducing module
   ui/strings.yaml            all learner-facing UI copy
   style/STYLE-GUIDE.md, house-skeleton.py   voice and code conventions for modules
 ```

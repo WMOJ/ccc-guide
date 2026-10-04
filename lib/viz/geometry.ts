@@ -1,6 +1,6 @@
 // The drawing vocabulary shared by every visualizer: a layout function turns one frame into a
-// VizScene (positioned primitives in user units); components/viz/SceneSvg draws it. Pure TS so
-// the static text-size check (check:viz) can measure every scene without a browser.
+// VizScene (positioned primitives in user units); components/viz/SceneSvg draws it. Pure TS, no
+// browser APIs.
 import type { VizState } from "./schema";
 
 // ---------------------------------------------------------------------------------------------

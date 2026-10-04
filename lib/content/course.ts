@@ -45,7 +45,6 @@ function buildModuleLink(
   const dir = findModuleDir(stageId, stageTitle, entry.id);
   // An authored module's own module.yaml status is the working status (authors move it through
   // drafted -> gated -> reviewed); course.yaml's copy only matters for unauthored modules.
-  // content:check (G-SCHEMA) keeps the two in agreement wherever "accepted" is involved.
   let status: ModuleStatus = entry.status;
   let hasBody = false;
   if (dir) {

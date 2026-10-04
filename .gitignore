@@ -3,12 +3,9 @@ node_modules/
 .next/
 .next-*/
 out/
-test-results/
 *.tsbuildinfo
 
-# tools/pycheck scratch (fenced-code-block temp files, deleted at the end of every run;
-# gitignored as a safety net if a run is interrupted)
-.pycheck-scratch/
+# Python bytecode from the PyPy recorders
 __pycache__/
 
 # Secrets and machine-local config
@@ -21,7 +18,3 @@ __pycache__/
 
 # OS
 .DS_Store
-
-# Run logs and reports written by manual tools (link verification) — regenerated
-# on each run, not scratch by definition but not meant to be committed either
-reports/

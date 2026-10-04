@@ -1,5 +1,5 @@
-// lib/tools/resolve-tools.ts — resolves the external tools the authoring-time gates need
-// (PyPy 3.8, ruff, vermin), plain from the environment: an explicit env var first, then PATH.
+// lib/tools/resolve-tools.ts — resolves PyPy 3.8, which gen:outputs and gen:viz need, plain from
+// the environment: an explicit env var first, then PATH.
 // Nothing here is downloaded, pinned, or redirected into a project-local sandbox — install these
 // normally (see README.md) and they just work, the same as any other repo.
 
@@ -54,67 +54,4 @@ export function resolvePypy38(): string {
     );
   }
   return candidate;
-}
-
-/** True if a usable PyPy 3.8 is available, without throwing — for tests that skip instead of failing. */
-export function hasPypy38(): boolean {
-  try {
-    resolvePypy38();
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/** Like resolvePypy38, but returns "" instead of throwing — for optional, best-effort checks. */
-export function resolvePypy38Quiet(): string {
-  try {
-    return resolvePypy38();
-  } catch {
-    return "";
-  }
-}
-
-/** Resolves `ruff`: the `RUFF` env var if set, else `ruff` on PATH. Pinned version: see README.md. */
-export function resolveRuff(): string {
-  const candidate = process.env.RUFF || which("ruff");
-  if (!candidate) {
-    throw new Error(
-      "ruff not found. Set RUFF=/path/to/ruff, or install it (pipx install ruff / pip install ruff) " +
-        "and put it on PATH. See README.md for the pinned version.",
-    );
-  }
-  return candidate;
-}
-
-/** Resolves `vermin`: the `VERMIN` env var if set, else `vermin` on PATH. Pinned version: see README.md. */
-export function resolveVermin(): string {
-  const candidate = process.env.VERMIN || which("vermin");
-  if (!candidate) {
-    throw new Error(
-      "vermin not found. Set VERMIN=/path/to/vermin, or install it (pipx install vermin / pip install " +
-        "vermin) and put it on PATH. See README.md for the pinned version.",
-    );
-  }
-  return candidate;
-}
-
-/** True if `ruff` is resolvable, without throwing — for tests that skip instead of failing. */
-export function hasRuff(): boolean {
-  try {
-    resolveRuff();
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/** True if `vermin` is resolvable, without throwing — for tests that skip instead of failing. */
-export function hasVermin(): boolean {
-  try {
-    resolveVermin();
-    return true;
-  } catch {
-    return false;
-  }
 }

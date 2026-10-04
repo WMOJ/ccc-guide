@@ -1,7 +1,7 @@
-// Zod schemas for every visual data file (G-VIZ): the per-visualizer frame
+// Zod schemas for every visual data file: the per-visualizer frame
 // schemas, the `.frames.json` / `.trace.json` files written by tools/viz, and the authored
 // `.viz.yaml` / `.trace.yaml` configs. Pure TypeScript (no JSX, no Next imports) so the Node
-// gate scripts can load it with type stripping (tools/viz/register.mjs).
+// generator scripts can load it with type stripping (tools/viz/register.mjs).
 import { z } from "zod";
 
 // The state vocabulary lives in ./states (no Zod), so client code can use it without pulling

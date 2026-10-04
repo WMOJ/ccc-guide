@@ -1,8 +1,5 @@
-// validateVisualFile(path): Zod validation of one visual data file (G-VIZ schema part). Called
-// by content:check and prebuild (W1) and by check:viz (tools/viz/check-viz.ts). Node-safe: no
-// JSX, no Next imports. Run from a Node script with `--import ./tools/viz/register.mjs` so the
-// extensionless relative imports resolve under Node's type stripping.
-import fs from "node:fs";
+// validateVisualText(text, kind): Zod validation of one visual data file's contents, used by the
+// runtime loader (components/viz/load.ts). No JSX, no Next imports.
 import path from "node:path";
 import { parse as parseYaml } from "yaml";
 import type { ZodType } from "zod";
@@ -13,14 +10,6 @@ export type VisualFileKind = "frames" | "trace" | "viz-yaml" | "trace-yaml";
 export type VisualValidation =
   | { ok: true; kind: VisualFileKind; path: string; data: unknown }
   | { ok: false; kind: VisualFileKind | null; path: string; errors: string[] };
-
-export function visualFileKind(file: string): VisualFileKind | null {
-  if (file.endsWith(".frames.json")) return "frames";
-  if (file.endsWith(".trace.json")) return "trace";
-  if (file.endsWith(".viz.yaml")) return "viz-yaml";
-  if (file.endsWith(".trace.yaml")) return "trace-yaml";
-  return null;
-}
 
 const SCHEMAS: Record<VisualFileKind, ZodType> = {
   frames: framesFileSchema,
@@ -59,27 +48,4 @@ export function validateVisualText(
   }
   if (errors.length > 0) return { ok: false, kind, path: file, errors };
   return { ok: true, kind, path: file, data: result.data };
-}
-
-/**
- * Validate one visual data file by its extension: `.frames.json`, `.trace.json`, `.viz.yaml`
- * or `.trace.yaml`. Never throws; unknown extensions and unreadable files are errors.
- */
-export function validateVisualFile(file: string): VisualValidation {
-  const kind = visualFileKind(file);
-  if (kind === null) {
-    return {
-      ok: false,
-      kind: null,
-      path: file,
-      errors: ["not a visual data file (.frames.json, .trace.json, .viz.yaml, .trace.yaml)"],
-    };
-  }
-  let text: string;
-  try {
-    text = fs.readFileSync(file, "utf8");
-  } catch (err) {
-    return { ok: false, kind, path: file, errors: [`cannot read: ${(err as Error).message}`] };
-  }
-  return validateVisualText(text, kind, file);
 }

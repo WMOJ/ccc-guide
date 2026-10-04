@@ -1,6 +1,5 @@
 // The /dev/viz gallery: every primitive, every visualizer in every state, every
-// player state, the code tracer and each scene. Where visual baselines and the design review
-// start. Previews only (the route 404s in production).
+// player state, the code tracer and each scene. Where the design review starts. Previews only (the route 404s in production).
 import path from "node:path";
 import type { ReactNode } from "react";
 import { SiteFrame } from "@/components/layout/SiteFrame";
@@ -262,7 +261,7 @@ export async function VizGallery() {
       <h1 className={h1Class}>Visual gallery</h1>
       <p className="mt-3 max-w-(--measure) text-body text-ink-2">
         Every primitive, visualizer, player state and scene of the visualization library, for the
-        pixel review and the visual baselines. Previews only.
+        pixel review. Previews only.
       </p>
 
       <Section

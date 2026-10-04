@@ -189,7 +189,7 @@ export function layoutJudgeScene(frames: JudgeSceneFrame[]): VizScene[] {
   const tw = 48;
   const tgap = 8;
   const PIPE = ["Test input", "Your program", "Its output"];
-  // Each box fits its step name with at least 6 units clear on each side (G-VIZ collision).
+  // Each box fits its step name with at least 6 units clear on each side.
   const boxWs = PIPE.map((t) => Math.max(84, Math.ceil(textAdvance(t, "label")) + 20));
   const boxW = (i: number) => boxWs[i] as number;
   const boxH = 36;

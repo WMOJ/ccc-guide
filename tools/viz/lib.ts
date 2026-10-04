@@ -1,4 +1,4 @@
-// Shared by gen-viz.ts, check-viz.ts and viz-shots.ts: find the visual sources under the
+// Used by gen-viz.ts: find the visual sources under the
 // content roots, run the PyPy 3.8 recorders, and format the generated files deterministically.
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
@@ -32,7 +32,6 @@ export const DEFAULT_ROOTS = [
   path.join(APP_ROOT, "content"),
   path.join(APP_ROOT, "app", "dev", "viz"),
 ];
-export const DEFAULT_BYTES = 150_000;
 export const DEFAULT_STEPS = 200;
 
 export interface VisualSource {
@@ -79,18 +78,6 @@ export function inScope(file: string, scope: string | undefined): boolean {
     .replace(/\.(viz\.yaml|trace\.yaml|frames\.json|trace\.json|viz\.py|py|mdx)$/, "");
   if (stem === scope) return true;
   return segments.some((s) => s === scope || s.startsWith(`${scope}-`));
-}
-
-/**
- * Does a module page path (/learn/<stage>/<module>) belong to the scope: a module id (exact, so
- * M1.1 does not pick up M1.10), a module folder name, or a stage id? P6: the old test lower-cased
- * the scope and swapped its dot for a dash, so no module id ever matched a real page URL.
- */
-export function moduleInScope(modulePath: string, scopeId: string | undefined): boolean {
-  if (!scopeId) return true;
-  const [, , stage, moduleId] = decodeURIComponent(modulePath).split("/");
-  const folderId = scopeId.replace(/-.*$/, ""); // "M1.2-integer-..." -> "M1.2"
-  return moduleId === folderId || stage === scopeId;
 }
 
 export function findVisuals(roots: string[], scope?: string): VisualSource[] {

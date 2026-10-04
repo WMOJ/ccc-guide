@@ -1,8 +1,8 @@
 // tools/viz/register.mjs: lets plain Node (type stripping, Node 24) run the app's TypeScript
 // modules the way Next and TypeScript resolve them: extensionless relative imports and the `@/`
 // alias (tsconfig "paths") resolve to .ts / .tsx / index.ts. Use it as
-//   node --import ./tools/viz/register.mjs tools/viz/check-viz.ts
-// Only .ts files are loadable this way (no JSX); every module the gate scripts reach is pure TS.
+//   node --import ./tools/viz/register.mjs tools/viz/gen-viz.ts
+// Only .ts files are loadable this way (no JSX); every module the Node scripts reach is pure TS.
 import fs from "node:fs";
 import { registerHooks } from "node:module";
 import path from "node:path";

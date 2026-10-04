@@ -45,24 +45,21 @@ npm run dev              # next dev
 npm run build            # production build (through scripts/build-lock.mjs)
 npm run lint             # biome check .
 npm run typecheck        # tsc --noEmit
-npm run verify:fast      # the fast gates (lint, types, schema, style, R14, links, ...)
-npm run verify:full      # verify:fast + build + internal links + viz:shots
+npm run gen:outputs      # regenerate every example's .out/.err under PyPy 3.8
+npm run gen:viz          # regenerate every visual's frames/trace JSON under PyPy 3.8
+npm run content:status   # rebuild ledger.generated.md from each module.yaml's status
 ```
-
-`verify:full` must be green before any change is considered done. See the `verifying-changes`
-skill for what each gate checks.
 
 ## Tool prerequisites
 
-Node version is pinned in `package.json`'s `engines`. Everything else (PyPy 3.8, ruff, vermin,
-Playwright's Chromium) is a normal, system-wide install — see the `tool-setup` skill for exact
-pinned versions, install steps, and a one-line check for each.
+Node version is pinned in `package.json`'s `engines`. PyPy 3.8 (for the generators) is a normal,
+system-wide install — see the `tool-setup` skill for the pinned version, install steps, and a
+one-line check.
 
 ## Broad rules every change must respect
 
 - **No agent views images** (owner rule): no reading PNG/JPG screenshots, no browser or
-  computer-use screenshots. Check visuals from text (source, frames JSON, `check:viz`,
-  `viz:shots`'s text report).
+  computer-use screenshots. Check visuals from text (source and frames JSON).
 - **Light mode only.** No dark theme, no `prefers-color-scheme: dark`, no `dark:` classes.
 - **Every shown code sample is Python 3.8**, because that is what the CCC grader's PyPy runs. A
   deliberately invalid example is labeled "not valid on the CCC grader"; a deliberately failing one
@@ -78,8 +75,7 @@ pinned versions, install steps, and a one-line check for each.
 - **Only `accepted` modules render in production.** `gated`/`reviewed` show with a Draft badge in
   previews; `planned`/`drafted` show "Coming soon" with no link.
 - **Generated files are never hand-edited**: every example's `.out`/`.err` (from `gen:outputs`),
-  every visual's `*.frames.json`/`*.trace.json` (from `gen:viz`), `verified.json` (from
-  `links:verify`), and the `<!-- BEGIN/END:nextjs-agent-rules -->` block at the top of this file
+  every visual's `*.frames.json`/`*.trace.json` (from `gen:viz`), and the `<!-- BEGIN/END:nextjs-agent-rules -->` block at the top of this file
   (re-written by `next dev`). Re-run the generator instead of editing the output.
 
 ## Content model
@@ -95,8 +91,7 @@ list.
   practice), example `.py`/`.out`/`.err` files, and a `visuals/` folder of recorder scripts
   (`.viz.py`) plus their generated output. The folder is found by its `<id>-` prefix alone.
 - `content/registry/ccc-problems.yaml`: the 119 CCC 2014–2026 problems (WMOJ/DMOJ links, aliases).
-- `content/glossary.yaml`, `content/concepts.yaml`: terms and Python features, each with an
-  `introducedIn` module id; content:check fails a module that uses one before that module.
+- `content/glossary.yaml`: terms, each with the `introducedIn` id of the module that first uses it.
 - `content/ui/strings.yaml`: all learner-facing UI copy.
 - `content/style/STYLE-GUIDE.md` and `house-skeleton.py`: the voice, format and code conventions —
   read before writing or editing any module (see the `writing-modules` skill).

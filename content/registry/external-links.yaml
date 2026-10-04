@@ -1,7 +1,7 @@
-# content/registry/external-links.yaml — allow-list of non-judge external links (G-LINK-FMT).
+# content/registry/external-links.yaml — allow-list of non-judge external links.
 # Judge links never appear here: they come only from judgeUrl() (lib/registry).
 # Anything a module page or a component links to outside the origin must resolve to one of these
-# entries by id; content:check fails a raw external URL that is not on this list.
+# entries by id.
 
 links:
   - id: python-docs
@@ -17,8 +17,7 @@ links:
     label: Past CCC contests (CEMC)
     url: https://cemc.uwaterloo.ca/resources/past-contests
   # pypy-downloads / python-downloads removed: the app has no
-  # install or setup content, so it never links a download page. Added to the G-R14 banned-URL
-  # list instead, so a future module can't reintroduce one.
+  # install or setup content, so it never links a download page.
   - id: wmoj-home
     label: WMOJ
     url: https://wmoj.ca/

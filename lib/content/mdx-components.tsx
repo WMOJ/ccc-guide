@@ -1,10 +1,7 @@
 // lib/content/mdx-components.tsx — the fixed MDX component map. Authors
 // never import: every name below is all that is available inside a module.mdx file. Anything
 // else fails the build (unresolved MDX component references throw at render time, which SSG hits
-// during `next build` since every route is static) — and, before that, fails
-// content:check's static G-SCHEMA check, which reads the same key list
-// from ./mdx-component-names.ts (a plain-data module, kept in sync with the object below by
-// hand) since it cannot load this file's JSX.
+// during `next build` since every route is static).
 import fs from "node:fs";
 import type { ReactNode, TableHTMLAttributes } from "react";
 import {

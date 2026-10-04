@@ -96,8 +96,7 @@ export function DesignGallery({
     <SiteFrame current="none" courseNav={courseNav}>
       <h1 className={h1Class}>Design gallery</h1>
       <p className="mt-3 max-w-(--measure) text-body text-ink-2">
-        Every component in every state, for the pixel review and the visual baselines. Previews
-        only.
+        Every component in every state, for the pixel review. Previews only.
       </p>
       <TitleBlockStrip
         cells={[

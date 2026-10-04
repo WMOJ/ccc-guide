@@ -1,7 +1,6 @@
 # content/glossary.yaml — Glossary of competitive programming and Python terms.
 #
 # term -> definition, introducedIn (the id of the module that first uses the term)
-# Checked by G-SCHEMA and G-PREREQ.
 
 terms:
   - id: variable

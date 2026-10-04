@@ -1,5 +1,5 @@
 # content/ui/strings.yaml — ALL learner-facing UI copy, written in the approved voice
-# (STYLE-GUIDE.md). G-STYLE checks every string here. Loaded and Zod-validated by
+# (STYLE-GUIDE.md). Loaded and Zod-validated by
 # lib/content/strings.ts (getUiStrings()). Working title: "CCC Python Course" until the
 # Manager decides.
 

@@ -540,7 +540,7 @@ Plan §4.11.3. Tokens and the state grammar below are the design lead's [W2]. Th
 
 ### Typography in visuals [W2]
 - Lettering: Atkinson Hyperlegible Next for labels and captions, Mono for values, indices and code. Both tabular.
-- **Minimum rendered size at a 390 px viewport: 12 px** for indices, axis labels and pointer names; **14 px** for values inside cells and nodes; captions 15 px (small) on phones, 16 px at 640 px and up. Visuals scale with the column, so authors size presets so that these minimums hold at the 390 px column width (about 350 px of stage); the G-VIZ/visual checks enforce it. [W3] Two checks do it: `check:viz` lays out every step of every preset and fails any panel wider than 361 units (a 316 px phone stage ÷ 0.875, the ratio of 14 px values to their 16 px natural size); `viz:shots` then measures every SVG text in a real browser at each width it shoots (390, 768 and 1440 px by default) and fails anything below 14 px (values) or 12 px (labels and titles).
+- **Minimum rendered size at a 390 px viewport: 12 px** for indices, axis labels and pointer names; **14 px** for values inside cells and nodes; captions 15 px (small) on phones, 16 px at 640 px and up. Visuals scale with the column, so authors size presets so that these minimums hold at the 390 px column width (about 350 px of stage): no panel wider than 361 units (a 316 px phone stage ÷ 0.875, the ratio of 14 px values to their 16 px natural size).
 - Values in Mono 500; labels in Next 500; the current pointer label in 700.
 - Natural SVG sizes (before the stage scales): values 16 units, labels and panel titles 14 units. These are SVG user units, not CSS text sizes, so they sit outside the page type ramp on purpose; the rendered minimums above are what the checks enforce.
 
@@ -555,7 +555,7 @@ Plan §4.11.3. Tokens and the state grammar below are the design lead's [W2]. Th
 - [W3] Playback timing per speed (`lib/viz/player-state.ts` SPEEDS): 0.5× = one step per 2.4 s, 1× = 1.2 s, 2× = 0.6 s; transitions take `--dur-viz` (280 ms) at 0.5× and 1× and 200 ms at 2×. Sequencing and layout transitions: see "Motion choreography" below.
 
 ### Captions [W2 style, W3 plumbing]
-- Every step has a caption in the teaching voice (style guide, G-STYLE): what changed and why, one or two sentences, present tense, naming things with the same words as the prose and the legend. Never "Step 7".
+- Every step has a caption in the teaching voice (style guide): what changed and why, one or two sentences, present tense, naming things with the same words as the prose and the legend. Never "Step 7".
 - Caption region: below the control strip, small/body style ink on paper, left-aligned, `aria-live="polite"`, with a **reserved minimum height of 3 lines** (4 on phones) so the page never shifts as captions change. Step number is not repeated in the caption (the counter shows it).
 
 ### Player chrome [W2 look, W3 behaviour]
@@ -584,14 +584,14 @@ Below 640 px: the stage stays above; state panels (variables, stack, output in a
 - Output so far: the Output panel style, growing line by line.
 
 ### Library structure [W3]
-- Frames are data, drawn by one renderer. A layout function (`lib/viz/layout*.ts`, pure TypeScript) turns every step of every preset of one panel into positioned items (cells, nodes, edges, arrows, pointers, dimension lines, text, slots, lines, badges, bands); `components/viz/SceneSvg.tsx` draws them with the primitives in `components/viz/primitives`. The same code runs on the server (first frame), in the lazy client player, and in the `check:viz` gate.
+- Frames are data, drawn by one renderer. A layout function (`lib/viz/layout*.ts`, pure TypeScript) turns every step of every preset of one panel into positioned items (cells, nodes, edges, arrows, pointers, dimension lines, text, slots, lines, badges, bands); `components/viz/SceneSvg.tsx` draws them with the primitives in `components/viz/primitives`. The same code runs on the server (first frame), and in the lazy client player.
 - Every panel keeps one box for all steps and presets (the union of their sizes), so nothing shifts while stepping. A smaller preset sits centred in that box.
 - Styling is by state, not by colour: each item carries `data-s="<state>"` and `viz.css` maps states to custom properties (`--vz-fill`, `--vz-edge`, `--vz-sw`, `--vz-dash`), which read only the tokens below. No component hard-codes a colour.
 - Two library states beyond the table above: **Wall** (`#` in grids: `rule-strong` fill hatching, legend "Wall") and **Just changed** (code trace values and objects: `--color-viz-changed` = `check-soft`, legend "Just changed"). Free-standing labels paint above every shape and sit on a stage-coloured knockout, so no line, sweep or edge ever crosses a label.
 
 ### Per-visualizer specifics [W3]
 All sizes are in natural units (1 unit = 1 px at scale 1; the stage scales a panel down to fit, never below the minimum text sizes, and up to at most 1.25×). Scene padding is 8.
-- **Clearances (G-VIZ rule `collision`, `lib/viz/collide.ts`)**: `check:viz` lays out every step of every preset and fails when a label overlaps another label, a label crosses the edge of a cell, slot, badge or node (it must sit fully inside or fully clear), or a value inside its own cell, pill or node has less than 6 units to the edge (measured at the text's cap height, so rounded ends count). Lines (edges, arrows, axes, sweeps) are exempt: labels paint above them on a knockout. The failing fixture is `tests/fixtures/gates/G-VIZ/collision`; a unit test holds every gallery sample and scene at zero.
+- **Clearances**: in every step of every preset, no label overlaps another label, no label crosses the edge of a cell, slot, badge or node (it must sit fully inside or fully clear), and a value inside its own cell, pill or node keeps at least 6 units to the edge (measured at the text's cap height, so rounded ends count). Lines (edges, arrows, axes, sweeps) are exempt: labels paint above them on a knockout.
 - **ArrayViz**: cells 40 tall and at least 40 wide (value width + 14), indices 20 below in label style. Pointers get a 38-unit row above or below: a 1.5 px ink arrow and the name (the strong one in 700); several pointers on one index share one label ("lo, mid"). Ranges are dimension lines in 28-unit rows. A compare is a plum bracket on its own row above, with the comparison written in its gap; with a pointer at either end, the bracket's legs stop on top of the pointer label. `circular` draws a return arrow under the row.
 - **GridViz**: square cells from 28 to 40 units (as large as fits 361 units), row and column indices in label style unless `indices: false`; walls hatched; values in Mono inside cells; no pointers (the caption names the cell).
 - **GraphViz**: author coordinates in grid units of 60; nodes are circles of radius 18 with the id in Mono; value badges sit under each node, and `valueLabel` explains them once under the graph ("Boxed under each node: distance"). Edge weights sit at the midpoint, offset from the line, on a knockout. Directed edges end in an arrowhead at the node rim.
@@ -639,7 +639,7 @@ A dev-only page (404 in production) on the standard sheet, in five sections: Pri
 - **Do** theme the browser surfaces: selection (check-soft), caret (blueline), thin scrollbars (rule-strong), tabular numerals in every column of numbers.
 
 ### Don't:
-- **Don't** add dark mode, `dark:` classes, `prefers-color-scheme: dark` or any dark theme import (PRODUCT.md, G-UI-LIGHT).
+- **Don't** add dark mode, `dark:` classes, `prefers-color-scheme: dark` or any dark theme import (PRODUCT.md).
 - **Don't** add an eyebrow or kicker above any heading; the title-block strip is the only place for that metadata.
 - **Don't** use a coloured `border-left`/`border-right` wider than 1 px on callouts, list items, rows or cards; callouts are framed boxes with an icon and a label.
 - **Don't** build any page as a grid of same-size icon cards, and never nest a framed box in a framed box.

@@ -27,13 +27,10 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // ETCCC_DIST_DIR (orchestrator relay, W3's finding): a plain `next build` writes to `.next`,
-  // which is also where `next dev` writes — running one while the other is up kills the dev
-  // server (BUILD_ID changes under it). Unset (the default) still resolves to `.next`, so Vercel's
-  // own deployment build — which never sets this — is unaffected; every *local* script that
-  // might run alongside someone's `next dev` (verify:full's G-BUILD, links:internal) sets it
-  // explicitly to a directory nothing else writes to. `npm run dev`/`npm run start` never set it,
-  // so they keep using `.next` as always.
+  // ETCCC_DIST_DIR: a plain `next build` writes to `.next`, which is also where `next dev`
+  // writes — running one while the other is up kills the dev server (BUILD_ID changes under it).
+  // Set it to build into a separate directory while `next dev` is running. Unset (the default)
+  // resolves to `.next`, which Vercel's deployment build and `npm run dev`/`start` always use.
   distDir: process.env.ETCCC_DIST_DIR || ".next",
   // No `output: 'export'`: a regular Vercel build keeps next.config headers and redirects working.
   async redirects() {

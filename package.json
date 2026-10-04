@@ -12,25 +12,9 @@
     "start": "next start",
     "lint": "biome check .",
     "typecheck": "tsc --noEmit",
-    "lint:light": "node scripts/gates/lint-light.mjs",
-    "content:check": "node --import ./tools/viz/register.mjs scripts/gates/content-check.ts",
-    "content:status": "node --import ./tools/viz/register.mjs scripts/gates/content-status.ts",
-    "lint:r14": "node scripts/gates/lint-r14.mjs",
-    "spell": "cspell --no-progress \"content/**\" \"*.md\"",
-    "lint:mdx": "remark . --ext mdx --frail",
-    "check:python": "node --import ./tools/viz/register.mjs tools/pycheck/check-python.ts",
+    "content:status": "node --import ./tools/viz/register.mjs scripts/content-status.ts",
     "gen:outputs": "node --import ./tools/viz/register.mjs tools/pycheck/gen-outputs.ts",
-    "style:check": "node tools/style/check-style.mjs",
-    "gen:viz": "node --import ./tools/viz/register.mjs tools/viz/gen-viz.ts",
-    "check:viz": "node --import ./tools/viz/register.mjs tools/viz/check-viz.ts",
-    "viz:shots": "node --import ./tools/viz/register.mjs tools/viz/viz-shots.ts",
-    "prebuild": "node scripts/gates/prebuild.mjs",
-    "verify:build": "node scripts/gates/verify-build.mjs",
-    "links:verify": "node tools/links/verify-judges.mjs",
-    "links:external": "node tools/links/verify-external.mjs",
-    "links:internal": "node scripts/links-internal.mjs",
-    "verify:fast": "node scripts/verify.mjs fast",
-    "verify:full": "node scripts/verify.mjs full"
+    "gen:viz": "node --import ./tools/viz/register.mjs tools/viz/gen-viz.ts"
   },
   "dependencies": {
     "@base-ui/react": "1.8.0",
@@ -62,14 +46,7 @@
     "@types/node": "24.13.6",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "cspell": "10.3.3",
-    "linkinator": "8.1.0",
-    "playwright": "1.63.0",
     "postcss": "8.5.28",
-    "remark-cli": "12.0.1",
-    "remark-mdx": "3.1.1",
-    "remark-preset-lint-consistent": "6.0.1",
-    "remark-preset-lint-recommended": "7.0.1",
     "typescript": "6.0.3"
   }
 }

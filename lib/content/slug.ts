@@ -3,8 +3,7 @@
 // alone, in lib/content/course.ts).
 
 /** The page body's file name inside a module directory. Plain MDX with no frontmatter: the title
- * lives in course.yaml, objectives and practice in module.yaml. Plain data, so the Node-run gates
- * (scripts/gates/content-check.ts) can import it too. */
+ * lives in course.yaml, objectives and practice in module.yaml. */
 export const MODULE_BODY_FILE = "module.mdx";
 
 export function slugify(text: string): string {

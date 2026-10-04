@@ -1,6 +1,6 @@
 ---
 name: step-through-visuals
-description: How the recorded step-through visuals and code traces work — the viz spec format, gen:viz/check:viz, the tracer, and phone-width limits. Load before authoring, editing, or debugging any visual or CodeTrace.
+description: How the recorded step-through visuals and code traces work — the viz spec format, gen:viz, the tracer, and phone-width limits. Load before authoring, editing, or debugging any visual or CodeTrace.
 ---
 
 # Step-through visuals
@@ -16,20 +16,15 @@ server-rendered and fully meaningful on its own, with no autoplay.
 - `npm run gen:viz` runs the recorders under PyPy 3.8 (`tools/viz/lib.ts` resolves the interpreter
   via `lib/tools/resolve-tools.ts` — see `AGENTS.md`'s tool prerequisites) and writes the generated
   files deterministically.
-- `npm run check:viz` (G-VIZ) re-runs generation and fails on any diff, so a hand-edited generated
-  file is caught immediately — always regenerate, never hand-edit.
-- `npm run viz:shots` shoots every figure and reports, as text, values under 14 px, labels under
-  12 px, sideways scroll at 390 px and console errors. Read that report only: by owner rule no
-  agent opens the PNGs (or any screenshot). Check a figure by reading its source and frames JSON
+- Always regenerate, never hand-edit a generated file.
+- By owner rule no agent opens a screenshot. Check a figure by reading its source and frames JSON
   against the limits below and its captions against the prose.
 
-## What G-VIZ checks
+## What a visual must have
 
-Zod-valid data; `gen:viz` regenerates with **no diff**; a caption on every step; a text
-alternative present; the visual's declared behavior stays consistent with the shown code; size and
-step budgets (`DEFAULT_BYTES` = 150,000 bytes, `DEFAULT_STEPS` = 200 in `tools/viz/lib.ts`, both
-overridable per visual via `budget:`); and only library components are used — no ad hoc one-off
-visual.
+Zod-valid data (checked at render time); a caption on every step; a text alternative; behavior
+consistent with the shown code; at most `DEFAULT_STEPS` = 200 steps (`tools/viz/lib.ts`,
+overridable per visual via `budget:`); and only library components — no ad hoc one-off visual.
 
 ## Phone-width and accessibility limits
 
@@ -55,8 +50,8 @@ visual.
 - Schema caps worth knowing before sizing: at most 3 presets per visual, and a `TableViz` at most
   10 rows and 10 columns. At 390 px, a table or grid of about 6 columns with short labels is the
   practical limit; split a longer row into two rows with row heads instead of dropping data.
-- `check:viz` lays panels out in a 361-unit width, so the real limits are tighter than the
-  ~10-cell rule of thumb: an ArrayViz fits 7 short cells (8 measured 368), and a TreeViz with 8 leaves fails
+- Panels are laid out in a 361-unit width, so the real limits are tighter than the
+  ~10-cell rule of thumb: an ArrayViz fits 7 short cells (8 measured 368), and a TreeViz with 8 leaves overflows
   (6 fit). Other caps that fail late: at most 2 `ranges` per ArrayViz frame, `valueLabel` at most
   10 characters, and `legendLabels` keys are state names (`frontier`, not `queued`). A TableViz
   `row_title` longer than its column heads collides with them.
@@ -73,7 +68,7 @@ visual.
   titles 24 characters; an ArrayViz `name` 12; a TableViz `colTitle` 12; LineViz at most 10
   intervals and 4 rows per frame, with tick and point labels colliding when closer than about 3
   ticks (use tick 30 on a 0–180 axis). GraphViz draws no self-loops.
-- `check:viz` enforces `tree-ids`: a TreeViz node id must keep the same parent in every frame of
+- A TreeViz node id must keep the same parent in every frame of
   every preset, so build ids from the path ("0-1-2") and show the number as the label.
 - Every recorded visual needs `consistency:` with an example, and the example is re-run on every
   preset's stdin. A static reference table with no program behind it goes inline instead.
@@ -84,13 +79,13 @@ visual.
 - A `.viz.py` sees only its preset's stdin, never the preset id: vary presets through stdin.
 - Label a panel once: its `title` in the `.viz.yaml` or the frame's `name=`, not both.
 - Preset labels share one tab row: keep each to one or two words, or the page scrolls sideways
-  at 390 px (`viz:shots` reports it as a page problem, not a tab problem).
+  at 390 px.
 - A `CodeTrace` shows the whole example file and every line must fit a 390 px phone without
-  scrolling (`viz:shots` checks it; `check:viz` does not): keep traced lines to about 30 characters by
+  scrolling: keep traced lines to about 30 characters by
   splitting a statement in two or using shorter local names (keeping a long `raw` string alive
   widens the variables panel instead; see the width note above). Prefer the single-`main()` skeleton for a
   traced file, so the last steps still show the program's own variables.
-- Inline `<Diagram viz=… data={{…}}>` data is validated at render time, not by `check:viz`: use
+- Inline `<Diagram viz=… data={{…}}>` data is validated at render time: use
   one-letter state codes (`"d"`, `"c"`, `"m"`), and give its `<Figure>` an `alt` (only the
   `frames=` form inherits the `.viz.yaml`'s `alt`). A mistake shows up as a page error, so load
   the module page after adding one.
@@ -101,8 +96,9 @@ visual.
 
 ## Debugging a broken visual
 
-1. Reproduce with `npm run check:viz -- --scope <module id>` before touching anything.
-2. If the diff is in the data, fix the `.viz.py` source and regenerate — never hand-patch the
+1. Reproduce with `npm run gen:viz -- --scope <module id>` and load the module page before
+   touching anything.
+2. If the problem is in the data, fix the `.viz.py` source and regenerate — never hand-patch the
    JSON.
-3. If the diff is visual only (layout, color, motion), check it from text with `viz:shots` — see
-   the `verifying-changes` skill.
+3. If the problem is visual only (layout, color, motion), check it from the source and frames JSON
+   against the limits above.

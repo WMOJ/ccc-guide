@@ -1,5 +1,5 @@
 // lib/content/pages.tsx — /start and /about prose. The copy lives in
-// content/ui/strings.yaml (startPage, aboutPage) with the rest of the UI copy, so G-STYLE checks it;
+// content/ui/strings.yaml (startPage, aboutPage) with the rest of the UI copy;
 // this file only turns it into headed sections. Rules for that copy: no local system/environment
 // setup content, no score targets or CCO/medal wording, no walkthroughs or
 // per-problem hints.

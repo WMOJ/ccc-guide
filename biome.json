@@ -11,7 +11,6 @@
       "!**/.next",
       "!**/node_modules",
       "!**/.impeccable",
-      "!**/test-results",
       "!.agents/skills",
       "!.claude",
       "!**/AGENTS.md",
