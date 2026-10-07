@@ -1,33 +1,12 @@
-## Maintaining this file
-
-Keep it current — fixing what is outdated, wrong or missing here is part of your change, not extra
-credit — and keep it **at or under 150 lines**. Update it the moment you notice anything in it is
-stale, without waiting to be asked; the same goes for every project skill in `.agents/skills/`.
-
-⚠️ **Maintenance here is ZERO-SUM.** The budget is the point: a file nobody finishes reading guides
-nothing. So the test is never "is this true and useful" (almost everything is) but:
-
-> **Is this worth removing something else to make room for?**
-
-If no, it does not go here. If yes, name what you cut and cut it in the same change — though while the
-file is *under* 150 that room already exists, so add freely: spare budget is there to be spent, and a
-file that uses it well beats one that leaves it on the table. Where it goes instead:
-
-1. **Has a detectable trigger** ("when editing a table", "when touching the PDF pipeline") → a
-   **skill**, loaded only when needed and costing nothing otherwise. This is the default answer.
-2. **Broad and unconditional** — every change must respect it, whatever it touches → this file.
-3. **Neither** → bloat: delete it, or leave it as a comment beside the code, where a narrow fact stays
-   honest longest. A fact with no trigger is not a skill either — never invent one to hold it.
-
-Skills live in `.agents/skills/<name>/SKILL.md`.
+# Agent Guide
 
 ## What this is
 
-A free, non-commercial reading course (Next.js 16 App Router) that teaches CCC Senior (S1–S5)
-algorithms in **Python 3.8** — the language level of the CCC grader's PyPy. Prose, worked
-examples, read-only code, and recorded animated step-throughs; practice happens outside the app,
-on WMOJ/DMOJ. No accounts, no scores, no code execution in the app. The design system lives in
-the `ui-design` skill; load it before any UI/UX work.
+A free, non-commercial, all-in-one reading course (Next.js 16 App Router) that takes a complete
+beginner from their first line of code to everything they need to compete at the highest level of
+the CCC Senior contest (S1–S5), in **Python 3.8** — the language level of the CCC grader's PyPy.
+Prose, worked examples, read-only code, and recorded animated step-throughs; practice happens
+outside the app, on WMOJ/DMOJ. No accounts, no scores, no code execution in the app.
 
 ## Commands
 
@@ -44,8 +23,7 @@ npm run content:status   # rebuild ledger.generated.md from each module.yaml's s
 ## Tool prerequisites
 
 Node version is pinned in `package.json`'s `engines`. PyPy 3.8 (for the generators) is a normal,
-system-wide install — see the `tool-setup` skill for the pinned version, install steps, and a
-one-line check.
+system-wide install.
 
 ## Broad rules every change must respect
 
@@ -86,4 +64,27 @@ list.
 - `content/glossary.yaml`: terms, each with the `introducedIn` id of the module that first uses it.
 - `content/ui/strings.yaml`: all learner-facing UI copy.
 - `content/style/STYLE-GUIDE.md` and `house-skeleton.py`: the voice, format and code conventions —
-  read before writing or editing any module (see the `writing-modules` skill).
+  read before writing or editing any module.
+
+## Maintaining this file
+
+Keep it current — fixing what is outdated, wrong or missing here is part of your change, not extra
+credit — and keep it **at or under 150 lines**. Update it the moment you notice anything in it is
+stale, without waiting to be asked; the same goes for every project skill in `.agents/skills/`.
+
+⚠️ **Maintenance here is ZERO-SUM.** The budget is the point: a file nobody finishes reading guides
+nothing. So the test is never "is this true and useful" (almost everything is) but:
+
+> **Is this worth removing something else to make room for?**
+
+If no, it does not go here. If yes, name what you cut and cut it in the same change — though while the
+file is *under* 150 that room already exists, so add freely: spare budget is there to be spent, and a
+file that uses it well beats one that leaves it on the table. Where it goes instead:
+
+1. **Has a detectable trigger** ("when editing a table", "when touching the PDF pipeline") → a
+   **skill**, loaded only when needed and costing nothing otherwise. This is the default answer.
+2. **Broad and unconditional** — every change must respect it, whatever it touches → this file.
+3. **Neither** → bloat: delete it, or leave it as a comment beside the code, where a narrow fact stays
+   honest longest. A fact with no trigger is not a skill either — never invent one to hold it.
+
+Skills live in `.agents/skills/<name>/SKILL.md`.
