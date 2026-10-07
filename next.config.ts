@@ -27,6 +27,8 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Stop `next dev` from writing its agent-rules block into AGENTS.md.
+  agentRules: false,
   // ETCCC_DIST_DIR: a plain `next build` writes to `.next`, which is also where `next dev`
   // writes — running one while the other is up kills the dev server (BUILD_ID changes under it).
   // Set it to build into a separate directory while `next dev` is running. Unset (the default)

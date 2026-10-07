@@ -1,13 +1,3 @@
-<!-- BEGIN:nextjs-agent-rules -->
-
-# This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
-
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
-
-<!-- END:nextjs-agent-rules -->
-
 ## Maintaining this file
 
 Keep it current — fixing what is outdated, wrong or missing here is part of your change, not extra
@@ -77,9 +67,8 @@ one-line check.
 - **Only `accepted` modules render in production.** `gated`/`reviewed` show with a Draft badge in
   previews; `planned`/`drafted` show "Coming soon" with no link.
 - **Generated files are never hand-edited**: every example's `.out`/`.err` (from `gen:outputs`),
-  every visual's `*.frames.json`/`*.trace.json` (from `gen:viz`), and the
-  `<!-- BEGIN/END:nextjs-agent-rules -->` block at the top of this file (re-written by
-  `next dev`). Re-run the generator instead of editing the output.
+  and every visual's `*.frames.json`/`*.trace.json` (from `gen:viz`). Re-run the generator
+  instead of editing the output.
 
 ## Content model
 
