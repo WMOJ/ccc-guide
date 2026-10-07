@@ -5,7 +5,7 @@ language level of the CCC grader's PyPy. Prose, worked examples, and recorded an
 step-throughs; practice happens outside the app, on WMOJ/DMOJ. See `AGENTS.md` for the rules every
 change follows, and `.agents/skills/ui-design/SKILL.md` for the design system.
 
-**Live site:** _(URL to be filled in)_
+**Live site:** https://cccguide.wmoj.ca
 
 ## Prerequisites
 
