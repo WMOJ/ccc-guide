@@ -30,9 +30,8 @@ a second `.mdx` file in one folder.
 ## Voice
 
 Warm, plain, second person, short sentences in Stages 0–2. No hype, no clipped fragments, no
-judgments about the learner. Use the `avoid-ai-writing` skill (`.agents/skills/avoid-ai-writing/`)
-in its `warm` voice and `docs` context on every prose pass, over module pages and
-`content/ui/strings.yaml` alike.
+judgments about the learner. Hold every prose pass, over module pages and
+`content/ui/strings.yaml` alike, to the style guide's avoid-AI-writing rules.
 
 ## Format
 

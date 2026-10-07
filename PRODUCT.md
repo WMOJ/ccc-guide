@@ -1,8 +1,6 @@
 # Product
 
-<!-- impeccable:product-schema 1 -->
-
-<!-- Written through Impeccable `init`. A few inferences are marked "Inferred". -->
+<!-- A few inferences are marked "Inferred". -->
 
 ## Platform
 
@@ -65,7 +63,7 @@ The only course that goes from "never programmed" to CCC Senior S5 **in Python 3
 
 ## Brand Commitments
 
-- Tone: **calm, encouraging, focused.** Teaching prose uses the avoid-ai-writing skill in its `warm` voice and `docs` context.
+- Tone: **calm, encouraging, focused.** Teaching prose is warm and plain, with no AI-writing tells (see `content/style/STYLE-GUIDE.md`).
 - The CCC and its problems belong to the CEMC (University of Waterloo). The app is not affiliated with the CEMC and must not look like an official CEMC product; attribution (CC BY-NC 4.0) lives on `/about`. (The "not official" framing is Inferred from the copyright constraint.)
 - The app is free; nothing may charge for access to past contests.
 - No logo or identity assets exist. None may be invented that imitate CEMC, WMOJ or DMOJ marks; judges are named in text badges only (Inferred).

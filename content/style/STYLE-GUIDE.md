@@ -26,7 +26,7 @@ This style guide establishes the authoring standards, voice, conventions, and co
 
 ## 3. Avoid-AI-Writing Rules
 
-All content is drafted using the `avoid-ai-writing` skill with the `warm` voice and `docs` context.
+All content is written in a warm, plain voice with none of the AI-writing tells below.
 - **Zero Tier 1 words**: Never use words like *delve*, *robust*, *leverage*, *pivotal*, *tapestry*, *realm*, *seamless*, *comprehensive*, *intricate*, *holistic*, *synergy*, *embark*, or *testament*.
 - **No hollow intensifiers**: Cut *genuinely*, *truly*, *actually*, *real*, *quite frankly*, and *to be honest*.
 - **No rule-of-three triads**: Avoid grouping adjectives or clauses into compulsive sets of three.

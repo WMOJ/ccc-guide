@@ -10,7 +10,6 @@
       "**",
       "!**/.next",
       "!**/node_modules",
-      "!**/.impeccable",
       "!.agents/skills",
       "!.claude",
       "!**/AGENTS.md",

@@ -11,7 +11,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Maintaining this file
 
 Keep it current — fixing what is outdated, wrong or missing here is part of your change, not extra
-credit — and keep it **at or under 150 lines**.
+credit — and keep it **at or under 150 lines**. Update it the moment you notice anything in it is
+stale, without waiting to be asked; the same goes for every project skill in `.agents/skills/`.
 
 ⚠️ **Maintenance here is ZERO-SUM.** The budget is the point: a file nobody finishes reading guides
 nothing. So the test is never "is this true and useful" (almost everything is) but:
@@ -59,7 +60,8 @@ one-line check.
 ## Broad rules every change must respect
 
 - **No agent views images** (owner rule): no reading PNG/JPG screenshots, no browser or
-  computer-use screenshots. Check visuals from text (source and frames JSON).
+  computer-use screenshots, and no scripts, npm commands or tooling that render screenshots or
+  images to look at. Check visuals from text (source and frames JSON).
 - **Light mode only.** No dark theme, no `prefers-color-scheme: dark`, no `dark:` classes.
 - **Every shown code sample is Python 3.8**, because that is what the CCC grader's PyPy runs. A
   deliberately invalid example is labeled "not valid on the CCC grader"; a deliberately failing one
@@ -75,8 +77,9 @@ one-line check.
 - **Only `accepted` modules render in production.** `gated`/`reviewed` show with a Draft badge in
   previews; `planned`/`drafted` show "Coming soon" with no link.
 - **Generated files are never hand-edited**: every example's `.out`/`.err` (from `gen:outputs`),
-  every visual's `*.frames.json`/`*.trace.json` (from `gen:viz`), and the `<!-- BEGIN/END:nextjs-agent-rules -->` block at the top of this file
-  (re-written by `next dev`). Re-run the generator instead of editing the output.
+  every visual's `*.frames.json`/`*.trace.json` (from `gen:viz`), and the
+  `<!-- BEGIN/END:nextjs-agent-rules -->` block at the top of this file (re-written by
+  `next dev`). Re-run the generator instead of editing the output.
 
 ## Content model
 

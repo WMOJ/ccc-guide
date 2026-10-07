@@ -12,9 +12,6 @@ __pycache__/
 .env*
 .vercel/
 .claude/settings.local.json
-.impeccable/config.local.json
-.impeccable/hook.cache.json
-.impeccable/hook.pending.json
 
 # OS
 .DS_Store
