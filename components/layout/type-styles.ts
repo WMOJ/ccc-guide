@@ -1,4 +1,4 @@
-// Heading classes (DESIGN.md → Typography → Hierarchy), shared by page components.
+// Heading classes (ui-design skill → Typography → Hierarchy), shared by page components.
 export const h1Class =
   "font-bold text-title leading-(--text-title--line-height) tracking-(--text-title--letter-spacing) text-ink text-balance";
 export const displayClass =

@@ -7,7 +7,7 @@ export interface TitleCell {
 }
 
 /**
- * The ruled title-block strip under an H1 (DESIGN.md → Reading page): field label above value,
+ * The ruled title-block strip under an H1 (ui-design skill → Reading page): field label above value,
  * square corners, 1 px rules. The cells always share one row in equal columns with a rule between
  * them; on phones the extra item (the Draft badge) takes its own ruled row below. Values wrap,
  * never truncate.

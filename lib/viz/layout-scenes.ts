@@ -287,7 +287,7 @@ export function layoutJudgeScene(frames: JudgeSceneFrame[]): VizScene[] {
       d: `M ${xo} ${yPipe + boxH + 3} L ${xo} ${ymid} L ${xc} ${ymid} L ${xc} ${yCheck - 4}`,
       state: "none",
     });
-    // The verdict in words on its own full-width row (DESIGN.md → Scenes); the short code is only
+    // The verdict in words on its own full-width row (ui-design skill → Scenes); the short code is only
     // the secondary label under each test case.
     items.push({
       key: "pverdict",

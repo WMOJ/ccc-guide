@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 /*
-  Design tokens: the single source is DESIGN.md ("Token Block"). Light mode only.
+  Design tokens: the single source is the ui-design skill
+  (.agents/skills/ui-design, "Token Block"). Light mode only.
   `static` emits every variable even when no utility uses it: the Shiki
   theme and the visualization library read them.
 */
@@ -258,7 +259,7 @@
     max-width: var(--measure);
   }
 
-  /* Measure per block type (DESIGN.md → Layout → Measure by block type): code assemblies,
+  /* Measure per block type (ui-design skill → Layout → Measure by block type): code assemblies,
      output panels, figures, tables and display math run to the wide measure; everything else,
      including callouts, details and the practice list, keeps the prose measure. */
   .prose-sheet > :is([data-wide], figure, table, .prose-table-scroll, .katex-display) {
@@ -525,7 +526,7 @@
   }
 }
 
-/* ---------- Term (native popover, DESIGN.md → Term) ---------- */
+/* ---------- Term (native popover, ui-design skill → Term) ---------- */
 @layer components {
   .term-trigger {
     display: inline;

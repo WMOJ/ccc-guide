@@ -7,7 +7,7 @@ import type { VizState } from "./schema";
 // Sizes (user units; 1 unit = 1 CSS px at scale 1)
 // ---------------------------------------------------------------------------------------------
 
-/** Text sizes by role (DESIGN.md → Typography in visuals). */
+/** Text sizes by role (ui-design skill → Typography in visuals). */
 export const FONT = {
   /** Values inside cells and nodes (Mono 500). */
   value: 16,
@@ -18,7 +18,7 @@ export const FONT = {
 } as const;
 export type TextRole = keyof typeof FONT;
 
-/** Minimum rendered sizes at a 390 px viewport (DESIGN.md): values 14 px, labels 12 px. */
+/** Minimum rendered sizes at a 390 px viewport (ui-design skill): values 14 px, labels 12 px. */
 export const MIN_RENDERED = { value: 14, label: 12, title: 12 } as const;
 
 /**

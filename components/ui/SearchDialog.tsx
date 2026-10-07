@@ -221,7 +221,7 @@ function Highlight({ text, q }: { text: string; q: string }) {
   );
 }
 
-/** Header search trigger + dialog (DESIGN.md → Search dialog). `/` opens it. */
+/** Header search trigger + dialog (ui-design skill → Search dialog). `/` opens it. */
 export function SearchDialog({ labels }: { labels: SearchLabels }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);

@@ -14,7 +14,7 @@ export interface TermProps {
 }
 
 /**
- * Glossary term (DESIGN.md → Term): a dotted-underlined button that opens a native popover with
+ * Glossary term (ui-design skill → Term): a dotted-underlined button that opens a native popover with
  * the definition. No JS: `popovertarget` + `popover="auto"` (light dismiss, Escape).
  */
 export function Term({ id, term, definition, glossaryHref, children }: TermProps) {

@@ -21,7 +21,7 @@ function formatDate(iso: string): string {
 }
 
 /**
- * Mark-as-read control (DESIGN.md → Read cell and mark-as-read). Renders the unread state on the
+ * Mark-as-read control (ui-design skill → Read cell and mark-as-read). Renders the unread state on the
  * server; marking plays the ink-in wipe once.
  */
 export function MarkAsRead({ moduleId, labels }: MarkAsReadProps) {

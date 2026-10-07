@@ -1,6 +1,6 @@
 // CodeTraceViz state panel: call frames (newest on top) with their variables, and the heap
 // objects they refer to, drawn as boxes with arrows from names so aliasing is visible
-// (DESIGN.md → Code trace layout).
+// (ui-design skill → Code trace layout).
 import { MAX_NATURAL_WIDTH, PAD, textWidth, type VizItem, type VizScene } from "./geometry";
 import type { HeapObject, TraceValue } from "./schema";
 import type { TraceState } from "./trace";

@@ -13,7 +13,7 @@ function letterOf(term: string): string {
   return /[A-Z]/.test(c) ? c : "#";
 }
 
-/** Glossary (DESIGN.md → Glossary): letter strip, then terms by letter. */
+/** Glossary (ui-design skill → Glossary): letter strip, then terms by letter. */
 export function GlossaryPage({ terms }: GlossaryPageProps) {
   const s = ui();
   const g = s.glossary;

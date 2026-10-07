@@ -5,7 +5,7 @@ import { fmt, ui } from "@/components/ui/ui-strings";
 import { judgeName, problemLabel } from "./problem-label";
 
 /**
- * Inline problem link (DESIGN.md → Problem link and judge badge): "2023 S1: Title" + judge badge.
+ * Inline problem link (ui-design skill → Problem link and judge badge): "2023 S1: Title" + judge badge.
  * The URL comes from the registry's judgeUrl() via `problem.url`; never typed here.
  */
 export function ProblemLink({ problem }: { problem: ProblemView }) {

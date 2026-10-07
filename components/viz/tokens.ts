@@ -1,4 +1,4 @@
-// Visual-language tokens (DESIGN.md → Visual Language). The values live in app/globals.css as
+// Visual-language tokens (ui-design skill → Visual Language). The values live in app/globals.css as
 // CSS custom properties; this module only names them, so SVG and CSS use `var(--color-viz-…)`
 // and nothing in components/viz hard-codes a colour (brief A10).
 import type { VizState } from "../../lib/viz/schema";
@@ -33,7 +33,7 @@ export const vizStroke = {
   dash: "var(--viz-dash)",
 } as const;
 
-/** Legend labels and the non-colour cue of each state (DESIGN.md → State vocabulary). */
+/** Legend labels and the non-colour cue of each state (ui-design skill → State vocabulary). */
 export const STATE_META: Record<Exclude<VizState, "none">, { label: string; cue: string }> = {
   unvisited: { label: "Not reached", cue: "thin outline" },
   frontier: { label: "Queued", cue: "dashed outline" },

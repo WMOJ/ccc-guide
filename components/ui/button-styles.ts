@@ -1,6 +1,6 @@
 import { cn } from "./cn";
 
-// Button look (DESIGN.md → Components → Buttons). A plain function so server components, client
+// Button look (ui-design skill → Components → Buttons). A plain function so server components, client
 // components and links (`<a className={buttonClass(...)}>`) share one definition.
 export type ButtonVariant = "primary" | "secondary" | "ghost";
 export type ButtonSize = "md" | "sm" | "icon" | "icon-sm";

@@ -14,7 +14,7 @@ export interface FigureProps {
 /**
  * Figure: number, caption and text alternative around exactly one library visual. The visual
  * renders the frame itself (so the player, the caption and the "Read the steps as text" list
- * sit in the DESIGN.md order); Figure passes its facts down as the `figure` prop.
+ * sit in the order the ui-design skill gives); Figure passes its facts down as the `figure` prop.
  */
 export function Figure({ caption, alt, number, children }: FigureProps) {
   const visuals = Children.toArray(children).filter(isValidElement);

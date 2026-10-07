@@ -8,7 +8,7 @@ import { plainTitle } from "@/lib/content/title";
 import { SiteFrame } from "./SiteFrame";
 import { h1Class, h2Class } from "./type-styles";
 
-/** Every registry problem by year (DESIGN.md → Problems page). No filters, no status. */
+/** Every registry problem by year (ui-design skill → Problems page). No filters, no status. */
 export function ProblemsPage({ years }: ProblemsPageProps) {
   const s = ui();
   const p = s.problems;

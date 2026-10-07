@@ -1,4 +1,18 @@
 ---
+name: ui-design
+description: The app's design system — tokens, colour, typography, layout, every component and surface, the visual language of the step-through visuals, motion and accessibility. Load before any UI/UX work on the application (pages, components, CSS, layout, copy placement, visuals' look) and before changing app/globals.css or a design token.
+---
+
+# Design System: CCC Python Course
+
+The single source for the design system. `app/globals.css` implements the tokens below (see
+Token Block); a code comment citing "ui-design skill → <section>" points at the section of this
+file with that heading. The product name is a working title; the rendered wordmark comes from
+`content/ui/strings.yaml`.
+
+## Design tokens
+
+```yaml
 name: CCC Python Course
 description: A calm reading course from zero programming to CCC Senior algorithms in Python 3.8, drawn as a drafting set.
 colors:
@@ -197,14 +211,7 @@ components:
     textColor: "{colors.ink}"
     rounded: "{rounded.control}"
     height: "48px"
----
-
-# Design System: CCC Python Course
-
-<!--
-This file is the single token source for the design system.
-The product name above is a working title (see PRODUCT.md "Open facts"); the rendered wordmark comes from content/ui/strings.yaml.
--->
+```
 
 ## Overview
 
@@ -214,7 +221,7 @@ The course is a set of technical drawings, and each module is one sheet pinned t
 
 The system is quiet and dense in the right places. Prose runs in one generous column; the sidebar, header and metadata recede into the board. Colour is restrained (neutrals plus one interactive blue) on reading surfaces and becomes a precise, fixed vocabulary only inside code and visuals, where each hue means one state and nothing else. The typefaces, Atkinson Hyperlegible Next and Mono, were drawn to keep easily confused characters apart (0 and O, 1, l and I), which is exactly what ISO technical lettering is for and exactly what a new programmer needs when copying code.
 
-This is not a grey docs template with a blue sidebar and a card grid, not a cream-paper editorial page, and not a dark "hacker" theme. It is light only (PRODUCT.md), because it is read at a desk in daylight or lamplight over months, and white paper on a green board is how a drawing is read.
+This is not a grey docs template with a blue sidebar and a card grid, not a cream-paper editorial page, and not a dark "hacker" theme. It is light only, because it is read at a desk in daylight or lamplight over months, and white paper on a green board is how a drawing is read.
 
 **Key Characteristics:**
 - White sheet on a board-green ground, square sheet corners, 1 px ruled edges.
@@ -639,7 +646,7 @@ A dev-only page (404 in production) on the standard sheet, in five sections: Pri
 - **Do** theme the browser surfaces: selection (check-soft), caret (blueline), thin scrollbars (rule-strong), tabular numerals in every column of numbers.
 
 ### Don't:
-- **Don't** add dark mode, `dark:` classes, `prefers-color-scheme: dark` or any dark theme import (PRODUCT.md).
+- **Don't** add dark mode, `dark:` classes, `prefers-color-scheme: dark` or any dark theme import.
 - **Don't** add an eyebrow or kicker above any heading; the title-block strip is the only place for that metadata.
 - **Don't** use a coloured `border-left`/`border-right` wider than 1 px on callouts, list items, rows or cards; callouts are framed boxes with an icon and a label.
 - **Don't** build any page as a grid of same-size icon cards, and never nest a framed box in a framed box.

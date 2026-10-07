@@ -31,7 +31,7 @@ export interface CalloutProps {
   children: ReactNode;
 }
 
-/** Callout (DESIGN.md → Callouts). Kind shows as icon + label + colour, never colour alone. */
+/** Callout (ui-design skill → Callouts). Kind shows as icon + label + colour, never colour alone. */
 export function Callout({ kind, title, children }: CalloutProps) {
   const k = KINDS[kind] ?? KINDS.note;
   const s = ui().callout;

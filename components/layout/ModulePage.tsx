@@ -13,7 +13,7 @@ import { SiteFrame } from "./SiteFrame";
 import { TitleBlockStrip } from "./TitleBlock";
 import { h1Class, minorClass } from "./type-styles";
 
-/** The module page: one module, read top to bottom, practice at the end (DESIGN.md → Layout →
+/** The module page: one module, read top to bottom, practice at the end (ui-design skill → Layout →
  * Reading page order). */
 export function ModulePage({ module, stage, practice, nav, courseNav }: ModulePageProps) {
   const s = ui();

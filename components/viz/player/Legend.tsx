@@ -5,7 +5,7 @@ function hatch(): string {
   return "M1.5 8.5L8.5 1.5M1.5 14.5L14.5 1.5M7.5 14.5L14.5 7.5";
 }
 
-/** Legend: one swatch per state the visual uses, drawn with the exact cue (DESIGN.md). */
+/** Legend: one swatch per state the visual uses, drawn with the exact cue (ui-design skill). */
 export function Legend({
   states,
   label = "Legend",

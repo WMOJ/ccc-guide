@@ -9,7 +9,7 @@ export interface ReadCellProps {
 }
 
 /**
- * The read cell (DESIGN.md → Read cell): a hollow pencilled square when unread, an inked square
+ * The read cell (ui-design skill → Read cell): a hollow pencilled square when unread, an inked square
  * with a check when read. Decorative: callers state the read state in text.
  */
 export function ReadCell({ read, inkIn = false, size = "sm", className }: ReadCellProps) {

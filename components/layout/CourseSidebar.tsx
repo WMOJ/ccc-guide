@@ -7,7 +7,7 @@ import { RichTitle } from "@/components/ui/RichTitle";
 import { fmt, ui } from "@/components/ui/ui-strings";
 
 /**
- * Course navigation (DESIGN.md → Sidebar): the current stage's modules, each readable one with
+ * Course navigation (ui-design skill → Sidebar): the current stage's modules, each readable one with
  * its read cell in a trailing column (a planned module shows "Soon" there instead), the current
  * module as a white sheet tab, other stages collapsed.
  */

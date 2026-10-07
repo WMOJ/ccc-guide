@@ -57,7 +57,7 @@ function Ticks({ total }: { total: number }) {
 }
 
 /**
- * The shared player chrome (DESIGN.md → Player chrome): preset switcher, stage, control strip,
+ * The shared player chrome (ui-design skill → Player chrome): preset switcher, stage, control strip,
  * caption and legend inside one focusable group. Pure: the server renders it inert for the
  * first frame, the lazy client player renders the same markup with handlers.
  */
@@ -97,7 +97,7 @@ export function PlayerView(props: PlayerViewProps) {
       role="group"
       aria-roledescription="step-through"
       aria-label={label}
-      // biome-ignore lint/a11y/noNoninteractiveTabindex: the player is one focusable group; ←/→, Space, Home/End work while focus is inside it (DESIGN.md)
+      // biome-ignore lint/a11y/noNoninteractiveTabindex: the player is one focusable group; ←/→, Space, Home/End work while focus is inside it (ui-design skill)
       tabIndex={0}
       data-speed={speed}
       data-motion={props.reducedMotion ? "reduced" : undefined}

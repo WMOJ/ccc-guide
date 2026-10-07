@@ -53,7 +53,7 @@ const TRACEBACK = `Traceback (most recent call last):
 IndexError: list index out of range
 `;
 
-// Mirrors DESIGN.md → Layout → Measure by block type.
+// Mirrors the ui-design skill → Layout → Measure by block type.
 const MEASURES: [string, string][] = [
   ["Paragraphs, lists, headings, block quotes", "Prose (42rem)"],
   ["Callouts, Details, Practice list", "Prose (42rem)"],

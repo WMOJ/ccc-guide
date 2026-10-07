@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/components/ui/cn";
 
 /**
- * One label grid for every index in the app (DESIGN.md → Course map → Index row):
+ * One label grid for every index in the app (ui-design skill → Course map → Index row):
  * ID | title (+ description) | meta | marks. The whole row is the link when `href` is set.
  * Phones: status and meta drop to their own line under the title; marks stay at the right.
  */

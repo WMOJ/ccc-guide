@@ -25,7 +25,7 @@ export function primaryNav() {
   ] as const;
 }
 
-/** Header (DESIGN.md → Header and navigation). Server-rendered; the current section is a prop. */
+/** Header (ui-design skill → Header and navigation). Server-rendered; the current section is a prop. */
 export function SiteHeader({ current, mobileNav }: { current: Section; mobileNav?: ReactNode }) {
   const s = ui();
   return (

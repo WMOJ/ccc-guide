@@ -15,7 +15,7 @@ export interface ContinueBlockProps {
   labels: { continueLabel: string; startLabel: string };
 }
 
-/** The folded tape flag: where you stopped (DESIGN.md → Continue where you left off). */
+/** The folded tape flag: where you stopped (ui-design skill → Continue where you left off). */
 function Flag() {
   return (
     <svg aria-hidden="true" viewBox="0 0 20 20" width={20} height={20} className="shrink-0">

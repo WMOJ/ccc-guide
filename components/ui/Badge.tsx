@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { cn } from "./cn";
 import { ui } from "./ui-strings";
 
-/** Judge badge (DESIGN.md → Problem link and judge badge). Both judges share one style. */
+/** Judge badge (ui-design skill → Problem link and judge badge). Both judges share one style. */
 export function JudgeBadge({ judge, className }: { judge: "wmoj" | "dmoj"; className?: string }) {
   return (
     <span

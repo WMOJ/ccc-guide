@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 // SVG primitives: cell / value box, node, edge, arrow, pointer, dimension line
 // (range) and compare bracket, label, badge, container slot, plot line, band. Pure and
 // server-safe: no hooks, no client code. Colours and strokes come from viz.css through the
-// `data-s` state attribute (DESIGN.md → State vocabulary), never from literals here.
+// `data-s` state attribute (ui-design skill → State vocabulary), never from literals here.
 import type {
   ArrowItem,
   BadgeItem,

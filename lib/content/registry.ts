@@ -115,7 +115,7 @@ function canonicalId(registryId: string): string {
 
 /**
  * Canonical problem id -> the readable modules whose practice list names it, in course order
- * (DESIGN.md → Problems page, "Taught in"). Derived from the practice lists themselves, so it can
+ * (ui-design skill → Problems page, "Taught in"). Derived from the practice lists themselves, so it can
  * never disagree with what the module pages show. Modules this build does not show
  * (no href) are left out.
  */
@@ -138,7 +138,7 @@ function taughtInIndex(): Map<string, NonNullable<ProblemView["taughtIn"]>> {
 /**
  * /problems: every problem grouped by year (descending), Junior then Senior within a year. A
  * problem shared by both levels appears once in each level; the Junior row says "same problem as"
- * the Senior one (DESIGN.md → Problems page).
+ * the Senior one (ui-design skill → Problems page).
  */
 export function getProblemsGrouped(): { year: number; problems: ProblemView[] }[] {
   const taughtIn = taughtInIndex();

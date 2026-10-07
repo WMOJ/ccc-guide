@@ -8,6 +8,8 @@ description: How the recorded step-through visuals and code traces work — the 
 Nothing executes in the browser. Every visual and trace is recorded at authoring time under PyPy
 3.8 and replayed as static, versioned data (`*.frames.json`, `*.trace.json`) — the first frame is
 server-rendered and fully meaningful on its own, with no autoplay.
+How a visual looks (state vocabulary, colours, typography, motion, player chrome) is in the
+`ui-design` skill's Visual Language section.
 
 ## Pipeline
 

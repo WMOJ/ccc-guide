@@ -10,7 +10,7 @@ export interface JudgeLinkProps {
   children?: ReactNode;
 }
 
-/** Link to a judge's home or sign-up page (DESIGN.md → JudgeLink). */
+/** Link to a judge's home or sign-up page (ui-design skill → JudgeLink). */
 export function JudgeLink({ judge, kind, href, children }: JudgeLinkProps) {
   const s = ui().practice;
   const name = judge === "wmoj" ? "WMOJ" : "DMOJ";

@@ -1,7 +1,7 @@
 // The shared player's state machine (StepThrough, CodeTrace, Scene): pure and free of
 // browser APIs. Playback timing lives in the client player; this only decides states.
 
-/** Milliseconds per step and per transition at each speed (DESIGN.md → Motion, [W3] timings). */
+/** Milliseconds per step and per transition at each speed (ui-design skill → Motion, [W3] timings). */
 export const SPEEDS = [
   { id: "0.5", label: "0.5×", stepMs: 2400, transitionMs: 280 },
   { id: "1", label: "1×", stepMs: 1200, transitionMs: 280 },
@@ -81,7 +81,7 @@ export function makePlayerReducer(totals: readonly number[]) {
   };
 }
 
-/** Keyboard map inside the player group (DESIGN.md: only while focus is inside the group). */
+/** Keyboard map inside the player group (ui-design skill: only while focus is inside the group). */
 export function keyAction(key: string): PlayerAction | null {
   switch (key) {
     case "ArrowLeft":

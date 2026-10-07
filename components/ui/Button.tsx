@@ -6,7 +6,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
 }
 
-/** Button (DESIGN.md → Buttons). Icon-only buttons must pass `aria-label`. */
+/** Button (ui-design skill → Buttons). Icon-only buttons must pass `aria-label`. */
 export function Button({
   variant = "secondary",
   size = "md",

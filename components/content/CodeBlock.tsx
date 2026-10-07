@@ -28,7 +28,7 @@ export interface CodeBlockProps {
 const MIXED_REDLINE = "border-[color-mix(in_oklab,var(--color-redline)_30%,var(--color-paper))]";
 
 /**
- * Read-only code block (DESIGN.md → Code block, Input / Output panels, Error traceback panel).
+ * Read-only code block (ui-design skill → Code block, Input / Output panels, Error traceback panel).
  * Async server component: Shiki runs at build time; only the copy button hydrates.
  */
 export async function CodeBlock({

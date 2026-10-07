@@ -36,8 +36,8 @@ Skills live in `.agents/skills/<name>/SKILL.md`.
 A free, non-commercial reading course (Next.js 16 App Router) that teaches CCC Senior (S1–S5)
 algorithms in **Python 3.8** — the language level of the CCC grader's PyPy. Prose, worked
 examples, read-only code, and recorded animated step-throughs; practice happens outside the app,
-on WMOJ/DMOJ. No accounts, no scores, no code execution in the app. See `PRODUCT.md` and
-`DESIGN.md` for the full product and design spec.
+on WMOJ/DMOJ. No accounts, no scores, no code execution in the app. The design system lives in
+the `ui-design` skill; load it before any UI/UX work.
 
 ## Commands
 

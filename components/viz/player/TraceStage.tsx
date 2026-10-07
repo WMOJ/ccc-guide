@@ -29,7 +29,7 @@ function Caret({ hollow }: { hollow: boolean }) {
   );
 }
 
-/** Code pane + frames/objects panel + output so far (DESIGN.md → Code trace layout). */
+/** Code pane + frames/objects panel + output so far (ui-design skill → Code trace layout). */
 export function TraceStage({
   lines,
   state,

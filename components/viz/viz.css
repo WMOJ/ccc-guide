@@ -1,5 +1,5 @@
 /*
-  Visualization library styles (DESIGN.md → Visual Language). Every colour, stroke and duration
+  Visualization library styles (ui-design skill → Visual Language). Every colour, stroke and duration
   is a token from app/globals.css; nothing here is a literal colour. Light mode only.
   Items carry their state in `data-s`; `.vz-live` is set by the client player (transitions
   only run after a user action), `.vz-snap` finishes a running transition at once.
@@ -393,7 +393,7 @@
 }
 
 /* Chart gridlines are data furniture, so they are rule grey; construction blue belongs to the
-   stage's decorative grid only (DESIGN.md → Principles). */
+   stage's decorative grid only (ui-design skill → Principles). */
 .vz-pl-grid {
   --vz-lw: var(--viz-stroke-hair);
   color: var(--color-rule);

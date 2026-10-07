@@ -1,5 +1,5 @@
 // The one Shiki light theme, built from the syntax tokens in
-// DESIGN.md ("Colors → Syntax", "Components → Code block") and app/globals.css
+// the ui-design skill ("Colors → Syntax", "Components → Code block") and app/globals.css
 // (`--color-syn-*`). Change a colour there first, then here; the design review checks they match.
 // Every foreground meets WCAG AA on sheet-sunk (#f3f6f8) and on check-soft (#fef5c7) highlights:
 // lowest is the comment colour at 5.44:1. No italics anywhere in code.

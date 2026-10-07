@@ -792,7 +792,7 @@ export function layoutStruct(frames: StructFrame[]): VizScene[] {
     // One composed unit per step: the tree directly above the array, the tree centred over the
     // array, the pair anchored under the panel title. Tree nodes are pills sized for the widest
     // entry (text at least 8 units from each end, so tuples such as "4, B" never touch the edge);
-    // the indices live under the array cells only (DESIGN.md → StructViz).
+    // the indices live under the array cells only (ui-design skill → StructViz).
     const cw = Math.max(34, textW + 16);
     const ch = 32;
     const nw = Math.max(40, textW + 16);

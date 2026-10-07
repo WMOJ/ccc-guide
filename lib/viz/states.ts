@@ -1,7 +1,7 @@
 // The state vocabulary shared by the Zod schemas (./schema) and the client-side layouts and
-// player. Kept free of Zod so the lazy player chunk never bundles it (DESIGN.md → Performance).
+// player. Kept free of Zod so the lazy player chunk never bundles it (ui-design skill → Performance).
 // ---------------------------------------------------------------------------------------------
-// State vocabulary (DESIGN.md → Visual Language → State vocabulary). One letter per state keeps
+// State vocabulary (ui-design skill → Visual Language → State vocabulary). One letter per state keeps
 // grid and table frames compact: a grid row is a string such as "..qc#d".
 // ---------------------------------------------------------------------------------------------
 

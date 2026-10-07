@@ -5,7 +5,7 @@ import { CourseSidebar } from "./CourseSidebar";
 import { type Section, SiteHeader } from "./SiteHeader";
 
 /**
- * The board and the sheet (DESIGN.md → Layout → Page frame). With `courseNav` the board carries
+ * The board and the sheet (ui-design skill → Layout → Page frame). With `courseNav` the board carries
  * the course sidebar (1024 px and up) and the mobile drawer carries the same navigation.
  */
 export function SiteFrame({

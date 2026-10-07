@@ -1,7 +1,7 @@
 import type { TocItem } from "@/components/layout/props";
 import { ui } from "@/components/ui/ui-strings";
 
-/** Static "On this page" (DESIGN.md: ≥1280 px, 3+ H2s, no scroll-spy). */
+/** Static "On this page" (ui-design skill: ≥1280 px, 3+ H2s, no scroll-spy). */
 export function OnThisPage({ items }: { items: TocItem[] }) {
   if (items.length < 3) return null;
   const s = ui().module;

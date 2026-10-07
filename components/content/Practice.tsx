@@ -6,7 +6,7 @@ import { fmt, ui } from "@/components/ui/ui-strings";
 import { judgeName, problemLabel } from "./problem-label";
 
 /**
- * A module's practice list (DESIGN.md → Practice list). No status, checkboxes,
+ * A module's practice list (ui-design skill → Practice list). No status, checkboxes,
  * scores or hints. Renders nothing when the list is empty.
  */
 export function Practice({

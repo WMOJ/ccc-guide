@@ -8,7 +8,7 @@ import { IndexRow } from "./IndexRow";
 import { SiteFrame } from "./SiteFrame";
 import { h1Class, h2Class } from "./type-styles";
 
-/** Course map (DESIGN.md → Course map): one section per stage, one index row per module. */
+/** Course map (ui-design skill → Course map): one section per stage, one index row per module. */
 export function CourseMapPage({ stages }: CourseMapPageProps) {
   const s = ui();
   return (

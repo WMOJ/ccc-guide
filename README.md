@@ -2,8 +2,8 @@
 
 A free, non-commercial Next.js app that teaches CCC Senior (S1–S5) algorithms in Python 3.8, the
 language level of the CCC grader's PyPy. Prose, worked examples, and recorded animated
-step-throughs; practice happens outside the app, on WMOJ/DMOJ. See `PRODUCT.md` and `DESIGN.md`
-for the full product and design spec, and `AGENTS.md` for the rules every change follows.
+step-throughs; practice happens outside the app, on WMOJ/DMOJ. See `AGENTS.md` for the rules every
+change follows, and `.agents/skills/ui-design/SKILL.md` for the design system.
 
 **Live site:** _(URL to be filled in)_
 

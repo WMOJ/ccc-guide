@@ -7,7 +7,7 @@ import { SiteFrame } from "./SiteFrame";
 import { displayClass, h2Class } from "./type-styles";
 
 /**
- * Home (DESIGN.md → Other surfaces → Home): title, lede, continue block, the sheet index of
+ * Home (ui-design skill → Other surfaces → Home): title, lede, continue block, the sheet index of
  * stages, how the course works. The lede and "how it works" copy come from strings (P5).
  */
 export function HomePage({ stages, moduleOrder }: HomePageProps) {

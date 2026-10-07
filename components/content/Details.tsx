@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 
-/** Native <details> (DESIGN.md → Details). No JS. */
+/** Native <details> (ui-design skill → Details). No JS. */
 export function Details({ summary, children }: { summary: ReactNode; children: ReactNode }) {
   return (
     <details data-exhibit="" className="group rounded-box border border-rule bg-paper">
